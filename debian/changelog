@@ -1,3 +1,9 @@
+mdm (1.0.0) debian; urgency=low
+
+  * v 1.0.0, forked from GDM 2.20.11-4
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 19 Apr 2012 19:56:00 +0100
+
 mdm (2.20.11-4) unstable; urgency=low
 
   * debian-spacefun.shar: updated to remove the “debian” word in the 
