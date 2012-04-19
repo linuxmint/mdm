@@ -1,0 +1,69 @@
+GDM for Debian
+==============
+
+"I get ugly fonts"
+------------------
+
+In the past, as a quick workaround, GDM imposed a 96 DPI settings by
+passing "-dpi 96" to the X server on startup.  This is a bad idea has
+there's no reason to override standard DPI detection mechanisms for all
+screens which might or might not be 96 DPI screens.
+
+DPI should be computed automatically based on the information on your
+screen that Xorg gets; ideally, Xorg would get the DPI right, but you
+can help Xorg by configuring it with your exact screen properties.
+  If it's too complicated, you may still get the old behavior by
+setting:
+    [server-Standard]
+    command=/usr/bin/X -dpi 96 -audit 0
+in your gdm.conf.  See the defaults.conf file to see how it's configured
+by default.
+
+
+Face Browser
+------------
+
+If you enable the face browser in /etc/gdm/gdm.conf, gdm will look
+for face files (any gtk+-supported image format; see
+/usr/lib/gtk-2.0/2.2.0/loaders or similar for a list of installed
+loaders) in ~/.gnome2/photo or <greeter/GlobalFaceDir>/<loginname>,
+whichever is found first.  Note that there is no filename extension
+for either location.  greeter/GlobalFaceDir is set in
+/etc/gdm/gdm.conf
+
+
+Screen Saver
+------------
+
+If you want a screensaver running with the greeter, you should use the
+BackgroundProgram option in /etc/gdm/gdm.conf, or make sure if you start
+a gtk program in the PreSession script, that it is started with the gdm
+userid, and not root
+
+
+Secure System Menu
+------------------
+
+Debian versions 2.4.1.6-1 through 2.8.0.6-2 featured a
+"SecureSystemMenu" option in gdm.conf, that would require the root
+password to be entered for the reboot, shutdown, and suspend options
+on the system menu.  Some time after GDM 2.4.1.6 was released, other parts
+of the GNOME desktop began talking to the gdm daemon, so that one could
+reboot or shutdown without having to return to the gdm login screen.  These
+programs didn't support this option, and would have needed changes to do so.
+With gdm 2.13.0.10, the patch broke and would need a lot of debugging to get
+working again, and other programs talking to the daemon (gnome-session) would
+still have to be patched to support the option, or gdm patched to ignore
+them when they don't do authentication.  If anyone really wants this
+functionality back, I suggest working with upstream so it can be integrated
+into all the parts of the GNOME desktop that it would now impact.
+
+
+Translation of the Debconf templates
+------------------------------------
+
+A note to translators about the debconf templates -- translations
+should be sent to the xdm package.  I don't use gettext-based
+templates in the source, because I sync to the ones in the xdm
+package, and don't have any that are not shared.
+

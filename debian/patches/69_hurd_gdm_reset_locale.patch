@@ -1,0 +1,93 @@
+--- a/daemon/misc.c
++++ b/daemon/misc.c
+@@ -1680,43 +1680,6 @@
+ 	return ret;
+ }
+ 
+-#ifdef RLIM_NLIMITS
+-#define NUM_OF_LIMITS RLIM_NLIMITS
+-#else /* ! RLIM_NLIMITS */
+-#ifdef RLIMIT_NLIMITS
+-#define NUM_OF_LIMITS RLIMIT_NLIMITS
+-#endif /* RLIMIT_NLIMITS */
+-#endif /* RLIM_NLIMITS */
+-
+-/* If we can count limits then the reset code is simple */ 
+-#ifdef NUM_OF_LIMITS
+-
+-static struct rlimit limits[NUM_OF_LIMITS];
+-
+-void
+-gdm_get_initial_limits (void)
+-{
+-	int i;
+-
+-	for (i = 0; i < NUM_OF_LIMITS; i++) {
+-		/* Some sane defaults */
+-		limits[i].rlim_cur = RLIM_INFINITY;
+-		limits[i].rlim_max = RLIM_INFINITY;
+-		/* Get the limits */
+-		getrlimit (i, &(limits[i]));
+-	}
+-}
+-
+-void
+-gdm_reset_limits (void)
+-{
+-	int i;
+-
+-	for (i = 0; i < NUM_OF_LIMITS; i++) {
+-		/* Get the limits */
+-		setrlimit (i, &(limits[i]));
+-	}
+-}
+ 
+ #define CHECK_LC(value, category) \
+     (g_str_has_prefix (line->str, value "=")) \
+@@ -1813,6 +1776,46 @@
+ 
+ #undef CHECK_LC
+ 
++#ifdef RLIM_NLIMITS
++#define NUM_OF_LIMITS RLIM_NLIMITS
++#else /* ! RLIM_NLIMITS */
++#ifdef RLIMIT_NLIMITS
++#define NUM_OF_LIMITS RLIMIT_NLIMITS
++#endif /* RLIMIT_NLIMITS */
++#endif /* RLIM_NLIMITS */
++
++/* If we can count limits then the reset code is simple */
++#ifdef NUM_OF_LIMITS
++
++static struct rlimit limits[NUM_OF_LIMITS];
++
++void
++gdm_get_initial_limits (void)
++{
++	int i;
++
++	for (i = 0; i < NUM_OF_LIMITS; i++) {
++		/* Some sane defaults */
++		limits[i].rlim_cur = RLIM_INFINITY;
++		limits[i].rlim_max = RLIM_INFINITY;
++		/* Get the limits */
++		getrlimit (i, &(limits[i]));
++	}
++}
++
++
++void
++gdm_reset_limits (void)
++{
++	int i;
++
++	for (i = 0; i < NUM_OF_LIMITS; i++) {
++		/* Get the limits */
++		setrlimit (i, &(limits[i]));
++	}
++}
++
++
+ #else /* ! NUM_OF_LIMITS */
+ /* We have to go one by one here */
+ 

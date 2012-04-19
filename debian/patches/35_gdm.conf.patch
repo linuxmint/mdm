@@ -1,0 +1,210 @@
+Patch default configuration file:
+* default values for Debian
+* update comments
+* update pathnames
+
+Index: gdm-2.20.7/config/gdm.conf.in
+===================================================================
+--- gdm-2.20.7.orig/config/gdm.conf.in	2008-06-30 19:53:14.000000000 +0200
++++ gdm-2.20.7/config/gdm.conf.in	2008-10-22 15:11:29.371844187 +0200
+@@ -1,14 +1,8 @@
+ # GDM System Defaults Configuration file.
+ #
+ # This file should not be updated by hand.  Since GDM 2.13.0.4, configuration
+-# choices in the GDM Custom Configuration file will override the default
+-# values specified in this file.  This GDM System Defaults Configuration file
+-# may be overwritten on upgrade, so to ensure that your configuration choices
+-# are not lost, please make sure that your changes are made only the GDM Custom 
+-# Configuration file.  The GDM Custom Configuration file is found at the
+-# following location:
+-#
+-# @GDM_CUSTOM_CONF@
++# choices in the GDM System Configuration file (/etc/gdm/gdm.conf) will
++# override the default values specified in this file.
+ #
+ # If you were using an older version of GDM, your system may have the the older
+ # gdm.conf configuration file on the system.  If so, then this file is used
+@@ -31,11 +25,13 @@
+ #
+ # e.g, the "Enable" key in the "[debug]" section would be "debug/Enable".
+ #
+-# You can also run gdm-restart or gdm-safe-restart to cause GDM to restart and
+-# re-read the new configuration settings.  You can also restart GDM by sending
+-# a HUP or USR1 signal to the daemon.  HUP behaves like gdm-restart and causes
+-# any user session started by GDM to exit immediately while USR1 behaves like
+-# gdm-safe-restart and will wait until all users log out before restarting GDM.
++# You can also run invoke-rc.d gdm reload or invoke-rc.d gdm restart
++# to cause GDM to restart and re-read the new configuration settings. 
++# You can also restart GDM by sending a HUP or USR1 signal to the
++# daemon.  HUP behaves like restart and causes any user session
++# started by GDM to exit immediately while USR1 behaves like
++# reload and will wait until all users log out before
++# restarting GDM.
+ #
+ # For full reference documentation see the GNOME help browser under
+ # GNOME|System category.  You can also find the docs in HTML form on
+@@ -68,7 +64,7 @@
+ 
+ # The greeter for attached (non-xdmcp) logins.  Change gdmlogin to gdmgreeter
+ # to get the new graphical greeter.
+-#Greeter=@libexecdir@/gdmlogin
++Greeter=@libexecdir@/gdmgreeter
+ 
+ # The greeter for xdmcp logins, usually you want a less graphically intensive
+ # greeter here so it's better to leave this with gdmlogin
+@@ -83,13 +79,9 @@
+ #GtkModulesList=gail:atk-bridge:@libdir@/gtk-2.0/modules/libdwellmouselistener:@libdir@/gtk-2.0/modules/libkeymouselistener
+ 
+ # Default path to set.  The profile scripts will likely override this value.
+-# This value will be overridden with the value from /etc/default/login if it
+-# contains "ROOT=<pathvalue>".
+-#DefaultPath=@GDM_USER_PATH@
++DefaultPath=/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games
+ # Default path for root.  The profile scripts will likely override this value.
+-# This value will be overridden with the value from /etc/default/login if it
+-# contains "SUROOT=<pathvalue>".
+-#RootPath=/sbin:/usr/sbin:@GDM_USER_PATH@
++RootPath=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/bin/X11:/usr/games
+ 
+ # If you are having trouble with using a single server for a long time and want
+ # GDM to kill/restart the server, turn this on.  On Solaris, this value is
+@@ -105,7 +97,7 @@
+ # To try to kill all clients started at greeter time or in the Init script.
+ # does not always work, only if those clients have a window of their own.
+ #KillInitClients=true
+-LogDir=@logdir@
++LogDir=/var/log/gdm
+ 
+ # Note that a post login script is run before a PreSession script.  It is run
+ # after the login is successful and before any setup is run on behalf of the
+@@ -126,9 +118,9 @@
+ #
+ # Reboot, Halt and suspend commands, you can add different commands separated
+ # by a semicolon.  GDM will use the first one it can find.
+-RebootCommand=@REBOOT_COMMAND@
+-HaltCommand=@HALT_COMMAND@
+-SuspendCommand=@SUSPEND_COMMAND@
++RebootCommand=/sbin/shutdown -r now "Rebooted via gdm."
++HaltCommand=/sbin/shutdown -h now "Shut Down via gdm."
++SuspendCommand=/usr/sbin/pm-suspend
+ 
+ # The following options specify how GDM system commands are supported.
+ #
+@@ -161,11 +153,10 @@
+ BaseXsession=@gdmconfdir@/Xsession
+ # This is a directory where .desktop files describing the sessions live.  It is
+ # really a PATH style variable since 2.4.4.2 to allow actual interoperability
+-# with KDM.  Note that <dmconfdir>/Sessions is there for backwards
+-# compatibility reasons with 2.4.4.x.
+-#SessionDesktopDir=/etc/X11/sessions/:@dmconfdir@/Sessions/:@datadir@/gdm/BuiltInSessions/:@datadir@/xsessions/
++# with KDM.
++SessionDesktopDir=@datadir@/gdm/BuiltInSessions/:@datadir@/xsessions/:/etc/dm/Sessions/
+ # This is the default .desktop session.  One of the ones in SessionDesktopDir
+-#DefaultSession=gnome.desktop
++DefaultSession=default.desktop
+ # Better leave this blank and HOME will be used.  You can use syntax ~/ below
+ # to indicate home directory of the user.  You can also set this to something
+ # like /tmp if you don't want the authorizations to be in home directories.
+@@ -202,8 +193,8 @@
+ # Automatic VT allocation.  Right now only works on Linux.  This way we force
+ # X to use specific vts.  Turn VTAllocation to false if this is causing
+ # problems.
+-#FirstVT=7
+-#VTAllocation=true
++FirstVT=7
++VTAllocation=true
+ # Should double login be treated with a warning (and possibility to change VT's
+ # on Linux and FreeBSD systems for console logins)
+ #DoubleLoginWarning=true
+@@ -242,7 +233,7 @@
+ [security]
+ # Allow root to login.  It makes sense to turn this off for kiosk use, when
+ # you want to minimize the possibility of break in.
+-AllowRoot=true
++AllowRoot=false
+ # Allow login as root via XDMCP.  This value will be overridden and set to
+ # false if the /etc/default/login file exists and contains
+ # "CONSOLE=/dev/login", and set to true if the /etc/default/login file exists
+@@ -252,7 +243,7 @@
+ AllowRemoteAutoLogin=false
+ # 0 is the most restrictive, 1 allows group write permissions, 2 allows all
+ # write permissions.
+-RelaxPermissions=0
++RelaxPermissions=1
+ # Check if directories are owned by logon user.  Set to false, if you have, for
+ # example, home directories owned by some other user.
+ CheckDirOwner=true
+@@ -271,7 +262,7 @@
+ # Note: Anytime we find a -query or -indirect on the command line we do not add
+ # a "-nolisten tcp", as then the query just wouldn't work, so this setting only
+ # affects truly attached sessions.
+-#DisallowTCP=true
++DisallowTCP=true
+ # By default never place cookies if we "detect" NFS.  We detect NFS by
+ # detecting "root-squashing".  It seems bad practice to place cookies on things
+ # that go over the network by default and thus we do not do it by default.
+@@ -352,7 +343,7 @@
+ #GtkRC=@datadir@/themes/Default/gtk-2.0/gtkrc
+ 
+ # The GTK+ theme to use for the GUI.
+-#GtkTheme=Default
++GtkTheme=Clearlooks
+ # If to allow changing the GTK+ (widget) theme from the greeter.  Currently
+ # this only affects the standard greeter as the graphical greeter does not yet
+ # have this ability.
+@@ -391,13 +382,13 @@
+ # affect the Face Browser (MinimalUID, DefaultFace, Include, Exclude,
+ # IncludeAll, GlobalFaceDir) are used by both the Standard and Themed
+ # greeter.
+-Browser=false
++Browser=true
+ # The default picture in the browser.
+ #DefaultFace=@pixmapdir@/nobody.png
+ # User ID's less than the MinimalUID value will not be included in the face
+ # browser or in the gdmselection list for Automatic/Timed login.  They will not
+ # be displayed regardless of the settings for Include and Exclude.
+-#MinimalUID=100
++MinimalUID=1000
+ # Users listed in Include will be included in the face browser and in the
+ # gdmsetup selection list for Automatic/Timed login.  Users should be separated
+ # by commas.
+@@ -406,7 +397,7 @@
+ # gdmsetup selection list for Automatic/Timed login.  Excluded users will still
+ # be able to log in, but will have to type their username.  Users should be
+ # separated by commas.  
+-#Exclude=bin,daemon,adm,lp,sync,shutdown,halt,mail,news,uucp,operator,nobody,gdm,postgres,pvm,rpm,nfsnobody,pcap
++Exclude=nobody
+ # By default, an empty include list means display no users.  By setting
+ # IncludeAll to true, the password file will be scanned and all users will be
+ # displayed except users excluded via the Exclude setting and user ID's less
+@@ -414,16 +405,16 @@
+ # large numbers of users and this feature should not be used in such
+ # environments.  The setting of IncludeAll does nothing if Include is set to a
+ # non-empty value.
+-#IncludeAll=false
++IncludeAll=true
+ # If user or user.png exists in this dir it will be used as his picture.
+ #GlobalFaceDir=@datadir@/pixmaps/faces/
+ 
+ # File which contains the locale we show to the user.  Likely you want to use
+ # the one shipped with GDM and edit it.  It is not a standard locale.alias
+ # file, although GDM will be able to read a standard locale.alias file as well.
+-#LocaleFile=@gdmlocaledir@/locale.alias
++LocaleFile=/etc/gdm/locale.conf
+ # Logo shown in the standard greeter.
+-#Logo=@pixmapdir@/gdm-foot-logo.png
++Logo=@pixmapdir@/gdmDebianLogo.xpm
+ # Logo shown on file chooser button in gdmsetup (do not modify this value).
+ #ChooserButtonLogo=@pixmapdir@/gdm-foot-logo.png
+ # The standard greeter should shake if a user entered the wrong username or
+@@ -509,8 +500,8 @@
+ # list then provide a list that is delimited by /: to the GraphicalThemes
+ # key and set GraphicalThemeRand to true.  Otherwise use GraphicalTheme
+ # and specify just one theme.
+-#GraphicalTheme=circles
+-#GraphicalThemes=circles/:happygnome
++GraphicalTheme=debian-spacefun
++#GraphicalThemes=debian-moreblue-orbit:/bijou/:blueswirl/:circles/:debblue-list/:debblue/:ayo/:debian-dawn/:debian-greeter/:debian/:glassfoot/:hantzley/:happygnome/:industrial/:crystal/:linsta
+ GraphicalThemeDir=@datadir@/gdm/themes/
+ GraphicalThemeRand=false
+ 

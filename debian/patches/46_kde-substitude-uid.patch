@@ -1,0 +1,15 @@
+Add X-KDE-SubstituteUID=true to the gdmsetup desktop file to hide the entry
+for non-admin users in KDE.
+
+Index: gdm-2.18.1/gui/gdmsetup.desktop.in.in
+===================================================================
+--- gdm-2.18.1.orig/gui/gdmsetup.desktop.in.in	2007-05-02 17:47:25.000000000 +0200
++++ gdm-2.18.1/gui/gdmsetup.desktop.in.in	2007-05-02 17:47:41.000000000 +0200
+@@ -9,6 +9,7 @@
+ Terminal=false
+ Type=Application
+ Categories=GNOME;GTK;Settings;System;
++X-KDE-SubstituteUID=true
+ X-GNOME-Bugzilla-Bugzilla=GNOME
+ X-GNOME-Bugzilla-Product=gdm
+ X-GNOME-Bugzilla-Component=general

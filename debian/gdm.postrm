@@ -1,0 +1,35 @@
+#!/bin/sh
+
+DEFAULT_DISPLAY_MANAGER_FILE=/etc/X11/default-display-manager
+
+if [ "$1" = "abort-install" ] || [ "$1" = "abort-upgrade" ]; then
+  if [ -e "$DEFAULT_DISPLAY_MANAGER_FILE.dpkg-tmp" ]; then
+    mv "$DEFAULT_DISPLAY_MANAGER_FILE.dpkg-tmp" "$DEFAULT_DISPLAY_MANAGER_FILE"
+  fi
+fi
+
+if [ "$1" = "purge" ] ; then
+        update-rc.d gdm remove >/dev/null
+        rm -f /etc/default/gdm
+        if [ -d /etc/gdm ]; then
+                rmdir --ignore-fail-on-non-empty /etc/gdm/Init /etc/gdm/PreSession /etc/gdm/PostSession /etc/gdm/PostLogin /etc/gdm/Sessions /etc/gdm 2>/dev/null
+        fi
+        if [ -d /var/lib/gdm ]; then
+                rm -r /var/lib/gdm
+        fi
+        if [ -d /var/log/gdm ]; then
+                rm -r /var/log/gdm
+        fi
+        if getent passwd gdm >/dev/null; then
+                if [ -x /usr/sbin/deluser ]; then
+                        deluser --system gdm
+                fi
+        fi
+        if getent group gdm >/dev/null; then
+                if [ -x /usr/sbin/delgroup ]; then
+                        delgroup --system gdm
+                fi
+        fi
+fi
+#DEBHELPER#
+exit 0

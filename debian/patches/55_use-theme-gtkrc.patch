@@ -1,0 +1,29 @@
+GNOME #411427; Look for gtk-2.0/gtkrc in the theme directory and use it; found
+in the Ubuntu package.
+
+Index: gdm-2.20.0/gui/greeter/greeter_parser.c
+===================================================================
+--- gdm-2.20.0.orig/gui/greeter/greeter_parser.c	2007-09-17 16:45:37.000000000 +0200
++++ gdm-2.20.0/gui/greeter/greeter_parser.c	2007-10-06 16:24:28.089141651 +0200
+@@ -1812,6 +1812,7 @@
+   xmlChar *prop;
+   gboolean res;
+   GList *items;
++  char *dirtheme, *gtkrc;
+   
+   /* FIXME: EVIL! GLOBAL! */
+   g_free (file_search_path);
+@@ -1858,6 +1859,13 @@
+       return NULL;
+     }
+ 
++  dirtheme = g_path_get_dirname (file);
++  gtkrc = g_build_filename (dirtheme, "gtk-2.0", "gtkrc", NULL);
++  if (g_file_test (gtkrc, G_FILE_TEST_IS_REGULAR))
++    gtk_rc_parse (gtkrc);
++  g_free (dirtheme);
++  g_free (gtkrc);
++
+   /*
+    * The gtk-theme property specifies a theme specific gtk-theme to use
+    */

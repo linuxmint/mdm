@@ -1,0 +1,146 @@
+Patch to XKeepsCrashing from Ubuntu that restores the keyboard to xlate mode
+before trying to interact with the user.
+
+XXX might need more complete description / splitting
+
+--- gdm-2.16.4.orig/config/XKeepsCrashing
++++ gdm-2.16.4/config/XKeepsCrashing
+@@ -12,6 +12,15 @@
+   GDMTRANSLATE=
+ fi
+ 
++# Set the console to UTF-8 if needed.
++CHARMAP=`locale charmap`
++if test "$CHARMAP" = "UTF-8"
++then
++  unicode_start 2> /dev/null || true
++else
++  unicode_stop 2> /dev/null || true
++fi
++
+ gettextfunc () {
+   if test "x$GDMTRANSLATE" != "x" ; then
+     "$GDMTRANSLATE" "$1"
+@@ -38,6 +47,15 @@
+   echo "$OUTPUT"
+ }
+ 
++# X has a bad habit of not restoring the vt settings on exit.  Make sure that
++# the keyboard is restored to xlate mode, since we're going to try to interact
++# with the user
++# (http://bugzilla.ubuntu.com/show_bug.cgi?id=6286)
++KBD_MODE=`gdmwhich kbd_mode`
++if test "x$KBD_MODE" != "x" ; then
++  kbd_mode -a
++fi
++
+ MSG3=`gettextfunc "Failed to start the X server (your graphical interface).  It is likely that it is not set up correctly.  You will need to log in on a console and reconfigure the X server.  Then restart GDM."`
+ MSG4=`gettextfunc "Would you like to try to configure the X server?  Note that you will need the root password for this."`
+ MSG5=`gettextfunc "Please type in the root (privileged user) password."`
+@@ -60,32 +78,13 @@
+ #      to tell the user if possible
+ 
+ #
+-# First see if we can find an X configuration program
+-#  (first one in the list will be used)
+-#
+-XCONFIGURATOR=
+-for n in \
+-  /usr/bin/system-config-display \
+-  /usr/bin/redhat-config-xfree86 \
+-  /usr/sbin/XFdrake		 \
+-  /usr/bin/X11/XF86Setup	 \
+-  /usr/bin/X11/Xconfigurator	 \
+-  /usr/bin/X11/xf86cfg		 \
+-   ; do
+-  # standard shell test has no or and loops have no breaks, eek
+-  if test "x$XCONFIGURATOR" = "x" ; then
+-    if test -x "$n" ; then
+-      XCONFIGURATOR="$n"
+-    fi
+-  fi
+-done
+-
+-#
+ # Now we check for dialog and gdmaskpass
+ #
++DIALOG_OPTS=
+ DIALOG=`gdmwhich dialog`
+ if test "x$DIALOG" = "x" ; then
+   DIALOG=`gdmwhich whiptail`
++  DIALOG_OPTS="--scrolltext"
+ fi
+ if test -x "$LIBEXECDIR/gdmaskpass" ; then
+   ASKPASS="$LIBEXECDIR/gdmaskpass"
+@@ -93,28 +92,6 @@
+   ASKPASS=
+ fi
+ 
+-#
+-#  If this is a mouse problem try mouseconfig and modify some
+-#  messages
+-#
+-if grep '^\(Cannot open mouse\|No core pointer\)' "$XLOG" 2> /dev/null ; then
+-
+-  MSG8=`gettextfunc "Failed to start the X server (your graphical interface).  It seems that the pointer device (your mouse) is not set up correctly.  Would you like to view the X server output to diagnose the problem?"`
+-
+-  if test -x /usr/sbin/mouseconfig ; then
+-    XCONFIGURATOR=/usr/sbin/mouseconfig
+-    # Note: we know this is a mouse problem and yay we have mouseconfig
+-    MSG4=`gettextfunc "Would you like to try to configure the mouse?  Note that you will need the root password for this."`
+-  fi
+-
+-  if test -x /usr/bin/system-config-mouse ; then
+-    XCONFIGURATOR=/usr/bin/system-config-mouse
+-    # Note: we know this is a mouse problem and yay we have system-config-mouse
+-    MSG4=`gettextfunc "Would you like to try to configure the mouse?  Note that you will need the root password for this."`
+-  fi
+-
+-fi
+-
+ # we require 'gdmopen', to open a console, because we really dont
+ # have one.  Perhaps someone should try to figure out some shell
+ # black magic to get this to work on other then linux systems
+@@ -157,38 +134,15 @@
+ fi
+ 
+ if "$DIALOG" --yesno "$MSG8" 10 50 ; then 
+-  "$DIALOG" --textbox "$XLOG" 22 76
++  "$DIALOG" $DIALOG_OPTS --textbox "$XLOG" 22 76
+   # Support XFree86 v4 logfile thingie
+   if grep '^(..) Log file: "' "$XLOG" 2> /dev/null ; then
+     XLOG_DETAIL=`grep '^(..) Log file: "' "$XLOG" | sed 's/^[^"]*"\([^"]*\)".*$/\1/'`
+     if "$DIALOG" --yesno "$MSG9" 10 50 ; then 
+-      "$DIALOG" --textbox "$XLOG_DETAIL" 22 76
++      "$DIALOG" $DIALOG_OPTS --textbox "$XLOG_DETAIL" 22 76
+     fi
+   fi
+ fi
+ 
+-if test "x$XCONFIGURATOR" = "x" ; then
+-  "$DIALOG" --msgbox "$MSG7" 8 50
+-  exit 1
+-fi
+-
+-if "$DIALOG" --yesno "$MSG4" 10 50 ; then 
+-  clear
+-  echo
+-  echo "$MSG5"
+-  if test "x$ASKPASS" = "x" ; then
+-    # dirty trick to fool su into asking the root password even if were
+-    # root
+-    su nobody -c "su -c $XCONFIGURATOR"
+-  else
+-    if "$ASKPASS" ; then
+-      "$XCONFIGURATOR"
+-    fi
+-  fi
+-  clear
+-  "$DIALOG" --msgbox "$MSG6" 8 50
+-  exit 0
+-else
+-  "$DIALOG" --msgbox "$MSG7" 8 50
+-  exit 1
+-fi
++"$DIALOG" --msgbox "$MSG7" 8 50
++exit 1

@@ -1,0 +1,20 @@
+?package(gdm):needs="X11" section="Applications/System/Administration" \
+  title="GDM flexiserver" command="gdmflexiserver"\
+  hints="Display Manager"\
+  icon="/usr/share/pixmaps/gdm.xpm"\
+  longtitle="New GDM Session"
+?package(gdm):needs="X11" section="Applications/System/Administration" \
+  title="GDM flexiserver in Xnest" command="gdmflexiserver -n"\
+  hints="Display Manager"\
+  icon="/usr/share/pixmaps/gdm.xpm"\
+  longtitle="New GDM Session in Xnest"
+?package(gdm):needs="X11" section="Applications/System/Administration" \
+  title="GDM Photo Setup" command="gdmphotosetup"\
+  hints="Display Manager"\
+  icon="/usr/share/pixmaps/gdm.xpm"\
+  longtitle="Select a photo for GDM"
+?package(gdm):needs="X11" section="Applications/System/Administration" \
+  title="GDM Setup" command="su-to-root -X -p root -c /usr/sbin/gdmsetup"\
+  hints="Display Manager"\
+  icon="/usr/share/pixmaps/gdm.xpm"\
+  longtitle="GDM Setup"

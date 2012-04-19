@@ -1,0 +1,14 @@
+Index: gdm-2.20.10/config/PostSession.in
+===================================================================
+--- gdm-2.20.10.orig/config/PostSession.in	2010-03-09 19:26:36.487337978 +0100
++++ gdm-2.20.10/config/PostSession.in	2010-03-09 19:26:54.103839711 +0100
+@@ -19,4 +19,9 @@ gdmwhich () {
+   echo "$OUTPUT"
+ }
+ 
++# Use common Xreset framework if it exist
++if [ -x /etc/X11/Xreset ] ; then
++  /etc/X11/Xreset
++fi
++
+ exit 0

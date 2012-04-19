@@ -1,0 +1,119 @@
+--- gdm-2.16.4.orig/xdm.templates
++++ gdm-2.16.4/xdm.templates
+@@ -0,0 +1,31 @@
++Template: shared/default-x-display-manager
++Type: select
++Choices: ${choices}
++_Description: Select the desired default display manager.
++ A display manager is a program that provides graphical login capabilities for
++ the X Window System.
++ .
++ Only one display manager can manage a given X server, but multiple display
++ manager packages are installed.  Please select which display manager should
++ run by default.
++ .
++ (Multiple display managers can run simultaneously if they are configured to
++ manage different servers; to achieve this, configure the display managers
++ accordingly, edit each of their init scripts in /etc/init.d, and disable the
++ check for a default display manager.)
++
++Template: xdm/daemon_name
++Type: string
++Default: /usr/bin/X11/xdm
++Description: internal use only
++ This template is never shown to the user and does not require translation.
++
++Template: xdm/stop_running_server_with_children
++Type: boolean
++Default: false
++_Description: Do you wish to stop the xdm daemon?
++ The X display manager (xdm) daemon is typically stopped on package upgrade
++ and removal, but it appears to be managing at least one running X session.
++ If xdm is stopped now, any X sessions it manages will be terminated.
++ Otherwise you may leave xdm running, and the new version will take effect the
++ next time the daemon is restarted.
+--- gdm-2.16.4.orig/xdm.config.in
++++ gdm-2.16.4/xdm.config.in
+@@ -0,0 +1,82 @@
++#!/bin/sh
++# Debian xdm package configuration script
++# Copyright 2000-2003 Branden Robinson.
++# Licensed under the GNU General Public License, version 2.  See the file
++# /usr/share/common-licenses/GPL or <http://www.gnu.org/copyleft/gpl.txt>.
++
++# $Id: xdm.config.in 189 2005-06-11 00:04:27Z branden $
++
++set -e
++
++# source debconf library
++. /usr/share/debconf/confmodule
++
++THIS_PACKAGE=xdm
++THIS_SCRIPT=config
++
++#INCLUDE_SHELL_LIB#
++
++# set default display manager
++DEFAULT_DISPLAY_MANAGER_FILE=/etc/X11/default-display-manager
++
++OWNERS=
++if db_metaget shared/default-x-display-manager owners; then
++  OWNERS="$RET"
++fi
++
++CHOICES=
++if db_metaget shared/default-x-display-manager choices; then
++  CHOICES="$RET"
++fi
++
++if [ "$OWNERS" != "$CHOICES" ]; then
++  observe "X display managers now available are \"$OWNERS\""
++  run db_subst shared/default-x-display-manager choices "$OWNERS"
++  run db_fset shared/default-x-display-manager seen false
++fi
++
++# debconf is not a registry; use the current contents of the default display
++# manager file to pre-answer the question if possible
++if [ -e "$DEFAULT_DISPLAY_MANAGER_FILE" ]; then
++  CURRENT_DEFAULT=$(basename "$(grep -v '^[[:space:]]*#' \
++                                "$DEFAULT_DISPLAY_MANAGER_FILE" |
++                                head -n 1)")
++  if [ -n "$CURRENT_DEFAULT" ]; then
++    if ! which "$CURRENT_DEFAULT" >/dev/null 2>&1; then
++      observe "default display manager \"$CURRENT_DEFAULT\" specified in" \
++              "$DEFAULT_DISPLAY_MANAGER_FILE does not exist or is not" \
++              "executable"
++    fi
++    run db_set shared/default-x-display-manager "$CURRENT_DEFAULT"
++  fi
++else
++  CURRENT_DEFAULT=
++  if db_get shared/default-x-display-manager; then
++    CURRENT_DEFAULT="$RET"
++  fi
++fi
++
++run db_input high shared/default-x-display-manager
++run db_go
++
++# using this display manager?
++NEW_DEFAULT=
++if db_get shared/default-x-display-manager; then
++  NEW_DEFAULT="$RET"
++fi
++
++# move the default display manager file if we're going to change it
++if [ -n "$NEW_DEFAULT" ]; then
++  if [ "$NEW_DEFAULT" != "$CURRENT_DEFAULT" ]; then
++    if [ -e "$DEFAULT_DISPLAY_MANAGER_FILE" ]; then
++      observe "preparing to change default X display manager from" \
++              "\"$CURRENT_DEFAULT\" to \"$NEW_DEFAULT\""
++      mv "$DEFAULT_DISPLAY_MANAGER_FILE" \
++         "$DEFAULT_DISPLAY_MANAGER_FILE.dpkg-tmp"
++    fi
++  fi
++fi
++
++exit 0
++
++# vim:set ai et sts=2 sw=2 tw=80:

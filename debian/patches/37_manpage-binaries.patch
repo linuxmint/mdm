@@ -1,0 +1,49 @@
+Debian #357988; Remove mentions of gdm-binary, gdm-stop, gdm-restart,
+gdm-safe-restart.
+
+Index: gdm-2.18.1/docs/gdm.1
+===================================================================
+--- gdm-2.18.1.orig/docs/gdm.1	2007-05-02 16:26:23.000000000 +0200
++++ gdm-2.18.1/docs/gdm.1	2007-05-02 16:27:12.000000000 +0200
+@@ -6,15 +6,7 @@
+ .SH SYNOPSIS
+ .B gdm [options]
+ .br
+-.B gdm-binary [options]
+-.br
+ .B gdmsetup [options]
+-.br
+-.B gdm-stop
+-.br
+-.B gdm-restart
+-.br
+-.B gdm-safe-restart
+ .SH DESCRIPTION
+ GDM is a replacement for XDM, the X Display Manager. Unlike its
+ competitors (X3DM, KDM, WDM) GDM was written from scratch and
+@@ -23,15 +15,7 @@
+ See http://www.gnome.org/projects/gdm/ for more details.
+ .P
+ .B gdm
+-is just a script that runs the actual
+-.B gdm-binary
+-executable.
+-.B gdm-stop
+-is a script that stops the current running daemon immediately,
+-.B gdm-restart
+-restarts the current daemon immediately and
+-.B gdm-safe-restart
+-restarts the current daemon after everyone has logged out.
++is main executable.
+ .B gdmsetup
+ is a graphical tool for easily changing the most commonly
+ used options.
+@@ -43,7 +27,7 @@
+ .SH OPTIONS
+ .B gdm
+ and thus also
+-.B gdm-binary
++.B gdm
+ accept the following options:
+ .TP
+ .BI \-nodaemon

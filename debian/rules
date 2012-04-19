@@ -1,0 +1,125 @@
+#!/usr/bin/make -f
+
+DEB_VERSION := $(shell dpkg-parsechangelog | sed -n 's/^Version: //p')
+DEB_NOEPOCH_VERSION := $(shell echo $(DEB_VERSION) | cut -d: -f2-)
+DEB_UPSTREAM_VERSION := $(shell echo $(DEB_NOEPOCH_VERSION) | sed 's/-[^-]*$$//')
+
+MAJOR_MINOR := $(shell echo $(DEB_UPSTREAM_VERSION) | sed -r 's/([0-9]+\.[0-9]+).*/\1/')
+
+include /usr/share/gnome-pkg-tools/1/rules/uploaders.mk
+-include /usr/share/gnome-pkg-tools/1/rules/gnome-get-source.mk
+
+DEB_HOST_ARCH_OS = $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+
+configure_flags += --disable-dependency-tracking \
+		--prefix=/usr \
+		--mandir=\$${prefix}/share/man \
+		--infodir=\$${prefix}/share/info \
+		--sysconfdir=/etc \
+		--libexecdir=/usr/lib/gdm \
+		--localstatedir=/var/lib \
+		--with-custom-conf=/etc/gdm/gdm.conf \
+		--disable-scrollkeeper \
+		--enable-ipv6=yes \
+		--with-prefetch=yes \
+		--enable-secureremote=yes
+
+ifeq (linux,$(DEB_HOST_ARCH_OS))
+	configure_flags += --with-selinux
+else
+	configure_flags += --without-selinux
+endif
+
+MANPAGES += $(patsubst %.pod,%,$(wildcard debian/*.pod))
+
+PATCH_DIR := debian/patches
+
+CFLAGS += -Wall -g -O$(if $(findstring noopt,$(DEB_BUILD_OPTIONS)),0,2)
+
+patch: patch-stamp
+patch-stamp:
+	dh_testdir
+	# apply patches
+	QUILT_PATCHES=$(PATCH_DIR) \
+		quilt --quiltrc /dev/null push -a || test $$? = 2
+	touch $@
+
+configure: configure-stamp
+configure-stamp: patch-stamp
+	dh_testdir
+	./configure $(configure_flags) CFLAGS="$(CFLAGS)"
+	touch configure-stamp
+
+build: build-stamp
+build-stamp: configure-stamp $(MANPAGES)
+	dh_testdir
+	$(MAKE)
+	sh debian/debian-moreblue-orbit.shar
+	sh debian/debian-spacefun.shar
+	touch build-stamp
+
+install: install-stamp
+install-stamp: build-stamp
+	dh_testdir
+	dh_testroot
+	mkdir debian/tmp
+	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install
+	touch $@
+
+binary-indep: build install
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installdirs -a
+	dh_install -a
+	chmod 755 debian/gdm/usr/share/gdm/gdmXnestWrapper
+	# special environment settings should be done in /etc/default/gdm
+	mv debian/gdm/usr/sbin/gdm-binary debian/gdm/usr/sbin/gdm
+	cd debian/gdm/usr/sbin && rm -f gdm-restart gdm-safe-restart gdm-stop
+	chmod 755 debian/gdm/etc/gdm/Xsession
+	dh_installdebconf -a
+	dh_installdocs -a
+	dh_installmenu -a
+	#dh_installlogrotate -a
+	dh_scrollkeeper -a
+	dh_desktop -a
+	dh_installpam -a
+	# additional PAM file to install
+	dh_installpam -pgdm --name=gdm-autologin
+	dh_installinit -a --noscripts
+	dh_installman -a
+	dh_installchangelogs -a ChangeLog
+	dh_strip -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_installdeb -a
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+clean::
+	dh_testdir
+	dh_testroot
+	rm -rf debian/tmp
+	[ ! -f Makefile ] || $(MAKE) distclean
+	# unapply patches, if any
+	QUILT_PATCHES=$(PATCH_DIR) \
+		quilt --quiltrc /dev/null pop -a -R || test $$? = 2
+	-rm -rf .pc
+	rm -f install-stamp build-stamp configure-stamp patch-stamp
+	rm -rf debian/debian-moreblue-orbit debian/debian-spacefun
+	dh_clean $(MANPAGES) \
+		po/*.gmo po/.intltool-merge-cache \
+		config/gnome.desktop config/CDE.desktop config/default.desktop
+
+%: %.pod
+	pod2man --section=$(shell echo $@ | sed 's/.*\.//') \
+		--release="GNOME $(MAJOR_MINOR)" \
+		--center="Debian GNU/Linux" \
+		$< \
+		| sed -e 's/debian:://' >$@
+
+binary: binary-indep binary-arch
+.PHONY: patch configure build install clean binary-indep binary-arch binary

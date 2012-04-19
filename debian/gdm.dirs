@@ -1,0 +1,11 @@
+var/log/gdm
+var/lib/gdm
+usr/share/faces
+usr/share/hosts
+usr/share/sounds
+etc/pam.d
+etc/X11
+etc/gdm/Init
+etc/gdm/PreSession
+etc/gdm/PostSession
+usr/share/gdm/themes

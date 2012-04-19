@@ -1,0 +1,29 @@
+Index: gdm-2.20.11/daemon/slave.c
+===================================================================
+--- gdm-2.20.11.orig/daemon/slave.c	2010-07-04 15:16:55.919565088 +0200
++++ gdm-2.20.11/daemon/slave.c	2010-07-04 15:17:11.559565073 +0200
+@@ -373,10 +373,6 @@ run_session_output (gboolean read_until_
+ 			break;
+ 		}
+ 
+-		if G_UNLIKELY (d->xsession_errors_bytes >= MAX_XSESSION_ERRORS_BYTES ||
+-			       got_xfsz_signal)
+-			continue;
+-
+ 		/* write until we succeed in writing something */
+ 		VE_IGNORE_EINTR (written = write (d->xsession_errors_fd, buf, r));
+ 		if G_UNLIKELY (written < 0 || got_xfsz_signal) {
+@@ -397,13 +393,6 @@ run_session_output (gboolean read_until_
+ 
+ 		d->xsession_errors_bytes += r;
+ 
+-		if G_UNLIKELY (d->xsession_errors_bytes >= MAX_XSESSION_ERRORS_BYTES &&
+-			       ! got_xfsz_signal) {
+-			VE_IGNORE_EINTR (write (d->xsession_errors_fd,
+-						"\n...Too much output, ignoring rest...\n",
+-						strlen ("\n...Too much output, ignoring rest...\n")));
+-		}
+-
+ 		/* there wasn't more then buf available, so no need to try reading
+ 		 * again, unless we really want to */
+ 		if (r < sizeof (buf) && ! read_until_eof)

@@ -1,0 +1,353 @@
+/* config.h.in.  Generated from configure.ac by autoheader.  */
+#undef PACKAGE
+#undef VERSION
+#undef GETTEXT_PACKAGE
+#undef HALT_COMMAND
+#undef REBOOT_COMMAND
+#undef SOUND_PROGRAM
+#undef SUSPEND_COMMAND
+#undef ENABLE_IPV6
+#undef ENABLE_NLS
+#undef ALWAYS_RESTART_SERVER
+#undef GDM_USER_PATH
+#undef GDM_RBAC_SYSCMD_KEYS
+#undef HAVE_ADT
+#undef HAVE_CATGETS
+#undef HAVE_CHKAUTHATTR
+#undef HAVE_CHPASS
+#undef HAVE_CLEARENV
+#undef HAVE_CRYPT
+#undef HAVE_DEFOPEN
+#undef HAVE_FBCONSOLE
+#undef HAVE_GETTEXT
+#undef HAVE_LC_MESSAGES
+#undef HAVE_LIBSM
+#undef HAVE_LIBXDMCP
+#undef HAVE_LOGINCAP
+#undef HAVE_LOGINDEVPERM
+#undef HAVE_LOGINRESTRICTIONS
+#undef HAVE_PAM
+#undef HAVE_PASSWDEXPIRED
+#undef HAVE_SCHED_YIELD
+#undef HAVE_SELINUX
+#undef HAVE_SETENV
+#undef HAVE_SETRESUID
+#undef HAVE_SHADOW
+#undef HAVE_SMF_CONTRACTS
+#undef HAVE_SOLARIS_XINERAMA
+#undef HAVE_STPCPY
+#undef HAVE_SYS_SOCKIO_H
+#undef HAVE_SYS_VT_H
+#undef HAVE_TCPWRAPPERS
+#undef HAVE_UNSETENV
+#undef HAVE_XINERAMA
+#undef HAVE_XFREE_XINERAMA
+#undef HAVE_XINPUT
+#undef UTMP_LINE_ATTACHED
+#undef UTMP_LINE_REMOTE
+#undef UTMP_PSEUDO_DEVICE
+#undef X_SERVER
+#undef X_SERVER_PATH
+#undef X_XNEST_CMD
+#undef X_XNEST_CONFIG_OPTIONS
+#undef X_XNEST_UNSCALED_FONTPATH
+#undef X_CONFIG_OPTIONS
+#undef X_PATH
+#undef XSESSION_SHELL
+#undef XEVIE_OPTION
+#undef HAVE_UT_SYSLEN
+
+/* Define if you have the Andrew File System */
+#undef AFS
+
+/* Define this variable if the code to clear the ADMCHG flag can be compiled
+   */
+#undef CAN_CLEAR_ADMCHG
+
+/* Define this variable if the code to use the setpenv function can be
+   compiled and used */
+#undef CAN_USE_SETPENV
+
+/* always defined to indicate that i18n is enabled */
+#undef ENABLE_NLS
+
+/* Define to use AIX3 statfs to get filesystem type */
+#undef FSTYPE_AIX_STATFS
+
+/* Define to use Ultrix getmnt to get filesystem typ */
+#undef FSTYPE_GETMNT
+
+/* Define to use 4.3BSD getmntent to get filesystem typ */
+#undef FSTYPE_MNTENT
+
+/* Define to use 4.4BSD and OSF1 statfs to get filesystem typ */
+#undef FSTYPE_STATFS
+
+/* Define to use SVR4 statvfs to get filesystem type */
+#undef FSTYPE_STATVFS
+
+/* Define to use SVR3.2 statfs to get filesystem type */
+#undef FSTYPE_USG_STATFS
+
+/* pid file */
+#undef GDM_PID_FILE
+
+/* Define to 1 if you have the `bind_textdomain_codeset' function. */
+#undef HAVE_BIND_TEXTDOMAIN_CODESET
+
+/* Define to 1 if you have the `chpass' function. */
+#undef HAVE_CHPASS
+
+/* Define to 1 if you have the `clearenv' function. */
+#undef HAVE_CLEARENV
+
+/* Define to 1 if you have the <crt_externs.h> header file. */
+#undef HAVE_CRT_EXTERNS_H
+
+/* Define to 1 if you have the <crypt.h> header file. */
+#undef HAVE_CRYPT_H
+
+/* Define to 1 if you have the `dcgettext' function. */
+#undef HAVE_DCGETTEXT
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
+
+/* Define to 1 if you have the `endpwdb' function. */
+#undef HAVE_ENDPWDB
+
+/* Define if the GNU gettext() function is already present or preinstalled. */
+#undef HAVE_GETTEXT
+
+/* Define to 1 if you have the `getuserpw' function. */
+#undef HAVE_GETUSERPW
+
+/* Define to 1 if you have the `getutxent' function. */
+#undef HAVE_GETUTXENT
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define if your <locale.h> file defines LC_MESSAGES. */
+#undef HAVE_LC_MESSAGES
+
+/* linux audit support */
+#undef HAVE_LIBAUDIT
+
+/* Define to 1 if you have the <libgen.h> header file. */
+#undef HAVE_LIBGEN_H
+
+/* Define to 1 if you have the `pam' library (-lpam). */
+#undef HAVE_LIBPAM
+
+/* Define to 1 if you have the `util' library (-lutil). */
+#undef HAVE_LIBUTIL
+
+/* Define to 1 if you have the <libutil.h> header file. */
+#undef HAVE_LIBUTIL_H
+
+/* Define to 1 if you have the <locale.h> header file. */
+#undef HAVE_LOCALE_H
+
+/* Define to 1 if you have the `login' function. */
+#undef HAVE_LOGIN
+
+/* Define to 1 if you have the `loginrestrictions' function. */
+#undef HAVE_LOGINRESTRICTIONS
+
+/* Define to 1 if you have the `logout' function. */
+#undef HAVE_LOGOUT
+
+/* Define to 1 if you have the `logwtmp' function. */
+#undef HAVE_LOGWTMP
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the `passwdexpired' function. */
+#undef HAVE_PASSWDEXPIRED
+
+/* Define to 1 if you have the `putuserpw' function. */
+#undef HAVE_PUTUSERPW
+
+/* Define to 1 if you have the <security/pam_appl.h> header file. */
+#undef HAVE_SECURITY_PAM_APPL_H
+
+/* Define to 1 if you have the <security/pam_misc.h> header file. */
+#undef HAVE_SECURITY_PAM_MISC_H
+
+/* Define to 1 if you have the `setenv' function. */
+#undef HAVE_SETENV
+
+/* Define to 1 if you have the `setpwdb' function. */
+#undef HAVE_SETPWDB
+
+/* Define to 1 if you have the `setresuid' function. */
+#undef HAVE_SETRESUID
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the <sys/param.h> header file. */
+#undef HAVE_SYS_PARAM_H
+
+/* Define to 1 if you have the <sys/socket.h> header file. */
+#undef HAVE_SYS_SOCKET_H
+
+/* Define to 1 if you have the <sys/sockio.h> header file. */
+#undef HAVE_SYS_SOCKIO_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#undef HAVE_SYS_TIME_H
+
+/* Define to 1 if you have the <sys/tsol/label_macro.h> header file. */
+#undef HAVE_SYS_TSOL_LABEL_MACRO_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <sys/vt.h> header file. */
+#undef HAVE_SYS_VT_H
+
+/* Building with TSOL support */
+#undef HAVE_TSOL
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to 1 if you have the `unsetenv' function. */
+#undef HAVE_UNSETENV
+
+/* Define to 1 if you have the `updwtmpx' function. */
+#undef HAVE_UPDWTMPX
+
+/* Define to 1 if you have the <usersec.h> header file. */
+#undef HAVE_USERSEC_H
+
+/* Define to 1 if you have the <utmpx.h> header file. */
+#undef HAVE_UTMPX_H
+
+/* Define to 1 if you have the <utmp.h> header file. */
+#undef HAVE_UTMP_H
+
+/* Define if your utmp struct contains a ut_exit.e_termination field. */
+#undef HAVE_UT_UT_EXIT_E_TERMINATION
+
+/* Define if your utmp struct contains a ut_host field. */
+#undef HAVE_UT_UT_HOST
+
+/* Define if your utmp struct contains a ut_id field. */
+#undef HAVE_UT_UT_ID
+
+/* Define if your utmp struct contains a ut_name field. */
+#undef HAVE_UT_UT_NAME
+
+/* Define if your utmp struct contains a ut_pid field. */
+#undef HAVE_UT_UT_PID
+
+/* Define if your utmp struct contains a ut_syslen field. */
+#undef HAVE_UT_UT_SYSLEN
+
+/* Define if your utmp struct contains a ut_time field. */
+#undef HAVE_UT_UT_TIME
+
+/* Define if your utmp struct contains a ut_tv field. */
+#undef HAVE_UT_UT_TV
+
+/* Define if your utmp struct contains a ut_type field. */
+#undef HAVE_UT_UT_TYPE
+
+/* Define if your utmp struct contains a ut_user field. */
+#undef HAVE_UT_UT_USER
+
+/* Define to 1 if you have the `_NSGetEnviron' function. */
+#undef HAVE__NSGETENVIRON
+
+/* Path to the nologin binary */
+#undef NOLOGIN
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
+#undef TIME_WITH_SYS_TIME
+
+/* Enable extensions on AIX 3, Interix.  */
+#ifndef _ALL_SOURCE
+# undef _ALL_SOURCE
+#endif
+/* Enable GNU extensions on systems that have them.  */
+#ifndef _GNU_SOURCE
+# undef _GNU_SOURCE
+#endif
+/* Enable threading extensions on Solaris.  */
+#ifndef _POSIX_PTHREAD_SEMANTICS
+# undef _POSIX_PTHREAD_SEMANTICS
+#endif
+/* Enable extensions on HP NonStop.  */
+#ifndef _TANDEM_SOURCE
+# undef _TANDEM_SOURCE
+#endif
+/* Enable general extensions on Solaris.  */
+#ifndef __EXTENSIONS__
+# undef __EXTENSIONS__
+#endif
+
+
+/* Define to the name of a structure which holds utmp data. */
+#undef UTMP
+
+/* Version number of package */
+#undef VERSION
+
+/* Define to enable ConsoleKit support */
+#undef WITH_CONSOLE_KIT
+
+/* Options used when launching xserver */
+#undef X_CONFIG_OPTIONS
+
+/* Define to 1 if the X Window System is missing or not being used. */
+#undef X_DISPLAY_MISSING
+
+/* Define to 1 if on MINIX. */
+#undef _MINIX
+
+/* Define to 2 if the system does not provide POSIX.1 features except with
+   this defined. */
+#undef _POSIX_1_SOURCE
+
+/* Define to 1 if you need to in order for `stat' and other things to work. */
+#undef _POSIX_SOURCE
+
+/* Compatibility type */
+#undef socklen_t

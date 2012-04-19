@@ -1,0 +1,16 @@
+GNOME #331059; Ubuntu #79620; use /var/run for the gdm_socket file to comply
+with the FHS and to avoid issues with bootclean; found in the Ubuntu package.
+
+Index: gdm-2.18.1/daemon/gdm.h
+===================================================================
+--- gdm-2.18.1.orig/daemon/gdm.h	2007-04-09 07:15:15.000000000 +0200
++++ gdm-2.18.1/daemon/gdm.h	2007-05-02 17:54:03.000000000 +0200
+@@ -798,7 +798,7 @@
+  * all to be grabbed in one pull.
+  */
+ #define GDM_SUP_MAX_MESSAGES 80
+-#define GDM_SUP_SOCKET "/tmp/.gdm_socket"
++#define GDM_SUP_SOCKET "/var/run/gdm_socket"
+ 
+ /*
+  * The user socket protocol.  Each command is given on a separate line

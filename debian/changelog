@@ -1,0 +1,1272 @@
+gdm (2.20.11-4) unstable; urgency=low
+
+  * debian-spacefun.shar: updated to remove the “debian” word in the 
+    picture, because of copyright issues.
+
+ -- Josselin Mouette <joss@debian.org>  Sat, 13 Nov 2010 21:50:48 +0100
+
+gdm (2.20.11-3) unstable; urgency=low
+
+  * Remove moreblue theme.
+  * debian-spacefun.shar: ship SpaceFun theme instead.
+  * 35_gdm.conf.patch: set it as default. Closes: #603403.
+
+ -- Josselin Mouette <joss@debian.org>  Sat, 13 Nov 2010 21:18:33 +0100
+
+gdm (2.20.11-2) unstable; urgency=low
+
+  * Use linux-any wildcard instead of listing non-linux architectures.
+  * Bump standards version accordingly.
+  * 23_xsession-errors.patch: disable the obnoxious behavior that stops 
+    filling .xsession-errors when there is too much output.
+  * Update watch file.
+
+ -- Josselin Mouette <joss@debian.org>  Sun, 05 Sep 2010 21:16:42 +0200
+
+gdm (2.20.11-1) unstable; urgency=low
+
+  * gdm.config: handle the case where $OLD_DAEMON is empty.
+    Closes: #579103.
+  * Install a file in insserv.conf.d.
+  * New upstream release.
+  * 70_mandatory-relibtoolize.patch: updated for the new version.
+
+ -- Josselin Mouette <joss@debian.org>  Tue, 22 Jun 2010 00:59:27 +0200
+
+gdm (2.20.10-3) unstable; urgency=low
+
+  * gdm.config: add missing $ leading to a dpkg-tmp file being created 
+    in the wrong directory. Closes: #577216.
+
+ -- Josselin Mouette <joss@debian.org>  Sat, 10 Apr 2010 17:09:37 +0200
+
+gdm (2.20.10-2) unstable; urgency=low
+
+  [ Emilio Pozuelo Monfort ]
+  * debian/patches/68_hurd_pathmax.patch:
+    - Don't use MAXPATHLEN and PATH_MAX since it's not defined on
+      GNU/Hurd. Use dynamic allocation instead.
+  * debian/patches/69_hurd_gdm_reset_locale.patch:
+    - Don't implement gdm_reset_locale() only if RLIM_NLIMITS is defined,
+      since it has nothing to do with it and it's undefined on the Hurd.
+
+  [ Josselin Mouette ]
+  * 01_gdmchooser-ipv6_bindv6only-workaround.patch: patch from Miguel 
+    Landaeta. Allow gdmchooser to work with new default netbase setting 
+    net.ipv6.bindv6only=1. Closes: #562126.
+  * 61_console_tty0.patch: patch from Julien Cristau. The console device 
+    is /dev/tty0 for the physical console, not /dev/console.
+    Closes: #348033.
+  * 02_xdmcp-ipv6_bindv6only.patch: patch from Julien Cristau. Allow 
+    xdmcp to work with net.ipv6.bindv6only=1. Closes: #563406.
+
+  [ Julien Cristau ]
+  * gdm.templates, gdm.config: fix gdm daemon pathname (closes: #422735)
+  * gdm.config: get the old default display manager from
+    /etc/X11/default-display-manager instead of from debconf (stolen from xdm)
+  * gdm.config, gdm.postinst, gdm.postrm: in config, move
+    /etc/X11/default-display-manager away instead of removing it.  Delete it
+    in postinst instead, to allow rollback in postrm abort-{install,upgrade}
+    (stolen from xdm).
+
+  [ Josselin Mouette ]
+  * 22_Xreset.patch: patch by Petter Reinholdtsen to use Xreset in 
+    postinst if available. Closes: #571612.
+
+ -- Josselin Mouette <joss@debian.org>  Sat, 10 Apr 2010 00:21:42 +0200
+
+gdm (2.20.10-1) unstable; urgency=low
+
+  * 21_XKeepsCrashing_bashism.patch: new patch, fix a bashism.
+    Closes: #530086.
+  * gdm.init: add kbd to Should-Start. Closes: #548102.
+  * gdm.init: add x11-common to Required-Start.
+  * New upstream release.
+  * 51_xkb_init.patch, 52_xdmcp_fixes.patch: dropped, merged upstream.
+  * 70_mandatory-relibtoolize.patch: updated for the new version.
+
+ -- Josselin Mouette <joss@debian.org>  Sun, 25 Oct 2009 09:22:43 +0100
+
+gdm (2.20.9-1) unstable; urgency=low
+
+  * gdm.install: install the desktop files in 
+    /usr/share/gdm/applications, so that they are only available when 
+    the session has been started by GDM. Closes: #508345.
+  * Ship an empty /usr/share/sounds directory. Closes: #509219.
+  * New upstream translation and bugfix release.
+  * 51_selinux_memleak.patch, 52_shutdown_crash.patch: removed, merged 
+    upstream.
+  * 70_mandatory-relibtoolize.patch: updated for the new version.
+  * 51_xkb_init.patch: new patch, stolen upstream. Handle the case where 
+    XKB is not properly initialized.
+  * 52_xdmcp_fixes.patch: new patch, stolen upstream. Fix a double free 
+    and improve error handling for XDMCP. Hopefully closes: #495797.
+
+ -- Josselin Mouette <joss@debian.org>  Fri, 27 Feb 2009 19:22:26 +0100
+
+gdm (2.20.7-5) unstable; urgency=low
+
+  * Don't update-rc.d remove / install during first configuration.
+  * Use lt-nl when comparing versions instead of checking $2.
+  * Build-depend on xserver-xorg for the X_SERVER detection logic to work; it
+    would be more elegant to add an AC_ARG_WITH to skip the detection and
+    avoid the bdep, but the 2.20 branch isn't the long term focus so this is a
+    good stop gap measure; closes: #509425.
+
+ -- Loic Minier <lool@dooz.org>  Fri, 28 Nov 2008 19:55:12 +0100
+
+gdm (2.20.7-4) unstable; urgency=low
+
+  * 52_shutdown_crash.patch: updated to also ignore the signals in the 
+    shutdown process.
+  * 35_gdm.conf.patch: use pm-suspend instead of s2ram, for consistency 
+    with HAL. Closes: #503085.
+  * Suggest pm-utils instead of uswsusp.
+
+ -- Josselin Mouette <joss@debian.org>  Fri, 24 Oct 2008 21:53:24 +0200
+
+gdm (2.20.7-3) unstable; urgency=low
+
+  * Install the debian-moreblue-orbit theme, thanks Andre Luiz Rodrigues 
+    Ferreira. Closes: #497440.
+  * 35_gdm.conf.patch: make it the default.
+  * copyright: fix encoding.
+
+ -- Josselin Mouette <joss@debian.org>  Tue, 02 Sep 2008 10:37:20 +0200
+
+gdm (2.20.7-2) unstable; urgency=low
+
+  [ Loic Minier ]
+  * Add "status" support to the init script; bump dep on lsb to >= 3.2-14;
+    taken from Ubuntu.
+  * Update init script to honor "text" kernel commandline option by not
+    starting gdm if this word is found in /proc/cmdline; taken from Ubuntu
+    and added -w flag to grep; LP: #256125.
+
+  [ Josselin Mouette ]
+  * 51_selinux_memleak.patch: patch from Julien Cristau to fix a memory 
+    leak in the SELinux code.
+  * 52_shutdown_crash.patch: new patch, fixes crash upon shutdown when
+    the daemon is not correctly closed. Closes: #458802.
+
+ -- Josselin Mouette <joss@debian.org>  Fri, 29 Aug 2008 16:03:45 +0200
+
+gdm (2.20.7-1) unstable; urgency=low
+
+  [ Josselin Mouette ]
+  * 01_fixfree.patch: stolen from upstream. Patch from Frédéric Crozat 
+    to fix an invalid free causing yet another crash upon shutdown.
+
+  [ Sebastian Dröge ]
+  * New upstream bugfix release:
+    + debian/patches/01_fixfree.patch:
+      - Dropped, merged upstream.
+    + debian/patches/70_mandatory-relibtoolize.patch:
+      - Regenerated for the new version.
+
+ -- Sebastian Dröge <slomo@debian.org>  Tue, 01 Jul 2008 09:45:46 +0200
+
+gdm (2.20.6-1) unstable; urgency=low
+
+  * New upstream bugfix release:
+    + debian/patches/01_crash_on_shutdown.patch:
+      - Dropped, merged upstream.
+    + debian/patches/70_mandatory-relibtoolize.patch:
+      - Regenerated for the new version.
+
+ -- Sebastian Dröge <slomo@debian.org>  Wed, 21 May 2008 11:59:42 +0200
+
+gdm (2.20.5-2) unstable; urgency=low
+
+  * Xsession: set the USERXSESSIONRC variable. Thanks to Yves-Alexis 
+    Perez. Closes: #458549.
+  * control.in: depend on gnome-session | x-session-manager | ...
+    Closes: #478497.
+  * gdm.init: stop providing x-display-manager, to prevent installation 
+    failure together with another display manager. The parallel 
+    installation is already handled through debconf. Closes: #479468.
+    Other display manager packages should be fixed the same way.
+  * 01_crash_on_shutdown.patch: stolen from upstream SVN. Fixes the 
+    crash that happens during the shutdown process.
+    Closes: #480056, #475855, #467203. However it does not fix #459024. 
+
+ -- Josselin Mouette <joss@debian.org>  Sun, 11 May 2008 02:12:44 +0200
+
+gdm (2.20.5-1) unstable; urgency=low
+
+  * New upstream bugfix release:
+    + debian/patches/70_mandatory-relibtoolize.patch:
+      - Updated to apply cleanly again.
+
+ -- Sebastian Dröge <slomo@debian.org>  Tue, 08 Apr 2008 05:51:15 +0200
+
+gdm (2.20.4-2) unstable; urgency=low
+
+  * gdm.init: remove S from the Default-Stop header. Closes: #471074.
+
+ -- Josselin Mouette <joss@debian.org>  Sat, 15 Mar 2008 19:03:17 +0100
+
+gdm (2.20.4-1) unstable; urgency=low
+
+  * New upstream bugfix release:
+    + debian/patches/35_gdm.conf.patch:
+      - Updated to apply cleanly again.
+    + debian/patches/70_mandatory-relibtoolize.patch:
+      - Regenerated for the new version.
+
+ -- Sebastian Dröge <slomo@debian.org>  Fri, 14 Mar 2008 10:51:38 +0100
+
+gdm (2.20.3-2) unstable; urgency=medium
+
+  [ Josselin Mouette ]
+  * gdm.init: add dbus, hal and network-manager to the Should-Start
+    section.
+  * 35_gdm.conf.patch: remove /var/lib/menu-xdg/xsessions from the list
+    of session directories. Closes: #464179.
+
+  [ Loic Minier ]
+  * Add missing libpopt-dev b-dep; thanks Daniel Schepler; closes: #467179.
+
+ -- Josselin Mouette <joss@debian.org>  Sat, 16 Feb 2008 02:52:39 +0100
+
+gdm (2.20.3-1) unstable; urgency=low
+
+  [ Loic Minier ]
+  * Drop xbase-clients dep; thanks Robert Millan; closes: #455538.
+
+  [ Josselin Mouette ]
+  * Conflict against gnome-panel (<< 2.19.2). Closes: #446762.
+
+  [ Loic Minier ]
+  * Don't use an aliased ls but hardcode /bin/ls; closes: #454097
+
+  [ Josselin Mouette ]
+  * 61_config-parser-issues.patch: upstream fix (r5604) for a bug in the
+    parser. Also include r5599 which is required as well.
+    Closes: #458094.
+
+  [ Sebastian Dröge ]
+  * New upstream bugfix release:
+    + Fixes running gdmflexiserver setuid/setgid (Closes: #455694).
+    + 61_config-parser-issues.patch, dropped, merged upstream.
+    + 70_mandatory-relibtoolize.patch, regenerated for the new version.
+  * debian/control.in:
+    + Update to Standards-Version 3.7.3, no additional changes needed.
+
+ -- Sebastian Dröge <slomo@debian.org>  Tue, 08 Jan 2008 15:22:58 +0100
+
+gdm (2.20.2-1) unstable; urgency=low
+
+  [ Josselin Mouette ]
+  * debian/gdm.init:
+    + Use the basename of the contents of
+      /etc/X11/default-display-manager, to allow the user to specify a
+      path by hand. Closes: #452344.
+    + Fix bashims.
+  * gdm.pam: add support for pam_gnome_keyring. Closes: #445870.
+  * Suggest libpam-gnome-keyring.
+  * 35_gdm.conf.patch: set Browser=true so that themes with a face
+    browser work correctly. Closes: #445743.
+  * gdm.postinst: fix quoting in gdm.conf after upgrading from gdm <
+    2.20. Closes: #445947.
+
+  [ Loic Minier ]
+  * Read /etc/profile, ~/.profile, /etc/xprofile and ~/.xprofile; this is more
+    confortable for users, matches RedHat distros, and matches the
+    documentation; closes: #438866.
+
+  [ Sebastian Dröge ]
+  * New upstream bugfix release:
+    + debian/patches/67_dont_use_LC_CTYPE_for_GDMLANG.patch:
+      - Dropped, merged upstream.
+    + debian/patches/70_mandatory-relibtoolize.patch:
+      - Regenerated for the new version.
+    + debian/patches/45_use-gksu-for-gdmsetup.patch:
+      - Updated to apply cleanly again.
+
+ -- Sebastian Dröge <slomo@debian.org>  Sat, 01 Dec 2007 19:08:26 +0100
+
+gdm (2.20.1-2) unstable; urgency=low
+
+  * debian/patches/67_dont_use_LC_CTYPE_for_GDMLANG.patch:
+    + Added. Use g_get_language_names to determine the value of GDM_LANG
+      instead of LC_CTYPE
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 18 Nov 2007 17:29:25 +0100
+
+gdm (2.20.1-1) unstable; urgency=low
+
+  [ Josselin Mouette ]
+  * Document that references in 64_vt-auto-allocation-fix are wrong.
+
+  [ Sebastian Dröge ]
+  * New upstream bugfix release:
+    + It's possible to change to password input via tab again (Closes: #446962).
+    + debian/control.in:
+      - Require libglib2.0-dev (>= 2.12.0).
+    + debian/patches/70_mandatory-relibtoolize.patch:
+      - Updated for the new version.
+
+ -- Sebastian Dröge <slomo@debian.org>  Sat, 03 Nov 2007 22:04:04 +0100
+
+gdm (2.20.0-2) unstable; urgency=high
+
+  * Re-add bug ids and references to patch 64_vt-auto-allocation-fix.
+  * Clean whitespace in control.
+  * Conflict with fast-user-switch-applet (<< 2.17.4), gnome-session (<<
+    2.19.2), gnome-screensaver (<< 2.17.7) for the GDM socket path transition.
+
+ -- Loic Minier <lool@dooz.org>  Sat, 06 Oct 2007 20:02:06 +0200
+
+gdm (2.20.0-1) unstable; urgency=low
+
+  [ Loic Minier ]
+  * Pass --system to delgroup and deluser; thanks Vincent Bernat.
+  * Recommend xserver-xorg; closes: #436665.
+
+  [ Josselin Mouette ]
+  * New upstream release.
+  * Update build-dependencies.
+  * Refresh patches.
+  * 35_gdm.conf.patch:
+    + Use s2ram as suspend command; suggest uswsusp.
+    + Set UseCirclesInEntry.
+  * 41_config-files.patch: the OLD_CONF part is obsolete.
+  * Drop patches integrated upstream:
+    - 42_timed-login.patch
+    - 48_random-greeter-theme.patch
+    - 51_misc-env-var-fixes.patch
+    - 57_gdm-is-local.patch
+    - 59_standard-x-server-detection.patch
+    - 60_logname-is-log-name-in-PostLogin.patch
+    - 61_gdm-manpage-section.patch
+    - 67_C-locale-fallback.patch
+    - 69_misc-config-typos.patch
+    - 90_from_svn_fix_gdm_restart.patch
+  * 64_vt-auto-allocation-fix.patch: deactivated for now, it seems to
+    "fix" only part of the binaries, and I don't really know why.
+  * Enable secure remote connection; build-depend on zenity.
+  * gdm.install:
+    + Install desktop files in /usr/share/applications.
+    + Install the remote SSH session.
+  * gdm.8.pod, gdmlogin.8.pod: fix encoding.
+  * rules: don't pass ${prefix} to --libexecdir, it keeps as is in some
+    substitutions.
+  * gdm.menu: update to the latest menu policy.
+
+ -- Josselin Mouette <joss@debian.org>  Sat, 06 Oct 2007 18:39:23 +0200
+
+gdm (2.18.4-1) unstable; urgency=high
+
+  [ Josselin Mouette ]
+  * 43_gdmphotosetup.desktop.patch: set NoDisplay=true for
+    gdmphotosetup, which duplicates gnome-about-me's functionality.
+
+  [ Loic Minier ]
+  * Stop imposing the DPI settings; this was a quick fix that users may opt to
+    do, but the correct thing to do is to fix the Xorg configuration on these
+    systems or fix the generation of this config; document this in
+    README.Debian; closes: #278026, #339707, #364545.
+
+  [ Kilian Krause ]
+  * Add get-orig-source target.
+
+  [ Loic Minier ]
+  * New upstream stable release.
+    - SECURITY: Fixes denial of service attack where the user can crash the
+      GDM daemon with a carefuly crafted GDM socket command and cause GDM to
+      stop managing future displays; CVE-2007-3381.
+    - Drop patch 91_from-svn_gdm-init-hints-and-af-family-in-..., merged
+      upstream.
+
+ -- Loic Minier <lool@dooz.org>  Tue, 31 Jul 2007 18:34:07 +0200
+
+gdm (2.18.3-4) unstable; urgency=high
+
+  * Update
+    91_from-svn_gdm-init-hints-and-af-family-in-gdm_peek_local_address_list to
+    not set AF_INET6; thanks Ely Levy; GNOME #455190; closes: #432227.
+
+ -- Loic Minier <lool@dooz.org>  Thu, 12 Jul 2007 17:43:04 +0200
+
+gdm (2.18.3-3) unstable; urgency=high
+
+  * New patch,
+    91_from-svn_gdm-init-hints-and-af-family-in-gdm_peek_local_address_list,
+    fixes crash when using IPv6; thanks Ely Levy; GNOME #455190; from
+    SVN r5044; closes: #432227.
+
+ -- Loic Minier <lool@dooz.org>  Tue, 10 Jul 2007 15:48:01 +0200
+
+gdm (2.18.3-2) unstable; urgency=medium
+
+  * Cleanups.
+  * Fix permissions of gdmXnestWrapper; closes: #432153.
+  * Drop dep on debconf which is already added by ${misc:Depends}; thanks
+    Michael Biebl; closes: #431698.
+
+ -- Loic Minier <lool@dooz.org>  Wed, 04 Jul 2007 14:30:53 +0200
+
+gdm (2.18.3-1) unstable; urgency=low
+
+  [ Josselin Mouette ]
+  * gdmXnestWrapper: provide a wrapper script for both nested X servers.
+    + gdm.install: install it.
+    + 56_xnest-wrapper.patch: force its use in configure.ac.
+    + 70_mandatory-relibtoolize.patch: refresh configure.
+    + Stop build-depending on xserver-xephyr.
+  * 35_gdm.conf.patch: set Clearlooks as the default GTK+ theme.
+
+  [ Loic Minier ]
+  * Fix tabs versus spaces in gdm.install.
+
+  [ Josselin Mouette ]
+  * Move the nested servers to Recommends.
+  * Suggest hibernate instead of apmd.
+  * 35_gdm.conf.patch: use hibernate as the default suspend command.
+
+  [ Loic Minier ]
+  * New upstream stable release; bug fix and translation.
+    - Drop patch 58_is-local-check-null, a more complete fix was added
+      upstream; closes: #422483.
+    - Update autotools patch, 70_mandatory-relibtoolize, and update patch
+      header to use automake and aclocal 1.10 instead of 1.9.
+
+ -- Loic Minier <lool@dooz.org>  Tue, 03 Jul 2007 22:06:34 +0200
+
+gdm (2.18.2-1) unstable; urgency=low
+
+  [ Sam Morris ]
+  * Add support for DEB_BUILD_OPTIONS noopt option; closes: #347421.
+
+  [ Loic Minier ]
+  * Pass -Wall to CFLAGS too.
+  * Build-depend on xserver-xephyr; thanks Sven Arvidsson; closes: #422287.
+  * Rework 30_hardcode-standard-x-server and rename to
+    59_standard-x-server-detection; update 70_mandatory-relibtoolize.
+  * Drop patch 43_clearenv-no-lang as it seems useless -- it only removes a
+    function, not calls to this function.
+  * New patch, 58_is-local-check-null, checks for NULL ia in
+    gdm_is_local_addr6() and gdm_is_local_addr()
+  * Drop patch 53_remove-ok-and-cancel-from-included-themes, not needed
+    anymore as the buttons work fine.
+  * Update patch 58_is-local-check-null with an upstream patch from
+    GNOME #436725.
+
+  [ Josselin Mouette ]
+  * 35_gdm.conf.patch: add /etc/dm/Sessions/ to the list of directories
+    to search for X sessions.
+
+  [ Loic Minier ]
+  * New upstream stable release.
+    - Refresh patches 42_timed-login, 50_close-fds, 51_misc-env-var-fixes,
+      61_gdm-manpage-section, 90_from_svn_fix_gdm_restart to apply cleanly.
+    - Drop patches 63_buf-decl, 65_french-translation-typo,
+      68_pam-authinfo-unavail, merged upstream.
+    - Update relibtoolizing patch, 70_mandatory-relibtoolize.
+
+ -- Loic Minier <lool@dooz.org>  Tue, 29 May 2007 10:47:11 +0200
+
+gdm (2.18.1-2) unstable; urgency=low
+
+  * Fix a packaging mistake introduced while refactoring the install which
+    overwrote Debian's /etc/gdm/Xsession with upstream's.
+  * Set GNOME Team as Maintainer.
+
+ -- Loic Minier <lool@dooz.org>  Thu, 03 May 2007 14:42:24 +0200
+
+gdm (2.18.1-1) unstable; urgency=low
+
+  * Adopt package; set myself as Maintainer; thanks Ryan Murray for your
+    maintenance until now!
+  * Ack Porter NMU by Aurélien Jarno; thanks!
+  * GNOME Team uploads.
+    - Use a control.in.
+    - Build-depend on gnome-pkg-tools and include uploaders.mk.
+  * Use the quilt patch system instead of keeping changes in the .diff.gz.
+    - Apply / unapply patches in rules; "patch" is PHONY.
+    - Split the current .diff.gz into 20 patches.
+    - Create a series file with all patches.
+    - Build-depend on quilt.
+    - "make distclean" before unpatching.
+  * New patch, 68_doc-build-add-revnumber, fixes build with newer
+    gnome-doc-utils.
+  * Use full path to gdmsetup in menu file.
+  * Fix "closes:" in 2.2.5.2-1 and 2.13.0.10-1.
+  * Version the debhelper build-dep to >= 4 and set Debhelper compatibility
+    level via debian/compat to 4 instead of via DH_COMPAT in rules.
+  * Depend on "debconf (>= 0.5) | debconf-2.0" instead of the only virtual
+    "debconf-2.0".
+  * Wrap build-deps and deps.
+  * Update copyright file.
+    - Use full download URL.
+    - Include full GPL blob.
+    - List GNOME Team as new maintainer.
+  * Include AUTHORS in docs.
+  * Compute DEB_VERSION, DEB_NOEPOCH_VERSION, and DEB_UPSTREAM_VERSION
+    similarly to CDBS and finally compute MAJOR_MINOR for the GNOME version
+    included in the footer of man pages.
+  * Update watch file to track all stable releases.
+  * Misc cleanups.
+  * Bump up Debhelper compatibility level to 5.
+  * Rework the install / binary-arch targets completely to me more
+    debhelper-ish.
+    - Stop shipping *.a and *.la files for Gtk modules.
+  * Pass --disable-scrollkeeper to configure.
+  * Factorize manpages generation.
+  * Rename various debian/* files to debian/gdm.*.
+  * Add ${misc:Depends}.
+  * Misc updates to debian-moreblue.
+    - Cleanup indentation of this file.
+    - Merge patch by Michael Biebl to properly display wrapped login text;
+      closes: #408043.
+  * Apply update to templates; thanks Christian Perrier; closes: #417981.
+  * Drop postinst upgrade snippet for version <= 2.0-0.beta4.6; upgrades of
+    version before sarge don't have to be supported.
+  * Check for the usability of deluser and delgroup before running these in
+    gdm.postrm.
+  * Start gdm in S30 instead of S21; thanks Sjoerd Simons; closes: #419392.
+  * Rework gdm.postinst to only run version-specific upgrade code during
+    upgrades from these versions and to always run update-rc.d in these cases.
+  * Suggest xserver-xephyr | xnest; closes: #416238.
+  * New patch, 69_misc-config-typos, fixes misc typos in gdm.conf; thanks
+    J S Bygott; closes: #361436.
+  * Configure with --enable-ipv6=yes; GNOME #385451; Ubuntu #75254;
+    closes: #409428.
+  * New upstream releases.
+    - Build-dep on libdbus-glib-1-dev (>= 0.30) for ConsoleKit support.
+    - Refresh patches 30_hardcode-standard-x-server, 41_config-files,
+      42_pam-and-timed-login, 48_random-greeter-theme,
+      53_remove-ok-and-cancel-from-included-themes, 57_gdm-is-local,
+      62_reference-manual-docbook-entity-reference, 64_vt-auto-allocation-fix,
+      67_C-locale-fallback, 68_doc-build-add-revnumber, 69_misc-config-typos.
+    - Drop patches:
+      . 55_hurd-no-pipe-buf, merged upstream.
+      . 68_doc-build-add-revnumber: merged upstream.
+    - Update patches:
+      . 35_gdm.conf: Update reference to System Configuration file.
+      . 45_use-gksu-for-gdmsetup: Update to use the full path to gdmsetup.
+      . 50_close-fds: Update to match upstream changes which closed even more
+        fds than in the past; convert some Debian specific closes to use
+        VE_IGNORE_EINTR() too; leave the upstream code in the source.
+      . 65_french-translation-typo: Update to upstream rewording of this
+        string.
+      . 70_mandatory-relibtoolize: Relibtoolize.
+    - Works with sites using automounting since 2.17.0; GNOME #356869;
+      closes: #365606.
+    - Fixes typo in German translation with 2.18.1; GNOME #421661;
+      closes: #414387.
+    - Fixes incomprehensible Czech translation with 2.18.1; GNOME #421664;
+      closes: #415274.
+    - Fixed language selection issues since 2.17.5; GNOME #384603;
+      closes: #403928.
+  * Drop "--with-tags=" from configure args; libtool should autodetect this
+    properly.
+  * Build-dep on x11proto-core-dev for XDMCP.
+  * Configure with "--with-prefetch=yes"; PreFetchProgram is empty by default
+    in Debian though.
+  * New patch, 90_from_svn_fix_gdm_restart, fixed restarting of gdm when
+    Ctrl-Alt-Backspace is pressed; from SVN; found in the Ubuntu package.
+  * New patch, 37_manpage-binaries, removes mentions of various executables
+    not present in the Debian package; closes: #357988.
+  * New patch, 66_socket-in-var-run-for-fhs, use /var/run for the gdm_socket
+    file to comply with the FHS and to avoid issues with bootclean;
+    Ubuntu #79620; found in the Ubuntu package.
+  * New patch, 55_use-theme-gtkrc, look for gtk-2.0/gtkrc in the theme
+    directory and use it; found in the Ubuntu package.
+  * New patch, 46_kde-substitude-uid, add X-KDE-SubstituteUID=true to the
+    gdmsetup desktop file to hide the entry for non-admin users in KDE.
+  * Disabling patch 66_socket-in-var-run-for-fhs for now as it requires
+    changes in gnome-session, gnome-panel, and fast-switch-user-applet at the
+    same time; thanks Sébastien Bacher.
+  * Split patches:
+    . 42_pam-and-timed-login into 42_timed-login and 68_pam-authinfo-unavail.
+    . 43_clearenv-no-lang-and-buf-decl into 43_clearenv-no-lang and
+      63_buf-decl.
+    . 50_close-fds into 50_close-fds and 51_misc-env-var-fixes.
+  * Add GNOME bug to 66_socket-in-var-run-for-fhs.
+
+ -- Loic Minier <lool@dooz.org>  Wed, 02 May 2007 18:50:19 +0200
+
+gdm (2.16.4-1.1) unstable; urgency=low
+
+  * Porter NMU.
+  * Disable SELinux on non-Linux architectures (Hurd, GNU/kFreeBSD).
+    Fix gui/gdmchoosed.c wrt to PIPE_BUF (patch from upstream) to 
+    support Hurd. (closes: #313008).
+
+ -- Aurelien Jarno <aurel32@debian.org>  Mon, 26 Feb 2007 11:51:48 +0100
+
+gdm (2.16.4-1) unstable; urgency=high
+
+  * New upstream release
+    + Fix for CVE-2006-6105, gdmchooser format string vulnerability (closes: #403219)
+    + Fix for 64-bit portability problems (closes: #396259)
+  * Fix typo in pam files (closes: #396696)
+  * Update debian-moreblue theme to 0.5, and make it the default
+  * Relax gdm-themes depends to Recommends because of the default theme change
+
+ -- Ryan Murray <rmurray@debian.org>  Fri, 15 Dec 2006 15:11:04 -0800
+
+gdm (2.16.1-1) unstable; urgency=high
+
+  * New upstream release
+    + Fixes CVE-2006-2452 (closes: #375281)
+    + Failsafe session no longer made default (closes: #382698)
+    + Typo fixed in fr.po (closes: #392611)
+    + multiple login dialog updated (closes: #395003)
+    + SuspendCommand works (closes: #367232)
+    + gdmsetup image screen scrolling works (closes: #288286)
+  * Fix typo in fr.po (closes: #372949)
+  * Set RelaxPermissions=1 by default (closes: #339965)
+  * Don't close all descriptors before starting the slave. (closes: #308825)
+  * Parse /etc/default/locale in gdm pam files, for now (closes: #389466)
+  * Set console to utf-8 if needed in XKeepsCrashing (closes: #387043)
+  * Remove OK and Cancel buttons from included themes (closes: #377934)
+  * Add debian-moreblue theme from
+    http://cdd.debian-br.org/~si0ux/artwork/debian/gdm/gdm-theme-debian-moreblue.tar.gz
+  * Temporarily raise to Depends on gdm-themes, and make the debblue theme
+    default for now (closes: #350940)
+  * Add /var/lib/menu-xdg/xsessions to SessionDir (closes: #240991)
+  * add acpid to Should-Start line of init.d script (closes: #390414)
+  * Sync debconf templates against xdm 1.0.5-1
+  * Sync locale.conf against locales 2.3.6.ds1-7
+  * Stop installing factory-defaults.conf (closes: #394881)
+  * Hide stderr from cat in init script, create /etc/X11/default-display-manager
+    when the package is installed with tasksel (closes: #379198)
+  * Hardcode StandardXServer to /usr/bin/X (closes: #362925)
+  * Start gdm at S21 instead of S99 (closes: #291187)
+
+ -- Ryan Murray <rmurray@debian.org>  Sun, 29 Oct 2006 22:02:36 -0800
+
+gdm (2.14.5-1) unstable; urgency=low
+
+  * New upstream release
+    + Fixes logins that don't use ssh-agent (closes: #365568)
+
+ -- Ryan Murray <rmurray@debian.org>  Tue,  2 May 2006 23:59:16 -0700
+
+gdm (2.14.4-1) unstable; urgency=high
+
+  * New upstream release (Fixes CVE-2006-1057)
+    + sound options now honoured (closes: #361945)
+    + fix non-broadcast operation (closes: #365255)
+  * Add libdmx-dev to Build-Depends (closes: #346513)
+  * Document removal of SecureSystemMenu in README.Debian (closes: #361530)
+  * Stop creating/reading /etc/default/gdm and use /etc/default/locale instead.
+    (closes: #361090)
+  * Add Should-Start: console-screen to LSB block so that the keyboard is
+    configured before X is started (closes: #352743)
+
+ -- Ryan Murray <rmurray@debian.org>  Sat, 29 Apr 2006 15:08:41 -0700
+
+gdm (2.13.0.10-2) unstable; urgency=low
+
+  * Add gnome-doc-utils to build-depends.
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 13 Mar 2006 00:00:13 -0800
+
+gdm (2.13.0.10-1) unstable; urgency=low
+
+  * New upstream release
+    + two-level config (closes: #252543)
+  * Add build-depends on libxdmcp-dev, libxinerama-dev (closes: #340840, #342113)
+  * Relibtoolize (closes: #344910)
+  * Add dependency on lsb-base (closes: #346096)
+  * Add "Display Manager" hint to menu file (closes: #284613)
+  * Depend on librsvg2-common (closes: #348872)
+  * Update debconf template translations
+  * Update locale.conf against locales 2.3.6-3
+  * Take patch to XKeepsCrashing from Ubuntu that restores the keyboard
+    to xlate mode before trying to interact with the user.
+  * Drop ungnomeish SecureSysMenu patch. (closes: #261980)
+  * Set $HOME to /etc/X11 when starting the X server, causing the code
+    that looks for $HOME/xorg.conf before other files in /etc to look
+    at our configfile, and not one that might be in root's homedir.
+    (closes: #250438)
+  * Confirmed that the new version correctly works with utf-8 locales
+    (closes: #277953)
+
+ -- Ryan Murray <rmurray@debian.org>  Sat, 11 Mar 2006 14:51:15 -0800
+
+gdm (2.8.0.6-2) unstable; urgency=low
+
+  * Apply patch from CVS to fix new auto VT allocation method (closes: #339790)
+
+ -- Ryan Murray <rmurray@debian.org>  Thu, 24 Nov 2005 09:52:06 -0800
+
+gdm (2.8.0.6-1) unstable; urgency=low
+
+  * New upstream release (closes: #313200, #309224, #258934, #327464, #261979,
+    #290916, #276871, #304027, #314449)
+  * Update Build-Depends (closes: #323513)
+  * Update debconf dependency (closes: #331833)
+  * Update help section in manpage (closes: #274543)
+  * start-stop-daemon --stop and --exec are no longer used together
+    (closes: #309199)
+  * Rewrite init script with LSB functions.
+  * Modify gdm to check for random theme existence, so themes listed for
+    random selection don't have to exist
+  * Recommend gdm-themes
+  * Use graphical login by default and randomize through all packaged
+    themes by default (closes: #217250)
+  * Pass -dpi 96 to the X Server by default (closes: #285029)
+  * Use su-to-root instead of gksu for menu entry of gdmsetup.
+
+ -- Ryan Murray <rmurray@debian.org>  Thu, 17 Nov 2005 03:24:59 -0800
+
+gdm (2.6.0.8-1) unstable; urgency=low
+
+  * New upstream release (closes: #300738)
+  * Update watch file upstream location.
+  * Don't fail prerm if the question doesn't exist (closes: #299910)
+  * Correct PostLogin sample file comments (closes: #287725)
+  * Remove LANG variable "normalization" -- this is already dealt with by
+    PAM and code in gdm.  Still unset LANGUAGE if the selected GDM_LANG isn't
+    at the front of the list, however. (closes: #290565)
+  * Redirect invoke-rc.d error message (closes: #280194)
+  * Relibtoolize (closes: #274863)
+  * Halt Command fix from cvs.
+
+ -- Ryan Murray <rmurray@debian.org>  Thu, 31 Mar 2005 01:27:50 -0800
+
+gdm (2.6.0.6-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Ryan Murray <rmurray@debian.org>  Wed, 29 Dec 2004 09:19:17 -0800
+
+gdm (2.6.0.4-1) unstable; urgency=medium
+
+  * New upstream release (closes: #258213)
+  * When XKeepsCrashing uses whiptail, pass --scrolltext (closes: #248263)
+  * Fix case typo in slave.c (closes: #259173)
+  * Use invoke-rc.d in prerm (closes: #262625)
+  * Don't export LANG in /etc/default/gdm (closes: #265101)
+  * Move libexecdir to /usr/lib/gdm (closes: #266734)
+  * Keep stderr open across some execs so error messages make it to the log
+    (closes: #261786)
+  * Update de.po, es.po (closes: #258933, #267146)
+
+ -- Ryan Murray <rmurray@debian.org>  Sun, 29 Aug 2004 21:45:36 -0700
+
+gdm (2.6.0.3-1) unstable; urgency=low
+
+  * New upstream release (closes: #255516, #222601, #241607, #250755, #240265)
+  * Fix typo in prerm script (closes: #251144)
+  * Don't fail in the postinst if debconf calls do (closes: #176652)
+  * Add Build-Depends on libxt-dev (closes: #256322)
+  * Relibtoolize.
+
+ -- Ryan Murray <rmurray@debian.org>  Tue,  6 Jul 2004 22:42:12 -0700
+
+gdm (2.4.4.7-3) unstable; urgency=low
+
+  * Add Build-Depends on xlibs-static-dev
+
+ -- Ryan Murray <rmurray@debian.org>  Sat, 15 May 2004 21:07:50 -0700
+
+gdm (2.4.4.7-2) unstable; urgency=low
+
+  * Correct location of logdir (closes: #240984)
+  * Add /etc/default/gdm, initialized from the locales package's debconf.
+    (closes: #133578)
+  * Add depends on xbase-clients until #242485 is fixed in X. (closes: #247065)
+  * Change "genius" to "gdm" in default config comments (closes: #243218)
+  * Soft restart gdm in postinst (closes: #240993)
+  * Update locale.conf to latest glibc (closes: #247971)
+  * Create .dmrc with restrictive permissions if it doesn't exist.
+  * Now that gksu works for me, use it to start gdmsetup (closes: #189615)
+  * Update debconf templates to xdm 4.3.0.dfsg.1-1.
+  * Add Turkish debconf template (closes: #248328)
+  * Add note about debconf templates to README.Debian (closes: #200121)
+  * Add some whitespace to the gdmlogin logo (closes: #201303)
+  * Build with SELinux support.
+
+ -- Ryan Murray <rmurray@debian.org>  Sat, 15 May 2004 16:13:30 -0700
+
+gdm (2.4.4.7-1) unstable; urgency=low
+
+  * New upstream release (closes: #190390, #220492)
+  * Don't run update-rc.d if the init script isn't executable (closes: #213188)
+  * Use default gnome-session purge-delay (closes: #221448)
+  * Add gdmflexiserver(1) manpage (closes: #149396)
+  * Recommend whiptail | dialog, as the shell script works without
+    them.  (closes: #228295)
+  * Add menu entries (closes: #149388)
+  * gdmsetup now has options for control of -nolisten tcp (closes: #155479)
+  * gdm no longer reads the Sessions directory to populate the menu
+    (closes: #218786)
+  * Ensure char is unsigned in fd_getc, use the utf8 string in the standard
+    greeter (closes: #217496)
+  * Don't reparse xmodmap/xkb in session script (closes: #191598)
+  * The GDM manual is back, and covers this.  As well, it's totally different
+    in this version (closes: #229824)
+  * Use /etc/X11/Xsession.d/* for the tail end of session setup
+    (closes: #191711, #192252, #212120, #219040)
+  * Happygnome and Circles theme sizes increased upstream (closes: #219353)
+  * With the new Xsession.in that uses the Xsession.d dir to start up, and the
+    /usr/share/xsessions dir supported by kdm and gdm for programs to indicate they
+    should be on the session list, all that's needed is those programs to supply
+    desktop files for /usr/share/xsessions (closes: #84396)
+  * Don't always specify the charset when setting locales (closes: #213496)
+  * Don't ship the gnome.desktop session file; gnome-session will.
+  * Add |'d dependency on possible session programs, so at least one will
+    be installed.
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 29 Mar 2004 01:34:16 -0800
+
+gdm (2.4.1.7-1) unstable; urgency=low
+
+  * New upstream security release (closes: #217077, #217080)
+  * Fix accidental patch to ve-misc.c (closes: #215839)
+  * Add config updating support for SecureSysMenu (closes: #215875, #214724)
+
+ -- Ryan Murray <rmurray@debian.org>  Thu, 23 Oct 2003 02:18:49 -0700
+
+gdm (2.4.1.6-2) unstable; urgency=low
+
+  * Update pam setup for lowest common denominator "common" (closes: #207366)
+  * Update MinimalUID setting (closes: #209388)
+  * Add SecureSystemMenu support to the xml greeter (closes: #212752)
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 13 Oct 2003 13:25:12 -0700
+
+gdm (2.4.1.6-1) unstable; urgency=low
+
+  * New upstream release (closes: #129194, #197321, #194613)
+  * Update and include extract-locales, which is used to generate gdm's
+    locale.conf  Updated to move positioning of @ suffixes. (closes: #204932)
+  * Remove fallback to nobody/nobody from gdm.c If the system user and group
+    don't exist, the rest of the package will fail anyhow (closes: #194611)
+  * Add PAM_AUTHINFO_UNAVAIL to incorrect password error handler
+    (closes: #157792)
+  * Support use-ssh-agent in the Gnome session (closes: #196659)
+  * Remove links to non-existent documentation (closes: #198453, #193382)
+  * Update face browser comments in README.Debian (closes: #151373)
+  * Add SecureSystemMenu option to gdm and gdmconfig.  This requires the root
+    password to be entered to use any option in the system menu.
+  * Enable SystemMenu and SecureSystemMenu by default (closes: #80800, #196140)
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 25 Aug 2003 03:14:45 -0700
+
+gdm (2.4.1.3-2) unstable; urgency=low
+
+  * Comment out the half patch in gdmconfig until the other half can be
+    located (closes: #191330)
+
+ -- Ryan Murray <rmurray@cyberhqz.com>  Thu,  1 May 2003 18:09:15 -0700
+
+gdm (2.4.1.3-1) unstable; urgency=low
+
+  * New upstream release (closes: #147637)
+    + gdm no longer blocks SIGCHLD (closes: #141184)
+    + updated desktop files (closes: #175405)
+    + clean rule less aggressive (closes: #108732)
+    + gdm doesn't open any tty that already has a getty running on it
+      (closes: #60890)
+    + gdmconfig now works (closes: #145895, #189238)
+    + gdm deals gracefully with missing sessions (closes: #169645)
+    + gdm's error messages are clearer (closes: #114933)
+    + username fields are limited (closes: #162353)
+    + LANG isn't changed if the menu isn't used (closes: #151628)
+  * Update debconf template translations from current xdm package
+    (closes: #174708, #142539)
+  * Create system group rather than user group (closes: #167322)
+  * Use a locale configuration file based on all glibc supported locales
+    (closes: #117652, #121889, #136695)
+  * Set $PWD to $HOME, which makes shells happier when $HOME is a
+    symlink (closes: #179814)
+  * Remove conflicts from potato (closes: #186436)
+  * remove scrollkeeper handling as it is no longer needed
+    (closes: #164103)
+  * no longer use login shell to start session script, as having *dm logins
+    be a login shell suprises users, as no other *dm does so (closes: #155335)
+  * add a conflict with gdm2
+  * Change section to gnome
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 28 Apr 2003 11:47:58 -0700
+
+gdm (2.2.5.5-2) unstable; urgency=medium
+
+  * Set datadir instead of docdir (closes: #140367)
+  * use gnome-db2html, again.  gdm docs now use real docbook, so add
+    build-depends on docbook-utils (closes: #140839)
+  * Update french translation (closes: #140389)
+
+ -- Ryan Murray <rmurray@debian.org>  Thu,  4 Apr 2002 01:13:31 -0800
+
+gdm (2.2.5.5-1) unstable; urgency=low
+
+  * New upstream release (closes: #138984)
+  * Documentation is installed (closes: #112579)
+  * Add symlink to "advanced" gdm documentation (closes: #123241)
+  * Change UID sooner, to work with filesystems that don't give root
+    full permissions (closes: #129383, #137782)
+  * Update debconf translations (closes: #136925, #137938, #139732, #132614)
+    (closes: #136394)
+  * Use updated logo (closes: #122101)
+  * Fix quoting and set DEFAULT_DISPLAY_MANAGER_FILE in prerm (closes: #131907)
+    (closes: #137261)
+  * Remove user, group, and more config directories on purge (closes: #136247)
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 25 Mar 2002 23:41:05 -0800
+
+gdm (2.2.5.4-2) unstable; urgency=low
+
+  * Fix gdm-autologin.pam to not use RH-specific pam modules (closes: #130378)
+
+ -- Ryan Murray <rmurray@debian.org>  Sun, 27 Jan 2002 11:16:24 -0800
+
+gdm (2.2.5.4-1) unstable; urgency=low
+
+  * New upstream release (closes: #128364)
+  * Ship a gdm-autologin pam file (closes: #128656)
+  * Don't delete gdm.upgrade too soon (closes: #127392)
+  * Update README.Debian for xscreensaver use (closes: #128387)
+  * Update French translation (closes: #130137)
+
+ -- Ryan Murray <rmurray@debian.org>  Sun, 20 Jan 2002 23:36:06 -0800
+
+gdm (2.2.5.3-2) unstable; urgency=low
+
+  * Don't muck about with egid after setgid() (closes: #126936)
+  * Update Russian, Japanese, and Korean hardcoded LANG values (closes: #127052)
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 31 Dec 2001 00:45:44 -0800
+
+gdm (2.2.5.3-1) unstable; urgency=low
+
+  * New upstream release (closes: #113373, #119717)
+  * Update prerm script (closes: #125807, #115776)
+
+ -- Ryan Murray <rmurray@debian.org>  Fri, 28 Dec 2001 11:10:09 -0800
+
+gdm (2.2.5.2-2) unstable; urgency=low
+
+  * Fix $RET typo in postinst
+  * Add missing daemon_name template
+
+ -- Ryan Murray <rmurray@debian.org>  Thu, 13 Dec 2001 23:44:08 -0800
+
+gdm (2.2.5.2-1) unstable; urgency=low
+
+  * New upstream release (closes: #111738, #117744)
+  * Fix typo in postinst (closes: #117127)
+  * Fix removal of /etc/gdm directory in postrm
+  * gdm no longer starts from the postinst, ever (closes: #93236)
+  * Lower --retry timeout on gdm stop (closes: #122202)
+  * Only do the password stuff if the gdm user doesn't exist (closes: #119385)
+  * add pam_limits to the installed pam file (closes: #118335)
+  * Correct debconf for selection of display managers (closes: #115776)
+  * Add -xkb option to Xnest startup (closes: #111783)
+
+ -- Ryan Murray <rmurray@debian.org>  Sun,  9 Dec 2001 16:56:32 -0800
+
+gdm (2.2.4.3-1) unstable; urgency=low
+
+  * New upstream release (closes: #113822, #115543)
+  * Fix typo in config file (closes: #111941)
+  * Added de, pt_BR templates (closes: #112357, #116428)
+  * Fix default gnome session (closes: #111967)
+
+ -- Ryan Murray <rmurray@debian.org>  Sun, 21 Oct 2001 18:56:33 -0700
+
+gdm (2.2.4.1-1) unstable; urgency=low
+
+  * New upstream release (closes: #108715)
+	  * AllowRoot works (closes: #108192)
+	  * background and themes work (closes: #105713)
+  * Depend on dpkg >= 1.9 for retry option to start-stop-daemon
+  * All other known display managers can be installed alongside gdm, so
+    removing the conflicts.  This still doesn't solve the getty/dm problem,
+    however. (closes: #50707)
+  * Implement Pax Displayicus Managerius. (closes: #108712)
+  * Clobber variables a little less (closes: #104577)
+  * If you want verboseauth, change the config file (closes: #110779)
+  * Attempt to stop gdm on package removal (closes: #110503)
+  * Remove auth cookies, logs, and config on purge (closes: #110502)
+
+ -- Ryan Murray <rmurray@debian.org>  Fri,  7 Sep 2001 00:32:41 -0700
+
+gdm (2.2.3.1-2) unstable; urgency=low
+
+  * Update config.{guess,sub} and file the bug upstream (closes: #105061)
+  * Add conflicts to current and older versions of zh-trans
+
+ -- Ryan Murray <rmurray@debian.org>  Sat, 14 Jul 2001 00:05:09 -0700
+
+gdm (2.2.3.1-1) unstable; urgency=low
+
+  * New upstream release. (closes: #81408, #81099, #82183, #81732, #86980)
+    (closes: #88518, #93516, #93055, #82576, #85941, #94117, #50269)
+    (closes: #101867, #82264, #97586, #100587, #102194, #102691, #103931)
+    (closes: #79832)
+  * As the subject says, this isn't a bug (closes: #83007)
+  * Change default logo to Debian logo (closes: #71906)
+  * Priorities have been sorted by ftpmaster (closes: #64965)
+  * Moved from dbs; most of the patches are included now. (closes: #92020)
+  * Start X server without tcp listening by default (closes: #92909, #94293)
+  * change sessreg to -u none (closes: #90981)
+  * Bring back traditional Xsession session (closes: #87617)
+  * Don't ship an /etc/gdm/Sessions/Default (closes: #79300)
+  * Add fetchmail to ignored users (closes: #101240)
+  * Safe restart gets as close to this as possible.  gdm will restart when
+    all sessions log out when given SIGUSR1.  Make it the reload default.
+    (closes: #93077)
+
+ -- Ryan Murray <rmurray@debian.org>  Sun,  8 Jul 2001 19:51:26 -0700
+
+gdm (2.0-0.beta4.15) unstable; urgency=low
+
+  * Added xutils dependancy (closes: #76148)
+  * Added patch to remove locale menu, allowing dependancy on locales to
+    be lowered to suggests (closes: #80408)
+  * Apparently X has some issues with all the clients being killed in a row,
+    and doesn't decide to exit.  XDM kills the server instead of the "nice"
+    method, so now we do that, too. (closes: #77163)
+  * Remove non-sensical code that broke %d (closes: #75094)
+  * Add documentation on the face browser (closes: #75091)
+  * It seems updating the cookies already happens, so now the hostname is
+    reread each time the cookies regenerate (closes: #55712)
+  * Remove inappropriate Xsession session.
+  * Fix a syslog() format.
+
+ -- Ryan Murray <rmurray@debian.org>  Sun, 24 Dec 2000 21:43:55 -0800
+
+gdm (2.0-0.beta4.14) unstable; urgency=low
+
+  * Fix file descriptor leak in Xserver logfile.
+
+ -- Ryan Murray <rmurray@debian.org>  Fri,  8 Sep 2000 23:53:49 -0700
+
+gdm (2.0-0.beta4.13) unstable; urgency=low
+
+  * Add -deferglyphs 16 to starting of the X server
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 21 Aug 2000 22:30:07 -0700
+
+gdm (2.0-0.beta4.12) unstable; urgency=low
+
+  * Remove \n at the end of LANG. (closes: #68331)
+  * Apply uid switch patch (closes: #67364)
+
+ -- Ryan Murray <rmurray@debian.org>  Fri, 11 Aug 2000 04:16:40 -0700
+
+gdm (2.0-0.beta4.11) unstable; urgency=low
+
+  * Allow up to 128 character passwords (Closes: #66727)
+  * Wait until gdm has exited before restarting (Closes: #65446)
+
+ -- Ryan Murray <rmurray@debian.org>  Sun, 16 Jul 2000 13:23:12 -0700
+
+gdm (2.0-0.beta4.10) unstable; urgency=low
+
+  * Update maintainer's e-mail address
+  * Force focus to be on the login window when on the root window and
+    added accelerators for all menus via Alt+letter, including an extra
+    accelerator for ESC to bring down the first menu.  (Closes: #61141, #62837)
+  * Added README.Debian pointing out the manual (Closes: #61609)
+  * Increased delay before restart (didn't close: #65446)
+  * Force English to always be in the language list (Closes: #65538)
+
+ -- Ryan Murray <rmurray@debian.org>  Sun, 18 Jun 2000 18:01:46 -0700
+
+gdm (2.0-0.beta4.9) unstable frozen; urgency=high
+
+  * Fix several security related bugs, including one grave bug
+    (closes: #63255, #61968)
+  * Fix for /etc/environment being read twice (closes: #59042)
+  * Fix for LANG not being set correctly, based on a patch used by
+    redhat (closes: #59044)
+  * Added translations for new locales from CVS.
+  * Removed checking for pidfile in gdm code, as start-stop-daemon does
+    a better job, for Debian.
+  * Added --name to start-stop-daemon line (closes: #59176)
+  * Set default locale in LANG before starting gdmlogin.  This makes
+    GDM's text localized to the setting of DefaultLocale in gdm.conf
+    (closes: #57806)
+  * Changed build system to dbs, from patch system used by egcs at some
+    point.
+  * Fix reference of gdmgreeter in gdmlogin manpage (closes: #63680)
+  * Fix for buffer overflow in xdmcp.c (closes: #63876)
+
+ -- Ryan Murray <rmurray@cyberhqz.com>  Wed, 10 May 2000 02:24:59 -0700
+
+gdm (2.0-0.beta4.8) unstable frozen; urgency=medium
+
+  * Fix for grave password visible bug. (closes: #55886)
+  * Fix for font directive being ignored when gtkrc used (closes: #51374)
+  * Change build process to be more friendly when upstream isn't a CVS version
+  * Added missing build dependancies (closes: #56046)
+  * Moved logfiles to /var/log/gdm (closes: #56018)
+  * Don't start gdm if we're in X on the display it manages, or if it's
+    running (closes: #53992)
+
+ -- Ryan Murray <rmurray@cyberhqz.com>  Sun, 30 Jan 2000 23:16:24 -0800
+
+gdm (2.0-0.beta4.7) unstable frozen; urgency=medium
+
+  * Modified gdm.conf to start up as :0 on vt7, and added conflicts for other
+    display managers.  Release Critical bug fix.  (closes: #53988, #54234)
+  * added dependancy on libpam-modules (closes: #54452)
+  * removed --exec from start-stop-daemon to workaround bug #51953 in dpkg.
+    (closes: #53064)
+  * Added comment for SystemMenu to gdm.conf (closes: #53996)
+  * Made path closer to default login path
+  * Updated Exclude field in gdm.conf
+  * Added text strings describing shutdown/halt
+  * increase purge delay to 15 seconds (closes: #53998)
+
+ -- Ryan Murray <rmurray@cyberhqz.com>  Tue, 18 Jan 2000 00:37:37 -0800
+
+gdm (2.0-0.beta4.6) unstable; urgency=low
+
+  * New maintainer.
+  * Disable XDMCP by default (safer default)
+  * Modified gdm.conf to start up as :1 on vt8 as a default
+  * Updated to Standards-Version 3.1.1
+  * Moved to FHS 2.1 draft (/var/state -> /var/lib)
+  * Applied patch to solve (null) locale/session (Closes: #51846, #52321)
+  * Added pam_env.so to /etc/pam.d/gdm (Closes: #52408)
+  * Applied retry limit patch (Closes: #51103, #53065)
+  * Recompiled with new libesd-dev (Closes: #52245)
+  * Compiled with libwrap0
+  * export MAIL environment variable in Gnome session script (Closes: #53601)
+
+ -- Ryan Murray <rmurray@cyberhqz.com>  Wed, 29 Dec 1999 23:50:43 -0800
+
+gdm (2.0-0.beta4.5) unstable; urgency=low
+
+  * Added a suggests: xsm and corrected /etc/gdm/Sessions/Xsession
+    in order to work even if xsm is not available. Closes: #49632
+  * Enable XDMCP by default. Closes: #49104
+  * Updated the copyright file.
+  * Cleaned the .diff.gz and the rules file.
+  * Corrected the man pages.
+
+ -- Raphael Hertzog <hertzog@debian.org>  Tue,  9 Nov 1999 23:38:24 +0100
+
+gdm (2.0-0.beta4.4) unstable; urgency=low
+
+  * Removed the explicit setting of the virtual terminal. It was
+    causing problem to people who have getty running on vt8 ...
+  * Corrected /etc/gdm/Sessions/Gnome to work with OpenSSH.
+    Closes: #49443
+
+ -- Raphael Hertzog <hertzog@debian.org>  Thu,  4 Nov 1999 19:53:01 +0100
+
+gdm (2.0-0.beta4.3) unstable; urgency=low
+
+  * Session/Gnome: doesn't set the PATH since gdm does already take
+    care of this. Closes: #48310
+  * Session/Xsession: calls freetemp only if it's available. 
+    Closes: #47916
+  * Put a symlink /etc/X11/gdm -> ../gdm. Closes: #46898
+  * Now use /etc/locale.alias instead of its own file. 
+    Closes: #47915 
+
+ -- Raphael Hertzog <hertzog@debian.org>  Wed, 27 Oct 1999 14:33:49 +0200
+
+gdm (2.0-0.beta4.2) unstable; urgency=low
+
+  * Changed gdm.conf to explicitely give the virtual console
+    to use. Default to "vt8 :1" in order to avoid problems.
+    I hope that it closes: #47425, #47451
+
+ -- Raphael Hertzog <hertzog@debian.org>  Sat, 16 Oct 1999 18:37:17 +0200
+
+gdm (2.0-0.beta4.1) unstable; urgency=low
+
+  * New maintainer.
+  * Until a proper solution is found, gdm will conflict with xdm, kdm and
+    wdm. Closes: #46378
+  * Corrected the priority number for init.d scripts K99 -> K01.
+    Closes: #46379
+  * Recommends gnome-session ...
+  * Bug closed by previous NMU :
+    closes: #33471, #35672, #36284, #37780, #38034, #38343, #39433, #39703
+    closes: #40293, #40308, #41157, #42440, #42493, #42636, #43095, #43667
+    closes: #45719, #45916
+
+ -- Raphael Hertzog <hertzog@debian.org>  Tue, 12 Oct 1999 22:26:43 +0200
+
+gdm (2.0-0.beta4) unstable; urgency=low
+
+  * NMU
+  * New upstream version.
+  * Be more careful for creating user/group. Closes: #45916
+
+ -- Raphael Hertzog <hertzog@debian.org>  Thu, 30 Sep 1999 20:54:45 +0200
+
+gdm (2.0-0.beta3) unstable; urgency=low
+
+  * NMU.
+  * New upstream version of gdm (still beta but it does work contrary to
+    gdm1). Closes: #45719
+  * Does show all users (list of exclusion does exist in gdm.conf)
+    Closes: #42440, #42493
+  * The X connection problem is solved with this version. 
+    Closes: #42636, #43667, #43095
+  * The macros stuff has moved in /usr/share/aclocal/gnome. 
+    Closes: #40293
+  * gdm is very kind with xserver badly configured. Closes: #35672
+  * gdm cleans (not too much however) the environment. MAIL is removed.
+    Closes: #33471
+  * gdm does restart well. Closes: #38034
+  * You can select your language/sessions. Closes: #38343
+  * Gdm and xscreensaver do work correctly together. Closes: #39703
+  * Gdmgreeter does start. Closes: #40308
+  * Gdm does use :1 by default. Closes: #36284, #37780, #41157
+  * Gdm does now include /usr/games in the PATH. Closes: #39433
+
+ -- Raphael Hertzog <rhertzog@hrnet.fr>  Tue, 21 Sep 1999 20:25:01 +0200
+
+gdm2 (0+cvs19990428-1) experimental; urgency=low
+
+  * Experimental build of gdm2
+
+ -- Steve Haslam <araqnid@debian.org>  Mon, 17 May 1999 13:09:22 +0100
+
+gdm (1.0.0-6) unstable; urgency=low
+
+  * Don't automatically restart gdm
+  * Change init.d restart behaviour, no longer set -e.
+  * Made substantial changes to /etc/gdm/Sessions/Gnome; removed /etc/gnomerc 
+    as a result
+
+ -- Steve Haslam <araqnid@debian.org>  Wed,  5 May 1999 23:39:08 +0100
+
+gdm (1.0.0-5) unstable; urgency=low
+
+  * Replaced the PAM config again.  
+  * Remove po/*.gmo files when cleaning because changes to them can't be
+    represented in .diff.gz files
+
+ -- Steve Haslam <araqnid@debian.org>  Wed, 21 Apr 1999 17:19:16 +0100
+
+gdm (1.0.0-4) unstable; urgency=low
+
+  * Major rewrite of packaging files- now using .dpatch files to hold changes
+  * Added -lnsl to LIBS when using -lwrap (from cpbs@debian.org)
+
+ -- Steve Haslam <araqnid@debian.org>  Tue, 20 Apr 1999 02:48:32 +0100
+
+gdm (1.0.0-3) unstable; urgency=low
+
+  * Make /etc/gdm/Init/:0 a conffile too
+
+ -- Steve Haslam <araqnid@debian.org>  Sat, 27 Mar 1999 14:08:55 +0000
+
+gdm (1.0.0-2) unstable; urgency=low
+
+  * Use "update-rc.d gdm defaults 99"
+  * Don't strip x mode from /etc/gnomerc
+
+ -- Steve Haslam <araqnid@debian.org>  Mon, 22 Mar 1999 19:55:48 +0000
+
+gdm (1.0.0-1) unstable; urgency=low
+
+  * Initial version.
+
+ -- Steve Haslam <araqnid@debian.org>  Thu, 18 Mar 1999 21:27:20 +0000

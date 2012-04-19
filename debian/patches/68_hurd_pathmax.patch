@@ -1,0 +1,97 @@
+--- a/daemon/gdm.c
++++ b/daemon/gdm.c
+@@ -1439,28 +1439,33 @@
+ static gboolean
+ linux_only_is_running (pid_t pid)
+ {
+-	char resolved_self[PATH_MAX];
+-	char resolved_running[PATH_MAX];
++	char *resolved_self;
++	char *resolved_running;
++	gboolean ret;
+ 
+ 	char *running = g_strdup_printf ("/proc/%lu/exe", (gulong)pid);
+ 
+-	if (realpath ("/proc/self/exe", resolved_self) == NULL) {
++	if ((resolved_self = realpath ("/proc/self/exe", NULL)) == NULL) {
+ 		g_free (running);
+ 		/* probably not a linux system */
+ 		return TRUE;
+ 	}
+ 
+-	if (realpath (running, resolved_running) == NULL) {
++	if ((resolved_running = realpath (running, NULL)) == NULL) {
+ 		g_free (running);
++		free (resolved_self);
+ 		/* probably not a linux system */
+ 		return TRUE;
+ 	}
+ 
+ 	g_free (running);
+ 
++	ret = FALSE;
+ 	if (strcmp (resolved_running, resolved_self) == 0)
+-		return TRUE;
+-	return FALSE;
++		ret = TRUE;
++	free (resolved_self);
++	free (resolved_running);
++	return ret;
+ }
+ 
+ static void
+--- a/daemon/gdm-daemon-config.c
++++ b/daemon/gdm-daemon-config.c
+@@ -2524,13 +2524,13 @@
+ 		}
+ 
+ 		if (picfile != NULL) {
+-			char buf[PATH_MAX];
+-			if (realpath (picfile, buf) == NULL) {
++			char *buf;
++			if ((buf = realpath (picfile, NULL)) == NULL) {
+ 				g_free (picfile);
+ 				picfile = NULL;
+ 			} else {
+ 				g_free (picfile);
+-				picfile = g_strdup (buf);
++				picfile = buf;
+ 			}
+ 		}
+ 
+--- a/daemon/slave.c
++++ b/daemon/slave.c
+@@ -60,8 +60,6 @@
+ 
+ #if !defined (MAXPATHLEN) && defined (PATH_MAX)
+ #define MAXPATHLEN PATH_MAX
+-#elif !defined (MAXPATHLEN)
+-#error "MAXPATHLEN or PATH_MAX undefined"
+ #endif
+ 
+ #include <X11/Xlib.h>
+@@ -4191,14 +4189,13 @@
+ 	/* If using pseudo-devices, setup symlink if it does not exist */
+ 	if (device != NULL &&
+ 	    gdm_daemon_config_get_value_bool (GDM_KEY_UTMP_PSEUDO_DEVICE)) {
+-		gchar buf[MAXPATHLEN + 1];
++		gchar *buf;
+ 
+-		memset (buf, 0, sizeof (gchar) * (MAXPATHLEN + 1));
+ 
+ 		if (stat (device, &st) != 0) {
+ 			gdm_debug ("Creating pseudo-device %s", device);
+ 			symlink ("/dev/null", device);
+-		} else if (readlink (device, buf, MAXPATHLEN) > 0) {
++		} else if ((buf = realpath (device, NULL)) != NULL) {
+ 			if (strcmp (buf, "/dev/null") == 0) {
+ 				/* Touch symlink */
+ 				struct utimbuf  timebuf;
+@@ -4214,6 +4211,7 @@
+ 			} else {
+ 				gdm_debug ("Device %s points to %s", device, buf);
+ 			}
++			free (buf);
+ 		} else {
+ 			gdm_debug ("Device %s is not a symlink", device);
+ 		}
