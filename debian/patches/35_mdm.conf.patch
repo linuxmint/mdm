@@ -202,9 +202,9 @@ Index: mdm-2.20.7/config/mdm.conf.in
  # key and set GraphicalThemeRand to true.  Otherwise use GraphicalTheme
  # and specify just one theme.
 -#GraphicalTheme=circles
--#GraphicalThemes=circles/:happygnome
-+GraphicalTheme=debian-spacefun
-+#GraphicalThemes=debian-moreblue-orbit:/bijou/:blueswirl/:circles/:debblue-list/:debblue/:ayo/:debian-dawn/:debian-greeter/:debian/:glassfoot/:hantzley/:happygnome/:industrial/:crystal/:linsta
+-#GraphicalThemes=circles
++GraphicalTheme=circles
++#GraphicalThemes=circles
  GraphicalThemeDir=@datadir@/mdm/themes/
  GraphicalThemeRand=false
  

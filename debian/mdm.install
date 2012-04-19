@@ -1,8 +1,6 @@
 debian/*.xpm                            usr/share/pixmaps/
 debian/locale.conf                      etc/mdm
 debian/Xsession                         etc/mdm
-debian/debian-moreblue-orbit            usr/share/mdm/themes
-debian/debian-spacefun                  usr/share/mdm/themes
 debian/mdmXnestWrapper                  usr/share/mdm/
 debian/insserv.conf.d			etc
 debian/tmp/etc/dm

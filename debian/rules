@@ -54,8 +54,6 @@ build: build-stamp
 build-stamp: configure-stamp $(MANPAGES)
 	dh_testdir
 	$(MAKE)
-	sh debian/debian-moreblue-orbit.shar
-	sh debian/debian-spacefun.shar
 	touch build-stamp
 
 install: install-stamp
@@ -109,7 +107,6 @@ clean::
 		quilt --quiltrc /dev/null pop -a -R || test $$? = 2
 	-rm -rf .pc
 	rm -f install-stamp build-stamp configure-stamp patch-stamp
-	rm -rf debian/debian-moreblue-orbit debian/debian-spacefun
 	dh_clean $(MANPAGES) \
 		po/*.gmo po/.intltool-merge-cache \
 		config/gnome.desktop config/CDE.desktop config/default.desktop
