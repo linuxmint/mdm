@@ -1,1 +1,1 @@
-SUBDIRS = circles happygnome happygnome-list
+SUBDIRS = circles
