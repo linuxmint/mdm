@@ -60,8 +60,6 @@
 
 #if !defined (MAXPATHLEN) && defined (PATH_MAX)
 #define MAXPATHLEN PATH_MAX
-#elif !defined (MAXPATHLEN)
-#error "MAXPATHLEN or PATH_MAX undefined"
 #endif
 
 #include <X11/Xlib.h>
@@ -373,10 +371,6 @@ run_session_output (gboolean read_until_eof)
 			break;
 		}
 
-		if G_UNLIKELY (d->xsession_errors_bytes >= MAX_XSESSION_ERRORS_BYTES ||
-			       got_xfsz_signal)
-			continue;
-
 		/* write until we succeed in writing something */
 		VE_IGNORE_EINTR (written = write (d->xsession_errors_fd, buf, r));
 		if G_UNLIKELY (written < 0 || got_xfsz_signal) {
@@ -396,13 +390,6 @@ run_session_output (gboolean read_until_eof)
 		}
 
 		d->xsession_errors_bytes += r;
-
-		if G_UNLIKELY (d->xsession_errors_bytes >= MAX_XSESSION_ERRORS_BYTES &&
-			       ! got_xfsz_signal) {
-			VE_IGNORE_EINTR (write (d->xsession_errors_fd,
-						"\n...Too much output, ignoring rest...\n",
-						strlen ("\n...Too much output, ignoring rest...\n")));
-		}
 
 		/* there wasn't more then buf available, so no need to try reading
 		 * again, unless we really want to */
@@ -1745,6 +1732,9 @@ focus_first_x_window (const char *class_res_name)
 
 	mdm_log_shutdown ();
 
+	/* Debian changes */
+#if 0
+	/* upstream version */
 	mdm_close_all_descriptors (0 /* from */, p[1] /* except */, -1 /* except2 */);
 
 	/* No error checking here - if it's messed the best response
@@ -1752,6 +1742,17 @@ focus_first_x_window (const char *class_res_name)
 	mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
 	mdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
 	mdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
+#endif
+	/* Leave stderr open to the log */
+	VE_IGNORE_EINTR (close (0));
+	VE_IGNORE_EINTR (close (1));
+	mdm_close_all_descriptors (3 /* from */, p[1] /* except */, -1 /* except2 */);
+
+	/* No error checking here - if it's messed the best response
+         * is to ignore & try to continue */
+	mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
+	mdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
+	/* End of Debian changes */
 
 	mdm_log_init ();
 
@@ -1912,6 +1913,9 @@ run_config (MdmDisplay *display, struct passwd *pwent)
 
 		mdm_log_shutdown ();
 
+		/* Debian changes */
+#if 0
+		/* upstream version */
 		mdm_close_all_descriptors (0 /* from */, slave_fifo_pipe_fd /* except */, d->slave_notify_fd /* except2 */);
 
 		/* No error checking here - if it's messed the best response
@@ -1919,6 +1923,17 @@ run_config (MdmDisplay *display, struct passwd *pwent)
 		mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
 		mdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
 		mdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
+#endif
+		/* Leave stderr open to the log */
+		VE_IGNORE_EINTR (close (0));
+		VE_IGNORE_EINTR (close (1));
+		mdm_close_all_descriptors (3 /* from */, slave_fifo_pipe_fd /* except */, d->slave_notify_fd /* except2 */);
+
+		/* No error checking here - if it's messed the best response
+		 * is to ignore & try to continue */
+		mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
+		mdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
+		/* End of Debian changes */
 
 		mdm_log_init ();
 
@@ -4163,14 +4178,13 @@ mdm_slave_update_pseudo_device (MdmDisplay *d, const char *device_in)
 	/* If using pseudo-devices, setup symlink if it does not exist */
 	if (device != NULL &&
 	    mdm_daemon_config_get_value_bool (MDM_KEY_UTMP_PSEUDO_DEVICE)) {
-		gchar buf[MAXPATHLEN + 1];
+		gchar *buf;
 
-		memset (buf, 0, sizeof (gchar) * (MAXPATHLEN + 1));
 
 		if (stat (device, &st) != 0) {
 			mdm_debug ("Creating pseudo-device %s", device);
 			symlink ("/dev/null", device);
-		} else if (readlink (device, buf, MAXPATHLEN) > 0) {
+		} else if ((buf = realpath (device, NULL)) != NULL) {
 			if (strcmp (buf, "/dev/null") == 0) {
 				/* Touch symlink */
 				struct utimbuf  timebuf;
@@ -4186,6 +4200,7 @@ mdm_slave_update_pseudo_device (MdmDisplay *d, const char *device_in)
 			} else {
 				mdm_debug ("Device %s points to %s", device, buf);
 			}
+			free (buf);
 		} else {
 			mdm_debug ("Device %s is not a symlink", device);
 		}

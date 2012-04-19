@@ -1198,28 +1198,10 @@ else
    X_CONFIG_OPTIONS="-audit 0"
 fi
 
-# Use Xephyr if it is available.  It works better than Xnest since Xephyr
-# supports the Xserver extensions, even if on a remote machine.
-#
+# Use the wrapper script for the nested X server
+X_XNEST_CMD=/usr/share/mdm/mdmXnestWrapper
+X_XNEST_CONFIG_OPTIONS="-audit 0"
 X_XNEST_UNSCALED_FONTPATH="true"
-if test -x $X_SERVER_PATH/Xephyr; then
-    X_XNEST_CMD="$X_SERVER_PATH/Xephyr"
-    X_XNEST_CONFIG_OPTIONS="-audit 0"
-else
-    if test -x /usr/openwin/bin/Xnest; then
-        # If on Solaris, Xnest is only shipped with the Xsun Xserver, so
-        # use this version.
-        #
-        X_XNEST_CMD="/usr/openwin/bin/Xnest"
-        X_XNEST_CONFIG_OPTIONS="-audit 0 -name Xnest -pn"
-        X_XNEST_UNSCALED_FONTPATH="false"
-    else
-        if test -x $X_SERVER_PATH/Xnest; then
-            X_XNEST_CMD="$X_SERVER_PATH/Xnest"
-            X_XNEST_CONFIG_OPTIONS="-audit 0 -name Xnest"
-        fi
-    fi
-fi
 
 # Set POST_PATH after doing system specific case above just in case
 # any platforms want to update the PATH for a specific OS or distro.
@@ -1382,8 +1364,6 @@ gui/faces/Makefile
 gui/greeter/Makefile
 gui/greeter/themes/Makefile
 gui/greeter/themes/circles/Makefile
-gui/greeter/themes/happygnome/Makefile
-gui/greeter/themes/happygnome-list/Makefile
 gui/modules/Makefile
 utils/Makefile
 pixmaps/Makefile

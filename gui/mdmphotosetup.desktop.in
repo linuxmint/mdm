@@ -7,6 +7,7 @@ TryExec=mdmphotosetup
 Exec=mdmphotosetup
 Icon=mdm-login-photo
 StartupNotify=true
+NoDisplay=true
 Terminal=false
 Type=Application
 NotShowIn=GNOME;

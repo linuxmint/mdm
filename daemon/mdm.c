@@ -1439,28 +1439,33 @@ GOptionEntry options [] = {
 static gboolean
 linux_only_is_running (pid_t pid)
 {
-	char resolved_self[PATH_MAX];
-	char resolved_running[PATH_MAX];
+	char *resolved_self;
+	char *resolved_running;
+	gboolean ret;
 
 	char *running = g_strdup_printf ("/proc/%lu/exe", (gulong)pid);
 
-	if (realpath ("/proc/self/exe", resolved_self) == NULL) {
+	if ((resolved_self = realpath ("/proc/self/exe", NULL)) == NULL) {
 		g_free (running);
 		/* probably not a linux system */
 		return TRUE;
 	}
 
-	if (realpath (running, resolved_running) == NULL) {
+	if ((resolved_running = realpath (running, NULL)) == NULL) {
 		g_free (running);
+		free (resolved_self);
 		/* probably not a linux system */
 		return TRUE;
 	}
 
 	g_free (running);
 
+	ret = FALSE;
 	if (strcmp (resolved_running, resolved_self) == 0)
-		return TRUE;
-	return FALSE;
+		ret = TRUE;
+	free (resolved_self);
+	free (resolved_running);
+	return ret;
 }
 
 static void

@@ -163,8 +163,8 @@ Comment[zh_CN]=此会话使您登录到 GNOME
 Comment[zh_HK]=本作業階段會登入 GNOME 桌面環境
 Comment[zh_TW]=本作業階段會登入 GNOME 桌面環境
 Comment[zu]=Lenhlanganiso ikungenisa kwiGNOME
-Exec=/usr/dt/config/Xsession.jds
-TryExec=/usr/dt/config/Xsession.jds
+Exec=gnome-session
+TryExec=gnome-session
 # no icon yet, only the top three are currently used
 Icon=
 Type=Application

@@ -19,4 +19,3 @@
 #66_socket-in-var-run-for-fhs.patch
 68_hurd_pathmax.patch
 69_hurd_mdm_reset_locale.patch
-70_mandatory-relibtoolize.patch

@@ -19,4 +19,9 @@ mdmwhich () {
   echo "$OUTPUT"
 }
 
+# Use common Xreset framework if it exist
+if [ -x /etc/X11/Xreset ] ; then
+  /etc/X11/Xreset
+fi
+
 exit 0

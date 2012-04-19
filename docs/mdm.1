@@ -6,15 +6,7 @@ MDM \- The GNOME Display Manager
 .SH SYNOPSIS
 .B mdm [options]
 .br
-.B mdm-binary [options]
-.br
 .B mdmsetup [options]
-.br
-.B mdm-stop
-.br
-.B mdm-restart
-.br
-.B mdm-safe-restart
 .SH DESCRIPTION
 MDM is a replacement for XDM, the X Display Manager. Unlike its
 competitors (X3DM, KDM, WDM) MDM was written from scratch and
@@ -23,15 +15,7 @@ manages the X servers for both local and remote logins (using XDMCP).
 See http://www.gnome.org/projects/mdm/ for more details.
 .P
 .B mdm
-is just a script that runs the actual
-.B mdm-binary
-executable.
-.B mdm-stop
-is a script that stops the current running daemon immediately,
-.B mdm-restart
-restarts the current daemon immediately and
-.B mdm-safe-restart
-restarts the current daemon after everyone has logged out.
+is main executable.
 .B mdmsetup
 is a graphical tool for easily changing the most commonly
 used options.
@@ -43,7 +27,7 @@ section.
 .SH OPTIONS
 .B mdm
 and thus also
-.B mdm-binary
+.B mdm
 accept the following options:
 .TP
 .BI \-nodaemon

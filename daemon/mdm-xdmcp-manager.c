@@ -398,11 +398,20 @@ static int
 create_socket (struct addrinfo *ai)
 {
 	int sock;
+	int zero = 0;
 
 	sock = socket (ai->ai_family, ai->ai_socktype, ai->ai_protocol);
 	if (sock < 0) {
 		mdm_error ("socket: %s", g_strerror (errno));
 		return sock;
+	}
+
+	if (ai->ai_family == AF_INET6) {
+		if (setsockopt(sock, IPPROTO_IPV6, IPV6_V6ONLY, &zero, sizeof zero) < 0) {
+			mdm_error("setsockopt(IPV6_V6ONLY): %s\n", g_strerror(errno));
+			close(sock);
+			return -1;
+		}
 	}
 
 	if (bind (sock, ai->ai_addr, ai->ai_addrlen) < 0) {

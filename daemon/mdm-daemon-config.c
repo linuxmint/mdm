@@ -2524,13 +2524,13 @@ get_facefile_from_gnome2_dir_config (const char *homedir,
 		}
 
 		if (picfile != NULL) {
-			char buf[PATH_MAX];
-			if (realpath (picfile, buf) == NULL) {
+			char *buf;
+			if ((buf = realpath (picfile, NULL)) == NULL) {
 				g_free (picfile);
 				picfile = NULL;
 			} else {
 				g_free (picfile);
-				picfile = g_strdup (buf);
+				picfile = buf;
 			}
 		}
 

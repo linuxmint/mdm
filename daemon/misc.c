@@ -1680,43 +1680,6 @@ mdm_safe_fopen_ap (const char *file, mode_t perm)
 	return ret;
 }
 
-#ifdef RLIM_NLIMITS
-#define NUM_OF_LIMITS RLIM_NLIMITS
-#else /* ! RLIM_NLIMITS */
-#ifdef RLIMIT_NLIMITS
-#define NUM_OF_LIMITS RLIMIT_NLIMITS
-#endif /* RLIMIT_NLIMITS */
-#endif /* RLIM_NLIMITS */
-
-/* If we can count limits then the reset code is simple */ 
-#ifdef NUM_OF_LIMITS
-
-static struct rlimit limits[NUM_OF_LIMITS];
-
-void
-mdm_get_initial_limits (void)
-{
-	int i;
-
-	for (i = 0; i < NUM_OF_LIMITS; i++) {
-		/* Some sane defaults */
-		limits[i].rlim_cur = RLIM_INFINITY;
-		limits[i].rlim_max = RLIM_INFINITY;
-		/* Get the limits */
-		getrlimit (i, &(limits[i]));
-	}
-}
-
-void
-mdm_reset_limits (void)
-{
-	int i;
-
-	for (i = 0; i < NUM_OF_LIMITS; i++) {
-		/* Get the limits */
-		setrlimit (i, &(limits[i]));
-	}
-}
 
 #define CHECK_LC(value, category) \
     (g_str_has_prefix (line->str, value "=")) \
@@ -1812,6 +1775,46 @@ mdm_reset_locale (void)
 }
 
 #undef CHECK_LC
+
+#ifdef RLIM_NLIMITS
+#define NUM_OF_LIMITS RLIM_NLIMITS
+#else /* ! RLIM_NLIMITS */
+#ifdef RLIMIT_NLIMITS
+#define NUM_OF_LIMITS RLIMIT_NLIMITS
+#endif /* RLIMIT_NLIMITS */
+#endif /* RLIM_NLIMITS */
+
+/* If we can count limits then the reset code is simple */
+#ifdef NUM_OF_LIMITS
+
+static struct rlimit limits[NUM_OF_LIMITS];
+
+void
+mdm_get_initial_limits (void)
+{
+	int i;
+
+	for (i = 0; i < NUM_OF_LIMITS; i++) {
+		/* Some sane defaults */
+		limits[i].rlim_cur = RLIM_INFINITY;
+		limits[i].rlim_max = RLIM_INFINITY;
+		/* Get the limits */
+		getrlimit (i, &(limits[i]));
+	}
+}
+
+
+void
+mdm_reset_limits (void)
+{
+	int i;
+
+	for (i = 0; i < NUM_OF_LIMITS; i++) {
+		/* Get the limits */
+		setrlimit (i, &(limits[i]));
+	}
+}
+
 
 #else /* ! NUM_OF_LIMITS */
 /* We have to go one by one here */

@@ -1812,6 +1812,7 @@ greeter_parse (const char *file, const char *datadir,
   xmlChar *prop;
   gboolean res;
   GList *items;
+  char *dirtheme, *gtkrc;
   
   /* FIXME: EVIL! GLOBAL! */
   g_free (file_search_path);
@@ -1857,6 +1858,13 @@ greeter_parse (const char *file, const char *datadir,
 		   "The file %s has the wrong xml type", file);
       return NULL;
     }
+
+  dirtheme = g_path_get_dirname (file);
+  gtkrc = g_build_filename (dirtheme, "gtk-2.0", "gtkrc", NULL);
+  if (g_file_test (gtkrc, G_FILE_TEST_IS_REGULAR))
+    gtk_rc_parse (gtkrc);
+  g_free (dirtheme);
+  g_free (gtkrc);
 
   /*
    * The gtk-theme property specifies a theme specific gtk-theme to use

@@ -1302,11 +1302,20 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 				   (int)d->server_uid);
 			_exit (SERVER_ABORT);
 		}
+	/*
+	 * When started as root, X will read $HOME/xorg.conf before files in /etc.  As this isn't what users
+	 * expect from mdm starting up, we set $HOME to be /etc/X11.  (an unset $HOME will cause the X server
+	 * to bail)  The Debian X server will have this removed soon, and hopefully the change will go
+	 * upstream, at which point the original code will not cause user confusion.
+	 */
+#if 0
 		if (pwent->pw_dir != NULL &&
 		    g_file_test (pwent->pw_dir, G_FILE_TEST_EXISTS))
 			g_setenv ("HOME", pwent->pw_dir, TRUE);
 		else
 			g_setenv ("HOME", "/", TRUE); /* Hack */
+#endif
+		g_setenv ("HOME", "/etc/X11", TRUE);
 		g_setenv ("SHELL", pwent->pw_shell, TRUE);
 		g_unsetenv ("MAIL");
 

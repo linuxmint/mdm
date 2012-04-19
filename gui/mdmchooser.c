@@ -1121,6 +1121,7 @@ mdm_chooser_xdmcp_init (char **hosts)
 {
 	static XdmcpHeader header;
 	gint sockopts = 1;
+	int ipv6_only_flag = 0;
 
 	/* Open socket for communication */
 #ifdef ENABLE_IPV6
@@ -1138,6 +1139,13 @@ mdm_chooser_xdmcp_init (char **hosts)
 	if (setsockopt (sockfd, SOL_SOCKET, SO_BROADCAST,
 			(char *) &sockopts, sizeof (sockopts)) < 0) {
 		mdm_common_fail_exit ("Could not set socket options!");
+	}
+
+	if (have_ipv6) {
+		if (setsockopt (sockfd, IPPROTO_IPV6, IPV6_V6ONLY,
+			(char*)&ipv6_only_flag, sizeof(ipv6_only_flag)) < 0) {
+			mdm_common_fail_exit ("Could not set socket options!");
+            }
 	}
 
 	/* Assemble XDMCP BROADCAST_QUERY packet in static buffer */

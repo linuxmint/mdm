@@ -149,7 +149,7 @@ mdm_get_vt_device (int vtno)
 #ifdef __sun
 #define MDMCONSOLEDEVICE "/dev/vt/0"
 #else
-#define MDMCONSOLEDEVICE "/dev/console"
+#define MDMCONSOLEDEVICE "/dev/tty0"
 #endif
 
 

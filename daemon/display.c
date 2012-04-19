@@ -536,8 +536,17 @@ mdm_display_manage (MdmDisplay *d)
 
 	mdm_log_shutdown ();
 
-	/* Close everything */
-	mdm_close_all_descriptors (0 /* from */, fds[0] /* except */, slave_fifo_pipe_fd /* except2 */);
+	/* Debian changes */
+#if 0
+	/* upstream version */
+-	/* Close everything */
+-	mdm_close_all_descriptors (0 /* from */, fds[0] /* except */, slave_fifo_pipe_fd /* except2 */);
+#endif
+	/* Close stdin/stdout/stderr.  Leave others, as pam modules may have them open */
+	VE_IGNORE_EINTR (close (0));
+	VE_IGNORE_EINTR (close (1));
+	VE_IGNORE_EINTR (close (2));
+	/* End of Debian changes */
 
 	/* No error checking here - if it's messed the best response
          * is to ignore & try to continue */
