@@ -3351,7 +3351,7 @@ mdm:.my.domain
           <varlistentry>
             <term>BackgroundColor</term>
             <listitem>
-              <synopsis>BackgroundColor=#76848F</synopsis>
+              <synopsis>BackgroundColor=#000000</synopsis>
               <para>
                 If the BackgroundType is 2, use this color in the background
                 of the greeter.  Also use it as the back of transparent images
@@ -3649,7 +3649,7 @@ mdm:.my.domain
          <varlistentry>
             <term>GraphicalThemedColor</term>
             <listitem>
-              <synopsis>GraphicalThemedColor=#76848F</synopsis>
+              <synopsis>GraphicalThemedColor=#000000</synopsis>
               <para>
                 Use this color in the background of the Themed Greeter.  
                 This only affects the Themed Greeter.

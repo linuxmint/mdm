@@ -3647,7 +3647,7 @@ msgstr ""
 
 #: ../C/mdm.xml:3237(synopsis)
 #, no-wrap
-msgid "BackgroundColor=#76848F"
+msgid "BackgroundColor=#000000"
 msgstr ""
 
 #: ../C/mdm.xml:3238(para)
@@ -4012,7 +4012,7 @@ msgstr ""
 
 #: ../C/mdm.xml:3535(synopsis)
 #, no-wrap
-msgid "GraphicalThemedColor=#76848F"
+msgid "GraphicalThemedColor=#000000"
 msgstr ""
 
 #: ../C/mdm.xml:3536(para)

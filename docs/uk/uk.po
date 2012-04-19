@@ -1993,8 +1993,8 @@ msgstr "BackgroundColor"
 
 #: ../C/mdm.xml:2722(synopsis)
 #, no-wrap
-msgid "BackgroundColor=#76848F"
-msgstr "BackgroundColor=#76848F"
+msgid "BackgroundColor=#000000"
+msgstr "BackgroundColor=#000000"
 
 #: ../C/mdm.xml:2723(para)
 msgid "If the BackgroundType is 2, use this color in the background of the greeter. Also use it as the back of transparent images set on the background and if the BackgroundRemoteOnlyColor is set and this is a remote display. This only affects the GTK+ Greeter."
@@ -2278,8 +2278,8 @@ msgstr "GraphicalThemedColor"
 
 #: ../C/mdm.xml:3020(synopsis)
 #, no-wrap
-msgid "GraphicalThemedColor=#76848F"
-msgstr "GraphicalThemedColor=#76848F"
+msgid "GraphicalThemedColor=#000000"
+msgstr "GraphicalThemedColor=#000000"
 
 #: ../C/mdm.xml:3021(para)
 msgid "Use this color in the background of the Themed Greeter. This only affects the Themed Greeter."

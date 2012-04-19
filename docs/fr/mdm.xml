@@ -1373,7 +1373,7 @@ mdm:.mon.domaine
           <varlistentry>
             <term>BackgroundColor</term>
             <listitem>
-              <synopsis>BackgroundColor=#76848F</synopsis>
+              <synopsis>BackgroundColor=#000000</synopsis>
               <para>Si la valeur de BackgroundType est de 2, c'est cette couleur qui sera utilisée en arrière-plan de la bannière. Elle est aussi utilisée comme fond des images transparentes placées sur l'arrière-plan, également dans le cas où BackgroundRemoteOnlyColor est défini et que l'affichage est distant. Cela ne concerne que la bannière GTK+.</para>
             </listitem>
           </varlistentry>
@@ -1547,7 +1547,7 @@ mdm:.mon.domaine
          <varlistentry>
             <term>GraphicalThemedColor</term>
             <listitem>
-              <synopsis>GraphicalThemedColor=#76848F</synopsis>
+              <synopsis>GraphicalThemedColor=#000000</synopsis>
               <para>Couleur utilisée pour l'arrière-plan de la bannière avec thème. Cela ne concerne que la bannière avec thème.</para>
             </listitem>
           </varlistentry>

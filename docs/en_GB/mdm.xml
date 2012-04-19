@@ -1993,7 +1993,7 @@ mdm:.my.domain
           <varlistentry>
             <term>BackgroundColor</term>
             <listitem>
-              <synopsis>BackgroundColor=#76848F</synopsis>
+              <synopsis>BackgroundColor=#000000</synopsis>
               <para>If the BackgroundType is 2, use this colour in the background of the greeter. Also use it as the back of transparent images set on the background and if the BackgroundRemoteOnlyColor is set and this is a remote display. This only affects the GTK+ Greeter.</para>
             </listitem>
           </varlistentry>
@@ -2167,7 +2167,7 @@ mdm:.my.domain
          <varlistentry>
             <term>GraphicalThemedColor</term>
             <listitem>
-              <synopsis>GraphicalThemedColor=#76848F</synopsis>
+              <synopsis>GraphicalThemedColor=#000000</synopsis>
               <para>Use this colour in the background of the Themed Greeter. This only affects the Themed Greeter.</para>
             </listitem>
           </varlistentry>

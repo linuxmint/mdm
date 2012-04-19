@@ -3214,7 +3214,7 @@ Other Changes:
 
 - StandardXServer can now have arguments
 
-- Default color is now #76848F and the PreSession script tries
+- Default color is now #000000 and the PreSession script tries
   to use the default mdm color to fix #128220 
 
 - Fix assert failure when starting Xnest (#127780)

@@ -58,7 +58,7 @@ if [ "x$XSETROOT" != "x" ] ; then
 
 	# Default value
  	if [ "x$BACKCOLOR" = "x" ]; then
- 		BACKCOLOR="#76848F"
+ 		BACKCOLOR="#000000"
  	fi
 
 	"$XSETROOT" -cursor_name left_ptr -solid "$BACKCOLOR"

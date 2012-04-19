@@ -461,8 +461,8 @@ DefaultRemoteWelcome=true
 # The Standard greeter (mdmlogin) uses BackgroundColor as the background
 # color, while the themed greeter (mdmgreeter) uses GraphicalThemedColor
 # as the background color.
-BackgroundColor=#76848F
-GraphicalThemedColor=#76848F
+BackgroundColor=#000000
+GraphicalThemedColor=#000000
 # XDMCP session should only get a color, this is the sanest setting since you
 # don't want to take up too much bandwidth
 #BackgroundRemoteOnlyColor=true

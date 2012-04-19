@@ -2463,7 +2463,7 @@ mdm:.my.domain
           <varlistentry>
             <term>BackgroundColor</term>
             <listitem>
-              <synopsis>BackgroundColor=#76848F</synopsis>
+              <synopsis>BackgroundColor=#000000</synopsis>
               <para>Якщо BackgroundType дорівнює 2, тоді цей колір використовується для тла програми привітання. Він також використовується як задній план прозорих зображень на тлі, якщо встановлено параметр BackgroundRemoteOnlyColor та це віддалений дисплей. Впливає лише на програму привітання на GTK+.</para>
             </listitem>
           </varlistentry>
@@ -2644,7 +2644,7 @@ mdm:.my.domain
          <varlistentry>
             <term>GraphicalThemedColor</term>
             <listitem>
-              <synopsis>GraphicalThemedColor=#76848F</synopsis>
+              <synopsis>GraphicalThemedColor=#000000</synopsis>
               <para>Використовувати цей колір як тло програми привітання з підтримкою тем. Впливає лише на програму привітання на GTK+.</para>
             </listitem>
           </varlistentry>

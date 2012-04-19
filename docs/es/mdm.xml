@@ -1345,7 +1345,7 @@ Greeter=/usr/lib/mdmgreeter
           <varlistentry>
             <term>BackgroundColor</term>
             <listitem>
-              <synopsis>BackgroundColor=#76848F</synopsis>
+              <synopsis>BackgroundColor=#000000</synopsis>
               <para>Si BackgroundType es 2, use este color en el fondo del interfaz. Además se usará como el fondo de las imágenes transparentes y si BackgroundRemoteOnlyColor está establecido y es una pantalla remota. Esto sólo afecta al interfaz GTK+.</para>
             </listitem>
           </varlistentry>
@@ -1519,7 +1519,7 @@ Greeter=/usr/lib/mdmgreeter
          <varlistentry>
             <term>GraphicalThemedColor</term>
             <listitem>
-              <synopsis>GraphicalThemedColor=#76848F</synopsis>
+              <synopsis>GraphicalThemedColor=#000000</synopsis>
               <para>Use este color en el fondo del Interfaz con Temas. Esto sólo afecta al interfaz con temas.</para>
             </listitem>
           </varlistentry>

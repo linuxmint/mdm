@@ -7948,7 +7948,7 @@ Thu Dec 04 17:01:21 2003  Leena Gunda <leena.gunda@wipro.com>
 Fri Dec 19 17:04:31 2003  George Lebl <jirka@5z.com>
 
 	* daemon/mdm.h, config/PreSession.in, config/mdm.conf.in: Make
-	  default color #76848F to fix #128220.  Also in the PreSession
+	  default color #000000 to fix #128220.  Also in the PreSession
 	  script try to grab the color from the mdm.conf file when
 	  doing the xsetroot.
 
