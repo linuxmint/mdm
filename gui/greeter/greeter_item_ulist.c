@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -33,15 +33,15 @@
 #include <glib/gi18n.h>
 #include <librsvg/rsvg.h>
 
-#include "gdm.h"
-#include "gdmcommon.h"
-#include "gdmcomm.h"
-#include "gdmconfig.h"
-#include "gdmuser.h"
+#include "mdm.h"
+#include "mdmcommon.h"
+#include "mdmcomm.h"
+#include "mdmconfig.h"
+#include "mdmuser.h"
 
-#include "gdm-common.h"
-#include "gdm-socket-protocol.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-socket-protocol.h"
+#include "mdm-daemon-config-keys.h"
 
 #include "greeter.h"
 #include "greeter_item_ulist.h"
@@ -78,7 +78,7 @@ greeter_item_ulist_check_show_userlist (void)
 	 * userlist-rect id allows a rectangle to be defined with alpha
 	 * behind the userlist that also goes away when the list is empty.
 	 */
-	if (num_users == 0 || !gdm_config_get_bool (GDM_KEY_BROWSER)) {
+	if (num_users == 0 || !mdm_config_get_bool (MDM_KEY_BROWSER)) {
 
 		GreeterItemInfo *urinfo = greeter_lookup_id ("userlist-rect");
 
@@ -124,7 +124,7 @@ check_for_displays (void)
 	 * Might be nice to move this call into read_config() so that it happens
 	 * on the same socket call as reading the configuration.
 	 */
-	ret = gdmcomm_call_gdm (GDM_SUP_ATTACHED_SERVERS, auth_cookie, "2.2.4.0", 5);
+	ret = mdmcomm_call_mdm (MDM_SUP_ATTACHED_SERVERS, auth_cookie, "2.2.4.0", 5);
 	if (ve_string_empty (ret) || strncmp (ret, "OK ", 3) != 0) {
 		g_free (ret);
 		return;
@@ -145,7 +145,7 @@ check_for_displays (void)
 		char **rvec;
 
 		rvec = g_strsplit (vec[i], ",", -1);
-		if (gdm_vector_len (rvec) != 3) {
+		if (mdm_vector_len (rvec) != 3) {
 			g_strfreev (rvec);
 			continue;
 		}
@@ -161,21 +161,21 @@ check_for_displays (void)
 }
 
 static void 
-gdm_greeter_users_init (void)
+mdm_greeter_users_init (void)
 {
 	gint   size_of_users = 0;
 
-	defface = gdm_common_get_face (NULL,
-				       gdm_config_get_string (GDM_KEY_DEFAULT_FACE),
-				       gdm_config_get_int (GDM_KEY_MAX_ICON_WIDTH),
-				       gdm_config_get_int (GDM_KEY_MAX_ICON_HEIGHT));
+	defface = mdm_common_get_face (NULL,
+				       mdm_config_get_string (MDM_KEY_DEFAULT_FACE),
+				       mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH),
+				       mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
 	if (! defface) {
-		gdm_common_warning ("Can't open DefaultImage: %s!",
-			gdm_config_get_string (GDM_KEY_DEFAULT_FACE));
+		mdm_common_warning ("Can't open DefaultImage: %s!",
+			mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
 	}
 
-	gdm_users_init (&users, &users_string, NULL, defface,
-			&size_of_users, GDM_IS_LOCAL, !DOING_GDM_DEVELOPMENT);
+	mdm_users_init (&users, &users_string, NULL, defface,
+			&size_of_users, MDM_IS_LOCAL, !DOING_MDM_DEVELOPMENT);
 }
 
 static void
@@ -184,16 +184,16 @@ greeter_populate_user_list (GtkTreeModel *tm)
 	GList *li;
 
 	for (li = users; li != NULL; li = li->next) {
-		GdmUser    *usr = li->data;
+		MdmUser    *usr = li->data;
 		GtkTreeIter iter = {0};
 		char       *label;
 		char       *name;
 		gboolean    active;
 
 		if (usr->gecos && strcmp (usr->gecos, "") != 0) {
-			name = gdm_common_text_to_escaped_utf8 (usr->gecos);
+			name = mdm_common_text_to_escaped_utf8 (usr->gecos);
 		} else {
-			name = gdm_common_text_to_escaped_utf8 (usr->login);
+			name = mdm_common_text_to_escaped_utf8 (usr->login);
 		}
 
 		if (g_hash_table_lookup (displays_hash, usr->login))
@@ -228,7 +228,7 @@ void
 greeter_item_ulist_select_user (gchar *login)
 {
 	printf ("%c%c%c%s\n", STX, BEL,
-		GDM_INTERRUPT_SELECT_USER, login);
+		MDM_INTERRUPT_SELECT_USER, login);
 
 	fflush (stdout);
 }
@@ -251,7 +251,7 @@ user_selected (GtkTreeSelection *selection, gpointer data)
 			if (selecting_user) {
 				GreeterItemInfo *pamlabel = greeter_lookup_id ("pam-message");
 				if (pamlabel == NULL) {
-					gdm_common_warning ("Theme broken: must have pam-message label!");
+					mdm_common_warning ("Theme broken: must have pam-message label!");
 				}
 				greeter_item_ulist_select_user (login);
 				if (selected_user != NULL)
@@ -276,7 +276,7 @@ greeter_generate_userlist (GtkWidget *tv, GreeterItemInfo *info)
 	GtkTreeSelection *selection;
 	GList *list, *li;
 
-	gdm_greeter_users_init ();
+	mdm_greeter_users_init ();
 
 	check_for_displays ();
 
@@ -315,7 +315,7 @@ greeter_generate_userlist (GtkWidget *tv, GreeterItemInfo *info)
 		gtk_tree_view_append_column (GTK_TREE_VIEW (tv), column_two);
 
 		/* Only populate the user list if the browser is turned on */
-		if (gdm_config_get_bool (GDM_KEY_BROWSER))
+		if (mdm_config_get_bool (MDM_KEY_BROWSER))
 			greeter_populate_user_list (tm);
 
 		list = gtk_tree_view_column_get_cell_renderers (column_one);
@@ -349,18 +349,18 @@ force_no_tree_separators (GtkWidget *widget)
 
 	if (first_time) {
 		gtk_rc_parse_string ("\n"
-				     "	 style \"gdm-userlist-treeview-style\"\n"
+				     "	 style \"mdm-userlist-treeview-style\"\n"
 				     "	 {\n"
 				     "	    GtkTreeView::horizontal-separator=0\n"
 				     "	    GtkTreeView::vertical-separator=0\n"
 				     "	 }\n"
 				     "\n"
-				     "	  widget \"*.gdm-userlist-treeview\" style \"gdm-userlist-treeview-style\"\n"
+				     "	  widget \"*.mdm-userlist-treeview\" style \"mdm-userlist-treeview-style\"\n"
 				     "\n");
 		first_time = FALSE;
 	}
 
-	gtk_widget_set_name (widget, "gdm-userlist-treeview");
+	gtk_widget_set_name (widget, "mdm-userlist-treeview");
 }
 
 gboolean
@@ -397,7 +397,7 @@ greeter_item_ulist_setup (void)
 			 * avoids the ugly white background displayed
 			 * below the Face Browser when the list isn't
 			 * as large as the rectangle defined in the
-			 * GDM theme file.
+			 * MDM theme file.
 			 */
 
 			gtk_widget_size_request (user_list, &req);

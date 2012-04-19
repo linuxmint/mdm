@@ -100,7 +100,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 EXTRA_CHOOSER_LIBS = @EXTRA_CHOOSER_LIBS@
 EXTRA_DAEMON_LIBS = @EXTRA_DAEMON_LIBS@
-EXTRA_GDMASKPASS_LIBS = @EXTRA_GDMASKPASS_LIBS@
+EXTRA_MDMASKPASS_LIBS = @EXTRA_MDMASKPASS_LIBS@
 EXTRA_GREETER_LIBS = @EXTRA_GREETER_LIBS@
 EXTRA_NSL_LIB = @EXTRA_NSL_LIB@
 EXTRA_SOCKET_LIB = @EXTRA_SOCKET_LIB@
@@ -110,22 +110,22 @@ GDKPIXBUF_CFLAGS = @GDKPIXBUF_CFLAGS@
 GDKPIXBUF_LIBS = @GDKPIXBUF_LIBS@
 GDK_CFLAGS = @GDK_CFLAGS@
 GDK_LIBS = @GDK_LIBS@
-GDMASKPASS = @GDMASKPASS@
-GDMCHOOSER = @GDMCHOOSER@
-GDMGNOMESESSIONCMD = @GDMGNOMESESSIONCMD@
-GDMOPEN = @GDMOPEN@
-GDMPREFETCH = @GDMPREFETCH@
-GDMPREFETCHCMD = @GDMPREFETCHCMD@
-GDMPREFETCHLIST = @GDMPREFETCHLIST@
-GDMSSHSESSION = @GDMSSHSESSION@
-GDMSSHSESSIONCMD = @GDMSSHSESSIONCMD@
-GDMXNESTCHOOSER = @GDMXNESTCHOOSER@
-GDM_CUSTOM_CONF = @GDM_CUSTOM_CONF@
-GDM_DEFAULTS_CONF = @GDM_DEFAULTS_CONF@
-GDM_OLD_CONF = @GDM_OLD_CONF@
-GDM_PID_FILE = @GDM_PID_FILE@
-GDM_RBAC_SYSCMD_KEYS = @GDM_RBAC_SYSCMD_KEYS@
-GDM_USER_PATH = @GDM_USER_PATH@
+MDMASKPASS = @MDMASKPASS@
+MDMCHOOSER = @MDMCHOOSER@
+MDMGNOMESESSIONCMD = @MDMGNOMESESSIONCMD@
+MDMOPEN = @MDMOPEN@
+MDMPREFETCH = @MDMPREFETCH@
+MDMPREFETCHCMD = @MDMPREFETCHCMD@
+MDMPREFETCHLIST = @MDMPREFETCHLIST@
+MDMSSHSESSION = @MDMSSHSESSION@
+MDMSSHSESSIONCMD = @MDMSSHSESSIONCMD@
+MDMXNESTCHOOSER = @MDMXNESTCHOOSER@
+MDM_CUSTOM_CONF = @MDM_CUSTOM_CONF@
+MDM_DEFAULTS_CONF = @MDM_DEFAULTS_CONF@
+MDM_OLD_CONF = @MDM_OLD_CONF@
+MDM_PID_FILE = @MDM_PID_FILE@
+MDM_RBAC_SYSCMD_KEYS = @MDM_RBAC_SYSCMD_KEYS@
+MDM_USER_PATH = @MDM_USER_PATH@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_LIBS = @GLIB_LIBS@
@@ -258,8 +258,8 @@ dmconfdir = @dmconfdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
-gdmconfdir = @gdmconfdir@
-gdmlocaledir = @gdmlocaledir@
+mdmconfdir = @mdmconfdir@
+mdmlocaledir = @mdmlocaledir@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -291,16 +291,16 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-happygnomedir = $(datadir)/gdm/themes/happygnome-list
+happygnomedir = $(datadir)/mdm/themes/happygnome-list
 happygnome_DATA = \
-	GdmGreeterTheme.desktop \
+	MdmGreeterTheme.desktop \
 	happygnome-list.xml \
 	background.svg \
 	gnome-logo.svg  \
 	screenshot.png
 
 happygnome_in_files = \
-	GdmGreeterTheme.desktop.in
+	MdmGreeterTheme.desktop.in
 
 EXTRA_DIST = $(happygnome_DATA) $(happygnome_in_files)
 all: all-am
@@ -495,7 +495,7 @@ uninstall-am: uninstall-happygnomeDATA
 @INTLTOOL_DESKTOP_RULE@
 
 clean-local:
-	/bin/rm -f GdmGreeterTheme.desktop
+	/bin/rm -f MdmGreeterTheme.desktop
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

@@ -4,7 +4,7 @@ Ahh news...
 
 - No longer print invalid encoded strings since this can causemaster the user's 
   password to be logged in the syslog if it contains invalid characters
-  and if GDM debug is enabled.  Fixes bug #571846.
+  and if MDM debug is enabled.  Fixes bug #571846.
 
 - Fix call to g_markup_printf_escaped so NULL strings are not passed in.
 
@@ -15,7 +15,7 @@ Ahh news...
 - Switch buttons "Make Default" and "Just For This Session" for better
   usability.  Fixes bug #597661.
 
-- On Solaris, GDM now configure favors the Xfree Xinerama interfaces over 
+- On Solaris, MDM now configure favors the Xfree Xinerama interfaces over 
   the obsolete Solaris specific interfaces.  This ensures that Xinerama
   works on OpenSolaris where Xfree should be used, and also on Solaris 10
   where the Solaris specific interfaces should be used.  Fixes bug #580060.
@@ -36,13 +36,13 @@ Ahh news...
   So the gesture listener now checks if the initialization failed and 
   reinitializes upon keypress if there was a failure.  (Brian Cameron)
 
-- Enhance gdm-ssh-session so that the port value can be specified when doing
+- Enhance mdm-ssh-session so that the port value can be specified when doing
   a remote ssh connection.  (Thomas Bechtold)
 
 - Fix double-free issue and provide better error reporting when the command
-  specified by gdmdynamic can not be parsed.  (Chris Wilson, Brian Cameron)
+  specified by mdmdynamic can not be parsed.  (Chris Wilson, Brian Cameron)
 
-- Correct how the host variable is freed in gdm_xdmcp_handle_message so it
+- Correct how the host variable is freed in mdm_xdmcp_handle_message so it
   is not freed before it is last used.  (Brian Cameron)
 
 - Make sure that pwent gets set before calling audit_fail_login, otherwise
@@ -52,7 +52,7 @@ Ahh news...
 
 - Backout Solaris specific code from the Xsession script.  This code was moved
   to /etc/X11/xinit/xinitrc.d scripts, which is a better place to store such
-  distro specific code than in the GDM module.  (Takao Fujiwara)
+  distro specific code than in the MDM module.  (Takao Fujiwara)
 
 - Set default PRIO values properly on Solaris.  (Brian Cameron)
 
@@ -66,7 +66,7 @@ Ahh news...
 
 2.20.9 Stuff:
 
-- Fix processing of configuration variables in GDM's cleanup function so
+- Fix processing of configuration variables in MDM's cleanup function so
   that configuration options aren't checked after they are freed.  (Brian
   Cameron)
 
@@ -78,18 +78,18 @@ Ahh news...
 
 - Correct processing of CONSOLE and PASSREQ /etc/default/login parameters
   so that they are checked each time a user logs in, and the most recent
-  setting is used.  Thus, if the value is changed, GDM honors it immediately.
+  setting is used.  Thus, if the value is changed, MDM honors it immediately.
   (Brian Cameron)
 
 - Trusted Solaris integration now supports multilabel session entires.
   (Stephen Browne)
 
-- Fix so that the gdm_ensure_sanity function is non-functional on Solaris.
+- Fix so that the mdm_ensure_sanity function is non-functional on Solaris.
   This function sets file permissions on sockets which are inappropriate o
   Solaris.  (Brian Cameron)
 
 - When using the Solaris ZFS filesystem, the ACL's are now properly set
-  so that the "gdm" user has access to the sound device, so text-to-speech
+  so that the "mdm" user has access to the sound device, so text-to-speech
   can work.  (Brian Cameron)
 
 - Fix for Solaris fbconsole launching code so that fbconsole is killed when
@@ -103,9 +103,9 @@ Ahh news...
 
 2.20.8 Stuff:
 
-- Improve gdm_final_cleanup so that the slave daemon exits after
+- Improve mdm_final_cleanup so that the slave daemon exits after
   receiving a shutdown or reboot event, and after completing all
-  cleanup.  This further fixes bug #517526. which was causing GDM
+  cleanup.  This further fixes bug #517526. which was causing MDM
   to crash on reboot or shutdown. (Josselin Mouette)
 
 - Fix broken check in configure for TCP wrappers.  Fixes bug #548676.
@@ -113,7 +113,7 @@ Ahh news...
 
 - Correct memory leak in SELinux code.  (Julien Cristau)
 
-- Use g_strdup when copying strings in gdmchooser to avoid a
+- Use g_strdup when copying strings in mdmchooser to avoid a
   crash.  See bug #544730.  (Matthias Crochner and Brian Cameron)
 
 - Ignore ENXIO when processing ioctl since some distros, such as
@@ -121,7 +121,7 @@ Ahh news...
   Fixes bug #544790.  (Volker Stolz)
 
 - Prevent a negative value when processing SVG images in the
-  gdmgreeter themes.  (Pascal Brochart)
+  mdmgreeter themes.  (Pascal Brochart)
 
 - Add Kazakh language to locale.alias.
 
@@ -131,9 +131,9 @@ Ahh news...
 - On Solaris, no longer use ctrun for SMF integration, and instead
   manage SMF so that when the slave daemon is forked, it is spawned
   in a separate service contract.  This ensures that the user session
-  all GDM GUI programs, and the PAM interaction all happen in the
+  all MDM GUI programs, and the PAM interaction all happen in the
   user service contract.  This helps to ensure that if the Xserver
-  crashes, it does not cause the GDM service to restart.  (Brian
+  crashes, it does not cause the MDM service to restart.  (Brian
   Cameron)
 
 - On Solaris fbconsole is called with the "-n" argument to avoid
@@ -143,7 +143,7 @@ Ahh news...
 
 2.20.7 Stuff:
 
-- When GDM checks the XFree86_VT atom, it does not set it if it
+- When MDM checks the XFree86_VT atom, it does not set it if it
   does not already exist.  (Brian Cameron, Simon Zheng)
 
 - Free a pointer array via g_free instead of g_ptr_array_free, avoiding
@@ -152,7 +152,7 @@ Ahh news...
 - When reading in the BaseXsession configuration value, it now only
   accepts the first word as the script name and ignores the rest.
   Previously if you had any trailing spaces or other arguments, it
-  would cause GDM to fail to read any value for the script.  (Brian
+  would cause MDM to fail to read any value for the script.  (Brian
   Cameron)
 
 - Use RBAC for Suspend when on Solaris.  (Simon Zheng)
@@ -162,11 +162,11 @@ Ahh news...
 
 2.20.6 Stuff:
 
-- Fix two related bugs that were causing GDM to crash regularly on exit.
+- Fix two related bugs that were causing MDM to crash regularly on exit.
   Refer to bug #517526.  (Brian Cameron)
 
-- Fix a third bug that was causing the GDM daemon to crash occasionally when
-  using gdmsetup.  This fix changes GDM so that when it receives an
+- Fix a third bug that was causing the MDM daemon to crash occasionally when
+  using mdmsetup.  This fix changes MDM so that when it receives an
   UPDATE_CONFIG command, it only updates the key specified rather than
   re-reading the entire configuration file.  Fixes bug #517526.  (Brian
   Cameron)
@@ -178,14 +178,14 @@ Ahh news...
   the related fixes implemented in 2.20.2 did not fully resolve this issue.
   (Brian Cameron)
 
-- Fix bug that was causing GDM session desktop file marked as "Hidden=true"
+- Fix bug that was causing MDM session desktop file marked as "Hidden=true"
   to show up in the Session dialog.  (Brian Cameron)
 
-- Fix gdmsetup bug that caused users to need to restart GDM in order for
+- Fix mdmsetup bug that caused users to need to restart MDM in order for
   it to notice changes made in the "Server settings" dialog.  (Brian
   Cameron)
 
-- Fix gdmsetup so it does not save 24HourClock setting as a translated 
+- Fix mdmsetup so it does not save 24HourClock setting as a translated 
   string, which was causing the configuration to get confused.  (Brian
   Cameron)
 
@@ -215,8 +215,8 @@ Ahh news...
 
 - Use GDK functions to get proper screen resolution. (Vincent Untz)
 
-- Move default Welcome/RemoteWelcome strings from gdm.h to
-  gdm-daemon-config-keys.h so it isn't defined twice.  (Brian Cameron)
+- Move default Welcome/RemoteWelcome strings from mdm.h to
+  mdm-daemon-config-keys.h so it isn't defined twice.  (Brian Cameron)
 
 - Translation updates (Takeshi AIHANA, Wouter Bolsterlee, Luca Ferretti,
   Gil Forcada, Jorge Gonzalez, Gabor Kelemen, Petr Kovar, Yuri Kozlov,
@@ -225,7 +225,7 @@ Ahh news...
 
 2.20.4 Stuff:
 
-- The Custom Widgetry code in gdmgreeter was broken, and would not create
+- The Custom Widgetry code in mdmgreeter was broken, and would not create
   the /var/lib/$DISPLAY.GreeterInfo file properly.  Due to the move away
   from vicious-extensions and towards GKeyFile, the format of this file
   changed slightly to INI format with the [GreeterInfo] group.  The docs
@@ -246,21 +246,21 @@ Ahh news...
   docs were modified to explain this change.  Fixes bug #477881.
   (Alexander "weej" Jones)
 
-- Provide better tooltip for entry field in gdmgreeter.  (Roberto
+- Provide better tooltip for entry field in mdmgreeter.  (Roberto
   Sarrionandia)
 
 - Get the environment variable XDG_DATA_DIRS before clearing the 
   environment variables.  This way if the user sets XDG_DATA_DIRS before
-  running GDM, this should now be honored.  (Brian Cameron)
+  running MDM, this should now be honored.  (Brian Cameron)
 
-- Fix gdmsetup bug that was causing the Welcome (local and remote)
+- Fix mdmsetup bug that was causing the Welcome (local and remote)
   message to not be saved properly when changed.  (Brian Cameron)
 
 - Fix the setting of the custom command NOTIFY key to avoid crashing when
-  changing the label values of a custom command in gdmsetup.  (Brian
+  changing the label values of a custom command in mdmsetup.  (Brian
   Cameron)
 
-- Add include of "gdm-log.h" to daemon/verify-crypt.c and
+- Add include of "mdm-log.h" to daemon/verify-crypt.c and
   daemon/verify-shadow.c to fix compile issue on some platforms.  (Simon
   Munton)
 
@@ -279,23 +279,23 @@ Ahh news...
 - Now "Esc" key acts like the "Start Again" button in the greeter
   program.  (Ray Strode)
 
-- Fix regression in GDM 2.20 that caused the daemon to not read
+- Fix regression in MDM 2.20 that caused the daemon to not read
   any [server-foo] sections that were not referenced in the
   [servers] section of the configuration file.  This caused
-  problems for gdmsetup when you tried to edit the Xserver
+  problems for mdmsetup when you tried to edit the Xserver
   configuration.  (Brian Cameron)
 
-- Fix regression in GDM 2.20 that caused HaltCommand,
+- Fix regression in MDM 2.20 that caused HaltCommand,
   SuspendCommand, and RebootCommand to not get updated properly
-  when modified from gdmsetup.  (Brian Cameron)
+  when modified from mdmsetup.  (Brian Cameron)
 
-- Fix gdmsetup so that it doesn't use gtk_init when run with
-  the "--command" option.  This allows the gdmflexiserver --command
+- Fix mdmsetup so that it doesn't use gtk_init when run with
+  the "--command" option.  This allows the mdmflexiserver --command
   option to be run with setuid/setgid without problems.  This fixes
   bug #438939.  (Brian Cameron)
 
 - Fix counting of open XDMCP sessions.  In some situations this
-  problem would cause GDM to think the maximum number of XDMCP
+  problem would cause MDM to think the maximum number of XDMCP
   sessions had been started when this wasn't the case.  This fixes
   bug #495623.  (Andrew Ziem)
 
@@ -308,7 +308,7 @@ Ahh news...
 - Fixes to avoid compiler warnings.  (Brian Cameron, Larry
   Doolittle, George Lebl)
 
-- Fix gdmsetup so it does not crash if it cannot read any
+- Fix mdmsetup so it does not crash if it cannot read any
   displays from the configuration file.  (Brian Cameron)
 
 - Translation updates (Se\303\241n de B\303\272rca, Jakub Friedl)
@@ -321,10 +321,10 @@ Ahh news...
 - Fix so that XDMCP configuration options are read from the 
   configuration file.  (Andrew Ziem)
 
-- Fix bug with gdmXnestchooser where it wasn't starting Xephyr with
+- Fix bug with mdmXnestchooser where it wasn't starting Xephyr with
   the correct arguments.  (Andrew Ziem)
 
-- Fix so that GDM allows setting of LC_TYPE without setting LANG.
+- Fix so that MDM allows setting of LC_TYPE without setting LANG.
   (Sjoerd Simons and Takao Fujiwara)
 
 - Icon improvements.  (Luca Ferretti)
@@ -336,7 +336,7 @@ Ahh news...
 
 2.20.1 Stuff:
 
-- Now gdmlogin and gdmgreeter treat Tab like enter if the focus
+- Now mdmlogin and mdmgreeter treat Tab like enter if the focus
   is on the entry field.  This addresses usability issues as
   described in bug #433495.  (Lo\357c Minier)
 
@@ -344,12 +344,12 @@ Ahh news...
   to not get saved properly if they didn't already have a $HOME/.dmrc
   file.  (Brady Anderson)
 
-- Fix bug with XDMCP logic that was causing GDM to get confused 
+- Fix bug with XDMCP logic that was causing MDM to get confused 
   about when the maximum number of XDMCP sessions has been reached.
   (Francis Giraldeau)
    
 - Fix an issue that was causing the username to be logged as a debug
-  message when using GDM configured to use crypt or shadow passwords
+  message when using MDM configured to use crypt or shadow passwords
   (instead of the default PAM).  This could cause the user's password
   to get saved as a debug message if the user accidently typed their
   password into the username field when using crypt/shadow passwords.
@@ -358,13 +358,13 @@ Ahh news...
 - Set stdout/stderr to DEV_NULL when spawning at_spi_registryd and
   the prefetch program, fixing a hanging problem.  (Huang Peng)
 
-- GDM now always sends the daemon a response before exit to avoid a
+- MDM now always sends the daemon a response before exit to avoid a
   hang.  (Ray Strode)
 
-- Fix gdmXnestchooser and gdmsetup so debug isn't on by default. 
+- Fix mdmXnestchooser and mdmsetup so debug isn't on by default. 
   (Brian Cameron)
 
-- Updated the gdmgreeter themes so that they display correctly 
+- Updated the mdmgreeter themes so that they display correctly 
   on 800x600 displays.  (Dave Fincher)
 
 - Build/configure fixes for Solaris.  (Brian Cameron)
@@ -396,18 +396,18 @@ Ahh news...
 
 2.19.8 Stuff:
 
-- Fix bug where GDM was not properly executing a custom Xserver
+- Fix bug where MDM was not properly executing a custom Xserver
   start script.  This fixes a regression introduced earlier in
-  GDM 2.19.  (Brian Cameron)
+  MDM 2.19.  (Brian Cameron)
 
 - Fix bug with ConsoleKit that occurs when the session is going
   to migrate.  Previous code was failing to send the notification
   when the greeter is not TYPE_FLEXI.  (Ian Jackson)
 
-- Set invisible character to '*' for gdmgreeter.  (Sebastien
+- Set invisible character to '*' for mdmgreeter.  (Sebastien
   Bacher)
 
-- When using gdm_verify_standalone_pam_conv (used by automatic
+- When using mdm_verify_standalone_pam_conv (used by automatic
   login) set echo to FALSE when PAM_PROMPT_ECHO_OFF is handled.
 
 - Make it possible to configure system dependant options by
@@ -430,7 +430,7 @@ Ahh news...
 - Fix compile when using a compiler that doesn't like #ifdefs
   in macro calls.  (Jens Granseuer)
 
-- The greeter.dtd file has been updated.  Now the default GDM themes
+- The greeter.dtd file has been updated.  Now the default MDM themes
   validate with this dtd.  (Dave Fincher)
 
 - Translation updates (Jorge Gonzalez, Raphael Higino, Priit Laes,
@@ -439,7 +439,7 @@ Ahh news...
 
 2.19.6 Stuff:
 
-- Fix gdmflexiserver so when used to start a "Nested Display" (a login
+- Fix mdmflexiserver so when used to start a "Nested Display" (a login
   in a window), it does not pop-up the window showing the user what
   VT's are already logged in.  That window should only show up when
   starting Flexi (VT) displays, not Nested displays.  (Brian Cameron)
@@ -453,11 +453,11 @@ Ahh news...
   [server-foo] server.  This was working in 2.18 but got broken during
   the cleanup.  (Brian Cameron)
 
-- Fix gdm_fail function so that it cleans up and exits, so now GDM
+- Fix mdm_fail function so that it cleans up and exits, so now MDM
   will better handle critical failures.  This was working in 2.18
   but got broken during the cleanup.  (Brian Cameron)
 
-- Now gdmsetup sets "Use 24 Hour Clock" to "yes" when this is its
+- Now mdmsetup sets "Use 24 Hour Clock" to "yes" when this is its
   value.  (Sebastien Bacher)
 
 - Fixes for utmpx processing so it now works with utmp and also on
@@ -477,9 +477,9 @@ Ahh news...
 2.19.5 Stuff:
 
 - Fix for CVE-2007-3381, a denial of service attack where the
-  user can crash the GDM daemon with a carefully crafted 
-  GDM sockets command and cause GDM to stop managing future
-  displays.  GDM now is much better about safeguarding against
+  user can crash the MDM daemon with a carefully crafted 
+  MDM sockets command and cause MDM to stop managing future
+  displays.  MDM now is much better about safeguarding against
   NULL values returned from g_strsplit calls.  Credit given
   to "JLANTHEA".  (Brian Cameron)
 
@@ -489,13 +489,13 @@ Ahh news...
   (Lukasz Zalewski) 
 
 - Fix issues with icons not showing up properly in the 
-  gdmgreeter menu.  (Michael Terry)
+  mdmgreeter menu.  (Michael Terry)
 
 - Fix memory handling of the dialog which asks if you want
   to restart the greeter in a different language.  (Takao
   Fujiwara)
 
-- Autodetect the path to the nologin binary to fix GDM so it
+- Autodetect the path to the nologin binary to fix MDM so it
   works on FreeBSD where nologin is in a different location.
   Also fix compile issues for FreeBSD.  (Lo\357c Minier)
 
@@ -507,44 +507,44 @@ Ahh news...
 
 2.19.4 Stuff:
 
-- Now GDM manages utmp/wtmp processing directly rather than
+- Now MDM manages utmp/wtmp processing directly rather than
   using the X server sessreg program.  (Brian Cameron, Ray
   Strode)
 
-- Now GDM supports new configuration options to specify how the
+- Now MDM supports new configuration options to specify how the
   utmp/wtmp ut_line value is set.  Refer to the UtmpLineAttached,
   UtmpLineRemote, UtmpPseudoDevice configuration options and the
   fact that the [servers] section now supports specifying a 
   device via device="/dev/foo" syntax.
 
-- Fix gdmchooser so it will start the at_spi_registryd so that
+- Fix mdmchooser so it will start the at_spi_registryd so that
   AT programs work when you run it.  (Brian Cameron)
 
 - Now icons are installed to the hicolor theme and use the 
   correct GTK calls to grab application icons from the theme, not
   pixmaps.  (Michael Terry)
 
-- Now the gdmgreeter sports icons in the F10 menu.  (Brian
+- Now the mdmgreeter sports icons in the F10 menu.  (Brian
   Cameron, Michael Terry)
 
-- Fix focus handling in gdmlogin so that the Tab key can move
+- Fix focus handling in mdmlogin so that the Tab key can move
   focus into the button widgets.  Also fix sensitivity of the
   "OK" button so it is insensitive when no characters are in
   the entry field.  (Brian Cameron)
 
 - Remove logic that sets the default locale selection to en_US
   since this locale is not guaranteed to always be available.  Now
-  just let the system default to C without special code in GDM.
+  just let the system default to C without special code in MDM.
   (Lo\357c Minier)
 
-- Now GDM checks to ensure that a theme file is readable and
+- Now MDM checks to ensure that a theme file is readable and
   reports better error messages if not. (Lukasz Zalewski)
 
 - Enhanced Solaris utmp, PAM_TTY, Sun Audit, and logindevperm
   code to work with Virtual Terminals which will be available
   in Solaris Nevada in the next few months.  Fix logindevperm
   code so it only is used when the user logs in and logs out.
-  Now setfacl calls are made to allow the GDM user to have
+  Now setfacl calls are made to allow the MDM user to have
   access to the sound device on Solaris.  (Brian Cameron)
 
 - Initialize lang variable to avoid accessing a unitialized memory.
@@ -582,15 +582,15 @@ Ahh news...
 
 Interface Changes:
 
-- The location of the .gdm_socket file has been moved from /tmp to 
+- The location of the .mdm_socket file has been moved from /tmp to 
   /var/run.  This interface change has been coordinated with 
   gnome-session, gnome-panel, and the Fast-User-Switch Applet (FUSA).
-  This is a more sensible place for GDM to store its sockets file.
+  This is a more sensible place for MDM to store its sockets file.
   (Lo\357c Minier)
 
-- Now GDM desktop files are installed to /usr/share/gdm/applications and
-  GDM appends this directory to XDG_DATA_DIR.  This way GDM programs only
-  show up in the menus if GDM is actually being used as the login program.
+- Now MDM desktop files are installed to /usr/share/mdm/applications and
+  MDM appends this directory to XDG_DATA_DIR.  This way MDM programs only
+  show up in the menus if MDM is actually being used as the login program.
   This prevents the menu items from showing up if the user switches to
   another login program.  (Brian Cameron)
 
@@ -602,21 +602,21 @@ New features, improvements, and bug fixes:
 - Now support Linux auditing if configure detects libaudit on the system.
   See enhancement request #349835.  (Ray Strode)
 
-- Now GDM greeters only display languages that are installed on the system. 
+- Now MDM greeters only display languages that are installed on the system. 
   (Ray Strode)
 
 - The Face Browser now prunes out users if their shell is /sbin/nologin,
   /bin/true, or /bin/false.  (Ray Strode)
 
 - Improve custom command logic so that you can specify a widget in the
-  gdmgreeter theme with the following sort of tag:
+  mdmgreeter theme with the following sort of tag:
   <show modes="console" type=custom_cmdX/>.  (Lukasz Zalewski)
 
 - Now the greeter invisible character is set explicitely to '*' if
   the configuration file doesn't specify to use invisible or circles.
   (Sebastien Bacher)
 
-- GDM documentation make logic has been updated so it works better and we
+- MDM documentation make logic has been updated so it works better and we
   now generate documentation for more languages.  Now mdash and percnt
   entities have definitions so they no longer generate warnings.
   (Brian Cameron)
@@ -628,22 +628,22 @@ New features, improvements, and bug fixes:
 
 2.19.1 Stuff:
 
-- Now GDM desktop files support the optional X-Gdm-XserverArgs extension to
+- Now MDM desktop files support the optional X-Mdm-XserverArgs extension to
   the desktop files installed to /usr/share/xsessions.  This allows a desktop
   session file to specify additional Xserver flags to be used with the
   session.  This could be useful to turn on special extensions needed for
   certain accessibility features, or to use sessions that require special
   Xserver flags or extensions, etc.  Note that sessions that use this
-  feature cause GDM to restart the Xserver after authentication.
+  feature cause MDM to restart the Xserver after authentication.
   (Ron Yorston)
 
-- Now gdmgreeter themes support a "background=[true|false]" element to be 
+- Now mdmgreeter themes support a "background=[true|false]" element to be 
   specified for any item tag.  Items which have this tag set to true will
   be mapped to the root window after authentication.  This way the 
   background image to be displayed can be specified for the interim 
   between authentication and when the session starts.  (Frederic Crozat)
 
-- Fix gdm_daemon_check_permissions so it resets the permissions of the
+- Fix mdm_daemon_check_permissions so it resets the permissions of the
   ServAuthDir rather than LogDir.  This bug was introduced into 2.19.0.
   (Brian Cameron)
 
@@ -661,30 +661,30 @@ New features, improvements, and bug fixes:
 - Avoid starting timed login timer if a username has already been entered.
   (Lo\357c Minier)
 
-- Check for existance of a gdmgreeter theme before selecting a random 
+- Check for existance of a mdmgreeter theme before selecting a random 
   theme.  Skip over themes that don't exist on the system.  (Lo\357c Minier)
 
-- Fix a bug that was causing gdmflexiserver commands SET_LOGOUT_ACTION and
+- Fix a bug that was causing mdmflexiserver commands SET_LOGOUT_ACTION and
   SET_SAFE_LOGOUT action to not work.  Also fix a bug that was causing the
-  gdmflexiserver command UPDATE_CONFIG to return an incorrect return code.
-  These issues were introduced in GDM 2.19.0.  (Brian Cameron) 
+  mdmflexiserver command UPDATE_CONFIG to return an incorrect return code.
+  These issues were introduced in MDM 2.19.0.  (Brian Cameron) 
 
-- Now used an unsigned character buffer in gdm_fdgetc because the GDM GUI
+- Now used an unsigned character buffer in mdm_fdgetc because the MDM GUI
   sends the username/password data as utf8 and the daemon will interpret
   any character sent with its high bit set as EOF unless we use an unsigned
   buffer.  This should improve support of usernames and passwords which 
   contain non-ASCII characters.  (Lo\357c Minier)
 
 - This change should only affect Solaris users.  Add support for ctrun, so
-  that when running GDM as a svc service via svcadm(1M), subprocesses are run
+  that when running MDM as a svc service via svcadm(1M), subprocesses are run
   in a separate contract.  This ensures that when programs in the user session
-  crash, it doesn't cause a GDM restart.  (Brian Cameron)
+  crash, it doesn't cause a MDM restart.  (Brian Cameron)
 
-- Remove unused failsafe logic from the GDM Xsession script.  For
-  some time GDM has called failsafe directly from the daemon slave,
+- Remove unused failsafe logic from the MDM Xsession script.  For
+  some time MDM has called failsafe directly from the daemon slave,
   so this code hasn't been used for some time.  (Brian Cameron)
 
-- Improvements to how GDM sets umask.  (Peter Baumann)
+- Improvements to how MDM sets umask.  (Peter Baumann)
 
 - No longer unset MAIL when starting a user session, and set PWD before 
   starting a user session.  This fixes problems when the user's $HOME
@@ -703,74 +703,74 @@ New features, improvements, and bug fixes:
 
 Interface Changes:
 
-- Now the GDM PidFile is now specified as /var/run/gdm.pid and the
-  GDM configuration key PidFile has been deprecated.  The location
+- Now the MDM PidFile is now specified as /var/run/mdm.pid and the
+  MDM configuration key PidFile has been deprecated.  The location
   of the PidFile can be configured with the configure --with-pid-file
   option.  (Brian Cameron, William Jon McCann)
 
-- The GDM AlwaysRestartServer configuration option is deprecated and
-  GDM will now always restart the Xserver between users.  This makes
-  GDM work more reliably since reusing the Xserver can expose memory
+- The MDM AlwaysRestartServer configuration option is deprecated and
+  MDM will now always restart the Xserver between users.  This makes
+  MDM work more reliably since reusing the Xserver can expose memory
   leaks and instabilities in the Xserver code.  (Brian Cameron,
   William Jon McCann)
 
-- Now the GDM LogDir is set to /var/log/gdm rather than /var/lib/log/gdm
+- Now the MDM LogDir is set to /var/log/mdm rather than /var/lib/log/mdm
   by default.  Users can configure this with the configure
   --with-log-file option.  (Brian Cameron)
 
 - Remove logic to call whack_clients when closing the session.  This
   code was written to address bug #126071, to ensure that all clients
   are killed on session exit.  However, this approach does not work 
-  well and causes GDM to fail badly when you kill the Xserver via
+  well and causes MDM to fail badly when you kill the Xserver via
   control-al-backspace on some environments.  If there is still a need
   to kill clients on session exit, a better approach will need to be
   designed.  (Cesare Tirabassi)
 
-- Now GDM supports Xephyr as the Nested Xserver command.  GDM will use
+- Now MDM supports Xephyr as the Nested Xserver command.  MDM will use
   Xephyr by default if it is on the system, and fallback to Xnest.  Xephyr
   works much better than Xnest.  (Brian Cameron)
 
-- Now gdmgreeter will not display the Face Browser is the GDM configuration
-  option Browser is false.  Now gdmsetup supports a "Themed with face
+- Now mdmgreeter will not display the Face Browser is the MDM configuration
+  option Browser is false.  Now mdmsetup supports a "Themed with face
   browser" option to support selecting this.  (Brian Cameron and Lukasz
   Zalewski)
 
-- Comment in GDM System Defaults configuration file now shows "true"
+- Comment in MDM System Defaults configuration file now shows "true"
   for ConfigAvailable since this value has been defaulting to true for
   some time and the comment in the System Defaults configuration file
   was incorrect.  (Brian Cameron)
 
-- Now gdmphotosetup.desktop specifies NotShowIn=GNOME since the About-Me
+- Now mdmphotosetup.desktop specifies NotShowIn=GNOME since the About-Me
   capplet is a better place for configuring the user's face image in GNOME.
 
 New interfaces:
 
-- Add min-screen-height tag to gdmgreeter parser logic so that certain
+- Add min-screen-height tag to mdmgreeter parser logic so that certain
   elements in the theme will only display if the screen is large 
   enough.  (Ray Strode).
 
 - New configuration option SystemCommandsInMenu to configure which
-  system commands (reboot, shutdown, suspend, etc.) appear in the GDM
+  system commands (reboot, shutdown, suspend, etc.) appear in the MDM
   greeter system menu.   New configuration option AllowLogoutActions
   to specify which system commands are supported by the QUERY_LOGOUT_ACTION,
-  SET_LOGOUT_ACTION, and SET_SAFE_LOGOUT action gdmflexiserver commands.
-  This allows GDM to be configured to support shutdown, reboot, suspend
+  SET_LOGOUT_ACTION, and SET_SAFE_LOGOUT action mdmflexiserver commands.
+  This allows MDM to be configured to support shutdown, reboot, suspend
   from the user session, but no from the login screen directly, if 
   desired.  In situations where you want the user to authenticate before
   being able to shutdown or reboot the machine, this feature would be
   useful.  (Brian Cameron)
 
-- GDM Now supports RBAC (Role Based Access Control) for specifying
+- MDM Now supports RBAC (Role Based Access Control) for specifying
   which actions (reboot, shutdown, suspend, etc.) are supported on a per-user
-  basis.  This feature is only available if GDM is compiled with RBAC support
+  basis.  This feature is only available if MDM is compiled with RBAC support
   enabled.  The new configuration option RBACSystemCommandKeys allows an RBAC
   key to be specified for each system command.  Only users who have RBAC
-  authority will be able to query or set the logout action.  The GDM GUI will
-  only display actions for which the "gdm" user has RBAC authority.  GDM will
+  authority will be able to query or set the logout action.  The MDM GUI will
+  only display actions for which the "mdm" user has RBAC authority.  MDM will
   assume that all users have authority for actions which do not have an RBAC
   key associated with them.  (Brian Cameron)
 
-- Now support XnestUnscaledFontPath configuration option, which allows GDM
+- Now support XnestUnscaledFontPath configuration option, which allows MDM
   to work with Xnest.  Xorg 7.2 XGetFontPath function now returns fontpath
   with the ":unscaled" prefix, which Xsun Xnest cannot handle.  Setting
   XnestUnscaledFontPath=false, will strip the ":unscaled" prefix from the
@@ -778,72 +778,72 @@ New interfaces:
 
 New features, improvements, and bug fixes:
 
-- GDM had a bug that would happen after the user asked to run the
-  "Configure GDM" menu choice.  If the user typed the wrong password,
+- MDM had a bug that would happen after the user asked to run the
+  "Configure MDM" menu choice.  If the user typed the wrong password,
   it would ask up to 3 times.  If the user typed the correct password
   on the 2nd or 3rd try, it would start a root user session rather
-  than running gdmsetup.  This problem would only happen if using PAM
-  for authenticating passwords.  Now GDM only asks for the root
-  passwords once, and only runs gdmsetup if the password is correct.
-  This bug was introduced into GDM 2.18.0 when Ludwig Nussel made some
+  than running mdmsetup.  This problem would only happen if using PAM
+  for authenticating passwords.  Now MDM only asks for the root
+  passwords once, and only runs mdmsetup if the password is correct.
+  This bug was introduced into MDM 2.18.0 when Ludwig Nussel made some
   improvements to make the PAM logic more generic (Brian Cameron)
 
-- Much cleanup work in the GDM code, which now makes more use of 
+- Much cleanup work in the MDM code, which now makes more use of 
   GObjects (e.g. XDMCP code).   Configuration logic rewritten to no 
   longer use vicious-extensions and now uses GKeyFile.  (William Jon
   McCann)
 
-- Now when a user changes the language choice in GDM, it will ask if
-  the user wants to restart the GDM GUI in the selected language. 
+- Now when a user changes the language choice in MDM, it will ask if
+  the user wants to restart the MDM GUI in the selected language. 
   (Takao Fujiwara, Brian Cameron)
 
 - Many improvements supporting languages.  Now all LC_* settings are 
   normalized to LANG, and input methods (IIIM->XIM) are started.  
   (Hidetoshi Tajima, Chookij Vanatham)
 
-- Fix check in gdmgreeter so that the language combo style selection
+- Fix check in mdmgreeter so that the language combo style selection
   works.  (Simon)
 
-- Add ATK label for the entry field in gdmgreeter for better 
+- Add ATK label for the entry field in mdmgreeter for better 
   accessibility support.  (David Zeuthen)
 
-- In gdmsetup, only show tar and compressed tar files in the file chooser
-  for selecting gdmgreeter themes to install.  (Kristof Vansant)
+- In mdmsetup, only show tar and compressed tar files in the file chooser
+  for selecting mdmgreeter themes to install.  (Kristof Vansant)
 
-- Now the "Configure GDM" option is not displayed when accessibility is
-  enabled in GDM.  This is because gdmsetup currently hangs when the
-  user tries to run gdmsetup from the greeter program.  Not really a 
+- Now the "Configure MDM" option is not displayed when accessibility is
+  enabled in MDM.  This is because mdmsetup currently hangs when the
+  user tries to run mdmsetup from the greeter program.  Not really a 
   fix, but prevents the user from getting into a situation that causes
   a system hang.  (Brian Cameron)
 
 - Now Face Browser displays non-utf8 characters as '?' rather than
   crashing when trying to display such characters.  (Ray Strode)
 
-- Improve GDM messages, correcting spelling and grammar mistakes
+- Improve MDM messages, correcting spelling and grammar mistakes
   (Brian Cameron)
 
 - Fix detection of user specified in flexi command.  (William Jon 
   McCann)
 
-- gdmflexiserver now properly initializes GTK+.  (William Jon McCann)
+- mdmflexiserver now properly initializes GTK+.  (William Jon McCann)
 
 - Call "xrdb -merge /etc/X11/Xresources" in the Init script so that the
-  GDM GUI is properly configured with Xft rsources.  Fixes bug #301826.
+  MDM GUI is properly configured with Xft rsources.  Fixes bug #301826.
   (Ray Strode)
 
-- Now desktop categories for all GDM related desktop files should be
+- Now desktop categories for all MDM related desktop files should be
   correct.  (Brian Cameron)
 
-- Fix gdm startup script so it works with Solaris /bin/sh.  (Brian
+- Fix mdm startup script so it works with Solaris /bin/sh.  (Brian
   Cameron)
 
-- Fix a strcpy call in gui/gdmlanguages.c so source and destination do
+- Fix a strcpy call in gui/mdmlanguages.c so source and destination do
   not overlap.  (Ray Strode) 
 
 - Remove gnome glade references since GNOME does not use libglade anymore.
   (Kristof Vansant)
 
-- Many improvements to GDM docs.  (Brian Cameron, William Jon McCann)
+- Many improvements to MDM docs.  (Brian Cameron, William Jon McCann)
 
 - Translation updates (Djihed Afifi, Takeshi AIHANA, Leonardo
   Ferreira Fontenelle, Jakub Friedl, Pema Geyleg, Priit Laes, Duarte
@@ -853,9 +853,9 @@ New features, improvements, and bug fixes:
 2.18.4 Stuff:
 
 - Fix for CVE-2007-3381, a denial of service attack where the
-  user can crash the GDM daemon with a carefully crafted
-  GDM sockets command and cause GDM to stop managing future
-  displays.  GDM now is much better about safeguarding against
+  user can crash the MDM daemon with a carefully crafted
+  MDM sockets command and cause MDM to stop managing future
+  displays.  MDM now is much better about safeguarding against
   NULL values returned from g_strsplit calls.  (Brian Cameron)
 
 - Remove setting hints.ai_family != AF_INET6 to fix bug #455190.
@@ -876,7 +876,7 @@ New features, improvements, and bug fixes:
   it works for the non-migratable case (for Xnest, XDMCP, etc.).  Fixes
   bug #172600.  (Brian Cameron)
 
-- Use an unsigned char buffer in gdm_fdgetc.  (Brian Cameron)
+- Use an unsigned char buffer in mdm_fdgetc.  (Brian Cameron)
 
 - Just display the default "authentication failed" message when we
   receive PAM_AUTHINFO_UNAVAIL.  (Lo\357c Minier)
@@ -888,41 +888,41 @@ New features, improvements, and bug fixes:
 
 2.18.1 Stuff:
 
-- The GDM configuration option daemon/PidFile is now deprecated and
-  GDM now always uses /var/run/gdm.pid.  The location can be configured
+- The MDM configuration option daemon/PidFile is now deprecated and
+  MDM now always uses /var/run/mdm.pid.  The location can be configured
   at compile time with the configure --with-pid-file option.  This
   fixes bug #162849.  (William Jon McCann)
 
-- Now GDM supports Xephyr as the Nested Xserver command.  GDM will use
+- Now MDM supports Xephyr as the Nested Xserver command.  MDM will use
   Xephyr by default if it is on the system, and fallback to Xnest.  Xephyr
   works much better than Xnest.  (Brian Cameron)
 
-- GDM application desktop files now use the correct categories, so the
+- MDM application desktop files now use the correct categories, so the
   menu choices should appear in the correct place in the menu.  (Brian
   Cameron)
 
 - Remove the userlist from the circles and happygnome themes since this
   was causing problems for some users.  This change will go into 2.20
-  where we are fixing the problem better by fixing gdmsetup to support
-  setting the configuration so that gdmlogin and gdmgreeter work the
+  where we are fixing the problem better by fixing mdmsetup to support
+  setting the configuration so that mdmlogin and mdmgreeter work the
   same way with the Browser key.  (Brian Cameron)
 
-- Now gdmgreeter has an ATK label for the entry field.  (David Zeuthen)
+- Now mdmgreeter has an ATK label for the entry field.  (David Zeuthen)
 
 - Fix check so language combo style works.  Fixes bug #423063.  (Simon)
 
-- Now "Configure GDM" menu choice is not available when accessibility is
-  turned on since running gdmsetup in this configuration causes GDM to
+- Now "Configure MDM" menu choice is not available when accessibility is
+  turned on since running mdmsetup in this configuration causes MDM to
   hang.  Until the hanging bug is fixed, it's better to not allow the
   user to get into this situation.  (Brian Cameron)
 
-- Now support XnestUnscaledFontPath configuration option, which allows GDM
+- Now support XnestUnscaledFontPath configuration option, which allows MDM
   to work with Xnest.  Xorg 7.2 XGetFontPath function now returns fontpath
   with the ":unscaled" prefix, which Xsun Xnest cannot handle.  Setting
   XnestUnscaledFontPath=false, will strip the ":unscaled" prefix from the
   fontpath so that it can work.  (Brian Cameron)
 
-- GDM daemon no longer links with D-Bus if ConsoleKit is not enabled.
+- MDM daemon no longer links with D-Bus if ConsoleKit is not enabled.
   (William Jon McCann)
 
 - Remove gnome glade references since GNOME does not use libglade anymore.
@@ -935,11 +935,11 @@ New features, improvements, and bug fixes:
 
 2.18.0 Stuff:
 
-- Fix gdmchooser so the Cancel button works.  (Brian Cameron)
+- Fix mdmchooser so the Cancel button works.  (Brian Cameron)
 
 - Fix desktop files so they include "GNOME" and "GTK" and remove "Application".
-  Fixes bug #417350.  Now gdmsetup uses the full path in Exec, not just
-  TryExec, so that if gdmsetup isn't in the user's PATH it will still work.
+  Fixes bug #417350.  Now mdmsetup uses the full path in Exec, not just
+  TryExec, so that if mdmsetup isn't in the user's PATH it will still work.
   (Brian Cameron)
 
 - Update of ConsoleKit parameter names.  Fixes enhancement request #415181.
@@ -956,16 +956,16 @@ New features, improvements, and bug fixes:
 
 2.17.8 Stuff:
 
-- In gdmlogin, change "Session" mnemonic to "e" instead of "s"
+- In mdmlogin, change "Session" mnemonic to "e" instead of "s"
   so it doesn't conflict with the "Start Again" button.
 - Now AlwaysLoginCurrentSession is set to true by default.
 
-- Fix spacing in gdmsetup so it uses less vertical space.  (Lukasz
+- Fix spacing in mdmsetup so it uses less vertical space.  (Lukasz
   Zalewski)
 
-- Fix gdmchooser so it builds with HURD.  (Brian Cameron)
+- Fix mdmchooser so it builds with HURD.  (Brian Cameron)
 
-- Fix comparison with string literal in gdmdynamic.  (Hans Petter
+- Fix comparison with string literal in mdmdynamic.  (Hans Petter
   Jansson)
 
 - On Solaris, gnome.session script calls /usr/dt/config/Xsession.jds
@@ -998,12 +998,12 @@ New features, improvements, and bug fixes:
   and Jens Granseuer)
 
 - Avoid catching sigchld when trying to call XOpenDisplay.  This corrects
-  an issue where GDM catches a second SIGCHLD when trying to restart.  
+  an issue where MDM catches a second SIGCHLD when trying to restart.  
   This causes the slave to freeze even though the Xserver and the session
   are killed, causing the display to no longer manage. 
   (Roberto Tam)
 
-- Improvements to PAM documentation in GDM docs.  (Brian Cameron and
+- Improvements to PAM documentation in MDM docs.  (Brian Cameron and
   Gary Winiger)
 
 - Translation updates (Djihed Afifi, Theppitak Karoonboonyanan, Priit Laes,
@@ -1012,12 +1012,12 @@ New features, improvements, and bug fixes:
 
 2.17.6 Stuff:
 
-- More verbose error messages from GDM daemon and gdmsetup when custom.config
-  file is missing.  Now GDM will not start gdmsetup if the custom.config file
+- More verbose error messages from MDM daemon and mdmsetup when custom.config
+  file is missing.  Now MDM will not start mdmsetup if the custom.config file
   is missing, but instead display a pop-up dialog with an error message.
   (Lucasz Zalewski)
 
-- Remove redundant GenericName from gdmsetup.desktop.  (Brian Cameron)
+- Remove redundant GenericName from mdmsetup.desktop.  (Brian Cameron)
 
 - Fixes so code compiles with c99 compilers.  (Jens Granseuer)
 
@@ -1029,7 +1029,7 @@ New features, improvements, and bug fixes:
   shows dialog boxes since this causes the dialogs to not
   display any text.  (Brian Cameron)
 
-- Now GDM will recognize when the system default language
+- Now MDM will recognize when the system default language
   has changed and will display new GUI's with the new
   default language.  By default the /var/sysconfig/i18n
   file is assumed to have the language defined in LANG=foo
@@ -1043,7 +1043,7 @@ New features, improvements, and bug fixes:
   after it is started there is no need to listen to the
   propery any more.  (Li Yuan)
 
-- Further improvements to gdmsetup to improve usability.
+- Further improvements to mdmsetup to improve usability.
   (Lukasz Zalewski)
 
 - No longer hardcode invisible_char property in glade files,
@@ -1063,12 +1063,12 @@ New features, improvements, and bug fixes:
 
 - Fix for a recently reported security issue that has ID
   CVE-2006-6105.  This fixes a problem where a user can 
-  enter strings like "%08x" into the gdmchooser entry and
+  enter strings like "%08x" into the mdmchooser entry and
   press the "Add" host button to print out memory contents.
-  This issue was introduced into GDM 2.13.0.
+  This issue was introduced into MDM 2.13.0.
   (Brian Cameron)
 
-- Improvements to gdmsetup, which now supports many new
+- Improvements to mdmsetup, which now supports many new
   features.  Fixes feature request #334186 and bugs
   #343206 and #347101.  (Lukasz Zalewski)
 
@@ -1077,25 +1077,25 @@ New features, improvements, and bug fixes:
 
 - Now the key and dwell gestures start Orca instead of
   Gnopernicus.  Must use Orca v2.17.4 or later to work 
-  with GDM.  (Brian Cameron)
+  with MDM.  (Brian Cameron)
 
 - Translation updates (Kjartan Maraas, Daniel Nylander, 
   Francisco Javier F. Serrador, Ilkka Tuohela)
 
 2.17.3 Stuff:
 
-- Now all GDM GUI's are run as the gdm user.  This change ensures
-  that all GDM GUI's can talk to the at-spi-registryd that is 
+- Now all MDM GUI's are run as the mdm user.  This change ensures
+  that all MDM GUI's can talk to the at-spi-registryd that is 
   running.  This change involved making the forked slave talk
-  to the the GDM daemon so that the dialogs can be displayed.  
+  to the the MDM daemon so that the dialogs can be displayed.  
   The response from the dialog can be returned to the slave.
   There are reports that this bug triggers GDK bug #376315 on
   Linux when a11y is turned off.  This will need to be fixed
-  before the next GDM stable release.  Workaround is to turn
+  before the next MDM stable release.  Workaround is to turn
   on a11y until this bug is fixed.  (Leena Gunda and Srirama
   Sharma)
 
-- gdmsetup has a new tooltip suggestion.  (Calum Benson)
+- mdmsetup has a new tooltip suggestion.  (Calum Benson)
 
 - Now "Default System Session" is renamed to "Run Xclient
   script" which is more accurately what this does.  Use xterm
@@ -1103,7 +1103,7 @@ New features, improvements, and bug fixes:
   Linux.  Now zenity pop-up message is displayed when Xclient
   script is not found.  (Brian Cameron)
 
-- Fix for TryExec check in gdmsession to make sure that any
+- Fix for TryExec check in mdmsession to make sure that any
   arguments are not passed to g_find_program_in_path since 
   this causes the function to say it is not executable.
   (Brian Cameron)
@@ -1116,9 +1116,9 @@ New features, improvements, and bug fixes:
 2.17.2 Stuff:
 
 - Add ConsoleKit support.  This is a new feature and not tested.  If you
-  find that GDM does not allow you to log in, try using the configure 
+  find that MDM does not allow you to log in, try using the configure 
   option --with-console-kit=no to turn this feature off.  This feature
-  turns on GDM notification of session open, close and lock events via
+  turns on MDM notification of session open, close and lock events via
   D-Bus.  (William Jon McCann)
   
 - Added warnings when no themes are selected in "Random Theme Mode".
@@ -1138,12 +1138,12 @@ New features, improvements, and bug fixes:
 - No longer crash if at-spi-registryd cannot be started.  
   (Ariel Rios)
 
-- Now support customcommands in GDM configuration so that sysadmins
-  can specify custom commands to appear in the GDM GUI (in addition
-  to reboot/shutdown/etc.).  Refer to the comments in the GDM
+- Now support customcommands in MDM configuration so that sysadmins
+  can specify custom commands to appear in the MDM GUI (in addition
+  to reboot/shutdown/etc.).  Refer to the comments in the MDM
   configuration file and documentation for details.  Also support
   new QUERY_CUSTOM_CMD_LABELS and QUERY_CUSTOM_CMD_NO_RESTART_STATUS
-  gdmflexiserver commands.  (Lukasz Zalewski)
+  mdmflexiserver commands.  (Lukasz Zalewski)
   
 - Now support for "combo" style lists, and id values of "session"
   and "language" are supported for displaying the session/language
@@ -1157,13 +1157,13 @@ New features, improvements, and bug fixes:
   </item>
 
 - Now OK/Start Again buttons are sensitive/insensitive in a more
-  sensible way for both gdmlogin and gdmgreeter (if GTK style buttons
-  are used in gdmgreeter).  (Brian Cameron)
+  sensible way for both mdmlogin and mdmgreeter (if GTK style buttons
+  are used in mdmgreeter).  (Brian Cameron)
 
-- Face Browser widget and background rectangle (for gdmgreeter)
+- Face Browser widget and background rectangle (for mdmgreeter)
   is not shown if there are no users to display.  (Brian Cameron)
 
-- Help button now enabled in gdmphotosetup.  (Matthias Clasen)
+- Help button now enabled in mdmphotosetup.  (Matthias Clasen)
 
 - Fix so that if timed user script returns an invalid user that
   timed login is not turned on.  (Andrew)
@@ -1175,7 +1175,7 @@ New features, improvements, and bug fixes:
   pointer.  Fixes bug #359831.  (Amnon Aaronsohn)
 
 - Introduce altfile[n] property to cater for alternative image file
-  definition in gdmgreeter themes.  (Erwann Chenede)
+  definition in mdmgreeter themes.  (Erwann Chenede)
 
 - Leaks fixed.  (Kjartan Maraas)
 
@@ -1188,11 +1188,11 @@ New features, improvements, and bug fixes:
 
 2.17.0 Stuff:
 
-- Now when GDM_ADD_MODULES is set, GDM will launch at-spi-registryd.
+- Now when MDM_ADD_MODULES is set, MDM will launch at-spi-registryd.
   (Ariel Rios)
 
 - New SupportAutomount option which, when turned on, changes the
-  way that GDM accesses the user's $HOME/.dmrc file so that 
+  way that MDM accesses the user's $HOME/.dmrc file so that 
   automounted $HOME directories can be configured to work even
   when the automounter is not started with the --ghost option. 
   (Jerzy Borkowski)
@@ -1202,18 +1202,18 @@ New features, improvements, and bug fixes:
   (Andrew - andrewz@springsrescuemission.org).
 
 - Fix for bug #352838, avoid crashing by moving call to get
-  GDM_KEY_SYSTEM_MENU until after authentication check.
+  MDM_KEY_SYSTEM_MENU until after authentication check.
   (Frederic Crozat)
 
-- Use g_markup_printf_escaped so gdmsetup better handles
+- Use g_markup_printf_escaped so mdmsetup better handles
   description strings that contains things similar to a tag
   like an email address.  Fixes bug #357998.  (Matthias
   Clasen)
 
-- Fix gdmsetup so that the window manager close button works
+- Fix mdmsetup so that the window manager close button works
   as the Close button in the dialog.  (Matthias Clasen)
 
-- Add g_type_init() to gdmflexiserver since this is needed
+- Add g_type_init() to mdmflexiserver since this is needed
   for -a (authentication) code to work.  (Brian Cameron)
 
 - Set authdir to NULL after freeing to avoid accessing an
@@ -1228,9 +1228,9 @@ New features, improvements, and bug fixes:
 2.16.7 Stuff:
 
 - Fix for CVE-2007-3381, a denial of service attack where the
-  user can crash the GDM daemon with a carefully crafted
-  GDM sockets command and cause GDM to stop managing future
-  displays.  GDM now is much better about safeguarding against
+  user can crash the MDM daemon with a carefully crafted
+  MDM sockets command and cause MDM to stop managing future
+  displays.  MDM now is much better about safeguarding against
   NULL values returned from g_strsplit calls.  (Brian Cameron)
 
 - Translation updates (Christophe Merlet, Amitakhya Phukan,
@@ -1238,13 +1238,13 @@ New features, improvements, and bug fixes:
 
 2.16.6 Stuff:
 
-- The GDM configuration option daemon/PidFile is now deprecated and
-  GDM now always uses /var/run/gdm.pid.  The location can be configured
+- The MDM configuration option daemon/PidFile is now deprecated and
+  MDM now always uses /var/run/mdm.pid.  The location can be configured
   at compile time with the configure --with-pid-file option.  This
   fixes bug #162849.  (William Jon McCann)
 
-- Now "Configure GDM" menu choice is not available when accessibility is
-  turned on since running gdmsetup in this configuration causes GDM to
+- Now "Configure MDM" menu choice is not available when accessibility is
+  turned on since running mdmsetup in this configuration causes MDM to
   hang.  Until the hanging bug is fixed, it's better to not allow the
   user to get into this situation.  (Brian Cameron)
 
@@ -1253,7 +1253,7 @@ New features, improvements, and bug fixes:
 - Better fix for not showing the face browser if the userlist is empty.
   (Ludwig Nussel)
 
-- Add ATK label for gdmgreeter entry field.  (David Zeuthen)
+- Add ATK label for mdmgreeter entry field.  (David Zeuthen)
 
 - Fix XDMCP send forward query so it works for IPv6.
   (Ludwig Nussel)
@@ -1266,7 +1266,7 @@ New features, improvements, and bug fixes:
 - Remove gnome glade references since GNOME does not use libglade anymore.
   (Kristof Vansant)
 
-- Fix comparison with string literal in gdmdynamic.  (Hans Petter Jansson)
+- Fix comparison with string literal in mdmdynamic.  (Hans Petter Jansson)
 
 - Translation updates (Amitakhya Phukan, Ignacio Casal Quinteiro,
   Hendrik Richter)
@@ -1283,11 +1283,11 @@ New features, improvements, and bug fixes:
 
 - Fix for a recently reported security issue that has ID
   CVE-2006-6105.  This fixes a problem where a user can 
-  enter strings like "%08x" into the gdmchooser entry and
+  enter strings like "%08x" into the mdmchooser entry and
   press the "Add" host button to print out memory contents.
-  This issue was introduced into GDM 2.13.0.
+  This issue was introduced into MDM 2.13.0.
 
-- Fix for TryExec check in gdmsession to make sure that any
+- Fix for TryExec check in mdmsession to make sure that any
   arguments are not passed to g_find_program_in_path since
   this causes the function to say it is not executable.
   (Brian Cameron)
@@ -1307,11 +1307,11 @@ New features, improvements, and bug fixes:
 
 - Update to make casting more clear in PAM logic.  This fixes a
   bug where the Kerberos PAM module was sending multiple error
-  messages and GDM was not processing them properly.
+  messages and MDM was not processing them properly.
   (Brian Cameron)
 
 - Add X_EXTRA_LIBS and X_LIBS to utils/Makefile when building
-  gdm-dmx-reconnect-proxy to fix bug #368808.
+  mdm-dmx-reconnect-proxy to fix bug #368808.
 
 - Translation updates (Djihed Afifi, Wouter Bolsterlee, Luca
   Ferretti, Pema Geyleg, Priit Laes, Duarte Loreto, Christophe
@@ -1333,13 +1333,13 @@ New features, improvements, and bug fixes:
   </item>
 
 - Now OK/Start Again buttons are sensitive/insensitive in a more
-  sensible way for both gdmlogin and gdmgreeter (if GTK style buttons
-  are used in gdmgreeter).  (Brian Cameron)
+  sensible way for both mdmlogin and mdmgreeter (if GTK style buttons
+  are used in mdmgreeter).  (Brian Cameron)
 
-- Face Browser widget and background rectangle (for gdmgreeter)
+- Face Browser widget and background rectangle (for mdmgreeter)
   is not shown if there are no users to display.  (Brian Cameron)
 
-- Help button now enabled in gdmphotosetup.  (Matthias Clasen)
+- Help button now enabled in mdmphotosetup.  (Matthias Clasen)
 
 - Fix so that if timed user script returns an invalid user that
   timed login is not turned on.  (Andrew)
@@ -1356,19 +1356,19 @@ New features, improvements, and bug fixes:
 
 2.16.1 Stuff:
 
-- Use g_markup_printf_escaped so gdmsetup better handles
+- Use g_markup_printf_escaped so mdmsetup better handles
   description strings that contains things similar to a tag
   like an email address.  Fixes bug #357998.  (Matthias
   Clasen)
 
-- Fix gdmsetup so that the window manager close button works
+- Fix mdmsetup so that the window manager close button works
   as the Close button in the dialog.  (Matthias Clasen)
 
 - Fix for bug #352838, avoid crashing by moving call to get
-  GDM_KEY_SYSTEM_MENU until after authentication check.
+  MDM_KEY_SYSTEM_MENU until after authentication check.
   (Frederic Crozat)
 
-- Add g_type_init() to gdmflexiserver since this is needed
+- Add g_type_init() to mdmflexiserver since this is needed
   for -a (authentication) code to work.  (Brian Cameron)
 
 - Translation updates (Rahul Bhalerao, Runa Bhattacharjee,
@@ -1387,9 +1387,9 @@ New features, improvements, and bug fixes:
   Rajesh Ranjan, Hendrik Richter, Danilo \305\240egan, Mugurel Tudor,
   Funda Wang, Matic \305\275gur)
 
-- Highlights from the 2.15 release cycle.  GDM was enhanced to use
+- Highlights from the 2.15 release cycle.  MDM was enhanced to use
   giochannel for communication between the daemon and slaves and goption 
-  instead of popt.  gdmsetup startup performance improved, and the
+  instead of popt.  mdmsetup startup performance improved, and the
   "Options" button usability has been further improved.  The following
   bugs were fixed.
   327530 - Ensure login window always has focus.
@@ -1397,7 +1397,7 @@ New features, improvements, and bug fixes:
 
 2.15.10 Stuff:
 
-- Now gdmlogin centers cursor in the GUI to ensure that the login
+- Now mdmlogin centers cursor in the GUI to ensure that the login
   window always has focus.  Fixes bug 327530.
 
 - Translation updates (Subhransu Behera, Rahul Bhalerao, Wouter
@@ -1408,14 +1408,14 @@ New features, improvements, and bug fixes:
 2.15.9 Stuff:
 
 - The iochannel fix in 2.15.8 broke the face browser when using
-  gdmgreeter.  Now fixed.  (Ray Strode)
+  mdmgreeter.  Now fixed.  (Ray Strode)
 
 - Fix so that focus never leaves the user/password entry when using
-  the gdmgreeter Options button.  The previous fixes for this didn't
+  the mdmgreeter Options button.  The previous fixes for this didn't
   take into account the situation where the user pops up the menu,
   but doesn't select an option.  (Brian Cameron)
 
-- Fix error message that gets printed when you try to run GDM 
+- Fix error message that gets printed when you try to run MDM 
   daemon as a non-root user.  (Brian Cameron)
 
 - The configure script now supports the Xserver installed in
@@ -1424,14 +1424,14 @@ New features, improvements, and bug fixes:
 - Remove calls to syslog/malloc that are called from inside signal 
   handlers, since they are not safe.  (Ray Strode)
 
-- Improved commands in GDM configuration files.  (Brian Cameron)
+- Improved commands in MDM configuration files.  (Brian Cameron)
 
 - Translation updates (Subhransu Behera, Rahul Bhalerao, Inaki Larranaga,
   Jovan Naumovski, Ankit Patel, Ani Peter)
 
 2.15.8 Stuff:
 
-- Fix to bugs causing gdmchooser to core dump when started.
+- Fix to bugs causing mdmchooser to core dump when started.
   (Brian Cameron)
 
 - Translation updates (Pawan Chitrakar, Christophe Merlet,
@@ -1439,16 +1439,16 @@ New features, improvements, and bug fixes:
 
 2.15.7 Stuff:
 
-- Now GDM does not save Failsafe GNOME or Failsafe Xterm as the
+- Now MDM does not save Failsafe GNOME or Failsafe Xterm as the
   user's default session, so the user does not lose their 
   default setting when using Failsafe (bug #341619).  
   (Brian Cameron)
 
-- Updated GDM's slave/daemon message handling so it uses 
+- Updated MDM's slave/daemon message handling so it uses 
   giochannel internal buffering.  This should prevent messages
   from getting lost.  (Ray Strode)
 
-- Performance improvements to gdmsetup start-up.  (Ray Strode)
+- Performance improvements to mdmsetup start-up.  (Ray Strode)
 
 - Fix for compiling with GCC 2.95.  (Jens Granseuer)
 
@@ -1469,8 +1469,8 @@ New features, improvements, and bug fixes:
 - NoHost icon updated to use official GNOME logo.  New default face
   image with a facelift.
 
-- Scrolling regions in gdmsetup User tab are now scrollable
-  vertically, improving UI experience.  gdmsetup now generates a 
+- Scrolling regions in mdmsetup User tab are now scrollable
+  vertically, improving UI experience.  mdmsetup now generates a 
   proper error message and fails when it can't find the custom
   configuration file.
 
@@ -1492,9 +1492,9 @@ New features, improvements, and bug fixes:
 2.15.4 Stuff:
 
 - Correction for serious security issue where the user can enter the
-  GDM configuration GUI with a user password when the Face Browser
+  MDM configuration GUI with a user password when the Face Browser
   is enabled.  Refer to bugzilla.gnome.org bug #343476 (Brian
-  Cameron)  This issue impacts all versions of GDM 2.8.0.0-2.8.0.7,
+  Cameron)  This issue impacts all versions of MDM 2.8.0.0-2.8.0.7,
   2.14.0-2.14.7, and 2.15.0-2.15.3.  This issue was reported to
   vendor-sec one week ago and has ID #CVE-2006-2452.
 
@@ -1502,10 +1502,10 @@ New features, improvements, and bug fixes:
   Users tab, the Automatic/Timed login dropdown lists update
   properly.  (Brian Cameron)
 
-- Now gdmflexiserver calls gdmcomm_check with FALSE so it will not
-  pop up a dialog.  gdmflexiserver can be run with the --command
+- Now mdmflexiserver calls mdmcomm_check with FALSE so it will not
+  pop up a dialog.  mdmflexiserver can be run with the --command
   option which can be used when the user does not have permission to
-  a DISPLAY, so trying to show a dialog was causing gdmflexiserver
+  a DISPLAY, so trying to show a dialog was causing mdmflexiserver
   to core dump when the check failed.   (Brian Cameron)
 
 - Added gestures to the AccessKeyMouseEvents configuration file
@@ -1515,14 +1515,14 @@ New features, improvements, and bug fixes:
 - Now Welcome message is saved in the configuration file in 
   UTF-8 format for better readability.  (Frederic Peters)
 
-- The GDM daemon once again supports the -nodaemon option.
+- The MDM daemon once again supports the -nodaemon option.
   (Ray Strode)
 
 - Improvements to Face Browser.  Now do not ask the user to
   re-enter username on password failure.  The cancel button
   must now be used to unselect a user.  (Brian Cameron)
 
-- Now when GTK+ style buttons are used in gdmgreeter themes, 
+- Now when GTK+ style buttons are used in mdmgreeter themes, 
   focus always returns to the entry field after clicking on
   a button.  (Brian Cameron)
 
@@ -1532,7 +1532,7 @@ New features, improvements, and bug fixes:
 - "make install" no longer fails if chown fails.  (Brian
    Cameron)
 
-- If authdir is the fallback dir.  If not, and GDM cannot 
+- If authdir is the fallback dir.  If not, and MDM cannot 
   access the user's $HOME directory, then try and use the
   fallback directory.  (Arjan Timmerman)
 
@@ -1544,9 +1544,9 @@ New features, improvements, and bug fixes:
 2.15.3 Stuff:
 
 - No longer use popt in favor of glib's GOption command line parsing.
-  Note that this removes the single-dash options GDM used to support
-  (such as the gdm -nodaemon option which is now --nodaemon) which
-  were originally supported so GDM would be more like XDM.  Users who
+  Note that this removes the single-dash options MDM used to support
+  (such as the mdm -nodaemon option which is now --nodaemon) which
+  were originally supported so MDM would be more like XDM.  Users who
   depend on the single dash options will need to change to use the
   non-deprecated double-dash options.  (Christian Kirbach)
 
@@ -1554,12 +1554,12 @@ New features, improvements, and bug fixes:
   ShowGnomeXtermSession configuration values to not work. (Brian
   Cameron)
 
-- Now add gdm-ssh-session to distribution tarball, and fix the
+- Now add mdm-ssh-session to distribution tarball, and fix the
   ssh-session.desktop file so that it sets the right TryExec
   value even if --libexecdir isn't passed into configure.
   (Brian Cameron)
 
-- Use ngettext in gui/gdmcommon.c for building the Timed Login
+- Use ngettext in gui/mdmcommon.c for building the Timed Login
   message.  (Benoit Dejean)
 
 - Translation updates (Chao-Hsiung Liao, Gora Mohanty, Ankit Patel)
@@ -1568,7 +1568,7 @@ New features, improvements, and bug fixes:
 
 - Correct build to include translation files.
 
-- Fix layout of new buttons in gdmgreeter themes.
+- Fix layout of new buttons in mdmgreeter themes.
 
 - Translation updates (Alexander Shopov)
 
@@ -1577,7 +1577,7 @@ New features, improvements, and bug fixes:
 - Correct double free that was causing a core dump in the last release.
   (Joe Marcus Clark)
 
-- Improvements to signal handling, fixing problem where GDM slave can
+- Improvements to signal handling, fixing problem where MDM slave can
   hang on read.  Fixes bug #336549.  (Ed Catmur, Brian Cameron)
 
 - "Start Over" string changed to "Start Again" after another round of
@@ -1590,7 +1590,7 @@ New features, improvements, and bug fixes:
 - Fix security/AllowRemoteAutoLogin and fix SuspendCommand configuration
   so it honors SystemMenu.  (Brian Cameron)
 
-- Correct installation of gdm-ssh-session and now the desktop file is
+- Correct installation of mdm-ssh-session and now the desktop file is
   translated.  (Brian Cameron)
 
 - Correct invocation of PreFetch, when enabled, so it only executes
@@ -1607,15 +1607,15 @@ New features, improvements, and bug fixes:
   program to avoid remaining with high privileges.  Fixes bug #340347.
   (Julio M. Merino Vidal)
 
-- Now allow the PAM Stack to be specified in the GDM configuration instead
-  of being hardcoded to "gdm".  (Brian Cameron)
+- Now allow the PAM Stack to be specified in the MDM configuration instead
+  of being hardcoded to "mdm".  (Brian Cameron)
 
 - Per-display configuration is now supported.  The user may create 
-  /etc/gdm/custom.conf:<dispnum> files (/etc/gdm/custom.conf:0 for display :0)
+  /etc/mdm/custom.conf:<dispnum> files (/etc/mdm/custom.conf:0 for display :0)
   and GUI related configuration settings in the per-display file will override
   for that display.  (Brian Cameron)
 
-- Greeter themes now support real GTK+ button types, making gdmgreeter
+- Greeter themes now support real GTK+ button types, making mdmgreeter
   better support a11y and allow GTK themeable buttons.  (Brian Cameron)
 
 - New pam-error-logo greeter type to allow an image to be displayed only
@@ -1624,9 +1624,9 @@ New features, improvements, and bug fixes:
 - Updated config/gettextfoo.h to reflect current strings for translation.
   Fixes bug #340017.  (Brian Cameron)
 
-- Updated comments in GDM configuration files (Brian Cameron)
+- Updated comments in MDM configuration files (Brian Cameron)
 
-- GDM now uses the string "Start Over" instead of "Cancel" in the GUI.
+- MDM now uses the string "Start Over" instead of "Cancel" in the GUI.
   (Brian Cameron)
 
 - Many updates to documentation.  Explain gtk-theme greeter tag, new button and
@@ -1636,17 +1636,17 @@ New features, improvements, and bug fixes:
 2.14.13 stuff:
 
 - Fix for CVE-2007-3381, a denial of service attack where the
-  user can crash the GDM daemon with a carefully crafted
-  GDM sockets command and cause GDM to stop managing future
-  displays.  GDM now is much better about safeguarding against
+  user can crash the MDM daemon with a carefully crafted
+  MDM sockets command and cause MDM to stop managing future
+  displays.  MDM now is much better about safeguarding against
   NULL values returned from g_strsplit calls.  (Brian Cameron)
 
 - Translation updates (Christophe Merlet)
 
 2.14.12 stuff:
 
-- The GDM configuration option daemon/PidFile is now deprecated and
-  GDM now always uses /var/run/gdm.pid.  The location can be configured
+- The MDM configuration option daemon/PidFile is now deprecated and
+  MDM now always uses /var/run/mdm.pid.  The location can be configured
   at compile time with the configure --with-pid-file option.  This
   fixes bug #162849.  (William Jon McCann)
 
@@ -1656,15 +1656,15 @@ New features, improvements, and bug fixes:
 - Remove gnome glade references since GNOME does not use libglade anymore.
   (Kristof Vansant)
 
-- Fix comparison with string literal in gdmdynamic.  (Hans Petter Jansson)
+- Fix comparison with string literal in mdmdynamic.  (Hans Petter Jansson)
 
 2.14.11 stuff:
 
 - Fix for a recently reported security issue that has ID
   CVE-2006-6105.  This fixes a problem where a user can 
-  enter strings like "%08x" into the gdmchooser entry and
+  enter strings like "%08x" into the mdmchooser entry and
   press the "Add" host button to print out memory contents.
-  This issue was introduced into GDM 2.13.0.
+  This issue was introduced into MDM 2.13.0.
 
 - Set authdir to NULL after freeing to avoid accessing an invalid
   pointer.  Fixes bug #359831.  (Amnon Aaronsohn)
@@ -1678,17 +1678,17 @@ New features, improvements, and bug fixes:
 - The configure script now supports the Xserver installed in
   /usr/bin/Xorg.  (Ray Strode)
 
-- Fix error message that gets printed when you run GDM
+- Fix error message that gets printed when you run MDM
   as non-root user. (Brian Cameron)
 
 2.14.10 stuff:
 
-- Fix so that GDM does not save the Failsafe GNOME or Xterm
+- Fix so that MDM does not save the Failsafe GNOME or Xterm
   session as the user's default.  (Brian Cameron)
 
-- Fix gdmchooser crash issue.  (Brian Cameron)
+- Fix mdmchooser crash issue.  (Brian Cameron)
 
-- Performance tunings for gdmsetup startup. (Ray Strode)
+- Performance tunings for mdmsetup startup. (Ray Strode)
 
 - Fix decoding of suspend message in the daemon so the suspend
   command works.  (Philippe Troin)
@@ -1699,7 +1699,7 @@ New features, improvements, and bug fixes:
 - Make sure focus is returned to the entry field when using the
   "Options" button.  (Brian Cameron)
 
-- Fix issue causes gdmsetup to fail improperly when the custom
+- Fix issue causes mdmsetup to fail improperly when the custom
   configuration file cannot be found.  (Brian Cameron)
 
 - The nohost icon has been updated to use official GNOME logo,
@@ -1723,7 +1723,7 @@ New features, improvements, and bug fixes:
 2.14.8 stuff:
 
 - Correction for serious security issue where the user can enter the
-  GDM configuration GUI with a user password when the Face Browser
+  MDM configuration GUI with a user password when the Face Browser
   is enabled.  Refer to bugzilla.gnome.org bug #343476 and
   CVE-2006-2452.  (Brian Cameron)
 
@@ -1731,10 +1731,10 @@ New features, improvements, and bug fixes:
   Users tab, the Automatic/Timed login dropdown lists update
   properly.  (Brian Cameron)
 
-- Now gdmflexiserver calls gdmcomm_check with FALSE so it will not
-  pop up a dialog.  gdmflexiserver can be run with the --command
+- Now mdmflexiserver calls mdmcomm_check with FALSE so it will not
+  pop up a dialog.  mdmflexiserver can be run with the --command
   option which can be used when the user does not have permission to
-  a DISPLAY, so trying to show a dialog was causing gdmflexiserver
+  a DISPLAY, so trying to show a dialog was causing mdmflexiserver
   to core dump when the check failed.   (Brian Cameron)
 
 - Added gestures to the AccessKeyMouseEvents configuration file
@@ -1747,20 +1747,20 @@ New features, improvements, and bug fixes:
 
 2.14.7 stuff:
 
-- Correct build/install issues with gdm-ssh-session and the desktop
+- Correct build/install issues with mdm-ssh-session and the desktop
   file.  (Brian Cameron)
 
 - Fix bug that was causing the greeter/ShowGnomeFailsafeSession and
   ShowGnomeXtermSession configuration values to not work.  (Brian
   Cameron)
 
-- Fix gdmgreeter so the entry field always has focus after a button
+- Fix mdmgreeter so the entry field always has focus after a button
   press when using real GTK+ buttons in the theme.  (Brian Cameron)
 
 - Now per-display configuration works with the greeter/SystemMenu and
   greeter/ChooserButton keys.  (Brian Cameron)
 
-- Corrected a problem with GDM not using the fallback directory when
+- Corrected a problem with MDM not using the fallback directory when
   it cannot access the user's $HOME directory.  (Arjan Timmerman)
 
 - "make install" no longer fails if user cannot run chown.
@@ -1775,14 +1775,14 @@ New features, improvements, and bug fixes:
 2.14.6 stuff:
 
 - Backporting some useful features from 2.15 to 2.14.   Per-display
-  configuration and new gdmgreeter theming options (real GTK+ buttons,
+  configuration and new mdmgreeter theming options (real GTK+ buttons,
   pam-error-logo, and "startagain" stock label is displayed as "Cancel".
-  Note that the default themes shipped with GDM 2.14 do not use these
+  Note that the default themes shipped with MDM 2.14 do not use these
   features, but this patch means newer themes made with 2.15 should now
   work with this version of 2.14 and above. No strings were changed due
   to this change.  (Brian Cameron, Erwann Chenede)
 
-- Improvements to signal handling, fixing problem where GDM slave can
+- Improvements to signal handling, fixing problem where MDM slave can
   hang on read.  Fixes bug #336549.  (Ed Catmur, Brian Cameron)
 
 - Better configure support for FreeBSD.  Now the default configuration
@@ -1792,7 +1792,7 @@ New features, improvements, and bug fixes:
 - Fix security/AllowRemoteAutoLogin and fix SuspendCommand configuration
   so it honors SystemMenu.  (Brian Cameron)
 
-- Correct installation of gdm-ssh-session and now the desktop file is
+- Correct installation of mdm-ssh-session and now the desktop file is
   translated.  (Brian Cameron)
 
 - Correct invocation of PreFetch, when enabled, so it only executes
@@ -1812,7 +1812,7 @@ New features, improvements, and bug fixes:
 - Updated config/gettextfoo.h to reflect current strings for translation.
   Fixes bug #340017.  (Brian Cameron)
 
-- Updated comments in GDM configuration files (Brian Cameron)
+- Updated comments in MDM configuration files (Brian Cameron)
 
 - Translation updates (Takeshi AIHANA, Josep Puigdemont Casamaj\303\263,
    Artur Flinta, Priit Laes, Chao-Hsiung Liao, Lukas Novotny, Daniel
@@ -1828,11 +1828,11 @@ New features, improvements, and bug fixes:
 
 2.14.3 stuff:
 
-- Fixed bug where gdmchooser was ignoring hosts passed in on the command line.
-  Now gdmchooser works properly when BROADCAST is set to false.  (Brian
+- Fixed bug where mdmchooser was ignoring hosts passed in on the command line.
+  Now mdmchooser works properly when BROADCAST is set to false.  (Brian
   Cameron, Tiago Vignatti)
 
-- Marked strings as translatable and fix gdmsetup.desktop file so it is
+- Marked strings as translatable and fix mdmsetup.desktop file so it is
   translated.  (Vincent Fretin)
 
 - Fix to conform to C89 compilers.  (Jens Granseuer)
@@ -1843,10 +1843,10 @@ New features, improvements, and bug fixes:
 
 2.14.2 stuff:
 
-- Now include gui/gdmthemetester.in in the distribution.  It being missing
+- Now include gui/mdmthemetester.in in the distribution.  It being missing
   was causing the module to fail to compile.  (Brian Cameron)
 
-- Fix to the BROADCAST key in gdmchooser so it should now work.  (Brian
+- Fix to the BROADCAST key in mdmchooser so it should now work.  (Brian
   Cameron, kudos to Tiago Vignatti)
 
 - Further cleanups to Addresses CVE-2006-1057.  (Hans Petter Jansson,
@@ -1860,29 +1860,29 @@ New features, improvements, and bug fixes:
 
 2.14.1 stuff:
 
-- The sockets connection between the slaves and the GDM daemon is now
+- The sockets connection between the slaves and the MDM daemon is now
   better managed to better ensure that sockets are never left open.
-  This work also makes gdmsetup start faster.  (Brian Cameron)
+  This work also makes mdmsetup start faster.  (Brian Cameron)
 
-- Corrected bug that causes a core dump when you click on gdmgreeter
+- Corrected bug that causes a core dump when you click on mdmgreeter
   fields that have an id.  (Brian Cameron)
 
-- Add new GdmXserverTimeout configuration setting so that the length of
-  time GDM waits for the Xserver to start can be tuned, so GDM better
+- Add new MdmXserverTimeout configuration setting so that the length of
+  time MDM waits for the Xserver to start can be tuned, so MDM better
   works with Xservers that require more than 10 seconds to start.
   (Emilie)
 
-- The happygnome and happygnome-list gdmgreeter themes now use the
+- The happygnome and happygnome-list mdmgreeter themes now use the
   official logo.  (Brian Cameron)
 
-- Now GDM configure supports --with-sysconfsubdir so that GDM's 
-  configuration directory can be configured to not have "/gdm" appended
+- Now MDM configure supports --with-sysconfsubdir so that MDM's 
+  configuration directory can be configured to not have "/mdm" appended
   to the end.  (Julio M. Merino Vidal)
 
 - Fix for ensuring .ICEauthority file has proper ownership/permissions.
   Addresses CVE-2006-1057.  (Hans Petter Jansson)
 
-- Fix "Show Actions Menu" section in gdmsetup so it appears when both
+- Fix "Show Actions Menu" section in mdmsetup so it appears when both
   "Plain" and "Themed" style is chosen.  (Brian Cameron, Dennis
   Cranston)
 
@@ -1911,9 +1911,9 @@ New features, improvements, and bug fixes:
 
 2.14.0 stuff:
 
-- Now GDM will update the actual custom configuration file used by
-  the daemon, so if gdm.conf is being used by the daemon, it will
-  also be edited by gdmsetup.
+- Now MDM will update the actual custom configuration file used by
+  the daemon, so if mdm.conf is being used by the daemon, it will
+  also be edited by mdmsetup.
 
 - Now the Options menu will appear below the button if there is room,
   and above the button otherwise.  Previously it always appeared above,
@@ -1930,7 +1930,7 @@ New features, improvements, and bug fixes:
 
 2.13.0.10 stuff:
 
-- Now GDM will use the gdm.conf file if it exists as the custom.conf
+- Now MDM will use the mdm.conf file if it exists as the custom.conf
   file, so if the user has an old configuration file it will continue
   to use that.  (Brian Cameron)
 
@@ -1939,18 +1939,18 @@ New features, improvements, and bug fixes:
 2.13.0.9 stuff:
 
 - New "gtk-theme" property can be used with the <greeter> tag in
-  gdmgreeter themes to specify a theme to control the appearance
+  mdmgreeter themes to specify a theme to control the appearance
   of the F10/Options menu, the entry field, and other GTK+
   widget appearance.  (Brian Cameron)
 
-- Core dumping problem with gdmgreeter should be fixed.  (Brian
+- Core dumping problem with mdmgreeter should be fixed.  (Brian
   Cameron)
 
 - Some fixes to memory management.  Memory leak issues resolved.
   (Brian Cameron)
 
 - Correct error message that is printed when ServAuthDir isn't
-  owned by root:gdm.  THis doesn't affect localization since
+  owned by root:mdm.  THis doesn't affect localization since
   the string didn't change, just the value placed into the %s
   sequence.  (Brian Cameron)
 
@@ -1964,27 +1964,27 @@ New features, improvements, and bug fixes:
 
 2.13.0.8 stuff:
 
-- Because the main gdm.conf file is now read-only, contains distro
+- Because the main mdm.conf file is now read-only, contains distro
   defaults and is not to be edited by the user, the file has been
-  moved to ${datadir}/gdm/defaults.conf (also factory-gdm.conf is
-  now %{datadir}/gdm/factory-defaults.conf).  Users can use the
+  moved to ${datadir}/mdm/defaults.conf (also factory-mdm.conf is
+  now %{datadir}/mdm/factory-defaults.conf).  Users can use the
   --with-defaults-conf to specify the location of this file.
-  Note that this means that distributions who want to preserve GDM 
-  configuration set by those using older versions of GDM should use
-  preinstall/postinstall scripts to move the /etc/gdm/gdm.conf file
-  to /etc/gdm/gdm.conf-custom if the file has been edited (compare
-  against /etc/gdm/factory-gdm.conf to see if it has been modified).
-  "make install" for GDM does this if building from source.  GDM
+  Note that this means that distributions who want to preserve MDM 
+  configuration set by those using older versions of MDM should use
+  preinstall/postinstall scripts to move the /etc/mdm/mdm.conf file
+  to /etc/mdm/mdm.conf-custom if the file has been edited (compare
+  against /etc/mdm/factory-mdm.conf to see if it has been modified).
+  "make install" for MDM does this if building from source.  MDM
   docs updated to reflect this change.
 
-- Lots of performance issues with the GDM sockets connection improved.
+- Lots of performance issues with the MDM sockets connection improved.
   Now the code deals much better with failures, and better debug is
   printed to the log.
 
-- Improved debug logic in GDM slaves so they use common functions.
+- Improved debug logic in MDM slaves so they use common functions.
 
-- Fix gdmdynamic so it supports up to hundreds of displays rather than
-  just a dozen or so.  Now gdmdynamic backs off on sending sockets
+- Fix mdmdynamic so it supports up to hundreds of displays rather than
+  just a dozen or so.  Now mdmdynamic backs off on sending sockets
   commands to the server if it is being flooded with requests.  Added
   new "SERVER_BUSY" sockets command to support this feature and new
   -t and -s command line options so the back-off behavior can be 
@@ -1993,13 +1993,13 @@ New features, improvements, and bug fixes:
 - The config logic for the slaves will now return the compiled in
   value if it fails to connect to the server for better behavior.
 
-- gdm-restart, gdm-safe-restart, gdm-stop, and gdm.spec now use
-  gdmflexiserver to get config data rather than trying to grep and 
+- mdm-restart, mdm-safe-restart, mdm-stop, and mdm.spec now use
+  mdmflexiserver to get config data rather than trying to grep and 
   awk the config file directly.  
 
 - Fix Xsession script so zenity calls work.
 
-- Lots of improvements to the GDM docs.  Added section about "PAM" in
+- Lots of improvements to the MDM docs.  Added section about "PAM" in
   Security.  Add comment that +xkb is needed for keyboard gesture
   listeners (accessibility) to work.  Also updated README and 
   README.install and moved some information that was in these files
@@ -2009,7 +2009,7 @@ New features, improvements, and bug fixes:
   more connections from slaves.  This improves performance when the
   daemon is flooded with requests.
 
-- Fix include statement in daemon/gdmconfig.c to fix compile problem
+- Fix include statement in daemon/mdmconfig.c to fix compile problem
   on LFS.
 
 - Translation updates (Raphael Higino, Theppitak Karoonboonyanan,
@@ -2024,20 +2024,20 @@ New features, improvements, and bug fixes:
 - Turns out the core dumping issue that was supposed to be fixed in 2.13.0.6
   wasn't really fixed.  Now it is.  (Sebastien Bacher)
 
-- New "options_button" available for gdmgreeter themes.  This pops up 
+- New "options_button" available for mdmgreeter themes.  This pops up 
   the F10 menu which has all the choices found in the Disconnect, System,
   Sessions, and Language buttons so that themes can have a cleaner 
   1-button look.  The default circles, happygnome, and happygnome-list
   themes now use this style.  (Sebastien Bacher, Brian Cameron)
 
 - Fix bugs that were causing User24HourClock=auto to not work properly.
-  Now GDM should properly grab the system time format when auto is set.
+  Now MDM should properly grab the system time format when auto is set.
   (Christopher Aillon)
 
 - Fix bug in PreSession script that was causing it to not properly set the
   background color before starting user session.  (Brian Cameron)
 
-- GDM docs now has a troubleshooting section.  (Brian Cameron)
+- MDM docs now has a troubleshooting section.  (Brian Cameron)
 
 - Make sure /usr/openwin/bin is in PATH on Solaris, since this is needed
   for PreSession/PostSession scripts to find sessreg and other needed
@@ -2046,7 +2046,7 @@ New features, improvements, and bug fixes:
 - String change of "XDMCP Chooser" to "Remote Login via XDMCP".
   (Brian Cameron)
 
-- Minor tweaks to default/example gdmprefetchlist file so it works 
+- Minor tweaks to default/example mdmprefetchlist file so it works 
   better for GNOME 2.14 out of the box.  (Brian Cameron)
 
 - Translation updates (Stanislav Brabec, Theppitak Karoonboonyanan,
@@ -2071,47 +2071,47 @@ New features, improvements, and bug fixes:
 
 2.13.0.5 stuff:
 
-Note: Some users have been complaining that GDM 2.13.0.4 core dumps when the
+Note: Some users have been complaining that MDM 2.13.0.4 core dumps when the
       IncludeAll feature is turned on, and the face browser is also being used.
       I can not recreate this problem on my machine, so this issue may still
       exist on some platforms.
 
-- GDM now supports secure remote login which can be enabled by using
+- MDM now supports secure remote login which can be enabled by using
   --enable-securelogin at configure time.  (Dominique Hazael-Massieux)
   
-- Fixed gdmsetup so the Logo/Background file chooser does not generate assert
+- Fixed mdmsetup so the Logo/Background file chooser does not generate assert
   warnings and no longer will reset your logo/background to NULL.  I think this
   problem was causing occasional core dumping issues.  Also cleaned up memory
-  management in gdmsetup a bit.  (Brian Cameron)
+  management in mdmsetup a bit.  (Brian Cameron)
 
 - Now SELinux initialization logic does not use setexeccon if 
   is_selinux_enabled returns -1.  (Dan Walsh)
 
 - The prefetch logic that is enabled by using --with-prefetch was improved
-  and GDM will now install a default librarylist if the feature is enabled.
-  Now GDM will only launch the gdm_prefetch program the first time that a
+  and MDM will now install a default librarylist if the feature is enabled.
+  Now MDM will only launch the mdm_prefetch program the first time that a
   greeter is displayed.  Since this behavior is very specific to the needs
-  of prefetching libraries, the gdm.conf key changed from PostDisplayProgram
+  of prefetching libraries, the mdm.conf key changed from PostDisplayProgram
   to PreFetchProgram.  (Padraig O'Briain/Brian Cameron)
 
-- GDM no longer requires libgnome or libgnomeui at all.  This should improve
-  GDM performance and make GDM more lightweight.  (Jani Monoses)
+- MDM no longer requires libgnome or libgnomeui at all.  This should improve
+  MDM performance and make MDM more lightweight.  (Jani Monoses)
 
-- GDM Daemon now uses the GDK_DISPLAY_XDISPLAY macro instead of the 
-  GDK_DISPLAY macro since the GDK_DISPLAY macro causes the GDM daemon to
+- MDM Daemon now uses the GDK_DISPLAY_XDISPLAY macro instead of the 
+  GDK_DISPLAY macro since the GDK_DISPLAY macro causes the MDM daemon to
   require the libgdk-x11 library to always be loaded into memory.  Now it can
-  lazyload this library only when needed (when GDM daemon displays error GUI's
-  which only happens when GDM can't start up properly).  This should improve
-  performance and make GDM more lightweight for the normal case where GDM does
+  lazyload this library only when needed (when MDM daemon displays error GUI's
+  which only happens when MDM can't start up properly).  This should improve
+  performance and make MDM more lightweight for the normal case where MDM does
   start up.  (Brian Cameron)
 
-- Minor cleanup of gdmsetup.  (Dennis Cranston)
+- Minor cleanup of mdmsetup.  (Dennis Cranston)
 
 - Caps lock and Shut down messages changed to be more consistent between
-  gdmlogin and gdmgreeter.  Error message provided when session file is 
+  mdmlogin and mdmgreeter.  Error message provided when session file is 
   invalid now tells you the name of the offending file.  (Brian Cameron)
 
-- GDM docs given some attention, new "Security" and "Performance" sections and
+- MDM docs given some attention, new "Security" and "Performance" sections and
   a good bit of information added to the "Introduction" and "Accessibility"
   sections.  (Brian Cameron)
 
@@ -2125,32 +2125,32 @@ Note: Some users have been complaining that GDM 2.13.0.4 core dumps when the
 
 Interface Changes:
 
-- This version of GDM handles its configuration files slighly differently.
-  Now users are not recommended to modify the installed gdm.conf file and
-  are instead encouraged to make changes to gdm.conf-custom.  The gdmsetup
-  program now saves user configuration changes to the gdm.conf-custom file.
-  Configuration options specified in gdm.conf-custom file override the values
-  in the main gdm.conf file.  
+- This version of MDM handles its configuration files slighly differently.
+  Now users are not recommended to modify the installed mdm.conf file and
+  are instead encouraged to make changes to mdm.conf-custom.  The mdmsetup
+  program now saves user configuration changes to the mdm.conf-custom file.
+  Configuration options specified in mdm.conf-custom file override the values
+  in the main mdm.conf file.  
 
-  This allows distributions to overwrite the gdm.conf file without worry
+  This allows distributions to overwrite the mdm.conf file without worry
   that the file contains any user customizations.  When running "make install"
-  GDM now compares the already installed gdm.conf with the already installed
-  factory-gdm.conf file and if they both exist and are not the same, then
-  gdm.conf file is moved to gdm.conf-custom to preserve user changes.  If the
-  gdm.conf-custom file already exists it is renamed to gdm.conf.org.
-  Distributions should do the same when upgrading GDM.
+  MDM now compares the already installed mdm.conf with the already installed
+  factory-mdm.conf file and if they both exist and are not the same, then
+  mdm.conf file is moved to mdm.conf-custom to preserve user changes.  If the
+  mdm.conf-custom file already exists it is renamed to mdm.conf.org.
+  Distributions should do the same when upgrading MDM.
 
-  Note that this change is backwards compatible.  GDM will still work as
-  it did before even if no gdm.conf-custom file exists on the system.
+  Note that this change is backwards compatible.  MDM will still work as
+  it did before even if no mdm.conf-custom file exists on the system.
   (Brian Cameron)
 
-- gdmconfig no longer supports the --config command line option since it
+- mdmconfig no longer supports the --config command line option since it
   now accesses the configuration data over the sockets protocol rather
-  than reading the configuration files directly.  Note the GDM daemon still
+  than reading the configuration files directly.  Note the MDM daemon still
   supports the --config command line option.
 
 - Added PostDisplayProgram and the --with-prefetch configuration option
-  to support GDM running a prefetch script to preload libraries when it
+  to support MDM running a prefetch script to preload libraries when it
   firsts starts the greeter program, which has been shown to improve first
   time login time.  (Padraig O'Briain, Brian Cameron)
 
@@ -2161,16 +2161,16 @@ Interface Changes:
 
 Other Changes:
 
-- This release completes the internal redesign of GDM's configuration
+- This release completes the internal redesign of MDM's configuration
   system.  Now all configuration information is read by the daemon and
-  accessed via the GDM sockets protocol.  The GET_SERVER_LIST and
+  accessed via the MDM sockets protocol.  The GET_SERVER_LIST and
   GET_SERVER_DETAILS sockets commands were added to support accessing the
   [server-foo] sections of the configuration file via the sockets protocol.
   (Brian Cameron)
 
-- Merged code for parsing character sequences in gdmgreeter labels and
+- Merged code for parsing character sequences in mdmgreeter labels and
   the Welcome/RemoteWelcome keys, so now they are handled the same by both
-  gdmlogin and gdmgreeter.  Now %d is used for display number and %s is the
+  mdmlogin and mdmgreeter.  Now %d is used for display number and %s is the
   system name (uname.sysname).  The previously undocumented sequences are now
   explained in the documentation.  (Brian Cameron)
 
@@ -2179,18 +2179,18 @@ Other Changes:
   value.  (Brian Cameron)
 
 - Fixed bug that caused the TimedLogin user to be logged in if the user
-  hit the "ENTER" key without entering a password.  Mention in the GDM
+  hit the "ENTER" key without entering a password.  Mention in the MDM
   documentation that if the user does not enter a username but just hits
   the ENTER key while the login program is requesting the username, then 
-  GDM will just login as the timed user.  (Brian Cameron)
+  MDM will just login as the timed user.  (Brian Cameron)
 
-- Removed libgnome as a GDM dependency and removed most libgnomeui 
-  dependencies.  Redesigning GDM's configuration allowed GDM to stop using
+- Removed libgnome as a MDM dependency and removed most libgnomeui 
+  dependencies.  Redesigning MDM's configuration allowed MDM to stop using
   deprecated gnome_config interfaces, for example.  (Brian Cameron)
 
 - Fixed a bug with keeping the sockets protocol open for multiple commands
   that was included in the last release, and fixed memory handling issues
-  that was causing core dumping with gdmsetup in the previous release.
+  that was causing core dumping with mdmsetup in the previous release.
   (Brian Cameron)
 
 - Fixed bug with the --with-configdir configure option.  (Brian Cameron)
@@ -2208,16 +2208,16 @@ Other Changes:
 
 2.13.0.3 stuff:
 
-- Minor UI improvements to gdmsetup (Dennis Cranston, Calum Benson)
+- Minor UI improvements to mdmsetup (Dennis Cranston, Calum Benson)
 
-- Removed libgnome dependencies for all GDM programs except gdmflexiserver and
-  gdmsetup.  These should be fixed for the next release.  (Jani Monoses, Brian
+- Removed libgnome dependencies for all MDM programs except mdmflexiserver and
+  mdmsetup.  These should be fixed for the next release.  (Jani Monoses, Brian
   Cameron)
 
 - Now communications protocol used by client does not shut down after each
   call, improves performance.  (Brian Cameron)
 
-- More clear stability information about gdm.conf file in README (Brian
+- More clear stability information about mdm.conf file in README (Brian
   Cameron)
 
 - Translation updates (Takeshi AIHANA, \305\275ygimantas Beru\304\215ka,
@@ -2227,8 +2227,8 @@ Other Changes:
 
 2.13.0.2 stuff:
 
-- Further redesign of configuration parsing logic.  Now all GDM slaves (except
-  gdmsetup) use the GET_CONFIG socket command to access configuration data.
+- Further redesign of configuration parsing logic.  Now all MDM slaves (except
+  mdmsetup) use the GET_CONFIG socket command to access configuration data.
   This means all configuration parsing is now handled in one place, the daemon.
   Improvements to the daemon configuration parsing so it correctly parses and
   validates all parameters used by the slave programs.  Also fix some compile
@@ -2246,7 +2246,7 @@ Other Changes:
 
 - Correct Linux get VT logic so it returns the correct VT.  (Frederic Crozat)
 
-- Now gdmlogin always uses GDK_RGB_DITHER_MAX when painting the background to
+- Now mdmlogin always uses GDK_RGB_DITHER_MAX when painting the background to
   ensure a nice background regardless of X configuration (e.g. X in 16bpp
   mode).  (Frederic Crozat)
 
@@ -2265,24 +2265,24 @@ Other Changes:
 
 2.13.0.1 stuff:
 
-- Complete redesign of gdmsetup so it follows usability recommendation mockups
+- Complete redesign of mdmsetup so it follows usability recommendation mockups
   by Calum Benson.  (Dennis Cranston, Calum Benson)
 
-- gdmsetup now supports drag-and-drop for new themes.  (Dennis Cranston)
+- mdmsetup now supports drag-and-drop for new themes.  (Dennis Cranston)
 
 - The chooser GUI has been HIGified. (Dennis Cranston)
 
-- Redesign of configuration parsing logic in the GDM daemon which simplifies
+- Redesign of configuration parsing logic in the MDM daemon which simplifies
   how the UPDATE_CONFIG and GET_CONFIG commands work, better encapsulates the
   vicious-extensions logic, and cleans up the code.  (Brian Cameron)
 
 - If slave does not respond to a SIGTERM, try a SIGKILL the second time.  This
-  resolves a problem where GDM sometimes stops managing a display because it
+  resolves a problem where MDM sometimes stops managing a display because it
   just keeps waiting for the slave to die.  See bug #113902.  (Vaclav Smilauer)
 
-- GDM now uses VT_GETSTATE for peeking VT freeness (Samuel Thibault)
+- MDM now uses VT_GETSTATE for peeking VT freeness (Samuel Thibault)
 
-- Now GDM warns correctly about caps lock if an alternate keymap is enabled.
+- Now MDM warns correctly about caps lock if an alternate keymap is enabled.
   kbGetState is used instead of XkbGetIndicator State. (Sebastien Bacher)
 
 - Fixed race condition where a variable used by the signal handlers was not
@@ -2309,13 +2309,13 @@ Other Changes:
 - Fix problem with PostSession script not always being executed when user kills
   the Xserver with ctrl-alt-backspace.  Fixes bug #152906. (Jerry G. DeLapp)
 
-- No longer set tooltips for menu items in gdmlogin.  These do not work with
+- No longer set tooltips for menu items in mdmlogin.  These do not work with
   accessibility and no GNOME programs use menu tooltips, it is not recommended.
   (Brian Cameron)
 
 - Change the way the "OK" and "Cancel" buttons work so they are consistent.
-  Now the "Cancel" button in gdmlogin is active when the Username is requested
-  and just clears the field.  This makes gdmlogin work like gdmgreeter.  Now
+  Now the "Cancel" button in mdmlogin is active when the Username is requested
+  and just clears the field.  This makes mdmlogin work like mdmgreeter.  Now
   make the buttons insensitive when the ok/enter/tab is pressed and make them
   sensitive again when the greeter wants entry.  This fixes a bug where the
   greeter's memory could get corrupted by pressing "Cancel" after
@@ -2323,7 +2323,7 @@ Other Changes:
   enough delay to allow this to happen or perhaps on a really slow machine).
   (Brian Cameron)
 
-- Correct reading of config file in gdmflexiserver.  (Christiaan Welvaart)
+- Correct reading of config file in mdmflexiserver.  (Christiaan Welvaart)
 
 - GNOME HIG fixes for the Language, Session, and Message dialogs.  (Dennis
   Cranston)
@@ -2333,8 +2333,8 @@ Other Changes:
 
 - Better /etc/default/login support on Solaris.  Previously it supported only
   PASSREQ.  Now it supports PATH, SUPATH and CONSOLE (the same ones CDE login
-  supports).  Added new PasswordRequired gdm.conf setting so that PASSREQ can
-  be controlled via gdm.conf as well.
+  supports).  Added new PasswordRequired mdm.conf setting so that PASSREQ can
+  be controlled via mdm.conf as well.
 
 - Memory leaks fixed.  (Steve Grubb/Brian Cameron)
 
@@ -2347,7 +2347,7 @@ Other Changes:
 2.8.0.8 stuff:
 
 - Correction for serious security issue where the user can enter the
-  GDM configuration GUI with a user password when the Face Browser
+  MDM configuration GUI with a user password when the Face Browser
   is enabled.  Refer to bugzilla.gnome.org bug #343476 and
   CVE-2006-2452. (Brian Cameron)
 
@@ -2362,7 +2362,7 @@ Other Changes:
 
 - Correct Linux get VT logic so it returns the correct VT.  (Frederic Crozat)
 
-- Now gdmlogin always uses GDK_RGB_DITHER_MAX when painting the background to
+- Now mdmlogin always uses GDK_RGB_DITHER_MAX when painting the background to
   ensure a nice background regardless of X configuration (e.g. X in 16bpp
   mode).  (Frederic Crozat)
 
@@ -2384,29 +2384,29 @@ Other Changes:
   kills the Xserver with ctrl-alt-backspace.  This is caused because an
   xioerror is generated when the clients are killed and this needs to be
   ignored for the PostSession script to be processed.  This problem tended not
-  to manifest in GDM 2.6 since the call to kill the clients was made earlier.
+  to manifest in MDM 2.6 since the call to kill the clients was made earlier.
   However, it was still a race condition in 2.6 and this fix ensures that the
   slave will never exit too early.  (Jerry G. DeLapp)
 
-- The "OK" and "Cancel" buttons in gdmlogin and gdmgreeter now work
-  consistently.  Now the gdmlogin "Cancel" button is active when the Username
+- The "OK" and "Cancel" buttons in mdmlogin and mdmgreeter now work
+  consistently.  Now the mdmlogin "Cancel" button is active when the Username
   is requested and pressing it just clears the field, so it works like
-  gdmgreeter.  Also fixed a bug in gdmgreeter where a user could corrupt
-  gdmgreeter's memory by hitting cancel after authentication, which could only
+  mdmgreeter.  Also fixed a bug in mdmgreeter where a user could corrupt
+  mdmgreeter's memory by hitting cancel after authentication, which could only
   happen if the PostLogin script caused a long enough delay to allow this to
   happen.  (Brian Cameron)
 
-- No longer set tooltips for menu items in gdmlogin.  They are distracting and
+- No longer set tooltips for menu items in mdmlogin.  They are distracting and
   do not work with accessibility.  No GNOME programs use menu tooltips and it
   is not recommend.  (Brian Cameron)
 
 - If slave does not respond to a SIGTERM, try a SIGKILL the second time.  This
-  resolves a problem where GDM sometimes stops managing a display because it
+  resolves a problem where MDM sometimes stops managing a display because it
   just keeps waiting for the slave to die.  See bug #113902.  (Vaclav Smilauer)
 
-- GDM now uses VT_GETSTATE for peeking VT freeness
+- MDM now uses VT_GETSTATE for peeking VT freeness
 
-- Now GDM warns correctly about caps lock if an alternate keymap is enabled.
+- Now MDM warns correctly about caps lock if an alternate keymap is enabled.
   kbGetState is used instead of XkbGetIndicator State.  (Sebastien Bacher)
 
 - Now set cursor and watch as soon as GTK+ is initialized and the configure
@@ -2414,7 +2414,7 @@ Other Changes:
   default grey.  Cleaned up the code so that all programs use a common
   function to set the background.  (Brian Cameron)
 
-- Fix reading of config file in gdmflexiserver so it properly reads in the
+- Fix reading of config file in mdmflexiserver so it properly reads in the
   available servers.  (Christiaan Welvaart)
 
 - Fixed race condition where a variable used by the signal handlers was not
@@ -2441,32 +2441,32 @@ Other Changes:
 
 2.8.0.5 stuff:
 
-- gdmflexiserver supports --startnew option so that gdmflexiserver can be told
+- mdmflexiserver supports --startnew option so that mdmflexiserver can be told
   to not pop-up the dialog asking if the user wants to start a current session.
   With this option it just always starts a new session.  This allows running
-  gdmflexiserver from the screensaver, where the pop-up can't be interacted
+  mdmflexiserver from the screensaver, where the pop-up can't be interacted
   with due to the nature of the screensaver.  (Brian Cameron)
 
-- Now gdmflexiserver supports gnome-screensaver if available, then defaults to
+- Now mdmflexiserver supports gnome-screensaver if available, then defaults to
   xscreensaver. (William Jon McCann)
 
 - Bug corrected in dwellmouselistener which caused it to always fail to
   recognize gestures.  (Brian Cameron)
 
-- Added warning message if gdmgreeter theme supports face browser but does not
+- Added warning message if mdmgreeter theme supports face browser but does not
   have pam-message defined.  (Brian Cameron)
 
-- gdmsetup and gdmphotosetup now only map right/left mouse buttons to button1
-  when running under GDM.  When running as user, honor user defaults.  (Brian
+- mdmsetup and mdmphotosetup now only map right/left mouse buttons to button1
+  when running under MDM.  When running as user, honor user defaults.  (Brian
   Cameron)
 
 - XdmcpFill() failure is now logged as debug, since this happens when the
   client disconnects from the XDMCP server before the session was setup.
   (Bastien Nocera)
 
-- gdmsetup fixed so when user modifies Include/Exclude list, the
+- mdmsetup fixed so when user modifies Include/Exclude list, the
   automatic/timed dropdown lists are updated immediately instead of having to
-  stop and restart gdmsetup to see the users in the list. (Brian Cameron)
+  stop and restart mdmsetup to see the users in the list. (Brian Cameron)
 
 - Correct illegal reference to build directory in installed .la files.
   (Stanislav Brabec)
@@ -2497,24 +2497,24 @@ Other Changes:
 
 2.8.0.3 stuff:
 
-- The GDM website has moved to a new location
-  http://www.gnome.org/projects/gdm/, and the GDM mail alias has moved from
-  gdm@sunsite.dk to gdm-list@gnome.org.  README, and GDM docs updated with the
-  new information and corrected broken link to the GDM Theme section at
+- The MDM website has moved to a new location
+  http://www.gnome.org/projects/mdm/, and the MDM mail alias has moved from
+  mdm@sunsite.dk to mdm-list@gnome.org.  README, and MDM docs updated with the
+  new information and corrected broken link to the MDM Theme section at
   http://art.gnome.org/ (Brian Cameron)
 
-- Installation location of gdmphotosetup.desktop has moved from the deprecated
+- Installation location of mdmphotosetup.desktop has moved from the deprecated
   /usr/share/gnome/capplets to /usr/share/applications (Mark McLoughlin, Brian
   Cameron)
 
 - Honor default session when logging in via autologin.  (Hans Petter Jansson)
 
-- Removed spaces in locale name since it caused GDM to discard the locales.
+- Removed spaces in locale name since it caused MDM to discard the locales.
   (Frederic Crozat)
 
 - Added missing tooltips (Rodrigo Moya)
 
-- Corrected reading of configuration file in gdmflexiserver so it works.  Fixes
+- Corrected reading of configuration file in mdmflexiserver so it works.  Fixes
   corrupted Session selection dialog presented to user.  (Brian Cameron)
 
 - Correct use-after-free with the dynamic session in the sessions list,
@@ -2527,13 +2527,13 @@ Other Changes:
 
 2.8.0.2 stuff:
 
-- GDM now supports more dynamic configuration.  The gdm daemon supports the
+- MDM now supports more dynamic configuration.  The mdm daemon supports the
   --config option which allows an alternative configuration file to be
   supported. The --with-configdir configure option may also be used to specify
-  a system-wide configuration location so the gdm.conf file can be located on a
+  a system-wide configuration location so the mdm.conf file can be located on a
   mounted directory.  To support machine-specific configuration, an existing
-  %sysconfdir/gdm configuration file will override a system-wide configuration
-  file.  Refer to the GDM documentation for more information.  (Brian Cameron)
+  %sysconfdir/mdm configuration file will override a system-wide configuration
+  file.  Refer to the MDM documentation for more information.  (Brian Cameron)
 
 - New configuration option AlwaysLoginCurrentSession which will automatically
   switch the user to their previous session without asking.  This feature is
@@ -2543,23 +2543,23 @@ Other Changes:
   date/time formatting.  (Tommi Vainikainen)
 
 - Better backwards compatibility support for Welcome and RemoteWelcome.  If
-  using an old gdm.conf (older than 2.8.0.0) file that does not have settings
-  for DefaultWelcome and/or DefaultRemoteWelcome, GDM will now continue to work
+  using an old mdm.conf (older than 2.8.0.0) file that does not have settings
+  for DefaultWelcome and/or DefaultRemoteWelcome, MDM will now continue to work
   as it did before 2.8.0.0.  (Brian Cameron)
 
-- Usability improvements to gdmsetup.  "Face Browser" tab renamed to "User".
+- Usability improvements to mdmsetup.  "Face Browser" tab renamed to "User".
   Now tabs no longer have mnemonics, since this violates HIG.  Fixed broken
   sensitivity on the "Users" tab.  Improved labels.  (Brian Cameron)
 
-- Support HIG style button layout in gdmlogin.  (William Jon McCann)
+- Support HIG style button layout in mdmlogin.  (William Jon McCann)
 
 - Use GTK+ themed icon stock_person before falling back to the DefaultFace.
   (William Jon McCann)
 
-- Usability improvements to the face browser when using gdmgreeter, now the
+- Usability improvements to the face browser when using mdmgreeter, now the
   background behind the userlist translucent.  (William Jon McCann)
 
-- Usability improvements to gdmphotosetup, and now better follows HIG.
+- Usability improvements to mdmphotosetup, and now better follows HIG.
   (William Jon McCann)
 
 - New selection of face browser images.  (William Jon McCann) 
@@ -2567,16 +2567,16 @@ Other Changes:
 - No longer stat or read face images from remote home directories.  (William
   Jon McCann)
 
-- New gdmflexiserver command "GET_CONFIG_FILE" which will return the location
+- New mdmflexiserver command "GET_CONFIG_FILE" which will return the location
   of the configuration file being used by the daemon.  (Brian Cameron)
 
-- Now gdmflexiserver command "GET_CONFIG" works.  Previously it only returned a
-  value if the value was set in the gdm.conf file.  Now it returns compiled-in
-  default values if gdm.conf has no setting.  (Brian Cameron)
+- Now mdmflexiserver command "GET_CONFIG" works.  Previously it only returned a
+  value if the value was set in the mdm.conf file.  Now it returns compiled-in
+  default values if mdm.conf has no setting.  (Brian Cameron)
 
 - Support DragonFly VT. (Joerg Sonnenberger)
 
-- GDM configure script now Supports TCP Wrappers on Solaris.  (Brian Cameron)
+- MDM configure script now Supports TCP Wrappers on Solaris.  (Brian Cameron)
 
 - Many string/grammar improvements. (Tommi Vainikainen, Brian Cameron)
 
@@ -2591,15 +2591,15 @@ Other Changes:
 
 2.8.0.1 stuff:
 
-- This release fixes a nasty bug which was causing the /etc/gdm/Xsession file
+- This release fixes a nasty bug which was causing the /etc/mdm/Xsession file
   to always use /bin/ksh.  This caused problems on Linux, where it should be
   /bin/sh.  It now is only /bin/ksh on Solaris builds.  (Brian Cameron)
 
-- seteuid/setegid logic in the GDM slave logic has been made more sane.  This
-  was causing problems running GDM2 on NetBSD (refer to bug #301821).  (Julio
+- seteuid/setegid logic in the MDM slave logic has been made more sane.  This
+  was causing problems running MDM2 on NetBSD (refer to bug #301821).  (Julio
   M. Merino Vidal)
 
-- Correct "Delete Theme" button sensitivity in gdmsetup.  (Andrew Case)
+- Correct "Delete Theme" button sensitivity in mdmsetup.  (Andrew Case)
 
 - Minor correction to Solaris audit logic.  (Gary Winiger)
 
@@ -2618,7 +2618,7 @@ Other Changes:
   Case)
 
 - The gesture listeners now log debug messages to syslog instead of stdout, and
-  debug can now be turned on by setting the GDM_DEBUG_GESTURES environment
+  debug can now be turned on by setting the MDM_DEBUG_GESTURES environment
   variable rather than needing to recompile with debug.  This makes it much
   easier to debug issues.  (Brian Cameron)
 
@@ -2635,52 +2635,52 @@ Other Changes:
 
 Interface Changes:
 
-- Now gdm, gdm-binary, gdmsetup are installed to /sbin and gdmchooser,
-  gdmgreeter, gdmlogin are installed to /libexec.  This better conforms to UNIX
-  recommend installation locations.  The gdmconfig and gdmXnest symlinks have
+- Now mdm, mdm-binary, mdmsetup are installed to /sbin and mdmchooser,
+  mdmgreeter, mdmlogin are installed to /libexec.  This better conforms to UNIX
+  recommend installation locations.  The mdmconfig and mdmXnest symlinks have
   been removed since they were redundant.  Distributions will need to modify
-  the way GDM programs are launched to reflect these changes.  (Brian Cameron)
+  the way MDM programs are launched to reflect these changes.  (Brian Cameron)
 
-- gdm.conf and GdmSetup now use the DefaultWelcome and DefaultRemoteWelcome
+- mdm.conf and MdmSetup now use the DefaultWelcome and DefaultRemoteWelcome
   keys to specify if the default message should be used.  Now the Welcome and
   RemoteWelcome keys are empty by default.  This is to avoid putting strings
-  that are translated in the gdm.conf file.  Users that want to use a
+  that are translated in the mdm.conf file.  Users that want to use a
   non-default welcome string will need to ensure that DefaultWelcome and/or
   DefaultRemoteWelcome are set to false.  (Brian Cameron)
 
 - Now users to be included in the face browser need to be identified using the
-  gdm.conf "Include" configure option or the "Face Browser" tab in gdmsetup.
-  Previously, GDM parsed the system's password file for a complete list of
-  users and excluded userid's listed in the gdm.conf "Exclude" configure
+  mdm.conf "Include" configure option or the "Face Browser" tab in mdmsetup.
+  Previously, MDM parsed the system's password file for a complete list of
+  users and excluded userid's listed in the mdm.conf "Exclude" configure
   option.  This behavior did not work well on systems that use NIS for storing
   passwords.  This previous behavior may be turned back on by setting the
-  gdm.conf "IncludeAll" configure option to "true".  (Brian Cameron)
+  mdm.conf "IncludeAll" configure option to "true".  (Brian Cameron)
 
 - xevie Xserver extension is now turned on by default on Linux for better a11y
   support.
 
-- /bin/ksh is used in the GDM2 Xsession script on Solaris.  Since this script
+- /bin/ksh is used in the MDM2 Xsession script on Solaris.  Since this script
   sources the user's $HOME/.profile, ksh works better if the profile has
   bash/ksh style syntax.  (Brian Cameron)
 
 Other Changes:
 
-- Fix so GDM works better on BSD and MacOS.  Upon getting EOF on
+- Fix so MDM works better on BSD and MacOS.  Upon getting EOF on
   socket/pipe/etc. G_IO_IN is always set and G_IO_HUP may not be set.
   Therefore, if a length <= 0 is returned from read(), the socket is closed.
-  This prevents gdm2 from causing high CPU-load after logout.  (Joe Marcus
+  This prevents mdm2 from causing high CPU-load after logout.  (Joe Marcus
   Clarke)
 
 - Now support "session migration" using DMX.  Refer to docs.  (Mark McLoughlin)
 
 - Now support "Dynamic Xservers".  Refer to docs.  (Bob Terek)
 
-- The background colors used in gdmgreeter's Face Browser in can now be themed
+- The background colors used in mdmgreeter's Face Browser in can now be themed
   using the <color iconcolor="" "labelcolor=""> syntax.  The Face Browser now
   shrinks so it is the same size as the treeview so extra white space isn't
   shown.  (Brian Cameron)
 
-- To better conform to the Usability Guide, gdmlogin and gdmgreeter now
+- To better conform to the Usability Guide, mdmlogin and mdmgreeter now
   supports an "OK" button which functions the same as hitting <Return> and a
   Cancel button which allows the user to go back to the "Username" prompt
   without having to enter an invalid password.  (Brian Cameron)
@@ -2690,69 +2690,69 @@ Other Changes:
   on the face takes the user to Password entry.  The cancel button can be used
   to get back to "Username" entry.  (Brian Cameron)
 
-- GDM now ships with a collection of default faces installed to
+- MDM now ships with a collection of default faces installed to
   datadir/pixmaps/faces.  (Jaap A. Haitsma)
 
 - Support for ratio scaling of SVG images.  (Vincent Untz)
 
 - Better left-handed support.  Now right and left mouse buttons can be used in
-  all GDM windows/dialogs/etc.  (Brian Cameron)
+  all MDM windows/dialogs/etc.  (Brian Cameron)
 
 - Now can use XDMCP from Xnest session.  (Leena Gunda)
 
-- Now login success/failure sounds can be selected in gdm.conf or in the
-  Accessibility tab of gdmsetup.  (Andrew Case, Mark McLoughlin)
+- Now login success/failure sounds can be selected in mdm.conf or in the
+  Accessibility tab of mdmsetup.  (Andrew Case, Mark McLoughlin)
 
-- Now "random theme" can be selected in the gdm.conf file or gdmsetup to allow
+- Now "random theme" can be selected in the mdm.conf file or mdmsetup to allow
   a different theme to be used for each login.  (Andrew Case)
 
 - Now support background programs that are started after a timedelay and can be
   restarted after a delay.  Useful for running a screensaver at login time.
   (Laurent Birtz)
 
-- gdmphotosetup has been improved so it now scales the face image to GDM's max
+- mdmphotosetup has been improved so it now scales the face image to MDM's max
   icon size before saving it.  By default it looks in datadir/pixmaps/faces to
   find face images.  (Brian Cameron)
   
 - <Control>-U may now be used to clear the entry field.  Now <Tab> works like
   <Enter> in the login screen.  (Brian Cameron)
 
-- gdmflexiserver now supports the GET_CONFIG command, so that other programs
-  can access the GDM configuration data in a stable fashion.  This is useful
+- mdmflexiserver now supports the GET_CONFIG command, so that other programs
+  can access the MDM configuration data in a stable fashion.  This is useful
   for other programs that might want to know what the system
-  suspend/halt/reboot command is or what the max icon size for creating gdm2
+  suspend/halt/reboot command is or what the max icon size for creating mdm2
   face images, etc.  (Brian Cameron)
 
-- Flexiserver commands are now sent as a single call to gdm_connection_write or
-  gdm_connection_printf rather than building commands and sending them in
+- Flexiserver commands are now sent as a single call to mdm_connection_write or
+  mdm_connection_printf rather than building commands and sending them in
   pieces.  Fixes bug #158799.  (Brian Cameron)
 
 - Now gesture listener configuration files specify AT programs by full PATH
   (default EXPANDED_BINDIR).  This can be overridden via the --with-at-bindir
-  configure option.  Since AT programs are launched as user gdm2, it is more
+  configure option.  Since AT programs are launched as user mdm2, it is more
   secure to not depend on PATH.  (Brian Cameron)
 
 - Now use more sensible arguments for starting magnifier.  (Bill Haneman)
 
-- gdmsetup Now has a separate tab for configuring the Face Browser, and for
+- mdmsetup Now has a separate tab for configuring the Face Browser, and for
   configuring the Xserver.  Now the checkboxes for turning on the Face Browser
   and XDMCP are on the Security tab.  The Face Browser and XDMCP tabs are
   insensitive if they are not enabled.  Now users can turn on/off Theme menu
-  choice for gdmlogin in the Accessibility tab.  Can turn on/off debug in the
+  choice for mdmlogin in the Accessibility tab.  Can turn on/off debug in the
   Security tab.  RemoteWelcome is insensitive if XDMCP is not enabled.  Better
   mnemonics.  (Brian Cameron, Andrew Case)
 
-- GDM now no longer uses deprecated widgets.  The new file selection widget is
+- MDM now no longer uses deprecated widgets.  The new file selection widget is
   used (which no longer core dumps if you click on the sidebars).  GtkComboBox
   and GtkComboBoxEntry are used instead of GtkEntry and GtkOptionMenu (Brian
   Cameron)
 
-- gdmthemetester now uses gdmwhich instead of which, so it works better on
+- mdmthemetester now uses mdmwhich instead of which, so it works better on
   Solaris.  (Brian Cameron)
 
-- Timed login message is displayed in a separate label on gdmlogin which avoids
+- Timed login message is displayed in a separate label on mdmlogin which avoids
   problems caused because different things were trying to use the same label
-  for status messages.  Reorganized gdmlogin screen so it no longer should
+  for status messages.  Reorganized mdmlogin screen so it no longer should
   resize as it is being used.  (Brian Cameron)
 
 - The max size of the username/password entry is now set to PAM_MAX_RESP_SIZE
@@ -2773,7 +2773,7 @@ Other Changes:
 
 - Better sorting of session names in the Session menu.  (Ray Strode)
 
-- Remove gdm_debug from signal handlers since they aren't safe in signal
+- Remove mdm_debug from signal handlers since they aren't safe in signal
   handlers (Mark McLoughlin)
 
 - Many strings, docs, README's have been improved.  Better wording, better
@@ -2810,7 +2810,7 @@ Other Changes:
 - Enhanced a11y gesture listeners so they support XInput events
   for better a11y support.  (Bill Haneman).
 
-- Add STRUTS support to gdm2's window manager for better a11y
+- Add STRUTS support to mdm2's window manager for better a11y
   support (Bill Haneman).
 
 - Improved the way the user's default PATH is set up by configure
@@ -2831,9 +2831,9 @@ Other Changes:
 - Make default face obey the MaxIconWidth and MaxIconHeight 
   configuration settings.  (Diego Gonzalez)
 
-- gdm2 slave now sources /etc/environment if it exists. (Vicent Berger)
+- mdm2 slave now sources /etc/environment if it exists. (Vicent Berger)
 
-- Correct gdmsetup's tooltip to conform to GNOME HIG. (Sebastien Bacher)
+- Correct mdmsetup's tooltip to conform to GNOME HIG. (Sebastien Bacher)
 
 - Use ngettext for translation.  (Christian Rose)
 
@@ -2849,7 +2849,7 @@ Other Changes:
 - Ensure LC_MESSAGES is set so the user's default language can be
   displayed (Hidetoshi Tajima).
 
-- Specify font for username/password entry for gdm2 supplied themes.
+- Specify font for username/password entry for mdm2 supplied themes.
   (Alexander Kirillov)
 
 - Add Kinyarwanda and Armenian to language list.  (Steve Murphy and
@@ -2891,14 +2891,14 @@ Other Changes:
 - Now using CVS head of vicious-extensions, left out of previous
   release due to schedule freeze.
 
-- Do not init the wm twice if gdm_wm_init is called twice. (George)
+- Do not init the wm twice if mdm_wm_init is called twice. (George)
 
 - Always destroy dialog widget in greeter to fix non-fatal error
   dialogs from hanging around. (George)
 
 - Leak corrected in daemon/verify-pam.c. (George)
 
-- Corrected g_strconcat call in gui/gdmsetup.c. (meissner@suse.de)
+- Corrected g_strconcat call in gui/mdmsetup.c. (meissner@suse.de)
 
 - Added Afrikaans, Northern Sotho, South African English, and Zulu.
   to language translations. (Dwayne Baily)
@@ -2918,7 +2918,7 @@ Other Changes:
 2.6.0.6 stuff:
 
 - Allow flexi x servers to be launched from the fifo script with
-  "echo FLEXI_XSERVER > <ServAuthDir>/.gdmfifo" (Tuukka Hastrup, me)
+  "echo FLEXI_XSERVER > <ServAuthDir>/.mdmfifo" (Tuukka Hastrup, me)
 
 - Autologin works on the first handled display not just first local
   display
@@ -2931,7 +2931,7 @@ Other Changes:
 
 - Fix language selection (Ray Strode)
 
-- Set the GDM_XSERVER_LOCATION env var on the session so that the
+- Set the MDM_XSERVER_LOCATION env var on the session so that the
   user can find out what they can do.
 
 - Fix logindevperm stuff to allow a11y access to sound (Brian Cameron)
@@ -2980,12 +2980,12 @@ Other Changes:
 
 - Fix #144007 where bad .profile could screw up a session start
 
-- Fix #148042 by making GETTEXT_PACKAGE just gdm
+- Fix #148042 by making GETTEXT_PACKAGE just mdm
 
 - Fix #147940 by properly checking if shutdown/reboot/suspend commands exist
   in the graphical greeter
 
-- Fix #143707 by using Exclude key for the user dropdown lists in gdmsetup
+- Fix #143707 by using Exclude key for the user dropdown lists in mdmsetup
 
 - Fix some compiler warnings for new gcc
 
@@ -3033,7 +3033,7 @@ Other Changes:
 
 - Support system-config-display as X setup for FC2
 
-- Further shell quoting paranoia in gdmsetup
+- Further shell quoting paranoia in mdmsetup
 
 - Many minor fixes
 
@@ -3046,7 +3046,7 @@ Other Changes:
 
 - Fix PAM braindamage in #119853 and #126984 (Frederic Crozat, me)
 
-- Fix the flexiserver protocol (gdmflexiserver should no longer hang)
+- Fix the flexiserver protocol (mdmflexiserver should no longer hang)
 
 - Disable IPv6 by default, it's still kind of problematic, you have
   to explicitly enable it now with --enable-ipv6=yes
@@ -3161,10 +3161,10 @@ Other Changes:
 
 2.5.90.0 stuff:
 
-- Add accessibility setting to gdmsetup and allow setting an arbitrary
+- Add accessibility setting to mdmsetup and allow setting an arbitrary
   sound for the "ready for login" sound.  (#125487)
 
-- gdmflexiserver now lists running sessions if there are some and allow
+- mdmflexiserver now lists running sessions if there are some and allow
   the users to easily switch. (#127038)
 
 - Display last login when the user enters their name (can be turned
@@ -3191,7 +3191,7 @@ Other Changes:
 - IPv6 support (Archana Shah)
 
 - Built in sessions are out of /etc/X11/dm/Sessions and moved to
-  <datadir>/gdm/BuiltInSessions
+  <datadir>/mdm/BuiltInSessions
 
 - Fix chooser communication vs. accessibility stuff (#125064)
 
@@ -3204,7 +3204,7 @@ Other Changes:
 
 - Clients are now forcibly whacked at session stop, should "fix" #126071
 
-- Use GtkFileChooser in gdmsetup (Jan Arne Petersen, #128668)
+- Use GtkFileChooser in mdmsetup (Jan Arne Petersen, #128668)
 
 - Paranoia: Check ownership of the socket before using it
 
@@ -3215,7 +3215,7 @@ Other Changes:
 - StandardXServer can now have arguments
 
 - Default color is now #76848F and the PreSession script tries
-  to use the default gdm color to fix #128220 
+  to use the default mdm color to fix #128220 
 
 - Fix assert failure when starting Xnest (#127780)
 
@@ -3283,7 +3283,7 @@ Other Changes:
 
 - The graphical greeter now wraps text correctly (and
   all text).  Plus you can insert \n in the welcome text
-  now too (it worked for gdmlogin before) Fixes #123017
+  now too (it worked for mdmlogin before) Fixes #123017
 
 - The entry type in the graphical greeter listens to
   font and color from the normal state (it only has
@@ -3349,7 +3349,7 @@ Other Changes:
 
 - Be ultra anal with creating the user protocol socket
 
-- Don't fall back to 'nobody' if the gdm user is not found
+- Don't fall back to 'nobody' if the mdm user is not found
   (that is a horrible behaviour)
 
 - Support and write KDM style .dmrc (KDM will use this in
@@ -3407,7 +3407,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - Update the manual
 
-- Fix error where GDM would take up 100% cpu in case
+- Fix error where MDM would take up 100% cpu in case
   the Xsession file redirect .xsession-errors output
   itself (which is really a bug IMO) (#120580)
 
@@ -3416,7 +3416,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
   dir is unsafe or it's a failsafe session)
 
 - Fix sensitivity with respect to action menu toggle in
-  the security tab in gdmsetup (#120639)
+  the security tab in mdmsetup (#120639)
 
 - A whole bunch of fixes to how the xauth files
   are set up
@@ -3425,13 +3425,13 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - Added --version command line option (#120409)
 
-- The gdmsetup.desktop now has System in the
+- The mdmsetup.desktop now has System in the
   categories (#120360)
 
 - Filenames are built properly without double '/'
   everywhere (#118040)
 
-- There is a simple gdm(1) man page
+- There is a simple mdm(1) man page
 
 - Many minor fixes
 
@@ -3462,7 +3462,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
   session and only writing to the ~/.xsession-errors
   file a maximum of 80*2500 bytes.
 
-- The user lists in the face browsers and the gdmsetup are
+- The user lists in the face browsers and the mdmsetup are
   now capped at a higher number, but we also cap the time
   that is spent gathering the info at 5 seconds.
 
@@ -3490,7 +3490,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
   theme
 
 - Display help from the setup program if not running
-  from within gdm itself
+  from within mdm itself
 
 - The standard config file now has most keys commented out
   so that the internal defaults are used and so that we can
@@ -3575,18 +3575,18 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Updated docs a bit
 
 - When no local servers are defined we assume we have no console
-  and don't use the console to print messages with gdmopen and
+  and don't use the console to print messages with mdmopen and
   dialog.  Also --no-console now forces this (forces ignoring
   [servers] section).  Fixes debian #194613
 
-- Changed required permissions on ServAuthDir to be: root.gdm 1770.
-  These are now enforced and GDM will try to set them if they're
+- Changed required permissions on ServAuthDir to be: root.mdm 1770.
+  These are now enforced and MDM will try to set them if they're
   not that way already.
 
 - Fix PostLogin to behave like PostSession with respect to the return
   value.
 
-- Use /var/log/gdm by default as logdir rather then the ServAuthDir
+- Use /var/log/mdm by default as logdir rather then the ServAuthDir
 
 - The face browsers all display at most 50 users.  This should fix
   very large systems where this may hang for a long time and more
@@ -3630,9 +3630,9 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - On exit from an XDMCP display whack all the clients with windows
   to support the more broken displays.
 
-- gdmchooser handles HUP gracefully and rereads config
+- mdmchooser handles HUP gracefully and rereads config
 
-- gdmthemetester improved
+- mdmthemetester improved
 
 - Some build fixes
 
@@ -3652,9 +3652,9 @@ Major changes in 2.4.4.x since 2.4.1.x:
   xml docs and they're installed so you can use the GNOME
   help browser to browse them under GNOME|System.  Or you
   can view the HTML versions on the webpage
-  (www.jirka.org/gdm.html)
+  (www.jirka.org/mdm.html)
 
-- Whack the GdmGreeterThemeManual.txt as it is now part
+- Whack the MdmGreeterThemeManual.txt as it is now part
   of the xml documentation
 
 - Add mnemonics/keynav to a bunch of things and generally try to
@@ -3674,7 +3674,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
   weird anyway.
 
 - Internal messaging is now faster as we use an internal pipe
-  instead of the FIFO file.  Also reduces the damage gdm user
+  instead of the FIFO file.  Also reduces the damage mdm user
   can do
 
 - Don't XOpenDisplay so many times to make things run along
@@ -3693,7 +3693,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Fix a bunch of errors (mostly portability stuff) by looking at the
   FreeBSD cvs repository
 
-- The server authfile is now unreadable by the gdm user during
+- The server authfile is now unreadable by the mdm user during
   a user sessions for security
 
 - Fixed #109331, by catching term/int/hup signals properly when inside
@@ -3720,11 +3720,11 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - The Xsession now displays $0 in output (Steve Chaplin, #117898)
 
-- There is now a gdmtranslate libexec proggie that does what
+- There is now a mdmtranslate libexec proggie that does what
   the gettext command does, so we get translations from scripts
   even on user systems (ones without developer kind of packages)
 
-- Fix gdmaskpass internationalization
+- Fix mdmaskpass internationalization
 
 - Lots of random minor fixes
 
@@ -3743,11 +3743,11 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Fix DNS lookup stuff in XDMCP for places without DNS.  Also cache
   last result of DNS lookup to cut down traffic during session setup.
 
-- daemon, gdmgreeter, gdmlogin and gdmchooser don't link against
-  libgnome and friends (gdmgreeter still uses canvas).  This
+- daemon, mdmgreeter, mdmlogin and mdmchooser don't link against
+  libgnome and friends (mdmgreeter still uses canvas).  This
   reduces number of libs linked by daemon from 46 to 26, for
-  gdmgreeter this goes from 56 to 32 and for gdmlogin this goes
-  from 52 to 22, and gdmchooser is down to 27
+  mdmgreeter this goes from 56 to 32 and for mdmlogin this goes
+  from 52 to 22, and mdmchooser is down to 27
 
 - If a greeter crashes within 10 seconds of display start, try
   running a different greeter (and telling the user that)
@@ -3766,17 +3766,17 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - The .desktop files include correct Terminal and StartupNotify
   entries (Jordi Mallach)
 
-- Fallback for home is now ServAuthDir for gdm processes
+- Fallback for home is now ServAuthDir for mdm processes
   instead of / and for shell we use /bin/sh consistently
   (rather then /bin/bash)
 
-- The full error dialog is now run as the gdm user for security
+- The full error dialog is now run as the mdm user for security
   (no more gtk code run as root)  Also uses GtkTextView,
   looks nicer and converts encoding correctly.
 
 - Be very careful when opening files just about everywhere,
   so this prevents some possible damage someone could do if
-  they do manage to get the gdm user privs.
+  they do manage to get the mdm user privs.
 
 - If X server crashes or doesn't otherwise whack its lockfile,
   help it along, should fix #114003 and redhat #90014
@@ -3784,13 +3784,13 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - No translatable message contains unnecessary markup now
   (fixes #101794 and #101795)
 
-- gdmsetup .desktop file is now in the SystemSetup category
+- mdmsetup .desktop file is now in the SystemSetup category
   and so goes into System Setup in the menu (#116977)
 
 - The bits that parse X output now understand v4 XFree86 output
   correctly
 
-- gdmopen now sets up TERM to "linux" on linux to make sure
+- mdmopen now sets up TERM to "linux" on linux to make sure
   that fonts come out all ok
 
 - Use ve-config (from vicious-extensions) everywhere in the daemon
@@ -3814,18 +3814,18 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 2.4.2.96 stuff:
 
-- When you log in twice on a different server, gdm warns you and if
-  both logins are console logins on linux, then you can have gdm switch
+- When you log in twice on a different server, mdm warns you and if
+  both logins are console logins on linux, then you can have mdm switch
   consoles for you instead of logging on.
 
-- Errorgui (failsafe) dialogs now run mostly under the gdm user and not as root
+- Errorgui (failsafe) dialogs now run mostly under the mdm user and not as root
 
-- In the .desktop files we now refer to GDM as Login Screen and not GDM,
+- In the .desktop files we now refer to MDM as Login Screen and not MDM,
   fixes #85543
 
 - Add ALL_SERVERS to the socket protocol which returns all the displays
 
-- DESKTOP_SESSION is set in addition to GDMSESSION.  Also these are unset
+- DESKTOP_SESSION is set in addition to MDMSESSION.  Also these are unset
   in the standard Xsession file not to pollute the env namespace.
 
 - Add CDE session .desktop (Brian Cameron)
@@ -3852,9 +3852,9 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - Completely new session setup, born out of discussions with Oswald
   Buddenhagen, the KDM maintainer, which will bring about common session
-  setup for both GDM and KDM.  We now basically have a common
+  setup for both MDM and KDM.  We now basically have a common
   /etc/X11/dm/Sessions directory where there are .desktop files are stored
-  which describe sessions and these will be shared among KDM and GDM.
+  which describe sessions and these will be shared among KDM and MDM.
   Among other things this also makes the face browser default to using
   ~/.face and the per user saved info is in ~/.dmrc
 
@@ -3893,7 +3893,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
   the comment in the config file said seconds, so I suppose this is a bugfix,
   should "fix" #103266
 
-- Add a "Delete theme" button to gdmsetup, add a scroll window to the
+- Add a "Delete theme" button to mdmsetup, add a scroll window to the
   theme preview, fixes #110302 and #104757
 
 - PAM now asks for username itself.  This made LocalNoPasswordUsers impossible,
@@ -3919,7 +3919,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - The "subtype" field to the "show" item for the themes is gone, it was stupid
   and I hope no one used it (it wasn't documented anyhow).
 
-- A bunch of standard pam messages are now translated inside gdm
+- A bunch of standard pam messages are now translated inside mdm
 
 - If there are many sessions available the graphical greeter presents
   a scrolled window, fixes #104120
@@ -3932,11 +3932,11 @@ Major changes in 2.4.4.x since 2.4.1.x:
   Also the toplevel loop of death does not abort the display, but only
   disables it for 2 minutes.
 
-- Suspend now works much better and doesn't whack the gdm process,
+- Suspend now works much better and doesn't whack the mdm process,
   fixes #108700
 
 - When more then 50 users on the system don't put them all into
-  the combobox in gdmsetup, semi-fixes #111830
+  the combobox in mdmsetup, semi-fixes #111830
 
 - When using shadow passwords, fall back to standard if shadow is
   not available, fixes #109765 (cschelcher@free.fr)
@@ -3947,7 +3947,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Set TEXTDOMAIN to GETTEXT_PACKAGE for the x keeps failing script,
   fixes #106657 (Owen Taylor)
 
-- gdmopens are done using login shell, fixes #106658, also gdmopen
+- mdmopens are done using login shell, fixes #106658, also mdmopen
   doesn't deallocate the vt which is apparently not kosher and fixes
   #106656 (Owen Taylor, me)
 
@@ -3960,8 +3960,8 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - Fix typos and change some strings, #106207, #105923, #56654 among others
 
-- gdmmktemp is gone as we have not been using it, also gdmaskpass and
-  gdmopen are now in libexec
+- mdmmktemp is gone as we have not been using it, also mdmaskpass and
+  mdmopen are now in libexec
 
 - Many minor fixes
 
@@ -4038,7 +4038,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - Workaround librsvg (new librsvg should be fixed though) for non-C locales
 
-- Make language dialog in the gdmgreeter at least 400 wide (fixes #103254)
+- Make language dialog in the mdmgreeter at least 400 wide (fixes #103254)
 
 - Don't translate stuff coming from pam (fixes #102691)
 
@@ -4071,7 +4071,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - Some string fixes (Alex Duggan, me)
 
-- GDM photo setup now checks for gdm running (RH #70326 and GNOME #101653)
+- MDM photo setup now checks for mdm running (RH #70326 and GNOME #101653)
 
 - Be UTF-8 safe on expanding strings (#100738)
 
@@ -4114,7 +4114,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - Fix timeout on stopping the daemon, now stops immediately.
 
-- gdm-restart, gdm-soft-restart, gdm-stop find the config file if you haven't
+- mdm-restart, mdm-soft-restart, mdm-stop find the config file if you haven't
   specified --sysconfdir on the configure command line.
 
 - Minor cleanup
@@ -4129,7 +4129,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Automatic VT management.  This should fix #62997.  Basically on
   linux (only currently) we can find a free vt that is higher then
   a certain number (by default 7) and force the server to use that.
-  gdm can now be safely run as service with this on.
+  mdm can now be safely run as service with this on.
 
 - The locale.alias file now can have a list of locales to try for
   each language.  We also don't list locales that don't work.  This
@@ -4163,8 +4163,8 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 2.4.0.8 stuff:
 
-- New script to aid in testing graphical greeter themes, gdmthemetester.
-  It will run Xnest with gdmgreeter in debug mode with the specified theme
+- New script to aid in testing graphical greeter themes, mdmthemetester.
+  It will run Xnest with mdmgreeter in debug mode with the specified theme
   and under the specified environment.  Run it to get help.
 
 - No longer 'asks twice' in graphical login to halt, reboot or suspend
@@ -4195,7 +4195,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - The daemon is fixed so that if pam asks questions during autologin, they
   will actually get asked.
 
-- gdmphotosetup no longer hangs on "Browse".  Fixes #90613
+- mdmphotosetup no longer hangs on "Browse".  Fixes #90613
   
 - Busy cursor will never get stuck on autologin
 
@@ -4207,10 +4207,10 @@ Major changes in 2.4.4.x since 2.4.1.x:
   keyboard configuration.  Also read capslock state from the parent server
   in the greeter.
 
-- Close the 0,1,2 descriptors in the gdmXnestchooser so that things like
-  "`gdmXnest -b`" shell things to get the display number work.
+- Close the 0,1,2 descriptors in the mdmXnestchooser so that things like
+  "`mdmXnest -b`" shell things to get the display number work.
 
-- gdmXnestchooser acts more nicely on being killed
+- mdmXnestchooser acts more nicely on being killed
 
 - Config file is updated and includes more "documentation" comments
 
@@ -4250,21 +4250,21 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Read and honour the gtkrc setting in the graphical greeter, fixes #90003
 
 - Add a DIRTY_SERVERS and SOFT_RESTART_SERVERS fifo commands which will
-  make gdm restart all the X servers next time it wants to reinit (such as
+  make mdm restart all the X servers next time it wants to reinit (such as
   when a user logs out) or as soon as possible (in case of SOFT_RESTART_SERVERS)
-  (See doc in daemon/gdm.h, look for the GDM_SOP_)
+  (See doc in daemon/mdm.h, look for the MDM_SOP_)
   Useful for changing X configuration.
-  You can do "(echo;echo DIRTY_SERVERS) > /var/gdm/.gdmfifo" (Given that
-  ServAuthDir is /var/gdm).  This is a possible solution to issues
+  You can do "(echo;echo DIRTY_SERVERS) > /var/mdm/.mdmfifo" (Given that
+  ServAuthDir is /var/mdm).  This is a possible solution to issues
   such as in redhat bug 70072
 
-- Only set GDM_LANG if a language different from the system default was
+- Only set MDM_LANG if a language different from the system default was
   selected 
 
 - In Gnome and Xsession sessions, ensure that the language is set properly
   fixes #89970
 
-- Fix crasher bug on closing the gdmsetup window, and fix applying changes
+- Fix crasher bug on closing the mdmsetup window, and fix applying changes
   that happened before the writing timeout
 
 - Clear the initial message even on further tries to log in, fixes redhat bug
@@ -4272,7 +4272,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - When starting Xnest give it the current font path.  Should fix #89308
 
-- make the gdmXnest link relative
+- make the mdmXnest link relative
 
 - Gnome and Xsession scripts no longer read in the xdm resources, I was
   told this is bad
@@ -4308,8 +4308,8 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Fix io channel stuff in the greeters (actually set unbuffered and NULL
   encoding, this may just fix all the FreeBSD issues)
 
-- Recheck for gdm running before sending any update from gdmsetup, this means
-  that even if you run gdmsetup before gdm, things will still work.
+- Recheck for mdm running before sending any update from mdmsetup, this means
+  that even if you run mdmsetup before mdm, things will still work.
 
 - Update background and logo on the fly in the standard greeter
 
@@ -4331,7 +4331,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Fix some weirdness on setup proggie starting (change dir to something
   sane and fix setting the cursor race)
 
-- Support .bz2 archives as theme archives in the gdmsetup
+- Support .bz2 archives as theme archives in the mdmsetup
 
 - Translation updates (Stanislav Visnovsky, me)
 
@@ -4366,9 +4366,9 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Some cleanups/fixes of places where unix is very weird and could cause
   problems in fringe cases
 
-- The gdmXnestchooser now works much better in the Xnest only mode, that
+- The mdmXnestchooser now works much better in the Xnest only mode, that
   is on rh 7.3 it now actually works again.  You can also start it only
-  as gdmXnest to get the pure Xnest only mode.  This would be the user
+  as mdmXnest to get the pure Xnest only mode.  This would be the user
   friendly way of starting Xnest.
 
 - Add busy cursor when starting the configurator, and a busy cursor when
@@ -4379,9 +4379,9 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - Happygnome theme yet again fixed (Frederic Crozat)
 
-- 24 hour clock preference now on the main page in gdmsetup
+- 24 hour clock preference now on the main page in mdmsetup
 
-- gdmsetup greeter themebrowser now wraps test correctly
+- mdmsetup greeter themebrowser now wraps test correctly
 
 - Corrected some language names and added a few extra languages, fixes
   among others #88273, #88423
@@ -4392,7 +4392,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 2.4.0.2 stuff:
 
-- Add busy cursor when we start X so that the user knows that GDM
+- Add busy cursor when we start X so that the user knows that MDM
   is busy before the greeter/chooser appears.
 
 - Added a 'System default' language choice.  This choice will use
@@ -4420,13 +4420,13 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Ensure existance of file descriptors 0, 1 and 2 on startup, should fix
   some problems on very esoteric setups.
 
-- Source /etc/profile in the gdm script
+- Source /etc/profile in the mdm script
 
 - All installed .desktop's have Encoding=UTF-8 as per the standard
 
 - Fix the failsafe question dialog
 
-- Fix crash and login window reparenting in the gdmwm window manager
+- Fix crash and login window reparenting in the mdmwm window manager
 
 - Corrected some yodaspeak, bug #83077
 
@@ -4440,16 +4440,16 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Fix killing other processes including the session when greeter settings
   were touched, fixes #84717
 
-- Don't run the gdmwm when there is a windowmanager present, fixes #86620
+- Don't run the mdmwm when there is a windowmanager present, fixes #86620
 
 - Fix some Solaris compilation issues, fixes #86679
 
-- Don't clear env for chooser, greeter and setup and run gdm itself from
+- Don't clear env for chooser, greeter and setup and run mdm itself from
   a script, fixes #87387
 
 - Properly center windows
 
-- Fix gdmchooser to actually work
+- Fix mdmchooser to actually work
 
 - Install missing files from the happygnome theme, fixes #86264
   (Frederic Crozat)
@@ -4461,7 +4461,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - Fix wiping the pid file by mistake on config file errors
 
-- On linux do better checking for stale /var/run/gdm.pid files,
+- On linux do better checking for stale /var/run/mdm.pid files,
   by checking /proc (Jim Bray, me)
 
 - Many random fixes all around
@@ -4469,7 +4469,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - If we can't write the user authentication in the home directory
   use the fallback file (say due to out of disk space errors)
 
-- Add a 'handled' flag for servers (see default gdm.conf for some
+- Add a 'handled' flag for servers (see default mdm.conf for some
   notes on how to use it) that makes it possible to run unhandled
   X servers (such as X terminals).
 
@@ -4522,7 +4522,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Xnest is now being passed the -kb argument to disable the xkb
   extension on the Xnest as this just causes problems apparently. (#66610)
 
-- The gdmXnestchooser command now actually uses the command you gave it
+- The mdmXnestchooser command now actually uses the command you gave it
   in the config file or on the command line
 
 - The graphical greeter is actually translated, plus a bunch of
@@ -4538,7 +4538,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 2.3.90.4 stuff:
 
-- IMPORTANT: Change the behaviour of session scripts.  Now gdm will
+- IMPORTANT: Change the behaviour of session scripts.  Now mdm will
   automatically start writing output to ~/.xsession-errors for EVERY
   session file and not just in the Xsession file.  Well every file
   except the failsafe ones (including sessions named 'Failsafe')
@@ -4567,14 +4567,14 @@ Major changes in 2.4.4.x since 2.4.1.x:
   I don't have a BSD box.
 
 - Add greeter/MinimalUID which is the minimal UID to show in the
-  browser and in the dropdown lists in gdmsetup
+  browser and in the dropdown lists in mdmsetup
 
 - Don't exclude people from the browser that have '*' in the password
   field as that could be legitimate
 
 - Fix xnest flexi server on nfs mounted home dirs with root squashing.
   This required a protocol change to the socket protocol, but I don't
-  think anything outside of gdmflexiserver is using it (and it will
+  think anything outside of mdmflexiserver is using it (and it will
   fail gracefully anyway), fixes #82122
 
 - Some random UI issues fixed (#80038, and others)
@@ -4598,8 +4598,8 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 2.3.90.3 stuff:
 
-- The instant apply, no crack, setup proggie (gdmsetup) now works,
-  gdmconfig is removed (Check out the gdmgreeter theme selector, though
+- The instant apply, no crack, setup proggie (mdmsetup) now works,
+  mdmconfig is removed (Check out the mdmgreeter theme selector, though
   we only have one theme now)
 
 - Fix the i18n encoding issues.  non-english users can now log in!  Yay!
@@ -4609,7 +4609,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 - Leak fixes #80888 (Ali Akcaagac, me)
 
-- Gdmphotosetup fixiage #80835
+- Mdmphotosetup fixiage #80835
 
 - Look into other dirs for an X server, and use /usr/X11R6/bin/X by default
   #80829 (Ali Akcaagac, me)
@@ -4623,14 +4623,14 @@ Major changes in 2.4.4.x since 2.4.1.x:
 - Greeter themes now have info files, so that we can have some info about a
   theme for the theme browser
 
-- Bunch of greeter work to bring it more up to speed with gdmlogin, though
+- Bunch of greeter work to bring it more up to speed with mdmlogin, though
   it's still not quite there yet.
 
 - Add an icon for the photo chooser 'capplet' (Seth)
 
 - Some dialog fixes all around
 
-- Fix gdmchooser, use a completely new looking glade file
+- Fix mdmchooser, use a completely new looking glade file
 
 - Translation updates (Pablo Saratxaga, Zbigniew Chyla, Stanislav Visnovsky,
   Christophe Merlet, Ole Laursen, Kjartan Maraas, Changwoo Ryu, 
@@ -4639,9 +4639,9 @@ Major changes in 2.4.4.x since 2.4.1.x:
 
 Issues with this version:
 
-- You need a very new libgnomeui to run gdmsetup else it'll crash
+- You need a very new libgnomeui to run mdmsetup else it'll crash
 
-- The graphical greeter (gdmgreeter) is still not where it should be
+- The graphical greeter (mdmgreeter) is still not where it should be
   functionality wise, but it is mostly usable as a login window
 
 2.3.90.2 stuff:
@@ -4653,7 +4653,7 @@ Issues with this version:
 
 - Start of a new configurator.  One without crack (George's definition of
   what's crack applies).  It doesn't actually work yet.  But then again
-  gdmconfig doesn't work either.
+  mdmconfig doesn't work either.
 
 - Some UI/String Fixes #77151, #73817 and others (Benedikt Roth,
   Gaute Lindkvist, Karsten Weiss, Abel Cheung, Havoc)
@@ -4693,7 +4693,7 @@ Issues with this version:
 - Make welcome message surrounded by <big><big><big> to make
   it ... big
 
-- Fix usage of glade2, so that chooser now works, and gdmconfig crashes
+- Fix usage of glade2, so that chooser now works, and mdmconfig crashes
   later in the startup then in 2.3.90.0
 
 - Face browser now works again
@@ -4742,13 +4742,13 @@ Issues with this version:
   we do anything else.  Also we work on one pam handle only, and
   yet again switch setcred/open_session order (Karsten Petersen, me)
 
-- Autologin is now done with a separate pam configuration.  gdm-autologin
+- Autologin is now done with a separate pam configuration.  mdm-autologin
   service.  This just logs anyone in without asking for a password,
   but this makes autologin work with some pam setups.  Of course
-  you must now modify gdm-autologin in addition to 'gdm' if you have
+  you must now modify mdm-autologin in addition to 'mdm' if you have
   some weird pam setup.
 
-- Fix gdmconfig saving of server definitions
+- Fix mdmconfig saving of server definitions
 
 - Add possibility of multiline welcome message by use of '\n'
 
@@ -4756,7 +4756,7 @@ Issues with this version:
   loop of death
 
 - Fix a USR2 race in the slave if the main daemon is already dead
-  (this makes 'killall gdm' work right)
+  (this makes 'killall mdm' work right)
 
 - Translation updates (Kjartan Maraas, Gustavo Maciel Dias Vieira,
   Abel Cheung, Christian Rose, Duarte Loreto, Christian Meyer,
@@ -4774,7 +4774,7 @@ Issues with this version:
 - Keep 4 old copies of the X server logs to make debugging bad
   X setups easy
 
-- The WM now supports NoInput windows, which improves gdm
+- The WM now supports NoInput windows, which improves mdm
   accessibility and makes it possible to run things like xscribble
   (Crossfire (from debian bug report) and moi)
 
@@ -4815,15 +4815,15 @@ Issues with this version:
 
 - DESTDIR fixes (Frodo Looijaard)
 
-- gdmopen now sets VT_NUMBER env var for it's child
+- mdmopen now sets VT_NUMBER env var for it's child
 
-- Focus issues fixed in gdmwm (the windowmanager of the greeter)
+- Focus issues fixed in mdmwm (the windowmanager of the greeter)
 
 - Check for existance of a home directory.  If it doesn't exist,
   the user has the option of canceling the login or logging in with
   the home dir set to root.
 
-- Many MANY races fixed in handling of extra processes.  Gdm should
+- Many MANY races fixed in handling of extra processes.  Mdm should
   now always clean up after itself well if killed.  And it will
   now not screw up if the child processes die too quickly.
 
@@ -4831,16 +4831,16 @@ Issues with this version:
   the configure script and also make console helper enabled by default
   if it's possible to use it
 
-- gdmXnestchooser now has quite a few more modes of operation, in effect
+- mdmXnestchooser now has quite a few more modes of operation, in effect
   it can now be used as a generic Xnext launching program.  It also
-  by default reads the Xnest command from gdm.conf
+  by default reads the Xnest command from mdm.conf
   
 - Remove VerboseAuth configuration variable as it was utterly useless,
   and actually resulted in usability degradation when on.
 
-- Include our own gdmmktemp like the mktemp program for shell scripts
+- Include our own mdmmktemp like the mktemp program for shell scripts
 
-- Fix stuff on console with gdmopen by printing \033(K onto the console
+- Fix stuff on console with mdmopen by printing \033(K onto the console
   before it does anything else
 
 - Work with KDE face directories (username.png rather then username) as
@@ -4857,7 +4857,7 @@ Issues with this version:
 
 - Use the pam wait time on errors, if available, this fixes a bug where
   the wait time was doubled because it was both the pam one and the
-  gdm one.
+  mdm one.
 
 - Make sure the cookie file is full of all different local addresses
   and don't whack out if the local hostname is not resolvable.  Also
@@ -4906,7 +4906,7 @@ Issues with this version:
 
 - Ensure that /tmp/.ICE-unix exists
 
-- X servers now run with root gid and not gdm gid
+- X servers now run with root gid and not mdm gid
 
 - Ugly fix to the toolbar deadlock problem, very VERY evil, but
   it's really a bug in gnome-dock
@@ -4928,7 +4928,7 @@ Issues with this version:
 
 2.2.4.1 stuff:
 
-- X server editing now actually works, and gdmconfig produces
+- X server editing now actually works, and mdmconfig produces
   correct config files.  DOH!
 
 - X server editing now enforces strict order of servers (it only sort
@@ -4937,7 +4937,7 @@ Issues with this version:
 - XDMCP can now run a script to get a custom WILLING status script
   (Matt Forrest, me)
 
-- Change the gdm extension protocol to XDMCP.  The MANAGED_FORWARD
+- Change the mdm extension protocol to XDMCP.  The MANAGED_FORWARD
   was being used in a wrong way and required a slight protocol change,
   as this is a non-required part of the protocol nothing will break.
 
@@ -4974,9 +4974,9 @@ Issues with this version:
 - PAM usage more correct with respect to setting credentials.  This makes
   pam_group actually work, and probably some other things
 
-- Implement a vt open (gdmopen) alternative inside gdm itself.  This
+- Implement a vt open (mdmopen) alternative inside mdm itself.  This
   version is stripped down version of open and it works much better for
-  gdm's purposes of it.
+  mdm's purposes of it.
 
 - Implement a local helper (if pam is used) for the password asking
   when attempting to run X configuration.  This is more friendly
@@ -4986,7 +4986,7 @@ Issues with this version:
   Previously some of these could be left hanging.
 
 - When a display number is busy, ask the user about starting the
-  server on an empty display number (if no gdmopen or dialog, just
+  server on an empty display number (if no mdmopen or dialog, just
   do it)
 
 - Keep track of the VT (on linux) of local servers and allow programs to
@@ -5025,7 +5025,7 @@ Issues with this version:
 
 - Run /etc/X11/xinit/xinitrc.d from the Gnome session
 
-- RUNNING_UNDER_GDM defined for init scripts (Owen)
+- RUNNING_UNDER_MDM defined for init scripts (Owen)
 
 - Embrace and extend XDMCP so that choosing works nicer.  No worries, still
   100% compatible with XDMCP 1.0
@@ -5048,11 +5048,11 @@ Issues with this version:
 
 2.2.3.1 stuff:
 
-- file descriptor leaks and mess-ups dealt with, making gdm2 work again
+- file descriptor leaks and mess-ups dealt with, making mdm2 work again
   on debian and probably others (Ryan Murray, me)
 
 - Posibility of a "soft" restart, that is scheduling a restart when all logins
-  end.  This is now possible from gdmconfig.
+  end.  This is now possible from mdmconfig.
 
 - A new "protocol" for the slave to talk to the daemon by way of a fifo.
 
@@ -5062,7 +5062,7 @@ Issues with this version:
 - Handle the slave process crashing much more gracefully.  And be generally
   more thorough in killing our children.
 
-- Killing an X server while running is no longer treated as an X crash by gdm
+- Killing an X server while running is no longer treated as an X crash by mdm
 
 - Other cleanups and minor fixes
 
@@ -5128,7 +5128,7 @@ Issues with this version:
 
 - Pinging for XDMCP sessions to detect if they're dead
 
-- Saving current gnome session is done from gdm (gnome-core HEAD no longer
+- Saving current gnome session is done from mdm (gnome-core HEAD no longer
   saves it)
 
 - Don't change utmp from Pre/Post session scripts
@@ -5139,7 +5139,7 @@ Issues with this version:
 
 - Nicer iconify button
 
-- gdmphotosetup permissions fixes
+- mdmphotosetup permissions fixes
 
 - Always add POSIX/C locale setting to language menu
 
@@ -5170,7 +5170,7 @@ Issues with this version:
 
 - The language list is now translated
 
-- A small proggie to set your gdm browser face
+- A small proggie to set your mdm browser face
 
 - Accept clicks by the right button as if they are the first button,
   we don't know if the user is left or right handed yet
@@ -5182,12 +5182,12 @@ Issues with this version:
 
 - AllowConfig now on by default
 
-- Properly runs with a missing gdm.conf
+- Properly runs with a missing mdm.conf
 
 - Remove old failsafe stuff and use the new builtin failsafes, which
   are much nicer
 
-- Saner focus on all gdm windows, and give the failsafe xterm focus
+- Saner focus on all mdm windows, and give the failsafe xterm focus
 
 - Gnome and Xsession default sessions now setup xresources and read in
   keymaps
@@ -5198,13 +5198,13 @@ Issues with this version:
 
 - Greeter segfault fixed when no language file present
 
-- Anti-hosification measures.  GDM will now try to do something to allow
+- Anti-hosification measures.  MDM will now try to do something to allow
   itself to be fixed on some mistakes.  Rather then just aborting and leaving
-  crack in the syslog.  And gdmconfig let's you see hosification as it happens
+  crack in the syslog.  And mdmconfig let's you see hosification as it happens
 
 - Updated fixed icon entry
 
-- gdm-restart script to automate restarting of gdm by HUPing the main daemon
+- mdm-restart script to automate restarting of mdm by HUPing the main daemon
 
 - Mucho fixes
 
@@ -5226,20 +5226,20 @@ Issues with this version:
   now requires GdkPixbuf because of this.
 
 - The root overlay window is gone now and we have real focus
-  management.  In effect gdmlogin is a VERY simple windowmanager.
+  management.  In effect mdmlogin is a VERY simple windowmanager.
 
 - Ability to choose a specific GNOME session
 
 - Ability to run the configurator directly on the login screen,
   which requires a root password of course (Disabled by default)
 
-- An editor for the Sessions directory in gdmconfig (Lee)
+- An editor for the Sessions directory in mdmconfig (Lee)
 
 - Title bar can be hidden by configuration
 
 - The icon entry is now sane with the panel icon entry hack
 
-- If no LANG variable set gdm starts out in the DefaultLocale
+- If no LANG variable set mdm starts out in the DefaultLocale
   from the config file
 
 - Now non-verbose mode is actually useful and verbose mode
@@ -5248,7 +5248,7 @@ Issues with this version:
 - For consistency AllowRoot now works on pam setups as well,
   also a setting just for remote root logins.
 
-- Timed login, you can set up gdm to log in a certain user on the
+- Timed login, you can set up mdm to log in a certain user on the
   first local display after a specified timeout if no one logs in
   (me, Jim Bray)
 
@@ -5266,26 +5266,26 @@ Issues with this version:
 
 2.2.0 stuff:
 
-- gdmconfig now works with more fontsizes (me, Lee)
+- mdmconfig now works with more fontsizes (me, Lee)
 
 - Another minor xinerama fix
 
 - Fixup the pam message voodoo, so that it now is at least functional even
   though it may not be pretty nor 100% correct.
 
-- Initial gdmconfig documentation (Trevor Curtis, Lee)
+- Initial mdmconfig documentation (Trevor Curtis, Lee)
 
-- gdmconfig now correctly handles RelaxPerms (Lee)
+- mdmconfig now correctly handles RelaxPerms (Lee)
 
-- gdmconfig has now nice pam console helper setup (Lee)
+- mdmconfig has now nice pam console helper setup (Lee)
 
-- gladify/beautify gdmchooser (Lee)
+- gladify/beautify mdmchooser (Lee)
 
-- gdmchooser now apparently works with xdm (Matthias Clasen)
+- mdmchooser now apparently works with xdm (Matthias Clasen)
 
 - Better specfile (Gregory Leblanc)
 
-- Packagers should read the comment on end of config/gdm.conf.in (especially
+- Packagers should read the comment on end of config/mdm.conf.in (especially
   debian people)
 
 - Configuration file now does not force the adobe version of helvetica, and
@@ -5307,7 +5307,7 @@ Issues with this version:
 
 - Minor login minimize button cleanup (Jonathan Blandford)
 
-- gdmconfig UI update and fixes (Lee Mallabone)
+- mdmconfig UI update and fixes (Lee Mallabone)
 
 - Easter egg update
 
@@ -5336,7 +5336,7 @@ Issues with this version:
 
 - spec file actually works (Lee Mellabone)
 
-- Bigger! Better! Faster!  gdmconfig.  Much cooler and easier to use
+- Bigger! Better! Faster!  mdmconfig.  Much cooler and easier to use
   (Lee Mellabone)
 
 - More xinerama fixes (Tim Jansen)
@@ -5356,15 +5356,15 @@ Issues with this version:
 
 2.0.97 stuff:
 
-- Graphical configurator in Foot/System/Gdm Configurator,
-  or run "gdmconfig" (Lee Mellabone)
+- Graphical configurator in Foot/System/Mdm Configurator,
+  or run "mdmconfig" (Lee Mellabone)
 
 - i18n and greeter/slave communication fixes (ChiDeok Hwang)
 
 - int vs. bool mess fixed up in the configuration files
 
 - Use the language from the LANG variable as the default and use
-  the one from gdm.conf as backup only
+  the one from mdm.conf as backup only
 
 - Verbose authentication on by default and don't reveal information
   on verbose authentication.  I may remove this option altogether
@@ -5408,8 +5408,8 @@ Open issues:
 
 2.0.95 stuff:
 
-- Autologin (AutomaticLogin key in [daemon] section of gdm.conf)
-  This is a string key that if it's set then gdm will log in that
+- Autologin (AutomaticLogin key in [daemon] section of mdm.conf)
+  This is a string key that if it's set then mdm will log in that
   user without prompting on the first time it runs a local server.
   Will not autologin "root" though as that would be dumb.
 

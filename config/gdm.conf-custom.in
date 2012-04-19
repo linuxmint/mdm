@@ -1,17 +1,17 @@
-# GDM Custom Configuration file.
+# MDM Custom Configuration file.
 #
 # This file is the appropriate place for specifying your customizations to the
-# GDM configuration.   If you run gdmsetup, it will automatically edit this
-# file for you and will cause the daemon and any running GDM GUI programs to
+# MDM configuration.   If you run mdmsetup, it will automatically edit this
+# file for you and will cause the daemon and any running MDM GUI programs to
 # automatically update with the new configuration.  Not all configuration
-# options are supported by gdmsetup, so to modify some values it may be
+# options are supported by mdmsetup, so to modify some values it may be
 # necessary to modify this file directly by hand.
 #
 # This file overrides the default configuration settings.  These settings 
-# are stored in the GDM System Defaults configuration file, which is found
+# are stored in the MDM System Defaults configuration file, which is found
 # at the following location.
 #
-# @GDM_DEFAULTS_CONF@.  
+# @MDM_DEFAULTS_CONF@.  
 #
 # This file contains comments about the meaning of each configuration option,
 # so is also a useful reference.  Also refer to the documentation links at
@@ -20,33 +20,33 @@
 # appropriate section in the template below this comment section.
 #
 # For example, if you want to specify a different value for the Enable key
-# in the "[debug]" section of your GDM System Defaults configuration file,
+# in the "[debug]" section of your MDM System Defaults configuration file,
 # then add "Enable=true" in the "[debug]" section of this file.  If the
 # key already exists in this file, then simply modify it.
 #
-# Older versions of GDM used the "gdm.conf" file for configuration.  If your
-# system has an old gdm.conf file on the system, it will be used instead of
+# Older versions of MDM used the "mdm.conf" file for configuration.  If your
+# system has an old mdm.conf file on the system, it will be used instead of
 # this file - so changes made to this file will not take effect.  Consider
-# migrating your configuration to this file and removing the gdm.conf file.
+# migrating your configuration to this file and removing the mdm.conf file.
 #
-# If you hand edit a GDM configuration file, you can run the following
-# command and the GDM daemon will immediately reflect the change.  Any
-# running GDM GUI programs will also be notified to update with the new
+# If you hand edit a MDM configuration file, you can run the following
+# command and the MDM daemon will immediately reflect the change.  Any
+# running MDM GUI programs will also be notified to update with the new
 # configuration.
 #
-# gdmflexiserver --command="UPDATE_CONFIG <configuration key>"
+# mdmflexiserver --command="UPDATE_CONFIG <configuration key>"
 #
 # e.g, the "Enable" key in the "[debug]" section would be "debug/Enable".
 #
-# You can also run gdm-restart or gdm-safe-restart to cause GDM to restart and
-# re-read the new configuration settings.  You can also restart GDM by sending
-# a HUP or USR1 signal to the daemon.  HUP behaves like gdm-restart and causes
-# any user session started by GDM to exit immediately while USR1 behaves like
-# gdm-safe-restart and will wait until all users log out before restarting GDM.
+# You can also run mdm-restart or mdm-safe-restart to cause MDM to restart and
+# re-read the new configuration settings.  You can also restart MDM by sending
+# a HUP or USR1 signal to the daemon.  HUP behaves like mdm-restart and causes
+# any user session started by MDM to exit immediately while USR1 behaves like
+# mdm-safe-restart and will wait until all users log out before restarting MDM.
 #
 # For full reference documentation see the gnome help browser under
 # GNOME|System category.  You can also find the docs in HTML form on
-# http://www.gnome.org/projects/gdm/
+# http://www.gnome.org/projects/mdm/
 #
 # NOTE: Lines that begin with "#" are considered comments.
 #
@@ -66,15 +66,15 @@
 
 [debug]
 
-# Note that to disable servers defined in the GDM System Defaults
+# Note that to disable servers defined in the MDM System Defaults
 # configuration file (such as 0=Standard, you must put a line in this file
-# that says 0=inactive, as described in the Configuration section of the GDM
+# that says 0=inactive, as described in the Configuration section of the MDM
 # documentation.
 #
 [servers]
 
-# Also note, that if you redefine a [server-foo] section, then GDM will
-# use the definition in this file, not the GDM System Defaults configuration
+# Also note, that if you redefine a [server-foo] section, then MDM will
+# use the definition in this file, not the MDM System Defaults configuration
 # file.  It is currently not possible to disable a [server-foo] section
-# defined in the GDM System Defaults configuration file.
+# defined in the MDM System Defaults configuration file.
 #

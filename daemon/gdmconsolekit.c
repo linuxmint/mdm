@@ -30,8 +30,8 @@
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
-#include "gdm-log.h" /* for gdm_debug */
-#include "gdmconsolekit.h"
+#include "mdm-log.h" /* for mdm_debug */
+#include "mdmconsolekit.h"
 
 
 #define CK_NAME              "org.freedesktop.ConsoleKit"
@@ -159,7 +159,7 @@ session_get_x11_display (DBusConnection *connection,
 						CK_SESSION_INTERFACE,
 						"GetX11Display");
 	if (message == NULL) {
-		gdm_debug ("ConsoleKit: Couldn't allocate the D-Bus message");
+		mdm_debug ("ConsoleKit: Couldn't allocate the D-Bus message");
 		return FALSE;
 	}
 
@@ -168,7 +168,7 @@ session_get_x11_display (DBusConnection *connection,
 							   message,
 							   -1, &error);
 	if (dbus_error_is_set (&error)) {
-		gdm_debug ("ConsoleKit: %s raised:\n %s\n\n", error.name, error.message);
+		mdm_debug ("ConsoleKit: %s raised:\n %s\n\n", error.name, error.message);
 		reply = NULL;
 	}
 
@@ -197,13 +197,13 @@ session_unlock (DBusConnection *connection,
 	DBusMessage    *message;
 	DBusMessage    *reply;
 
-	gdm_debug ("ConsoleKit: Unlocking session %s", ssid);
+	mdm_debug ("ConsoleKit: Unlocking session %s", ssid);
 	message = dbus_message_new_method_call (CK_NAME,
 						ssid,
 						CK_SESSION_INTERFACE,
 						"Unlock");
 	if (message == NULL) {
-		gdm_debug ("ConsoleKit: Couldn't allocate the D-Bus message");
+		mdm_debug ("ConsoleKit: Couldn't allocate the D-Bus message");
 		return FALSE;
 	}
 
@@ -216,7 +216,7 @@ session_unlock (DBusConnection *connection,
 	dbus_connection_flush (connection);
 
 	if (dbus_error_is_set (&error)) {
-		gdm_debug ("ConsoleKit: %s raised:\n %s\n\n", error.name, error.message);
+		mdm_debug ("ConsoleKit: %s raised:\n %s\n\n", error.name, error.message);
 		return FALSE;
 	}
 
@@ -271,7 +271,7 @@ get_path_array_from_iter (DBusMessageIter *iter,
 	return buffer;
 
 oom:
-	gdm_debug ("%s %d : error allocating memory\n", __FILE__, __LINE__);
+	mdm_debug ("%s %d : error allocating memory\n", __FILE__, __LINE__);
 	return NULL;
 
 }
@@ -302,7 +302,7 @@ get_sessions_for_user (DBusConnection *connection,
 						CK_MANAGER_INTERFACE,
 						"GetSessionsForUser");
 	if (message == NULL) {
-		gdm_debug ("ConsoleKit: Couldn't allocate the D-Bus message");
+		mdm_debug ("ConsoleKit: Couldn't allocate the D-Bus message");
 		goto out;
 	}
 
@@ -318,18 +318,18 @@ get_sessions_for_user (DBusConnection *connection,
 	dbus_connection_flush (connection);
 
 	if (dbus_error_is_set (&error)) {
-		gdm_debug ("ConsoleKit: %s raised:\n %s\n\n", error.name, error.message);
+		mdm_debug ("ConsoleKit: %s raised:\n %s\n\n", error.name, error.message);
 		goto out;
 	}
 
 	if (reply == NULL) {
-		gdm_debug ("ConsoleKit: No reply for GetSessionsForUser");
+		mdm_debug ("ConsoleKit: No reply for GetSessionsForUser");
 		goto out;
 	}
 
 	dbus_message_iter_init (reply, &iter_reply);
 	if (dbus_message_iter_get_arg_type (&iter_reply) != DBUS_TYPE_ARRAY) {
-		gdm_debug ("ConsoleKit: Wrong reply for GetSessionsForUser - expecting an array.");
+		mdm_debug ("ConsoleKit: Wrong reply for GetSessionsForUser - expecting an array.");
 		goto out;
 	}
 
@@ -356,19 +356,19 @@ unlock_ck_session (const char *user,
 	char           **sessions;
 	int              i;
 
-	gdm_debug ("ConsoleKit: Unlocking session for %s on %s", user, x11_display);
+	mdm_debug ("ConsoleKit: Unlocking session for %s on %s", user, x11_display);
 
 	dbus_error_init (&error);
 	connection = dbus_bus_get (DBUS_BUS_SYSTEM, &error);
 	if (connection == NULL) {
-		gdm_debug ("ConsoleKit: Failed to connect to the D-Bus daemon: %s", error.message);
+		mdm_debug ("ConsoleKit: Failed to connect to the D-Bus daemon: %s", error.message);
 		dbus_error_free (&error);
 		return;
 	}
 
 	sessions = get_sessions_for_user (connection, user, x11_display);
 	if (sessions == NULL || sessions[0] == NULL) {
-		gdm_debug ("ConsoleKit: no sessions found");
+		mdm_debug ("ConsoleKit: no sessions found");
 		return;
 	}
 
@@ -378,7 +378,7 @@ unlock_ck_session (const char *user,
 
 		ssid = sessions[i];
 		session_get_x11_display (connection, ssid, &xdisplay);
-		gdm_debug ("ConsoleKit: session %s has DISPLAY %s", ssid, xdisplay);
+		mdm_debug ("ConsoleKit: session %s has DISPLAY %s", ssid, xdisplay);
 
 		if (xdisplay != NULL
 		    && x11_display != NULL
@@ -387,7 +387,7 @@ unlock_ck_session (const char *user,
 
 			res = session_unlock (connection, ssid);
 			if (! res) {
-				gdm_error ("ConsoleKit: Unable to unlock %s", ssid);
+				mdm_error ("ConsoleKit: Unable to unlock %s", ssid);
 			}
 		}
 
@@ -399,7 +399,7 @@ unlock_ck_session (const char *user,
 
 char *
 open_ck_session (struct passwd *pwent,
-		 GdmDisplay    *d,
+		 MdmDisplay    *d,
 		 const char    *session)
 {
 	DBusConnection *connection;
@@ -412,14 +412,14 @@ open_ck_session (struct passwd *pwent,
 
 	cookie = NULL;
 
-	gdm_debug ("ConsoleKit: Opening session for %s", pwent->pw_name);
+	mdm_debug ("ConsoleKit: Opening session for %s", pwent->pw_name);
 
 	dbus_error_init (&error);
 	connection = dbus_bus_get_private (DBUS_BUS_SYSTEM, &error);
 	private_connection = connection;
 
 	if (connection == NULL) {
-		gdm_debug ("ConsoleKit: Failed to connect to the D-Bus daemon: %s", error.message);
+		mdm_debug ("ConsoleKit: Failed to connect to the D-Bus daemon: %s", error.message);
 		dbus_error_free (&error);
 		return NULL;
 	}
@@ -433,7 +433,7 @@ open_ck_session (struct passwd *pwent,
 						CK_MANAGER_INTERFACE,
 						"OpenSessionWithParameters");
 	if (message == NULL) {
-		gdm_debug ("ConsoleKit: Couldn't allocate the D-Bus message");
+		mdm_debug ("ConsoleKit: Couldn't allocate the D-Bus message");
 		return NULL;
 	}
 
@@ -468,7 +468,7 @@ open_ck_session (struct passwd *pwent,
 							   message,
 							   -1, &error);
 	if (dbus_error_is_set (&error)) {
-		gdm_debug ("ConsoleKit: %s raised:\n %s\n\n", error.name, error.message);
+		mdm_debug ("ConsoleKit: %s raised:\n %s\n\n", error.name, error.message);
 		reply = NULL;
 	}
 
@@ -511,7 +511,7 @@ close_ck_session (const char *cookie)
 						CK_MANAGER_INTERFACE,
 						"CloseSession");
 	if (message == NULL) {
-		gdm_debug ("ConsoleKit: Couldn't allocate the D-Bus message");
+		mdm_debug ("ConsoleKit: Couldn't allocate the D-Bus message");
 		return;
 	}
 
@@ -524,7 +524,7 @@ close_ck_session (const char *cookie)
 							   message,
 							   -1, &error);
 	if (dbus_error_is_set (&error)) {
-		gdm_debug ("ConsoleKit: %s raised:\n %s\n\n", error.name, error.message);
+		mdm_debug ("ConsoleKit: %s raised:\n %s\n\n", error.name, error.message);
 		reply = NULL;
 	}
 

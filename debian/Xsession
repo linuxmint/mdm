@@ -10,13 +10,13 @@
 # (Note that other arguments could also follow, but only the command one is
 # right now relevant and supported)
 #
-# The output is ALREADY redirected to .xsession-errors in GDM.  This way
+# The output is ALREADY redirected to .xsession-errors in MDM.  This way
 # .xsession-errors actually gets more output such as if the PreSession script
 # is failing.  This also prevents DoS attacks if some app in the users session
 # can be prodded to dump lots of stuff on the stdout/stderr.  We wish to be
 # robust don't we?  In case you wish to use an existing script for other DM's,
-# you can just not redirect when GDMSESSION is set.  GDMSESSION will always
-# be set from gdm.
+# you can just not redirect when MDMSESSION is set.  MDMSESSION will always
+# be set from mdm.
 #
 # Also note that this is not run as a login shell, this is just executed.
 #
@@ -111,16 +111,16 @@ test -f /etc/xprofile && . /etc/xprofile
 test -f "$HOME/.xprofile" && . "$HOME/.xprofile"
 
 # Translation stuff
-if [ -x "/usr/lib/gdm/gdmtranslate" ] ; then
-  gdmtranslate="/usr/lib/gdm/gdmtranslate"
+if [ -x "/usr/lib/mdm/mdmtranslate" ] ; then
+  mdmtranslate="/usr/lib/mdm/mdmtranslate"
 else
-  gdmtranslate=
+  mdmtranslate=
 fi
 
 # Note that this should only go to zenity dialogs which always expect utf8
 gettextfunc () {
-  if [ "x$gdmtranslate" != "x" ] ; then
-    "$gdmtranslate" --utf8 "$1"
+  if [ "x$mdmtranslate" != "x" ] ; then
+    "$mdmtranslate" --utf8 "$1"
   else
     echo "$1"
   fi
@@ -167,10 +167,10 @@ fi
 
 unset XKB_IN_USE
 
-# if GDM_LANG isn't first in LANGUAGE, then unset it.
-if [ -n "$GDM_LANG" ]; then
+# if MDM_LANG isn't first in LANGUAGE, then unset it.
+if [ -n "$MDM_LANG" ]; then
     if [ -n "$LANGUAGE" ]; then
-        if echo "$LANGUAGE" | grep -q -- "^$GDM_LANG"; then
+        if echo "$LANGUAGE" | grep -q -- "^$MDM_LANG"; then
            :
         else
            unset LANGUAGE

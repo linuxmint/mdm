@@ -28,10 +28,10 @@
 
 #include <glib.h>
 
-#include "gdm-common-config.h"
+#include "mdm-common-config.h"
 
 gboolean
-gdm_common_config_parse_key_string (const char *keystring,
+mdm_common_config_parse_key_string (const char *keystring,
 				    char      **group,
 				    char      **key,
 				    char      **locale,
@@ -100,7 +100,7 @@ gdm_common_config_parse_key_string (const char *keystring,
 }
 
 GKeyFile *
-gdm_common_config_load (const char *filename,
+mdm_common_config_load (const char *filename,
 			GError    **error)
 {
 	GKeyFile *config;
@@ -124,7 +124,7 @@ gdm_common_config_load (const char *filename,
 }
 
 GKeyFile *
-gdm_common_config_load_from_dirs (const char  *filename,
+mdm_common_config_load_from_dirs (const char  *filename,
 				  const char **dirs,
 				  GError     **error)
 {
@@ -139,7 +139,7 @@ gdm_common_config_load_from_dirs (const char  *filename,
 		char *path;
 
 		path = g_build_filename (dirs[i], filename, NULL);
-		config = gdm_common_config_load (path, NULL);
+		config = mdm_common_config_load (path, NULL);
 		g_free (path);
 		if (config != NULL) {
 			break;
@@ -157,7 +157,7 @@ gdm_common_config_load_from_dirs (const char  *filename,
 }
 
 gboolean
-gdm_common_config_save (GKeyFile   *config,
+mdm_common_config_save (GKeyFile   *config,
 			const char *filename,
 			GError    **error)
 {
@@ -189,7 +189,7 @@ gdm_common_config_save (GKeyFile   *config,
 }
 
 gboolean
-gdm_common_config_get_int (GKeyFile   *config,
+mdm_common_config_get_int (GKeyFile   *config,
 			   const char *keystring,
 			   int        *value,
 			   GError    **error)
@@ -204,7 +204,7 @@ gdm_common_config_get_int (GKeyFile   *config,
 	ret = FALSE;
 
 	group = key = default_value = NULL;
-	if (! gdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value))
+	if (! mdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value))
 		return FALSE;
 
 	local_error = NULL;
@@ -236,7 +236,7 @@ gdm_common_config_get_int (GKeyFile   *config,
 }
 
 gboolean
-gdm_common_config_get_translated_string (GKeyFile   *config,
+mdm_common_config_get_translated_string (GKeyFile   *config,
 					 const char *keystring,
 					 char      **value,
 					 GError    **error)
@@ -254,7 +254,7 @@ gdm_common_config_get_translated_string (GKeyFile   *config,
 	val = NULL;
 
 	group = key = default_value = NULL;
-	if (! gdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value))
+	if (! mdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value))
 		return FALSE;
 
 	langs = g_get_language_names ();
@@ -293,7 +293,7 @@ gdm_common_config_get_translated_string (GKeyFile   *config,
 }
 
 gboolean
-gdm_common_config_get_string (GKeyFile   *config,
+mdm_common_config_get_string (GKeyFile   *config,
 			      const char *keystring,
 			      char      **value,
 			      GError    **error)
@@ -308,7 +308,7 @@ gdm_common_config_get_string (GKeyFile   *config,
 	ret = FALSE;
 
 	group = key = default_value = NULL;
-	if (! gdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value)) {
+	if (! mdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value)) {
 		g_set_error (error,
 			     G_KEY_FILE_ERROR,
 			     G_KEY_FILE_ERROR_PARSE,
@@ -345,7 +345,7 @@ gdm_common_config_get_string (GKeyFile   *config,
 }
 
 gboolean
-gdm_common_config_get_boolean (GKeyFile   *config,
+mdm_common_config_get_boolean (GKeyFile   *config,
 			       const char *keystring,
 			       gboolean   *value,
 			       GError    **error)
@@ -360,7 +360,7 @@ gdm_common_config_get_boolean (GKeyFile   *config,
 	ret = FALSE;
 
 	group = key = default_value = NULL;
-	if (! gdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value))
+	if (! mdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value))
 		return FALSE;
 
 	local_error = NULL;
@@ -399,7 +399,7 @@ gdm_common_config_get_boolean (GKeyFile   *config,
 }
 
 void
-gdm_common_config_set_string (GKeyFile   *config,
+mdm_common_config_set_string (GKeyFile   *config,
 			      const char *keystring,
 			      const char *value)
 {
@@ -408,7 +408,7 @@ gdm_common_config_set_string (GKeyFile   *config,
 	char    *default_value;
 
 	group = key = default_value = NULL;
-	if (! gdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value)) {
+	if (! mdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value)) {
 		return;
 	}
 
@@ -420,7 +420,7 @@ gdm_common_config_set_string (GKeyFile   *config,
 }
 
 void
-gdm_common_config_set_boolean (GKeyFile   *config,
+mdm_common_config_set_boolean (GKeyFile   *config,
 			       const char *keystring,
 			       gboolean    value)
 {
@@ -429,7 +429,7 @@ gdm_common_config_set_boolean (GKeyFile   *config,
 	char    *default_value;
 
 	group = key = default_value = NULL;
-	if (! gdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value)) {
+	if (! mdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value)) {
 		return;
 	}
 
@@ -441,7 +441,7 @@ gdm_common_config_set_boolean (GKeyFile   *config,
 }
 
 void
-gdm_common_config_set_int (GKeyFile   *config,
+mdm_common_config_set_int (GKeyFile   *config,
 			   const char *keystring,
 			   int         value)
 {
@@ -450,7 +450,7 @@ gdm_common_config_set_int (GKeyFile   *config,
 	char    *default_value;
 
 	group = key = default_value = NULL;
-	if (! gdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value)) {
+	if (! mdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value)) {
 		return;
 	}
 
@@ -462,7 +462,7 @@ gdm_common_config_set_int (GKeyFile   *config,
 }
 
 void
-gdm_common_config_remove_key (GKeyFile   *config,
+mdm_common_config_remove_key (GKeyFile   *config,
 			      const char *keystring,
 			      GError    **error)
 {
@@ -472,7 +472,7 @@ gdm_common_config_remove_key (GKeyFile   *config,
 	GError  *local_error;
 
 	group = key = default_value = NULL;
-	if (! gdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value)) {
+	if (! mdm_common_config_parse_key_string (keystring, &group, &key, NULL, &default_value)) {
 		return;
 	}
 

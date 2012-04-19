@@ -1,4 +1,4 @@
-/* GDM - The Gnome Display Manager - misc functions
+/* MDM - The Gnome Display Manager - misc functions
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 #ifndef MISC_H
 #define MISC_H
 
-void		gdm_set_theme			(const char *theme_name);
-gboolean	gdm_working_command_exists	(const char *commands);
+void		mdm_set_theme			(const char *theme_name);
+gboolean	mdm_working_command_exists	(const char *commands);
 
 #endif /* MISC_H */
 

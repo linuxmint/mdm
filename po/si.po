@@ -17,23 +17,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../common/gdm-config.c:338
+#: ../common/mdm-config.c:338
 #, c-format
 msgid "Didn't understand `%s' (expected integer)"
 msgstr ""
 
-#: ../common/gdm-config.c:346
+#: ../common/mdm-config.c:346
 #, c-format
 msgid "Integer `%s' is too large or small"
 msgstr ""
 
-#: ../common/gdm-config.c:376
+#: ../common/mdm-config.c:376
 #, c-format
 msgid "Didn't understand `%s' (expected true or false)"
 msgstr ""
 
-#: ../common/gdm-config.c:388 ../common/gdm-config.c:400
-#: ../common/gdm-config.c:412 ../common/gdm-config.c:427
+#: ../common/mdm-config.c:388 ../common/mdm-config.c:400
+#: ../common/mdm-config.c:412 ../common/mdm-config.c:427
 msgid "Text contains invalid UTF-8"
 msgstr "පෙළ තුළ සාවද්‍ය UTF-8 අඩංගු වේ"
 
@@ -62,7 +62,7 @@ msgstr ""
 msgid ""
 "Failed to start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly.  You will need to log in on a console and "
-"reconfigure the X server.  Then restart GDM."
+"reconfigure the X server.  Then restart MDM."
 msgstr ""
 
 #: ../config/gettextfoo.h:6
@@ -80,7 +80,7 @@ msgid "Trying to restart the X server."
 msgstr ""
 
 #: ../config/gettextfoo.h:9
-msgid "The X server is now disabled.  Restart GDM when it is configured correctly."
+msgid "The X server is now disabled.  Restart MDM when it is configured correctly."
 msgstr ""
 
 #: ../config/gettextfoo.h:10
@@ -150,7 +150,7 @@ msgstr ""
 #: ../daemon/auth.c:72
 #, c-format
 msgid ""
-"GDM could not write a new authorization entry to disk.  Possibly out of "
+"MDM could not write a new authorization entry to disk.  Possibly out of "
 "diskspace.%s%s"
 msgstr ""
 
@@ -185,7 +185,7 @@ msgstr ""
 msgid "%s: Ignoring suspiciously looking cookie file %s"
 msgstr ""
 
-#: ../daemon/auth.c:867 ../daemon/gdm.c:1514 ../daemon/gdm.c:1887
+#: ../daemon/auth.c:867 ../daemon/mdm.c:1514 ../daemon/mdm.c:1887
 #, c-format
 msgid "Can't write to %s: %s"
 msgstr "%s වෙත ලිවිය නොහැක: %s"
@@ -195,9 +195,9 @@ msgstr "%s වෙත ලිවිය නොහැක: %s"
 #. * cought that elsewhere.  Things are just
 #. * not working out, so tell the user.
 #. * However this may have been caused by a malicious local user
-#. * zapping the display repeatedly, that shouldn't cause gdm
+#. * zapping the display repeatedly, that shouldn't cause mdm
 #. * to stop working completely so just wait for 2 minutes,
-#. * that should give people ample time to stop gdm if needed,
+#. * that should give people ample time to stop mdm if needed,
 #. * or just wait for the stupid malicious user to get bored
 #. * and go away
 #: ../daemon/display.c:189
@@ -215,7 +215,7 @@ msgstr ""
 
 #: ../daemon/display.c:409
 #, c-format
-msgid "%s: Failed forking GDM slave process for %s"
+msgid "%s: Failed forking MDM slave process for %s"
 msgstr ""
 
 #: ../daemon/errorgui.c:362
@@ -281,356 +281,356 @@ msgstr ""
 msgid "%s: %s is bigger than sysadmin specified maximum file size."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1141
+#: ../daemon/mdm-daemon-config.c:1141
 #, c-format
 msgid "%s: Priority out of bounds; changed to %d"
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1147
+#: ../daemon/mdm-daemon-config.c:1147
 #, c-format
 msgid "%s: Empty server command; using standard command."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1388
+#: ../daemon/mdm-daemon-config.c:1388
 #, c-format
 msgid "%s: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1413
+#: ../daemon/mdm-daemon-config.c:1413
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this "
-"does not exist. Please correct GDM configuration and restart GDM."
+"does not exist. Please correct MDM configuration and restart MDM."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1424
+#: ../daemon/mdm-daemon-config.c:1424
 #, c-format
 msgid "%s: Authdir %s does not exist. Aborting."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1429
+#: ../daemon/mdm-daemon-config.c:1429
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this is "
-"not a directory. Please correct GDM configuration and restart GDM."
+"not a directory. Please correct MDM configuration and restart MDM."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1440
+#: ../daemon/mdm-daemon-config.c:1440
 #, c-format
 msgid "%s: Authdir %s is not a directory. Aborting."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1535
+#: ../daemon/mdm-daemon-config.c:1535
 #, c-format
 msgid "%s: BaseXsession empty; using %s"
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1579
+#: ../daemon/mdm-daemon-config.c:1579
 #, c-format
 msgid "%s: Standard X server not found; trying alternatives"
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1641
+#: ../daemon/mdm-daemon-config.c:1641
 #, c-format
 msgid "%s: No greeter specified."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1657
+#: ../daemon/mdm-daemon-config.c:1657
 #, c-format
 msgid "%s: No remote greeter specified."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1673
+#: ../daemon/mdm-daemon-config.c:1673
 #, c-format
 msgid "%s: No sessions directory specified."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1721
+#: ../daemon/mdm-daemon-config.c:1721
 #, c-format
 msgid "%s: XDMCP was enabled while there is no XDMCP support; turning it off"
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1929 ../daemon/gdm-daemon-config.c:1972
+#: ../daemon/mdm-daemon-config.c:1929 ../daemon/mdm-daemon-config.c:1972
 #, c-format
 msgid "%s: XDMCP disabled and no static servers defined. Aborting!"
 msgstr ""
 
 #. start
 #. server uid
-#: ../daemon/gdm-daemon-config.c:1948
+#: ../daemon/mdm-daemon-config.c:1948
 #, c-format
 msgid ""
 "%s: XDMCP disabled and no static servers defined. Adding %s on :%d to allow "
 "configuration!"
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:1963
+#: ../daemon/mdm-daemon-config.c:1963
 msgid ""
-"XDMCP is disabled and GDM cannot find any static server to start.  "
-"Aborting!  Please correct the configuration and restart GDM."
+"XDMCP is disabled and MDM cannot find any static server to start.  "
+"Aborting!  Please correct the configuration and restart MDM."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2006
-#, c-format
-msgid ""
-"The GDM user '%s' does not exist. Please correct GDM configuration and "
-"restart GDM."
-msgstr ""
-
-#: ../daemon/gdm-daemon-config.c:2014
-#, c-format
-msgid "%s: Can't find the GDM user '%s'. Aborting!"
-msgstr ""
-
-#: ../daemon/gdm-daemon-config.c:2021
-msgid ""
-"The GDM user is set to be root, but this is not allowed since it can pose a "
-"security risk.  Please correct GDM configuration and restart GDM."
-msgstr ""
-
-#: ../daemon/gdm-daemon-config.c:2031
-#, c-format
-msgid "%s: The GDM user should not be root. Aborting!"
-msgstr ""
-
-#: ../daemon/gdm-daemon-config.c:2038
+#: ../daemon/mdm-daemon-config.c:2006
 #, c-format
 msgid ""
-"The GDM group '%s' does not exist. Please correct GDM configuration and "
-"restart GDM."
+"The MDM user '%s' does not exist. Please correct MDM configuration and "
+"restart MDM."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2046
+#: ../daemon/mdm-daemon-config.c:2014
 #, c-format
-msgid "%s: Can't find the GDM group '%s'. Aborting!"
+msgid "%s: Can't find the MDM user '%s'. Aborting!"
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2053
+#: ../daemon/mdm-daemon-config.c:2021
 msgid ""
-"The GDM group is set to be root, but this is not allowed since it can pose a "
-"security risk. Please correct GDM configuration and restart GDM."
+"The MDM user is set to be root, but this is not allowed since it can pose a "
+"security risk.  Please correct MDM configuration and restart MDM."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2062
+#: ../daemon/mdm-daemon-config.c:2031
 #, c-format
-msgid "%s: The GDM group should not be root. Aborting!"
+msgid "%s: The MDM user should not be root. Aborting!"
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2110
+#: ../daemon/mdm-daemon-config.c:2038
+#, c-format
+msgid ""
+"The MDM group '%s' does not exist. Please correct MDM configuration and "
+"restart MDM."
+msgstr ""
+
+#: ../daemon/mdm-daemon-config.c:2046
+#, c-format
+msgid "%s: Can't find the MDM group '%s'. Aborting!"
+msgstr ""
+
+#: ../daemon/mdm-daemon-config.c:2053
+msgid ""
+"The MDM group is set to be root, but this is not allowed since it can pose a "
+"security risk. Please correct MDM configuration and restart MDM."
+msgstr ""
+
+#: ../daemon/mdm-daemon-config.c:2062
+#, c-format
+msgid "%s: The MDM group should not be root. Aborting!"
+msgstr ""
+
+#: ../daemon/mdm-daemon-config.c:2110
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but is not "
-"owned by user %d and group %d. Please correct the ownership or GDM "
-"configuration and restart GDM."
+"owned by user %d and group %d. Please correct the ownership or MDM "
+"configuration and restart MDM."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2123
+#: ../daemon/mdm-daemon-config.c:2123
 #, c-format
 msgid "%s: Authdir %s is not owned by user %d, group %d. Aborting."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2132
+#: ../daemon/mdm-daemon-config.c:2132
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but has the "
 "wrong permissions: it should have permissions of %o. Please correct the "
-"permissions or the GDM configuration and restart GDM."
+"permissions or the MDM configuration and restart MDM."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2145
+#: ../daemon/mdm-daemon-config.c:2145
 #, c-format
 msgid "%s: Authdir %s has wrong permissions %o. Should be %o. Aborting."
 msgstr ""
 
-#: ../daemon/gdm-net.c:337
+#: ../daemon/mdm-net.c:337
 #, c-format
 msgid "%s: Could not make socket"
 msgstr ""
 
-#: ../daemon/gdm-net.c:368
+#: ../daemon/mdm-net.c:368
 #, c-format
 msgid "%s: Could not bind socket"
 msgstr ""
 
-#: ../daemon/gdm-net.c:454
+#: ../daemon/mdm-net.c:454
 #, c-format
 msgid "%s: Could not make FIFO"
 msgstr ""
 
-#: ../daemon/gdm-net.c:462
+#: ../daemon/mdm-net.c:462
 #, c-format
 msgid "%s: Could not open FIFO"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:567
+#: ../daemon/mdm-xdmcp-manager.c:567
 msgid "Could not create socket!"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:790
+#: ../daemon/mdm-xdmcp-manager.c:790
 #, c-format
 msgid "Denied XDMCP query from host %s"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:941 ../daemon/gdm-xdmcp-manager.c:1006
+#: ../daemon/mdm-xdmcp-manager.c:941 ../daemon/mdm-xdmcp-manager.c:1006
 msgid "Could not extract authlist from packet"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:954 ../daemon/gdm-xdmcp-manager.c:1070
+#: ../daemon/mdm-xdmcp-manager.c:954 ../daemon/mdm-xdmcp-manager.c:1070
 msgid "Error in checksum"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1258
+#: ../daemon/mdm-xdmcp-manager.c:1258
 msgid "Bad address"
 msgstr "සාවද්‍ය ලිපිනය"
 
-#: ../daemon/gdm-xdmcp-manager.c:1338
+#: ../daemon/mdm-xdmcp-manager.c:1338
 #, c-format
 msgid "%s: Could not read display address"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1346
+#: ../daemon/mdm-xdmcp-manager.c:1346
 #, c-format
 msgid "%s: Could not read display port number"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1355
+#: ../daemon/mdm-xdmcp-manager.c:1355
 #, c-format
 msgid "%s: Could not extract authlist from packet"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1375
+#: ../daemon/mdm-xdmcp-manager.c:1375
 #, c-format
 msgid "%s: Error in checksum"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1838
+#: ../daemon/mdm-xdmcp-manager.c:1838
 #, c-format
 msgid "%s: Got REQUEST from banned host %s"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1850 ../daemon/gdm-xdmcp-manager.c:2171
-#: ../daemon/gdm-xdmcp-manager.c:2403
+#: ../daemon/mdm-xdmcp-manager.c:1850 ../daemon/mdm-xdmcp-manager.c:2171
+#: ../daemon/mdm-xdmcp-manager.c:2403
 #, c-format
 msgid "%s: Could not read Display Number"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1857
+#: ../daemon/mdm-xdmcp-manager.c:1857
 #, c-format
 msgid "%s: Could not read Connection Type"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1864
+#: ../daemon/mdm-xdmcp-manager.c:1864
 #, c-format
 msgid "%s: Could not read Client Address"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1872
+#: ../daemon/mdm-xdmcp-manager.c:1872
 #, c-format
 msgid "%s: Could not read Authentication Names"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1881
+#: ../daemon/mdm-xdmcp-manager.c:1881
 #, c-format
 msgid "%s: Could not read Authentication Data"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1891
+#: ../daemon/mdm-xdmcp-manager.c:1891
 #, c-format
 msgid "%s: Could not read Authorization List"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1909
+#: ../daemon/mdm-xdmcp-manager.c:1909
 #, c-format
 msgid "%s: Could not read Manufacturer ID"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:1934
+#: ../daemon/mdm-xdmcp-manager.c:1934
 #, c-format
 msgid "%s: Failed checksum from %s"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:2154
+#: ../daemon/mdm-xdmcp-manager.c:2154
 #, c-format
 msgid "%s: Got Manage from banned host %s"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:2164 ../daemon/gdm-xdmcp-manager.c:2410
+#: ../daemon/mdm-xdmcp-manager.c:2164 ../daemon/mdm-xdmcp-manager.c:2410
 #, c-format
 msgid "%s: Could not read Session ID"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:2178
+#: ../daemon/mdm-xdmcp-manager.c:2178
 #, c-format
 msgid "%s: Could not read Display Class"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:2273 ../daemon/gdm-xdmcp-manager.c:2320
-#: ../daemon/gdm-xdmcp-manager.c:2326
+#: ../daemon/mdm-xdmcp-manager.c:2273 ../daemon/mdm-xdmcp-manager.c:2320
+#: ../daemon/mdm-xdmcp-manager.c:2326
 #, c-format
 msgid "%s: Could not read address"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:2393
+#: ../daemon/mdm-xdmcp-manager.c:2393
 #, c-format
 msgid "%s: Got KEEPALIVE from banned host %s"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:2476
+#: ../daemon/mdm-xdmcp-manager.c:2476
 msgid "XMCP: Could not create XDMCP buffer!"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:2482
+#: ../daemon/mdm-xdmcp-manager.c:2482
 msgid "XDMCP: Could not read XDMCP header!"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:2488
+#: ../daemon/mdm-xdmcp-manager.c:2488
 msgid "XMDCP: Incorrect XDMCP version!"
 msgstr ""
 
-#: ../daemon/gdm-xdmcp-manager.c:2875
+#: ../daemon/mdm-xdmcp-manager.c:2875
 #, c-format
 msgid "Could not get server hostname: %s!"
 msgstr ""
 
 #. FIXME: how to handle this?
-#: ../daemon/gdm.c:197 ../daemon/gdm.c:205 ../daemon/gdm.c:1645
-#: ../daemon/gdm.c:1653
+#: ../daemon/mdm.c:197 ../daemon/mdm.c:205 ../daemon/mdm.c:1645
+#: ../daemon/mdm.c:1653
 #, c-format
 msgid "Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"
 msgstr ""
 
-#: ../daemon/gdm.c:199 ../daemon/gdm.c:207 ../daemon/gdm.c:1647
-#: ../daemon/gdm.c:1655
+#: ../daemon/mdm.c:199 ../daemon/mdm.c:207 ../daemon/mdm.c:1647
+#: ../daemon/mdm.c:1655
 #, c-format
 msgid "Cannot write PID file %s: possibly out of diskspace.  Error: %s"
 msgstr ""
 
-#: ../daemon/gdm.c:216
+#: ../daemon/mdm.c:216
 #, c-format
 msgid "%s: fork () failed!"
 msgstr ""
 
 #. should never happen
-#: ../daemon/gdm.c:219 ../daemon/slave.c:3497
+#: ../daemon/mdm.c:219 ../daemon/slave.c:3497
 #, c-format
 msgid "%s: setsid () failed: %s!"
 msgstr ""
 
-#: ../daemon/gdm.c:449
+#: ../daemon/mdm.c:449
 #, c-format
 msgid "%s: Trying failsafe X server %s"
 msgstr ""
 
-#: ../daemon/gdm.c:467
+#: ../daemon/mdm.c:467
 #, c-format
 msgid "%s: Running the XKeepsCrashing script"
 msgstr ""
 
-#: ../daemon/gdm.c:581
+#: ../daemon/mdm.c:581
 msgid ""
 "The X server (your graphical interface) cannot be started.  It is likely "
 "that it is not set up correctly.  You will need to log in on a console and "
-"rerun the X configuration application, then restart GDM."
+"rerun the X configuration application, then restart MDM."
 msgstr ""
 
 #. else {
@@ -638,192 +638,192 @@ msgstr ""
 #. * talk to him.  He's on some 'l33t system anyway, so syslog
 #. * reading will do him good
 #. * }
-#: ../daemon/gdm.c:593
+#: ../daemon/mdm.c:593
 #, c-format
 msgid ""
 "Failed to start X server several times in a short time period; disabling "
 "display %s"
 msgstr ""
 
-#: ../daemon/gdm.c:640
+#: ../daemon/mdm.c:640
 #, c-format
 msgid "command failed %s: %d"
 msgstr "%s විධානය අසමත් විය: %d"
 
-#: ../daemon/gdm.c:657 ../daemon/gdm.c:2533
+#: ../daemon/mdm.c:657 ../daemon/mdm.c:2533
 msgid "Master suspending..."
 msgstr ""
 
-#: ../daemon/gdm.c:688
+#: ../daemon/mdm.c:688
 #, c-format
 msgid "System is restarting, please wait ..."
 msgstr "කරුණාකර රැඳි සිටින්න, පද්ධතිය යළිආරම්ඹමින් ..."
 
-#: ../daemon/gdm.c:690
+#: ../daemon/mdm.c:690
 #, c-format
 msgid "System is shutting down, please wait ..."
 msgstr ""
 
-#: ../daemon/gdm.c:701
+#: ../daemon/mdm.c:701
 msgid "Master halting..."
 msgstr ""
 
-#: ../daemon/gdm.c:723
+#: ../daemon/mdm.c:723
 msgid "Restarting computer..."
 msgstr "පරිගණකය යළිආරම්ඹමින්..."
 
 #. We are just feeling very paranoid
-#: ../daemon/gdm.c:745
+#: ../daemon/mdm.c:745
 #, c-format
 msgid "custom_cmd: Custom command index %ld outside permitted range [0,%d)"
 msgstr ""
 
-#: ../daemon/gdm.c:766
+#: ../daemon/mdm.c:766
 #, c-format
 msgid "Executing custom command %ld with restart option..."
 msgstr ""
 
-#: ../daemon/gdm.c:789 ../daemon/gdm.c:827
+#: ../daemon/mdm.c:789 ../daemon/mdm.c:827
 #, c-format
 msgid "%s: Execution of custom command failed: %s"
 msgstr ""
 
-#: ../daemon/gdm.c:798
+#: ../daemon/mdm.c:798
 #, c-format
 msgid "Executing custom command %ld with no restart option ..."
 msgstr ""
 
 #. failed fork
-#: ../daemon/gdm.c:804
+#: ../daemon/mdm.c:804
 #, c-format
 msgid "custom_cmd: forking process for custom command %ld failed"
 msgstr ""
 
-#: ../daemon/gdm.c:838
+#: ../daemon/mdm.c:838
 #, c-format
 msgid "custom_cmd: child %d returned %d"
 msgstr ""
 
-#: ../daemon/gdm.c:947
+#: ../daemon/mdm.c:947
 #, c-format
 msgid ""
-"Restart GDM, Restart machine, Suspend, or Halt request when there is no "
+"Restart MDM, Restart machine, Suspend, or Halt request when there is no "
 "system menu from display %s"
 msgstr ""
 
-#: ../daemon/gdm.c:956
+#: ../daemon/mdm.c:956
 #, c-format
 msgid ""
-"Restart GDM, Restart machine, Suspend or Halt request from a non-static "
+"Restart MDM, Restart machine, Suspend or Halt request from a non-static "
 "display %s"
 msgstr ""
 
 #. Bury this display for good
-#: ../daemon/gdm.c:1022
+#: ../daemon/mdm.c:1022
 #, c-format
 msgid "%s: Aborting display %s"
 msgstr ""
 
-#: ../daemon/gdm.c:1173
-msgid "GDM restarting ..."
-msgstr "GDM ප්‍රථිආරම්ඹනය ..."
+#: ../daemon/mdm.c:1173
+msgid "MDM restarting ..."
+msgstr "MDM ප්‍රථිආරම්ඹනය ..."
 
-#: ../daemon/gdm.c:1177
+#: ../daemon/mdm.c:1177
 msgid "Failed to restart self"
 msgstr ""
 
 #. FIXME: note that this could mean out of memory
-#: ../daemon/gdm.c:1262
+#: ../daemon/mdm.c:1262
 msgid "main daemon: Got SIGABRT. Something went very wrong. Going down!"
 msgstr ""
 
-#: ../daemon/gdm.c:1419
+#: ../daemon/mdm.c:1419
 msgid "Do not fork into the background"
 msgstr ""
 
-#: ../daemon/gdm.c:1421
+#: ../daemon/mdm.c:1421
 msgid "No console (static) servers to be run"
 msgstr ""
 
-#: ../daemon/gdm.c:1423
-msgid "Alternative GDM System Defaults configuration file"
+#: ../daemon/mdm.c:1423
+msgid "Alternative MDM System Defaults configuration file"
 msgstr ""
 
-#: ../daemon/gdm.c:1423
+#: ../daemon/mdm.c:1423
 msgid "CONFIGFILE"
 msgstr "CONFIGFILE"
 
-#: ../daemon/gdm.c:1425
+#: ../daemon/mdm.c:1425
 msgid "Preserve LD_* variables"
 msgstr ""
 
-#: ../daemon/gdm.c:1427
-msgid "Print GDM version"
-msgstr "GDM වෙළුම මුද්‍රණය කරන්න"
+#: ../daemon/mdm.c:1427
+msgid "Print MDM version"
+msgstr "MDM වෙළුම මුද්‍රණය කරන්න"
 
-#: ../daemon/gdm.c:1429
+#: ../daemon/mdm.c:1429
 msgid "Start the first X server but then halt until we get a GO in the fifo"
 msgstr ""
 
-#: ../daemon/gdm.c:1503 ../daemon/gdm.c:1851
+#: ../daemon/mdm.c:1503 ../daemon/mdm.c:1851
 #, c-format
 msgid "Can't open %s for writing"
 msgstr ""
 
-#: ../daemon/gdm.c:1552
+#: ../daemon/mdm.c:1552
 msgid "- The GNOME login manager"
 msgstr "- ග්නෝම් පිවිසුම් කළමණාකරු"
 
-#: ../daemon/gdm.c:1553 ../gui/gdmXnestchooser.c:486
-#: ../gui/gdmXnestchooser.c:494 ../gui/gdmchooser.c:1967
+#: ../daemon/mdm.c:1553 ../gui/mdmXnestchooser.c:486
+#: ../gui/mdmXnestchooser.c:494 ../gui/mdmchooser.c:1967
 msgid "main options"
 msgstr "ප්‍රධාන විකල්ප"
 
 #. make sure the pid file doesn't get wiped
-#: ../daemon/gdm.c:1585
-msgid "Only root wants to run GDM\n"
+#: ../daemon/mdm.c:1585
+msgid "Only root wants to run MDM\n"
 msgstr ""
 
-#: ../daemon/gdm.c:1601 ../daemon/gdm.c:1605 ../daemon/gdm.c:1683
-#: ../daemon/gdm.c:1687 ../daemon/gdm.c:1691 ../daemon/gdm.c:1695
-#: ../daemon/gdm.c:1705 ../daemon/gdm.c:1711 ../daemon/gdm.c:1722
+#: ../daemon/mdm.c:1601 ../daemon/mdm.c:1605 ../daemon/mdm.c:1683
+#: ../daemon/mdm.c:1687 ../daemon/mdm.c:1691 ../daemon/mdm.c:1695
+#: ../daemon/mdm.c:1705 ../daemon/mdm.c:1711 ../daemon/mdm.c:1722
 #: ../daemon/misc.c:1370 ../daemon/misc.c:1374 ../daemon/misc.c:1378
 #: ../daemon/misc.c:1385 ../daemon/misc.c:1389 ../daemon/misc.c:1393
 #: ../daemon/server.c:528 ../daemon/server.c:541 ../daemon/slave.c:833
 #: ../daemon/slave.c:847 ../daemon/slave.c:857 ../daemon/slave.c:867
-#: ../daemon/slave.c:879 ../gui/gdmlogin.c:3429 ../gui/gdmlogin.c:3440
-#: ../gui/gdmlogin.c:3446
+#: ../daemon/slave.c:879 ../gui/mdmlogin.c:3429 ../gui/mdmlogin.c:3440
+#: ../gui/mdmlogin.c:3446
 #, c-format
 msgid "%s: Error setting up %s signal handler: %s"
 msgstr ""
 
-#: ../daemon/gdm.c:1627
-msgid "GDM already running. Aborting!"
+#: ../daemon/mdm.c:1627
+msgid "MDM already running. Aborting!"
 msgstr ""
 
-#: ../daemon/gdm.c:1731
+#: ../daemon/mdm.c:1731
 #, c-format
 msgid "%s: Error setting up CHLD signal handler"
 msgstr ""
 
-#: ../daemon/gdm.c:3160
+#: ../daemon/mdm.c:3160
 msgid "DYNAMIC request denied: Not authenticated"
 msgstr ""
 
-#: ../daemon/gdm.c:3447 ../daemon/gdm.c:3708 ../daemon/gdm.c:3792
-#: ../daemon/gdm.c:3922 ../daemon/gdm.c:3970 ../daemon/gdm.c:4038
-#: ../daemon/gdm.c:4100 ../daemon/gdm.c:4134 ../daemon/gdm.c:4179
+#: ../daemon/mdm.c:3447 ../daemon/mdm.c:3708 ../daemon/mdm.c:3792
+#: ../daemon/mdm.c:3922 ../daemon/mdm.c:3970 ../daemon/mdm.c:4038
+#: ../daemon/mdm.c:4100 ../daemon/mdm.c:4134 ../daemon/mdm.c:4179
 #, c-format
 msgid "%s request denied: Not authenticated"
 msgstr ""
 
 #. Don't print the name to syslog as it might be
 #. * long and dangerous
-#: ../daemon/gdm.c:3481
+#: ../daemon/mdm.c:3481
 msgid "Unknown server type requested; using standard server."
 msgstr ""
 
-#: ../daemon/gdm.c:3485
+#: ../daemon/mdm.c:3485
 #, c-format
 msgid ""
 "Requested server %s not allowed to be used for flexible servers; using "
@@ -867,7 +867,7 @@ msgstr ""
 #, c-format
 msgid ""
 "There already appears to be an X server running on display %s.  Should "
-"another display number by tried?  Answering no will cause GDM to attempt "
+"another display number by tried?  Answering no will cause MDM to attempt "
 "starting the server on %s again.%s"
 msgstr ""
 
@@ -1012,7 +1012,7 @@ msgid ""
 "Please contact your system administrator\n"
 "or check your syslog to diagnose.\n"
 "In the meantime this display will be\n"
-"disabled.  Please restart GDM when\n"
+"disabled.  Please restart MDM when\n"
 "the problem is corrected."
 msgstr ""
 
@@ -1057,13 +1057,13 @@ msgstr ""
 
 #: ../daemon/slave.c:2541 ../daemon/slave.c:2546
 #, c-format
-msgid "%s: Can't init pipe to gdmgreeter"
+msgid "%s: Can't init pipe to mdmgreeter"
 msgstr ""
 
 #: ../daemon/slave.c:2688
 msgid ""
 "No servers were defined in the configuration file and XDMCP was disabled.  "
-"This can only be a configuration error.  GDM has started a single server for "
+"This can only be a configuration error.  MDM has started a single server for "
 "you.  You should log in and fix the configuration.  Note that automatic and "
 "timed logins are disabled now."
 msgstr ""
@@ -1114,7 +1114,7 @@ msgstr ""
 
 #: ../daemon/slave.c:2779
 #, c-format
-msgid "%s: Can't fork gdmgreeter process"
+msgid "%s: Can't fork mdmgreeter process"
 msgstr ""
 
 #: ../daemon/slave.c:2859
@@ -1124,7 +1124,7 @@ msgstr ""
 
 #: ../daemon/slave.c:3037
 #, c-format
-msgid "%s: Can't init pipe to gdmchooser"
+msgid "%s: Can't init pipe to mdmchooser"
 msgstr ""
 
 #: ../daemon/slave.c:3146
@@ -1140,7 +1140,7 @@ msgstr ""
 
 #: ../daemon/slave.c:3153
 #, c-format
-msgid "%s: Can't fork gdmchooser process"
+msgid "%s: Can't fork mdmchooser process"
 msgstr ""
 
 #: ../daemon/slave.c:3386
@@ -1304,7 +1304,7 @@ msgstr ""
 
 #: ../daemon/slave.c:4274
 msgid ""
-"GDM could not write to your authorization file.  This could mean that you "
+"MDM could not write to your authorization file.  This could mean that you "
 "are out of disk space or that your home directory could not be opened for "
 "writing.  In any case, it is not possible to log in.  Please contact your "
 "system administrator"
@@ -1328,7 +1328,7 @@ msgid "View details (~/.xsession-errors file)"
 msgstr ""
 
 #: ../daemon/slave.c:4620
-msgid "GDM detected a halt or restart in progress."
+msgid "MDM detected a halt or restart in progress."
 msgstr ""
 
 #: ../daemon/slave.c:4996
@@ -1383,15 +1383,15 @@ msgstr "කරුණාකර ඔබගේ පරිශිලක නම ඇත�
 #: ../daemon/verify-crypt.c:129 ../daemon/verify-pam.c:449
 #: ../daemon/verify-pam.c:450 ../daemon/verify-pam.c:451
 #: ../daemon/verify-pam.c:532 ../daemon/verify-pam.c:889
-#: ../daemon/verify-shadow.c:131 ../gui/gdmlogin.c:873 ../gui/gdmlogin.c:887
-#: ../gui/gdmlogin.c:1355 ../gui/gdmlogin.c:1851 ../gui/greeter/greeter.c:247
+#: ../daemon/verify-shadow.c:131 ../gui/mdmlogin.c:873 ../gui/mdmlogin.c:887
+#: ../gui/mdmlogin.c:1355 ../gui/mdmlogin.c:1851 ../gui/greeter/greeter.c:247
 #: ../gui/greeter/greeter_parser.c:401
 msgid "Username:"
 msgstr "පරිශිලක නම:"
 
 #: ../daemon/verify-crypt.c:167 ../daemon/verify-pam.c:452
 #: ../daemon/verify-pam.c:453 ../daemon/verify-pam.c:563
-#: ../daemon/verify-shadow.c:188 ../gui/gdmlogin.c:1390
+#: ../daemon/verify-shadow.c:188 ../gui/mdmlogin.c:1390
 msgid "Password:"
 msgstr "රහස්පදය:"
 
@@ -1648,7 +1648,7 @@ msgid ""
 msgstr ""
 
 #: ../daemon/verify-pam.c:1606 ../daemon/verify-pam.c:1608
-msgid "Can't find PAM configuration for GDM."
+msgid "Can't find PAM configuration for MDM."
 msgstr ""
 
 #: ../daemon/xdmcp.c:85
@@ -1664,106 +1664,106 @@ msgstr ""
 msgid "%s: No XDMCP support"
 msgstr "%s: XDMCP සහය නැත"
 
-#: ../gui/gdmXnestchooser.c:175 ../gui/gdmXnestchooser.c:183
+#: ../gui/mdmXnestchooser.c:175 ../gui/mdmXnestchooser.c:183
 msgid "Xnest command line"
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:175 ../gui/gdmXnestchooser.c:183
+#: ../gui/mdmXnestchooser.c:175 ../gui/mdmXnestchooser.c:183
 msgid "STRING"
 msgstr "STRING"
 
-#: ../gui/gdmXnestchooser.c:176 ../gui/gdmXnestchooser.c:184
+#: ../gui/mdmXnestchooser.c:176 ../gui/mdmXnestchooser.c:184
 msgid "Extra options for Xnest"
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:176 ../gui/gdmXnestchooser.c:184
+#: ../gui/mdmXnestchooser.c:176 ../gui/mdmXnestchooser.c:184
 msgid "OPTIONS"
 msgstr "OPTIONS"
 
-#: ../gui/gdmXnestchooser.c:177 ../gui/gdmXnestchooser.c:188
+#: ../gui/mdmXnestchooser.c:177 ../gui/mdmXnestchooser.c:188
 msgid "Run in background"
 msgstr "පසුබිමේ ක්‍රියාත්මක කරන්න"
 
-#: ../gui/gdmXnestchooser.c:185
+#: ../gui/mdmXnestchooser.c:185
 msgid "Just run Xnest, no query (no chooser)"
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:186
+#: ../gui/mdmXnestchooser.c:186
 msgid "Do direct query instead of indirect (chooser)"
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:187
+#: ../gui/mdmXnestchooser.c:187
 msgid "Run broadcast instead of indirect (chooser)"
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:189
-msgid "Don't check for running GDM"
+#: ../gui/mdmXnestchooser.c:189
+msgid "Don't check for running MDM"
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:485
-msgid "- Nested gdm login chooser"
+#: ../gui/mdmXnestchooser.c:485
+msgid "- Nested mdm login chooser"
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:493
-msgid "- Nested gdm login"
+#: ../gui/mdmXnestchooser.c:493
+msgid "- Nested mdm login"
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:523
+#: ../gui/mdmXnestchooser.c:523
 msgid "Xnest doesn't exist."
 msgstr "Xnest භාවිතය සඳහා නැත."
 
-#: ../gui/gdmXnestchooser.c:524
+#: ../gui/mdmXnestchooser.c:524
 msgid "Please ask your system administrator to install it."
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:548
+#: ../gui/mdmXnestchooser.c:548
 msgid "Indirect XDMCP is not enabled"
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:549 ../gui/gdmXnestchooser.c:566
+#: ../gui/mdmXnestchooser.c:549 ../gui/mdmXnestchooser.c:566
 msgid "Please ask your system administrator to enable this feature."
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:565
+#: ../gui/mdmXnestchooser.c:565
 msgid "XDMCP is not enabled"
 msgstr "XDMCPසක්‍රීයව නැත"
 
-#: ../gui/gdmXnestchooser.c:596
-msgid "GDM is not running"
-msgstr "GDM ක්‍රියාත්මක වී නැත"
+#: ../gui/mdmXnestchooser.c:596
+msgid "MDM is not running"
+msgstr "MDM ක්‍රියාත්මක වී නැත"
 
-#: ../gui/gdmXnestchooser.c:597
+#: ../gui/mdmXnestchooser.c:597
 msgid "Please ask your system administrator to start it."
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:613
+#: ../gui/mdmXnestchooser.c:613
 msgid "Could not find a free display number"
 msgstr ""
 
-#: ../gui/gdmchooser.c:86
+#: ../gui/mdmchooser.c:86
 msgid "Please wait: scanning local network..."
 msgstr ""
 
-#: ../gui/gdmchooser.c:87
+#: ../gui/mdmchooser.c:87
 msgid "No serving hosts were found."
 msgstr ""
 
-#: ../gui/gdmchooser.c:88
+#: ../gui/mdmchooser.c:88
 msgid "Choose a ho_st to connect to:"
 msgstr "සම්බන්ධ වීම සදහා ධාරකයක් තෝරන්න (_s):"
 
-#: ../gui/gdmchooser.c:645
+#: ../gui/mdmchooser.c:645
 #, c-format
 msgid ""
 "The host \"%s\" is not willing to support a login session right now.  Please "
 "try again later."
 msgstr ""
 
-#: ../gui/gdmchooser.c:654
+#: ../gui/mdmchooser.c:654
 msgid "Cannot connect to remote server"
 msgstr "දුරස්ථ සේවාදායකයට සම්බන්ද විය නොහැක"
 
-#: ../gui/gdmchooser.c:1305
+#: ../gui/mdmchooser.c:1305
 #, c-format
 msgid ""
 "Did not receive any response from host \"%s\" in %d seconds.  Perhaps the "
@@ -1771,20 +1771,20 @@ msgid ""
 "now.  Please try again later."
 msgstr ""
 
-#: ../gui/gdmchooser.c:1317
+#: ../gui/mdmchooser.c:1317
 msgid "Did not receive response from server"
 msgstr "සේවාදායකයෙන් ප්‍රතිචාරයක් නැත"
 
-#: ../gui/gdmchooser.c:1419
+#: ../gui/mdmchooser.c:1419
 #, c-format
 msgid "Cannot find the host \"%s\". Perhaps you have mistyped it."
 msgstr ""
 
-#: ../gui/gdmchooser.c:1427
+#: ../gui/mdmchooser.c:1427
 msgid "Cannot find host"
 msgstr "ධාරකය සොයාගත නොහැක"
 
-#: ../gui/gdmchooser.c:1628
+#: ../gui/mdmchooser.c:1628
 msgid ""
 "The main area of this application shows the hosts on the local network that "
 "have \"XDMCP\" enabled. This allows users to login remotely to other "
@@ -1794,182 +1794,182 @@ msgid ""
 "have selected a host click \"Connect\" to open a session to that computer."
 msgstr ""
 
-#: ../gui/gdmchooser.c:1904
+#: ../gui/mdmchooser.c:1904
 msgid "Socket for xdm communication"
 msgstr ""
 
-#: ../gui/gdmchooser.c:1904
+#: ../gui/mdmchooser.c:1904
 msgid "SOCKET"
 msgstr "SOCKET"
 
-#: ../gui/gdmchooser.c:1906
+#: ../gui/mdmchooser.c:1906
 msgid "Client address to return in response to xdm"
 msgstr ""
 
-#: ../gui/gdmchooser.c:1906
+#: ../gui/mdmchooser.c:1906
 msgid "ADDRESS"
 msgstr "ADDRESS"
 
-#: ../gui/gdmchooser.c:1908
+#: ../gui/mdmchooser.c:1908
 msgid "Connection type to return in response to xdm"
 msgstr ""
 
-#: ../gui/gdmchooser.c:1908
+#: ../gui/mdmchooser.c:1908
 msgid "TYPE"
 msgstr "TYPE"
 
-#: ../gui/gdmchooser.c:1966
-msgid "- gdm login chooser"
+#: ../gui/mdmchooser.c:1966
+msgid "- mdm login chooser"
 msgstr ""
 
-#: ../gui/gdmchooser.c:2031
+#: ../gui/mdmchooser.c:2031
 #, c-format
 msgid ""
 "The chooser version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded GDM.  Please restart the GDM daemon or the computer."
+"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
 msgstr ""
 
-#: ../gui/gdmchooser.c:2041
+#: ../gui/mdmchooser.c:2041
 msgid "Cannot run chooser"
 msgstr ""
 
 #. EOF
-#: ../gui/gdmchooser.glade.h:1
+#: ../gui/mdmchooser.glade.h:1
 msgid "A_dd host: "
 msgstr "ධරකය එක්කරන්න (_d): "
 
-#: ../gui/gdmchooser.glade.h:2
+#: ../gui/mdmchooser.glade.h:2
 msgid "C_onnect"
 msgstr "සම්බන්ධ වන්න (_o)"
 
-#: ../gui/gdmchooser.glade.h:3
+#: ../gui/mdmchooser.glade.h:3
 msgid "Exit the application"
 msgstr ""
 
-#: ../gui/gdmchooser.glade.h:4
+#: ../gui/mdmchooser.glade.h:4
 msgid "How to use this application"
 msgstr ""
 
-#: ../gui/gdmchooser.glade.h:5
+#: ../gui/mdmchooser.glade.h:5
 msgid "Login Host Chooser"
 msgstr ""
 
-#: ../gui/gdmchooser.glade.h:6
+#: ../gui/mdmchooser.glade.h:6
 msgid "Open a session to the selected host"
 msgstr ""
 
-#: ../gui/gdmchooser.glade.h:7
+#: ../gui/mdmchooser.glade.h:7
 msgid "Probe the network"
 msgstr ""
 
-#: ../gui/gdmchooser.glade.h:8
+#: ../gui/mdmchooser.glade.h:8
 msgid "Query and add this host to the above list"
 msgstr ""
 
-#: ../gui/gdmchooser.glade.h:9
+#: ../gui/mdmchooser.glade.h:9
 msgid "Status"
 msgstr "තත්වය"
 
-#: ../gui/gdmchooser.glade.h:10
+#: ../gui/mdmchooser.glade.h:10
 msgid "_Add"
 msgstr "එක් කරන්න (_A)"
 
-#: ../gui/gdmcomm.c:628
-msgid "GDM (GNOME Display Manager) is not running."
+#: ../gui/mdmcomm.c:628
+msgid "MDM (GNOME Display Manager) is not running."
 msgstr ""
 
-#: ../gui/gdmcomm.c:630
+#: ../gui/mdmcomm.c:630
 msgid ""
 "You might be using a different display manager, such as KDM (KDE Display "
 "Manager), CDE login (dtlogin), or xdm. If you wish to use this feature, then "
-"your system will need to be configured to use GDM instead."
+"your system will need to be configured to use MDM instead."
 msgstr ""
 
-#: ../gui/gdmcomm.c:653 ../gui/gdmflexiserver.c:844
-msgid "Cannot communicate with GDM (The GNOME Display Manager)"
+#: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:844
+msgid "Cannot communicate with MDM (The GNOME Display Manager)"
 msgstr ""
 
-#: ../gui/gdmcomm.c:655 ../gui/gdmflexiserver.c:846
-msgid "Perhaps you have an old version of GDM running."
+#: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:846
+msgid "Perhaps you have an old version of MDM running."
 msgstr ""
 
-#: ../gui/gdmcomm.c:672 ../gui/gdmcomm.c:675
-msgid "Cannot communicate with GDM. Perhaps you have an old version running."
+#: ../gui/mdmcomm.c:672 ../gui/mdmcomm.c:675
+msgid "Cannot communicate with MDM. Perhaps you have an old version running."
 msgstr ""
 
-#: ../gui/gdmcomm.c:678
+#: ../gui/mdmcomm.c:678
 msgid "The allowed limit of flexible X servers reached."
 msgstr ""
 
-#: ../gui/gdmcomm.c:680
+#: ../gui/mdmcomm.c:680
 msgid "There were errors trying to start the X server."
 msgstr ""
 
-#: ../gui/gdmcomm.c:682
+#: ../gui/mdmcomm.c:682
 msgid "The X server failed.  Perhaps it is not configured well."
 msgstr ""
 
-#: ../gui/gdmcomm.c:685
+#: ../gui/mdmcomm.c:685
 msgid "Too many X sessions running."
 msgstr ""
 
-#: ../gui/gdmcomm.c:687
+#: ../gui/mdmcomm.c:687
 msgid ""
 "The nested X server cannot connect to your current X server.  You may be "
 "missing an X authorization file."
 msgstr ""
 
-#: ../gui/gdmcomm.c:692
+#: ../gui/mdmcomm.c:692
 msgid ""
-"The nested X server is not available, or GDM is badly configured.\n"
+"The nested X server is not available, or MDM is badly configured.\n"
 "Please install the Xnest package in order to use the nested login."
 msgstr ""
 
-#: ../gui/gdmcomm.c:697
-msgid "The X server is not available. GDM may be misconfigured."
+#: ../gui/mdmcomm.c:697
+msgid "The X server is not available. MDM may be misconfigured."
 msgstr ""
 
-#: ../gui/gdmcomm.c:700
+#: ../gui/mdmcomm.c:700
 msgid ""
 "Trying to set an unknown logout action, or trying to set a logout action "
 "which is not available."
 msgstr ""
 
-#: ../gui/gdmcomm.c:703
+#: ../gui/mdmcomm.c:703
 msgid "Virtual terminals not supported."
 msgstr ""
 
-#: ../gui/gdmcomm.c:705
+#: ../gui/mdmcomm.c:705
 msgid "Trying to change to an invalid virtual terminal number."
 msgstr ""
 
-#: ../gui/gdmcomm.c:707
+#: ../gui/mdmcomm.c:707
 msgid "Trying to update an unsupported configuration key."
 msgstr ""
 
-#: ../gui/gdmcomm.c:709
+#: ../gui/mdmcomm.c:709
 msgid ""
 "You do not seem to have the authentication needed for this operation.  "
 "Perhaps your .Xauthority file is not set up correctly."
 msgstr ""
 
-#: ../gui/gdmcomm.c:713
-msgid "Too many messages were sent to GDM and it hung up on us."
+#: ../gui/mdmcomm.c:713
+msgid "Too many messages were sent to MDM and it hung up on us."
 msgstr ""
 
-#: ../gui/gdmcomm.c:716
+#: ../gui/mdmcomm.c:716
 msgid "Unknown error occurred."
 msgstr "නොදන්නා දෝෂයක් හටගැනිණි."
 
-#: ../gui/gdmcommon.c:700
+#: ../gui/mdmcommon.c:700
 msgid "The accessibility registry was not found."
 msgstr ""
 
-#: ../gui/gdmcommon.c:723
+#: ../gui/mdmcommon.c:723
 msgid "The accessibility registry could not be started."
 msgstr ""
 
-#: ../gui/gdmcommon.c:785
+#: ../gui/mdmcommon.c:785
 msgid "%a %b %d, %H:%M"
 msgstr "%a %b %d, %H:%M"
 
@@ -1977,806 +1977,806 @@ msgstr "%a %b %d, %H:%M"
 #. %H:%M if your language does not have AM and PM
 #. equivalent.  Note: %l is a strftime option for
 #. 12-hour clock format
-#: ../gui/gdmcommon.c:791
+#: ../gui/mdmcommon.c:791
 msgid "%a %b %d, %l:%M %p"
 msgstr "%a %b %d, %l:%M %p"
 
-#: ../gui/gdmcommon.c:891
+#: ../gui/mdmcommon.c:891
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "තත්පර %d යි"
 msgstr[1] "තත්පර %d යි"
 
-#: ../gui/gdmdynamic.c:54
+#: ../gui/mdmdynamic.c:54
 #, c-format
 msgid "Usage: %s [-b][-v] and one of the following:\n"
 msgstr ""
 
-#: ../gui/gdmdynamic.c:55
+#: ../gui/mdmdynamic.c:55
 #, c-format
 msgid "\t-a display\n"
 msgstr "\t-a සංදර්ශනය\n"
 
-#: ../gui/gdmdynamic.c:56
+#: ../gui/mdmdynamic.c:56
 #, c-format
 msgid "\t-r display\n"
 msgstr "\t-r සංදර්ශනය\n"
 
-#: ../gui/gdmdynamic.c:57
+#: ../gui/mdmdynamic.c:57
 #, c-format
 msgid "\t-d display\n"
 msgstr "\t-d සංදර්ශනය\n"
 
-#: ../gui/gdmdynamic.c:58
+#: ../gui/mdmdynamic.c:58
 #, c-format
 msgid "\t-l [server_name]\n"
 msgstr ""
 
-#: ../gui/gdmdynamic.c:59
+#: ../gui/mdmdynamic.c:59
 #, c-format
 msgid "\t-t maximum tries to connect (default 15)\n"
 msgstr ""
 
-#: ../gui/gdmdynamic.c:60
+#: ../gui/mdmdynamic.c:60
 #, c-format
 msgid "\t-s sleep value (default 8)\n"
 msgstr ""
 
-#: ../gui/gdmdynamic.c:237
+#: ../gui/mdmdynamic.c:237
 msgid "Server busy, will sleep.\n"
 msgstr ""
 
-#: ../gui/gdmdynamic.c:327
+#: ../gui/mdmdynamic.c:327
 #, c-format
 msgid "Connection to daemon failed, sleeping for %d seconds.  Retry %d of %d\n"
 msgstr ""
 
 #. This is a serious error, so print a message even if verbose is off
-#: ../gui/gdmdynamic.c:350
+#: ../gui/mdmdynamic.c:350
 #, c-format
 msgid "Failed to connect to server after %d retries\n"
 msgstr ""
 
-#: ../gui/gdmflexiserver-xnest.desktop.in.in.h:1
+#: ../gui/mdmflexiserver-xnest.desktop.in.in.h:1
 msgid "Login as another user inside a nested window"
 msgstr ""
 
-#: ../gui/gdmflexiserver-xnest.desktop.in.in.h:2
+#: ../gui/mdmflexiserver-xnest.desktop.in.in.h:2
 msgid "New Login in a Nested Window"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:68
-msgid "Send the specified protocol command to GDM"
+#: ../gui/mdmflexiserver.c:68
+msgid "Send the specified protocol command to MDM"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:68
+#: ../gui/mdmflexiserver.c:68
 msgid "COMMAND"
 msgstr "COMMAND"
 
-#: ../gui/gdmflexiserver.c:69
+#: ../gui/mdmflexiserver.c:69
 msgid "Xnest mode"
 msgstr "Xnest ආකාරය"
 
-#: ../gui/gdmflexiserver.c:70
+#: ../gui/mdmflexiserver.c:70
 msgid "Do not lock current screen"
 msgstr "දැනට භාවිතාවන තිරය අගුලු නොදමන්න"
 
-#: ../gui/gdmflexiserver.c:71
+#: ../gui/mdmflexiserver.c:71
 msgid "Debugging output"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:72
+#: ../gui/mdmflexiserver.c:72
 msgid "Authenticate before running --command"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:73
+#: ../gui/mdmflexiserver.c:73
 msgid "Start new flexible session; do not show popup"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:156
+#: ../gui/mdmflexiserver.c:156
 msgid "Cannot change display"
 msgstr "සංදර්ශනය වෙනස් කළ නොහැක"
 
-#: ../gui/gdmflexiserver.c:241
+#: ../gui/mdmflexiserver.c:241
 msgid "Nobody"
 msgstr "කිසිවකු නැත"
 
-#: ../gui/gdmflexiserver.c:276
+#: ../gui/mdmflexiserver.c:276
 #, c-format
 msgid "Display %s on virtual terminal %d"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:281
+#: ../gui/mdmflexiserver.c:281
 #, c-format
 msgid "Nested display %s on virtual terminal %d"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:311 ../gui/gdmlogin.c:2465
+#: ../gui/mdmflexiserver.c:311 ../gui/mdmlogin.c:2465
 #: ../gui/greeter/greeter_item_ulist.c:317
 msgid "Username"
 msgstr "පරිශීලක නම"
 
-#: ../gui/gdmflexiserver.c:320
+#: ../gui/mdmflexiserver.c:320
 msgid "Display"
 msgstr "සංදර්ශනය"
 
-#: ../gui/gdmflexiserver.c:431
+#: ../gui/mdmflexiserver.c:431
 msgid "Open Displays"
 msgstr "සංදර්ශක විවෘත කරන්න"
 
 #. parent
 #. flags
-#: ../gui/gdmflexiserver.c:434
+#: ../gui/mdmflexiserver.c:434
 msgid "_Open New Display"
 msgstr "නව සංදර්ශකයක් විවෘත කරන්න (_O)"
 
-#: ../gui/gdmflexiserver.c:436
+#: ../gui/mdmflexiserver.c:436
 msgid "Change to _Existing Display"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:444
+#: ../gui/mdmflexiserver.c:444
 msgid ""
 "There are some displays already open.  You can select one from the list "
 "below or open a new one."
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:626
+#: ../gui/mdmflexiserver.c:626
 msgid "Choose server"
 msgstr "සේවාදායකය තෝරන්න"
 
-#: ../gui/gdmflexiserver.c:637
+#: ../gui/mdmflexiserver.c:637
 msgid "Choose the X server to start"
 msgstr "ඇරඹුම සඳහා X සේවාදායකය තෝරන්න"
 
-#: ../gui/gdmflexiserver.c:643
+#: ../gui/mdmflexiserver.c:643
 msgid "Standard server"
 msgstr "සම්මත සේවාදායකය"
 
-#: ../gui/gdmflexiserver.c:779
-msgid "Error: GDM (GNOME Display Manager) is not running."
+#: ../gui/mdmflexiserver.c:779
+msgid "Error: MDM (GNOME Display Manager) is not running."
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:780
+#: ../gui/mdmflexiserver.c:780
 msgid "You might be using a different display manager."
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:889
+#: ../gui/mdmflexiserver.c:889
 msgid "You do not seem to have the authentication needed for this operation"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:892
+#: ../gui/mdmflexiserver.c:892
 msgid "Perhaps your .Xauthority file is not set up correctly."
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:917
+#: ../gui/mdmflexiserver.c:917
 msgid "You do not seem to be logged in on the console"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:919
+#: ../gui/mdmflexiserver.c:919
 msgid "Starting a new login only works correctly on the console."
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:966
+#: ../gui/mdmflexiserver.c:966
 msgid "Cannot start new display"
 msgstr "නව සංදර්ශකයක් ඇරඹිය නොහැක"
 
-#: ../gui/gdmflexiserver.desktop.in.h:1
+#: ../gui/mdmflexiserver.desktop.in.h:1
 msgid "Log in as another user without logging out"
 msgstr ""
 
-#: ../gui/gdmflexiserver.desktop.in.h:2
+#: ../gui/mdmflexiserver.desktop.in.h:2
 msgid "New Login"
 msgstr "නව පිවිසුම"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:74
+#: ../gui/mdmlanguages.c:74
 msgid "A-M|Afrikaans"
 msgstr "අප්‍රිකානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:76
+#: ../gui/mdmlanguages.c:76
 msgid "A-M|Albanian"
 msgstr "ඇල්බේනියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:78
+#: ../gui/mdmlanguages.c:78
 msgid "A-M|Amharic"
 msgstr "ඇම්හරික්"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:80
+#: ../gui/mdmlanguages.c:80
 msgid "A-M|Arabic (Egypt)"
 msgstr "අරාබි (ඊජිප්තු)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:82
+#: ../gui/mdmlanguages.c:82
 msgid "A-M|Arabic (Lebanon)"
 msgstr "අරාබි (ලෙබනන්)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:84
+#: ../gui/mdmlanguages.c:84
 msgid "A-M|Arabic (Saudi Arabia)"
 msgstr "අරාබි (සවුදි අරාබි)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:86
+#: ../gui/mdmlanguages.c:86
 msgid "A-M|Armenian"
 msgstr "අර්මෙනියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:88
+#: ../gui/mdmlanguages.c:88
 msgid "A-M|Azerbaijani"
 msgstr "අසාබයිජානියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:90
+#: ../gui/mdmlanguages.c:90
 msgid "A-M|Basque"
 msgstr "බස්කෝ"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:92
+#: ../gui/mdmlanguages.c:92
 msgid "A-M|Belarusian"
 msgstr "බෙලතුසියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:94
+#: ../gui/mdmlanguages.c:94
 msgid "A-M|Bengali"
 msgstr "බෙංගාලි"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:96
+#: ../gui/mdmlanguages.c:96
 msgid "A-M|Bengali (India)"
 msgstr "බෙංගාලි (ඉංදියාව)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:98
+#: ../gui/mdmlanguages.c:98
 msgid "A-M|Bulgarian"
 msgstr "බල්ගේරියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:100
+#: ../gui/mdmlanguages.c:100
 msgid "A-M|Bosnian"
 msgstr "බොස්නියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:102
+#: ../gui/mdmlanguages.c:102
 msgid "A-M|Catalan"
 msgstr "කතලන්"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:104
+#: ../gui/mdmlanguages.c:104
 msgid "A-M|Chinese (China Mainland)"
 msgstr "වීන (චීන ප්‍රධානදේශය)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:106
+#: ../gui/mdmlanguages.c:106
 msgid "A-M|Chinese (Hong Kong)"
 msgstr "චීන (හොංකොංග්)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:108
+#: ../gui/mdmlanguages.c:108
 msgid "A-M|Chinese (Singapore)"
 msgstr "චීන (සිංගප්පුරුව)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:110
+#: ../gui/mdmlanguages.c:110
 msgid "A-M|Chinese (Taiwan)"
 msgstr "චීන (තායිවාන)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:112
+#: ../gui/mdmlanguages.c:112
 msgid "A-M|Croatian"
 msgstr "ක්‍රෝඑශියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:114
+#: ../gui/mdmlanguages.c:114
 msgid "A-M|Czech"
 msgstr "ක්සෙච්"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:116
+#: ../gui/mdmlanguages.c:116
 msgid "A-M|Danish"
 msgstr ""
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:118
+#: ../gui/mdmlanguages.c:118
 msgid "A-M|Dutch"
 msgstr ""
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:120
+#: ../gui/mdmlanguages.c:120
 msgid "A-M|Dutch (Belgium)"
 msgstr ""
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:122
+#: ../gui/mdmlanguages.c:122
 msgid "A-M|English (USA)"
 msgstr "ඉංග්‍රීසි (ඒ.ජ)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:124
+#: ../gui/mdmlanguages.c:124
 msgid "A-M|English (Australia)"
 msgstr "ඉංග්‍රීසි (ඔස්ට්‍රේලියාව)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:126
+#: ../gui/mdmlanguages.c:126
 msgid "A-M|English (UK)"
 msgstr "ඉංග්‍රීසි (ඒ.රාජධානිය)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:128
+#: ../gui/mdmlanguages.c:128
 msgid "A-M|English (Canada)"
 msgstr "ඉංග්‍රීසි (කැනඩාව)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:130
+#: ../gui/mdmlanguages.c:130
 msgid "A-M|English (Ireland)"
 msgstr "ඉංග්‍රීසි (ඇයර්ලන්තය)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:132
+#: ../gui/mdmlanguages.c:132
 msgid "A-M|English (Denmark)"
 msgstr "ඉංග්‍රීසි (ඩෙන්මාර්කය)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:134
+#: ../gui/mdmlanguages.c:134
 msgid "A-M|English (South Africa)"
 msgstr "ඉංග්‍රීසි (දකුණු අප්‍රිකාව)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:136
+#: ../gui/mdmlanguages.c:136
 msgid "A-M|English (Malta)"
 msgstr "ඉංග්‍රීසි (මොල්ටාව)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:138
+#: ../gui/mdmlanguages.c:138
 msgid "A-M|English (New Zealand)"
 msgstr "ඉංග්‍රීසි (නවසිලන්තය)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:140
+#: ../gui/mdmlanguages.c:140
 msgid "A-M|Estonian"
 msgstr "එස්ටොනියාව"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:142
+#: ../gui/mdmlanguages.c:142
 msgid "A-M|Finnish"
 msgstr ""
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:144
+#: ../gui/mdmlanguages.c:144
 msgid "A-M|French"
 msgstr "ප්‍රංශ"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:146
+#: ../gui/mdmlanguages.c:146
 msgid "A-M|French (Belgium)"
 msgstr "ප්‍රංශ (බෙල්ජියම)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:148
+#: ../gui/mdmlanguages.c:148
 msgid "A-M|French (Canada)"
 msgstr "ප්‍රංශ (කැනඩාව)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:150
+#: ../gui/mdmlanguages.c:150
 msgid "A-M|French (Luxembourg)"
 msgstr "ප්‍රංශ (ලක්සෙම්බර්ග්)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:152
+#: ../gui/mdmlanguages.c:152
 msgid "A-M|French (Switzerland)"
 msgstr "ප්‍රංශ (ස්විට්සර්ලන්තය)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:154
+#: ../gui/mdmlanguages.c:154
 msgid "A-M|Galician"
 msgstr "ගලිසියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:156
+#: ../gui/mdmlanguages.c:156
 msgid "A-M|German"
 msgstr "ජර්මානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:158
+#: ../gui/mdmlanguages.c:158
 msgid "A-M|German (Austria)"
 msgstr "ජර්මානු (ඔස්ට්‍රියාව)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:160
+#: ../gui/mdmlanguages.c:160
 msgid "A-M|German (Luxembourg)"
 msgstr "ජර්මානු (ලක්සෙම්බර්ග්)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:162
+#: ../gui/mdmlanguages.c:162
 msgid "A-M|German (Switzerland)"
 msgstr "ජර්මානු (ස්විට්සර්ලන්තය)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:164
+#: ../gui/mdmlanguages.c:164
 msgid "A-M|Greek"
 msgstr "ග්‍රීක"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:166
+#: ../gui/mdmlanguages.c:166
 msgid "A-M|Greek (Cyprus)"
 msgstr "ග්‍රීක (සයිප්‍රස්)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:168
+#: ../gui/mdmlanguages.c:168
 msgid "A-M|Gujarati"
 msgstr "ගුජරාති"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:170 ../gui/gdmlanguages.c:172
+#: ../gui/mdmlanguages.c:170 ../gui/mdmlanguages.c:172
 msgid "A-M|Hebrew"
 msgstr "හේබ්‍රව්"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:174
+#: ../gui/mdmlanguages.c:174
 msgid "A-M|Hindi"
 msgstr "හිංදි"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:176
+#: ../gui/mdmlanguages.c:176
 msgid "A-M|Hungarian"
 msgstr "හංගේරියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:178
+#: ../gui/mdmlanguages.c:178
 msgid "A-M|Icelandic"
 msgstr "අයිස්ලන්ත"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:180
+#: ../gui/mdmlanguages.c:180
 msgid "A-M|Indonesian"
 msgstr "ඉන්දුනිසියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:182
+#: ../gui/mdmlanguages.c:182
 msgid "A-M|Interlingua"
 msgstr "ඉන්ටලින්ගුවා"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:184
+#: ../gui/mdmlanguages.c:184
 msgid "A-M|Irish"
 msgstr ""
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:186
+#: ../gui/mdmlanguages.c:186
 msgid "A-M|Italian"
 msgstr "ඉතාලි"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:188
+#: ../gui/mdmlanguages.c:188
 msgid "A-M|Japanese"
 msgstr "ජපන්"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:190
+#: ../gui/mdmlanguages.c:190
 msgid "A-M|Kannada"
 msgstr "කන්නඩා"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:192
+#: ../gui/mdmlanguages.c:192
 msgid "A-M|Kinyarwanda"
 msgstr "කිනියර්වානඩා"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:194
+#: ../gui/mdmlanguages.c:194
 msgid "A-M|Korean"
 msgstr "කොරියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:196
+#: ../gui/mdmlanguages.c:196
 msgid "A-M|Latvian"
 msgstr "ලත්නියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:198
+#: ../gui/mdmlanguages.c:198
 msgid "A-M|Lithuanian"
 msgstr "ලිතුවේනියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:200
+#: ../gui/mdmlanguages.c:200
 msgid "A-M|Macedonian"
 msgstr "මැසඩොනියානු"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:202
+#: ../gui/mdmlanguages.c:202
 msgid "A-M|Malay"
 msgstr "මැලේ"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:204
+#: ../gui/mdmlanguages.c:204
 msgid "A-M|Malayalam"
 msgstr "මලයාලම්"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:206
+#: ../gui/mdmlanguages.c:206
 msgid "A-M|Maltese"
 msgstr "මාල්ටෙස්"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:208
+#: ../gui/mdmlanguages.c:208
 msgid "A-M|Marathi"
 msgstr "මරාති"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:210
+#: ../gui/mdmlanguages.c:210
 msgid "A-M|Mongolian"
 msgstr "මොන්ගෝලියානු"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:212
+#: ../gui/mdmlanguages.c:212
 msgid "N-Z|Northern Sotho"
 msgstr "උතුරු සෝතෝ"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:214
+#: ../gui/mdmlanguages.c:214
 msgid "N-Z|Norwegian (bokmal)"
 msgstr "නොර්වෙජියානු (බොක්මාල්)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:216
+#: ../gui/mdmlanguages.c:216
 msgid "N-Z|Norwegian (nynorsk)"
 msgstr "නොර්වෙජියානු (නිනොර්ස්ක්)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:218
+#: ../gui/mdmlanguages.c:218
 msgid "N-Z|Oriya"
 msgstr "ඔරියා"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:220
+#: ../gui/mdmlanguages.c:220
 msgid "N-Z|Punjabi"
 msgstr "පන්ජාබි"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:222
+#: ../gui/mdmlanguages.c:222
 msgid "N-Z|Persian"
 msgstr "පර්සියන්"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:224
+#: ../gui/mdmlanguages.c:224
 msgid "N-Z|Polish"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:226
+#: ../gui/mdmlanguages.c:226
 msgid "N-Z|Portuguese"
 msgstr "පෘතුගීසි"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:228
+#: ../gui/mdmlanguages.c:228
 msgid "N-Z|Portuguese (Brazilian)"
 msgstr "පෘතුගීසි (බ්‍රසිලියානු)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:230
+#: ../gui/mdmlanguages.c:230
 msgid "N-Z|Romanian"
 msgstr "රොමෙනියානු"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:232
+#: ../gui/mdmlanguages.c:232
 msgid "N-Z|Russian"
 msgstr "රුසියානු"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:234
+#: ../gui/mdmlanguages.c:234
 msgid "N-Z|Serbian"
 msgstr "සර්බියානු"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:236
+#: ../gui/mdmlanguages.c:236
 msgid "N-Z|Serbian (Serbia & Montenegro)"
 msgstr "සර්බියානු (සර්බියාව සහ මොන්ටෙනෙගෝව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:238
+#: ../gui/mdmlanguages.c:238
 msgid "N-Z|Serbian (Montenegro)"
 msgstr "සර්බියානු (මොන්ටෙනෙගෝව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:240
+#: ../gui/mdmlanguages.c:240
 msgid "N-Z|Serbian (Serbia)"
 msgstr "සර්බියානු (සර්බියාව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:242
+#: ../gui/mdmlanguages.c:242
 msgid "N-Z|Serbian (Latin)"
 msgstr "සර්බියානු (ලතින්)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:244
+#: ../gui/mdmlanguages.c:244
 msgid "N-Z|Serbian (Jekavian)"
 msgstr "සර්බියානු (ජෙකාවියානු)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:246
+#: ../gui/mdmlanguages.c:246
 msgid "N-Z|Serbian (Bosnia)"
 msgstr "සර්බියානු (බොස්නියාව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:248
+#: ../gui/mdmlanguages.c:248
 msgid "N-Z|Slovak"
 msgstr "ස්ලෝවැකියානු"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:250
+#: ../gui/mdmlanguages.c:250
 msgid "N-Z|Slovenian"
 msgstr "ස්ලෝවේනියානි"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:252
+#: ../gui/mdmlanguages.c:252
 msgid "N-Z|Spanish"
 msgstr "ස්පාඤ්ඤ"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:254
+#: ../gui/mdmlanguages.c:254
 msgid "N-Z|Spanish (Argentina)"
 msgstr "ස්පාඤ්ඤ (අර්ජන්ටිනාව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:256
+#: ../gui/mdmlanguages.c:256
 msgid "N-Z|Spanish (Bolivia)"
 msgstr "ස්පාඤ්ඤ (බොලිවියාව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:258
+#: ../gui/mdmlanguages.c:258
 msgid "N-Z|Spanish (Chile)"
 msgstr "ස්පාඤ්ඤ (චිලි)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:260
+#: ../gui/mdmlanguages.c:260
 msgid "N-Z|Spanish (Colombia)"
 msgstr "ස්පාඤ්ඤ (කොලොම්බියාව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:262
+#: ../gui/mdmlanguages.c:262
 msgid "N-Z|Spanish (Costa Rica)"
 msgstr "ස්පාඤ්ඤ (කොස්ටාරිකා)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:264
+#: ../gui/mdmlanguages.c:264
 msgid "N-Z|Spanish (Ecuador)"
 msgstr "ස්පාඤ්ඤ (ඉක්වදෝරය)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:266
+#: ../gui/mdmlanguages.c:266
 msgid "N-Z|Spanish (Guatemala)"
 msgstr "ස්පාඤ්ඤ (ග්වාතාමාලාව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:268
+#: ../gui/mdmlanguages.c:268
 msgid "N-Z|Spanish (Mexico)"
 msgstr "ස්පාඤ්ඤ (මෙක්සිකෝව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:270
+#: ../gui/mdmlanguages.c:270
 msgid "N-Z|Spanish (Nicaragua)"
 msgstr "ස්පාඤ්ඤ (නිකරගුවාව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:272
+#: ../gui/mdmlanguages.c:272
 msgid "N-Z|Spanish (Panama)"
 msgstr "ස්පාඤ්ඤ (පැනමාව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:274
+#: ../gui/mdmlanguages.c:274
 msgid "N-Z|Spanish (Peru)"
 msgstr "ස්පාඤ්ඤ (පේරු)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:276
+#: ../gui/mdmlanguages.c:276
 msgid "N-Z|Spanish (Paraguay)"
 msgstr "ස්පාඤ්ඤ (පැරගුවේ)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:278
+#: ../gui/mdmlanguages.c:278
 msgid "N-Z|Spanish (El Salvador)"
 msgstr "ස්පාඤ්ඤ (එල් සැල්වදෝරය)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:280
+#: ../gui/mdmlanguages.c:280
 msgid "N-Z|Spanish (Uruguay)"
 msgstr "ස්පාඤ්ඤ (උරුගුවේ)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:282
+#: ../gui/mdmlanguages.c:282
 msgid "N-Z|Spanish (Venezuela)"
 msgstr "ස්පාඤ්ඤ (වෙනිසියුලාව)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:284
+#: ../gui/mdmlanguages.c:284
 msgid "N-Z|Swedish"
 msgstr "ස්වීඩිෂ්"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:286
+#: ../gui/mdmlanguages.c:286
 msgid "N-Z|Swedish (Finland)"
 msgstr "ස්වීඩිෂ් (පින්ලන්ත)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:288
+#: ../gui/mdmlanguages.c:288
 msgid "N-Z|Tamil"
 msgstr "දමිල"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:290
+#: ../gui/mdmlanguages.c:290
 msgid "N-Z|Telugu"
 msgstr "තෙලිගු"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:292
+#: ../gui/mdmlanguages.c:292
 msgid "N-Z|Thai"
 msgstr "තායි"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:294
+#: ../gui/mdmlanguages.c:294
 msgid "N-Z|Turkish"
 msgstr "තුර්කි"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:296
+#: ../gui/mdmlanguages.c:296
 msgid "N-Z|Ukrainian"
 msgstr "යුක්රෙනියානු"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:298
+#: ../gui/mdmlanguages.c:298
 msgid "N-Z|Vietnamese"
 msgstr "නියට්නාම"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:300
+#: ../gui/mdmlanguages.c:300
 msgid "N-Z|Walloon"
 msgstr "වෝලූන්"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:302
+#: ../gui/mdmlanguages.c:302
 msgid "N-Z|Welsh"
 msgstr "වේල්ෂ්"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:304
+#: ../gui/mdmlanguages.c:304
 msgid "N-Z|Xhosa"
 msgstr "එක්දෝසා"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:306
+#: ../gui/mdmlanguages.c:306
 msgid "N-Z|Yiddish"
 msgstr "සීඩිෂ්"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:308
+#: ../gui/mdmlanguages.c:308
 msgid "N-Z|Zulu"
 msgstr "සුලු"
 
 #. This is the POSIX/C locale for english, should really be in Other
-#: ../gui/gdmlanguages.c:310
+#: ../gui/mdmlanguages.c:310
 msgid "Other|POSIX/C English"
 msgstr "POSIX/C ඉංග්‍රීසි"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: ../gui/gdmlanguages.c:496
+#: ../gui/mdmlanguages.c:496
 msgid "A-M"
 msgstr "A-M"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: ../gui/gdmlanguages.c:504
+#: ../gui/mdmlanguages.c:504
 msgid "N-Z"
 msgstr "N-Z"
 
-#: ../gui/gdmlanguages.c:684
+#: ../gui/mdmlanguages.c:684
 msgid "Last language"
 msgstr "අවසාන භාෂාව"
 
-#: ../gui/gdmlanguages.c:691 ../gui/gdmlanguages.c:760
-#: ../gui/gdmlanguages.c:768
+#: ../gui/mdmlanguages.c:691 ../gui/mdmlanguages.c:760
+#: ../gui/mdmlanguages.c:768
 msgid "System Default"
 msgstr "පද්ධති පෙරනිමිය"
 
@@ -2784,141 +2784,141 @@ msgstr "පද්ධති පෙරනිමිය"
 #. no_group
 #. untranslated
 #. markup
-#: ../gui/gdmlanguages.c:776 ../gui/gdmlogin.c:1507 ../gui/gdmlogin.c:1521
+#: ../gui/mdmlanguages.c:776 ../gui/mdmlogin.c:1507 ../gui/mdmlogin.c:1521
 #: ../gui/greeter/greeter.c:333 ../gui/greeter/greeter.c:348
 #, c-format
 msgid "Do you wish to make %s the default for future sessions?"
 msgstr "ඔබට %s අනාගත සැසි සඳහා පෙරනිමිය ලෙස සැකසීමට අවශ්‍යද?"
 
-#: ../gui/gdmlanguages.c:778 ../gui/gdmlogin.c:1524
+#: ../gui/mdmlanguages.c:778 ../gui/mdmlogin.c:1524
 #: ../gui/greeter/greeter.c:351
 #, c-format
 msgid "You have chosen %s for this session, but your default setting is %s."
 msgstr "මෙම සැසිය සඳහා ඔබ %s තෝරාගන්නා ලඳි, නමුත් ඔබගේ ඔඑරනිමිය වනුයේ %s."
 
-#: ../gui/gdmlanguages.c:784 ../gui/gdmlogin.c:1514 ../gui/gdmlogin.c:1530
+#: ../gui/mdmlanguages.c:784 ../gui/mdmlogin.c:1514 ../gui/mdmlogin.c:1530
 #: ../gui/greeter/greeter.c:340 ../gui/greeter/greeter.c:357
 msgid "Make _Default"
 msgstr "පෙරනිමය ලෙසට සකසන්න (_D)"
 
-#: ../gui/gdmlanguages.c:784 ../gui/gdmlogin.c:1530
+#: ../gui/mdmlanguages.c:784 ../gui/mdmlogin.c:1530
 #: ../gui/greeter/greeter.c:357
 msgid "Just For _This Session"
 msgstr "මෙම සැසිය සඳහා පමණයි (_T)"
 
-#: ../gui/gdmlanguages.c:839
+#: ../gui/mdmlanguages.c:839
 msgid "Select a Language"
 msgstr "භාෂාවක් තෝරන්න"
 
-#: ../gui/gdmlanguages.c:849
+#: ../gui/mdmlanguages.c:849
 msgid "Change _Language"
 msgstr "භාෂාව වෙනස් කරන්න (_L)"
 
-#: ../gui/gdmlanguages.c:869
+#: ../gui/mdmlanguages.c:869
 msgid "_Select the language for your session to use:"
 msgstr "ඔබගේ සැසියේ භාවිතය සඳහා භාෂාව තෝරන්න (_S)"
 
-#: ../gui/gdmlanguages.c:932
+#: ../gui/mdmlanguages.c:932
 msgid "the login screen"
 msgstr "පිවිසුම් තිරය"
 
-#: ../gui/gdmlanguages.c:933
+#: ../gui/mdmlanguages.c:933
 #, c-format
 msgid "Do you wish to restart %s with the chosen language?"
 msgstr "ඔබට තෝරාගත් භාෂාව සමඟ %s නැවත ආරම්ඹ කිරීමට අවශ්‍යද?"
 
-#: ../gui/gdmlanguages.c:935
+#: ../gui/mdmlanguages.c:935
 #, c-format
 msgid "You will restart %s with the %s locale."
 msgstr ""
 
-#: ../gui/gdmlanguages.c:939
+#: ../gui/mdmlanguages.c:939
 msgid "_Yes"
 msgstr "ඔව් (_Y)"
 
-#: ../gui/gdmlanguages.c:939
+#: ../gui/mdmlanguages.c:939
 msgid "_No"
 msgstr "නැත (_N)"
 
-#: ../gui/gdmlogin.c:393
+#: ../gui/mdmlogin.c:393
 #, c-format
 msgid "Cannot run command '%s': %s."
 msgstr "'%s' විධානය ක්‍රියාත්මක කළ නොහැක: %s."
 
-#: ../gui/gdmlogin.c:401
+#: ../gui/mdmlogin.c:401
 msgid "Cannot start background application"
 msgstr "පසුබිම් යෙදුම් ආරම්ඹ කිරීමට නොහැක"
 
-#: ../gui/gdmlogin.c:476 ../gui/greeter/greeter_parser.c:387
+#: ../gui/mdmlogin.c:476 ../gui/greeter/greeter_parser.c:387
 msgid "User %u will login in %t"
 msgstr "%u පරිශීලකයා %t තුළ පිවිසෙනු ඇත"
 
-#: ../gui/gdmlogin.c:701 ../gui/greeter/greeter_system.c:85
+#: ../gui/mdmlogin.c:701 ../gui/greeter/greeter_system.c:85
 msgid "Are you sure you want to restart the computer?"
 msgstr "ඔබට විශ්වාසද? ඔබට පරිගණකය නැවත ආරම්භ විමට අවශ්‍ය ද?"
 
-#: ../gui/gdmlogin.c:702 ../gui/gdmlogin.c:2318
+#: ../gui/mdmlogin.c:702 ../gui/mdmlogin.c:2318
 #: ../gui/greeter/greeter_parser.c:362 ../gui/greeter/greeter_system.c:86
 #: ../gui/greeter/greeter_system.c:273
 msgid "_Restart"
 msgstr "නැවත ආරම්භ කරන්න (_R)"
 
-#: ../gui/gdmlogin.c:730 ../gui/greeter/greeter_system.c:109
+#: ../gui/mdmlogin.c:730 ../gui/greeter/greeter_system.c:109
 msgid "Are you sure you want to Shut Down the computer?"
 msgstr "ඔබට විශ්වාසද? ඔබට පරිගණකය වසා දැමීමට අවශ්‍ය ද?"
 
-#: ../gui/gdmlogin.c:731 ../gui/gdmlogin.c:2329
+#: ../gui/mdmlogin.c:731 ../gui/mdmlogin.c:2329
 #: ../gui/greeter/greeter_parser.c:352 ../gui/greeter/greeter_system.c:110
 #: ../gui/greeter/greeter_system.c:282
 msgid "Shut _Down"
 msgstr "වසා දමන්න (_D)"
 
-#: ../gui/gdmlogin.c:749 ../gui/greeter/greeter_system.c:118
+#: ../gui/mdmlogin.c:749 ../gui/greeter/greeter_system.c:118
 msgid "Are you sure you want to suspend the computer?"
 msgstr "ඔබට විශ්වාසද? ඔබට පරිගණකය අත්හිටු විමමට අවශ්‍ය ද?"
 
-#: ../gui/gdmlogin.c:750 ../gui/gdmlogin.c:2340
+#: ../gui/mdmlogin.c:750 ../gui/mdmlogin.c:2340
 #: ../gui/greeter/greeter_system.c:119
 msgid "_Suspend"
 msgstr "අත්හිටු වන්න (_S)"
 
-#: ../gui/gdmlogin.c:874 ../gui/gdmlogin.c:888 ../gui/gdmlogin.c:1359
-#: ../gui/gdmlogin.c:1852 ../gui/gdmlogin.c:2569
+#: ../gui/mdmlogin.c:874 ../gui/mdmlogin.c:888 ../gui/mdmlogin.c:1359
+#: ../gui/mdmlogin.c:1852 ../gui/mdmlogin.c:2569
 msgid "_Username:"
 msgstr "පරිශීලක නම (_U):"
 
-#: ../gui/gdmlogin.c:964
+#: ../gui/mdmlogin.c:964
 #, c-format
 msgid "%s session selected"
 msgstr "%s සැසිය තෝරගන්නා ලදි"
 
-#: ../gui/gdmlogin.c:985
+#: ../gui/mdmlogin.c:985
 msgid "_Last"
 msgstr "අවසාන (_L)"
 
-#: ../gui/gdmlogin.c:1070 ../gui/greeter/greeter_canvas_item.c:162
+#: ../gui/mdmlogin.c:1070 ../gui/greeter/greeter_canvas_item.c:162
 msgid "Select _Language..."
 msgstr "භාෂාවක් තෝරන්න... (_L)"
 
-#: ../gui/gdmlogin.c:1391
+#: ../gui/mdmlogin.c:1391
 msgid "_Password:"
 msgstr "රහස්පදය: (_P)"
 
-#: ../gui/gdmlogin.c:1510 ../gui/greeter/greeter.c:336
+#: ../gui/mdmlogin.c:1510 ../gui/greeter/greeter.c:336
 #, c-format
 msgid "Your preferred session type %s is not installed on this computer."
 msgstr "ඔබගේ අභිමත සැසි වර්‍ගය වන %s මෙම පරිබණකය තුළ ස්ථාපනය කර නැත."
 
-#: ../gui/gdmlogin.c:1514 ../gui/greeter/greeter.c:340
+#: ../gui/mdmlogin.c:1514 ../gui/greeter/greeter.c:340
 msgid "Just _Log In"
 msgstr "හුදෙක් පිසීම සඳහා පමණයි (_L)"
 
-#: ../gui/gdmlogin.c:1537 ../gui/greeter/greeter.c:364
+#: ../gui/mdmlogin.c:1537 ../gui/greeter/greeter.c:364
 #, c-format
 msgid "You have chosen %s for this session"
 msgstr "මෙම සැසිය සඳහා ඔබ %s තෝරාගන්නා ලඳි"
 
-#: ../gui/gdmlogin.c:1540 ../gui/greeter/greeter.c:367
+#: ../gui/mdmlogin.c:1540 ../gui/greeter/greeter.c:367
 #, c-format
 msgid ""
 "If you wish to make %s the default for future sessions, run the 'switchdesk' "
@@ -2927,441 +2927,441 @@ msgstr ""
 
 #. translators:  This is a nice and evil eggie text, translate
 #. * to your favourite currency
-#: ../gui/gdmlogin.c:1655 ../gui/greeter/greeter.c:462
+#: ../gui/mdmlogin.c:1655 ../gui/greeter/greeter.c:462
 msgid "Please insert 25 cents to log in."
 msgstr ""
 
-#: ../gui/gdmlogin.c:1973
+#: ../gui/mdmlogin.c:1973
 msgid "GNOME Desktop Manager"
 msgstr "GNOME මුලිකතිර කළමණාකරු"
 
-#: ../gui/gdmlogin.c:2039
+#: ../gui/mdmlogin.c:2039
 msgid "Finger"
 msgstr ""
 
-#: ../gui/gdmlogin.c:2227
-msgid "GDM Login"
-msgstr "GDM පිවිසුම"
+#: ../gui/mdmlogin.c:2227
+msgid "MDM Login"
+msgstr "MDM පිවිසුම"
 
-#: ../gui/gdmlogin.c:2270
+#: ../gui/mdmlogin.c:2270
 msgid "S_ession"
 msgstr "සැසිය (_e)"
 
-#: ../gui/gdmlogin.c:2277 ../gui/greeter/greeter_parser.c:327
+#: ../gui/mdmlogin.c:2277 ../gui/greeter/greeter_parser.c:327
 msgid "_Language"
 msgstr "භාෂාව (_L)"
 
-#: ../gui/gdmlogin.c:2291 ../gui/greeter/greeter_system.c:243
+#: ../gui/mdmlogin.c:2291 ../gui/greeter/greeter_system.c:243
 msgid "Remote Login via _XDMCP..."
 msgstr ""
 
-#: ../gui/gdmlogin.c:2307
+#: ../gui/mdmlogin.c:2307
 msgid "_Configure Login Manager..."
 msgstr "පිවිසුම් කළමණාකරු මානකරණය... (_C)"
 
-#: ../gui/gdmlogin.c:2370 ../gui/greeter/greeter_parser.c:337
+#: ../gui/mdmlogin.c:2370 ../gui/greeter/greeter_parser.c:337
 msgid "_Actions"
 msgstr "ක්‍රියා (_A)"
 
-#: ../gui/gdmlogin.c:2379
+#: ../gui/mdmlogin.c:2379
 msgid "_Theme"
 msgstr "තේමාව (_T)"
 
-#: ../gui/gdmlogin.c:2390 ../gui/greeter/greeter_canvas_item.c:183
+#: ../gui/mdmlogin.c:2390 ../gui/greeter/greeter_canvas_item.c:183
 #: ../gui/greeter/greeter_parser.c:347
 msgid "_Quit"
 msgstr "ඉවත් වන්න (_Q)"
 
-#: ../gui/gdmlogin.c:2392 ../gui/greeter/greeter_canvas_item.c:185
+#: ../gui/mdmlogin.c:2392 ../gui/greeter/greeter_canvas_item.c:185
 #: ../gui/greeter/greeter_parser.c:342
 msgid "D_isconnect"
 msgstr "අසම්බන්ධය (_i)"
 
-#: ../gui/gdmlogin.c:2458 ../gui/greeter/greeter_item_ulist.c:311
+#: ../gui/mdmlogin.c:2458 ../gui/greeter/greeter_item_ulist.c:311
 msgid "Icon"
 msgstr "අයිකනය"
 
-#: ../gui/gdmlogin.c:2539
+#: ../gui/mdmlogin.c:2539
 msgid "Welcome"
 msgstr "ආයුබෝවන්"
 
-#: ../gui/gdmlogin.c:2657 ../gui/greeter/greeter_parser.c:416
+#: ../gui/mdmlogin.c:2657 ../gui/greeter/greeter_parser.c:416
 msgid "_Start Again"
 msgstr "නැවත අරඹන්න (_S)"
 
-#: ../gui/gdmlogin.c:3268 ../gui/gdmlogin.c:3302 ../gui/greeter/greeter.c:706
+#: ../gui/mdmlogin.c:3268 ../gui/mdmlogin.c:3302 ../gui/greeter/greeter.c:706
 #: ../gui/greeter/greeter.c:741
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version. You have "
-"probably just upgraded GDM. Please restart the GDM daemon or the computer."
+"probably just upgraded MDM. Please restart the MDM daemon or the computer."
 msgstr ""
 
-#: ../gui/gdmlogin.c:3278 ../gui/gdmlogin.c:3312 ../gui/gdmlogin.c:3360
+#: ../gui/mdmlogin.c:3278 ../gui/mdmlogin.c:3312 ../gui/mdmlogin.c:3360
 #: ../gui/greeter/greeter.c:716 ../gui/greeter/greeter.c:751
 #: ../gui/greeter/greeter.c:800
 msgid "Cannot start the greeter"
 msgstr ""
 
-#: ../gui/gdmlogin.c:3317
+#: ../gui/mdmlogin.c:3317
 msgid "Restart"
 msgstr "නැවත ආරම්භ කරන්න"
 
-#: ../gui/gdmlogin.c:3350 ../gui/greeter/greeter.c:790
+#: ../gui/mdmlogin.c:3350 ../gui/greeter/greeter.c:790
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded GDM.  Please restart the GDM daemon or the computer."
+"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
 msgstr ""
 
-#: ../gui/gdmlogin.c:3365 ../gui/greeter/greeter.c:805
-msgid "Restart GDM"
-msgstr "GDM ප්‍රථිඅරඹන්න"
+#: ../gui/mdmlogin.c:3365 ../gui/greeter/greeter.c:805
+msgid "Restart MDM"
+msgstr "MDM ප්‍රථිඅරඹන්න"
 
-#: ../gui/gdmlogin.c:3367
+#: ../gui/mdmlogin.c:3367
 msgid "Restart computer"
 msgstr "පරිගණකය නැවත ආරම්ඹකරන්න"
 
-#: ../gui/gdmlogin.c:3457
+#: ../gui/mdmlogin.c:3457
 msgid "Could not set signal mask!"
 msgstr ""
 
-#: ../gui/gdmlogin.c:3575 ../gui/greeter/greeter.c:1587
+#: ../gui/mdmlogin.c:3575 ../gui/greeter/greeter.c:1587
 msgid "Session directory is missing"
 msgstr ""
 
-#: ../gui/gdmlogin.c:3576
+#: ../gui/mdmlogin.c:3576
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the GDM "
+"sessions you can use, but you should log in and correct the MDM "
 "configuration."
 msgstr ""
 
-#: ../gui/gdmlogin.c:3599 ../gui/greeter/greeter.c:1612
+#: ../gui/mdmlogin.c:3599 ../gui/greeter/greeter.c:1612
 msgid "Configuration is not correct"
 msgstr ""
 
-#: ../gui/gdmlogin.c:3600 ../gui/greeter/greeter.c:1613
+#: ../gui/mdmlogin.c:3600 ../gui/greeter/greeter.c:1613
 msgid ""
 "The configuration file contains an invalid command line for the login "
 "dialog, so running the default command.  Please fix your configuration."
 msgstr ""
 
-#: ../gui/gdmphotosetup.c:214
+#: ../gui/mdmphotosetup.c:214
 #, c-format
 msgid "File %s cannot be opened for writing."
 msgstr ""
 
-#: ../gui/gdmphotosetup.c:221
+#: ../gui/mdmphotosetup.c:221
 msgid "Cannot open file"
 msgstr "විවෘත කළ නොහැක"
 
-#: ../gui/gdmphotosetup.c:275
+#: ../gui/mdmphotosetup.c:275
 msgid "Select User Image"
 msgstr "පරිශිලක පිළිඹිබුව තෝරන්න"
 
-#: ../gui/gdmphotosetup.c:299 ../gui/gdmsetup.c:4325 ../gui/gdmsetup.c:7128
-#: ../gui/gdmsetup.c:7268 ../gui/gdmsetup.c:7581 ../gui/gdmsetup.c:7720
+#: ../gui/mdmphotosetup.c:299 ../gui/mdmsetup.c:4325 ../gui/mdmsetup.c:7128
+#: ../gui/mdmsetup.c:7268 ../gui/mdmsetup.c:7581 ../gui/mdmsetup.c:7720
 msgid "Images"
 msgstr "පිළිඹිබු"
 
-#: ../gui/gdmphotosetup.c:304 ../gui/gdmsetup.c:4463 ../gui/gdmsetup.c:7133
-#: ../gui/gdmsetup.c:7273 ../gui/gdmsetup.c:7586 ../gui/gdmsetup.c:7725
+#: ../gui/mdmphotosetup.c:304 ../gui/mdmsetup.c:4463 ../gui/mdmsetup.c:7133
+#: ../gui/mdmsetup.c:7273 ../gui/mdmsetup.c:7586 ../gui/mdmsetup.c:7725
 msgid "All Files"
 msgstr "සියළුම ගොනු"
 
-#: ../gui/gdmphotosetup.desktop.in.h:1
-msgid "Change the picture that will show in the GDM (login manager) face browser"
+#: ../gui/mdmphotosetup.desktop.in.h:1
+msgid "Change the picture that will show in the MDM (login manager) face browser"
 msgstr ""
 
-#: ../gui/gdmphotosetup.desktop.in.h:2
+#: ../gui/mdmphotosetup.desktop.in.h:2
 msgid "Login Photo"
 msgstr "පිවිසුම් පිංතුරය"
 
-#: ../gui/gdmphotosetup.glade.h:1
+#: ../gui/mdmphotosetup.glade.h:1
 msgid "<b>User Image</b>"
 msgstr "<b>පරිශිලක පිළිඹිබුව</b>"
 
-#: ../gui/gdmphotosetup.glade.h:2
+#: ../gui/mdmphotosetup.glade.h:2
 msgid "Login Photo Preferences"
 msgstr ""
 
-#: ../gui/gdmsession.c:142 ../gui/gdmsession.c:332
+#: ../gui/mdmsession.c:142 ../gui/mdmsession.c:332
 msgid "Failsafe _GNOME"
 msgstr ""
 
-#: ../gui/gdmsession.c:143 ../gui/gdmsession.c:333
+#: ../gui/mdmsession.c:143 ../gui/mdmsession.c:333
 msgid "Failsafe GNOME"
 msgstr ""
 
-#: ../gui/gdmsession.c:144 ../gui/gdmsession.c:334
+#: ../gui/mdmsession.c:144 ../gui/mdmsession.c:334
 msgid ""
 "This is a failsafe session that will log you into GNOME. No startup scripts "
 "will be read and it is only to be used when you can't log in otherwise.  "
 "GNOME will use the 'Default' session."
 msgstr ""
 
-#: ../gui/gdmsession.c:155 ../gui/gdmsession.c:345
+#: ../gui/mdmsession.c:155 ../gui/mdmsession.c:345
 msgid "Failsafe _Terminal"
 msgstr ""
 
-#: ../gui/gdmsession.c:156 ../gui/gdmsession.c:346
+#: ../gui/mdmsession.c:156 ../gui/mdmsession.c:346
 msgid "Failsafe Terminal"
 msgstr ""
 
-#: ../gui/gdmsession.c:157 ../gui/gdmsession.c:347
+#: ../gui/mdmsession.c:157 ../gui/mdmsession.c:347
 msgid ""
 "This is a failsafe session that will log you into a terminal.  No startup "
 "scripts will be read and it is only to be used when you can't log in "
 "otherwise.  To exit the terminal, type 'exit'."
 msgstr ""
 
-#: ../gui/gdmsetup.c:320
+#: ../gui/mdmsetup.c:320
 msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
 msgstr ""
 
-#: ../gui/gdmsetup.c:792 ../gui/gdmsetup.c:2988
+#: ../gui/mdmsetup.c:792 ../gui/mdmsetup.c:2988
 msgid "Users include list modification"
 msgstr ""
 
-#: ../gui/gdmsetup.c:793
+#: ../gui/mdmsetup.c:793
 msgid ""
 "Some of the users in the Include list (Users tab) now have uid lower than "
 "MinimalUID and will be removed."
 msgstr ""
 
-#: ../gui/gdmsetup.c:1206 ../gui/gdmsetup.c:1232 ../gui/gdmsetup.c:1391
-#: ../gui/gdmsetup.c:1795
+#: ../gui/mdmsetup.c:1206 ../gui/mdmsetup.c:1232 ../gui/mdmsetup.c:1391
+#: ../gui/mdmsetup.c:1795
 msgid "Themed"
 msgstr ""
 
-#: ../gui/gdmsetup.c:1209 ../gui/gdmsetup.c:1235
+#: ../gui/mdmsetup.c:1209 ../gui/mdmsetup.c:1235
 msgid "Themed with face browser"
 msgstr ""
 
-#: ../gui/gdmsetup.c:1212 ../gui/gdmsetup.c:1253
+#: ../gui/mdmsetup.c:1212 ../gui/mdmsetup.c:1253
 msgid "Plain"
 msgstr "සරල"
 
 #. Themed with face browser
-#: ../gui/gdmsetup.c:1215 ../gui/gdmsetup.c:1256
+#: ../gui/mdmsetup.c:1215 ../gui/mdmsetup.c:1256
 msgid "Plain with face browser"
 msgstr ""
 
-#: ../gui/gdmsetup.c:1443
+#: ../gui/mdmsetup.c:1443
 msgid "Autologin or timed login to the root account is forbidden."
 msgstr ""
 
-#: ../gui/gdmsetup.c:1445 ../gui/gdmsetup.c:2725 ../gui/gdmsetup.c:2829
+#: ../gui/mdmsetup.c:1445 ../gui/mdmsetup.c:2725 ../gui/mdmsetup.c:2829
 #, c-format
 msgid "The \"%s\" user UID is lower than allowed MinimalUID."
 msgstr ""
 
-#: ../gui/gdmsetup.c:1452
+#: ../gui/mdmsetup.c:1452
 msgid "User not allowed"
 msgstr ""
 
-#: ../gui/gdmsetup.c:1629 ../gui/gdmsetup.glade.h:8
+#: ../gui/mdmsetup.c:1629 ../gui/mdmsetup.glade.h:8
 msgid "(Enabled)"
 msgstr "(සක්‍රීය)"
 
-#: ../gui/gdmsetup.c:1631
+#: ../gui/mdmsetup.c:1631
 msgid "(Disabled)"
 msgstr "(අක්‍රීය)"
 
-#: ../gui/gdmsetup.c:1849 ../gui/gdmsetup.c:1881 ../gui/gdmsetup.c:5032
+#: ../gui/mdmsetup.c:1849 ../gui/mdmsetup.c:1881 ../gui/mdmsetup.c:5032
 msgid "No themes selected!"
 msgstr "තේමාවක්ව තෝරා නැත!"
 
-#: ../gui/gdmsetup.c:1850 ../gui/gdmsetup.c:1882 ../gui/gdmsetup.c:5033
+#: ../gui/mdmsetup.c:1850 ../gui/mdmsetup.c:1882 ../gui/mdmsetup.c:5033
 msgid ""
 "You need one or more themes selected for the \"Random from selected\" option "
 "to be valid. Failure to do so will force \"Selected only\" mode."
 msgstr ""
 
-#: ../gui/gdmsetup.c:2008
+#: ../gui/mdmsetup.c:2008
 msgid "Apply changes to the modified command?"
 msgstr ""
 
-#: ../gui/gdmsetup.c:2009
+#: ../gui/mdmsetup.c:2009
 msgid "If you don't apply, the changes will be discarded."
 msgstr ""
 
-#: ../gui/gdmsetup.c:2451
+#: ../gui/mdmsetup.c:2451
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr ""
 
-#: ../gui/gdmsetup.c:2670
+#: ../gui/mdmsetup.c:2670
 #, c-format
 msgid "The \"%s\" user already exists in the include list."
 msgstr ""
 
-#: ../gui/gdmsetup.c:2678 ../gui/gdmsetup.c:2706 ../gui/gdmsetup.c:2733
-#: ../gui/gdmsetup.c:2763 ../gui/gdmsetup.c:2837
+#: ../gui/mdmsetup.c:2678 ../gui/mdmsetup.c:2706 ../gui/mdmsetup.c:2733
+#: ../gui/mdmsetup.c:2763 ../gui/mdmsetup.c:2837
 msgid "Cannot add user"
 msgstr "පරිශීලක එක් කළ නොහැක"
 
-#: ../gui/gdmsetup.c:2698
+#: ../gui/mdmsetup.c:2698
 #, c-format
 msgid "The \"%s\" user already exists in the exclude list."
 msgstr ""
 
-#: ../gui/gdmsetup.c:2755
+#: ../gui/mdmsetup.c:2755
 #, c-format
 msgid "The \"%s\" user does not exist."
 msgstr ""
 
-#: ../gui/gdmsetup.c:2919
+#: ../gui/mdmsetup.c:2919
 msgid "Invalid command path"
 msgstr "සාවද්‍ය වධාන මාර්‍ගයක්"
 
-#: ../gui/gdmsetup.c:2920
+#: ../gui/mdmsetup.c:2920
 msgid ""
 "The path you provided for this command is not valid. The changes will not be "
 "saved."
 msgstr ""
 
-#: ../gui/gdmsetup.c:2989
+#: ../gui/mdmsetup.c:2989
 msgid ""
 "Some of the users had uid lower than MinimalUID (Security tab) and could not "
 "be added."
 msgstr ""
 
 #. first get the file
-#: ../gui/gdmsetup.c:3618
+#: ../gui/mdmsetup.c:3618
 msgid "Select Command"
 msgstr "තෝරාගැනීමේ විධානය"
 
-#: ../gui/gdmsetup.c:3644 ../gui/gdmsetup.c:5558
+#: ../gui/mdmsetup.c:3644 ../gui/mdmsetup.c:5558
 msgid "No file selected"
 msgstr "ගොනුවක් තෝරා නැත"
 
-#: ../gui/gdmsetup.c:3809
+#: ../gui/mdmsetup.c:3809
 msgid "Apply the changes to commands before closing?"
 msgstr ""
 
-#: ../gui/gdmsetup.c:3810
+#: ../gui/mdmsetup.c:3810
 msgid "If you don't apply, the changes made will be disregarded."
 msgstr ""
 
-#: ../gui/gdmsetup.c:3813 ../gui/gdmsetup.c:8157
+#: ../gui/mdmsetup.c:3813 ../gui/mdmsetup.c:8157
 msgid "Close _without Applying"
 msgstr ""
 
 #. Add halt, reboot and suspend commands
-#: ../gui/gdmsetup.c:3904
+#: ../gui/mdmsetup.c:3904
 msgid "Halt command"
 msgstr ""
 
-#: ../gui/gdmsetup.c:3905
+#: ../gui/mdmsetup.c:3905
 msgid "Reboot command"
 msgstr ""
 
-#: ../gui/gdmsetup.c:3906
+#: ../gui/mdmsetup.c:3906
 msgid "Suspend command"
 msgstr "විධානය අත්හිටු වන්න"
 
-#: ../gui/gdmsetup.c:4458 ../gui/gdmsetup.glade.h:139
+#: ../gui/mdmsetup.c:4458 ../gui/mdmsetup.glade.h:139
 msgid "Sounds"
 msgstr ""
 
-#: ../gui/gdmsetup.c:4677 ../gui/gdmsetup.c:4731
+#: ../gui/mdmsetup.c:4677 ../gui/mdmsetup.c:4731
 msgid "None"
 msgstr "කිසිවක් නැත"
 
-#: ../gui/gdmsetup.c:5206
+#: ../gui/mdmsetup.c:5206
 msgid "Archive is not of a subdirectory"
 msgstr ""
 
-#: ../gui/gdmsetup.c:5214
+#: ../gui/mdmsetup.c:5214
 msgid "Archive is not of a single subdirectory"
 msgstr ""
 
-#: ../gui/gdmsetup.c:5238 ../gui/gdmsetup.c:5315
+#: ../gui/mdmsetup.c:5238 ../gui/mdmsetup.c:5315
 msgid "File not a tar.gz or tar archive"
 msgstr ""
 
-#: ../gui/gdmsetup.c:5240
-msgid "Archive does not include a GdmGreeterTheme.info file"
+#: ../gui/mdmsetup.c:5240
+msgid "Archive does not include a MdmGreeterTheme.info file"
 msgstr ""
 
-#: ../gui/gdmsetup.c:5262
+#: ../gui/mdmsetup.c:5262
 msgid "File does not exist"
 msgstr ""
 
-#: ../gui/gdmsetup.c:5381
+#: ../gui/mdmsetup.c:5381
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../gui/gdmsetup.c:5388
+#: ../gui/mdmsetup.c:5388
 msgid "Not a theme archive"
 msgstr "තේමා සංරක්‍ෂිතයක් නොවේ"
 
 #. FIXME: if exists already perhaps we could also have an
 #. * option to change the dir name
-#: ../gui/gdmsetup.c:5410
+#: ../gui/mdmsetup.c:5410
 #, c-format
 msgid "Theme directory '%s' seems to be already installed. Install again anyway?"
 msgstr ""
 
-#: ../gui/gdmsetup.c:5502
+#: ../gui/mdmsetup.c:5502
 msgid "Some error occurred when installing the theme"
 msgstr ""
 
-#: ../gui/gdmsetup.c:5580
+#: ../gui/mdmsetup.c:5580
 msgid "Select Theme Archive"
 msgstr "තේමා සංරක්‍ෂණය තෝරන්න"
 
-#: ../gui/gdmsetup.c:5584 ../gui/gdmsetup.c:6677
+#: ../gui/mdmsetup.c:5584 ../gui/mdmsetup.c:6677
 msgid "_Install"
 msgstr "ස්ථාපනය (_I)"
 
-#: ../gui/gdmsetup.c:5588
+#: ../gui/mdmsetup.c:5588
 msgid "Theme archives"
 msgstr "තේමා සංරක්‍ෂිත"
 
-#: ../gui/gdmsetup.c:5689
+#: ../gui/mdmsetup.c:5689
 msgid "Theme active in \"Selected only\" mode"
 msgstr ""
 
-#: ../gui/gdmsetup.c:5690
+#: ../gui/mdmsetup.c:5690
 msgid ""
 "This theme cannot be deleted at this point. If you wish to delete this theme "
 "switch to \"Selected only\" mode, and deselect it by choosing a different "
 "theme."
 msgstr ""
 
-#: ../gui/gdmsetup.c:5719
+#: ../gui/mdmsetup.c:5719
 #, c-format
 msgid "Remove the \"%s\" theme?"
 msgstr "\"%s\" තේමාව ඉවත් කිරීමට අවශ්‍යද?"
 
-#: ../gui/gdmsetup.c:5727
+#: ../gui/mdmsetup.c:5727
 msgid "If you choose to remove the theme, it will be permanently lost."
 msgstr ""
 
-#: ../gui/gdmsetup.c:5735
+#: ../gui/mdmsetup.c:5735
 msgid "_Remove Theme"
 msgstr "තේමාව ඉවත් කරන්න (_R)"
 
-#: ../gui/gdmsetup.c:6666
+#: ../gui/mdmsetup.c:6666
 #, c-format
 msgid "Install the theme from '%s'?"
 msgstr "'%s' තේමාව ස්ථාපනය කිරීමට අවශ්‍යද?"
 
-#: ../gui/gdmsetup.c:6667
+#: ../gui/mdmsetup.c:6667
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
 msgstr ""
 
 #. This is the temporary help dialog
-#: ../gui/gdmsetup.c:6922
+#: ../gui/mdmsetup.c:6922
 #, c-format
 msgid ""
-"This configuration window changes settings for the GDM daemon, which is the "
+"This configuration window changes settings for the MDM daemon, which is the "
 "graphical login screen for GNOME.  Changes that you make will take effect "
 "immediately.\n"
 "\n"
@@ -3372,87 +3372,87 @@ msgid ""
 "category."
 msgstr ""
 
-#: ../gui/gdmsetup.c:7520
+#: ../gui/mdmsetup.c:7520
 msgid "auto"
 msgstr "ස්වයංක්‍රීය"
 
-#: ../gui/gdmsetup.c:7523
+#: ../gui/mdmsetup.c:7523
 msgid "yes"
 msgstr "ඔව්"
 
-#: ../gui/gdmsetup.c:7526
+#: ../gui/mdmsetup.c:7526
 msgid "no"
 msgstr "නැත"
 
-#: ../gui/gdmsetup.c:8135
+#: ../gui/mdmsetup.c:8135
 msgid "Random theme mode change"
 msgstr ""
 
-#: ../gui/gdmsetup.c:8136
+#: ../gui/mdmsetup.c:8136
 msgid ""
 "Since no themes were selected in random theme mode switching back to single "
 "theme mode."
 msgstr ""
 
-#: ../gui/gdmsetup.c:8153
+#: ../gui/mdmsetup.c:8153
 msgid "Apply the changes to users before closing?"
 msgstr "වසා දැමීමට ප්‍රථම පරිශීලකයන්ට වෙනස්කම් යෙදවිය යුතුද?"
 
-#: ../gui/gdmsetup.c:8154
+#: ../gui/mdmsetup.c:8154
 msgid "If you don't apply, the changes made on the Users tab will be disregarded."
 msgstr ""
 
-#: ../gui/gdmsetup.c:8223
+#: ../gui/mdmsetup.c:8223
 msgid "Could not access configuration file (defaults.conf)"
 msgstr ""
 
-#: ../gui/gdmsetup.c:8224 ../gui/gdmsetup.c:8241
+#: ../gui/mdmsetup.c:8224 ../gui/mdmsetup.c:8241
 msgid "Make sure that the file exists before launching login manager config utility."
 msgstr ""
 
-#: ../gui/gdmsetup.c:8240
+#: ../gui/mdmsetup.c:8240
 msgid "Could not access configuration file (custom.conf)"
 msgstr ""
 
-#: ../gui/gdmsetup.c:8288
-msgid "You must be the root user to configure GDM."
+#: ../gui/mdmsetup.c:8288
+msgid "You must be the root user to configure MDM."
 msgstr ""
 
 #. EOF
-#: ../gui/gdmsetup.desktop.in.in.h:1
-msgid "Configure GDM login window appearance and behavior"
+#: ../gui/mdmsetup.desktop.in.in.h:1
+msgid "Configure MDM login window appearance and behavior"
 msgstr ""
 
-#: ../gui/gdmsetup.desktop.in.in.h:2
+#: ../gui/mdmsetup.desktop.in.in.h:2
 msgid "Login Window"
 msgstr "පිවිසුම් කවුළුව"
 
-#: ../gui/gdmsetup.glade.h:1
+#: ../gui/mdmsetup.glade.h:1
 msgid " "
 msgstr " "
 
-#: ../gui/gdmsetup.glade.h:2
+#: ../gui/mdmsetup.glade.h:2
 msgid "  "
 msgstr "  "
 
-#: ../gui/gdmsetup.glade.h:3
+#: ../gui/mdmsetup.glade.h:3
 msgid "    "
 msgstr "    "
 
-#: ../gui/gdmsetup.glade.h:4
+#: ../gui/mdmsetup.glade.h:4
 msgid "     "
 msgstr "     "
 
-#: ../gui/gdmsetup.glade.h:5
+#: ../gui/mdmsetup.glade.h:5
 msgid "         "
 msgstr "         "
 
-#: ../gui/gdmsetup.glade.h:7
+#: ../gui/mdmsetup.glade.h:7
 #, no-c-format
 msgid "%n will be replaced by hostname"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:9
+#: ../gui/mdmsetup.glade.h:9
 msgid ""
 "<b>Note:</b>  Users in the Include list will appear in the face browser if "
 "enabled and will appear in the user drop-down lists for automatic and timed "
@@ -3461,99 +3461,99 @@ msgid ""
 "allowed to join Include list."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:10
+#: ../gui/mdmsetup.glade.h:10
 msgid ""
 "<b>Note:</b> You can select different commands from the drop-down list, and "
 "modify them through relevant fields located below. To save changes press "
 "Apply Command Changes button."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:11
+#: ../gui/mdmsetup.glade.h:11
 msgid ""
 "<b>Warning:</b>  Incorrect settings could prevent the X server from "
-"restarting.  Changes to these settings will not take effect until GDM is "
+"restarting.  Changes to these settings will not take effect until MDM is "
 "restarted."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:12
+#: ../gui/mdmsetup.glade.h:12
 msgid "A_dd..."
 msgstr "එක් කරන්න... (_d)"
 
-#: ../gui/gdmsetup.glade.h:13
+#: ../gui/mdmsetup.glade.h:13
 msgid "A_llow remote system administrator login"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:14
+#: ../gui/mdmsetup.glade.h:14
 msgid "A_pply User Changes"
 msgstr "පරිශීලක වෙනස්කම් යොදන්න (_p)"
 
-#: ../gui/gdmsetup.glade.h:15
+#: ../gui/mdmsetup.glade.h:15
 msgid "Accessibility"
 msgstr "ප්‍රවේශ්‍යතාව"
 
-#: ../gui/gdmsetup.glade.h:16
+#: ../gui/mdmsetup.glade.h:16
 msgid "Accessible from the outside of the login manager"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:17
+#: ../gui/mdmsetup.glade.h:17
 msgid "Add / Modify Servers To Start"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:18
+#: ../gui/mdmsetup.glade.h:18
 msgid "Add S_erver..."
 msgstr "සේවාදායකය එක් කරන්න... (_e)"
 
-#: ../gui/gdmsetup.glade.h:19
+#: ../gui/mdmsetup.glade.h:19
 msgid "Add User"
 msgstr "පරිශීලකයකු එක් කරන්න"
 
-#: ../gui/gdmsetup.glade.h:20
+#: ../gui/mdmsetup.glade.h:20
 msgid ""
 "Adds a chooser button to the Actions menu that will restart the current X "
 "server with a chooser.  XDMCP does not need to be enabled on the local "
 "computer for this to work."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:21
+#: ../gui/mdmsetup.glade.h:21
 msgid ""
 "All users with a lower UID will be excluded from the face browser, automatic "
 "and timed login."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:22
+#: ../gui/mdmsetup.glade.h:22
 msgid "Allo_w remote timed logins"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:23
+#: ../gui/mdmsetup.glade.h:23
 msgid ""
 "Allow changing the GTK+ (widget) theme from the greeter. Currently this only "
 "affects the standard greeter. The theme will stay in effect on this display "
-"until changed and will affect all the other windows that are put up by GDM."
+"until changed and will affect all the other windows that are put up by MDM."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:24
+#: ../gui/mdmsetup.glade.h:24
 msgid "Allow group writable files and directories."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:25
+#: ../gui/mdmsetup.glade.h:25
 msgid "Allow logi_n if group write permissions on user's home directory"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:26
+#: ../gui/mdmsetup.glade.h:26
 msgid "Allow login _if all write permissions on user's home directory"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:27
+#: ../gui/mdmsetup.glade.h:27
 msgid "Allow world writable files and directories."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:28
+#: ../gui/mdmsetup.glade.h:28
 msgid ""
 "Allows the configurator to be run from the greeter. Note that the user will "
 "need to type in the root password before the configurator will be started."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:29
+#: ../gui/mdmsetup.glade.h:29
 msgid ""
 "Always append -nolisten tcp to the command line of local X servers, thus "
 "disallowing TCP connection.  This is useful if you do not care for allowing "
@@ -3562,96 +3562,96 @@ msgid ""
 "Also disables X forwarding, but does not affect XDMCP."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:30
+#: ../gui/mdmsetup.glade.h:30
 msgid "Apply Co_mmand Changes"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:31
+#: ../gui/mdmsetup.glade.h:31
 msgid "Author:"
 msgstr "කතෘ:"
 
-#: ../gui/gdmsetup.glade.h:32
+#: ../gui/mdmsetup.glade.h:32
 msgid "Background"
 msgstr "පසුබිම"
 
-#: ../gui/gdmsetup.glade.h:33
+#: ../gui/mdmsetup.glade.h:33
 msgid "Background color of the greeter."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:34
+#: ../gui/mdmsetup.glade.h:34
 msgid "Behaviour"
 msgstr "හැසිරීම"
 
-#: ../gui/gdmsetup.glade.h:35
+#: ../gui/mdmsetup.glade.h:35
 msgid "C_ommand:"
 msgstr "විධානය (_o):"
 
-#: ../gui/gdmsetup.glade.h:36
+#: ../gui/mdmsetup.glade.h:36
 msgid "C_ustom:"
 msgstr "පරිශීලක (_u):"
 
-#: ../gui/gdmsetup.glade.h:37
+#: ../gui/mdmsetup.glade.h:37
 msgid ""
 "Checks the ownership of the home directories before writing to them. This "
 "prevents security issues in case of bad setup."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:38
+#: ../gui/mdmsetup.glade.h:38
 msgid "Co_lor:"
 msgstr "වර්‍ණය (_l):"
 
-#: ../gui/gdmsetup.glade.h:39
+#: ../gui/mdmsetup.glade.h:39
 msgid "Color depth:"
 msgstr "වර්‍ණයේ ගැබුර:"
 
-#: ../gui/gdmsetup.glade.h:40
+#: ../gui/mdmsetup.glade.h:40
 msgid "Comma_nd type:"
 msgstr "විධාන වර්‍ගය (_n):"
 
-#: ../gui/gdmsetup.glade.h:41
+#: ../gui/mdmsetup.glade.h:41
 msgid "Configure XDMC_P..."
 msgstr "XDMCP මානකරණය... (_P)"
 
-#: ../gui/gdmsetup.glade.h:42
+#: ../gui/mdmsetup.glade.h:42
 msgid "Configure _X Server..."
 msgstr "X සේවාදායකය මානකරණය... (_X)"
 
-#: ../gui/gdmsetup.glade.h:43
+#: ../gui/mdmsetup.glade.h:43
 msgid ""
 "Controls which text to display next to the logo image in the greeter for "
 "remote XDMCP sessions."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:44
+#: ../gui/mdmsetup.glade.h:44
 msgid ""
 "Controls which text to display next to the logo image in the standard "
 "greeter. This string is only used for local logins."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:45
+#: ../gui/mdmsetup.glade.h:45
 msgid "Copyright:"
 msgstr "කර්‍තෘ හිමිකම:"
 
-#: ../gui/gdmsetup.glade.h:46
+#: ../gui/mdmsetup.glade.h:46
 msgid "De_fault face:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:47
+#: ../gui/mdmsetup.glade.h:47
 msgid "De_fault session:"
 msgstr "පෙරනිමි සැසිය (_f):"
 
-#: ../gui/gdmsetup.glade.h:48
+#: ../gui/mdmsetup.glade.h:48
 msgid "Delay in seconds before the Timed login user will be logged in."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:49
+#: ../gui/mdmsetup.glade.h:49
 msgid ""
 "Determines the maximum number of remote display connections which will be "
 "managed simultaneously. I.e. the total number of remote displays that can "
 "use your host."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:50
+#: ../gui/mdmsetup.glade.h:50
 msgid ""
 "Determines the maximum number of seconds between the time where a user "
 "chooses a host and the subsequent indirect query where the user is connected "
@@ -3659,261 +3659,261 @@ msgid ""
 "host is forgotten and the indirect slot freed up for other displays."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:51
+#: ../gui/mdmsetup.glade.h:51
 msgid "Disa_ble multiple logins for a single user"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:52
+#: ../gui/mdmsetup.glade.h:52
 msgid "Display the title bar in the greeter."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:53
+#: ../gui/mdmsetup.glade.h:53
 msgid "Displays per _host:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:54
+#: ../gui/mdmsetup.glade.h:54
 msgid "Displays this image as the background in the greeter."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:55
+#: ../gui/mdmsetup.glade.h:55
 msgid "Do not show image for _remote logins"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:56
+#: ../gui/mdmsetup.glade.h:56
 msgid ""
 "Does not place cookies into the users home directory if this directory is on "
 "NFS."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:57
+#: ../gui/mdmsetup.glade.h:57
 msgid "Don't restart the login manager after the execution"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:58
+#: ../gui/mdmsetup.glade.h:58
 msgid "E_dit Commands..."
 msgstr "විධාන සකසන්න... (_d)"
 
-#: ../gui/gdmsetup.glade.h:59
+#: ../gui/mdmsetup.glade.h:59
 msgid "E_xclude:"
 msgstr "නොඇතුළත් (_x):"
 
-#: ../gui/gdmsetup.glade.h:60
+#: ../gui/mdmsetup.glade.h:60
 msgid "Ena_ble debug messages to system log"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:61
+#: ../gui/mdmsetup.glade.h:61
 msgid "Enable _Timed Login"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:62
+#: ../gui/mdmsetup.glade.h:62
 msgid ""
-"Enables XDMCP INDIRECT choosing (i.e. remote execution of gdmchooser) for X-"
+"Enables XDMCP INDIRECT choosing (i.e. remote execution of mdmchooser) for X-"
 "terminals which don't supply their own display browser."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:63
+#: ../gui/mdmsetup.glade.h:63
 msgid ""
 "Enables greeter to be launched with additional Gtk+ modules. This is useful "
 "when extra features are required such as accessible login. Note that only "
 "\"trusted\" modules should be used to minimize security issues."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:64
+#: ../gui/mdmsetup.glade.h:64
 msgid ""
 "Full path and arguments for the command to be executed. If the value is "
 "missing, the command will not be available."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:65
+#: ../gui/mdmsetup.glade.h:65
 msgid "Full path and arguments to the command to be executed"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:66
+#: ../gui/mdmsetup.glade.h:66
 msgid ""
-"GDM should run the login window on this server and allow a user to log in.  "
-"If not selected, then GDM will just run this server and wait for it to "
+"MDM should run the login window on this server and allow a user to log in.  "
+"If not selected, then MDM will just run this server and wait for it to "
 "terminate."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:67
+#: ../gui/mdmsetup.glade.h:67
 msgid "General"
 msgstr "සාමාන්‍ය"
 
-#: ../gui/gdmsetup.glade.h:68
+#: ../gui/mdmsetup.glade.h:68
 msgid ""
 "Given user should be logged in after a number of seconds (set with Pause "
 "before login) of inactivity on the login screen.  This is useful for public "
 "access terminals or perhaps even home use."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:69
+#: ../gui/mdmsetup.glade.h:69
 msgid ""
 "Given user should be logged in upon first bootup.  No password will be "
 "asked.  This is useful for single user workstations where local console "
 "security is not an issue."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:70
+#: ../gui/mdmsetup.glade.h:70
 msgid ""
 "Greeter\n"
 "Chooser"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:72
+#: ../gui/mdmsetup.glade.h:72
 msgid "Honor _indirect requests"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:73
+#: ../gui/mdmsetup.glade.h:73
 msgid "I_mage:"
 msgstr "පිළිඹිබුව (_m):"
 
-#: ../gui/gdmsetup.glade.h:74
+#: ../gui/mdmsetup.glade.h:74
 msgid "I_nclude:"
 msgstr "ඇතුළත් (_n):"
 
-#: ../gui/gdmsetup.glade.h:75
+#: ../gui/mdmsetup.glade.h:75
 msgid ""
-"If a user has no defined face image, GDM will use the \"stock_person\" icon "
+"If a user has no defined face image, MDM will use the \"stock_person\" icon "
 "defined in the current GTK+ theme.  If no such image is defined, the image "
 "specified by DefaultFace will be used.  The image must be in an gdk-pixbuf "
-"supported format and the file must be readable to the GDM user."
+"supported format and the file must be readable to the MDM user."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:76
+#: ../gui/mdmsetup.glade.h:76
 msgid ""
 "Image file to display in the logo box. The file must be in an gdk-pixbuf "
-"supported format and it must be readable by the GDM user. If no file is "
+"supported format and it must be readable by the MDM user. If no file is "
 "specified the logo feature is disabled."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:77
+#: ../gui/mdmsetup.glade.h:77
 msgid "Includ_e Hostname Chooser (XDMCP) menu item"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:78
+#: ../gui/mdmsetup.glade.h:78
 msgid "Include Con_figure menu item"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:79
+#: ../gui/mdmsetup.glade.h:79
 msgid ""
 "Indicates that the X server should be started at a different process "
 "priority."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:80
+#: ../gui/mdmsetup.glade.h:80
 msgid ""
 "Interval in which to ping the X server in seconds.  If the X server doesn't "
 "return before the next time we ping it, the connection is stopped and the "
 "session ended."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:81
+#: ../gui/mdmsetup.glade.h:81
 msgid "LRla_bel:"
 msgstr "LR ලේබලය (_b):"
 
-#: ../gui/gdmsetup.glade.h:82
+#: ../gui/mdmsetup.glade.h:82
 msgid "La_unch:"
 msgstr "ආරම්ඹය (_u):"
 
-#: ../gui/gdmsetup.glade.h:83
+#: ../gui/mdmsetup.glade.h:83
 msgid "Listen on _UDP port: "
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:84
+#: ../gui/mdmsetup.glade.h:84
 msgid "Loc_k position of the window"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:85
+#: ../gui/mdmsetup.glade.h:85
 msgid "Local"
 msgstr "ප්‍රාදේශීය"
 
-#: ../gui/gdmsetup.glade.h:86
+#: ../gui/mdmsetup.glade.h:86
 msgid "Login Window Preferences"
 msgstr "පිවිසුම් කවුළුවේ අභිප්‍රේත"
 
-#: ../gui/gdmsetup.glade.h:87
+#: ../gui/mdmsetup.glade.h:87
 msgid "Login _failed:"
 msgstr "පිවිසුම අසමත් විය (_f):"
 
-#: ../gui/gdmsetup.glade.h:88
+#: ../gui/mdmsetup.glade.h:88
 msgid "Login _retry delay:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:89
+#: ../gui/mdmsetup.glade.h:89
 msgid "Login _successful:"
 msgstr "පිවිසුම සාර්තකයි (_s):"
 
-#: ../gui/gdmsetup.glade.h:90
+#: ../gui/mdmsetup.glade.h:90
 msgid "Logo"
 msgstr "ලාංඡනය"
 
-#: ../gui/gdmsetup.glade.h:91
+#: ../gui/mdmsetup.glade.h:91
 msgid "Maximum _remote sessions:"
 msgstr "උපරිම දුරස්ථ සැසිනස් (_r):"
 
-#: ../gui/gdmsetup.glade.h:92
+#: ../gui/mdmsetup.glade.h:92
 msgid "Maximum _wait time:"
 msgstr "උපරිම නැවතිමේ කාලය (_w):"
 
-#: ../gui/gdmsetup.glade.h:93
+#: ../gui/mdmsetup.glade.h:93
 msgid "Maximum indirect w_ait time:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:94
+#: ../gui/mdmsetup.glade.h:94
 msgid "Maximum p_ending indirect requests:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:95
+#: ../gui/mdmsetup.glade.h:95
 msgid "Menu Bar"
 msgstr "මෙනු බාරය"
 
-#: ../gui/gdmsetup.glade.h:96
+#: ../gui/mdmsetup.glade.h:96
 msgid "Messa_ge:"
 msgstr "පණිවිඩය (_g):"
 
-#: ../gui/gdmsetup.glade.h:97
+#: ../gui/mdmsetup.glade.h:97
 msgid "Ne_ver place cookies on NFS"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:98
+#: ../gui/mdmsetup.glade.h:98
 msgid "No _restart required"
 msgstr "නැවත ඇරඹිමක් අවශ්‍ය නැත"
 
-#: ../gui/gdmsetup.glade.h:99
+#: ../gui/mdmsetup.glade.h:99
 msgid ""
 "Number of simultaneously provided displays with host choosers.  If more "
 "queries from different hosts come in, the oldest ones will be forgotten."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:100
+#: ../gui/mdmsetup.glade.h:100
 msgid "Only allow login i_f user owns their home directory"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:101
+#: ../gui/mdmsetup.glade.h:101
 msgid "Op_tions:\t"
 msgstr "විකල්ප (_t):\t"
 
-#: ../gui/gdmsetup.glade.h:102
+#: ../gui/mdmsetup.glade.h:102
 msgid "Pa_th:"
 msgstr "මාර්‍ගය (_t):"
 
-#: ../gui/gdmsetup.glade.h:103
+#: ../gui/mdmsetup.glade.h:103
 msgid "Paranoia option. Only accepts user owned files and directories."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:104
+#: ../gui/mdmsetup.glade.h:104
 msgid "Per_sistent"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:105
+#: ../gui/mdmsetup.glade.h:105
 msgid "Permissions"
 msgstr "අවසර"
 
-#: ../gui/gdmsetup.glade.h:106
+#: ../gui/mdmsetup.glade.h:106
 msgid "Pick Background Color"
 msgstr "පසුබිම් වර්‍ණයක් තෝරා ගන්න"
 
-#: ../gui/gdmsetup.glade.h:107
+#: ../gui/mdmsetup.glade.h:107
 msgid ""
 "Plain\n"
 "Plain with face browser\n"
@@ -3921,38 +3921,38 @@ msgid ""
 "Themed with face browser"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:111
+#: ../gui/mdmsetup.glade.h:111
 msgid "Qui_ver when incorrect username/password entered"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:112
+#: ../gui/mdmsetup.glade.h:112
 msgid "R_emove"
 msgstr "ඉවත් කරන්න (_e)"
 
-#: ../gui/gdmsetup.glade.h:113
+#: ../gui/mdmsetup.glade.h:113
 msgid "Re_move Server"
 msgstr "සේවාදායකය ඉවත් කරන්න (_m)"
 
-#: ../gui/gdmsetup.glade.h:114
+#: ../gui/mdmsetup.glade.h:114
 msgid "Reboot, Halt, Suspend and Custom Command Preferences"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:115
+#: ../gui/mdmsetup.glade.h:115
 msgid "Refresh rate:"
 msgstr "නැවුම් කිරීමේ ශිග්‍රතාව:"
 
-#: ../gui/gdmsetup.glade.h:116
+#: ../gui/mdmsetup.glade.h:116
 msgid "Remote"
 msgstr "දුරස්ථ"
 
-#: ../gui/gdmsetup.glade.h:117
+#: ../gui/mdmsetup.glade.h:117
 msgid ""
 "Remote connections through XDMCP will be allowed to log into the \"TimedLogin"
 "\" user by letting the login window time out, just like the local user on "
 "the first console."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:118
+#: ../gui/mdmsetup.glade.h:118
 msgid ""
 "Remote login disabled\n"
 "Same as Local"
@@ -3960,432 +3960,432 @@ msgstr ""
 "දුරස්ථ පිවිසීම අක්‍රීයයි\n"
 "ප්‍රදේශිය ලෙසම"
 
-#: ../gui/gdmsetup.glade.h:120
+#: ../gui/mdmsetup.glade.h:120
 msgid "Resolution:"
 msgstr "විභේදනය:"
 
-#: ../gui/gdmsetup.glade.h:121
+#: ../gui/mdmsetup.glade.h:121
 msgid "Sc_ale to fit screen"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:122
+#: ../gui/mdmsetup.glade.h:122
 msgid "Scale background image to fit the screen."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:123
+#: ../gui/mdmsetup.glade.h:123
 msgid "Security"
 msgstr "ආරක්‍ෂාව"
 
-#: ../gui/gdmsetup.glade.h:124
+#: ../gui/mdmsetup.glade.h:124
 msgid "Select Background Image"
 msgstr "පසුබිම් පිළිඹිබුව තෝරන්න"
 
-#: ../gui/gdmsetup.glade.h:125
+#: ../gui/mdmsetup.glade.h:125
 msgid "Select Logo Image"
 msgstr "ලාංජන පිළිඹිබු ගොනුවක් තෝරන්න"
 
-#: ../gui/gdmsetup.glade.h:126
+#: ../gui/mdmsetup.glade.h:126
 msgid "Select Sound File"
 msgstr "හඬ ගොනුව තෝරන්න"
 
-#: ../gui/gdmsetup.glade.h:127
+#: ../gui/mdmsetup.glade.h:127
 msgid ""
 "Selected only\n"
 "Random from selected\n"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:130
+#: ../gui/mdmsetup.glade.h:130
 msgid ""
 "Sends debug output to the syslog.  This can be useful for tracking down "
-"problems with GDM.  This output tends to be verbose so should not be turned "
+"problems with MDM.  This output tends to be verbose so should not be turned "
 "on for general use."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:131
+#: ../gui/mdmsetup.glade.h:131
 msgid "Server Settings"
 msgstr "සේවාදායකයේ සැකසුම්"
 
-#: ../gui/gdmsetup.glade.h:132
+#: ../gui/mdmsetup.glade.h:132
 msgid "Server _name:"
 msgstr "සේවාදායකයේ නම (_n):"
 
-#: ../gui/gdmsetup.glade.h:133
+#: ../gui/mdmsetup.glade.h:133
 msgid "Servers To Start"
 msgstr "ඇරභීම සඳහා සේවාදායක"
 
-#: ../gui/gdmsetup.glade.h:134
+#: ../gui/mdmsetup.glade.h:134
 msgid "Set positio_n of the window:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:135
+#: ../gui/mdmsetup.glade.h:135
 msgid "Sh_ow title bar"
 msgstr "සිරස් තල තීරුව පෙන්වන්න (_o)"
 
-#: ../gui/gdmsetup.glade.h:136
+#: ../gui/mdmsetup.glade.h:136
 msgid "Shake the display when an incorrect username/password is entered."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:137
+#: ../gui/mdmsetup.glade.h:137
 msgid "Sho_w Actions menu"
 msgstr "ක්‍රියා මෙනුව දර්ශනය කරන්න (_w)"
 
-#: ../gui/gdmsetup.glade.h:138
+#: ../gui/mdmsetup.glade.h:138
 msgid ""
 "Show visual feedback in the password entry. Turning this option on can be a "
 "security hazard as the length of your password can be guessed."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:140
+#: ../gui/mdmsetup.glade.h:140
 msgid ""
 "Specifies if Custom Command will appear outside the login manager, for "
 "example on the desktop through the Log Out/Shut Down widgets."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:141
+#: ../gui/mdmsetup.glade.h:141
 msgid ""
-"Specifies if gdm will be stopped/restarted once Custom Command has been "
+"Specifies if mdm will be stopped/restarted once Custom Command has been "
 "executed."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:142
+#: ../gui/mdmsetup.glade.h:142
 msgid ""
 "Specifies the label that will be displayed on the Custom Command buttons and "
 "menu items."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:143
+#: ../gui/mdmsetup.glade.h:143
 msgid ""
 "Specifies the label that will be displayed on the Custom Command list items "
 "and radio buttons."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:144
+#: ../gui/mdmsetup.glade.h:144
 msgid ""
 "Specifies the message that will be displayed on Custom Command tooltip "
 "entries."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:145
+#: ../gui/mdmsetup.glade.h:145
 msgid ""
 "Specifies the message that will be displayed on the warning dialog box when "
 "one of the Custom Command widgets is activated."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:146
+#: ../gui/mdmsetup.glade.h:146
 msgid ""
 "Systemwide directory for face files. The sysadmin can place icons for users "
 "here without touching their homedirs. Faces are named after their users' "
 "logins. The face images must be stored in gdk-pixbuf supported formats and "
-"they must be readable for the GDM user."
+"they must be readable for the MDM user."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:147
+#: ../gui/mdmsetup.glade.h:147
 msgid "T_ooltip:"
 msgstr "මෙවලම් ඉඟි (_o):"
 
-#: ../gui/gdmsetup.glade.h:148
+#: ../gui/mdmsetup.glade.h:148
 msgid "Text to appear in the warning pop-up dialogs"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:149
+#: ../gui/mdmsetup.glade.h:149
 msgid "Text to appear on the buttons and menu items"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:150
+#: ../gui/mdmsetup.glade.h:150
 msgid "Text to appear on the radio buttons and list items"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:151
+#: ../gui/mdmsetup.glade.h:151
 msgid "Text to appear on the tooltips"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:152
+#: ../gui/mdmsetup.glade.h:152
 msgid ""
-"The UDP port number gdm should listen to for XDMCP requests. Don't change "
+"The UDP port number mdm should listen to for XDMCP requests. Don't change "
 "this unless you know what you are doing."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:153
+#: ../gui/mdmsetup.glade.h:153
 msgid ""
 "The command to execute, with full path to the binary of the X server, and "
 "any extra arguments needed. Example: /usr/X11R6/bin/X"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:154
+#: ../gui/mdmsetup.glade.h:154
 msgid "The greeter will play a sound after a failed login attempt."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:155
+#: ../gui/mdmsetup.glade.h:155
 msgid "The greeter will play a sound after a successful login attempt."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:156
+#: ../gui/mdmsetup.glade.h:156
 msgid "The greeter will play a sound or beep when it is ready for a login."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:157
+#: ../gui/mdmsetup.glade.h:157
 msgid "The horizontal position of the login window."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:158
+#: ../gui/mdmsetup.glade.h:158
 msgid "The name that will be displayed to the user."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:159
+#: ../gui/mdmsetup.glade.h:159
 msgid ""
 "The number of seconds that should pass before reactivating the entry field "
 "after a failed login."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:160
+#: ../gui/mdmsetup.glade.h:160
 msgid "The position of the login window cannot be changed."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:161
+#: ../gui/mdmsetup.glade.h:161
 msgid "The position of the login window is determined by Position X / Position Y."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:162
+#: ../gui/mdmsetup.glade.h:162
 msgid ""
 "The session that is used by default if the user does not have a saved "
 "preference and has picked 'Last' from the list of sessions."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:163
+#: ../gui/mdmsetup.glade.h:163
 msgid "The vertical position of the login window."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:164
+#: ../gui/mdmsetup.glade.h:164
 msgid "Themes"
 msgstr "තේමා"
 
-#: ../gui/gdmsetup.glade.h:165
+#: ../gui/mdmsetup.glade.h:165
 msgid ""
 "This server is available as a choice when a user wishes to run a flexible, "
 "on demand server."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:166
+#: ../gui/mdmsetup.glade.h:166
 msgid ""
-"To avoid denial of service attacks, GDM has fixed size queue of pending "
+"To avoid denial of service attacks, MDM has fixed size queue of pending "
 "connections. Please note that this parameter does *not* limit the number of "
 "remote displays which can be managed. It only limits the number of displays "
 "initiating a connection simultaneously."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:167
+#: ../gui/mdmsetup.glade.h:167
 msgid ""
-"To prevent attackers from filling up the pending queue, GDM will only allow "
+"To prevent attackers from filling up the pending queue, MDM will only allow "
 "one connection for each remote computer.  If you want to provide display "
 "services to computers with more than one screen, you should increase the "
 "this value accordingly."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:168
+#: ../gui/mdmsetup.glade.h:168
 msgid ""
 "Turns the Actions menu (which used to be called System menu) on or off.  If "
 "this is off then one of the actions will be available anywhere.  These "
 "actions include Shutdown, Restart, Custom, Configure, XDMCP chooser and such."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:169
+#: ../gui/mdmsetup.glade.h:169
 msgid "U_ser:"
 msgstr "පරිශීලක (_s):"
 
-#: ../gui/gdmsetup.glade.h:170
+#: ../gui/mdmsetup.glade.h:170
 msgid "Us_e 24 Hour Clock:"
 msgstr "පැය 24 ඔරලෝසුව භාවිතා කරන්න (_e):"
 
-#: ../gui/gdmsetup.glade.h:171
+#: ../gui/mdmsetup.glade.h:171
 msgid ""
 "Use circles instead of asterisks in the password entry. This may not work "
 "with all fonts however."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:172
+#: ../gui/mdmsetup.glade.h:172
 msgid "Users"
 msgstr "පරිශීලකයින්"
 
-#: ../gui/gdmsetup.glade.h:173
+#: ../gui/mdmsetup.glade.h:173
 msgid "Welcome Message"
 msgstr "පිළිගැනීමේ පණිවිඩය"
 
-#: ../gui/gdmsetup.glade.h:174
+#: ../gui/mdmsetup.glade.h:174
 msgid ""
-"When GDM is ready to manage a remote display, an ACCEPT packet is sent to it "
+"When MDM is ready to manage a remote display, an ACCEPT packet is sent to it "
 "containing a unique session id which will be used in future XDMCP "
-"conversations. GDM will then place the session id in the pending queue "
+"conversations. MDM will then place the session id in the pending queue "
 "waiting for the display to respond with a MANAGE request. If no response is "
-"received within maximum wait time, GDM will declare the display dead and "
+"received within maximum wait time, MDM will declare the display dead and "
 "erase it from the pending queue freeing up the slot for other displays."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:175
+#: ../gui/mdmsetup.glade.h:175
 msgid ""
 "When the user logs in and already has an existing session, they are "
 "connected to that session rather than starting a new session.  This only "
-"works for sessions running on Virtual Terminals started with gdmflexiserver, "
+"works for sessions running on Virtual Terminals started with mdmflexiserver, "
 "and not with XDMCP."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:176
+#: ../gui/mdmsetup.glade.h:176
 msgid "X Server Login Window Preferences"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:177
+#: ../gui/mdmsetup.glade.h:177
 msgid "XDMCP Login Window Preferences"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:178
+#: ../gui/mdmsetup.glade.h:178
 msgid "_Add..."
 msgstr "එක් කරන්න... (_A)"
 
-#: ../gui/gdmsetup.glade.h:179
+#: ../gui/mdmsetup.glade.h:179
 msgid "_Add/Modify..."
 msgstr "එක් කරන්න/වෙනස් කරන්න... (_A)"
 
-#: ../gui/gdmsetup.glade.h:180
+#: ../gui/mdmsetup.glade.h:180
 msgid "_Allow local system administrator login"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:181
+#: ../gui/mdmsetup.glade.h:181
 msgid "_Allow users to change fonts and colors of plain greeter"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:182
+#: ../gui/mdmsetup.glade.h:182
 msgid "_Background color:"
 msgstr "පසුතල වර්‍ණය: (_B)"
 
-#: ../gui/gdmsetup.glade.h:184
+#: ../gui/mdmsetup.glade.h:184
 #, no-c-format
 msgid "_Default: \"Welcome to %n\""
 msgstr "පෙරනිමිය (_D): \"ආයුබෝවන්, %n සඳහා සාදරයෙන් පිළිගනිමි\""
 
-#: ../gui/gdmsetup.glade.h:185
+#: ../gui/mdmsetup.glade.h:185
 msgid "_Default: \"Welcome\""
 msgstr "පෙරනිමිය (_D): \"ආයුබෝවන්\""
 
-#: ../gui/gdmsetup.glade.h:186
+#: ../gui/mdmsetup.glade.h:186
 msgid "_Deny TCP connections to Xserver"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:187
+#: ../gui/mdmsetup.glade.h:187
 msgid "_Enable Automatic Login"
 msgstr "ස්වයංක්‍රීය පිවිසුම සක්‍රීය කරන්න (_E)"
 
-#: ../gui/gdmsetup.glade.h:188
+#: ../gui/mdmsetup.glade.h:188
 msgid "_Enable accessible login"
 msgstr "ප්‍රවේශහැකි පිවිසුම සක්‍රීය කරන්න (_E)"
 
-#: ../gui/gdmsetup.glade.h:189
+#: ../gui/mdmsetup.glade.h:189
 msgid "_Flexible (on demand)"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:190
+#: ../gui/mdmsetup.glade.h:190
 msgid "_Global face dir:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:191
+#: ../gui/mdmsetup.glade.h:191
 msgid "_GtkRC file:"
 msgstr "GtkRC ගොනුව (_G):"
 
-#: ../gui/gdmsetup.glade.h:192
+#: ../gui/mdmsetup.glade.h:192
 msgid "_Image:"
 msgstr "පිළිඹිබුව: (_I)"
 
-#: ../gui/gdmsetup.glade.h:193
+#: ../gui/mdmsetup.glade.h:193
 msgid "_Include all users from /etc/passwd (not for NIS)"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:194
+#: ../gui/mdmsetup.glade.h:194
 msgid "_Label:"
 msgstr "ලේබලය (_L):"
 
-#: ../gui/gdmsetup.glade.h:195
+#: ../gui/mdmsetup.glade.h:195
 msgid "_Login screen ready:"
 msgstr "පිවිසුම් තිරය සුදානම් (_L):"
 
-#: ../gui/gdmsetup.glade.h:196
+#: ../gui/mdmsetup.glade.h:196
 msgid "_Logins are handled by this computer"
 msgstr "පිවිසුම් මෙම පරිගණකය මඟින් හසුරුවයි (_L)"
 
-#: ../gui/gdmsetup.glade.h:197
+#: ../gui/mdmsetup.glade.h:197
 msgid "_Maximum pending requests:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:198
+#: ../gui/mdmsetup.glade.h:198
 msgid "_Minimal UID:"
 msgstr "අවම UID (_M):"
 
-#: ../gui/gdmsetup.glade.h:199
+#: ../gui/mdmsetup.glade.h:199
 msgid "_Only allow login if user's home directory permissions are secure"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:200
+#: ../gui/mdmsetup.glade.h:200
 msgid "_Path:       "
 msgstr "මාර්‍ගය _(P):       "
 
-#: ../gui/gdmsetup.glade.h:201
+#: ../gui/mdmsetup.glade.h:201
 msgid "_Pause before login:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:202
+#: ../gui/mdmsetup.glade.h:202
 msgid "_Ping interval:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:203
+#: ../gui/mdmsetup.glade.h:203
 msgid "_Priority:"
 msgstr "ප්‍රමුඛත්වය (_P):"
 
-#: ../gui/gdmsetup.glade.h:204
+#: ../gui/mdmsetup.glade.h:204
 msgid "_Remove"
 msgstr "ඉවත් කරන්න (_R)"
 
-#: ../gui/gdmsetup.glade.h:205
+#: ../gui/mdmsetup.glade.h:205
 msgid "_Remove..."
 msgstr "ඉවත් කරන්න... (_R)"
 
-#: ../gui/gdmsetup.glade.h:206
+#: ../gui/mdmsetup.glade.h:206
 msgid "_Server:"
 msgstr "සේවාදායකය: (_S)"
 
-#: ../gui/gdmsetup.glade.h:207
+#: ../gui/mdmsetup.glade.h:207
 msgid "_Servers:"
 msgstr "සේවා දා_Servers:"
 
-#: ../gui/gdmsetup.glade.h:208
+#: ../gui/mdmsetup.glade.h:208
 msgid "_Show visual feedback (asterisks) in the password entry"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:209
+#: ../gui/mdmsetup.glade.h:209
 msgid "_Style:"
 msgstr "රටාව (_S):"
 
-#: ../gui/gdmsetup.glade.h:210
+#: ../gui/mdmsetup.glade.h:210
 msgid "_Theme:"
 msgstr "තේමාව (_T):"
 
-#: ../gui/gdmsetup.glade.h:211
+#: ../gui/mdmsetup.glade.h:211
 msgid "_Use circles instead of asterisks in the password entry"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:212
+#: ../gui/mdmsetup.glade.h:212
 msgid "_User:"
 msgstr "පරිශීලක (_U):"
 
-#: ../gui/gdmsetup.glade.h:213
+#: ../gui/mdmsetup.glade.h:213
 msgid "_VT:"
 msgstr "_VT:"
 
-#: ../gui/gdmsetup.glade.h:214
+#: ../gui/mdmsetup.glade.h:214
 msgid "_X coordinate"
 msgstr "X ඛංඩාක (_X)"
 
-#: ../gui/gdmsetup.glade.h:215
+#: ../gui/mdmsetup.glade.h:215
 msgid "_Y coordinate"
 msgstr "Y ඛංඩාක (_Y)"
 
-#: ../gui/gdmsetup.glade.h:216
+#: ../gui/mdmsetup.glade.h:216
 msgid ""
 "auto\n"
 "yes\n"
@@ -4395,15 +4395,15 @@ msgstr ""
 "ඔව්\n"
 "නැත"
 
-#: ../gui/gdmsetup.glade.h:219
+#: ../gui/mdmsetup.glade.h:219
 msgid "dummy"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:220
+#: ../gui/mdmsetup.glade.h:220
 msgid "seconds"
 msgstr "තත්පර"
 
-#: ../gui/gdmuser.c:280 ../gui/gdmuser.c:282
+#: ../gui/mdmuser.c:280 ../gui/mdmuser.c:282
 msgid "Too many users to list here..."
 msgstr ""
 
@@ -4435,13 +4435,13 @@ msgstr ""
 #: ../gui/greeter/greeter.c:1521
 msgid ""
 "The GTK+ greeter could not be started.  This display will abort and you may "
-"have to login another way and fix the installation of GDM"
+"have to login another way and fix the installation of MDM"
 msgstr ""
 
 #: ../gui/greeter/greeter.c:1588
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the gdm "
+"sessions you can use, but you should log in and correct the mdm "
 "configuration."
 msgstr ""
 
@@ -4555,48 +4555,48 @@ msgid "Confi_gure the login manager"
 msgstr "පිවිසුම් කළමාණාකරු මානකරණය (_g)"
 
 #: ../gui/greeter/greeter_system.c:505
-msgid "Configure GDM (this login manager). This will require the root password."
+msgid "Configure MDM (this login manager). This will require the root password."
 msgstr ""
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 Bond, James Bond"
 msgstr "(c) 2002 Bond, James Bond"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:2
 msgid "Bond, James Bond"
 msgstr ""
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:3
 msgid "Circles"
 msgstr ""
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:4
 msgid "Theme with blue circles"
 msgstr ""
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:1
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 GNOME"
 msgstr "(c) 2002 ග්නෝම්"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles with a Face Browser"
 msgstr ""
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:3
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:3
 msgid "GNOME Artists"
 msgstr "ග්නෝම් කතෘන්"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME with Browser"
 msgstr "ගවේශකය සමඟ ප්‍රීතිමත් ග්නෝම්"
 
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles"
 msgstr ""
 
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME"
 msgstr "ප්‍රීතිමත් ග්නෝම්"
 
@@ -4613,65 +4613,65 @@ msgstr ""
 msgid "Cannot open gestures file: %s"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:38
+#: ../utils/mdm-dmx-reconnect-proxy.c:38
 msgid "DMX display to migrate to"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:39 ../utils/gdm-dmx-reconnect-proxy.c:44
+#: ../utils/mdm-dmx-reconnect-proxy.c:39 ../utils/mdm-dmx-reconnect-proxy.c:44
 msgid "DISPLAY"
 msgstr "DISPLAY"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:43
+#: ../utils/mdm-dmx-reconnect-proxy.c:43
 msgid "Backend display name"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:48
+#: ../utils/mdm-dmx-reconnect-proxy.c:48
 msgid "Xauthority file for destination display"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:49 ../utils/gdm-dmx-reconnect-proxy.c:54
+#: ../utils/mdm-dmx-reconnect-proxy.c:49 ../utils/mdm-dmx-reconnect-proxy.c:54
 msgid "AUTHFILE"
 msgstr "AUTHFILE"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:53
+#: ../utils/mdm-dmx-reconnect-proxy.c:53
 msgid "Xauthority file for backend display"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:71
+#: ../utils/mdm-dmx-reconnect-proxy.c:71
 #, c-format
 msgid "Failed to open display \"%s\"\n"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:75
+#: ../utils/mdm-dmx-reconnect-proxy.c:75
 #, c-format
 msgid "DMX extension not present on \"%s\"\n"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:98
+#: ../utils/mdm-dmx-reconnect-proxy.c:98
 msgid "- migrate a backend display from one DMX display to another"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:104
+#: ../utils/mdm-dmx-reconnect-proxy.c:104
 #, c-format
 msgid "You must specify a destination DMX display using %s\n"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:109
+#: ../utils/mdm-dmx-reconnect-proxy.c:109
 #, c-format
 msgid "You must specify a backend display by using %s\n"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:124
+#: ../utils/mdm-dmx-reconnect-proxy.c:124
 #, c-format
 msgid "DMXAddScreen \"%s\" failed on \"%s\"\n"
 msgstr ""
 
-#: ../utils/gdmaskpass.c:26
+#: ../utils/mdmaskpass.c:26
 #, c-format
-msgid "gdmaskpass only runs as root\n"
+msgid "mdmaskpass only runs as root\n"
 msgstr ""
 
-#: ../utils/gdmaskpass.c:42 ../utils/gdmaskpass.c:48
+#: ../utils/mdmaskpass.c:42 ../utils/mdmaskpass.c:48
 #, c-format
 msgid "Authentication failure!\n"
 msgstr ""

@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,15 +23,15 @@
 #include <glib/gi18n.h>
 #include <sys/stat.h>
 
-#include "gdm.h"
-#include "gdm-common.h"
-#include "gdm-daemon-config.h"
-#include "gdm-log.h"
+#include "mdm.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config.h"
+#include "mdm-log.h"
 
 #include "filecheck.h"
 
 /**
- * gdm_file_check:
+ * mdm_file_check:
  * @caller: String to be prepended to error messages.
  * @user: User id for the user owning the file/dir.
  * @dir: Directory to be examined.
@@ -46,7 +46,7 @@
 
 /* we should be euid the user BTW */
 gboolean
-gdm_file_check (const gchar *caller,
+mdm_file_check (const gchar *caller,
                 uid_t user,
                 const gchar *dir,
 		const gchar *file,
@@ -65,9 +65,9 @@ gdm_file_check (const gchar *caller,
 		return FALSE;
 
 	/* Stat on automounted directory - append the '/.' to dereference mount point.
-	   Do this only if GdmSupportAutomount is true (default is false)
+	   Do this only if MdmSupportAutomount is true (default is false)
 	   2006-09-22, Jerzy Borkowski, CAMK */
-	if G_UNLIKELY (gdm_daemon_config_get_value_bool (GDM_KEY_SUPPORT_AUTOMOUNT)) {
+	if G_UNLIKELY (mdm_daemon_config_get_value_bool (MDM_KEY_SUPPORT_AUTOMOUNT)) {
 		dirautofs = g_strconcat(dir, "/.", NULL);
 		VE_IGNORE_EINTR (r = stat (dirautofs, &statbuf));
 		g_free(dirautofs);
@@ -79,31 +79,31 @@ gdm_file_check (const gchar *caller,
 
 	if (r < 0) {
 		if ( ! absentdirok)
-			gdm_debug ("%s: Directory %s does not exist.",
+			mdm_debug ("%s: Directory %s does not exist.",
 				   caller, dir);
 		return FALSE;
 	}
 
 	/* Check if dir is owned by the user ...
-	   Only, if GDM_KEY_CHECK_DIR_OWNER is true (default)
+	   Only, if MDM_KEY_CHECK_DIR_OWNER is true (default)
 	   This is a "hack" for directories not owned by
 	   the user.
 	   2004-06-22, Andreas Schubert, MATHEMA Software GmbH */
 
-	if G_UNLIKELY (gdm_daemon_config_get_value_bool (GDM_KEY_CHECK_DIR_OWNER) && (statbuf.st_uid != user)) {
-		gdm_debug ("%s: %s is not owned by uid %d.", caller, dir, user);
+	if G_UNLIKELY (mdm_daemon_config_get_value_bool (MDM_KEY_CHECK_DIR_OWNER) && (statbuf.st_uid != user)) {
+		mdm_debug ("%s: %s is not owned by uid %d.", caller, dir, user);
 		return FALSE;
 	}
 
 	/* ... if group has write permission ... */
 	if G_UNLIKELY (perms < 1 && (statbuf.st_mode & S_IWGRP) == S_IWGRP) {
-		gdm_debug ("%s: %s is writable by group.", caller, dir);
+		mdm_debug ("%s: %s is writable by group.", caller, dir);
 		return FALSE;
 	}
 
 	/* ... and if others have write permission. */
 	if G_UNLIKELY (perms < 2 && (statbuf.st_mode & S_IWOTH) == S_IWOTH) {
-		gdm_debug ("%s: %s is writable by other.", caller, dir);
+		mdm_debug ("%s: %s is writable by other.", caller, dir);
 		return FALSE;
 	}
 
@@ -118,7 +118,7 @@ gdm_file_check (const gchar *caller,
 			return TRUE;
 		}
 		else {
-			gdm_debug ("%s: %s does not exist but must exist.", caller, fullpath);
+			mdm_debug ("%s: %s does not exist but must exist.", caller, fullpath);
 			g_free (fullpath);
 			return FALSE;
 		}
@@ -126,35 +126,35 @@ gdm_file_check (const gchar *caller,
 
 	/* Check that it is a regular file ... */
 	if G_UNLIKELY (! S_ISREG (statbuf.st_mode)) {
-		gdm_debug ("%s: %s is not a regular file.", caller, fullpath);
+		mdm_debug ("%s: %s is not a regular file.", caller, fullpath);
 		g_free (fullpath);
 		return FALSE;
 	}
 
 	/* ... owned by the user ... */
 	if G_UNLIKELY (statbuf.st_uid != user) {
-		gdm_debug ("%s: %s is not owned by uid %d.", caller, fullpath, user);
+		mdm_debug ("%s: %s is not owned by uid %d.", caller, fullpath, user);
 		g_free (fullpath);
 		return FALSE;
 	}
 
 	/* ... unwritable by group ... */
 	if G_UNLIKELY (perms < 1 && (statbuf.st_mode & S_IWGRP) == S_IWGRP) {
-		gdm_debug ("%s: %s is writable by group.", caller, fullpath);
+		mdm_debug ("%s: %s is writable by group.", caller, fullpath);
 		g_free (fullpath);
 		return FALSE;
 	}
 
 	/* ... unwritable by others ... */
 	if G_UNLIKELY (perms < 2 && (statbuf.st_mode & S_IWOTH) == S_IWOTH) {
-		gdm_debug ("%s: %s is writable by group/other.", caller, fullpath);
+		mdm_debug ("%s: %s is writable by group/other.", caller, fullpath);
 		g_free (fullpath);
 		return FALSE;
 	}
 
 	/* ... and smaller than sysadmin specified limit. */
 	if G_UNLIKELY (maxsize && statbuf.st_size > maxsize) {
-		gdm_debug ("%s: %s is bigger than sysadmin specified maximum file size.",
+		mdm_debug ("%s: %s is bigger than sysadmin specified maximum file size.",
 			   caller, fullpath);
 		g_free (fullpath);
 		return FALSE;
@@ -168,7 +168,7 @@ gdm_file_check (const gchar *caller,
 
 /* we should be euid the user BTW */
 gboolean
-gdm_auth_file_check (const gchar *caller,
+mdm_auth_file_check (const gchar *caller,
                      uid_t user,
                      const gchar *authfile,
                      gboolean absentok,
@@ -188,32 +188,32 @@ gdm_auth_file_check (const gchar *caller,
 	if (r < 0) {
 		if (absentok)
 			return TRUE;
-		gdm_debug ("%s: %s does not exist but must exist.", caller, authfile);
+		mdm_debug ("%s: %s does not exist but must exist.", caller, authfile);
 		return FALSE;
 	}
 
 	/* Check that it is a regular file ... */
 	if G_UNLIKELY (! S_ISREG (statbuf.st_mode)) {
-		gdm_debug ("%s: %s is not a regular file.", caller, authfile);
+		mdm_debug ("%s: %s is not a regular file.", caller, authfile);
 		return FALSE;
 	}
 
 	/* ... owned by the user ... */
 	if G_UNLIKELY (statbuf.st_uid != user) {
-		gdm_debug ("%s: %s is not owned by uid %d.", caller, authfile, user);
+		mdm_debug ("%s: %s is not owned by uid %d.", caller, authfile, user);
 		return FALSE;
 	}
 
 	/* ... has right permissions ... */
 	if G_UNLIKELY (statbuf.st_mode & 0077) {
-		gdm_debug ("%s: %s has wrong permissions (should be 0600)", caller, authfile);
+		mdm_debug ("%s: %s has wrong permissions (should be 0600)", caller, authfile);
 		return FALSE;
 	}
 
-	usermaxfile = gdm_daemon_config_get_value_int (GDM_KEY_USER_MAX_FILE);
+	usermaxfile = mdm_daemon_config_get_value_int (MDM_KEY_USER_MAX_FILE);
 	/* ... and smaller than sysadmin specified limit. */
 	if G_UNLIKELY (usermaxfile && statbuf.st_size > usermaxfile) {
-		gdm_debug ("%s: %s is bigger than sysadmin specified maximum file size.",
+		mdm_debug ("%s: %s is bigger than sysadmin specified maximum file size.",
 			caller, authfile);
 		return FALSE;
 	}

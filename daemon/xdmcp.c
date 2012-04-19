@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,43 +25,43 @@
 #include <glib/gi18n.h>
 
 #include "display.h"
-#include "gdm-daemon-config.h"
-#include "gdm-log.h"
+#include "mdm-daemon-config.h"
+#include "mdm-log.h"
 
-#include "gdm-xdmcp-manager.h"
+#include "mdm-xdmcp-manager.h"
 #include "xdmcp.h"
 
 #ifdef HAVE_LIBXDMCP
 
-static GdmXdmcpManager *xdmcp_manager = NULL;
+static MdmXdmcpManager *xdmcp_manager = NULL;
 
 gboolean
-gdm_xdmcp_init (void)
+mdm_xdmcp_init (void)
 {
-	xdmcp_manager = gdm_xdmcp_manager_new ();
+	xdmcp_manager = mdm_xdmcp_manager_new ();
 	return TRUE;
 }
 
 void
-gdm_xdmcp_run (void)
+mdm_xdmcp_run (void)
 {
 	if (xdmcp_manager != NULL) {
-		gdm_xdmcp_manager_start (xdmcp_manager, NULL);
+		mdm_xdmcp_manager_start (xdmcp_manager, NULL);
 	}
 }
 
 void
-gdm_xdmcp_close (void)
+mdm_xdmcp_close (void)
 {
 	g_object_unref (xdmcp_manager);
 }
 
 static void
-reconnect_to_parent (GdmDisplay *to)
+reconnect_to_parent (MdmDisplay *to)
 {
        GError *error;
        gchar *command_argv[10];
-       const gchar *proxyreconnect = gdm_daemon_config_get_value_string (GDM_KEY_XDMCP_PROXY_RECONNECT);
+       const gchar *proxyreconnect = mdm_daemon_config_get_value_string (MDM_KEY_XDMCP_PROXY_RECONNECT);
 
        command_argv[0] = (char *)proxyreconnect;
        command_argv[1] = "--display";
@@ -74,7 +74,7 @@ reconnect_to_parent (GdmDisplay *to)
        command_argv[8] = to->authfile;
        command_argv[9] = NULL;
 
-       gdm_debug ("XDMCP: migrating display by running "
+       mdm_debug ("XDMCP: migrating display by running "
                   "'%s --display %s --display-authfile %s --to %s --to-authfile %s'",
                   proxyreconnect,
                   to->parent_disp, to->parent_auth_file,
@@ -82,9 +82,9 @@ reconnect_to_parent (GdmDisplay *to)
 
        error = NULL;
        if (!g_spawn_async (NULL, command_argv, NULL, 0, NULL, NULL, NULL, &error)) {
-               gdm_error (_("%s: Failed to run "
+               mdm_error (_("%s: Failed to run "
                             "'%s --display %s --display-authfile %s --to %s --to-authfile %s': %s"),
-                          "gdm_xdmcp_migrate",
+                          "mdm_xdmcp_migrate",
                           proxyreconnect,
                           to->parent_disp, to->parent_auth_file,
                           to->name, to->authfile,
@@ -94,7 +94,7 @@ reconnect_to_parent (GdmDisplay *to)
 }
 
 void
-gdm_xdmcp_migrate (GdmDisplay *from, GdmDisplay *to)
+mdm_xdmcp_migrate (MdmDisplay *from, MdmDisplay *to)
 {
        if (from->type != TYPE_XDMCP_PROXY ||
            to->type   != TYPE_XDMCP_PROXY)
@@ -114,28 +114,28 @@ gdm_xdmcp_migrate (GdmDisplay *from, GdmDisplay *to)
 
 /* Here come some empty stubs for no XDMCP support */
 int
-gdm_xdmcp_init  (void)
+mdm_xdmcp_init  (void)
 {
-	gdm_error (_("%s: No XDMCP support"), "gdm_xdmcp_init");
+	mdm_error (_("%s: No XDMCP support"), "mdm_xdmcp_init");
 	return FALSE;
 }
 
 void
-gdm_xdmcp_run (void)
+mdm_xdmcp_run (void)
 {
-	gdm_error (_("%s: No XDMCP support"), "gdm_xdmcp_run");
+	mdm_error (_("%s: No XDMCP support"), "mdm_xdmcp_run");
 }
 
 void
-gdm_xdmcp_close (void)
+mdm_xdmcp_close (void)
 {
-	gdm_error (_("%s: No XDMCP support"), "gdm_xdmcp_close");
+	mdm_error (_("%s: No XDMCP support"), "mdm_xdmcp_close");
 }
 
 void
-gdm_xdmcp_migrate (GdmDisplay *from, GdmDisplay *to)
+mdm_xdmcp_migrate (MdmDisplay *from, MdmDisplay *to)
 {
-	gdm_error (_("%s: No XDMCP support"), "gdm_xdmcp_migrate");
+	mdm_error (_("%s: No XDMCP support"), "mdm_xdmcp_migrate");
 }
 
 #endif /* HAVE_LIBXDMCP */

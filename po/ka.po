@@ -1,12 +1,12 @@
 # Georgian translation for Gnome Display Manager 2.
 # Copyright © 2005 Canonical Ltd, and Rosetta Contributors 2005
-# This file is distributed under the same license as the gdm2 package.
+# This file is distributed under the same license as the mdm2 package.
 # Alexander Didebulidze <didebuli@in.tum.de>, 2005, 2006.
 # Vladimer Sichinava <alinux@siena.linux.it>, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gdm2\n"
+"Project-Id-Version: mdm2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-16 07:38+0100\n"
 "PO-Revision-Date: 2006-02-22 05:34+0100\n"
@@ -40,7 +40,7 @@ msgstr "ეს არის სისტემის სტანდარტუ
 msgid ""
 "I cannot start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly.  You will need to log in on a console and rerun "
-"the X configuration program.  Then restart GDM."
+"the X configuration program.  Then restart MDM."
 msgstr "I X არა ზემოთ თქვენ -სკენ - ჩართულია a და X პროგრამა."
 
 #: ../config/gettextfoo.h:4
@@ -62,7 +62,7 @@ msgstr "I ახლა -სკენ X."
 #: ../config/gettextfoo.h:7
 #, fuzzy
 msgid ""
-"I will disable this X server for now.  Restart GDM when it is configured "
+"I will disable this X server for now.  Restart MDM when it is configured "
 "correctly."
 msgstr "I გამორთვა X ახლა გადატვირთე."
 
@@ -134,7 +134,7 @@ msgstr "წმ არა ახალი ელემენტი -"
 #, c-format
 #, fuzzy
 msgid ""
-"GDM could not write a new authorization entry to disk.  Possibly out of "
+"MDM could not write a new authorization entry to disk.  Possibly out of "
 "diskspace.%s%s"
 msgstr "არა a ახალი ელემენტი -სკენ - წმ წმ"
 
@@ -174,7 +174,7 @@ msgstr "წმ არა"
 msgid "%s: Ignoring suspiciously looking cookie file %s"
 msgstr "წმ ფაილი წმ"
 
-#: ../daemon/auth.c:895 ../daemon/gdm.c:1364 ../daemon/gdm.c:1728
+#: ../daemon/auth.c:895 ../daemon/mdm.c:1364 ../daemon/mdm.c:1728
 #, c-format
 msgid "Can't write to %s: %s"
 msgstr "ვერ ვწერ %s: %s"
@@ -184,9 +184,9 @@ msgstr "ვერ ვწერ %s: %s"
 #. * cought that elsewhere.  Things are just
 #. * not working out, so tell the user.
 #. * However this may have been caused by a malicious local user
-#. * zapping the display repeatedly, that shouldn't cause gdm
+#. * zapping the display repeatedly, that shouldn't cause mdm
 #. * to stop working completely so just wait for 2 minutes,
-#. * that should give people ample time to stop gdm if needed,
+#. * that should give people ample time to stop mdm if needed,
 #. * or just wait for the stupid malicious user to get bored
 #. * and go away
 #: ../daemon/display.c:111
@@ -207,7 +207,7 @@ msgstr "წმ"
 #: ../daemon/display.c:331
 #, c-format
 #, fuzzy
-msgid "%s: Failed forking GDM slave process for %s"
+msgid "%s: Failed forking MDM slave process for %s"
 msgstr "წმ ვერ შევასრულე წმ"
 
 #: ../daemon/errorgui.c:348
@@ -281,74 +281,74 @@ msgstr "წმ წმ ჯგუფი სხვა."
 msgid "%s: %s is bigger than sysadmin specified maximum file size."
 msgstr "წმ წმ ფაილი."
 
-#: ../daemon/gdm-net.c:331
+#: ../daemon/mdm-net.c:331
 #, c-format
 #, fuzzy
 msgid "%s: Could not make socket"
 msgstr "წმ არა"
 
-#: ../daemon/gdm-net.c:362
+#: ../daemon/mdm-net.c:362
 #, c-format
 #, fuzzy
 msgid "%s: Could not bind socket"
 msgstr "წმ არა"
 
-#: ../daemon/gdm-net.c:448
+#: ../daemon/mdm-net.c:448
 #, c-format
 #, fuzzy
 msgid "%s: Could not make FIFO"
 msgstr "წმ არა"
 
-#: ../daemon/gdm-net.c:456
+#: ../daemon/mdm-net.c:456
 #, c-format
 #, fuzzy
 msgid "%s: Could not open FIFO"
 msgstr "წმ არა გახსნა"
 
 #. FIXME: how to handle this?
-#: ../daemon/gdm.c:198 ../daemon/gdm.c:206 ../daemon/gdm.c:1498
-#: ../daemon/gdm.c:1506
+#: ../daemon/mdm.c:198 ../daemon/mdm.c:206 ../daemon/mdm.c:1498
+#: ../daemon/mdm.c:1506
 #, c-format
 #, fuzzy
 msgid "Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"
 msgstr "PID ფაილი წმ - შეცდომა წმ n"
 
-#: ../daemon/gdm.c:200 ../daemon/gdm.c:208 ../daemon/gdm.c:1500
-#: ../daemon/gdm.c:1508
+#: ../daemon/mdm.c:200 ../daemon/mdm.c:208 ../daemon/mdm.c:1500
+#: ../daemon/mdm.c:1508
 #, c-format
 #, fuzzy
 msgid "Cannot write PID file %s: possibly out of diskspace.  Error: %s"
 msgstr "PID ფაილი წმ - შეცდომა წმ"
 
-#: ../daemon/gdm.c:218
+#: ../daemon/mdm.c:218
 #, fuzzy, c-format
 msgid "%s: fork () failed!"
 msgstr "წმ!"
 
 #. should never happen
-#: ../daemon/gdm.c:221 ../daemon/slave.c:3332
+#: ../daemon/mdm.c:221 ../daemon/slave.c:3332
 #, fuzzy, c-format
 msgid "%s: setsid () failed: %s!"
 msgstr "წმ წმ!"
 
-#: ../daemon/gdm.c:412
+#: ../daemon/mdm.c:412
 #, c-format
 #, fuzzy
 msgid "%s: Trying failsafe X server %s"
 msgstr "წმ X წმ"
 
-#: ../daemon/gdm.c:430
+#: ../daemon/mdm.c:430
 #, c-format
 #, fuzzy
 msgid "%s: Running the XKeepsCrashing script"
 msgstr "წმ გაშვებულია"
 
-#: ../daemon/gdm.c:547
+#: ../daemon/mdm.c:547
 #, fuzzy
 msgid ""
 "The X server (your graphical interface) cannot be started.  It is likely "
 "that it is not set up correctly.  You will need to log in on a console and "
-"rerun the X configuration application, then restart GDM."
+"rerun the X configuration application, then restart MDM."
 msgstr "X არა ზემოთ თქვენ -სკენ - ჩართულია a და X პროგრამა."
 
 #. else {
@@ -356,7 +356,7 @@ msgstr "X არა ზემოთ თქვენ -სკენ - ჩართ
 #. * talk to him.  He's on some 'l33t system anyway, so syslog
 #. * reading will do him good
 #. * }
-#: ../daemon/gdm.c:559
+#: ../daemon/mdm.c:559
 #, c-format
 #, fuzzy
 msgid ""
@@ -364,116 +364,116 @@ msgid ""
 "display %s"
 msgstr "ვერ შევასრულე -სკენ X - a short წმ"
 
-#: ../daemon/gdm.c:569 ../daemon/gdm.c:2298
+#: ../daemon/mdm.c:569 ../daemon/mdm.c:2298
 #, fuzzy
 msgid "Master suspending..."
 msgstr "პირველადი."
 
-#: ../daemon/gdm.c:622
+#: ../daemon/mdm.c:622
 #, c-format
 msgid "System is restarting, please wait ..."
 msgstr "სისტემა გადატვირთვის პროცესშია, გთხოვთ მოითმინოთ..."
 
-#: ../daemon/gdm.c:624
+#: ../daemon/mdm.c:624
 #, c-format
 msgid "System is shutting down, please wait ..."
 msgstr "სისტემა ითიშება, გთხოვთ დაელოდეთ..."
 
-#: ../daemon/gdm.c:635
+#: ../daemon/mdm.c:635
 #, fuzzy
 msgid "Master halting..."
 msgstr "პირველადი."
 
-#: ../daemon/gdm.c:648
+#: ../daemon/mdm.c:648
 #, c-format
 msgid "%s: Halt failed: %s"
 msgstr "%s:·გათიშვა შეფერხებულია:·%s"
 
-#: ../daemon/gdm.c:657
+#: ../daemon/mdm.c:657
 msgid "Restarting computer..."
 msgstr "მიმდინარეობს კომპიუტერის გადატვირთვა..."
 
-#: ../daemon/gdm.c:670
+#: ../daemon/mdm.c:670
 #, fuzzy, c-format
 msgid "%s: Restart failed: %s"
 msgstr "წმ გადატვირთე წმ"
 
-#: ../daemon/gdm.c:774
+#: ../daemon/mdm.c:774
 #, c-format
 #, fuzzy
 msgid ""
-"Restart GDM, Restart machine, Suspend, or Halt request when there is no "
+"Restart MDM, Restart machine, Suspend, or Halt request when there is no "
 "system menu from display %s"
 msgstr "გადატვირთე გადატვირთე შეჩერება ან არა მენიუ წმ"
 
-#: ../daemon/gdm.c:783
+#: ../daemon/mdm.c:783
 #, c-format
 #, fuzzy
 msgid ""
-"Restart GDM, Restart machine, Suspend or Halt request from a non-static "
+"Restart MDM, Restart machine, Suspend or Halt request from a non-static "
 "display %s"
 msgstr "გადატვირთე გადატვირთე შეჩერება ან a სტაიკური წმ"
 
 #. Bury this display for good
-#: ../daemon/gdm.c:849
+#: ../daemon/mdm.c:849
 #, c-format
 #, fuzzy
 msgid "%s: Aborting display %s"
 msgstr "წმ წმ"
 
-#: ../daemon/gdm.c:1000
-msgid "GDM restarting ..."
-msgstr "GDM გადატვირთვა ..."
+#: ../daemon/mdm.c:1000
+msgid "MDM restarting ..."
+msgstr "MDM გადატვირთვა ..."
 
-#: ../daemon/gdm.c:1004
+#: ../daemon/mdm.c:1004
 #, fuzzy
 msgid "Failed to restart self"
 msgstr "ვერ შევასრულე -სკენ"
 
 #. FIXME: note that this could mean out of memory
-#: ../daemon/gdm.c:1078
+#: ../daemon/mdm.c:1078
 #, fuzzy
 msgid "main daemon: Got SIGABRT. Something went very wrong. Going down!"
 msgstr "ქვემოთ!"
 
-#: ../daemon/gdm.c:1236
+#: ../daemon/mdm.c:1236
 #, fuzzy
 msgid "Do not fork into the background"
 msgstr "არ გაუშვა ფონურ რეჟიმში "
 
-#: ../daemon/gdm.c:1238
+#: ../daemon/mdm.c:1238
 #, fuzzy
 msgid "No console (static) servers to be run"
 msgstr "არა სტაიკური -სკენ"
 
-#: ../daemon/gdm.c:1240
+#: ../daemon/mdm.c:1240
 #, fuzzy
 msgid "Alternative configuration file"
 msgstr "ფაილი"
 
-#: ../daemon/gdm.c:1240
+#: ../daemon/mdm.c:1240
 msgid "CONFIGFILE"
 msgstr "CONFIGFILE"
 
-#: ../daemon/gdm.c:1242
+#: ../daemon/mdm.c:1242
 msgid "Preserve LD_* variables"
 msgstr ""
 
-#: ../daemon/gdm.c:1244
-msgid "Print GDM version"
-msgstr "დაბეჭდე GDM ის ვერსია"
+#: ../daemon/mdm.c:1244
+msgid "Print MDM version"
+msgstr "დაბეჭდე MDM ის ვერსია"
 
-#: ../daemon/gdm.c:1246
+#: ../daemon/mdm.c:1246
 #, fuzzy
 msgid "Start the first X server but then halt until we get a GO in the fifo"
 msgstr "გაშვება პირველი X a -"
 
-#: ../daemon/gdm.c:1353 ../daemon/gdm.c:1697
+#: ../daemon/mdm.c:1353 ../daemon/mdm.c:1697
 #, c-format
 msgid "Can't open %s for writing"
 msgstr "ვერ ვხსნი სესიას %s გამო"
 
-#: ../daemon/gdm.c:1411 ../gui/gdmchooser.c:1971
+#: ../daemon/mdm.c:1411 ../gui/mdmchooser.c:1971
 #, c-format
 #, fuzzy
 msgid ""
@@ -482,43 +482,43 @@ msgid ""
 msgstr "შეცდომა ჩართულია წმ წმ წმ დახმარება -სკენ a სია - ხაზი n"
 
 #. make sure the pid file doesn't get wiped
-#: ../daemon/gdm.c:1433
+#: ../daemon/mdm.c:1433
 #, fuzzy
-msgid "Only root wants to run GDM\n"
+msgid "Only root wants to run MDM\n"
 msgstr "მხოლოდ root -სკენ n"
 
-#: ../daemon/gdm.c:1449 ../daemon/gdm.c:1453 ../daemon/gdm.c:1536
-#: ../daemon/gdm.c:1540 ../daemon/gdm.c:1544 ../daemon/gdm.c:1548
-#: ../daemon/gdm.c:1558 ../daemon/gdm.c:1564 ../daemon/gdm.c:1575
+#: ../daemon/mdm.c:1449 ../daemon/mdm.c:1453 ../daemon/mdm.c:1536
+#: ../daemon/mdm.c:1540 ../daemon/mdm.c:1544 ../daemon/mdm.c:1548
+#: ../daemon/mdm.c:1558 ../daemon/mdm.c:1564 ../daemon/mdm.c:1575
 #: ../daemon/misc.c:1771 ../daemon/misc.c:1775 ../daemon/misc.c:1779
 #: ../daemon/misc.c:1786 ../daemon/misc.c:1790 ../daemon/misc.c:1794
 #: ../daemon/server.c:522 ../daemon/server.c:535 ../daemon/slave.c:780
 #: ../daemon/slave.c:794 ../daemon/slave.c:804 ../daemon/slave.c:814
-#: ../daemon/slave.c:826 ../gui/gdmlogin.c:3523 ../gui/gdmlogin.c:3534
-#: ../gui/gdmlogin.c:3540
+#: ../daemon/slave.c:826 ../gui/mdmlogin.c:3523 ../gui/mdmlogin.c:3534
+#: ../gui/mdmlogin.c:3540
 #, c-format
 #, fuzzy
 msgid "%s: Error setting up %s signal handler: %s"
 msgstr "წმ შეცდომა ზემოთ წმ წმ"
 
-#: ../daemon/gdm.c:1480
+#: ../daemon/mdm.c:1480
 #, fuzzy
-msgid "GDM already running. Aborting!"
-msgstr "GDM ჩატვირთულია ვცდილობ გათიშვას!"
+msgid "MDM already running. Aborting!"
+msgstr "MDM ჩატვირთულია ვცდილობ გათიშვას!"
 
-#: ../daemon/gdm.c:1584
+#: ../daemon/mdm.c:1584
 #, c-format
 #, fuzzy
 msgid "%s: Error setting up CHLD signal handler"
 msgstr "წმ შეცდომა ზემოთ"
 
-#: ../daemon/gdm.c:2713
+#: ../daemon/mdm.c:2713
 msgid "DYNAMIC request denied: Not authenticated"
 msgstr ""
 
-#: ../daemon/gdm.c:2879 ../daemon/gdm.c:2897 ../daemon/gdm.c:3157
-#: ../daemon/gdm.c:3208 ../daemon/gdm.c:3260 ../daemon/gdm.c:3301
-#: ../daemon/gdm.c:3327
+#: ../daemon/mdm.c:2879 ../daemon/mdm.c:2897 ../daemon/mdm.c:3157
+#: ../daemon/mdm.c:3208 ../daemon/mdm.c:3260 ../daemon/mdm.c:3301
+#: ../daemon/mdm.c:3327
 #, c-format
 #, fuzzy
 msgid "%s request denied: Not authenticated"
@@ -526,12 +526,12 @@ msgstr "წმ"
 
 #. Don't print the name to syslog as it might be
 #. * long and dangerous
-#: ../daemon/gdm.c:2915
+#: ../daemon/mdm.c:2915
 #, fuzzy
 msgid "Unknown server type requested; using standard server."
 msgstr "უცნობი მოთხოვნილი."
 
-#: ../daemon/gdm.c:2919
+#: ../daemon/mdm.c:2919
 #, c-format
 #, fuzzy
 msgid ""
@@ -539,104 +539,104 @@ msgid ""
 "standard server."
 msgstr "წმ არა -სკენ."
 
-#: ../daemon/gdmconfig.c:551 ../daemon/gdmconfig.c:558
+#: ../daemon/mdmconfig.c:551 ../daemon/mdmconfig.c:558
 #, c-format
 #, fuzzy
-msgid "%s: No GDM configuration file: %s. Using defaults."
+msgid "%s: No MDM configuration file: %s. Using defaults."
 msgstr "წმ არა ფაილი წმ."
 
-#: ../daemon/gdmconfig.c:854
+#: ../daemon/mdmconfig.c:854
 #, c-format
 #, fuzzy
-msgid "%s: BaseXsession empty; using %s/gdm/Xsession"
+msgid "%s: BaseXsession empty; using %s/mdm/Xsession"
 msgstr "წმ წმ"
 
-#: ../daemon/gdmconfig.c:887
+#: ../daemon/mdmconfig.c:887
 #, c-format
 #, fuzzy
 msgid "%s: Standard X server not found; trying alternatives"
 msgstr "წმ სტანდარტული X არა"
 
-#: ../daemon/gdmconfig.c:946
+#: ../daemon/mdmconfig.c:946
 #, fuzzy, c-format
 msgid "%s: No greeter specified."
 msgstr "წმ არა."
 
-#: ../daemon/gdmconfig.c:948
+#: ../daemon/mdmconfig.c:948
 #, fuzzy, c-format
 msgid "%s: No remote greeter specified."
 msgstr "წმ არა."
 
-#: ../daemon/gdmconfig.c:950
+#: ../daemon/mdmconfig.c:950
 #, c-format
 msgid "%s: No sessions directory specified."
 msgstr "%s: სესიების დირექტორია არ არის მითითებული."
 
-#: ../daemon/gdmconfig.c:1034
+#: ../daemon/mdmconfig.c:1034
 #, c-format
 #, fuzzy
 msgid "%s: XDMCP was enabled while there is no XDMCP support; turning it off"
 msgstr "წმ ჩართული არა სუპორტი გამორთულია"
 
-#: ../daemon/gdmconfig.c:1095
+#: ../daemon/mdmconfig.c:1095
 #, c-format
 #, fuzzy
 msgid "%s: TimedLoginDelay is less than 5, defaulting to 5."
 msgstr "წმ ნაკლები -სკენ."
 
-#: ../daemon/gdmconfig.c:1331
+#: ../daemon/mdmconfig.c:1331
 #, c-format
 #, fuzzy
 msgid "%s: Priority out of bounds; changed to %d"
 msgstr "წმ პრიორიტეტი - -სკენ"
 
-#: ../daemon/gdmconfig.c:1337
+#: ../daemon/mdmconfig.c:1337
 #, c-format
 #, fuzzy
 msgid "%s: Empty server command; using standard command."
 msgstr "წმ ცარიელი."
 
-#: ../daemon/gdmconfig.c:1536
+#: ../daemon/mdmconfig.c:1536
 #, c-format
 #, fuzzy
 msgid "%s: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s."
 msgstr "წმ წმ არა ან a წმ."
 
-#: ../daemon/gdmconfig.c:1552
+#: ../daemon/mdmconfig.c:1552
 #, c-format
 #, fuzzy
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this "
-"does not exist. Please correct GDM configuration and restart GDM."
+"does not exist. Please correct MDM configuration and restart MDM."
 msgstr "სერვერი ავტორიზაცია -სკენ წმ არა და."
 
-#: ../daemon/gdmconfig.c:1561
+#: ../daemon/mdmconfig.c:1561
 #, c-format
 #, fuzzy
 msgid "%s: Authdir %s does not exist. Aborting."
 msgstr "წმ წმ არა."
 
-#: ../daemon/gdmconfig.c:1566
+#: ../daemon/mdmconfig.c:1566
 #, c-format
 #, fuzzy
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this is "
-"not a directory. Please correct GDM configuration and restart GDM."
+"not a directory. Please correct MDM configuration and restart MDM."
 msgstr "სერვერი ავტორიზაცია -სკენ წმ არა a და."
 
-#: ../daemon/gdmconfig.c:1575
+#: ../daemon/mdmconfig.c:1575
 #, c-format
 #, fuzzy
 msgid "%s: Authdir %s is not a directory. Aborting."
 msgstr "წმ წმ არა a."
 
-#: ../daemon/gdmconfig.c:1648
+#: ../daemon/mdmconfig.c:1648
 #, c-format
 #, fuzzy
 msgid "%s: Invalid server line in config file. Ignoring!"
 msgstr "წმ არასწორი ხაზი - ფაილი!"
 
-#: ../daemon/gdmconfig.c:1771 ../daemon/gdmconfig.c:1809
+#: ../daemon/mdmconfig.c:1771 ../daemon/mdmconfig.c:1809
 #, c-format
 #, fuzzy
 msgid "%s: XDMCP disabled and no static servers defined. Aborting!"
@@ -644,7 +644,7 @@ msgstr "წმ გამორთული და არა სტაიკუ�
 
 #. start
 #. server uid
-#: ../daemon/gdmconfig.c:1789
+#: ../daemon/mdmconfig.c:1789
 #, c-format
 #, fuzzy
 msgid ""
@@ -652,120 +652,120 @@ msgid ""
 "configuration!"
 msgstr "წმ გამორთული და არა სტაიკური წმ ჩართულია -სკენ!"
 
-#: ../daemon/gdmconfig.c:1801
+#: ../daemon/mdmconfig.c:1801
 #, fuzzy
 msgid ""
-"XDMCP is disabled and GDM cannot find any static server to start.  "
-"Aborting!  Please correct the configuration and restart GDM."
+"XDMCP is disabled and MDM cannot find any static server to start.  "
+"Aborting!  Please correct the configuration and restart MDM."
 msgstr "გამორთული და პოვნა ნებისმიერი სტაიკური -სკენ და."
 
-#: ../daemon/gdmconfig.c:1826
+#: ../daemon/mdmconfig.c:1826
 #, c-format
 msgid ""
-"The GDM user '%s' does not exist. Please correct GDM configuration and "
-"restart GDM."
+"The MDM user '%s' does not exist. Please correct MDM configuration and "
+"restart MDM."
 msgstr ""
-"GDM მომხმარებელი '%s' არ არხებობს. გთხოვთ გაასწოროთ GDM-ის კონფიგურაცია და "
-"გადატვირთოთ GDM."
+"MDM მომხმარებელი '%s' არ არხებობს. გთხოვთ გაასწოროთ MDM-ის კონფიგურაცია და "
+"გადატვირთოთ MDM."
 
-#: ../daemon/gdmconfig.c:1834
+#: ../daemon/mdmconfig.c:1834
 #, c-format
 #, fuzzy
-msgid "%s: Can't find the GDM user '%s'. Aborting!"
+msgid "%s: Can't find the MDM user '%s'. Aborting!"
 msgstr "წმ პოვნა წმ!"
 
-#: ../daemon/gdmconfig.c:1840
+#: ../daemon/mdmconfig.c:1840
 #, fuzzy
 msgid ""
-"The GDM user is set to be root, but this is not allowed since it can pose a "
-"security risk.  Please correct GDM configuration and restart GDM."
+"The MDM user is set to be root, but this is not allowed since it can pose a "
+"security risk.  Please correct MDM configuration and restart MDM."
 msgstr "-სკენ root არა a და."
 
-#: ../daemon/gdmconfig.c:1849
+#: ../daemon/mdmconfig.c:1849
 #, c-format
 #, fuzzy
-msgid "%s: The GDM user should not be root. Aborting!"
+msgid "%s: The MDM user should not be root. Aborting!"
 msgstr "წმ არა root!"
 
-#: ../daemon/gdmconfig.c:1855
+#: ../daemon/mdmconfig.c:1855
 #, fuzzy, c-format
 msgid ""
-"The GDM group '%s' does not exist. Please correct GDM configuration and "
-"restart GDM."
+"The MDM group '%s' does not exist. Please correct MDM configuration and "
+"restart MDM."
 msgstr "ჯგუფი წმ არა და."
 
-#: ../daemon/gdmconfig.c:1862
+#: ../daemon/mdmconfig.c:1862
 #, c-format
 #, fuzzy
-msgid "%s: Can't find the GDM group '%s'. Aborting!"
+msgid "%s: Can't find the MDM group '%s'. Aborting!"
 msgstr "წმ პოვნა ჯგუფი წმ!"
 
-#: ../daemon/gdmconfig.c:1868
+#: ../daemon/mdmconfig.c:1868
 #, fuzzy
 msgid ""
-"The GDM group is set to be root, but this is not allowed since it can pose a "
-"security risk. Please correct GDM configuration and restart GDM."
+"The MDM group is set to be root, but this is not allowed since it can pose a "
+"security risk. Please correct MDM configuration and restart MDM."
 msgstr "ჯგუფი -სკენ root არა a და."
 
-#: ../daemon/gdmconfig.c:1877
+#: ../daemon/mdmconfig.c:1877
 #, c-format
 #, fuzzy
-msgid "%s: The GDM group should not be root. Aborting!"
+msgid "%s: The MDM group should not be root. Aborting!"
 msgstr "წმ ჯგუფი არა root!"
 
-#: ../daemon/gdmconfig.c:1886
+#: ../daemon/mdmconfig.c:1886
 #, c-format
 #, fuzzy
-msgid "%s: Greeter not found or can't be executed by the GDM user"
+msgid "%s: Greeter not found or can't be executed by the MDM user"
 msgstr "წმ არა ან"
 
-#: ../daemon/gdmconfig.c:1892
+#: ../daemon/mdmconfig.c:1892
 #, c-format
 #, fuzzy
-msgid "%s: Remote greeter not found or can't be executed by the GDM user"
+msgid "%s: Remote greeter not found or can't be executed by the MDM user"
 msgstr "წმ დაშორებული არა ან"
 
-#: ../daemon/gdmconfig.c:1900
+#: ../daemon/mdmconfig.c:1900
 #, c-format
 #, fuzzy
-msgid "%s: Chooser not found or it can't be executed by the GDM user"
+msgid "%s: Chooser not found or it can't be executed by the MDM user"
 msgstr "წმ არა ან"
 
-#: ../daemon/gdmconfig.c:1909
+#: ../daemon/mdmconfig.c:1909
 #, fuzzy
-msgid "No daemon/ServAuthDir specified in the GDM configuration file"
+msgid "No daemon/ServAuthDir specified in the MDM configuration file"
 msgstr "არა - ფაილი"
 
-#: ../daemon/gdmconfig.c:1911
+#: ../daemon/mdmconfig.c:1911
 #, fuzzy, c-format
 msgid "%s: No daemon/ServAuthDir specified."
 msgstr "წმ არა."
 
-#: ../daemon/gdmconfig.c:1934
+#: ../daemon/mdmconfig.c:1934
 #, c-format
 #, fuzzy
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but is not "
-"owned by user %s and group %s. Please correct the ownership or GDM "
-"configuration and restart GDM."
+"owned by user %s and group %s. Please correct the ownership or MDM "
+"configuration and restart MDM."
 msgstr "სერვერი ავტორიზაცია -სკენ წმ არა წმ და ჯგუფი წმ ან და."
 
-#: ../daemon/gdmconfig.c:1944
+#: ../daemon/mdmconfig.c:1944
 #, c-format
 #, fuzzy
 msgid "%s: Authdir %s is not owned by user %s, group %s. Aborting."
 msgstr "წმ წმ არა წმ ჯგუფი წმ."
 
-#: ../daemon/gdmconfig.c:1949
+#: ../daemon/mdmconfig.c:1949
 #, c-format
 #, fuzzy
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but has the "
 "wrong permissions: it should have permissions of %o. Please correct the "
-"permissions or the GDM configuration and restart GDM."
+"permissions or the MDM configuration and restart MDM."
 msgstr "სერვერი ავტორიზაცია -სკენ წმ - o ან და."
 
-#: ../daemon/gdmconfig.c:1961
+#: ../daemon/mdmconfig.c:1961
 #, c-format
 #, fuzzy
 msgid "%s: Authdir %s has wrong permissions %o. Should be %o. Aborting."
@@ -818,7 +818,7 @@ msgstr "არა"
 #, fuzzy
 msgid ""
 "There already appears to be an X server running on display %s.  Should "
-"another display number by tried?  Answering no will cause GDM to attempt "
+"another display number by tried?  Answering no will cause MDM to attempt "
 "starting the server on %s again.%s"
 msgstr "-სკენ X ჩართულია წმ რიცხვი არა -სკენ ჩართულია წმ წმ"
 
@@ -986,7 +986,7 @@ msgid ""
 "Please contact your system administrator\n"
 "or check your syslog to diagnose.\n"
 "In the meantime this display will be\n"
-"disabled.  Please restart GDM when\n"
+"disabled.  Please restart MDM when\n"
 "the problem is corrected."
 msgstr "არა X -სკენ მონაცემები შეცდომა -სკენ."
 
@@ -1031,14 +1031,14 @@ msgstr "შესვლა მოთხოვნილი ჩართული�
 #: ../daemon/slave.c:2404 ../daemon/slave.c:2409
 #, c-format
 #, fuzzy
-msgid "%s: Can't init pipe to gdmgreeter"
+msgid "%s: Can't init pipe to mdmgreeter"
 msgstr "წმ -სკენ"
 
 #: ../daemon/slave.c:2541
 #, fuzzy
 msgid ""
 "No servers were defined in the configuration file and XDMCP was disabled.  "
-"This can only be a configuration error.  GDM has started a single server for "
+"This can only be a configuration error.  MDM has started a single server for "
 "you.  You should log in and fix the configuration.  Note that automatic and "
 "timed logins are disabled now."
 msgstr "არა - ფაილი და გამორთული a შეცდომა a თქვენ - და შენიშვნა ავტომატური და გამორთული ახლა."
@@ -1097,7 +1097,7 @@ msgstr "წმ შეცდომა ჩართულია წმ"
 #: ../daemon/slave.c:2637
 #, c-format
 #, fuzzy
-msgid "%s: Can't fork gdmgreeter process"
+msgid "%s: Can't fork mdmgreeter process"
 msgstr "წმ"
 
 #: ../daemon/slave.c:2709
@@ -1108,7 +1108,7 @@ msgstr "%s: ვერ ვხსნი fifo ს!"
 #: ../daemon/slave.c:2881
 #, c-format
 #, fuzzy
-msgid "%s: Can't init pipe to gdmchooser"
+msgid "%s: Can't init pipe to mdmchooser"
 msgstr "წმ -სკენ"
 
 #: ../daemon/slave.c:2986
@@ -1127,7 +1127,7 @@ msgstr "წმ შეცდომა ჩართულია წმ"
 #: ../daemon/slave.c:2993
 #, c-format
 #, fuzzy
-msgid "%s: Can't fork gdmchooser process"
+msgid "%s: Can't fork mdmchooser process"
 msgstr "წმ"
 
 #: ../daemon/slave.c:3226
@@ -1303,7 +1303,7 @@ msgstr "მომხმარებელი წმ ფაილი საწყ
 #: ../daemon/slave.c:3985
 #, fuzzy
 msgid ""
-"GDM could not write to your authorization file.  This could mean that you "
+"MDM could not write to your authorization file.  This could mean that you "
 "are out of disk space or that your home directory could not be opened for "
 "writing.  In any case, it is not possible to log in.  Please contact your "
 "system administrator"
@@ -1331,7 +1331,7 @@ msgstr "ჩვენება ფაილი"
 
 #: ../daemon/slave.c:4314
 #, fuzzy
-msgid "GDM detected a halt or restart in progress."
+msgid "MDM detected a halt or restart in progress."
 msgstr "a ან -."
 
 #: ../daemon/slave.c:4408
@@ -1393,7 +1393,7 @@ msgid "Caps Lock is on."
 msgstr "ჩაკეტილი ჩართულია."
 
 #: ../daemon/verify-crypt.c:118 ../daemon/verify-pam.c:525
-#: ../daemon/verify-shadow.c:117 ../gui/gdmlogin.c:2782
+#: ../daemon/verify-shadow.c:117 ../gui/mdmlogin.c:2782
 msgid "Please enter your username"
 msgstr "გთხოვთ მიუთითოთ თქვენი სახელი"
 
@@ -1401,15 +1401,15 @@ msgstr "გთხოვთ მიუთითოთ თქვენი სახ
 #: ../daemon/verify-crypt.c:119 ../daemon/verify-pam.c:425
 #: ../daemon/verify-pam.c:426 ../daemon/verify-pam.c:427
 #: ../daemon/verify-pam.c:512 ../daemon/verify-pam.c:854
-#: ../daemon/verify-shadow.c:118 ../gui/gdmlogin.c:1005 ../gui/gdmlogin.c:1019
-#: ../gui/gdmlogin.c:1633 ../gui/gdmlogin.c:2113 ../gui/greeter/greeter.c:173
+#: ../daemon/verify-shadow.c:118 ../gui/mdmlogin.c:1005 ../gui/mdmlogin.c:1019
+#: ../gui/mdmlogin.c:1633 ../gui/mdmlogin.c:2113 ../gui/greeter/greeter.c:173
 #: ../gui/greeter/greeter_parser.c:1125
 msgid "Username:"
 msgstr "მომხმარებელი:"
 
 #: ../daemon/verify-crypt.c:157 ../daemon/verify-pam.c:428
 #: ../daemon/verify-pam.c:429 ../daemon/verify-pam.c:573
-#: ../daemon/verify-shadow.c:175 ../gui/gdmlogin.c:1668
+#: ../daemon/verify-shadow.c:175 ../gui/mdmlogin.c:1668
 #: ../gui/greeter/greeter.c:191
 msgid "Password:"
 msgstr "პაროლი:"
@@ -1698,7 +1698,7 @@ msgstr "გამორთული -სკენ."
 
 #: ../daemon/verify-pam.c:1519 ../daemon/verify-pam.c:1521
 #, fuzzy
-msgid "Can't find PAM configuration for GDM."
+msgid "Can't find PAM configuration for MDM."
 msgstr "პოვნა PAM."
 
 #: ../daemon/xdmcp.c:350
@@ -1877,102 +1877,102 @@ msgstr "წმ ვერ შევასრულე -სკენ წმ წმ
 msgid "%s: No XDMCP support"
 msgstr "წმ არა სუპორტი"
 
-#: ../gui/gdmXnestchooser.c:168 ../gui/gdmXnestchooser.c:175
+#: ../gui/mdmXnestchooser.c:168 ../gui/mdmXnestchooser.c:175
 #, fuzzy
 msgid "Xnest command line"
 msgstr "ხაზი"
 
-#: ../gui/gdmXnestchooser.c:168 ../gui/gdmXnestchooser.c:175
+#: ../gui/mdmXnestchooser.c:168 ../gui/mdmXnestchooser.c:175
 msgid "STRING"
 msgstr "სტრინგი"
 
-#: ../gui/gdmXnestchooser.c:169 ../gui/gdmXnestchooser.c:176
+#: ../gui/mdmXnestchooser.c:169 ../gui/mdmXnestchooser.c:176
 #, fuzzy
 msgid "Extra options for Xnest"
 msgstr "ექსტრა"
 
-#: ../gui/gdmXnestchooser.c:169 ../gui/gdmXnestchooser.c:176
+#: ../gui/mdmXnestchooser.c:169 ../gui/mdmXnestchooser.c:176
 msgid "OPTIONS"
 msgstr "ოპციები"
 
-#: ../gui/gdmXnestchooser.c:170 ../gui/gdmXnestchooser.c:180
+#: ../gui/mdmXnestchooser.c:170 ../gui/mdmXnestchooser.c:180
 #, fuzzy
 msgid "Run in background"
 msgstr "გაშვება -"
 
-#: ../gui/gdmXnestchooser.c:177
+#: ../gui/mdmXnestchooser.c:177
 #, fuzzy
 msgid "Just run Xnest, no query (no chooser)"
 msgstr "არა არა"
 
-#: ../gui/gdmXnestchooser.c:178
+#: ../gui/mdmXnestchooser.c:178
 #, fuzzy
 msgid "Do direct query instead of indirect (chooser)"
 msgstr "-"
 
-#: ../gui/gdmXnestchooser.c:179
+#: ../gui/mdmXnestchooser.c:179
 #, fuzzy
 msgid "Run broadcast instead of indirect (chooser)"
 msgstr "გაშვება -"
 
-#: ../gui/gdmXnestchooser.c:181
-msgid "Don't check for running GDM"
+#: ../gui/mdmXnestchooser.c:181
+msgid "Don't check for running MDM"
 msgstr ""
 
-#: ../gui/gdmXnestchooser.c:513
+#: ../gui/mdmXnestchooser.c:513
 #, fuzzy
 msgid "Xnest doesn't exist."
 msgstr "ფაილი ’%s’ არ არსებობს."
 
-#: ../gui/gdmXnestchooser.c:514
+#: ../gui/mdmXnestchooser.c:514
 #, fuzzy
 msgid "Please ask your system administrator to install it."
 msgstr "-სკენ."
 
-#: ../gui/gdmXnestchooser.c:539
+#: ../gui/mdmXnestchooser.c:539
 #, fuzzy
 msgid "Indirect XDMCP is not enabled"
 msgstr "არა ჩართული"
 
-#: ../gui/gdmXnestchooser.c:540 ../gui/gdmXnestchooser.c:558
+#: ../gui/mdmXnestchooser.c:540 ../gui/mdmXnestchooser.c:558
 #, fuzzy
 msgid "Please ask your system administrator to enable this feature."
 msgstr "-სკენ."
 
-#: ../gui/gdmXnestchooser.c:557
+#: ../gui/mdmXnestchooser.c:557
 #, fuzzy
 msgid "XDMCP is not enabled"
 msgstr "არა ჩართული"
 
-#: ../gui/gdmXnestchooser.c:589
-msgid "GDM is not running"
-msgstr "GDM არ არის ჩატვირთული"
+#: ../gui/mdmXnestchooser.c:589
+msgid "MDM is not running"
+msgstr "MDM არ არის ჩატვირთული"
 
-#: ../gui/gdmXnestchooser.c:590
+#: ../gui/mdmXnestchooser.c:590
 #, fuzzy
 msgid "Please ask your system administrator to start it."
 msgstr "-სკენ."
 
-#: ../gui/gdmXnestchooser.c:606
+#: ../gui/mdmXnestchooser.c:606
 #, fuzzy
 msgid "Could not find a free display number"
 msgstr "არა პოვნა a რიცხვი"
 
-#: ../gui/gdmchooser.c:85
+#: ../gui/mdmchooser.c:85
 msgid "Please wait: scanning local network..."
 msgstr ""
 
-#: ../gui/gdmchooser.c:86
+#: ../gui/mdmchooser.c:86
 #, fuzzy
 msgid "No serving hosts were found."
 msgstr "არა."
 
-#: ../gui/gdmchooser.c:87
+#: ../gui/mdmchooser.c:87
 #, fuzzy
 msgid "Choose a ho_st to connect to:"
 msgstr "არჩევა a -სკენ -სკენ:"
 
-#: ../gui/gdmchooser.c:620
+#: ../gui/mdmchooser.c:620
 #, c-format
 #, fuzzy
 msgid ""
@@ -1980,12 +1980,12 @@ msgid ""
 "try again later."
 msgstr "წმ არა -სკენ სუპორტი a მარჯვნივ ახლა."
 
-#: ../gui/gdmchooser.c:630
+#: ../gui/mdmchooser.c:630
 #, fuzzy
 msgid "Cannot connect to remote server"
 msgstr "-სკენ"
 
-#: ../gui/gdmchooser.c:1282
+#: ../gui/mdmchooser.c:1282
 #, c-format
 #, fuzzy
 msgid ""
@@ -1994,23 +1994,23 @@ msgid ""
 "now.  Please try again later."
 msgstr "არა ნებისმიერი წმ - წამები არა ჩართულია ან არა -სკენ სუპორტი a მარჯვნივ ახლა."
 
-#: ../gui/gdmchooser.c:1295
+#: ../gui/mdmchooser.c:1295
 #, fuzzy
 msgid "Did not receive response from server"
 msgstr "არა"
 
-#: ../gui/gdmchooser.c:1397
+#: ../gui/mdmchooser.c:1397
 #, c-format
 #, fuzzy
 msgid "Cannot find the host \"%s\". Perhaps you have mistyped it."
 msgstr "პოვნა წმ."
 
-#: ../gui/gdmchooser.c:1406
+#: ../gui/mdmchooser.c:1406
 #, fuzzy
 msgid "Cannot find host"
 msgstr "პოვნა"
 
-#: ../gui/gdmchooser.c:1611
+#: ../gui/mdmchooser.c:1611
 #, fuzzy
 msgid ""
 "The main area of this application shows the hosts on the local network that "
@@ -2021,197 +2021,197 @@ msgid ""
 "have selected a host click \"Connect\" to open a session to that computer."
 msgstr "- პროგრამა ჩართულია ჩართული -სკენ -სკენ სხვა ჩართულია n ახალი განახლება a დაკავშირება -სკენ გახსნა a -სკენ."
 
-#: ../gui/gdmchooser.c:1900
+#: ../gui/mdmchooser.c:1900
 #, fuzzy
 msgid "Socket for xdm communication"
 msgstr "სოკეტი"
 
-#: ../gui/gdmchooser.c:1900
+#: ../gui/mdmchooser.c:1900
 msgid "SOCKET"
 msgstr "სოკეტი"
 
-#: ../gui/gdmchooser.c:1903
+#: ../gui/mdmchooser.c:1903
 #, fuzzy
 msgid "Client address to return in response to xdm"
 msgstr "კლიენტი -სკენ - -სკენ"
 
-#: ../gui/gdmchooser.c:1903
+#: ../gui/mdmchooser.c:1903
 msgid "ADDRESS"
 msgstr "მისამართი"
 
-#: ../gui/gdmchooser.c:1906
+#: ../gui/mdmchooser.c:1906
 #, fuzzy
 msgid "Connection type to return in response to xdm"
 msgstr "კავშირი -სკენ - -სკენ"
 
-#: ../gui/gdmchooser.c:1906
+#: ../gui/mdmchooser.c:1906
 msgid "TYPE"
 msgstr "ტიპი"
 
-#: ../gui/gdmchooser.c:2029
+#: ../gui/mdmchooser.c:2029
 #, c-format
 #, fuzzy
 msgid ""
 "The chooser version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded GDM.  Please restart the GDM daemon or the computer."
+"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
 msgstr "ვერსია წმ არა ემთხვევა ვერსია წმ თქვენ ან."
 
-#: ../gui/gdmchooser.c:2039
+#: ../gui/mdmchooser.c:2039
 #, fuzzy
 msgid "Cannot run chooser"
 msgstr "გაუშვი ტერმინალში"
 
 #. EOF
-#: ../gui/gdmchooser.glade.h:1
+#: ../gui/mdmchooser.glade.h:1
 msgid "A_dd host: "
 msgstr "და_ამატე ჰოსტი: "
 
-#: ../gui/gdmchooser.glade.h:2
+#: ../gui/mdmchooser.glade.h:2
 msgid "C_onnect"
 msgstr "დ_აკავშირება"
 
-#: ../gui/gdmchooser.glade.h:3
+#: ../gui/mdmchooser.glade.h:3
 msgid "Exit the application"
 msgstr "გამოდი პროგრამიდან"
 
-#: ../gui/gdmchooser.glade.h:4
+#: ../gui/mdmchooser.glade.h:4
 #, fuzzy
 msgid "How to use this application"
 msgstr "-სკენ პროგრამა"
 
-#: ../gui/gdmchooser.glade.h:5
+#: ../gui/mdmchooser.glade.h:5
 #, fuzzy
 msgid "Login Host Chooser"
 msgstr "შესვლა მასპინძელი სერვერი"
 
-#: ../gui/gdmchooser.glade.h:6
+#: ../gui/mdmchooser.glade.h:6
 #, fuzzy
 msgid "Open a session to the selected host"
 msgstr "გახსენი a -სკენ"
 
-#: ../gui/gdmchooser.glade.h:7
+#: ../gui/mdmchooser.glade.h:7
 msgid "Probe the network"
 msgstr "ქსელის შემოწმება"
 
-#: ../gui/gdmchooser.glade.h:8
+#: ../gui/mdmchooser.glade.h:8
 #, fuzzy
 msgid "Query and add this host to the above list"
 msgstr "გამოკითხვა და დამატება -სკენ სია"
 
-#: ../gui/gdmchooser.glade.h:9
+#: ../gui/mdmchooser.glade.h:9
 msgid "Status"
 msgstr "სტატუსი"
 
-#: ../gui/gdmchooser.glade.h:10
+#: ../gui/mdmchooser.glade.h:10
 msgid "_Add"
 msgstr "_დაამატე"
 
-#: ../gui/gdmcomm.c:590
+#: ../gui/mdmcomm.c:590
 #, fuzzy
-msgid "GDM (The GNOME Display Manager) is not running."
+msgid "MDM (The GNOME Display Manager) is not running."
 msgstr "GNOME დისპლეი მმართველი არა."
 
-#: ../gui/gdmcomm.c:592
+#: ../gui/mdmcomm.c:592
 #, fuzzy
 msgid ""
 "You might in fact be using a different display manager, such as KDM (KDE "
 "Display Manager) or xdm. If you still wish to use this feature, either start "
-"GDM yourself or ask your system administrator to start GDM."
+"MDM yourself or ask your system administrator to start MDM."
 msgstr "თქვენ - a KDE დისპლეი მმართველი ან -სკენ ან -სკენ."
 
-#: ../gui/gdmcomm.c:616 ../gui/gdmflexiserver.c:784
+#: ../gui/mdmcomm.c:616 ../gui/mdmflexiserver.c:784
 #, fuzzy
-msgid "Cannot communicate with GDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The GNOME Display Manager)"
 msgstr "GNOME დისპლეი მმართველი"
 
-#: ../gui/gdmcomm.c:618 ../gui/gdmflexiserver.c:786
+#: ../gui/mdmcomm.c:618 ../gui/mdmflexiserver.c:786
 #, fuzzy
-msgid "Perhaps you have an old version of GDM running."
+msgid "Perhaps you have an old version of MDM running."
 msgstr "ვერსია -."
 
-#: ../gui/gdmcomm.c:635 ../gui/gdmcomm.c:638
+#: ../gui/mdmcomm.c:635 ../gui/mdmcomm.c:638
 #, fuzzy
-msgid "Cannot communicate with GDM. Perhaps you have an old version running."
+msgid "Cannot communicate with MDM. Perhaps you have an old version running."
 msgstr "ვერსია."
 
-#: ../gui/gdmcomm.c:641
+#: ../gui/mdmcomm.c:641
 #, fuzzy
 msgid "The allowed limit of flexible X servers reached."
 msgstr "- X."
 
-#: ../gui/gdmcomm.c:643
+#: ../gui/mdmcomm.c:643
 #, fuzzy
 msgid "There were errors trying to start the X server."
 msgstr "-სკენ X."
 
-#: ../gui/gdmcomm.c:645
+#: ../gui/mdmcomm.c:645
 #, fuzzy
 msgid "The X server failed.  Perhaps it is not configured well."
 msgstr "X არა."
 
-#: ../gui/gdmcomm.c:648
+#: ../gui/mdmcomm.c:648
 #, fuzzy
 msgid "Too many X sessions running."
 msgstr "X."
 
-#: ../gui/gdmcomm.c:650
+#: ../gui/mdmcomm.c:650
 #, fuzzy
 msgid ""
 "The nested X server (Xnest) cannot connect to your current X server.  You "
 "may be missing an X authorization file."
 msgstr "X -სკენ X თქვენ X ფაილი."
 
-#: ../gui/gdmcomm.c:655
+#: ../gui/mdmcomm.c:655
 #, fuzzy
 msgid ""
-"The nested X server (Xnest) is not available, or GDM is badly configured.\n"
+"The nested X server (Xnest) is not available, or MDM is badly configured.\n"
 "Please install the Xnest package in order to use the nested login."
 msgstr "X არა ან - -სკენ."
 
-#: ../gui/gdmcomm.c:660
+#: ../gui/mdmcomm.c:660
 #, fuzzy
-msgid "The X server is not available. GDM may be misconfigured."
+msgid "The X server is not available. MDM may be misconfigured."
 msgstr "X არა."
 
-#: ../gui/gdmcomm.c:663
+#: ../gui/mdmcomm.c:663
 #, fuzzy
 msgid ""
 "Trying to set an unknown logout action, or trying to set a logout action "
 "which is not available."
 msgstr "-სკენ უცნობი მოქმედება ან -სკენ a მოქმედება არა."
 
-#: ../gui/gdmcomm.c:666
+#: ../gui/mdmcomm.c:666
 #, fuzzy
 msgid "Virtual terminals not supported."
 msgstr "არა."
 
-#: ../gui/gdmcomm.c:668
+#: ../gui/mdmcomm.c:668
 #, fuzzy
 msgid "Trying to change to an invalid virtual terminal number."
 msgstr "-სკენ -სკენ მცდარი ტერმინალი რიცხვი."
 
-#: ../gui/gdmcomm.c:670
+#: ../gui/mdmcomm.c:670
 #, fuzzy
 msgid "Trying to update an unsupported configuration key."
 msgstr "-სკენ გასაღები."
 
-#: ../gui/gdmcomm.c:672
+#: ../gui/mdmcomm.c:672
 #, fuzzy
 msgid ""
 "You do not seem to have the authentication needed for this operation.  "
 "Perhaps your .Xauthority file is not set up correctly."
 msgstr "თქვენ არა -სკენ აუთენტიფიკაცია ფაილი არა ზემოთ."
 
-#: ../gui/gdmcomm.c:676
+#: ../gui/mdmcomm.c:676
 #, fuzzy
-msgid "Too many messages were sent to GDM and it hung up on us."
+msgid "Too many messages were sent to MDM and it hung up on us."
 msgstr "გაგზავნილი -სკენ და ზემოთ ჩართულია."
 
-#: ../gui/gdmcomm.c:679
+#: ../gui/mdmcomm.c:679
 msgid "Unknown error occurred."
 msgstr "დაიშვა უცნობი შეცდომა."
 
-#: ../gui/gdmcommon.c:567
+#: ../gui/mdmcommon.c:567
 msgid "%a %b %d, %H:%M"
 msgstr "%a·%b·%d,·%H:%M"
 
@@ -2219,718 +2219,718 @@ msgstr "%a·%b·%d,·%H:%M"
 #. %H:%M if your language does not have AM and PM
 #. equivalent.  Note: %l is a strftime option for
 #. 12-hour clock format
-#: ../gui/gdmcommon.c:573
+#: ../gui/mdmcommon.c:573
 msgid "%a %b %d, %l:%M %p"
 msgstr "%a·%b·%d,·%l:%M·%p"
 
-#: ../gui/gdmcommon.c:681
+#: ../gui/mdmcommon.c:681
 msgid " seconds"
 msgstr " წამი"
 
-#: ../gui/gdmcommon.c:683
+#: ../gui/mdmcommon.c:683
 msgid " second"
 msgstr " წამი"
 
-#: ../gui/gdmdynamic.c:48
+#: ../gui/mdmdynamic.c:48
 #, c-format
 #, fuzzy
 msgid "Usage: %s [-b][-v] and one of the following:\n"
 msgstr "გამოყენება წმ v და - n"
 
-#: ../gui/gdmdynamic.c:49
+#: ../gui/mdmdynamic.c:49
 #, fuzzy, c-format
 msgid "\t-a display\n"
 msgstr "a n"
 
-#: ../gui/gdmdynamic.c:50
+#: ../gui/mdmdynamic.c:50
 #, fuzzy, c-format
 msgid "\t-r display\n"
 msgstr "n"
 
-#: ../gui/gdmdynamic.c:51
+#: ../gui/mdmdynamic.c:51
 #, fuzzy, c-format
 msgid "\t-d display\n"
 msgstr "n"
 
-#: ../gui/gdmdynamic.c:52
+#: ../gui/mdmdynamic.c:52
 #, fuzzy, c-format
 msgid "\t-l [server_name]\n"
 msgstr "n"
 
-#: ../gui/gdmdynamic.c:53
+#: ../gui/mdmdynamic.c:53
 #, c-format
 #, fuzzy
 msgid "\t-t maximum tries to connect (default 15)\n"
 msgstr "-სკენ საწყისი n"
 
-#: ../gui/gdmdynamic.c:54
+#: ../gui/mdmdynamic.c:54
 #, c-format
 #, fuzzy
 msgid "\t-s sleep value (default 8)\n"
 msgstr "წმ საწყისი n"
 
-#: ../gui/gdmdynamic.c:217
+#: ../gui/mdmdynamic.c:217
 #, fuzzy
 msgid "Server busy, will sleep.\n"
 msgstr "სერვერი n"
 
-#: ../gui/gdmdynamic.c:304
+#: ../gui/mdmdynamic.c:304
 #, c-format
 #, fuzzy
 msgid "Connection to daemon failed, sleeping for %d seconds.  Retry %d of %d\n"
 msgstr "კავშირი -სკენ წამები გამეორება - n"
 
 #. This is a serious error, so print a message even if verbose is off
-#: ../gui/gdmdynamic.c:327
+#: ../gui/mdmdynamic.c:327
 #, c-format
 #, fuzzy
 msgid "Failed to connect to server after %d retries\n"
 msgstr "ვერ შევასრულე -სკენ -სკენ n"
 
-#: ../gui/gdmflexiserver-xnest.desktop.in.h:1
+#: ../gui/mdmflexiserver-xnest.desktop.in.h:1
 msgid "Log in as another user inside a nested window"
 msgstr ""
 
-#: ../gui/gdmflexiserver-xnest.desktop.in.h:2
+#: ../gui/mdmflexiserver-xnest.desktop.in.h:2
 msgid "New Login in a Nested Window"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:103
+#: ../gui/mdmflexiserver.c:103
 #, fuzzy
 msgid "Cannot change display"
 msgstr "შეცვალე არსებულ დისფლეიზე"
 
-#: ../gui/gdmflexiserver.c:180
+#: ../gui/mdmflexiserver.c:180
 msgid "Nobody"
 msgstr "არავინ"
 
-#: ../gui/gdmflexiserver.c:215
+#: ../gui/mdmflexiserver.c:215
 #, c-format
 #, fuzzy
 msgid "Display %s on virtual terminal %d"
 msgstr "დისპლეი წმ ჩართულია ტერმინალი"
 
-#: ../gui/gdmflexiserver.c:220
+#: ../gui/mdmflexiserver.c:220
 #, c-format
 #, fuzzy
 msgid "Nested display %s on virtual terminal %d"
 msgstr "წმ ჩართულია ტერმინალი"
 
-#: ../gui/gdmflexiserver.c:250 ../gui/gdmlogin.c:2630
+#: ../gui/mdmflexiserver.c:250 ../gui/mdmlogin.c:2630
 #: ../gui/greeter/greeter_item_ulist.c:242
 msgid "Username"
 msgstr "მომხმარებელი"
 
-#: ../gui/gdmflexiserver.c:259
+#: ../gui/mdmflexiserver.c:259
 msgid "Display"
 msgstr "დისპლეი"
 
-#: ../gui/gdmflexiserver.c:373
+#: ../gui/mdmflexiserver.c:373
 msgid "Open Displays"
 msgstr "გახსენი დისპლეი"
 
 #. parent
 #. flags
-#: ../gui/gdmflexiserver.c:376
+#: ../gui/mdmflexiserver.c:376
 msgid "_Open New Display"
 msgstr "_გახსენი ახალი დისფლეი"
 
-#: ../gui/gdmflexiserver.c:378
+#: ../gui/mdmflexiserver.c:378
 msgid "Change to _Existing Display"
 msgstr "შეცვალე არსებულ დისფლეიზე"
 
-#: ../gui/gdmflexiserver.c:386
+#: ../gui/mdmflexiserver.c:386
 #, fuzzy
 msgid ""
 "There are some displays already open.  You can select one from the list "
 "below or open a new one."
 msgstr "მონაცემები გახსნა თქვენ სია ან გახსნა a ახალი."
 
-#: ../gui/gdmflexiserver.c:569
+#: ../gui/mdmflexiserver.c:569
 msgid "Choose server"
 msgstr "ამოირჩიე სერვერი"
 
-#: ../gui/gdmflexiserver.c:580
+#: ../gui/mdmflexiserver.c:580
 #, fuzzy
 msgid "Choose the X server to start"
 msgstr "არჩევა X -სკენ"
 
-#: ../gui/gdmflexiserver.c:586
+#: ../gui/mdmflexiserver.c:586
 #, fuzzy
 msgid "Standard server"
 msgstr "სტანდარტული"
 
-#: ../gui/gdmflexiserver.c:688
+#: ../gui/mdmflexiserver.c:688
 #, fuzzy
-msgid "Send the specified protocol command to GDM"
+msgid "Send the specified protocol command to MDM"
 msgstr "გაგზავნა -სკენ"
 
-#: ../gui/gdmflexiserver.c:688
+#: ../gui/mdmflexiserver.c:688
 msgid "COMMAND"
 msgstr "ბრზანება"
 
-#: ../gui/gdmflexiserver.c:689
+#: ../gui/mdmflexiserver.c:689
 msgid "Xnest mode"
 msgstr "Xnest მოდუსი"
 
-#: ../gui/gdmflexiserver.c:690
+#: ../gui/mdmflexiserver.c:690
 #, fuzzy
 msgid "Do not lock current screen"
 msgstr "არა"
 
-#: ../gui/gdmflexiserver.c:691
+#: ../gui/mdmflexiserver.c:691
 #, fuzzy
 msgid "Debugging output"
 msgstr "<b>აუდიო გასავალი</b>"
 
-#: ../gui/gdmflexiserver.c:692
+#: ../gui/mdmflexiserver.c:692
 msgid "Authenticate before running --command"
 msgstr ""
 
-#: ../gui/gdmflexiserver.c:693
+#: ../gui/mdmflexiserver.c:693
 #, fuzzy
 msgid "Start new flexible session; do not show popup"
 msgstr "გაშვება ახალი არა"
 
-#: ../gui/gdmflexiserver.c:831
+#: ../gui/mdmflexiserver.c:831
 #, fuzzy
 msgid "You do not seem to have the authentication needed for this operation"
 msgstr "თქვენ არა -სკენ აუთენტიფიკაცია"
 
-#: ../gui/gdmflexiserver.c:834
+#: ../gui/mdmflexiserver.c:834
 #, fuzzy
 msgid "Perhaps your .Xauthority file is not set up correctly."
 msgstr "ფაილი არა ზემოთ."
 
-#: ../gui/gdmflexiserver.c:860
+#: ../gui/mdmflexiserver.c:860
 #, fuzzy
 msgid "You do not seem to be logged in on the console"
 msgstr "თქვენ არა -სკენ - ჩართულია"
 
-#: ../gui/gdmflexiserver.c:862
+#: ../gui/mdmflexiserver.c:862
 #, fuzzy
 msgid "Starting a new login only works correctly on the console."
 msgstr "ვრთავ a ახალი ჩართულია."
 
-#: ../gui/gdmflexiserver.c:908
+#: ../gui/mdmflexiserver.c:908
 #, fuzzy
 msgid "Cannot start new display"
 msgstr "ახალი"
 
-#: ../gui/gdmflexiserver.desktop.in.h:1
+#: ../gui/mdmflexiserver.desktop.in.h:1
 msgid "Log in as another user without logging out"
 msgstr ""
 
-#: ../gui/gdmflexiserver.desktop.in.h:2
+#: ../gui/mdmflexiserver.desktop.in.h:2
 msgid "New Login"
 msgstr "ახალი შესვლა"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:53
+#: ../gui/mdmlanguages.c:53
 msgid "A-M|Afrikaans"
 msgstr "ა-მ| აფრიკული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:55
+#: ../gui/mdmlanguages.c:55
 msgid "A-M|Albanian"
 msgstr "ა-მ| ალბანური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:57
+#: ../gui/mdmlanguages.c:57
 msgid "A-M|Amharic"
 msgstr "ა-მ|ამჰარული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:59
+#: ../gui/mdmlanguages.c:59
 msgid "A-M|Arabic (Egypt)"
 msgstr "ა-მ| არაბული (ეგვიპტე)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:61
+#: ../gui/mdmlanguages.c:61
 msgid "A-M|Arabic (Lebanon)"
 msgstr "ა-მ| არაბული (ლიბანი)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:63
+#: ../gui/mdmlanguages.c:63
 msgid "A-M|Armenian"
 msgstr "ა-მ| სომხური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:65
+#: ../gui/mdmlanguages.c:65
 msgid "A-M|Azerbaijani"
 msgstr "ა-მ| აზერბაიჯანული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:67
+#: ../gui/mdmlanguages.c:67
 msgid "A-M|Basque"
 msgstr "ა-მ| ბასკური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:69
+#: ../gui/mdmlanguages.c:69
 msgid "A-M|Belarusian"
 msgstr "ა-მ| ბიელორუსული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:71
+#: ../gui/mdmlanguages.c:71
 msgid "A-M|Bengali"
 msgstr "ა-მ| ბენგალი"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:73
+#: ../gui/mdmlanguages.c:73
 msgid "A-M|Bengali (India)"
 msgstr "ა-მ| ბენგალი (ინდოეთი)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:75
+#: ../gui/mdmlanguages.c:75
 msgid "A-M|Bulgarian"
 msgstr "ა-მ| ბულგარული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:77
+#: ../gui/mdmlanguages.c:77
 msgid "A-M|Bosnian"
 msgstr "ა-მ| ბოსნიური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:79
+#: ../gui/mdmlanguages.c:79
 msgid "A-M|Catalan"
 msgstr "ა-მ| კატალანური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:81
+#: ../gui/mdmlanguages.c:81
 msgid "A-M|Chinese (China Mainland)"
 msgstr "ა-მ| ჩინური (ძირითადი)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:83
+#: ../gui/mdmlanguages.c:83
 msgid "A-M|Chinese (Hong Kong)"
 msgstr "ა-მ| ჩინური (ჰონგ კონგი)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:85
+#: ../gui/mdmlanguages.c:85
 msgid "A-M|Chinese (Singapore)"
 msgstr "ა-მ| ჩინური (სინგაპური)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:87
+#: ../gui/mdmlanguages.c:87
 msgid "A-M|Chinese (Taiwan)"
 msgstr "ა-მ| ჩინური (ტაივანი)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:89
+#: ../gui/mdmlanguages.c:89
 msgid "A-M|Croatian"
 msgstr "ა-მ| ხორვატიული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:91
+#: ../gui/mdmlanguages.c:91
 msgid "A-M|Czech"
 msgstr "ა-მ| ჩეხური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:93
+#: ../gui/mdmlanguages.c:93
 msgid "A-M|Danish"
 msgstr "ა-მ| დანიური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:95
+#: ../gui/mdmlanguages.c:95
 msgid "A-M|Dutch"
 msgstr "ა-მ| შვედური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:97
+#: ../gui/mdmlanguages.c:97
 msgid "A-M|English (USA)"
 msgstr "ა-მ| ინგლისური (აშშ)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:99
+#: ../gui/mdmlanguages.c:99
 msgid "A-M|English (Australia)"
 msgstr "ა-მ| ავსტრალია"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:101
+#: ../gui/mdmlanguages.c:101
 msgid "A-M|English (UK)"
 msgstr "ა-მ| ინგლისური (დ.ბ)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:103
+#: ../gui/mdmlanguages.c:103
 msgid "A-M|English (Canada)"
 msgstr "ა-მ| ინგლისური (კანადა)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:105
+#: ../gui/mdmlanguages.c:105
 msgid "A-M|English (Ireland)"
 msgstr "ა-მ| ინგლისური (ირლანდია)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:107
+#: ../gui/mdmlanguages.c:107
 msgid "A-M|English (Denmark)"
 msgstr "ა-მ| ინგლისური (დანია)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:109
+#: ../gui/mdmlanguages.c:109
 msgid "A-M|English (South Africa)"
 msgstr "ა-მ| ინგლისური (სამხრეთ აფრიკა)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:111
+#: ../gui/mdmlanguages.c:111
 msgid "A-M|Estonian"
 msgstr "ა-მ| ესტონური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:113
+#: ../gui/mdmlanguages.c:113
 msgid "A-M|Finnish"
 msgstr "ა-მ| ფინური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:115
+#: ../gui/mdmlanguages.c:115
 msgid "A-M|French"
 msgstr "ა-მ| ფრანგული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:117
+#: ../gui/mdmlanguages.c:117
 msgid "A-M|French (Belgium)"
 msgstr "ა-მ| ფრანგული (ბელგია)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:119
+#: ../gui/mdmlanguages.c:119
 msgid "A-M|French (Switzerland)"
 msgstr "ა-მ| ფრანგული (შვეიცარია)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:121
+#: ../gui/mdmlanguages.c:121
 msgid "A-M|Galician"
 msgstr "ა-მ| გალიციური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:123
+#: ../gui/mdmlanguages.c:123
 msgid "A-M|German"
 msgstr "ა-მ| გერმანული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:125
+#: ../gui/mdmlanguages.c:125
 msgid "A-M|German (Austria)"
 msgstr "ა-მ| გერმანული (ავსტრია)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:127
+#: ../gui/mdmlanguages.c:127
 msgid "A-M|German (Switzerland)"
 msgstr "ა-მ| გერმანია (შვეიცარია)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:129
+#: ../gui/mdmlanguages.c:129
 msgid "A-M|Greek"
 msgstr "ა-მ| საბერძნეთი"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:131
+#: ../gui/mdmlanguages.c:131
 msgid "A-M|Gujarati"
 msgstr "ა-მ| გუჯარათი"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:133 ../gui/gdmlanguages.c:135
+#: ../gui/mdmlanguages.c:133 ../gui/mdmlanguages.c:135
 msgid "A-M|Hebrew"
 msgstr "ა-მ| ებრაული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:137
+#: ../gui/mdmlanguages.c:137
 msgid "A-M|Hindi"
 msgstr "ა-მ| ინდური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:139
+#: ../gui/mdmlanguages.c:139
 msgid "A-M|Hungarian"
 msgstr "ა-მ| უნგრული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:141
+#: ../gui/mdmlanguages.c:141
 msgid "A-M|Icelandic"
 msgstr "ა-მ| ისლანდიური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:143
+#: ../gui/mdmlanguages.c:143
 msgid "A-M|Indonesian"
 msgstr "ა-მ| ინდონეზიური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:145
+#: ../gui/mdmlanguages.c:145
 msgid "A-M|Interlingua"
 msgstr "ა-მ| ინტერენა"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:147
+#: ../gui/mdmlanguages.c:147
 msgid "A-M|Irish"
 msgstr "ა-მ| ირლანდიური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:149
+#: ../gui/mdmlanguages.c:149
 msgid "A-M|Italian"
 msgstr "ა-მ| იტალიური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:151
+#: ../gui/mdmlanguages.c:151
 msgid "A-M|Japanese"
 msgstr "ა-მ| იაპონური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:153
+#: ../gui/mdmlanguages.c:153
 msgid "A-M|Kannada"
 msgstr "ა-მ| კანადა"
 
 #. Note translate the A-M to the A-M you used in the group label
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:156
+#: ../gui/mdmlanguages.c:156
 msgid "A-M|Kinyarwanda"
 msgstr "ა-მ| კენიარუანდა"
 
-#: ../gui/gdmlanguages.c:157
+#: ../gui/mdmlanguages.c:157
 msgid "A-M|Korean"
 msgstr "ა-მ| კორეული"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:159
+#: ../gui/mdmlanguages.c:159
 msgid "A-M|Latvian"
 msgstr "ა-მ| ლატვური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:161
+#: ../gui/mdmlanguages.c:161
 msgid "A-M|Lithuanian"
 msgstr "ა-მ| ლიტვური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:163
+#: ../gui/mdmlanguages.c:163
 msgid "A-M|Macedonian"
 msgstr "ა-მ| მაკედონური"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:165
+#: ../gui/mdmlanguages.c:165
 msgid "A-M|Malay"
 msgstr "ა-მ| მალაი"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:167
+#: ../gui/mdmlanguages.c:167
 msgid "A-M|Malayalam"
 msgstr "ა-მ| მაიალამ"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:169
+#: ../gui/mdmlanguages.c:169
 msgid "A-M|Marathi"
 msgstr "ა-მ| მარათი"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:171
+#: ../gui/mdmlanguages.c:171
 msgid "A-M|Mongolian"
 msgstr "ა-მ| მონღოლური"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:173
+#: ../gui/mdmlanguages.c:173
 msgid "N-Z|Northern Sotho"
 msgstr "ნ-ჰ| ნორვეგიული სოთო"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:175
+#: ../gui/mdmlanguages.c:175
 msgid "N-Z|Norwegian (bokmal)"
 msgstr "ნ-ჰ| ნორვეგიული (ბოკმალ)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:177
+#: ../gui/mdmlanguages.c:177
 msgid "N-Z|Norwegian (nynorsk)"
 msgstr "ნ-ჰ ნო"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:179
+#: ../gui/mdmlanguages.c:179
 msgid "N-Z|Oriya"
 msgstr "ნ-ჰ| ორია"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:181
+#: ../gui/mdmlanguages.c:181
 msgid "N-Z|Panjabi"
 msgstr "ნ-ჰ| ფანჯაბი"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:183
+#: ../gui/mdmlanguages.c:183
 msgid "N-Z|Persian"
 msgstr "ნ-ჰ| სპარსული"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:185
+#: ../gui/mdmlanguages.c:185
 msgid "N-Z|Polish"
 msgstr "ნ-ჰ| პოლონური"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:187
+#: ../gui/mdmlanguages.c:187
 msgid "N-Z|Portuguese"
 msgstr "ნ-ჰ| პორტოგალიური"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:189
+#: ../gui/mdmlanguages.c:189
 msgid "N-Z|Portuguese (Brazilian)"
 msgstr "ნ-ჰ| პორტოგალიური (ბრაზილია)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:191
+#: ../gui/mdmlanguages.c:191
 msgid "N-Z|Romanian"
 msgstr "ნ-ჰ| რუმინული"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:193
+#: ../gui/mdmlanguages.c:193
 msgid "N-Z|Russian"
 msgstr "ნ-ჰ| რუსული"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:195 ../gui/gdmlanguages.c:197
+#: ../gui/mdmlanguages.c:195 ../gui/mdmlanguages.c:197
 msgid "N-Z|Serbian"
 msgstr "ნ-ჰ| სერბული"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:199
+#: ../gui/mdmlanguages.c:199
 msgid "N-Z|Serbian (Latin)"
 msgstr "ნ-ჰ| სერბული (ლატინური)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:201
+#: ../gui/mdmlanguages.c:201
 msgid "N-Z|Serbian (Jekavian)"
 msgstr "ნ-ჰ| სერბული (ჯეკავიანი)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:203
+#: ../gui/mdmlanguages.c:203
 msgid "N-Z|Slovak"
 msgstr "ნ-ჰ| სლოვაკური"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:205
+#: ../gui/mdmlanguages.c:205
 msgid "N-Z|Slovenian"
 msgstr "ნ-ჰ| სლოვენიური"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:207
+#: ../gui/mdmlanguages.c:207
 msgid "N-Z|Spanish"
 msgstr "ნ-ჰ| ესპანური"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:209
+#: ../gui/mdmlanguages.c:209
 msgid "N-Z|Spanish (Mexico)"
 msgstr "ნ-ჰ| ესპანური (მექსიკა)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:211
+#: ../gui/mdmlanguages.c:211
 msgid "N-Z|Swedish"
 msgstr "ნ-ჰ| შვედური"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:213
+#: ../gui/mdmlanguages.c:213
 msgid "N-Z|Swedish (Finland)"
 msgstr "ნ-ჰ| შვედური (ფინეთი)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:215
+#: ../gui/mdmlanguages.c:215
 msgid "N-Z|Tamil"
 msgstr "ნ-ჰ| ტამილ"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:217
+#: ../gui/mdmlanguages.c:217
 msgid "N-Z|Telugu"
 msgstr "ნ-ჰ| ტელუგუ"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:219
+#: ../gui/mdmlanguages.c:219
 msgid "N-Z|Thai"
 msgstr "ნ-ჰ| ტაი"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:221
+#: ../gui/mdmlanguages.c:221
 msgid "N-Z|Turkish"
 msgstr "ნ-ჰ| თურქული"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:223
+#: ../gui/mdmlanguages.c:223
 msgid "N-Z|Ukrainian"
 msgstr "ნ-ჰ| უკრაინული"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:225
+#: ../gui/mdmlanguages.c:225
 msgid "N-Z|Vietnamese"
 msgstr "ნ-ჰ|ვიეტნამური"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:227
+#: ../gui/mdmlanguages.c:227
 msgid "N-Z|Walloon"
 msgstr "ნ-ჰ| ვალონ"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:229
+#: ../gui/mdmlanguages.c:229
 msgid "N-Z|Welsh"
 msgstr "ნ-ჰ| უელსური"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:231
+#: ../gui/mdmlanguages.c:231
 msgid "N-Z|Yiddish"
 msgstr "ნ-ჰ| იდიში"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:233
+#: ../gui/mdmlanguages.c:233
 msgid "N-Z|Zulu"
 msgstr "ნ-ჰ| ზულუ"
 
 #. This is the POSIX/C locale for english, should really be in Other
-#: ../gui/gdmlanguages.c:235
+#: ../gui/mdmlanguages.c:235
 #, fuzzy
 msgid "Other|POSIX/C English"
 msgstr "სხვა C ინგლისური"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: ../gui/gdmlanguages.c:419
+#: ../gui/mdmlanguages.c:419
 msgid "A-M"
 msgstr "ა-მ"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: ../gui/gdmlanguages.c:427
+#: ../gui/mdmlanguages.c:427
 msgid "N-Z"
 msgstr "ნ-ჰ"
 
-#: ../gui/gdmlogin.c:352
+#: ../gui/mdmlogin.c:352
 #, c-format
 #, fuzzy
 msgid "Cannot run command '%s': %s."
 msgstr "წმ წმ."
 
-#: ../gui/gdmlogin.c:360
+#: ../gui/mdmlogin.c:360
 #, fuzzy
 msgid "Cannot start background application"
 msgstr "პროგრამა"
 
-#: ../gui/gdmlogin.c:434 ../gui/greeter/greeter_parser.c:1111
+#: ../gui/mdmlogin.c:434 ../gui/greeter/greeter_parser.c:1111
 #, fuzzy
 msgid "User %u will login in %t"
 msgstr "მომხმარებელი u -"
 
-#: ../gui/gdmlogin.c:652 ../gui/greeter/greeter_system.c:71
+#: ../gui/mdmlogin.c:652 ../gui/greeter/greeter_system.c:71
 #, fuzzy
 msgid "Are you sure you want to restart the computer?"
 msgstr "-სკენ?"
 
-#: ../gui/gdmlogin.c:653 ../gui/gdmlogin.c:2503
+#: ../gui/mdmlogin.c:653 ../gui/mdmlogin.c:2503
 #: ../gui/greeter/greeter_parser.c:1086 ../gui/greeter/greeter_system.c:72
 #: ../gui/greeter/greeter_system.c:178
 msgid "_Restart"
 msgstr "_გადატვირთვა"
 
-#: ../gui/gdmlogin.c:667 ../gui/greeter/greeter_system.c:83
+#: ../gui/mdmlogin.c:667 ../gui/greeter/greeter_system.c:83
 msgid "Are you sure you want to Shut Down the computer?"
 msgstr "დარწმუნებული ხართ რომ კომპიუტერის გათიშვა გსურთ?"
 
-#: ../gui/gdmlogin.c:668 ../gui/gdmlogin.c:2513
+#: ../gui/mdmlogin.c:668 ../gui/mdmlogin.c:2513
 #: ../gui/greeter/greeter_parser.c:1076 ../gui/greeter/greeter_system.c:84
 #: ../gui/greeter/greeter_system.c:187
 msgid "Shut _Down"
 msgstr "გამოთიშე"
 
-#: ../gui/gdmlogin.c:690 ../gui/greeter/greeter_system.c:94
+#: ../gui/mdmlogin.c:690 ../gui/greeter/greeter_system.c:94
 #, fuzzy
 msgid "Are you sure you want to suspend the computer?"
 msgstr "-სკენ?"
 
-#: ../gui/gdmlogin.c:691 ../gui/gdmlogin.c:2523
+#: ../gui/mdmlogin.c:691 ../gui/mdmlogin.c:2523
 #: ../gui/greeter/greeter_system.c:95
 msgid "_Suspend"
 msgstr "_შეაყოვნე"
@@ -2939,30 +2939,30 @@ msgstr "_შეაყოვნე"
 #. no_group
 #. untranslated
 #. markup
-#: ../gui/gdmlogin.c:775 ../gui/gdmlogin.c:804 ../gui/gdmlogin.c:887
+#: ../gui/mdmlogin.c:775 ../gui/mdmlogin.c:804 ../gui/mdmlogin.c:887
 #: ../gui/greeter/greeter_action_language.c:158
 #: ../gui/greeter/greeter_session.c:119 ../gui/greeter/greeter_session.c:150
 #, fuzzy, c-format
 msgid "Do you wish to make %s the default for future sessions?"
 msgstr "-სკენ წმ საწყისი მომავალი?"
 
-#: ../gui/gdmlogin.c:778 ../gui/greeter/greeter_session.c:122
+#: ../gui/mdmlogin.c:778 ../gui/greeter/greeter_session.c:122
 #, c-format
 #, fuzzy
 msgid "Your preferred session type %s is not installed on this computer."
 msgstr "წმ არა ჩართულია."
 
-#: ../gui/gdmlogin.c:783 ../gui/gdmlogin.c:814 ../gui/gdmlogin.c:895
+#: ../gui/mdmlogin.c:783 ../gui/mdmlogin.c:814 ../gui/mdmlogin.c:895
 #: ../gui/greeter/greeter_action_language.c:166
 #: ../gui/greeter/greeter_session.c:126 ../gui/greeter/greeter_session.c:159
 msgid "Make _Default"
 msgstr "გახადე _სტანდარტული"
 
-#: ../gui/gdmlogin.c:783 ../gui/greeter/greeter_session.c:126
+#: ../gui/mdmlogin.c:783 ../gui/greeter/greeter_session.c:126
 msgid "Just _Log In"
 msgstr "მხოლოდ _შედი"
 
-#: ../gui/gdmlogin.c:808 ../gui/gdmlogin.c:889
+#: ../gui/mdmlogin.c:808 ../gui/mdmlogin.c:889
 #: ../gui/greeter/greeter_action_language.c:160
 #: ../gui/greeter/greeter_session.c:153
 #, c-format
@@ -2970,19 +2970,19 @@ msgstr "მხოლოდ _შედი"
 msgid "You have chosen %s for this session, but your default setting is %s."
 msgstr "თქვენ წმ საწყისი წმ."
 
-#: ../gui/gdmlogin.c:814 ../gui/gdmlogin.c:895
+#: ../gui/mdmlogin.c:814 ../gui/mdmlogin.c:895
 #: ../gui/greeter/greeter_action_language.c:166
 #: ../gui/greeter/greeter_session.c:159
 msgid "Just For _This Session"
 msgstr "_"
 
-#: ../gui/gdmlogin.c:825
+#: ../gui/mdmlogin.c:825
 #, c-format
 #, fuzzy
 msgid "You have chosen %s for this session."
 msgstr "თქვენ წმ."
 
-#: ../gui/gdmlogin.c:828
+#: ../gui/mdmlogin.c:828
 #, c-format
 #, fuzzy
 msgid ""
@@ -2990,25 +2990,25 @@ msgid ""
 "utility (System Tools->Desktop Switching Tool from the main menu)."
 msgstr "-სკენ წმ საწყისი მომავალი სისტემა ხელსაწყოები სამუშაო მაგიდა მენიუ."
 
-#: ../gui/gdmlogin.c:869 ../gui/gdmlogin.c:878
+#: ../gui/mdmlogin.c:869 ../gui/mdmlogin.c:878
 #: ../gui/greeter/greeter_action_language.c:73
 #: ../gui/greeter/greeter_action_language.c:142
 #: ../gui/greeter/greeter_action_language.c:150
 msgid "System Default"
 msgstr "სისტემის სტანდარტული"
 
-#: ../gui/gdmlogin.c:1006 ../gui/gdmlogin.c:1020 ../gui/gdmlogin.c:1637
-#: ../gui/gdmlogin.c:2114 ../gui/gdmlogin.c:2735
+#: ../gui/mdmlogin.c:1006 ../gui/mdmlogin.c:1020 ../gui/mdmlogin.c:1637
+#: ../gui/mdmlogin.c:2114 ../gui/mdmlogin.c:2735
 msgid "_Username:"
 msgstr "_მომხმარებელი:"
 
-#: ../gui/gdmlogin.c:1094
+#: ../gui/mdmlogin.c:1094
 #, c-format
 #, fuzzy
 msgid "%s session selected"
 msgstr "წმ"
 
-#: ../gui/gdmlogin.c:1115 ../gui/gdmlogin.c:1233
+#: ../gui/mdmlogin.c:1115 ../gui/mdmlogin.c:1233
 msgid "_Last"
 msgstr "_ბოლოს"
 
@@ -3016,191 +3016,191 @@ msgstr "_ბოლოს"
 #. no_group
 #. untranslated
 #. makrup
-#: ../gui/gdmlogin.c:1198
+#: ../gui/mdmlogin.c:1198
 #, c-format
 #, fuzzy
 msgid "%s language selected"
 msgstr "წმ"
 
-#: ../gui/gdmlogin.c:1244
+#: ../gui/mdmlogin.c:1244
 msgid "_System Default"
 msgstr "_სისტემის სტანდარტული"
 
-#: ../gui/gdmlogin.c:1276
+#: ../gui/mdmlogin.c:1276
 msgid "_Other"
 msgstr "_სხვა"
 
-#: ../gui/gdmlogin.c:1669
+#: ../gui/mdmlogin.c:1669
 msgid "_Password:"
 msgstr "_პაროლი:"
 
 #. translators:  This is a nice and evil eggie text, translate
 #. * to your favourite currency
-#: ../gui/gdmlogin.c:1900 ../gui/greeter/greeter.c:339
+#: ../gui/mdmlogin.c:1900 ../gui/greeter/greeter.c:339
 #, fuzzy
 msgid "Please insert 25 cents to log in."
 msgstr "-სკენ -."
 
-#: ../gui/gdmlogin.c:2234
+#: ../gui/mdmlogin.c:2234
 msgid "GNOME Desktop Manager"
 msgstr "გნომის გრაფიკული ინტერფეისი"
 
-#: ../gui/gdmlogin.c:2300
+#: ../gui/mdmlogin.c:2300
 msgid "Finger"
 msgstr ""
 
-#: ../gui/gdmlogin.c:2418
-msgid "GDM Login"
-msgstr "GDM შესასვლელი"
+#: ../gui/mdmlogin.c:2418
+msgid "MDM Login"
+msgstr "MDM შესასვლელი"
 
-#: ../gui/gdmlogin.c:2461 ../gui/greeter/greeter_parser.c:1056
+#: ../gui/mdmlogin.c:2461 ../gui/greeter/greeter_parser.c:1056
 msgid "_Session"
 msgstr "_სესია:"
 
-#: ../gui/gdmlogin.c:2468 ../gui/greeter/greeter_parser.c:1051
+#: ../gui/mdmlogin.c:2468 ../gui/greeter/greeter_parser.c:1051
 msgid "_Language"
 msgstr "_ენა"
 
-#: ../gui/gdmlogin.c:2482 ../gui/greeter/greeter_system.c:153
+#: ../gui/mdmlogin.c:2482 ../gui/greeter/greeter_system.c:153
 #, fuzzy
 msgid "Remote Login via _XDMCP..."
 msgstr "დაშორებული შესვლა."
 
-#: ../gui/gdmlogin.c:2493
+#: ../gui/mdmlogin.c:2493
 #, fuzzy
 msgid "_Configure Login Manager..."
 msgstr "გამართვა შესვლა მმართველი."
 
-#: ../gui/gdmlogin.c:2533 ../gui/greeter/greeter_parser.c:1061
+#: ../gui/mdmlogin.c:2533 ../gui/greeter/greeter_parser.c:1061
 msgid "_Actions"
 msgstr "_მოქმედებანი"
 
-#: ../gui/gdmlogin.c:2542
+#: ../gui/mdmlogin.c:2542
 msgid "_Theme"
 msgstr "_თემა"
 
-#: ../gui/gdmlogin.c:2553 ../gui/greeter/greeter_canvas_item.c:165
+#: ../gui/mdmlogin.c:2553 ../gui/greeter/greeter_canvas_item.c:165
 #: ../gui/greeter/greeter_parser.c:1071
 msgid "_Quit"
 msgstr "_გასვლა"
 
-#: ../gui/gdmlogin.c:2555 ../gui/greeter/greeter_canvas_item.c:167
+#: ../gui/mdmlogin.c:2555 ../gui/greeter/greeter_canvas_item.c:167
 #: ../gui/greeter/greeter_parser.c:1066
 msgid "D_isconnect"
 msgstr "_გათიშვა"
 
-#: ../gui/gdmlogin.c:2623 ../gui/greeter/greeter_item_ulist.c:236
+#: ../gui/mdmlogin.c:2623 ../gui/greeter/greeter_item_ulist.c:236
 msgid "Icon"
 msgstr "ხატულა"
 
-#: ../gui/gdmlogin.c:3367 ../gui/gdmlogin.c:3401 ../gui/greeter/greeter.c:580
+#: ../gui/mdmlogin.c:3367 ../gui/mdmlogin.c:3401 ../gui/greeter/greeter.c:580
 #, c-format
 #, fuzzy
 msgid ""
 "The greeter version (%s) does not match the daemon version.  You have "
-"probably just upgraded GDM.  Please restart the GDM daemon or the computer."
+"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
 msgstr "ვერსია წმ არა ემთხვევა ვერსია თქვენ ან."
 
-#: ../gui/gdmlogin.c:3377 ../gui/gdmlogin.c:3411 ../gui/gdmlogin.c:3459
+#: ../gui/mdmlogin.c:3377 ../gui/mdmlogin.c:3411 ../gui/mdmlogin.c:3459
 #: ../gui/greeter/greeter.c:590 ../gui/greeter/greeter.c:625
 #: ../gui/greeter/greeter.c:674
 msgid "Cannot start the greeter"
 msgstr "ვერ გამოვიძახე პროგრამა greeter:"
 
-#: ../gui/gdmlogin.c:3416
+#: ../gui/mdmlogin.c:3416
 msgid "Restart"
 msgstr "გადატვირთე"
 
-#: ../gui/gdmlogin.c:3449 ../gui/greeter/greeter.c:664
+#: ../gui/mdmlogin.c:3449 ../gui/greeter/greeter.c:664
 #, c-format
 #, fuzzy
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded GDM.  Please restart the GDM daemon or the computer."
+"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
 msgstr "ვერსია წმ არა ემთხვევა ვერსია წმ თქვენ ან."
 
-#: ../gui/gdmlogin.c:3464 ../gui/greeter/greeter.c:679
-msgid "Restart GDM"
-msgstr "GDM-ის გადატვირთვა"
+#: ../gui/mdmlogin.c:3464 ../gui/greeter/greeter.c:679
+msgid "Restart MDM"
+msgstr "MDM-ის გადატვირთვა"
 
-#: ../gui/gdmlogin.c:3466
+#: ../gui/mdmlogin.c:3466
 msgid "Restart computer"
 msgstr "გადატვირთე კომპიუტერი"
 
-#: ../gui/gdmlogin.c:3551
+#: ../gui/mdmlogin.c:3551
 #, fuzzy
 msgid "Could not set signal mask!"
 msgstr "არა!"
 
-#: ../gui/gdmlogin.c:3666 ../gui/greeter/greeter.c:1359
+#: ../gui/mdmlogin.c:3666 ../gui/greeter/greeter.c:1359
 msgid "Session directory is missing"
 msgstr "დაიკარგა სისტემის დირექტორია"
 
-#: ../gui/gdmlogin.c:3667
+#: ../gui/mdmlogin.c:3667
 #, fuzzy
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the GDM "
+"sessions you can use, but you should log in and correct the MDM "
 "configuration."
 msgstr "ან - და."
 
-#: ../gui/gdmlogin.c:3690 ../gui/greeter/greeter.c:1384
+#: ../gui/mdmlogin.c:3690 ../gui/greeter/greeter.c:1384
 #, fuzzy
 msgid "Configuration is not correct"
 msgstr "გამართვა არა"
 
-#: ../gui/gdmlogin.c:3691 ../gui/greeter/greeter.c:1385
+#: ../gui/mdmlogin.c:3691 ../gui/greeter/greeter.c:1385
 #, fuzzy
 msgid ""
 "The configuration file contains an invalid command line for the login "
 "dialog, so running the default command.  Please fix your configuration."
 msgstr "ფაილი შეიცავს მცდარი ხაზი დიალოგი საწყისი."
 
-#: ../gui/gdmphotosetup.c:188
+#: ../gui/mdmphotosetup.c:188
 #, fuzzy, c-format
 msgid "File %s cannot be opened for writing."
 msgstr "ფაილი წმ."
 
-#: ../gui/gdmphotosetup.c:195
+#: ../gui/mdmphotosetup.c:195
 msgid "Cannot open file"
 msgstr "ვერ ვხსნი ფაილს"
 
-#: ../gui/gdmphotosetup.c:249
+#: ../gui/mdmphotosetup.c:249
 #, fuzzy
 msgid "Select User Image"
 msgstr "ამორჩევა მომხმარებელი გამოსახულება"
 
-#: ../gui/gdmphotosetup.c:273 ../gui/gdmsetup.c:5589 ../gui/gdmsetup.c:5711
-#: ../gui/gdmsetup.c:5864 ../gui/gdmsetup.c:5986
+#: ../gui/mdmphotosetup.c:273 ../gui/mdmsetup.c:5589 ../gui/mdmsetup.c:5711
+#: ../gui/mdmsetup.c:5864 ../gui/mdmsetup.c:5986
 msgid "Images"
 msgstr "_სურათი"
 
-#: ../gui/gdmphotosetup.c:278 ../gui/gdmsetup.c:3046 ../gui/gdmsetup.c:5594
-#: ../gui/gdmsetup.c:5716 ../gui/gdmsetup.c:5869 ../gui/gdmsetup.c:5991
+#: ../gui/mdmphotosetup.c:278 ../gui/mdmsetup.c:3046 ../gui/mdmsetup.c:5594
+#: ../gui/mdmsetup.c:5716 ../gui/mdmsetup.c:5869 ../gui/mdmsetup.c:5991
 msgid "All Files"
 msgstr "ყველა ფაილი"
 
-#: ../gui/gdmphotosetup.desktop.in.h:1
-msgid "Change the picture that will show in the GDM (login manager) face browser"
+#: ../gui/mdmphotosetup.desktop.in.h:1
+msgid "Change the picture that will show in the MDM (login manager) face browser"
 msgstr ""
 
-#: ../gui/gdmphotosetup.desktop.in.h:2
+#: ../gui/mdmphotosetup.desktop.in.h:2
 msgid "Login Photo"
 msgstr "შესვლის ფოტო"
 
-#: ../gui/gdmphotosetup.glade.h:1
+#: ../gui/mdmphotosetup.glade.h:1
 msgid "<b>User Image</b>"
 msgstr "<b>მომხმარებლის სურათი</b>"
 
-#: ../gui/gdmphotosetup.glade.h:2
+#: ../gui/mdmphotosetup.glade.h:2
 msgid "Login Photo Preferences"
 msgstr "მომხმარებლის ფოტოს პარამეტრები"
 
-#: ../gui/gdmsession.c:125 ../gui/gdmsession.c:296
+#: ../gui/mdmsession.c:125 ../gui/mdmsession.c:296
 msgid "Failsafe _GNOME"
 msgstr "უხიფათო Failsafe _GNOME"
 
-#: ../gui/gdmsession.c:126 ../gui/gdmsession.c:297
+#: ../gui/mdmsession.c:126 ../gui/mdmsession.c:297
 #, fuzzy
 msgid ""
 "This is a failsafe session that will log you into GNOME. No startup scripts "
@@ -3208,11 +3208,11 @@ msgid ""
 "GNOME will use the 'Default' session."
 msgstr "a GNOME არა და -სკენ - GNOME ნაგულისხმევი."
 
-#: ../gui/gdmsession.c:136 ../gui/gdmsession.c:308
+#: ../gui/mdmsession.c:136 ../gui/mdmsession.c:308
 msgid "Failsafe _Terminal"
 msgstr "ფაილდაცვის _ტერმინალი"
 
-#: ../gui/gdmsession.c:137 ../gui/gdmsession.c:309
+#: ../gui/mdmsession.c:137 ../gui/mdmsession.c:309
 #, fuzzy
 msgid ""
 "This is a failsafe session that will log you into a terminal.  No startup "
@@ -3220,159 +3220,159 @@ msgid ""
 "otherwise.  To exit the terminal, type 'exit'."
 msgstr "a a ტერმინალი არა და -სკენ - ვის ტერმინალი."
 
-#: ../gui/gdmsetup.c:260
+#: ../gui/mdmsetup.c:260
 #, fuzzy
 msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
 msgstr "შეცდომა -სკენ ყველა."
 
-#: ../gui/gdmsetup.c:801 ../gui/gdmsetup.c:819 ../gui/gdmsetup.c:974
-#: ../gui/gdmsetup.c:1220
+#: ../gui/mdmsetup.c:801 ../gui/mdmsetup.c:819 ../gui/mdmsetup.c:974
+#: ../gui/mdmsetup.c:1220
 #, fuzzy
 msgid "Themed"
 msgstr "_თემა"
 
-#: ../gui/gdmsetup.c:804 ../gui/gdmsetup.c:835
+#: ../gui/mdmsetup.c:804 ../gui/mdmsetup.c:835
 #, fuzzy
 msgid "Plain"
 msgstr "გლუვი"
 
-#: ../gui/gdmsetup.c:805 ../gui/gdmsetup.c:836
+#: ../gui/mdmsetup.c:805 ../gui/mdmsetup.c:836
 #, fuzzy
 msgid "Plain with face browser"
 msgstr "გლუვი"
 
-#: ../gui/gdmsetup.c:1571
+#: ../gui/mdmsetup.c:1571
 #, fuzzy
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr "ან -სკენ root არა."
 
-#: ../gui/gdmsetup.c:1792
+#: ../gui/mdmsetup.c:1792
 #, c-format
 #, fuzzy
 msgid "The \"%s\" user already exists in the include list."
 msgstr "წმ - შემცველობა სია."
 
-#: ../gui/gdmsetup.c:1802 ../gui/gdmsetup.c:1832 ../gui/gdmsetup.c:1869
+#: ../gui/mdmsetup.c:1802 ../gui/mdmsetup.c:1832 ../gui/mdmsetup.c:1869
 #, fuzzy
 msgid "Cannot add user"
 msgstr "დამატება"
 
-#: ../gui/gdmsetup.c:1822
+#: ../gui/mdmsetup.c:1822
 #, c-format
 #, fuzzy
 msgid "The \"%s\" user already exists in the exclude list."
 msgstr "წმ - სია."
 
-#: ../gui/gdmsetup.c:1859
+#: ../gui/mdmsetup.c:1859
 #, fuzzy, c-format
 msgid "The \"%s\" user does not exist."
 msgstr "წმ არა."
 
-#: ../gui/gdmsetup.c:3041 ../gui/gdmsetup.glade.h:73
+#: ../gui/mdmsetup.c:3041 ../gui/mdmsetup.glade.h:73
 #, fuzzy
 msgid "Sounds"
 msgstr "ხმები"
 
-#: ../gui/gdmsetup.c:3250 ../gui/gdmsetup.c:3308
+#: ../gui/mdmsetup.c:3250 ../gui/mdmsetup.c:3308
 msgid "None"
 msgstr "არავითარი"
 
-#: ../gui/gdmsetup.c:3741
+#: ../gui/mdmsetup.c:3741
 #, fuzzy
 msgid "Archive is not of a subdirectory"
 msgstr "არქივი არა - a"
 
-#: ../gui/gdmsetup.c:3749
+#: ../gui/mdmsetup.c:3749
 #, fuzzy
 msgid "Archive is not of a single subdirectory"
 msgstr "არქივი არა - a"
 
-#: ../gui/gdmsetup.c:3773 ../gui/gdmsetup.c:3851
+#: ../gui/mdmsetup.c:3773 ../gui/mdmsetup.c:3851
 #, fuzzy
 msgid "File not a tar.gz or tar archive"
 msgstr "ფაილი არა a ან"
 
-#: ../gui/gdmsetup.c:3775
+#: ../gui/mdmsetup.c:3775
 #, fuzzy
-msgid "Archive does not include a GdmGreeterTheme.info file"
+msgid "Archive does not include a MdmGreeterTheme.info file"
 msgstr "არქივი არა შემცველობა a ფაილი"
 
-#: ../gui/gdmsetup.c:3797
+#: ../gui/mdmsetup.c:3797
 msgid "File does not exist"
 msgstr "ფაილი არ არსებობს."
 
-#: ../gui/gdmsetup.c:3917
+#: ../gui/mdmsetup.c:3917
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../gui/gdmsetup.c:3924
+#: ../gui/mdmsetup.c:3924
 #, fuzzy
 msgid "Not a theme archive"
 msgstr "a"
 
 #. FIXME: if exists already perhaps we could also have an
 #. * option to change the dir name
-#: ../gui/gdmsetup.c:3946
+#: ../gui/mdmsetup.c:3946
 #, c-format
 #, fuzzy
 msgid "Theme directory '%s' seems to be already installed. Install again anyway?"
 msgstr "გაფორმება წმ -სკენ დაყენება?"
 
-#: ../gui/gdmsetup.c:4038
+#: ../gui/mdmsetup.c:4038
 #, fuzzy
 msgid "Some error occurred when installing the theme"
 msgstr "შეცდომა"
 
-#: ../gui/gdmsetup.c:4094
+#: ../gui/mdmsetup.c:4094
 #, fuzzy
 msgid "No file selected"
 msgstr "არა ფაილი"
 
-#: ../gui/gdmsetup.c:4115
+#: ../gui/mdmsetup.c:4115
 #, fuzzy
 msgid "Select Theme Archive"
 msgstr "ამორჩევა გაფორმება არქივი"
 
-#: ../gui/gdmsetup.c:4119 ../gui/gdmsetup.c:5110
+#: ../gui/mdmsetup.c:4119 ../gui/mdmsetup.c:5110
 #, fuzzy
 msgid "_Install"
 msgstr "დაყენება"
 
-#: ../gui/gdmsetup.c:4210
+#: ../gui/mdmsetup.c:4210
 #, fuzzy, c-format
 msgid "Remove the \"%s\" theme?"
 msgstr "წაშლა წმ?"
 
-#: ../gui/gdmsetup.c:4219
+#: ../gui/mdmsetup.c:4219
 #, fuzzy
 msgid "If you choose to remove the theme, it will be permanently lost."
 msgstr "-სკენ ამოშლა."
 
-#: ../gui/gdmsetup.c:4227
+#: ../gui/mdmsetup.c:4227
 #, fuzzy
 msgid "_Remove Theme"
 msgstr "წაშლა გაფორმება"
 
-#: ../gui/gdmsetup.c:5099
+#: ../gui/mdmsetup.c:5099
 #, fuzzy, c-format
 msgid "Install the theme from '%s'?"
 msgstr "დაყენება წმ?"
 
-#: ../gui/gdmsetup.c:5100
+#: ../gui/mdmsetup.c:5100
 #, c-format
 #, fuzzy
 msgid "Select install to add the theme from the file '%s'."
 msgstr "ამორჩევა -სკენ დამატება ფაილი წმ."
 
 #. This is the temporary help dialog
-#: ../gui/gdmsetup.c:5361
+#: ../gui/mdmsetup.c:5361
 #, c-format
 #, fuzzy
 msgid ""
-"This configuration window changes settings for the GDM daemon, which is the "
+"This configuration window changes settings for the MDM daemon, which is the "
 "graphical login screen for GNOME.  Changes that you make will take effect "
 "immediately.\n"
 "\n"
@@ -3383,58 +3383,58 @@ msgid ""
 "category."
 msgstr "ფანჯარა GNOME n არა ყველა თქვენ -სკენ რედაქტირება წმ პოვნა n დოკუმენტაცია GNOME დახმარება სამუშაო მაგიდა."
 
-#: ../gui/gdmsetup.c:6407
+#: ../gui/mdmsetup.c:6407
 #, fuzzy
 msgid "Apply the changes to users before closing?"
 msgstr "გამოყენება -სკენ?"
 
-#: ../gui/gdmsetup.c:6408
+#: ../gui/mdmsetup.c:6408
 #, fuzzy
 msgid "If you don't apply, the changes made on the Users tab will be disregarded."
 msgstr "გამოყენება ჩართულია მომხმარებლები."
 
-#: ../gui/gdmsetup.c:6411
+#: ../gui/mdmsetup.c:6411
 #, fuzzy
 msgid "Close _without Applying"
 msgstr "დახურვა"
 
-#: ../gui/gdmsetup.c:6459
+#: ../gui/mdmsetup.c:6459
 #, fuzzy
-msgid "Could not access GDM configuration file.\n"
+msgid "Could not access MDM configuration file.\n"
 msgstr "არა ფაილი n"
 
-#: ../gui/gdmsetup.c:6503
+#: ../gui/mdmsetup.c:6503
 #, fuzzy
-msgid "You must be the root user to configure GDM."
+msgid "You must be the root user to configure MDM."
 msgstr "თქვენ root -სკენ."
 
 #. EOF
-#: ../gui/gdmsetup.desktop.in.h:1
+#: ../gui/mdmsetup.desktop.in.h:1
 #, fuzzy
 msgid "Configure the login window (GNOME Display Manager)"
 msgstr "გამართვა ფანჯარა GNOME დისპლეი მმართველი"
 
-#: ../gui/gdmsetup.desktop.in.h:2
+#: ../gui/mdmsetup.desktop.in.h:2
 msgid "Login Window"
 msgstr "შემოსასვლელი სარკმელი"
 
-#: ../gui/gdmsetup.desktop.in.h:3 ../gui/gdmsetup.glade.h:39
+#: ../gui/mdmsetup.desktop.in.h:3 ../gui/mdmsetup.glade.h:39
 #, fuzzy
 msgid "Login Window Preferences"
 msgstr "შესვლა ფანჯარა პარამეტრები"
 
-#: ../gui/gdmsetup.glade.h:1
+#: ../gui/mdmsetup.glade.h:1
 #, fuzzy
 msgid "    "
 msgstr "    "
 
-#: ../gui/gdmsetup.glade.h:3
+#: ../gui/mdmsetup.glade.h:3
 #, no-c-format
 #, fuzzy
 msgid "%n will be replaced by hostname"
 msgstr "n"
 
-#: ../gui/gdmsetup.glade.h:4
+#: ../gui/mdmsetup.glade.h:4
 #, fuzzy
 msgid ""
 "<b>Note:</b>  Users in the Include list will appear in the face browser if "
@@ -3442,220 +3442,220 @@ msgid ""
 "logins on the Security tab.  Users in the Exclude list will not appear."
 msgstr "<b> შენიშვნა</b> მომხმარებლები - სია - ჩართული და - ქვემოთ ავტომატური და ჩართულია უსაფრთხოება მომხმარებლები - სია არა."
 
-#: ../gui/gdmsetup.glade.h:5
+#: ../gui/mdmsetup.glade.h:5
 #, fuzzy
 msgid ""
 "<b>Warning:</b>  Incorrect settings could prevent the X server from "
-"restarting.  Changes to these settings will not take effect until GDM is "
+"restarting.  Changes to these settings will not take effect until MDM is "
 "restarted."
 msgstr "<b> გაფრთხილება</b> X -სკენ არა."
 
-#: ../gui/gdmsetup.glade.h:6
+#: ../gui/mdmsetup.glade.h:6
 #, fuzzy
 msgid "A_llow remote system administrator login"
 msgstr "ჩ/გ"
 
-#: ../gui/gdmsetup.glade.h:7
+#: ../gui/mdmsetup.glade.h:7
 #, fuzzy
 msgid "Accessibility"
 msgstr "დამხმარე საშუალებები"
 
-#: ../gui/gdmsetup.glade.h:8
+#: ../gui/mdmsetup.glade.h:8
 #, fuzzy
 msgid "Add / Modify Servers To Start"
 msgstr "დამატება შეცვლა სერვერები ვის გაშვება"
 
-#: ../gui/gdmsetup.glade.h:9
+#: ../gui/mdmsetup.glade.h:9
 msgid "Add S_erver..."
 msgstr "სერ_ვერის დამატება %s..."
 
-#: ../gui/gdmsetup.glade.h:10
+#: ../gui/mdmsetup.glade.h:10
 msgid "Add User"
 msgstr "მომხმარებელის დამატება"
 
-#: ../gui/gdmsetup.glade.h:11
+#: ../gui/mdmsetup.glade.h:11
 msgid "Allo_w remote timed logins"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:12
+#: ../gui/mdmsetup.glade.h:12
 msgid "Author:"
 msgstr "ავტორი:"
 
-#: ../gui/gdmsetup.glade.h:13
+#: ../gui/mdmsetup.glade.h:13
 #, fuzzy
 msgid "Background"
 msgstr "ფონი"
 
-#: ../gui/gdmsetup.glade.h:14
+#: ../gui/mdmsetup.glade.h:14
 #, fuzzy
 msgid "C_ommand:"
 msgstr "_ბრძანება:"
 
-#: ../gui/gdmsetup.glade.h:15
+#: ../gui/mdmsetup.glade.h:15
 #, fuzzy
 msgid "C_ustom:"
 msgstr "C:"
 
-#: ../gui/gdmsetup.glade.h:16
+#: ../gui/mdmsetup.glade.h:16
 msgid "Co_lor:"
 msgstr "_ფერი:"
 
-#: ../gui/gdmsetup.glade.h:17
+#: ../gui/mdmsetup.glade.h:17
 #, fuzzy
 msgid "Color depth:"
 msgstr "ფერი:"
 
-#: ../gui/gdmsetup.glade.h:18
+#: ../gui/mdmsetup.glade.h:18
 #, fuzzy
 msgid "Configure _X Server..."
 msgstr "გამართვა X სერვერი."
 
-#: ../gui/gdmsetup.glade.h:19
+#: ../gui/mdmsetup.glade.h:19
 msgid "Configure _XDMCP..."
 msgstr "_XDMCP კონფიგურაცია..."
 
-#: ../gui/gdmsetup.glade.h:20
+#: ../gui/mdmsetup.glade.h:20
 msgid "Copyright:"
 msgstr "საავტორო უფლება:"
 
-#: ../gui/gdmsetup.glade.h:21
+#: ../gui/mdmsetup.glade.h:21
 #, fuzzy
 msgid "Disables X forwarding, but does not affect XDMCP."
 msgstr "X არა."
 
-#: ../gui/gdmsetup.glade.h:22
+#: ../gui/mdmsetup.glade.h:22
 #, fuzzy
 msgid "Displays per _host:"
 msgstr "0 კადრი წამში"
 
-#: ../gui/gdmsetup.glade.h:23
+#: ../gui/mdmsetup.glade.h:23
 #, fuzzy
 msgid "Do not show image for _remote logins"
 msgstr "არა ნახატი"
 
-#: ../gui/gdmsetup.glade.h:24
+#: ../gui/mdmsetup.glade.h:24
 #, fuzzy
 msgid "E_nable debug messages to system log"
 msgstr "E განბზიკვა -სკენ"
 
-#: ../gui/gdmsetup.glade.h:25
+#: ../gui/mdmsetup.glade.h:25
 #, fuzzy
 msgid "E_xclude:"
 msgstr "E:"
 
-#: ../gui/gdmsetup.glade.h:26
+#: ../gui/mdmsetup.glade.h:26
 #, fuzzy
 msgid "Enable _Timed Login"
 msgstr "ჩართვა შესვლა"
 
-#: ../gui/gdmsetup.glade.h:27
+#: ../gui/mdmsetup.glade.h:27
 #, fuzzy
 msgid "Example: /usr/X11R6/bin/X"
 msgstr "X"
 
-#: ../gui/gdmsetup.glade.h:28
+#: ../gui/mdmsetup.glade.h:28
 msgid ""
 "Greeter\n"
 "Chooser"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:30
+#: ../gui/mdmsetup.glade.h:30
 msgid "Honor _indirect requests"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:31
+#: ../gui/mdmsetup.glade.h:31
 msgid "I_mage:"
 msgstr "_სურათი:"
 
-#: ../gui/gdmsetup.glade.h:32
+#: ../gui/mdmsetup.glade.h:32
 #, fuzzy
 msgid "I_nclude:"
 msgstr "I:"
 
-#: ../gui/gdmsetup.glade.h:33
+#: ../gui/mdmsetup.glade.h:33
 #, fuzzy
 msgid "Includ_e Hostname Chooser (XDMCP) menu item"
 msgstr "e ჰოსტის სახელი მენიუ"
 
-#: ../gui/gdmsetup.glade.h:34
+#: ../gui/mdmsetup.glade.h:34
 #, fuzzy
 msgid "Include Con_figure menu item"
 msgstr "მენიუ"
 
-#: ../gui/gdmsetup.glade.h:35
+#: ../gui/mdmsetup.glade.h:35
 #, fuzzy
 msgid "L_ogin retry delay:"
 msgstr "L:"
 
-#: ../gui/gdmsetup.glade.h:36
+#: ../gui/mdmsetup.glade.h:36
 msgid "La_unch:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:37
+#: ../gui/mdmsetup.glade.h:37
 #, fuzzy
 msgid "Listen on _UDP port: "
 msgstr "ჩართულია "
 
-#: ../gui/gdmsetup.glade.h:38
+#: ../gui/mdmsetup.glade.h:38
 msgid "Local"
 msgstr "ლოკალური"
 
-#: ../gui/gdmsetup.glade.h:40
+#: ../gui/mdmsetup.glade.h:40
 #, fuzzy
 msgid "Login _failed:"
 msgstr "შესვლა:"
 
-#: ../gui/gdmsetup.glade.h:41
+#: ../gui/mdmsetup.glade.h:41
 #, fuzzy
 msgid "Login _successful:"
 msgstr "შესვლა:"
 
-#: ../gui/gdmsetup.glade.h:42
+#: ../gui/mdmsetup.glade.h:42
 msgid "Logo"
 msgstr "ლოგო"
 
-#: ../gui/gdmsetup.glade.h:43
+#: ../gui/mdmsetup.glade.h:43
 msgid "Maximum _pending requests:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:44
+#: ../gui/mdmsetup.glade.h:44
 #, fuzzy
 msgid "Maximum _remote sessions:"
 msgstr "%s: სესიების დირექტორია არ არის მითითებული."
 
-#: ../gui/gdmsetup.glade.h:45
+#: ../gui/mdmsetup.glade.h:45
 #, fuzzy
 msgid "Maximum _wait time:"
 msgstr "_მკითხე ყოველ შემთხვევაში"
 
-#: ../gui/gdmsetup.glade.h:46
+#: ../gui/mdmsetup.glade.h:46
 msgid "Maximum indirect w_ait time:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:47
+#: ../gui/mdmsetup.glade.h:47
 msgid "Maximum p_ending indirect requests:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:48
+#: ../gui/mdmsetup.glade.h:48
 #, fuzzy
 msgid "Menu Bar"
 msgstr "მენუს ზოლი"
 
-#: ../gui/gdmsetup.glade.h:49
+#: ../gui/mdmsetup.glade.h:49
 #, fuzzy
 msgid "Op_tions:\t"
 msgstr "მიეცი OP"
 
-#: ../gui/gdmsetup.glade.h:50
+#: ../gui/mdmsetup.glade.h:50
 #, fuzzy
 msgid "Pick Background Color"
 msgstr "ფონი ფერი"
 
-#: ../gui/gdmsetup.glade.h:51
+#: ../gui/mdmsetup.glade.h:51
 msgid "Pin_g interval:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:52
+#: ../gui/mdmsetup.glade.h:52
 #, fuzzy
 msgid ""
 "Plain\n"
@@ -3663,219 +3663,219 @@ msgid ""
 "Themed"
 msgstr "გლუვი"
 
-#: ../gui/gdmsetup.glade.h:55
+#: ../gui/mdmsetup.glade.h:55
 #, fuzzy
 msgid "Re_move Server"
 msgstr "სერვერი"
 
-#: ../gui/gdmsetup.glade.h:56
+#: ../gui/mdmsetup.glade.h:56
 #, fuzzy
 msgid "Refresh rate:"
 msgstr "განახლება:"
 
-#: ../gui/gdmsetup.glade.h:57
+#: ../gui/mdmsetup.glade.h:57
 #, fuzzy
 msgid "Remote"
 msgstr "დაშორებული"
 
-#: ../gui/gdmsetup.glade.h:58
+#: ../gui/mdmsetup.glade.h:58
 #, fuzzy
 msgid ""
 "Remote login disabled\n"
 "Same as Local"
 msgstr "დაშორებული გამორთული ლოკალური"
 
-#: ../gui/gdmsetup.glade.h:60
+#: ../gui/mdmsetup.glade.h:60
 #, fuzzy
 msgid "Resolution:"
 msgstr "გარჩევადობა:"
 
-#: ../gui/gdmsetup.glade.h:61
+#: ../gui/mdmsetup.glade.h:61
 #, fuzzy
 msgid "Sc_ale to fit screen"
 msgstr "-სკენ"
 
-#: ../gui/gdmsetup.glade.h:62
+#: ../gui/mdmsetup.glade.h:62
 #, fuzzy
 msgid "Security"
 msgstr "უსაფრთხოება"
 
-#: ../gui/gdmsetup.glade.h:63
+#: ../gui/mdmsetup.glade.h:63
 #, fuzzy
 msgid "Select Background Image"
 msgstr "ამოირჩიე ფონის გრაფიკული გამოსახულება"
 
-#: ../gui/gdmsetup.glade.h:64
+#: ../gui/mdmsetup.glade.h:64
 #, fuzzy
 msgid "Select Logo Image"
 msgstr "ამორჩევა ლოგო გამოსახულება"
 
-#: ../gui/gdmsetup.glade.h:65
+#: ../gui/mdmsetup.glade.h:65
 #, fuzzy
 msgid "Select Sound File"
 msgstr "ხმოვანი ფაილის არჩევა"
 
-#: ../gui/gdmsetup.glade.h:66
+#: ../gui/mdmsetup.glade.h:66
 #, fuzzy
 msgid ""
 "Selected only\n"
 "Random from selected\n"
 msgstr "მონიშნული n"
 
-#: ../gui/gdmsetup.glade.h:69
+#: ../gui/mdmsetup.glade.h:69
 #, fuzzy
 msgid "Server Settings"
 msgstr "სერვერის პარამეტრები"
 
-#: ../gui/gdmsetup.glade.h:70
+#: ../gui/mdmsetup.glade.h:70
 msgid "Server _name:"
 msgstr "სერვერის _სახელი"
 
-#: ../gui/gdmsetup.glade.h:71
+#: ../gui/mdmsetup.glade.h:71
 #, fuzzy
 msgid "Servers To Start"
 msgstr "სერვერები ვის გაშვება"
 
-#: ../gui/gdmsetup.glade.h:72
+#: ../gui/mdmsetup.glade.h:72
 #, fuzzy
 msgid "Sho_w Actions menu"
 msgstr "მოქმედებები მენიუ"
 
-#: ../gui/gdmsetup.glade.h:74
+#: ../gui/mdmsetup.glade.h:74
 msgid "Themes"
 msgstr "_თემა"
 
-#: ../gui/gdmsetup.glade.h:75
+#: ../gui/mdmsetup.glade.h:75
 msgid "U_ser:"
 msgstr "მო_მხმარებელი:"
 
-#: ../gui/gdmsetup.glade.h:76
+#: ../gui/mdmsetup.glade.h:76
 msgid "Users"
 msgstr "მომხმარებელი"
 
-#: ../gui/gdmsetup.glade.h:77
+#: ../gui/mdmsetup.glade.h:77
 msgid "Welcome Message"
 msgstr "მისალმების შეტყობინება"
 
-#: ../gui/gdmsetup.glade.h:78
+#: ../gui/mdmsetup.glade.h:78
 #, fuzzy
 msgid "X Server Login Window Preferences"
 msgstr "X სერვერი შესვლა ფანჯარა პარამეტრები"
 
-#: ../gui/gdmsetup.glade.h:79
+#: ../gui/mdmsetup.glade.h:79
 #, fuzzy
 msgid "XDMCP Login Window Preferences"
 msgstr "შესვლა ფანჯარა პარამეტრები"
 
-#: ../gui/gdmsetup.glade.h:80
+#: ../gui/mdmsetup.glade.h:80
 msgid "_Add/Modify..."
 msgstr "_დამატება/შეცვლა..."
 
-#: ../gui/gdmsetup.glade.h:81
+#: ../gui/mdmsetup.glade.h:81
 #, fuzzy
 msgid "_Allow local system administrator login"
 msgstr "ნების დართვა"
 
-#: ../gui/gdmsetup.glade.h:82
+#: ../gui/mdmsetup.glade.h:82
 #, fuzzy
 msgid "_Allow users to change fonts and colors of plain greeter"
 msgstr "ნების დართვა -სკენ და -"
 
-#: ../gui/gdmsetup.glade.h:83
+#: ../gui/mdmsetup.glade.h:83
 msgid "_Background color:"
 msgstr "_ფონის ფერი:"
 
-#: ../gui/gdmsetup.glade.h:85
+#: ../gui/mdmsetup.glade.h:85
 #, fuzzy, no-c-format
 msgid "_Default: \"Welcome to %n\""
 msgstr "ნაგულისხმევი მოგესალმებით -სკენ n"
 
-#: ../gui/gdmsetup.glade.h:86
+#: ../gui/mdmsetup.glade.h:86
 #, fuzzy
 msgid "_Default: \"Welcome\""
 msgstr "ნაგულისხმევი მოგესალმებით"
 
-#: ../gui/gdmsetup.glade.h:87
+#: ../gui/mdmsetup.glade.h:87
 #, fuzzy
 msgid "_Deny TCP connections to Xserver"
 msgstr "უარყოფა -სკენ"
 
-#: ../gui/gdmsetup.glade.h:88
+#: ../gui/mdmsetup.glade.h:88
 #, fuzzy
 msgid "_Enable Automatic Login"
 msgstr "ჩართვა ავტომატური შესვლა"
 
-#: ../gui/gdmsetup.glade.h:89
+#: ../gui/mdmsetup.glade.h:89
 #, fuzzy
 msgid "_Enable accessible login"
 msgstr "ჩართვა"
 
-#: ../gui/gdmsetup.glade.h:90
+#: ../gui/mdmsetup.glade.h:90
 #, fuzzy
 msgid "_Flexible (on demand)"
 msgstr "ჩართულია"
 
-#: ../gui/gdmsetup.glade.h:91
+#: ../gui/mdmsetup.glade.h:91
 msgid "_Image:"
 msgstr "_სურათი:"
 
-#: ../gui/gdmsetup.glade.h:92
+#: ../gui/mdmsetup.glade.h:92
 #, fuzzy
 msgid "_Include all users from /etc/passwd (not for NIS)"
 msgstr "ყველა არა NIS"
 
-#: ../gui/gdmsetup.glade.h:93
+#: ../gui/mdmsetup.glade.h:93
 #, fuzzy
 msgid "_Login screen ready:"
 msgstr "შესვლა:"
 
-#: ../gui/gdmsetup.glade.h:94
+#: ../gui/mdmsetup.glade.h:94
 msgid "_Logins are handled by this computer"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:95
+#: ../gui/mdmsetup.glade.h:95
 #, fuzzy
 msgid "_Pause before login:"
 msgstr "პაუზა:"
 
-#: ../gui/gdmsetup.glade.h:96
+#: ../gui/mdmsetup.glade.h:96
 msgid "_Remove"
 msgstr "_ამოშლა"
 
-#: ../gui/gdmsetup.glade.h:97
+#: ../gui/mdmsetup.glade.h:97
 msgid "_Server:"
 msgstr "_სერვერი:"
 
-#: ../gui/gdmsetup.glade.h:98
+#: ../gui/mdmsetup.glade.h:98
 msgid "_Servers:"
 msgstr "_სერვერი:"
 
-#: ../gui/gdmsetup.glade.h:99
+#: ../gui/mdmsetup.glade.h:99
 #, fuzzy
 msgid "_Style:"
 msgstr "_სტილი:"
 
-#: ../gui/gdmsetup.glade.h:100
+#: ../gui/mdmsetup.glade.h:100
 msgid "_Theme:"
 msgstr "_თემა:"
 
-#: ../gui/gdmsetup.glade.h:101
+#: ../gui/mdmsetup.glade.h:101
 msgid "_User:"
 msgstr "_მომხმარებელი:"
 
-#: ../gui/gdmsetup.glade.h:102
+#: ../gui/mdmsetup.glade.h:102
 msgid "_VT:"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:103
+#: ../gui/mdmsetup.glade.h:103
 msgid "dummy"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:104
+#: ../gui/mdmsetup.glade.h:104
 msgid "seconds"
 msgstr "წამი"
 
-#: ../gui/gdmuser.c:276 ../gui/gdmuser.c:278
+#: ../gui/mdmuser.c:276 ../gui/mdmuser.c:278
 #, fuzzy
 msgid "Too many users to list here..."
 msgstr "-სკენ სია."
@@ -3885,7 +3885,7 @@ msgstr "-სკენ სია."
 #, fuzzy
 msgid ""
 "The greeter version (%s) does not match the daemon version. You have "
-"probably just upgraded GDM. Please restart the GDM daemon or the computer."
+"probably just upgraded MDM. Please restart the MDM daemon or the computer."
 msgstr "ვერსია წმ არა ემთხვევა ვერსია თქვენ ან."
 
 #: ../gui/greeter/greeter.c:630 ../gui/greeter/greeter.c:681
@@ -3920,14 +3920,14 @@ msgstr "შეცდომა და საწყისი არა -სკე�
 #, fuzzy
 msgid ""
 "The GTK+ greeter could not be started.  This display will abort and you may "
-"have to login another way and fix the installation of GDM"
+"have to login another way and fix the installation of MDM"
 msgstr "არა შეწყვეტა და -სკენ და -"
 
 #: ../gui/greeter/greeter.c:1360
 #, fuzzy
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the gdm "
+"sessions you can use, but you should log in and correct the mdm "
 "configuration."
 msgstr "ან - და."
 
@@ -4075,52 +4075,52 @@ msgstr ""
 
 #: ../gui/greeter/greeter_system.c:357
 #, fuzzy
-msgid "Configure GDM (this login manager). This will require the root password."
+msgid "Configure MDM (this login manager). This will require the root password."
 msgstr "გამართვა root."
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 Bond, James Bond"
 msgstr "© 2002 ბონდი, ჯეიმს ბონდი"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:2
 msgid "Bond, James Bond"
 msgstr "არმეგედონ, არმაგედონ ჩალიჩავა"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:3
 msgid "Circles"
 msgstr "წრე"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:4
 #, fuzzy
 msgid "Theme with blue circles"
 msgstr "გაფორმება"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:1
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 GNOME"
 msgstr "(c)·2002·გნომი"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:2
 #, fuzzy
 msgid "GNOME Art variation of Circles with a Face Browser"
 msgstr "GNOME ხელოვნება - წრე a Browser-ი"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:3
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:3
 msgid "GNOME Artists"
 msgstr "გნომის ხელოვანები"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:4
 #, fuzzy
 msgid "Happy GNOME with Browser"
 msgstr "ბედნიერი GNOME Browser-ი"
 
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:2
 #, fuzzy
 msgid "GNOME Art variation of Circles"
 msgstr "GNOME ხელოვნება - წრე"
 
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME"
 msgstr "ხალისიანი გნომი"
 
@@ -4139,76 +4139,76 @@ msgstr "შეცდომა -სკენ წმ -სკენ წმ"
 msgid "Cannot open gestures file: %s"
 msgstr "გახსნა ფაილი წმ"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:38
+#: ../utils/mdm-dmx-reconnect-proxy.c:38
 #, fuzzy
 msgid "DMX display to migrate to"
 msgstr "-სკენ -სკენ"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:39 ../utils/gdm-dmx-reconnect-proxy.c:44
+#: ../utils/mdm-dmx-reconnect-proxy.c:39 ../utils/mdm-dmx-reconnect-proxy.c:44
 msgid "DISPLAY"
 msgstr "დისპლეი"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:43
+#: ../utils/mdm-dmx-reconnect-proxy.c:43
 #, fuzzy
 msgid "Backend display name"
 msgstr "ვერ ვსახავ ადგილმდებარეობას"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:48
+#: ../utils/mdm-dmx-reconnect-proxy.c:48
 #, fuzzy
 msgid "Xauthority file for destination display"
 msgstr "ფაილი"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:49 ../utils/gdm-dmx-reconnect-proxy.c:54
+#: ../utils/mdm-dmx-reconnect-proxy.c:49 ../utils/mdm-dmx-reconnect-proxy.c:54
 msgid "AUTHFILE"
 msgstr ""
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:53
+#: ../utils/mdm-dmx-reconnect-proxy.c:53
 #, fuzzy
 msgid "Xauthority file for backend display"
 msgstr "ფაილი"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:71
+#: ../utils/mdm-dmx-reconnect-proxy.c:71
 #, c-format
 #, fuzzy
 msgid "Failed to open display \"%s\"\n"
 msgstr "ვერ შევასრულე -სკენ გახსნა წმ n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:75
+#: ../utils/mdm-dmx-reconnect-proxy.c:75
 #, c-format
 #, fuzzy
 msgid "DMX extension not present on \"%s\"\n"
 msgstr "გაფართოვება არა აწმყო ჩართულია წმ n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:98
+#: ../utils/mdm-dmx-reconnect-proxy.c:98
 #, fuzzy
 msgid "- migrate a backend display from one DMX display to another"
 msgstr "a -სკენ"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:104
+#: ../utils/mdm-dmx-reconnect-proxy.c:104
 #, c-format
 #, fuzzy
 msgid "You must specify a destination DMX display using %s\n"
 msgstr "თქვენ a წმ n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:109
+#: ../utils/mdm-dmx-reconnect-proxy.c:109
 #, c-format
 #, fuzzy
 msgid "You must specify a backend display by using %s\n"
 msgstr "თქვენ a წმ n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:124
+#: ../utils/mdm-dmx-reconnect-proxy.c:124
 #, c-format
 #, fuzzy
 msgid "DMXAddScreen \"%s\" failed on \"%s\"\n"
 msgstr "წმ ჩართულია წმ n"
 
-#: ../utils/gdmaskpass.c:26
+#: ../utils/mdmaskpass.c:26
 #, c-format
 #, fuzzy
-msgid "gdmaskpass only runs as root\n"
+msgid "mdmaskpass only runs as root\n"
 msgstr "root n"
 
-#: ../utils/gdmaskpass.c:42 ../utils/gdmaskpass.c:48
+#: ../utils/mdmaskpass.c:42 ../utils/mdmaskpass.c:48
 #, c-format
 msgid "Authentication failure!\n"
 msgstr "იდენთიფიკაციამ ჩაიშალა!\n"

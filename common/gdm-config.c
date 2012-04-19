@@ -32,9 +32,9 @@
 #include <glib/gstdio.h>
 #include <glib/gi18n.h>
 
-#include "gdm-config.h"
+#include "mdm-config.h"
 
-struct _GdmConfig
+struct _MdmConfig
 {
 	char            *mandatory_filename;
 	char            *default_filename;
@@ -56,38 +56,38 @@ struct _GdmConfig
 
 	GHashTable      *value_hash;
 
-	GdmConfigFunc    validate_func;
+	MdmConfigFunc    validate_func;
 	gpointer         validate_func_data;
-	GdmConfigFunc    notify_func;
+	MdmConfigFunc    notify_func;
 	gpointer         notify_func_data;
 };
 
 
-typedef struct _GdmConfigRealValue
+typedef struct _MdmConfigRealValue
 {
-	GdmConfigValueType type;
+	MdmConfigValueType type;
 	union {
 		gboolean bool;
 		int      integer;
 		char    *str;
 		char   **array;
 	} val;
-} GdmConfigRealValue;
+} MdmConfigRealValue;
 
-#define REAL_VALUE(x) ((GdmConfigRealValue *)(x))
+#define REAL_VALUE(x) ((MdmConfigRealValue *)(x))
 
 GQuark
-gdm_config_error_quark (void)
+mdm_config_error_quark (void)
 {
-	return g_quark_from_static_string ("gdm-config-error-quark");
+	return g_quark_from_static_string ("mdm-config-error-quark");
 }
 
-GdmConfigEntry *
-gdm_config_entry_copy (const GdmConfigEntry *src)
+MdmConfigEntry *
+mdm_config_entry_copy (const MdmConfigEntry *src)
 {
-	GdmConfigEntry *dest;
+	MdmConfigEntry *dest;
 
-	dest = g_new0 (GdmConfigEntry, 1);
+	dest = g_new0 (MdmConfigEntry, 1);
 	dest->group = g_strdup (src->group);
 	dest->key = g_strdup (src->key);
 	dest->default_value = g_strdup (src->default_value);
@@ -98,7 +98,7 @@ gdm_config_entry_copy (const GdmConfigEntry *src)
 }
 
 void
-gdm_config_entry_free (GdmConfigEntry *entry)
+mdm_config_entry_free (MdmConfigEntry *entry)
 {
 	g_free (entry->group);
 	g_free (entry->key);
@@ -107,37 +107,37 @@ gdm_config_entry_free (GdmConfigEntry *entry)
 	g_free (entry);
 }
 
-GdmConfigValue *
-gdm_config_value_new (GdmConfigValueType type)
+MdmConfigValue *
+mdm_config_value_new (MdmConfigValueType type)
 {
-	GdmConfigValue *value;
+	MdmConfigValue *value;
 
-	g_return_val_if_fail (type != GDM_CONFIG_VALUE_INVALID, NULL);
+	g_return_val_if_fail (type != MDM_CONFIG_VALUE_INVALID, NULL);
 
-	value = (GdmConfigValue *) g_slice_new0 (GdmConfigRealValue);
+	value = (MdmConfigValue *) g_slice_new0 (MdmConfigRealValue);
 	value->type = type;
 
 	return value;
 }
 
 void
-gdm_config_value_free (GdmConfigValue *value)
+mdm_config_value_free (MdmConfigValue *value)
 {
-	GdmConfigRealValue *real;
+	MdmConfigRealValue *real;
 
 	real = REAL_VALUE (value);
 
 	switch (real->type) {
-        case GDM_CONFIG_VALUE_INVALID:
-        case GDM_CONFIG_VALUE_BOOL:
-        case GDM_CONFIG_VALUE_INT:
+        case MDM_CONFIG_VALUE_INVALID:
+        case MDM_CONFIG_VALUE_BOOL:
+        case MDM_CONFIG_VALUE_INT:
 		break;
-        case GDM_CONFIG_VALUE_STRING:
-        case GDM_CONFIG_VALUE_LOCALE_STRING:
+        case MDM_CONFIG_VALUE_STRING:
+        case MDM_CONFIG_VALUE_LOCALE_STRING:
 		g_free (real->val.str);
 		break;
-	case GDM_CONFIG_VALUE_STRING_ARRAY:
-	case GDM_CONFIG_VALUE_LOCALE_STRING_ARRAY:
+	case MDM_CONFIG_VALUE_STRING_ARRAY:
+	case MDM_CONFIG_VALUE_LOCALE_STRING_ARRAY:
 		g_strfreev (real->val.array);
 		break;
 	default:
@@ -145,7 +145,7 @@ gdm_config_value_free (GdmConfigValue *value)
 		break;
 	}
 
-	g_slice_free (GdmConfigRealValue, real);
+	g_slice_free (MdmConfigRealValue, real);
 }
 
 static void
@@ -170,75 +170,75 @@ set_string_array (char      ***dest,
 	*dest = src ? g_strdupv ((char **)src) : NULL;
 }
 
-GdmConfigValue *
-gdm_config_value_copy (const GdmConfigValue *src)
+MdmConfigValue *
+mdm_config_value_copy (const MdmConfigValue *src)
 {
-	GdmConfigRealValue *dest;
-	GdmConfigRealValue *real;
+	MdmConfigRealValue *dest;
+	MdmConfigRealValue *real;
 
 	g_return_val_if_fail (src != NULL, NULL);
 
 	real = REAL_VALUE (src);
-	dest = REAL_VALUE (gdm_config_value_new (src->type));
+	dest = REAL_VALUE (mdm_config_value_new (src->type));
 
 	switch (real->type) {
-	case GDM_CONFIG_VALUE_INT:
-	case GDM_CONFIG_VALUE_BOOL:
-	case GDM_CONFIG_VALUE_INVALID:
+	case MDM_CONFIG_VALUE_INT:
+	case MDM_CONFIG_VALUE_BOOL:
+	case MDM_CONFIG_VALUE_INVALID:
 		dest->val = real->val;
 		break;
-	case GDM_CONFIG_VALUE_STRING:
-	case GDM_CONFIG_VALUE_LOCALE_STRING:
+	case MDM_CONFIG_VALUE_STRING:
+	case MDM_CONFIG_VALUE_LOCALE_STRING:
 		set_string (&dest->val.str, real->val.str);
 		break;
-	case GDM_CONFIG_VALUE_STRING_ARRAY:
-	case GDM_CONFIG_VALUE_LOCALE_STRING_ARRAY:
+	case MDM_CONFIG_VALUE_STRING_ARRAY:
+	case MDM_CONFIG_VALUE_LOCALE_STRING_ARRAY:
 		set_string_array (&dest->val.array, (const char **)real->val.array);
 		break;
 	default:
 		g_assert_not_reached();
 	}
 
-	return (GdmConfigValue *) dest;
+	return (MdmConfigValue *) dest;
 }
 
 const char *
-gdm_config_value_get_string (const GdmConfigValue *value)
+mdm_config_value_get_string (const MdmConfigValue *value)
 {
 	g_return_val_if_fail (value != NULL, NULL);
-	g_return_val_if_fail (value->type == GDM_CONFIG_VALUE_STRING, NULL);
+	g_return_val_if_fail (value->type == MDM_CONFIG_VALUE_STRING, NULL);
 	return REAL_VALUE (value)->val.str;
 }
 
 const char *
-gdm_config_value_get_locale_string (const GdmConfigValue *value)
+mdm_config_value_get_locale_string (const MdmConfigValue *value)
 {
 	g_return_val_if_fail (value != NULL, NULL);
-	g_return_val_if_fail (value->type == GDM_CONFIG_VALUE_LOCALE_STRING, NULL);
+	g_return_val_if_fail (value->type == MDM_CONFIG_VALUE_LOCALE_STRING, NULL);
 	return REAL_VALUE (value)->val.str;
 }
 
 const char **
-gdm_config_value_get_string_array (const GdmConfigValue *value)
+mdm_config_value_get_string_array (const MdmConfigValue *value)
 {
 	g_return_val_if_fail (value != NULL, NULL);
-	g_return_val_if_fail (value->type == GDM_CONFIG_VALUE_STRING_ARRAY, NULL);
+	g_return_val_if_fail (value->type == MDM_CONFIG_VALUE_STRING_ARRAY, NULL);
 	return (const char **)REAL_VALUE (value)->val.array;
 }
 
 gboolean
-gdm_config_value_get_bool (const GdmConfigValue *value)
+mdm_config_value_get_bool (const MdmConfigValue *value)
 {
 	g_return_val_if_fail (value != NULL, FALSE);
-	g_return_val_if_fail (value->type == GDM_CONFIG_VALUE_BOOL, FALSE);
+	g_return_val_if_fail (value->type == MDM_CONFIG_VALUE_BOOL, FALSE);
 	return REAL_VALUE (value)->val.bool;
 }
 
 int
-gdm_config_value_get_int (const GdmConfigValue *value)
+mdm_config_value_get_int (const MdmConfigValue *value)
 {
 	g_return_val_if_fail (value != NULL, 0);
-	g_return_val_if_fail (value->type == GDM_CONFIG_VALUE_INT, 0);
+	g_return_val_if_fail (value->type == MDM_CONFIG_VALUE_INT, 0);
 	return REAL_VALUE (value)->val.integer;
 }
 
@@ -251,8 +251,8 @@ safe_strcmp (const char *a,
 
 /* based on code from gconf */
 int
-gdm_config_value_compare (const GdmConfigValue *value_a,
-			  const GdmConfigValue *value_b)
+mdm_config_value_compare (const MdmConfigValue *value_a,
+			  const MdmConfigValue *value_b)
 {
 	g_return_val_if_fail (value_a != NULL, 0);
 	g_return_val_if_fail (value_b != NULL, 0);
@@ -264,44 +264,44 @@ gdm_config_value_compare (const GdmConfigValue *value_a,
 	}
 
 	switch (value_a->type) {
-	case GDM_CONFIG_VALUE_INT:
-		if (gdm_config_value_get_int (value_a) < gdm_config_value_get_int (value_b)) {
+	case MDM_CONFIG_VALUE_INT:
+		if (mdm_config_value_get_int (value_a) < mdm_config_value_get_int (value_b)) {
 			return -1;
-		} else if (gdm_config_value_get_int (value_a) > gdm_config_value_get_int (value_b)) {
+		} else if (mdm_config_value_get_int (value_a) > mdm_config_value_get_int (value_b)) {
 			return 1;
 		} else {
 			return 0;
 		}
-	case GDM_CONFIG_VALUE_STRING:
-		return safe_strcmp (gdm_config_value_get_string (value_a),
-				    gdm_config_value_get_string (value_b));
-	case GDM_CONFIG_VALUE_LOCALE_STRING:
-		return safe_strcmp (gdm_config_value_get_locale_string (value_a),
-				    gdm_config_value_get_locale_string (value_b));
-	case GDM_CONFIG_VALUE_STRING_ARRAY:
-	case GDM_CONFIG_VALUE_LOCALE_STRING_ARRAY:
+	case MDM_CONFIG_VALUE_STRING:
+		return safe_strcmp (mdm_config_value_get_string (value_a),
+				    mdm_config_value_get_string (value_b));
+	case MDM_CONFIG_VALUE_LOCALE_STRING:
+		return safe_strcmp (mdm_config_value_get_locale_string (value_a),
+				    mdm_config_value_get_locale_string (value_b));
+	case MDM_CONFIG_VALUE_STRING_ARRAY:
+	case MDM_CONFIG_VALUE_LOCALE_STRING_ARRAY:
 		{
 			char *str_a;
 			char *str_b;
 			int   res;
 
-			str_a = gdm_config_value_to_string (value_a);
-			str_b = gdm_config_value_to_string (value_b);
+			str_a = mdm_config_value_to_string (value_a);
+			str_b = mdm_config_value_to_string (value_b);
 			res = safe_strcmp (str_a, str_b);
 			g_free (str_a);
 			g_free (str_b);
 
 			return res;
 		}
-	case GDM_CONFIG_VALUE_BOOL:
-		if (gdm_config_value_get_bool (value_a) == gdm_config_value_get_bool (value_b)) {
+	case MDM_CONFIG_VALUE_BOOL:
+		if (mdm_config_value_get_bool (value_a) == mdm_config_value_get_bool (value_b)) {
 			return 0;
-		} else if (gdm_config_value_get_bool (value_a)) {
+		} else if (mdm_config_value_get_bool (value_a)) {
 			return 1;
 		} else {
 			return -1;
 		}
-	case GDM_CONFIG_VALUE_INVALID:
+	case MDM_CONFIG_VALUE_INVALID:
 	default:
 		g_assert_not_reached ();
 		break;
@@ -311,20 +311,20 @@ gdm_config_value_compare (const GdmConfigValue *value_a,
 }
 
 /* based on code from gconf */
-GdmConfigValue *
-gdm_config_value_new_from_string (GdmConfigValueType type,
+MdmConfigValue *
+mdm_config_value_new_from_string (MdmConfigValueType type,
 				  const char        *value_str,
 				  GError           **error)
 {
-	GdmConfigValue *value;
+	MdmConfigValue *value;
 
-	g_return_val_if_fail (type != GDM_CONFIG_VALUE_INVALID, NULL);
+	g_return_val_if_fail (type != MDM_CONFIG_VALUE_INVALID, NULL);
 	g_return_val_if_fail (value_str != NULL, NULL);
 
-	value = gdm_config_value_new (type);
+	value = mdm_config_value_new (type);
 
         switch (value->type) {
-        case GDM_CONFIG_VALUE_INT:
+        case MDM_CONFIG_VALUE_INT:
 		{
 			char* endptr = NULL;
 			glong result;
@@ -333,33 +333,33 @@ gdm_config_value_new_from_string (GdmConfigValueType type,
 			result = strtol (value_str, &endptr, 10);
 			if (endptr == value_str) {
 				g_set_error (error,
-					     GDM_CONFIG_ERROR,
-					     GDM_CONFIG_ERROR_PARSE_ERROR,
+					     MDM_CONFIG_ERROR,
+					     MDM_CONFIG_ERROR_PARSE_ERROR,
 					     _("Didn't understand `%s' (expected integer)"),
 					     value_str);
-				gdm_config_value_free (value);
+				mdm_config_value_free (value);
 				value = NULL;
 			} else if (errno == ERANGE) {
 				g_set_error (error,
-					     GDM_CONFIG_ERROR,
-					     GDM_CONFIG_ERROR_PARSE_ERROR,
+					     MDM_CONFIG_ERROR,
+					     MDM_CONFIG_ERROR_PARSE_ERROR,
 					     _("Integer `%s' is too large or small"),
 					     value_str);
-				gdm_config_value_free (value);
+				mdm_config_value_free (value);
 				value = NULL;
 			} else {
-				gdm_config_value_set_int (value, result);
+				mdm_config_value_set_int (value, result);
 			}
 		}
                 break;
-        case GDM_CONFIG_VALUE_BOOL:
+        case MDM_CONFIG_VALUE_BOOL:
 		switch (*value_str) {
 		case 't':
 		case 'T':
 		case '1':
 		case 'y':
 		case 'Y':
-			gdm_config_value_set_bool (value, TRUE);
+			mdm_config_value_set_bool (value, TRUE);
 			break;
 
 		case 'f':
@@ -367,74 +367,74 @@ gdm_config_value_new_from_string (GdmConfigValueType type,
 		case '0':
 		case 'n':
 		case 'N':
-			gdm_config_value_set_bool (value, FALSE);
+			mdm_config_value_set_bool (value, FALSE);
 			break;
 		default:
 			g_set_error (error,
-				     GDM_CONFIG_ERROR,
-				     GDM_CONFIG_ERROR_PARSE_ERROR,
+				     MDM_CONFIG_ERROR,
+				     MDM_CONFIG_ERROR_PARSE_ERROR,
 				     _("Didn't understand `%s' (expected true or false)"),
 				     value_str);
-			gdm_config_value_free (value);
+			mdm_config_value_free (value);
 			value = NULL;
 			break;
 		}
 		break;
-        case GDM_CONFIG_VALUE_STRING:
+        case MDM_CONFIG_VALUE_STRING:
 		if (! g_utf8_validate (value_str, -1, NULL)) {
 			g_set_error (error,
-				     GDM_CONFIG_ERROR,
-				     GDM_CONFIG_ERROR_PARSE_ERROR,
+				     MDM_CONFIG_ERROR,
+				     MDM_CONFIG_ERROR_PARSE_ERROR,
 				     _("Text contains invalid UTF-8"));
-			gdm_config_value_free (value);
+			mdm_config_value_free (value);
 			value = NULL;
 		} else {
-			gdm_config_value_set_string (value, value_str);
+			mdm_config_value_set_string (value, value_str);
 		}
                 break;
-        case GDM_CONFIG_VALUE_LOCALE_STRING:
+        case MDM_CONFIG_VALUE_LOCALE_STRING:
 		if (! g_utf8_validate (value_str, -1, NULL)) {
 			g_set_error (error,
-				     GDM_CONFIG_ERROR,
-				     GDM_CONFIG_ERROR_PARSE_ERROR,
+				     MDM_CONFIG_ERROR,
+				     MDM_CONFIG_ERROR_PARSE_ERROR,
 				     _("Text contains invalid UTF-8"));
-			gdm_config_value_free (value);
+			mdm_config_value_free (value);
 			value = NULL;
 		} else {
-			gdm_config_value_set_locale_string (value, value_str);
+			mdm_config_value_set_locale_string (value, value_str);
 		}
 		break;
-        case GDM_CONFIG_VALUE_STRING_ARRAY:
+        case MDM_CONFIG_VALUE_STRING_ARRAY:
 		if (! g_utf8_validate (value_str, -1, NULL)) {
 			g_set_error (error,
-				     GDM_CONFIG_ERROR,
-				     GDM_CONFIG_ERROR_PARSE_ERROR,
+				     MDM_CONFIG_ERROR,
+				     MDM_CONFIG_ERROR_PARSE_ERROR,
 				     _("Text contains invalid UTF-8"));
-			gdm_config_value_free (value);
+			mdm_config_value_free (value);
 			value = NULL;
 		} else {
 			char **split;
 			split = g_strsplit (value_str, ";", -1);
-			gdm_config_value_set_string_array (value, (const char **)split);
+			mdm_config_value_set_string_array (value, (const char **)split);
 			g_strfreev (split);
 		}
                 break;
-        case GDM_CONFIG_VALUE_LOCALE_STRING_ARRAY:
+        case MDM_CONFIG_VALUE_LOCALE_STRING_ARRAY:
 		if (! g_utf8_validate (value_str, -1, NULL)) {
 			g_set_error (error,
-				     GDM_CONFIG_ERROR,
-				     GDM_CONFIG_ERROR_PARSE_ERROR,
+				     MDM_CONFIG_ERROR,
+				     MDM_CONFIG_ERROR_PARSE_ERROR,
 				     _("Text contains invalid UTF-8"));
-			gdm_config_value_free (value);
+			mdm_config_value_free (value);
 			value = NULL;
 		} else {
 			char **split;
 			split = g_strsplit (value_str, ";", -1);
-			gdm_config_value_set_locale_string_array (value, (const char **)split);
+			mdm_config_value_set_locale_string_array (value, (const char **)split);
 			g_strfreev (split);
 		}
                 break;
-        case GDM_CONFIG_VALUE_INVALID:
+        case MDM_CONFIG_VALUE_INVALID:
         default:
 		g_assert_not_reached ();
                 break;
@@ -444,13 +444,13 @@ gdm_config_value_new_from_string (GdmConfigValueType type,
 }
 
 void
-gdm_config_value_set_string_array (GdmConfigValue *value,
+mdm_config_value_set_string_array (MdmConfigValue *value,
 				   const char    **array)
 {
-	GdmConfigRealValue *real;
+	MdmConfigRealValue *real;
 
 	g_return_if_fail (value != NULL);
-	g_return_if_fail (value->type == GDM_CONFIG_VALUE_STRING_ARRAY);
+	g_return_if_fail (value->type == MDM_CONFIG_VALUE_STRING_ARRAY);
 
 	real = REAL_VALUE (value);
 
@@ -459,13 +459,13 @@ gdm_config_value_set_string_array (GdmConfigValue *value,
 }
 
 void
-gdm_config_value_set_locale_string_array (GdmConfigValue *value,
+mdm_config_value_set_locale_string_array (MdmConfigValue *value,
 					  const char    **array)
 {
-	GdmConfigRealValue *real;
+	MdmConfigRealValue *real;
 
 	g_return_if_fail (value != NULL);
-	g_return_if_fail (value->type == GDM_CONFIG_VALUE_LOCALE_STRING_ARRAY);
+	g_return_if_fail (value->type == MDM_CONFIG_VALUE_LOCALE_STRING_ARRAY);
 
 	real = REAL_VALUE (value);
 
@@ -474,13 +474,13 @@ gdm_config_value_set_locale_string_array (GdmConfigValue *value,
 }
 
 void
-gdm_config_value_set_int (GdmConfigValue *value,
+mdm_config_value_set_int (MdmConfigValue *value,
 			  int             integer)
 {
-	GdmConfigRealValue *real;
+	MdmConfigRealValue *real;
 
 	g_return_if_fail (value != NULL);
-	g_return_if_fail (value->type == GDM_CONFIG_VALUE_INT);
+	g_return_if_fail (value->type == MDM_CONFIG_VALUE_INT);
 
 	real = REAL_VALUE (value);
 
@@ -488,13 +488,13 @@ gdm_config_value_set_int (GdmConfigValue *value,
 }
 
 void
-gdm_config_value_set_bool (GdmConfigValue *value,
+mdm_config_value_set_bool (MdmConfigValue *value,
 			   gboolean        bool)
 {
-	GdmConfigRealValue *real;
+	MdmConfigRealValue *real;
 
 	g_return_if_fail (value != NULL);
-	g_return_if_fail (value->type == GDM_CONFIG_VALUE_BOOL);
+	g_return_if_fail (value->type == MDM_CONFIG_VALUE_BOOL);
 
 	real = REAL_VALUE (value);
 
@@ -502,13 +502,13 @@ gdm_config_value_set_bool (GdmConfigValue *value,
 }
 
 void
-gdm_config_value_set_string (GdmConfigValue *value,
+mdm_config_value_set_string (MdmConfigValue *value,
 			     const char     *str)
 {
-	GdmConfigRealValue *real;
+	MdmConfigRealValue *real;
 
 	g_return_if_fail (value != NULL);
-	g_return_if_fail (value->type == GDM_CONFIG_VALUE_STRING);
+	g_return_if_fail (value->type == MDM_CONFIG_VALUE_STRING);
 
 	real = REAL_VALUE (value);
 
@@ -517,13 +517,13 @@ gdm_config_value_set_string (GdmConfigValue *value,
 }
 
 void
-gdm_config_value_set_locale_string (GdmConfigValue *value,
+mdm_config_value_set_locale_string (MdmConfigValue *value,
 				    const char     *str)
 {
-	GdmConfigRealValue *real;
+	MdmConfigRealValue *real;
 
 	g_return_if_fail (value != NULL);
-	g_return_if_fail (value->type == GDM_CONFIG_VALUE_LOCALE_STRING);
+	g_return_if_fail (value->type == MDM_CONFIG_VALUE_LOCALE_STRING);
 
 	real = REAL_VALUE (value);
 
@@ -532,9 +532,9 @@ gdm_config_value_set_locale_string (GdmConfigValue *value,
 }
 
 char *
-gdm_config_value_to_string (const GdmConfigValue *value)
+mdm_config_value_to_string (const MdmConfigValue *value)
 {
-	GdmConfigRealValue *real;
+	MdmConfigRealValue *real;
 	char               *ret;
 
 	g_return_val_if_fail (value != NULL, NULL);
@@ -543,20 +543,20 @@ gdm_config_value_to_string (const GdmConfigValue *value)
 	real = REAL_VALUE (value);
 
 	switch (real->type) {
-        case GDM_CONFIG_VALUE_INVALID:
+        case MDM_CONFIG_VALUE_INVALID:
 		break;
-        case GDM_CONFIG_VALUE_BOOL:
+        case MDM_CONFIG_VALUE_BOOL:
 		ret = real->val.bool ? g_strdup ("true") : g_strdup ("false");
 		break;
-        case GDM_CONFIG_VALUE_INT:
+        case MDM_CONFIG_VALUE_INT:
 		ret = g_strdup_printf ("%d", real->val.integer);
 		break;
-        case GDM_CONFIG_VALUE_STRING:
-        case GDM_CONFIG_VALUE_LOCALE_STRING:
+        case MDM_CONFIG_VALUE_STRING:
+        case MDM_CONFIG_VALUE_LOCALE_STRING:
 		ret = g_strdup (real->val.str);
 		break;
-	case GDM_CONFIG_VALUE_STRING_ARRAY:
-	case GDM_CONFIG_VALUE_LOCALE_STRING_ARRAY:
+	case MDM_CONFIG_VALUE_STRING_ARRAY:
+	case MDM_CONFIG_VALUE_LOCALE_STRING_ARRAY:
 		ret = g_strjoinv (";", real->val.array);
 		break;
 	default:
@@ -567,39 +567,39 @@ gdm_config_value_to_string (const GdmConfigValue *value)
 }
 
 static void
-gdm_config_init (GdmConfig *config)
+mdm_config_init (MdmConfig *config)
 {
 	config->entries = g_ptr_array_new ();
 	config->value_hash = g_hash_table_new_full (g_str_hash,
 						    g_str_equal,
 						    (GDestroyNotify)g_free,
-						    (GDestroyNotify)gdm_config_value_free);
+						    (GDestroyNotify)mdm_config_value_free);
 }
 
-GdmConfig *
-gdm_config_new (void)
+MdmConfig *
+mdm_config_new (void)
 {
-	GdmConfig *config;
+	MdmConfig *config;
 
-	config = g_slice_new0 (GdmConfig);
-	gdm_config_init (config);
+	config = g_slice_new0 (MdmConfig);
+	mdm_config_init (config);
 
 	return config;
 }
 
 /*
  * Note that this function can be called a second time while 
- * GDM is in the middle of processing this function.  This is
- * because some GDM signal handlers (such as main_daemon_abrt)
- * call gdm_final_cleanup, which ends up calling this function.
+ * MDM is in the middle of processing this function.  This is
+ * because some MDM signal handlers (such as main_daemon_abrt)
+ * call mdm_final_cleanup, which ends up calling this function.
  * To fix the sort of crashing problem reported in bugzilla bug
  * #517526.  This function could probably be made more thread
  * safe.
  */
 void
-gdm_config_free (GdmConfig *config)
+mdm_config_free (MdmConfig *config)
 {
-	GdmConfigEntry *e;
+	MdmConfigEntry *e;
 	GKeyFile       *mkf, *dkf, *ckf;
 	GHashTable     *hash;
 
@@ -627,10 +627,10 @@ gdm_config_free (GdmConfig *config)
 	g_free (config->default_filename);
 	g_free (config->custom_filename);
 
-	g_slice_free (GdmConfig, config);
+	g_slice_free (MdmConfig, config);
 
 	if (e != NULL) {
-		g_ptr_array_foreach (e, (GFunc)gdm_config_entry_free, NULL);
+		g_ptr_array_foreach (e, (GFunc)mdm_config_entry_free, NULL);
 		g_ptr_array_free (e, TRUE);
 	}
 	if (mkf != NULL)
@@ -659,7 +659,7 @@ add_server_group_once (GPtrArray *server_groups, char *group)
 }
 
 GPtrArray *
-gdm_config_get_server_groups (GdmConfig *config)
+mdm_config_get_server_groups (MdmConfig *config)
 {
 	GPtrArray       *server_groups;
 	GError          *error;
@@ -708,13 +708,13 @@ gdm_config_get_server_groups (GdmConfig *config)
 	return server_groups;
 }
 
-const GdmConfigEntry *
-gdm_config_lookup_entry (GdmConfig  *config,
+const MdmConfigEntry *
+mdm_config_lookup_entry (MdmConfig  *config,
 			 const char *group,
 			 const char *key)
 {
 	int                   i;
-	const GdmConfigEntry *entry;
+	const MdmConfigEntry *entry;
 
 	g_return_val_if_fail (config != NULL, NULL);
 	g_return_val_if_fail (group != NULL, NULL);
@@ -723,11 +723,11 @@ gdm_config_lookup_entry (GdmConfig  *config,
 	entry = NULL;
 
 	for (i = 0; i < config->entries->len; i++) {
-		GdmConfigEntry *this;
+		MdmConfigEntry *this;
 		this = g_ptr_array_index (config->entries, i);
 		if (strcmp (this->group, group) == 0
 		    && strcmp (this->key, key) == 0) {
-			entry = (const GdmConfigEntry *)this;
+			entry = (const MdmConfigEntry *)this;
 			break;
 		}
 	}
@@ -735,22 +735,22 @@ gdm_config_lookup_entry (GdmConfig  *config,
 	return entry;
 }
 
-const GdmConfigEntry *
-gdm_config_lookup_entry_for_id (GdmConfig  *config,
+const MdmConfigEntry *
+mdm_config_lookup_entry_for_id (MdmConfig  *config,
 				int         id)
 {
 	int                   i;
-	const GdmConfigEntry *entry;
+	const MdmConfigEntry *entry;
 
 	g_return_val_if_fail (config != NULL, NULL);
 
 	entry = NULL;
 
 	for (i = 0; i < config->entries->len; i++) {
-		GdmConfigEntry *this;
+		MdmConfigEntry *this;
 		this = g_ptr_array_index (config->entries, i);
 		if (this->id == id) {
-			entry = (const GdmConfigEntry *)this;
+			entry = (const MdmConfigEntry *)this;
 			break;
 		}
 	}
@@ -759,21 +759,21 @@ gdm_config_lookup_entry_for_id (GdmConfig  *config,
 }
 
 void
-gdm_config_add_entry (GdmConfig            *config,
-		      const GdmConfigEntry *entry)
+mdm_config_add_entry (MdmConfig            *config,
+		      const MdmConfigEntry *entry)
 {
-	GdmConfigEntry *new_entry;
+	MdmConfigEntry *new_entry;
 
 	g_return_if_fail (config != NULL);
 	g_return_if_fail (entry != NULL);
 
-	new_entry = gdm_config_entry_copy (entry);
+	new_entry = mdm_config_entry_copy (entry);
 	g_ptr_array_add (config->entries, new_entry);
 }
 
 void
-gdm_config_add_static_entries (GdmConfig            *config,
-			       const GdmConfigEntry *entries)
+mdm_config_add_static_entries (MdmConfig            *config,
+			       const MdmConfigEntry *entries)
 {
 	int i;
 
@@ -781,13 +781,13 @@ gdm_config_add_static_entries (GdmConfig            *config,
 	g_return_if_fail (entries != NULL);
 
 	for (i = 0; entries[i].group != NULL; i++) {
-		gdm_config_add_entry (config, &entries[i]);
+		mdm_config_add_entry (config, &entries[i]);
 	}
 }
 
 void
-gdm_config_set_validate_func (GdmConfig       *config,
-			      GdmConfigFunc    func,
+mdm_config_set_validate_func (MdmConfig       *config,
+			      MdmConfigFunc    func,
 			      gpointer         data)
 {
 	g_return_if_fail (config != NULL);
@@ -797,7 +797,7 @@ gdm_config_set_validate_func (GdmConfig       *config,
 }
 
 void
-gdm_config_set_mandatory_file (GdmConfig  *config,
+mdm_config_set_mandatory_file (MdmConfig  *config,
 			       const char *name)
 {
 	g_return_if_fail (config != NULL);
@@ -807,7 +807,7 @@ gdm_config_set_mandatory_file (GdmConfig  *config,
 }
 
 void
-gdm_config_set_default_file (GdmConfig  *config,
+mdm_config_set_default_file (MdmConfig  *config,
 			     const char *name)
 {
 	g_return_if_fail (config != NULL);
@@ -817,7 +817,7 @@ gdm_config_set_default_file (GdmConfig  *config,
 }
 
 void
-gdm_config_set_custom_file (GdmConfig  *config,
+mdm_config_set_custom_file (MdmConfig  *config,
 			    const char *name)
 {
 	g_return_if_fail (config != NULL);
@@ -827,8 +827,8 @@ gdm_config_set_custom_file (GdmConfig  *config,
 }
 
 void
-gdm_config_set_notify_func (GdmConfig       *config,
-			    GdmConfigFunc    func,
+mdm_config_set_notify_func (MdmConfig       *config,
+			    MdmConfigFunc    func,
 			    gpointer         data)
 {
 	g_return_if_fail (config != NULL);
@@ -838,24 +838,24 @@ gdm_config_set_notify_func (GdmConfig       *config,
 }
 
 static gboolean
-key_file_get_value (GdmConfig            *config,
+key_file_get_value (MdmConfig            *config,
 		    GKeyFile             *key_file,
 		    const char           *group,
 		    const char           *key,
-		    GdmConfigValueType    type,
-		    GdmConfigValue      **valuep)
+		    MdmConfigValueType    type,
+		    MdmConfigValue      **valuep)
 {
 	char           *val;
 	GError         *error;
-	GdmConfigValue *value;
+	MdmConfigValue *value;
 	gboolean        ret;
 
 	ret = FALSE;
 	value = NULL;
 
 	error = NULL;
-	if (type == GDM_CONFIG_VALUE_LOCALE_STRING ||
-	    type == GDM_CONFIG_VALUE_LOCALE_STRING_ARRAY) {
+	if (type == MDM_CONFIG_VALUE_LOCALE_STRING ||
+	    type == MDM_CONFIG_VALUE_LOCALE_STRING_ARRAY) {
 		/* Use NULL locale to detect current locale */
 		val = g_key_file_get_locale_string (key_file,
 						    group,
@@ -893,7 +893,7 @@ key_file_get_value (GdmConfig            *config,
 	}
 
 	error = NULL;
-	value = gdm_config_value_new_from_string (type, val, &error);
+	value = mdm_config_value_new_from_string (type, val, &error);
 	if (error != NULL) {
 		g_warning ("%s", error->message);
 		g_error_free (error);
@@ -911,15 +911,15 @@ key_file_get_value (GdmConfig            *config,
 }
 
 static void
-entry_get_default_value (GdmConfig            *config,
-			 const GdmConfigEntry *entry,
-			 GdmConfigValue      **valuep)
+entry_get_default_value (MdmConfig            *config,
+			 const MdmConfigEntry *entry,
+			 MdmConfigValue      **valuep)
 {
-	GdmConfigValue *value;
+	MdmConfigValue *value;
 	GError         *error;
 
 	error = NULL;
-	value = gdm_config_value_new_from_string (entry->type,
+	value = mdm_config_value_new_from_string (entry->type,
 						  entry->default_value ? entry->default_value : "",
 						  &error);
 	if (error != NULL) {
@@ -931,13 +931,13 @@ entry_get_default_value (GdmConfig            *config,
 }
 
 static gboolean
-load_value_entry (GdmConfig            *config,
-		  const GdmConfigEntry *entry,
-		  GdmConfigValue      **valuep,
-		  GdmConfigSourceType  *sourcep)
+load_value_entry (MdmConfig            *config,
+		  const MdmConfigEntry *entry,
+		  MdmConfigValue      **valuep,
+		  MdmConfigSourceType  *sourcep)
 {
-	GdmConfigValue     *value;
-	GdmConfigSourceType source;
+	MdmConfigValue     *value;
+	MdmConfigSourceType source;
 	gboolean            ret;
 	gboolean            res;
 
@@ -948,7 +948,7 @@ load_value_entry (GdmConfig            *config,
 	 */
 
 	if (config->mandatory_filename != NULL) {
-		source = GDM_CONFIG_SOURCE_MANDATORY;
+		source = MDM_CONFIG_SOURCE_MANDATORY;
 		res = key_file_get_value (config,
 					  config->mandatory_key_file,
 					  entry->group,
@@ -960,7 +960,7 @@ load_value_entry (GdmConfig            *config,
 		}
 	}
 	if (config->custom_filename != NULL) {
-		source = GDM_CONFIG_SOURCE_CUSTOM;
+		source = MDM_CONFIG_SOURCE_CUSTOM;
 		res = key_file_get_value (config,
 					  config->custom_key_file,
 					  entry->group,
@@ -972,7 +972,7 @@ load_value_entry (GdmConfig            *config,
 		}
 	}
 	if (config->default_filename != NULL) {
-		source = GDM_CONFIG_SOURCE_DEFAULT;
+		source = MDM_CONFIG_SOURCE_DEFAULT;
 		res = key_file_get_value (config,
 					  config->default_key_file,
 					  entry->group,
@@ -985,7 +985,7 @@ load_value_entry (GdmConfig            *config,
 	}
 
 
-	source = GDM_CONFIG_SOURCE_BUILT_IN;
+	source = MDM_CONFIG_SOURCE_BUILT_IN;
 	entry_get_default_value (config, entry, &value);
 
  done:
@@ -1003,15 +1003,15 @@ load_value_entry (GdmConfig            *config,
 }
 
 static int
-lookup_id_for_key (GdmConfig  *config,
+lookup_id_for_key (MdmConfig  *config,
 		   const char *group,
 		   const char *key)
 {
 	int                   id;
-	const GdmConfigEntry *entry;
+	const MdmConfigEntry *entry;
 
-	id = GDM_CONFIG_INVALID_ID;
-	entry = gdm_config_lookup_entry (config, group, key);
+	id = MDM_CONFIG_INVALID_ID;
+	entry = mdm_config_lookup_entry (config, group, key);
 	if (entry != NULL) {
 		id = entry->id;
 	}
@@ -1020,15 +1020,15 @@ lookup_id_for_key (GdmConfig  *config,
 }
 
 static void
-internal_set_value (GdmConfig          *config,
-		    GdmConfigSourceType source,
+internal_set_value (MdmConfig          *config,
+		    MdmConfigSourceType source,
 		    const char         *group,
 		    const char         *key,
-		    GdmConfigValue     *value)
+		    MdmConfigValue     *value)
 {
 	char           *key_path;
 	int             id;
-	GdmConfigValue *v;
+	MdmConfigValue *v;
 	gboolean        res;
 
 	g_return_if_fail (config != NULL);
@@ -1042,7 +1042,7 @@ internal_set_value (GdmConfig          *config,
 					    (gpointer *)&v);
 
 	if (res) {
-		if (v != NULL && gdm_config_value_compare (v, value) == 0) {
+		if (v != NULL && mdm_config_value_compare (v, value) == 0) {
 			/* value is the same - don't update */
 			goto out;
 		}
@@ -1050,7 +1050,7 @@ internal_set_value (GdmConfig          *config,
 
 	g_hash_table_insert (config->value_hash,
 			     g_strdup (key_path),
-			     gdm_config_value_copy (value));
+			     mdm_config_value_copy (value));
 
 	id = lookup_id_for_key (config, group, key);
 
@@ -1062,24 +1062,24 @@ internal_set_value (GdmConfig          *config,
 }
 
 static void
-store_entry_value (GdmConfig            *config,
-		   const GdmConfigEntry *entry,
-		   GdmConfigSourceType   source,
-		   GdmConfigValue       *value)
+store_entry_value (MdmConfig            *config,
+		   const MdmConfigEntry *entry,
+		   MdmConfigSourceType   source,
+		   MdmConfigValue       *value)
 {
 	internal_set_value (config, source, entry->group, entry->key, value);
 }
 
 static gboolean
-load_entry (GdmConfig            *config,
-	    const GdmConfigEntry *entry)
+load_entry (MdmConfig            *config,
+	    const MdmConfigEntry *entry)
 {
-	GdmConfigValue     *value;
-	GdmConfigSourceType source;
+	MdmConfigValue     *value;
+	MdmConfigSourceType source;
 	gboolean            res;
 
 	value = NULL;
-	source = GDM_CONFIG_SOURCE_INVALID;
+	source = MDM_CONFIG_SOURCE_INVALID;
 
 	res = load_value_entry (config, entry, &value, &source);
 	if (!res) {
@@ -1138,7 +1138,7 @@ collect_hash_keys (const char *key,
 }
 
 char **
-gdm_config_get_keys_for_group (GdmConfig  *config,
+mdm_config_get_keys_for_group (MdmConfig  *config,
 			       const char *group,
 			       gsize      *length,
 			       GError    **error)
@@ -1177,7 +1177,7 @@ gdm_config_get_keys_for_group (GdmConfig  *config,
 }
 
 static gboolean
-load_backend (GdmConfig  *config,
+load_backend (MdmConfig  *config,
 	      const char *filename,
 	      GKeyFile  **key_file,
 	      time_t     *mtime)
@@ -1205,7 +1205,7 @@ load_backend (GdmConfig  *config,
 			/* needs an update */
 
                         /*
-                         * As in gdm-config-free, set a local
+                         * As in mdm-config-free, set a local
                          * variable equal to the memory to 
                          * free, and set the structure to 
                          * NULL, so if this function is 
@@ -1247,7 +1247,7 @@ load_backend (GdmConfig  *config,
 }
 
 gboolean
-gdm_config_load (GdmConfig *config,
+mdm_config_load (MdmConfig *config,
 		 GError   **error)
 {
 	g_return_val_if_fail (config != NULL, FALSE);
@@ -1269,8 +1269,8 @@ gdm_config_load (GdmConfig *config,
 }
 
 static gboolean
-process_entries (GdmConfig             *config,
-		 const GdmConfigEntry **entries,
+process_entries (MdmConfig             *config,
+		 const MdmConfigEntry **entries,
 		 gsize                  n_entries,
 		 GError               **error)
 {
@@ -1287,8 +1287,8 @@ process_entries (GdmConfig             *config,
 }
 
 gboolean
-gdm_config_process_entry (GdmConfig            *config,
-			  const GdmConfigEntry *entry,
+mdm_config_process_entry (MdmConfig            *config,
+			  const MdmConfigEntry *entry,
 			  GError              **error)
 {
 	gboolean  ret;
@@ -1302,8 +1302,8 @@ gdm_config_process_entry (GdmConfig            *config,
 }
 
 gboolean
-gdm_config_process_entries (GdmConfig             *config,
-			    const GdmConfigEntry **entries,
+mdm_config_process_entries (MdmConfig             *config,
+			    const MdmConfigEntry **entries,
 			    gsize                  n_entries,
 			    GError               **error)
 {
@@ -1319,7 +1319,7 @@ gdm_config_process_entries (GdmConfig             *config,
 }
 
 gboolean
-gdm_config_process_all (GdmConfig *config,
+mdm_config_process_all (MdmConfig *config,
 			GError   **error)
 {
 	gboolean  ret;
@@ -1327,7 +1327,7 @@ gdm_config_process_all (GdmConfig *config,
 	g_return_val_if_fail (config != NULL, FALSE);
 
 	ret = process_entries (config,
-			       (const GdmConfigEntry **)config->entries->pdata,
+			       (const MdmConfigEntry **)config->entries->pdata,
 			       config->entries->len,
 			       error);
 
@@ -1335,14 +1335,14 @@ gdm_config_process_all (GdmConfig *config,
 }
 
 gboolean
-gdm_config_peek_value (GdmConfig             *config,
+mdm_config_peek_value (MdmConfig             *config,
 		       const char            *group,
 		       const char            *key,
-		       const GdmConfigValue **valuep)
+		       const MdmConfigValue **valuep)
 {
 	gboolean              ret;
 	char                 *key_path;
-	const GdmConfigValue *value;
+	const MdmConfigValue *value;
 
 	g_return_val_if_fail (config != NULL, FALSE);
 
@@ -1366,106 +1366,106 @@ gdm_config_peek_value (GdmConfig             *config,
 }
 
 gboolean
-gdm_config_get_value (GdmConfig       *config,
+mdm_config_get_value (MdmConfig       *config,
 		      const char      *group,
 		      const char      *key,
-		      GdmConfigValue **valuep)
+		      MdmConfigValue **valuep)
 {
 	gboolean              res;
-	const GdmConfigValue *value;
+	const MdmConfigValue *value;
 
-	res = gdm_config_peek_value (config, group, key, &value);
+	res = mdm_config_peek_value (config, group, key, &value);
 	if (valuep != NULL) {
-		*valuep = (value == NULL) ? NULL : gdm_config_value_copy (value);
+		*valuep = (value == NULL) ? NULL : mdm_config_value_copy (value);
 	}
 
 	return res;
 }
 
 gboolean
-gdm_config_set_value (GdmConfig       *config,
+mdm_config_set_value (MdmConfig       *config,
 		      const char      *group,
 		      const char      *key,
-		      GdmConfigValue  *value)
+		      MdmConfigValue  *value)
 {
 	g_return_val_if_fail (config != NULL, FALSE);
 	g_return_val_if_fail (group != NULL, FALSE);
 	g_return_val_if_fail (key != NULL, FALSE);
 	g_return_val_if_fail (value != NULL, FALSE);
 
-	internal_set_value (config, GDM_CONFIG_SOURCE_RUNTIME_USER, group, key, value);
+	internal_set_value (config, MDM_CONFIG_SOURCE_RUNTIME_USER, group, key, value);
 
 	return TRUE;
 }
 
 static gboolean
-gdm_config_peek_value_for_id (GdmConfig             *config,
+mdm_config_peek_value_for_id (MdmConfig             *config,
 			      int                    id,
-			      const GdmConfigValue **valuep)
+			      const MdmConfigValue **valuep)
 {
-	const GdmConfigEntry *entry;
+	const MdmConfigEntry *entry;
 
 	g_return_val_if_fail (config != NULL, FALSE);
 
-	entry = gdm_config_lookup_entry_for_id (config, id);
+	entry = mdm_config_lookup_entry_for_id (config, id);
 	if (entry == NULL) {
 		return FALSE;
 	}
 
-	return gdm_config_peek_value (config, entry->group, entry->key, valuep);
+	return mdm_config_peek_value (config, entry->group, entry->key, valuep);
 }
 
 gboolean
-gdm_config_get_value_for_id (GdmConfig       *config,
+mdm_config_get_value_for_id (MdmConfig       *config,
 			     int              id,
-			     GdmConfigValue **valuep)
+			     MdmConfigValue **valuep)
 {
-	const GdmConfigEntry *entry;
+	const MdmConfigEntry *entry;
 
 	g_return_val_if_fail (config != NULL, FALSE);
 
-	entry = gdm_config_lookup_entry_for_id (config, id);
+	entry = mdm_config_lookup_entry_for_id (config, id);
 	if (entry == NULL) {
 		return FALSE;
 	}
 
-	return gdm_config_get_value (config, entry->group, entry->key, valuep);
+	return mdm_config_get_value (config, entry->group, entry->key, valuep);
 }
 
 gboolean
-gdm_config_set_value_for_id (GdmConfig      *config,
+mdm_config_set_value_for_id (MdmConfig      *config,
 			     int             id,
-			     GdmConfigValue *valuep)
+			     MdmConfigValue *valuep)
 {
-	const GdmConfigEntry *entry;
+	const MdmConfigEntry *entry;
 
 	g_return_val_if_fail (config != NULL, FALSE);
 
-	entry = gdm_config_lookup_entry_for_id (config, id);
+	entry = mdm_config_lookup_entry_for_id (config, id);
 	if (entry == NULL) {
 		return FALSE;
 	}
 
-	return gdm_config_set_value (config, entry->group, entry->key, valuep);
+	return mdm_config_set_value (config, entry->group, entry->key, valuep);
 }
 
 gboolean
-gdm_config_peek_string_for_id (GdmConfig       *config,
+mdm_config_peek_string_for_id (MdmConfig       *config,
 			       int              id,
 			       const char     **strp)
 {
-	const GdmConfigValue *value;
+	const MdmConfigValue *value;
 	const char           *str;
 	gboolean              res;
 
 	g_return_val_if_fail (config != NULL, FALSE);
 
-	res = gdm_config_peek_value_for_id (config, id, &value);
+	res = mdm_config_peek_value_for_id (config, id, &value);
 	if (! res) {
 		return FALSE;
 	}
 
-	str = gdm_config_value_get_string (value);
+	str = mdm_config_value_get_string (value);
 	if (strp != NULL) {
 		*strp = str;
 	}
@@ -1474,14 +1474,14 @@ gdm_config_peek_string_for_id (GdmConfig       *config,
 }
 
 gboolean
-gdm_config_get_string_for_id (GdmConfig       *config,
+mdm_config_get_string_for_id (MdmConfig       *config,
 			      int              id,
 			      char           **strp)
 {
 	gboolean    res;
 	const char *str;
 
-	res = gdm_config_peek_string_for_id (config, id, &str);
+	res = mdm_config_peek_string_for_id (config, id, &str);
 	if (strp != NULL) {
 		*strp = g_strdup (str);
 	}
@@ -1490,110 +1490,110 @@ gdm_config_get_string_for_id (GdmConfig       *config,
 }
 
 gboolean
-gdm_config_get_bool_for_id (GdmConfig       *config,
+mdm_config_get_bool_for_id (MdmConfig       *config,
 			    int              id,
 			    gboolean        *boolp)
 {
-	GdmConfigValue *value;
+	MdmConfigValue *value;
 	gboolean        bool;
 	gboolean        res;
 
 	g_return_val_if_fail (config != NULL, FALSE);
 
-	res = gdm_config_get_value_for_id (config, id, &value);
+	res = mdm_config_get_value_for_id (config, id, &value);
 	if (! res) {
 		return FALSE;
 	}
 
-	bool = gdm_config_value_get_bool (value);
+	bool = mdm_config_value_get_bool (value);
 	if (boolp != NULL) {
 		*boolp = bool;
 	}
 
-	gdm_config_value_free (value);
+	mdm_config_value_free (value);
 
 	return res;
 }
 
 gboolean
-gdm_config_get_int_for_id (GdmConfig       *config,
+mdm_config_get_int_for_id (MdmConfig       *config,
 			   int              id,
 			   int             *integerp)
 {
-	GdmConfigValue *value;
+	MdmConfigValue *value;
 	gboolean        integer;
 	gboolean        res;
 
 	g_return_val_if_fail (config != NULL, FALSE);
 
-	res = gdm_config_get_value_for_id (config, id, &value);
+	res = mdm_config_get_value_for_id (config, id, &value);
 	if (! res) {
 		return FALSE;
 	}
 
-	integer = gdm_config_value_get_int (value);
+	integer = mdm_config_value_get_int (value);
 	if (integerp != NULL) {
 		*integerp = integer;
 	}
 
-	gdm_config_value_free (value);
+	mdm_config_value_free (value);
 
 	return res;
 }
 
 gboolean
-gdm_config_set_string_for_id (GdmConfig      *config,
+mdm_config_set_string_for_id (MdmConfig      *config,
 			      int             id,
 			      char           *str)
 {
-	GdmConfigValue *value;
+	MdmConfigValue *value;
 	gboolean        res;
 
 	g_return_val_if_fail (config != NULL, FALSE);
 
-	value = gdm_config_value_new (GDM_CONFIG_VALUE_STRING);
-	gdm_config_value_set_string (value, str);
+	value = mdm_config_value_new (MDM_CONFIG_VALUE_STRING);
+	mdm_config_value_set_string (value, str);
 
-	res = gdm_config_set_value_for_id (config, id, value);
-	gdm_config_value_free (value);
+	res = mdm_config_set_value_for_id (config, id, value);
+	mdm_config_value_free (value);
 
 	return res;
 }
 
 gboolean
-gdm_config_set_bool_for_id (GdmConfig      *config,
+mdm_config_set_bool_for_id (MdmConfig      *config,
 			    int             id,
 			    gboolean        bool)
 {
-	GdmConfigValue *value;
+	MdmConfigValue *value;
 	gboolean        res;
 
 	g_return_val_if_fail (config != NULL, FALSE);
 
-	value = gdm_config_value_new (GDM_CONFIG_VALUE_BOOL);
-	gdm_config_value_set_bool (value, bool);
+	value = mdm_config_value_new (MDM_CONFIG_VALUE_BOOL);
+	mdm_config_value_set_bool (value, bool);
 
-	res = gdm_config_set_value_for_id (config, id, value);
-	gdm_config_value_free (value);
+	res = mdm_config_set_value_for_id (config, id, value);
+	mdm_config_value_free (value);
 
 	return res;
 }
 
 gboolean
-gdm_config_set_int_for_id (GdmConfig      *config,
+mdm_config_set_int_for_id (MdmConfig      *config,
 			   int             id,
 			   int             integer)
 {
-	GdmConfigValue *value;
+	MdmConfigValue *value;
 	gboolean        res;
 
 	g_return_val_if_fail (config != NULL, FALSE);
 
-	value = gdm_config_value_new (GDM_CONFIG_VALUE_INT);
-	gdm_config_value_set_int (value, integer);
+	value = mdm_config_value_new (MDM_CONFIG_VALUE_INT);
+	mdm_config_value_set_int (value, integer);
 
-	res = gdm_config_set_value_for_id (config, id, value);
-	gdm_config_value_free (value);
+	res = mdm_config_set_value_for_id (config, id, value);
+	mdm_config_value_free (value);
 
 	return res;
 }

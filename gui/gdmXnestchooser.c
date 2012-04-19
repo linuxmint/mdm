@@ -1,9 +1,9 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (c) 2001 Queen of England
  *    
- * GDMXnestChooser - run X nest with a chooser using xdmcp
+ * MDMXnestChooser - run X nest with a chooser using xdmcp
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,14 +39,14 @@
 #include <X11/Xlib.h>
 #include <X11/Xauth.h>
 
-#include "gdm.h"
-#include "gdmcomm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
+#include "mdm.h"
+#include "mdmcomm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-daemon-config-keys.h"
-#include "gdm-log.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config-keys.h"
+#include "mdm-log.h"
 
 static gchar **args_remaining;
 static pid_t xnest_pid = 0;
@@ -166,7 +166,7 @@ static gboolean no_query = FALSE;
 static gboolean background = FALSE;
 static gboolean do_direct = FALSE;
 static gboolean do_broadcast = FALSE;
-static gboolean no_gdm_check = FALSE;
+static gboolean no_mdm_check = FALSE;
 
 static char display_num[BUFSIZ] = "";
 static char indirect_host[BUFSIZ] = "";
@@ -187,7 +187,7 @@ static const GOptionEntry options[] = {
 	{ "direct", 'd', 0, G_OPTION_ARG_NONE, &do_direct, N_("Do direct query instead of indirect (chooser)"), NULL },
 	{ "broadcast", 'B', 0, G_OPTION_ARG_NONE, &do_broadcast, N_("Run broadcast instead of indirect (chooser)"), NULL },
 	{ "background", 'b', 0, G_OPTION_ARG_NONE, &background, N_("Run in background"), NULL },
-	{ "no-gdm-check", '\0', 0, G_OPTION_ARG_NONE, &no_gdm_check, N_("Don't check for running GDM"), NULL },
+	{ "no-mdm-check", '\0', 0, G_OPTION_ARG_NONE, &no_mdm_check, N_("Don't check for running MDM"), NULL },
 	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_STRING_ARRAY, &args_remaining, NULL, NULL },
 	{ NULL } 
 };
@@ -406,7 +406,7 @@ setup_cookie (int disp)
     if (XauLockAuth (filename, 3, 3, 0) != LOCK_SUCCESS)
 	    return;
 
-    cookie = gdmcomm_get_a_cookie (TRUE /* binary */);
+    cookie = mdmcomm_get_a_cookie (TRUE /* binary */);
     if (cookie == NULL) {
 	    XauUnlockAuth (filename);
 	    return;
@@ -481,43 +481,43 @@ main (int argc, char *argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	if (strcmp (base (argv[0]), "gdmXnest") == 0) {
+	if (strcmp (base (argv[0]), "mdmXnest") == 0) {
 		gtk_init(&argc, &argv);
-		ctx = g_option_context_new (_("- Nested gdm login chooser"));
+		ctx = g_option_context_new (_("- Nested mdm login chooser"));
 		g_option_context_add_main_entries (ctx, xnest_only_options, _("main options"));
 		g_option_context_parse (ctx, &argc, &argv, NULL);
 		g_option_context_free (ctx);
 		no_query = TRUE;
-		no_gdm_check = TRUE;
+		no_mdm_check = TRUE;
 	} else {
 		gtk_init(&argc, &argv);
-		ctx = g_option_context_new (_("- Nested gdm login"));
+		ctx = g_option_context_new (_("- Nested mdm login"));
 		g_option_context_add_main_entries (ctx, options, _("main options"));
 		g_option_context_parse (ctx, &argc, &argv, NULL);
 		g_option_context_free (ctx);
 	}
 
-	gdm_log_init ();
-	gdm_log_set_debug (FALSE);
+	mdm_log_init ();
+	mdm_log_set_debug (FALSE);
 
 	if (args_remaining != NULL && args_remaining[0] != NULL)
 		host = args_remaining[0];
 	g_strfreev (args_remaining);
 
 	/* Read config data in bulk */
-	gdmcomm_comm_bulk_start ();
+	mdmcomm_comm_bulk_start ();
 
-	xdmcp_enabled  = gdm_config_get_bool (GDM_KEY_XDMCP);
-	honor_indirect = gdm_config_get_bool (GDM_KEY_INDIRECT);
-	pidfile        = GDM_PID_FILE;
-	xnest          = gdm_config_get_string (GDM_KEY_XNEST);
+	xdmcp_enabled  = mdm_config_get_bool (MDM_KEY_XDMCP);
+	honor_indirect = mdm_config_get_bool (MDM_KEY_INDIRECT);
+	pidfile        = MDM_PID_FILE;
+	xnest          = mdm_config_get_string (MDM_KEY_XNEST);
 
 	/* At this point we are done using the socket, so close it */
-	gdmcomm_comm_bulk_stop ();
+	mdmcomm_comm_bulk_stop ();
 
 	if ( ! no_query &&
 	     ! do_broadcast &&
-	     ! no_gdm_check &&
+	     ! no_mdm_check &&
 	    strcmp (host, "localhost") == 0) {
 		FILE *fp = NULL;
 		long pid;
@@ -578,7 +578,7 @@ main (int argc, char *argv[])
 					    GTK_DIALOG_MODAL /* flags */,
 					    GTK_MESSAGE_ERROR,
 					    GTK_BUTTONS_OK,
-					    _("GDM is not running"),
+					    _("MDM is not running"),
 					    _("Please ask your "
 					      "system administrator to start it."));
 			gtk_widget_show_all (d);

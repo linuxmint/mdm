@@ -23,7 +23,7 @@ main (int argc, char *argv[])
 
 	if (getuid () != geteuid () ||
 	    getuid () != 0) {
-		fprintf (stderr, _("gdmaskpass only runs as root\n"));
+		fprintf (stderr, _("mdmaskpass only runs as root\n"));
 		return 1;
 	}
 
@@ -36,7 +36,7 @@ main (int argc, char *argv[])
 	textdomain (GETTEXT_PACKAGE);
 
 	for (tries = 3; tries > 0; tries --) {
-		if ((retval = pam_start ("gdm", username, &conv, &pamh)) != PAM_SUCCESS) {
+		if ((retval = pam_start ("mdm", username, &conv, &pamh)) != PAM_SUCCESS) {
 			pam_end (pamh, retval);
 			pamh = NULL;
 			printf (_("Authentication failure!\n"));

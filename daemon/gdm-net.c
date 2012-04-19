@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -34,13 +34,13 @@
 
 #include <glib/gi18n.h>
 
-#include "gdm.h"
+#include "mdm.h"
 #include "misc.h"
-#include "gdm-net.h"
+#include "mdm-net.h"
 
-#include "gdm-common.h"
-#include "gdm-log.h"
-#include "gdm-daemon-config.h"
+#include "mdm-common.h"
+#include "mdm-log.h"
+#include "mdm-daemon-config.h"
 
 /*
  * Kind of a weird setup, new connections whack old connections.
@@ -75,7 +75,7 @@
  */
 #define MAX_CONNECTIONS 15
 
-struct _GdmConnection {
+struct _MdmConnection {
 	int fd;
 	guint source;
 	gboolean writable;
@@ -94,38 +94,38 @@ struct _GdmConnection {
 
 	guint32 user_flags;
 
-	GdmConnectionHandler handler;
+	MdmConnectionHandler handler;
 	gpointer data;
 	GDestroyNotify destroy_notify;
 
 	gpointer close_data;
 	GDestroyNotify close_notify;
 
-	GdmConnection *parent;
+	MdmConnection *parent;
 
 	GList *subconnections;
 	int n_subconnections;
 
-	GdmDisplay *disp;
+	MdmDisplay *disp;
 };
 
 int 
-gdm_connection_is_server_busy (GdmConnection *conn) {
+mdm_connection_is_server_busy (MdmConnection *conn) {
 	int max_connections = MAX_CONNECTIONS;
 
 	if (conn->n_subconnections >= (max_connections / 2)) {
-		gdm_debug ("Connections is %d, max is %d, busy TRUE",
+		mdm_debug ("Connections is %d, max is %d, busy TRUE",
 			conn->n_subconnections, max_connections);
 		return TRUE;
 	} else {
-		gdm_debug ("Connections is %d, max is %d, busy FALSE",
+		mdm_debug ("Connections is %d, max is %d, busy FALSE",
 			conn->n_subconnections, max_connections);
 		return FALSE;
 	}
 }
 
 static gboolean
-close_if_needed (GdmConnection *conn, GIOCondition cond, gboolean error)
+close_if_needed (MdmConnection *conn, GIOCondition cond, gboolean error)
 {
 	/* non-subconnections are never closed */
 	if (conn->parent == NULL)
@@ -134,24 +134,24 @@ close_if_needed (GdmConnection *conn, GIOCondition cond, gboolean error)
 	if (cond & G_IO_ERR ||
 	    cond & G_IO_HUP || error) {
 	        if (cond & G_IO_ERR)
-			gdm_debug ("close_if_needed: Got G_IO_ERR on %d", conn->fd);
+			mdm_debug ("close_if_needed: Got G_IO_ERR on %d", conn->fd);
 	        if (cond & G_IO_HUP)
-			gdm_debug ("close_if_needed: Got G_IO_HUP on %d", conn->fd);
+			mdm_debug ("close_if_needed: Got G_IO_HUP on %d", conn->fd);
 		if (error)
-			gdm_debug ("close_if_needed: Got error on %d", conn->fd);
+			mdm_debug ("close_if_needed: Got error on %d", conn->fd);
 		conn->source = 0;
-		gdm_connection_close (conn);
+		mdm_connection_close (conn);
 		return FALSE;
 	}
 	return TRUE;
 }
 
 static gboolean
-gdm_connection_handler (GIOChannel *source,
+mdm_connection_handler (GIOChannel *source,
 		        GIOCondition cond,
 		        gpointer data)
 {
-	GdmConnection *conn = data;
+	MdmConnection *conn = data;
 	char buf[PIPE_SIZE];
 	char *p;
 	size_t len;
@@ -184,7 +184,7 @@ gdm_connection_handler (GIOChannel *source,
 			if (conn->close_level == 2) {
 				conn->close_level = 0;
 				conn->source = 0;
-				gdm_connection_close (conn);
+				mdm_connection_close (conn);
 				return FALSE;
 			}
 			conn->close_level = 0;
@@ -198,7 +198,7 @@ gdm_connection_handler (GIOChannel *source,
 }
 
 gboolean
-gdm_connection_is_writable (GdmConnection *conn)
+mdm_connection_is_writable (MdmConnection *conn)
 {
 	g_return_val_if_fail (conn != NULL, FALSE);
 
@@ -206,7 +206,7 @@ gdm_connection_is_writable (GdmConnection *conn)
 }
 
 gboolean
-gdm_connection_write (GdmConnection *conn, const char *str)
+mdm_connection_write (MdmConnection *conn, const char *str)
 {
 	int ret;
 	int save_errno;
@@ -246,13 +246,13 @@ gdm_connection_write (GdmConnection *conn, const char *str)
 }
 
 static gboolean
-gdm_socket_handler (GIOChannel *source,
+mdm_socket_handler (GIOChannel *source,
 		    GIOCondition cond,
 		    gpointer data)
 {
 	GIOChannel *unixchan;
-	GdmConnection *conn = data;
-	GdmConnection *newconn;
+	MdmConnection *conn = data;
+	MdmConnection *newconn;
 	struct sockaddr_un addr;
 	socklen_t addr_size = sizeof (addr);
 	int fd;
@@ -265,13 +265,13 @@ gdm_socket_handler (GIOChannel *source,
 				   (struct sockaddr *)&addr,
 				   &addr_size));
 	if G_UNLIKELY (fd < 0) {
-		gdm_debug ("gdm_socket_handler: Rejecting connection");
+		mdm_debug ("mdm_socket_handler: Rejecting connection");
 		return TRUE;
 	}
 
-	gdm_debug ("gdm_socket_handler: Accepting new connection fd %d", fd);
+	mdm_debug ("mdm_socket_handler: Accepting new connection fd %d", fd);
 
-	newconn = g_new0 (GdmConnection, 1);
+	newconn = g_new0 (MdmConnection, 1);
 	newconn->disp = NULL;
 	newconn->message_count = 0;
 	newconn->nonblock = conn->nonblock;
@@ -301,13 +301,13 @@ gdm_socket_handler (GIOChannel *source,
 	max_connections = MAX_CONNECTIONS;
              
 	if (conn->n_subconnections > max_connections) {
-		GdmConnection *old;
-		gdm_debug ("Closing connection, %d subconnections reached",
+		MdmConnection *old;
+		mdm_debug ("Closing connection, %d subconnections reached",
 			max_connections);
 		old = conn->subconnections->data;
 		conn->subconnections =
 			g_list_remove (conn->subconnections, old);
-		gdm_connection_close (old);
+		mdm_connection_close (old);
 	}
 
 	unixchan = g_io_channel_unix_new (newconn->fd);
@@ -317,25 +317,25 @@ gdm_socket_handler (GIOChannel *source,
 	newconn->source = g_io_add_watch_full
 		(unixchan, G_PRIORITY_DEFAULT,
 		 G_IO_IN|G_IO_PRI|G_IO_ERR|G_IO_HUP|G_IO_NVAL,
-		 gdm_connection_handler, newconn, NULL);
+		 mdm_connection_handler, newconn, NULL);
 	g_io_channel_unref (unixchan);
 
 	return TRUE;
 }
 
-GdmConnection *
-gdm_connection_open_unix (const char *sockname, mode_t mode)
+MdmConnection *
+mdm_connection_open_unix (const char *sockname, mode_t mode)
 {
 	GIOChannel *unixchan;
-	GdmConnection *conn;
+	MdmConnection *conn;
 	struct sockaddr_un addr;
 	int fd;
 	int try_again_attempts = 1000;
 
 	fd = socket (AF_UNIX, SOCK_STREAM, 0);
 	if G_UNLIKELY (fd < 0) {
-		gdm_error (_("%s: Could not make socket"),
-			   "gdm_connection_open_unix");
+		mdm_error (_("%s: Could not make socket"),
+			   "mdm_connection_open_unix");
 		return NULL;
 	}
 
@@ -365,8 +365,8 @@ try_again:
 	addr.sun_family = AF_UNIX;
 	if G_UNLIKELY (bind (fd,
 			     (struct sockaddr *) &addr, sizeof (addr)) < 0) {
-		gdm_error (_("%s: Could not bind socket"),
-			   "gdm_connection_open_unix");
+		mdm_error (_("%s: Could not bind socket"),
+			   "mdm_connection_open_unix");
 		try_again_attempts --;
 		/* someone is being evil on us */
 		if (errno == EADDRINUSE && try_again_attempts >= 0)
@@ -377,7 +377,7 @@ try_again:
 
 	VE_IGNORE_EINTR (g_chmod (sockname, mode));
 
-	conn = g_new0 (GdmConnection, 1);
+	conn = g_new0 (MdmConnection, 1);
 	conn->disp = NULL;
 	conn->message_count = 0;
 	conn->nonblock = FALSE;
@@ -398,7 +398,7 @@ try_again:
 	conn->source = g_io_add_watch_full
 		(unixchan, G_PRIORITY_DEFAULT,
 		 G_IO_IN|G_IO_PRI|G_IO_ERR|G_IO_HUP|G_IO_NVAL,
-		 gdm_socket_handler, conn, NULL);
+		 mdm_socket_handler, conn, NULL);
 	g_io_channel_unref (unixchan);
 
 	listen (fd, 5);
@@ -406,15 +406,15 @@ try_again:
 	return conn;
 }
 
-GdmConnection *
-gdm_connection_open_fd (int fd)
+MdmConnection *
+mdm_connection_open_fd (int fd)
 {
 	GIOChannel *unixchan;
-	GdmConnection *conn;
+	MdmConnection *conn;
 
 	g_return_val_if_fail (fd >= 0, NULL);
 
-	conn = g_new0 (GdmConnection, 1);
+	conn = g_new0 (MdmConnection, 1);
 	conn->disp = NULL;
 	conn->message_count = 0;
 	conn->nonblock = FALSE;
@@ -435,38 +435,38 @@ gdm_connection_open_fd (int fd)
 	conn->source = g_io_add_watch_full
 		(unixchan, G_PRIORITY_DEFAULT,
 		 G_IO_IN|G_IO_PRI|G_IO_ERR|G_IO_HUP|G_IO_NVAL,
-		 gdm_connection_handler, conn, NULL);
+		 mdm_connection_handler, conn, NULL);
 	g_io_channel_unref (unixchan);
 
 	return conn;
 }
 
-GdmConnection *
-gdm_connection_open_fifo (const char *fifo, mode_t mode)
+MdmConnection *
+mdm_connection_open_fifo (const char *fifo, mode_t mode)
 {
 	GIOChannel *fifochan;
-	GdmConnection *conn;
+	MdmConnection *conn;
 	int fd;
 
 	VE_IGNORE_EINTR (g_unlink (fifo));
 
 	if G_UNLIKELY (mkfifo (fifo, 0660) < 0) {
-		gdm_error (_("%s: Could not make FIFO"),
-			   "gdm_connection_open_fifo");
+		mdm_error (_("%s: Could not make FIFO"),
+			   "mdm_connection_open_fifo");
 		return NULL;
 	}
 
 	fd = open (fifo, O_RDWR); /* Open with write to avoid EOF */
 
 	if G_UNLIKELY (fd < 0) {
-		gdm_error (_("%s: Could not open FIFO"),
-			   "gdm_connection_open_fifo");
+		mdm_error (_("%s: Could not open FIFO"),
+			   "mdm_connection_open_fifo");
 		return NULL;
 	}
 
 	VE_IGNORE_EINTR (g_chmod (fifo, mode));
 
-	conn = g_new0 (GdmConnection, 1);
+	conn = g_new0 (MdmConnection, 1);
 	conn->disp = NULL;
 	conn->message_count = 0;
 	conn->nonblock = FALSE;
@@ -487,15 +487,15 @@ gdm_connection_open_fifo (const char *fifo, mode_t mode)
 	conn->source = g_io_add_watch_full
 		(fifochan, G_PRIORITY_DEFAULT,
 		 G_IO_IN|G_IO_PRI|G_IO_ERR|G_IO_HUP|G_IO_NVAL,
-		 gdm_connection_handler, conn, NULL);
+		 mdm_connection_handler, conn, NULL);
 	g_io_channel_unref (fifochan);
 
 	return conn;
 }
 
 void
-gdm_connection_set_handler (GdmConnection *conn,
-			    GdmConnectionHandler handler,
+mdm_connection_set_handler (MdmConnection *conn,
+			    MdmConnectionHandler handler,
 			    gpointer data,
 			    GDestroyNotify destroy_notify)
 {
@@ -510,7 +510,7 @@ gdm_connection_set_handler (GdmConnection *conn,
 }
 
 guint32
-gdm_connection_get_user_flags (GdmConnection *conn)
+mdm_connection_get_user_flags (MdmConnection *conn)
 {
 	g_return_val_if_fail (conn != NULL, 0);
 
@@ -518,7 +518,7 @@ gdm_connection_get_user_flags (GdmConnection *conn)
 }
 
 void
-gdm_connection_set_user_flags (GdmConnection *conn,
+mdm_connection_set_user_flags (MdmConnection *conn,
 			       guint32 flags)
 {
 	g_return_if_fail (conn != NULL);
@@ -527,7 +527,7 @@ gdm_connection_set_user_flags (GdmConnection *conn,
 }
 
 void
-gdm_connection_close (GdmConnection *conn)
+mdm_connection_close (MdmConnection *conn)
 {
 	GList *list;
 
@@ -561,7 +561,7 @@ gdm_connection_close (GdmConnection *conn)
 
 	list = conn->subconnections;
 	conn->subconnections = NULL;
-	g_list_foreach (list, (GFunc) gdm_connection_close, NULL);
+	g_list_foreach (list, (GFunc) mdm_connection_close, NULL);
 	g_list_free (list);
 
 	if (conn->destroy_notify != NULL) {
@@ -587,7 +587,7 @@ gdm_connection_close (GdmConnection *conn)
 }
 
 void
-gdm_connection_set_close_notify (GdmConnection *conn,
+mdm_connection_set_close_notify (MdmConnection *conn,
 				 gpointer close_data,
 				 GDestroyNotify close_notify)
 {
@@ -601,7 +601,7 @@ gdm_connection_set_close_notify (GdmConnection *conn,
 }
 
 gboolean 
-gdm_connection_printf (GdmConnection *conn, const gchar *format, ...)
+mdm_connection_printf (MdmConnection *conn, const gchar *format, ...)
 {
 	va_list args;
 	gboolean ret;
@@ -611,7 +611,7 @@ gdm_connection_printf (GdmConnection *conn, const gchar *format, ...)
 	s = g_strdup_vprintf (format, args);
 	va_end (args);
 
-	ret = gdm_connection_write (conn, s);
+	ret = mdm_connection_write (conn, s);
 
 	g_free (s);
 
@@ -619,45 +619,45 @@ gdm_connection_printf (GdmConnection *conn, const gchar *format, ...)
 }
 
 int
-gdm_connection_get_message_count (GdmConnection *conn)
+mdm_connection_get_message_count (MdmConnection *conn)
 {
 	g_return_val_if_fail (conn != NULL, -1);
 	return conn->message_count;
 }
 
 gboolean
-gdm_connection_get_nonblock (GdmConnection *conn)
+mdm_connection_get_nonblock (MdmConnection *conn)
 {
 	g_return_val_if_fail (conn != NULL, FALSE);
 	return conn->nonblock;
 }
 
 void
-gdm_connection_set_nonblock (GdmConnection *conn,
+mdm_connection_set_nonblock (MdmConnection *conn,
 			     gboolean nonblock)
 {
 	g_return_if_fail (conn != NULL);
 	conn->nonblock = nonblock;
 }
 
-GdmDisplay *
-gdm_connection_get_display (GdmConnection *conn)
+MdmDisplay *
+mdm_connection_get_display (MdmConnection *conn)
 {
 	g_return_val_if_fail (conn != NULL, NULL);
 	return conn->disp;
 }
 
 void
-gdm_connection_set_display (GdmConnection *conn,
-			    GdmDisplay *disp)
+mdm_connection_set_display (MdmConnection *conn,
+			    MdmDisplay *disp)
 {
 	g_return_if_fail (conn != NULL);
 	conn->disp = disp;
 }
 
 void
-gdm_kill_subconnections_with_display (GdmConnection *conn,
-				      GdmDisplay *disp)
+mdm_kill_subconnections_with_display (MdmConnection *conn,
+				      MdmDisplay *disp)
 {
 	GList *subs;
 
@@ -666,12 +666,12 @@ gdm_kill_subconnections_with_display (GdmConnection *conn,
 
 	subs = conn->subconnections;
 	while (subs != NULL) {
-		GdmConnection *subcon = subs->data;
+		MdmConnection *subcon = subs->data;
 		if (subcon->disp == disp) {
 			subcon->disp = NULL;
 			conn->subconnections =
 				g_list_remove (conn->subconnections, subcon);
-			gdm_connection_close (subcon);
+			mdm_connection_close (subcon);
 			subs = conn->subconnections;
 		} else {
 			subs = subs->next;

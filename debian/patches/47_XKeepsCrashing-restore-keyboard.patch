@@ -3,10 +3,10 @@ before trying to interact with the user.
 
 XXX might need more complete description / splitting
 
---- gdm-2.16.4.orig/config/XKeepsCrashing
-+++ gdm-2.16.4/config/XKeepsCrashing
+--- mdm-2.16.4.orig/config/XKeepsCrashing
++++ mdm-2.16.4/config/XKeepsCrashing
 @@ -12,6 +12,15 @@
-   GDMTRANSLATE=
+   MDMTRANSLATE=
  fi
  
 +# Set the console to UTF-8 if needed.
@@ -19,8 +19,8 @@ XXX might need more complete description / splitting
 +fi
 +
  gettextfunc () {
-   if test "x$GDMTRANSLATE" != "x" ; then
-     "$GDMTRANSLATE" "$1"
+   if test "x$MDMTRANSLATE" != "x" ; then
+     "$MDMTRANSLATE" "$1"
 @@ -38,6 +47,15 @@
    echo "$OUTPUT"
  }
@@ -29,12 +29,12 @@ XXX might need more complete description / splitting
 +# the keyboard is restored to xlate mode, since we're going to try to interact
 +# with the user
 +# (http://bugzilla.ubuntu.com/show_bug.cgi?id=6286)
-+KBD_MODE=`gdmwhich kbd_mode`
++KBD_MODE=`mdmwhich kbd_mode`
 +if test "x$KBD_MODE" != "x" ; then
 +  kbd_mode -a
 +fi
 +
- MSG3=`gettextfunc "Failed to start the X server (your graphical interface).  It is likely that it is not set up correctly.  You will need to log in on a console and reconfigure the X server.  Then restart GDM."`
+ MSG3=`gettextfunc "Failed to start the X server (your graphical interface).  It is likely that it is not set up correctly.  You will need to log in on a console and reconfigure the X server.  Then restart MDM."`
  MSG4=`gettextfunc "Would you like to try to configure the X server?  Note that you will need the root password for this."`
  MSG5=`gettextfunc "Please type in the root (privileged user) password."`
 @@ -60,32 +78,13 @@
@@ -62,16 +62,16 @@ XXX might need more complete description / splitting
 -done
 -
 -#
- # Now we check for dialog and gdmaskpass
+ # Now we check for dialog and mdmaskpass
  #
 +DIALOG_OPTS=
- DIALOG=`gdmwhich dialog`
+ DIALOG=`mdmwhich dialog`
  if test "x$DIALOG" = "x" ; then
-   DIALOG=`gdmwhich whiptail`
+   DIALOG=`mdmwhich whiptail`
 +  DIALOG_OPTS="--scrolltext"
  fi
- if test -x "$LIBEXECDIR/gdmaskpass" ; then
-   ASKPASS="$LIBEXECDIR/gdmaskpass"
+ if test -x "$LIBEXECDIR/mdmaskpass" ; then
+   ASKPASS="$LIBEXECDIR/mdmaskpass"
 @@ -93,28 +92,6 @@
    ASKPASS=
  fi
@@ -98,7 +98,7 @@ XXX might need more complete description / splitting
 -
 -fi
 -
- # we require 'gdmopen', to open a console, because we really dont
+ # we require 'mdmopen', to open a console, because we really dont
  # have one.  Perhaps someone should try to figure out some shell
  # black magic to get this to work on other then linux systems
 @@ -157,38 +134,15 @@

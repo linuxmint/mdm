@@ -29,7 +29,7 @@ main (int argc, char *argv[])
 		string = argv[1];
 		is_utf8 = FALSE;
 	} else {
-		fprintf (stderr, "usage: gdmtranslate [--utf8] <string to translate>\n");
+		fprintf (stderr, "usage: mdmtranslate [--utf8] <string to translate>\n");
 		return 0;
 	}
 

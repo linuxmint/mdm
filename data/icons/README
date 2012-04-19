@@ -1,18 +1,18 @@
                    GNOME DISPLAY MANAGER ICONS
 
-This directory stores named (or themeable) icons for GDM designed to use the 
+This directory stores named (or themeable) icons for MDM designed to use the 
 Tango style for appearance and Icon Naming Spec for names.
 
 By now the following icons are included:
  
   | Icon Name           | Context      | Role                         |
   |---------------------|--------------|------------------------------|
-  | gdmsetup            | apps         | Window and launcher icon     |
-  |                     |              | for gdmsetup                 |
+  | mdmsetup            | apps         | Window and launcher icon     |
+  |                     |              | for mdmsetup                 |
   |                     |              | (Login Window) application   |
   |---------------------|--------------|------------------------------|
-  | gdmflexiserver      | apps         | Launcher icon for            |
-  |                     |              | gdmflexiserver (New Login)   |
+  | mdmflexiserver      | apps         | Launcher icon for            |
+  |                     |              | mdmflexiserver (New Login)   |
   |                     |              | application                  |
   |_____________________|______________|______________________________|
 
@@ -32,7 +32,7 @@ Those additional sizes/formats are also available
 When relevant, source files (GIMP's XCF or SVG) are available for future changes
 or other needs like derivative icons. Those files have the same name of the
 final icon, but of course different extension (for example, in 32x32/apps
-directory you have gdmsetup.png file, the installed one, and gdmsetup.svg file,
+directory you have mdmsetup.png file, the installed one, and mdmsetup.svg file,
 the source one, used to generate the first and useful for future changes).
 
 If you need to provide a new named icon, you have to:

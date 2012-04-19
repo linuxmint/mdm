@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2001 George Lebl
@@ -34,20 +34,20 @@
 #include <X11/extensions/xinerama.h>
 #endif
 
-#include "gdmwm.h"
-#include "gdm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
+#include "mdmwm.h"
+#include "mdm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
+#include "mdm-common.h"
 
-typedef struct _GdmWindow GdmWindow;
-struct _GdmWindow {
+typedef struct _MdmWindow MdmWindow;
+struct _MdmWindow {
 	int x, y;
 	Window win;
 	Window deco;
 	Window shadow;
-	gboolean ignore_size_hints; /* for gdm windows */
+	gboolean ignore_size_hints; /* for mdm windows */
 	gboolean center; /* do centering */
 	gboolean recenter; /* do re-centering */
         gboolean takefocus; /* permit take focus */
@@ -74,85 +74,85 @@ static Atom XA_NET_WM_STRUT = 0;
 
 static int trap_depth = 0;
 
-GdkRectangle *gdm_wm_allscreens = NULL;
-int gdm_wm_screens = 0;
-GdkRectangle gdm_wm_screen = {0,0,0,0};
+GdkRectangle *mdm_wm_allscreens = NULL;
+int mdm_wm_screens = 0;
+GdkRectangle mdm_wm_screen = {0,0,0,0};
 
 static Window strut_owners[4] = {None, None, None, None};
 static guint save_struts[4] = {0, 0, 0, 0};
 
 void 
-gdm_wm_screen_init (int cur_screen_num)
+mdm_wm_screen_init (int cur_screen_num)
 {
 	GdkScreen *screen;
 	int i;
 
-	if (g_getenv ("FAKE_XINERAMA_GDM") != NULL) {
+	if (g_getenv ("FAKE_XINERAMA_MDM") != NULL) {
 	/* for testing Xinerama support on non-xinerama setups */
-		gdm_wm_screen.x = 100;
-		gdm_wm_screen.y = 100;
-		gdm_wm_screen.width = gdk_screen_width () / 2 - 100;
-		gdm_wm_screen.height = gdk_screen_height () / 2 - 100;
+		mdm_wm_screen.x = 100;
+		mdm_wm_screen.y = 100;
+		mdm_wm_screen.width = gdk_screen_width () / 2 - 100;
+		mdm_wm_screen.height = gdk_screen_height () / 2 - 100;
 
-		gdm_wm_allscreens = g_new0 (GdkRectangle, 2);
-		gdm_wm_allscreens[0] = gdm_wm_screen;
-		gdm_wm_allscreens[1].x = gdk_screen_width () / 2;
-		gdm_wm_allscreens[1].y = gdk_screen_height () / 2;
-		gdm_wm_allscreens[1].width = gdk_screen_width () / 2;
-		gdm_wm_allscreens[1].height = gdk_screen_height () / 2;
-		gdm_wm_screens = 2;
+		mdm_wm_allscreens = g_new0 (GdkRectangle, 2);
+		mdm_wm_allscreens[0] = mdm_wm_screen;
+		mdm_wm_allscreens[1].x = gdk_screen_width () / 2;
+		mdm_wm_allscreens[1].y = gdk_screen_height () / 2;
+		mdm_wm_allscreens[1].width = gdk_screen_width () / 2;
+		mdm_wm_allscreens[1].height = gdk_screen_height () / 2;
+		mdm_wm_screens = 2;
 		return;
 	}
 
 	screen = gdk_screen_get_default ();
 
-	gdm_wm_screens = gdk_screen_get_n_monitors (screen);
+	mdm_wm_screens = gdk_screen_get_n_monitors (screen);
 
-	gdm_wm_allscreens = g_new (GdkRectangle, gdm_wm_screens);
-	for (i = 0; i < gdm_wm_screens; i++)
-		gdk_screen_get_monitor_geometry (screen, i, gdm_wm_allscreens + i);
+	mdm_wm_allscreens = g_new (GdkRectangle, mdm_wm_screens);
+	for (i = 0; i < mdm_wm_screens; i++)
+		gdk_screen_get_monitor_geometry (screen, i, mdm_wm_allscreens + i);
 
-	if (gdm_wm_screens < cur_screen_num)
+	if (mdm_wm_screens < cur_screen_num)
 		cur_screen_num = 0;
 
-	gdm_wm_screen = gdm_wm_allscreens[cur_screen_num];
+	mdm_wm_screen = mdm_wm_allscreens[cur_screen_num];
 }
 
 void 
-gdm_wm_set_screen (int cur_screen_num)
+mdm_wm_set_screen (int cur_screen_num)
 {
-	if (cur_screen_num >= gdm_wm_screens || cur_screen_num < 0)
+	if (cur_screen_num >= mdm_wm_screens || cur_screen_num < 0)
 		cur_screen_num = 0;
 
-	gdm_wm_screen = gdm_wm_allscreens[cur_screen_num];
+	mdm_wm_screen = mdm_wm_allscreens[cur_screen_num];
 }
 
 /* Not really a WM function, center a gtk window by setting uposition */
 void
-gdm_wm_center_window (GtkWindow *cw) 
+mdm_wm_center_window (GtkWindow *cw) 
 {
         gint x, y;
         gint w, h;
 
 	gtk_window_get_size (cw, &w, &h); 
 
-	x = gdm_wm_screen.x + (gdm_wm_screen.width - w)/2;
-	y = gdm_wm_screen.y + (gdm_wm_screen.height - h)/2;	
+	x = mdm_wm_screen.x + (mdm_wm_screen.width - w)/2;
+	y = mdm_wm_screen.y + (mdm_wm_screen.height - h)/2;	
 
-	if (x < gdm_wm_screen.x)
-		x = gdm_wm_screen.x;
-	if (y < gdm_wm_screen.y)
-		y = gdm_wm_screen.y;
+	if (x < mdm_wm_screen.x)
+		x = mdm_wm_screen.x;
+	if (y < mdm_wm_screen.y)
+		y = mdm_wm_screen.y;
 
  	gtk_window_move (GTK_WINDOW (cw), x, y);	
 }
 
 void
-gdm_wm_center_cursor (void)
+mdm_wm_center_cursor (void)
 {
     XWarpPointer (wm_disp, None, wm_root, 0, 0, 0, 0, 
-		  gdm_wm_screen.x + gdm_wm_screen.width / 2,
-		  gdm_wm_screen.y + gdm_wm_screen.height / 2);
+		  mdm_wm_screen.x + mdm_wm_screen.width / 2,
+		  mdm_wm_screen.y + mdm_wm_screen.height / 2);
 }
 
 static void
@@ -288,12 +288,12 @@ get_typed_property_data (Display *xdisplay,
 }
 
 /* 
- * Update the gdm_wm_screen 'effective' screen area when a window reserves struts.
+ * Update the mdm_wm_screen 'effective' screen area when a window reserves struts.
  * This only works if struts don't "collide", i.e. there is a max of one strut setter
- * per edge.  Of course this should be the case at gdm time...
+ * per edge.  Of course this should be the case at mdm time...
  */
 static void
-gdm_wm_update_struts (Display *xdisplay, Window xwindow)
+mdm_wm_update_struts (Display *xdisplay, Window xwindow)
 {
 	gint     size = 0;
 	guint32 *struts = get_typed_property_data (xdisplay, xwindow, XA_NET_WM_STRUT, 
@@ -371,7 +371,7 @@ find_window_list (Window w, gboolean deco_ok)
 	GList *li;
 
 	for (li = windows; li != NULL; li = li->next) {
-		GdmWindow *gw = li->data;
+		MdmWindow *gw = li->data;
 
 		if (gw->win == w)
 			return li;
@@ -384,7 +384,7 @@ find_window_list (Window w, gboolean deco_ok)
 	return NULL;
 }
 
-static GdmWindow *
+static MdmWindow *
 find_window (Window w, gboolean deco_ok)
 {
 	GList *li = find_window_list (w, deco_ok);
@@ -395,10 +395,10 @@ find_window (Window w, gboolean deco_ok)
 }
 
 void
-gdm_wm_focus_window (Window window)
+mdm_wm_focus_window (Window window)
 {
 	XWindowAttributes attribs = {0};
-	GdmWindow *win;
+	MdmWindow *win;
 
 	if (no_focus_login > 0 &&
 	    window == wm_login_window)
@@ -441,7 +441,7 @@ gdm_wm_focus_window (Window window)
 }
 
 static void
-constrain_window (GdmWindow *gw)
+constrain_window (MdmWindow *gw)
 {
 /* constrain window to lie within screen geometry, with struts reserved */
 	int x, y, screen_x = 0, screen_y = 0;
@@ -499,14 +499,14 @@ constrain_all_windows (void)
 
 	while (winlist)
 	{
-		GdmWindow *gw = winlist->data;
+		MdmWindow *gw = winlist->data;
 		constrain_window (gw);
 		winlist = winlist->next;
 	}
 }
 
 static void
-center_x_window (GdmWindow *gw, Window w, Window hintwin)
+center_x_window (MdmWindow *gw, Window w, Window hintwin)
 {
 	XSizeHints hints;
 	Status status;
@@ -554,21 +554,21 @@ center_x_window (GdmWindow *gw, Window w, Window hintwin)
 	/* we replace the x,y and width,height with some new values */
 
 	if (can_resize) {
-		if (width > gdm_wm_screen.width)
-			width = gdm_wm_screen.width;
-		if (height > gdm_wm_screen.height)
-			height = gdm_wm_screen.height;
+		if (width > mdm_wm_screen.width)
+			width = mdm_wm_screen.width;
+		if (height > mdm_wm_screen.height)
+			height = mdm_wm_screen.height;
 	}
 
 	if (can_reposition) {
 		/* we wipe the X with some new values */
-		x = gdm_wm_screen.x + (gdm_wm_screen.width - width)/2;
-		y = gdm_wm_screen.y + (gdm_wm_screen.height - height)/2;	
+		x = mdm_wm_screen.x + (mdm_wm_screen.width - width)/2;
+		y = mdm_wm_screen.y + (mdm_wm_screen.height - height)/2;	
 
-		if (x < gdm_wm_screen.x)
-			x = gdm_wm_screen.x;
-		if (y < gdm_wm_screen.y)
-			y = gdm_wm_screen.y;
+		if (x < mdm_wm_screen.x)
+			x = mdm_wm_screen.x;
+		if (y < mdm_wm_screen.y)
+			y = mdm_wm_screen.y;
 	}
 	
 	XMoveResizeWindow (wm_disp, w, x, y, width, height);
@@ -639,7 +639,7 @@ has_deco (Window win)
 
 
 static void
-add_deco (GdmWindow *w, gboolean is_mapped)
+add_deco (MdmWindow *w, gboolean is_mapped)
 {
 	int x, y;
 	Window root;
@@ -727,10 +727,10 @@ is_wm_class (XClassHint *hint, const char *string, int len)
 	}
 }
 
-static GdmWindow *
+static MdmWindow *
 add_window (Window w, gboolean center, gboolean is_mapped)
 {
-	GdmWindow *gw;
+	MdmWindow *gw;
 
 	gw = find_window (w, FALSE);
 	if (gw == NULL) {
@@ -740,7 +740,7 @@ add_window (Window w, gboolean center, gboolean is_mapped)
 		Window root;
 		unsigned int width, height, border, depth;
 
-		gw = g_new0 (GdmWindow, 1);
+		gw = g_new0 (MdmWindow, 1);
 		gw->win = w;
 		windows = g_list_prepend (windows, gw);
 
@@ -775,7 +775,7 @@ add_window (Window w, gboolean center, gboolean is_mapped)
 			gw->center = FALSE;
 			gw->recenter = FALSE;
 		} else if (XGetClassHint (wm_disp, w, &hint)) {
-			if (is_wm_class (&hint, "gdm", 3)) {
+			if (is_wm_class (&hint, "mdm", 3)) {
 				gw->ignore_size_hints = TRUE;
 				gw->center = TRUE;
 				gw->recenter = TRUE;
@@ -820,7 +820,7 @@ remove_window (Window w)
 		wm_focus_window = None;
 
 	if (li != NULL) {
-		GdmWindow *gw = li->data;
+		MdmWindow *gw = li->data;
 
 		li->data = NULL;
 
@@ -851,7 +851,7 @@ static void
 revert_focus_to_login (void)
 {
 	if (wm_login_window != None) {
-		gdm_wm_focus_window (wm_login_window);
+		mdm_wm_focus_window (wm_login_window);
 	}
 }
 
@@ -901,7 +901,7 @@ add_all_current_windows (void)
 }
 
 static void
-reparent_to_root (GdmWindow *gw)
+reparent_to_root (MdmWindow *gw)
 {
 	/* only if reparented */
 	if (gw->deco != None) {
@@ -915,7 +915,7 @@ reparent_to_root (GdmWindow *gw)
 }
 
 static void
-shadow_follow (GdmWindow *gw)
+shadow_follow (MdmWindow *gw)
 {
 	int x, y;
 	Window root;
@@ -940,7 +940,7 @@ shadow_follow (GdmWindow *gw)
 static void
 event_process (XEvent *ev)
 {
-	GdmWindow *gw;
+	MdmWindow *gw;
 	Window w;
 	XWindowChanges wchanges;
 
@@ -1041,7 +1041,7 @@ event_process (XEvent *ev)
 			}
 			if ( ! ev->xmap.override_redirect &&
 			     focus_new_windows) {
-				gdm_wm_focus_window (w);
+				mdm_wm_focus_window (w);
 			}
 		}
 		break;
@@ -1081,12 +1081,12 @@ event_process (XEvent *ev)
 		w = ev->xcrossing.window;
 		gw = find_window (w, TRUE);
 		if (gw != NULL)
-			gdm_wm_focus_window (gw->win);
+			mdm_wm_focus_window (gw->win);
 		break;
 	case PropertyNotify:
 		if (ev->xproperty.atom == XA_NET_WM_STRUT)
 		{
-			gdm_wm_update_struts (ev->xproperty.display, 
+			mdm_wm_update_struts (ev->xproperty.display, 
 					      ev->xproperty.window);
 			constrain_all_windows ();
 		}
@@ -1146,7 +1146,7 @@ static GSourceFuncs event_funcs = {
 };
 
 void
-gdm_wm_init (Window login_window)
+mdm_wm_init (Window login_window)
 {
 	XWindowAttributes attribs = { 0, };
 	GSource *source;
@@ -1206,13 +1206,13 @@ gdm_wm_init (Window login_window)
 }
 
 void
-gdm_wm_focus_new_windows (gboolean focus)
+mdm_wm_focus_new_windows (gboolean focus)
 {
 	focus_new_windows = focus;
 }
 
 void
-gdm_wm_no_login_focus_push (void)
+mdm_wm_no_login_focus_push (void)
 {
 	/* it makes not sense for this to be false then */
 	focus_new_windows = TRUE;
@@ -1220,23 +1220,23 @@ gdm_wm_no_login_focus_push (void)
 }
 
 void
-gdm_wm_no_login_focus_pop (void)
+mdm_wm_no_login_focus_pop (void)
 {
 	no_focus_login --;
 
 	if (no_focus_login == 0 &&
 	    wm_focus_window == None &&
 	    wm_login_window != None)
-		gdm_wm_focus_window (wm_login_window);
+		mdm_wm_focus_window (wm_login_window);
 }
 
 void
-gdm_wm_get_window_pos (Window window, int *xp, int *yp)
+mdm_wm_get_window_pos (Window window, int *xp, int *yp)
 {
 	int x, y;
 	Window root;
 	unsigned int width, height, border, depth;
-	GdmWindow *gw;
+	MdmWindow *gw;
 
 	trap_push ();
 
@@ -1270,9 +1270,9 @@ gdm_wm_get_window_pos (Window window, int *xp, int *yp)
 }
 
 void
-gdm_wm_move_window_now (Window window, int x, int y)
+mdm_wm_move_window_now (Window window, int x, int y)
 {
-	GdmWindow *gw;
+	MdmWindow *gw;
 
 	trap_push ();
 
@@ -1298,7 +1298,7 @@ gdm_wm_move_window_now (Window window, int x, int y)
 }
 
 void
-gdm_wm_save_wm_order (void)
+mdm_wm_save_wm_order (void)
 {
 	Window *children = NULL;
 	Window xparent, xroot;
@@ -1323,7 +1323,7 @@ gdm_wm_save_wm_order (void)
 		data = g_new0 (unsigned long, size);
 
 		for (i = 0; i < size; i++) {
-			GdmWindow *gw = find_window (children[i], TRUE);
+			MdmWindow *gw = find_window (children[i], TRUE);
 
 			/* Ignore unknowns and shadows */
 			if (gw == NULL ||
@@ -1339,7 +1339,7 @@ gdm_wm_save_wm_order (void)
 			}
 		}
 
-		atom = XInternAtom (wm_disp, "GDMWM_WINDOW_ORDER", False);
+		atom = XInternAtom (wm_disp, "MDMWM_WINDOW_ORDER", False);
 
 		XChangeProperty (wm_disp, wm_root,
 				 atom,
@@ -1364,12 +1364,12 @@ focus_win (gpointer data)
 {
 	Window focus = (Window)data;
 	focus_new_windows = TRUE;
-	gdm_wm_focus_window (focus);
+	mdm_wm_focus_window (focus);
 	return FALSE;
 }
 
 void
-gdm_wm_restore_wm_order (void)
+mdm_wm_restore_wm_order (void)
 {
 	guint32 *data;
 	Window focus = None;
@@ -1388,7 +1388,7 @@ gdm_wm_restore_wm_order (void)
 
 	XGrabServer (wm_disp);
 
-	atom = XInternAtom (wm_disp, "GDMWM_WINDOW_ORDER", False);
+	atom = XInternAtom (wm_disp, "MDMWM_WINDOW_ORDER", False);
 
 	data = get_typed_property_data (wm_disp, wm_root,
 					atom, XA_CARDINAL,
@@ -1396,7 +1396,7 @@ gdm_wm_restore_wm_order (void)
 
 	if (data != NULL) {
 		for (i = 0; i < size/4; i++) {
-			GdmWindow *gw;
+			MdmWindow *gw;
 			if (data[i] == None)
 				gw = find_window (wm_login_window, TRUE);
 			else
@@ -1429,7 +1429,7 @@ gdm_wm_restore_wm_order (void)
 }
 
 void
-gdm_wm_show_info_msg_dialog (const gchar *msg_file,
+mdm_wm_show_info_msg_dialog (const gchar *msg_file,
 			     const gchar *msg_font)
 {
 	GtkWidget *dialog, *label;
@@ -1446,7 +1446,7 @@ gdm_wm_show_info_msg_dialog (const gchar *msg_file,
 		return;
 	}
 
-	gdm_wm_focus_new_windows (TRUE);
+	mdm_wm_focus_new_windows (TRUE);
 	dialog = gtk_dialog_new_with_buttons (NULL /* Message */,
 					      NULL /* parent */, GTK_DIALOG_MODAL |
 					      GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -1455,23 +1455,23 @@ gdm_wm_show_info_msg_dialog (const gchar *msg_file,
 	label = gtk_label_new (InfoMsg);
 
 	if (msg_font && strlen (msg_font) > 0) {
-		PangoFontDescription *GdmInfoMsgFontDesc = pango_font_description_from_string (msg_font);
-		if (GdmInfoMsgFontDesc) {
-			gtk_widget_modify_font (label, GdmInfoMsgFontDesc);
-			pango_font_description_free (GdmInfoMsgFontDesc);
+		PangoFontDescription *MdmInfoMsgFontDesc = pango_font_description_from_string (msg_font);
+		if (MdmInfoMsgFontDesc) {
+			gtk_widget_modify_font (label, MdmInfoMsgFontDesc);
+			pango_font_description_free (MdmInfoMsgFontDesc);
 		}
 	}
 
 	gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), label);
 	gtk_widget_show_all (dialog);
-	gdm_wm_center_window (GTK_WINDOW (dialog));
+	mdm_wm_center_window (GTK_WINDOW (dialog));
 
-	gdm_common_setup_cursor (GDK_LEFT_PTR);
+	mdm_common_setup_cursor (GDK_LEFT_PTR);
 
-	gdm_wm_no_login_focus_push ();
+	mdm_wm_no_login_focus_push ();
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
-	gdm_wm_no_login_focus_pop ();
+	mdm_wm_no_login_focus_pop ();
 
 	g_free (InfoMsg);
 }
@@ -1503,13 +1503,13 @@ hig_dialog_new (GtkWindow      *parent,
 }
 
 void
-gdm_wm_message_dialog (const gchar *primary_message, 
+mdm_wm_message_dialog (const gchar *primary_message, 
 		       const gchar *secondary_message)
 {
 	GtkWidget *req = NULL;
 
 	/* we should be now fine for focusing new windows */
-	gdm_wm_focus_new_windows (TRUE);
+	mdm_wm_focus_new_windows (TRUE);
 
 	req = hig_dialog_new (NULL /* parent */,
                               GTK_DIALOG_MODAL /* flags */,
@@ -1518,16 +1518,16 @@ gdm_wm_message_dialog (const gchar *primary_message,
                               primary_message,
                               secondary_message);
 
-	gdm_wm_center_window (GTK_WINDOW (req));
+	mdm_wm_center_window (GTK_WINDOW (req));
 
-	gdm_wm_no_login_focus_push ();
+	mdm_wm_no_login_focus_push ();
 	gtk_dialog_run (GTK_DIALOG (req));
 	gtk_widget_destroy (req);
-	gdm_wm_no_login_focus_pop ();
+	mdm_wm_no_login_focus_pop ();
 }
 
 gint
-gdm_wm_query_dialog (const gchar *primary_message,
+mdm_wm_query_dialog (const gchar *primary_message,
 		     const gchar *secondary_message,
 		     const char *posbutton,
 		     const char *negbutton,
@@ -1538,7 +1538,7 @@ gdm_wm_query_dialog (const gchar *primary_message,
 	GtkWidget *button;
 
 	/* we should be now fine for focusing new windows */
-	gdm_wm_focus_new_windows (TRUE);
+	mdm_wm_focus_new_windows (TRUE);
 
 	req = hig_dialog_new (NULL /* parent */,
                               GTK_DIALOG_MODAL /* flags */,
@@ -1575,18 +1575,18 @@ gdm_wm_query_dialog (const gchar *primary_message,
 	else if (has_cancel)
 		gtk_dialog_set_default_response (GTK_DIALOG (req), GTK_RESPONSE_CANCEL);
 
-	gdm_wm_center_window (GTK_WINDOW (req));
+	mdm_wm_center_window (GTK_WINDOW (req));
 
-	gdm_wm_no_login_focus_push ();
+	mdm_wm_no_login_focus_push ();
 	ret = gtk_dialog_run (GTK_DIALOG (req));
-	gdm_wm_no_login_focus_pop ();
+	mdm_wm_no_login_focus_pop ();
 	gtk_widget_destroy (req);
 
 	return ret;
 }
 
 gint
-gdm_wm_warn_dialog (const gchar *primary_message,
+mdm_wm_warn_dialog (const gchar *primary_message,
                     const gchar *secondary_message,
                     const char *posbutton,
                     const char *negbutton,
@@ -1597,7 +1597,7 @@ gdm_wm_warn_dialog (const gchar *primary_message,
 	GtkWidget *button;
 
 	/* we should be now fine for focusing new windows */
-	gdm_wm_focus_new_windows (TRUE);
+	mdm_wm_focus_new_windows (TRUE);
 
 	req = hig_dialog_new (NULL /* parent */,
                               GTK_DIALOG_MODAL /* flags */,
@@ -1634,11 +1634,11 @@ gdm_wm_warn_dialog (const gchar *primary_message,
 	else if (has_cancel)
 		gtk_dialog_set_default_response (GTK_DIALOG (req), GTK_RESPONSE_CANCEL);
 
-	gdm_wm_center_window (GTK_WINDOW (req));
+	mdm_wm_center_window (GTK_WINDOW (req));
 
-	gdm_wm_no_login_focus_push ();
+	mdm_wm_no_login_focus_push ();
 	ret = gtk_dialog_run (GTK_DIALOG (req));
-	gdm_wm_no_login_focus_pop ();
+	mdm_wm_no_login_focus_pop ();
 	gtk_widget_destroy (req);
 
 	return ret;

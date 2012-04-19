@@ -5,7 +5,7 @@
 PATH="@X_PATH@:$PATH:/bin:/usr/bin"
 OLD_IFS=$IFS
 
-gdmwhich () {
+mdmwhich () {
   COMMAND="$1"
   OUTPUT=
   IFS=:
@@ -22,12 +22,12 @@ gdmwhich () {
 }
 
 # Set background color
-XSETROOT=`gdmwhich xsetroot`
+XSETROOT=`mdmwhich xsetroot`
 if [ "x$XSETROOT" != "x" ] ; then
 
 	CHECKBACKCOLOR="OK"
-	if [ "x$GDM_GREETER_TYPE" = "xTHEMED" ]; then
-		BACKCOLOR=`gdmflexiserver --command="GET_CONFIG greeter/GraphicalThemedColor $DISPLAY"`
+	if [ "x$MDM_GREETER_TYPE" = "xTHEMED" ]; then
+		BACKCOLOR=`mdmflexiserver --command="GET_CONFIG greeter/GraphicalThemedColor $DISPLAY"`
 
 		CHECKBACKCOLOR=`echo $BACKCOLOR | sed 's/^\([^ ]*\) .*$/\1/'`
 		if [ "x$CHECKBACKCOLOR" = "xOK" ]; then
@@ -38,14 +38,14 @@ if [ "x$XSETROOT" != "x" ] ; then
 	fi
 
 	# If we tried to load the themed backgroundcolor, but failed, then try loading plain color
-	if [ "x$CHECKBACKCOLOR" != "xOK" ] || [ "x$GDM_GREETER_TYPE" = "xPLAIN" ]; then
+	if [ "x$CHECKBACKCOLOR" != "xOK" ] || [ "x$MDM_GREETER_TYPE" = "xPLAIN" ]; then
 
 		# Background type can be 0=None, 1=Image & Color, 2=Color, or 3=Image 
-		BACKTYPE=`gdmflexiserver --command="GET_CONFIG greeter/BackgroundType $DISPLAY"`
+		BACKTYPE=`mdmflexiserver --command="GET_CONFIG greeter/BackgroundType $DISPLAY"`
 
 		# Skip if background type does not include a color
 		if [ "x$BACKTYPE" = "xOK 1" ] || [ "x$BACKTYPE" = "xOK 2" ]; then
-			BACKCOLOR=`gdmflexiserver --command="GET_CONFIG greeter/BackgroundColor $DISPLAY"`
+			BACKCOLOR=`mdmflexiserver --command="GET_CONFIG greeter/BackgroundColor $DISPLAY"`
 
 			CHECKBACKCOLOR=`echo $BACKCOLOR | sed 's/^\([^ ]*\) .*$/\1/'`
 			if [ "x$CHECKBACKCOLOR" = "xOK" ]; then

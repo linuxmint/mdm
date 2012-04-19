@@ -4,26 +4,26 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-THIS_PACKAGE=gdm
+THIS_PACKAGE=mdm
 DEFAULT_DISPLAY_MANAGER_FILE=/etc/X11/default-display-manager
 
-# creating gdm group if he isn't already there
-if ! getent group gdm >/dev/null; then
-        addgroup --system gdm
+# creating mdm group if he isn't already there
+if ! getent group mdm >/dev/null; then
+        addgroup --system mdm
 fi
 
-# creating gdm user if he isn't already there
-if ! getent passwd gdm >/dev/null; then
-        adduser --system --ingroup gdm --home /var/lib/gdm gdm
-        usermod -c "Gnome Display Manager" gdm
-        usermod -d "/var/lib/gdm"          gdm
-        usermod -g "gdm"                   gdm
-        usermod -s "/bin/false"            gdm
+# creating mdm user if he isn't already there
+if ! getent passwd mdm >/dev/null; then
+        adduser --system --ingroup mdm --home /var/lib/mdm mdm
+        usermod -c "Gnome Display Manager" mdm
+        usermod -d "/var/lib/mdm"          mdm
+        usermod -g "mdm"                   mdm
+        usermod -s "/bin/false"            mdm
 fi
 
-if [ -d /var/lib/gdm ]; then
-  chown -R gdm:gdm /var/lib/gdm
-  chmod 0750 /var/lib/gdm
+if [ -d /var/lib/mdm ]; then
+  chown -R mdm:mdm /var/lib/mdm
+  chmod 0750 /var/lib/mdm
 fi
 
 # debconf is not a registry, so we only fiddle with the default file if it
@@ -48,7 +48,7 @@ if [ -e "$DEFAULT_DISPLAY_MANAGER_FILE.dpkg-tmp" ]; then
   rm "$DEFAULT_DISPLAY_MANAGER_FILE.dpkg-tmp"
 fi
 
-# debconf hangs if gdm gets started below without this
+# debconf hangs if mdm gets started below without this
 db_stop || true
 
 # update-rc.d levels
@@ -56,32 +56,32 @@ S=30
 K=01
 
 if [ "$1" = "configure" ] && dpkg --compare-versions "$2" lt-nl "2.16.1-1"; then
-    # since 2.16.1-1, gdm isn't started from S99 anymore
-    if [ -e /etc/rc2.d/S99gdm ]; then
-        update-rc.d -f gdm remove >/dev/null
-        update-rc.d gdm defaults $S $K
+    # since 2.16.1-1, mdm isn't started from S99 anymore
+    if [ -e /etc/rc2.d/S99mdm ]; then
+        update-rc.d -f mdm remove >/dev/null
+        update-rc.d mdm defaults $S $K
     fi
 elif [ "$1" = "configure" ] && dpkg --compare-versions "$2" le-nl "2.16.4-1.1"; then
-    # since after 2.16.4-1.1, gdm isn't started from S21 anymore
-    if [ -e /etc/rc2.d/S21gdm ]; then
-        update-rc.d -f gdm remove >/dev/null
-        update-rc.d gdm defaults $S $K
+    # since after 2.16.4-1.1, mdm isn't started from S21 anymore
+    if [ -e /etc/rc2.d/S21mdm ]; then
+        update-rc.d -f mdm remove >/dev/null
+        update-rc.d mdm defaults $S $K
     fi
 fi
 
 if [ "$1" = "configure" ] && dpkg --compare-versions "$2" lt-nl "2.20"; then
     # D'uh, that's an ugly hack, but upstream changed the syntax
     # of the quoting
-    if grep -q '\\"' /etc/gdm/gdm.conf; then
-        echo "WARNING: fixing quotes in /etc/gdm/gdm.conf"
-        cp -p /etc/gdm/gdm.conf /etc/gdm/gdm.conf.dpkg-old
-        sed -i 's/\\"/"/g' /etc/gdm/gdm.conf
+    if grep -q '\\"' /etc/mdm/mdm.conf; then
+        echo "WARNING: fixing quotes in /etc/mdm/mdm.conf"
+        cp -p /etc/mdm/mdm.conf /etc/mdm/mdm.conf.dpkg-old
+        sed -i 's/\\"/"/g' /etc/mdm/mdm.conf
     fi
 fi
 
-if [ -x /etc/init.d/gdm ]; then
-  update-rc.d gdm defaults $S $K >/dev/null 2>&1
-  invoke-rc.d gdm reload || true
+if [ -x /etc/init.d/mdm ]; then
+  update-rc.d mdm defaults $S $K >/dev/null 2>&1
+  invoke-rc.d mdm reload || true
 fi
 
 #DEBHELPER#

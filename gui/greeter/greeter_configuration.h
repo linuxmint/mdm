@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,54 +19,54 @@
 #ifndef GREETER_CONFIGURATION_H
 #define GREETER_CONFIGURATION_H
 
-extern gboolean GdmUseCirclesInEntry;
-extern gboolean GdmUseInvisibleInEntry;
-extern gboolean GdmShowGnomeFailsafeSession;
-extern gboolean GdmShowXtermFailsafeSession;
-extern gboolean GdmShowLastSession;
-extern gboolean GdmSystemMenu;
-extern gboolean GdmConfigAvailable;
-extern gboolean GdmChooserButton;
-extern gchar *GdmHalt;
-extern gchar *GdmReboot;
-extern gchar *GdmSuspend;
-extern gchar *GdmConfigurator;
-extern gboolean GdmHaltFound;
-extern gboolean GdmRebootFound;
-extern gboolean GdmCustomCmdFound;
-extern gboolean *GdmCustomCmdsFound;
-extern gboolean GdmAnyCustomCmdsFound;
-extern gboolean GdmSuspendFound;
-extern gboolean GdmConfiguratorFound;
-extern gchar *GdmSessionDir;
-extern gchar *GdmDefaultSession;
-extern gchar *GdmDefaultLocale;
-extern gchar *GdmLocaleFile;
-extern gboolean GdmTimedLoginEnable;
-extern gboolean GdmUse24Clock;
-extern gchar *GdmTimedLogin;
-extern gint GdmTimedLoginDelay;
-extern gchar *GdmGlobalFaceDir;
-extern gchar *GdmDefaultFace;
-extern gint  GdmIconMaxHeight;
-extern gint  GdmIconMaxWidth;
-extern gchar *GdmExclude;
-extern int GdmMinimalUID;
-extern gboolean GdmAllowRoot;
-extern gboolean GdmAllowRemoteRoot;
-extern gchar *GdmWelcome;
-extern gchar *GdmServAuthDir;
-extern gchar *GdmInfoMsgFile;
-extern gchar *GdmInfoMsgFont;
-extern gchar *GdmSoundProgram;
-extern gchar *GdmSoundOnLoginReadyFile;
-extern gchar *GdmSoundOnLoginSuccessFile;
-extern gchar *GdmSoundOnLoginFailureFile;
-extern gboolean GdmSoundOnLoginReady;
-extern gboolean GdmSoundOnLoginSuccess;
-extern gboolean GdmSoundOnLoginFailure;
+extern gboolean MdmUseCirclesInEntry;
+extern gboolean MdmUseInvisibleInEntry;
+extern gboolean MdmShowGnomeFailsafeSession;
+extern gboolean MdmShowXtermFailsafeSession;
+extern gboolean MdmShowLastSession;
+extern gboolean MdmSystemMenu;
+extern gboolean MdmConfigAvailable;
+extern gboolean MdmChooserButton;
+extern gchar *MdmHalt;
+extern gchar *MdmReboot;
+extern gchar *MdmSuspend;
+extern gchar *MdmConfigurator;
+extern gboolean MdmHaltFound;
+extern gboolean MdmRebootFound;
+extern gboolean MdmCustomCmdFound;
+extern gboolean *MdmCustomCmdsFound;
+extern gboolean MdmAnyCustomCmdsFound;
+extern gboolean MdmSuspendFound;
+extern gboolean MdmConfiguratorFound;
+extern gchar *MdmSessionDir;
+extern gchar *MdmDefaultSession;
+extern gchar *MdmDefaultLocale;
+extern gchar *MdmLocaleFile;
+extern gboolean MdmTimedLoginEnable;
+extern gboolean MdmUse24Clock;
+extern gchar *MdmTimedLogin;
+extern gint MdmTimedLoginDelay;
+extern gchar *MdmGlobalFaceDir;
+extern gchar *MdmDefaultFace;
+extern gint  MdmIconMaxHeight;
+extern gint  MdmIconMaxWidth;
+extern gchar *MdmExclude;
+extern int MdmMinimalUID;
+extern gboolean MdmAllowRoot;
+extern gboolean MdmAllowRemoteRoot;
+extern gchar *MdmWelcome;
+extern gchar *MdmServAuthDir;
+extern gchar *MdmInfoMsgFile;
+extern gchar *MdmInfoMsgFont;
+extern gchar *MdmSoundProgram;
+extern gchar *MdmSoundOnLoginReadyFile;
+extern gchar *MdmSoundOnLoginSuccessFile;
+extern gchar *MdmSoundOnLoginFailureFile;
+extern gboolean MdmSoundOnLoginReady;
+extern gboolean MdmSoundOnLoginSuccess;
+extern gboolean MdmSoundOnLoginFailure;
 
-extern gboolean GDM_IS_LOCAL;
-extern gboolean DOING_GDM_DEVELOPMENT;
+extern gboolean MDM_IS_LOCAL;
+extern gboolean DOING_MDM_DEVELOPMENT;
 
 #endif /* GREETER_CONFIGURATION_H */

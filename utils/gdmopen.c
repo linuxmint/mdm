@@ -1,6 +1,6 @@
 /*
- * 	 gdmopen.c by the Queen of England, based upon original open.
- *	 Simplified for the purposes of gdm.  All useless (to me)
+ * 	 mdmopen.c by the Queen of England, based upon original open.
+ *	 Simplified for the purposes of mdm.  All useless (to me)
  *	 functionality stripped.  Also returns what the command returns.
  *	 Return of 66 means error with open.
  *
@@ -52,16 +52,16 @@
 #endif
 
 #ifdef __sun
-#define GDMCONSOLEDEVICE "/dev/vt/0"
+#define MDMCONSOLEDEVICE "/dev/vt/0"
 #else
-#define GDMCONSOLEDEVICE "/dev/console"
+#define MDMCONSOLEDEVICE "/dev/console"
 #endif
 
 #ifdef ESIX_5_3_2_D
 #define	VTBASE		"/dev/vt%02d"
 #endif
 
-const char *GDMOPENversion = "gdmopen " VERSION " simplified (was: open: 1.4 (c) Jon Tombs 1994)";
+const char *MDMOPENversion = "mdmopen " VERSION " simplified (was: open: 1.4 (c) Jon Tombs 1994)";
 
 #ifndef VTNAME
 #error vt device name must be defined in open.c
@@ -103,7 +103,7 @@ main (int argc, char *argv[])
 
 	if (getuid () != geteuid () ||
 	    getuid () != 0) {
-		fprintf (stderr, "gdmopen: Only root wants to run me\n");
+		fprintf (stderr, "mdmopen: Only root wants to run me\n");
 		return 66;
 	}
 
@@ -112,7 +112,7 @@ main (int argc, char *argv[])
 	signal (SIGHUP, sighandler);
 
 	if (argc <= 1) {
-		fprintf (stderr, "gdmopen: must supply a command!\n");
+		fprintf (stderr, "mdmopen: must supply a command!\n");
 		return 66;
 	}
 
@@ -121,7 +121,7 @@ main (int argc, char *argv[])
 	if (strcmp (argv[1], "-l") == 0) {
 		char *p;
 		if (argc <= 2) {
-			fprintf (stderr, "gdmopen: must supply a command!\n");
+			fprintf (stderr, "mdmopen: must supply a command!\n");
 			return 66;
 		}
 		/* prepend '-' and start the command at
@@ -130,7 +130,7 @@ main (int argc, char *argv[])
 		command = argv[2];
 		argv[2] = malloc (strlen (command) + 2);
 		if (argv[2] == NULL) {
-			fprintf (stderr, "gdmopen: cannot allocate memory!\n");
+			fprintf (stderr, "mdmopen: cannot allocate memory!\n");
 			return 66;
 		}
 		p = strrchr (command, '/');
@@ -143,21 +143,21 @@ main (int argc, char *argv[])
 		*(argv[2]) = '-';
 	}
 
-	fd = open (GDMCONSOLEDEVICE, O_WRONLY, 0);
+	fd = open (MDMCONSOLEDEVICE, O_WRONLY, 0);
 	if (fd < 0) {
-		perror ("gdmopen: Failed to open " GDMCONSOLEDEVICE);	
+		perror ("mdmopen: Failed to open " MDMCONSOLEDEVICE);	
 		return 66;
 	}
 
 	errno = 0;
 	if ((ioctl(fd, VT_OPENQRY, &vtno) < 0) || (vtno == -1)) {
-		perror ("gdmopen: Cannot find a free VT");
+		perror ("mdmopen: Cannot find a free VT");
 		IGNORE_EINTR (close (fd));
 		return 66;
 	}
 
 	if (ioctl(fd, VT_GETSTATE, &vt) < 0) {
-		perror ("gdmopen: can't get VTstate");
+		perror ("mdmopen: can't get VTstate");
 		IGNORE_EINTR (close(fd));
 		return 66;
 	}
@@ -235,7 +235,7 @@ main (int argc, char *argv[])
 	}
 
 	if (child_pid < 0) {
-		perror ("gdmopen: fork() error");
+		perror ("mdmopen: fork() error");
 		return 66;
 	}
 

@@ -1,7 +1,7 @@
 # This is not really a .desktop file like the rest, but it's useful to treat
 # it as such
 
-[GdmGreeterTheme]
+[MdmGreeterTheme]
 Encoding=UTF-8
 Greeter=happygnome.xml
 Name=Happy GNOME

@@ -676,7 +676,7 @@
 
 	* POTFILES.in: Remove vicious-extensions/glade-helper.c and
 	  vicious-extensions/ve-nongnome.c since we no longer use
-	  vicious-extensions with GDM.
+	  vicious-extensions with MDM.
 
 2007-04-22  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
@@ -705,8 +705,8 @@
 
 2007-04-09  Brian Cameron  <brian.cameron@sun.com>
 
-	* Remove gdmflexiser-xnest.desktop.in from POTFILES.in and add
-	  gdmflexiserver-xnest.desktop.in.in
+	* Remove mdmflexiser-xnest.desktop.in from POTFILES.in and add
+	  mdmflexiserver-xnest.desktop.in.in
 
 2007-04-06  Funda Wang  <fundawang@gmail.com>
 
@@ -715,8 +715,8 @@
 2007-04-02  Brian Cameron  <brian.cameron@sun.com>
 
 	* POTFILES.skip: Updated to reflect rename of
-	  gdmflexiserver-xnest.desktop.in to
-	  gdmflexiserver-xnest.desktop.in.in
+	  mdmflexiserver-xnest.desktop.in to
+	  mdmflexiserver-xnest.desktop.in.in
 
 2007-03-29  Priit Laes  <plaes@svn.gnome.org>
 
@@ -1739,7 +1739,7 @@
 2006-04-24  Brian Cameron  <brian.cameron@sun.com>
 
 	* Release 2.14.3:
-	* POTFILES.in: Fix gdmsetup.desktop.in.in stuff.
+	* POTFILES.in: Fix mdmsetup.desktop.in.in stuff.
 
 2006-04-24  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
@@ -2853,7 +2853,7 @@
 
 	* fi.po: Fix for translation bug:
 	  Bug 317420: The login screen setup window is very wide
-	  - actually, this is a bug in gdm itself, this should be
+	  - actually, this is a bug in mdm itself, this should be
 	    wrapped text in code...
 
 2005-10-03  Alexander Shopov  <ash@contact.bg>
@@ -3112,7 +3112,7 @@
 
 	* fi.po: Updated Finnish translation.
 
-	* POTFILES.in: Added "gui/gdmcommon.c".
+	* POTFILES.in: Added "gui/mdmcommon.c".
 
 2005-07-26  Hendrik Brandt  <heb@gnome-de.org>
 
@@ -3382,7 +3382,7 @@
 
 2005-05-12  Danilo \305\240egan  <dsegan@gmx.net>
 
-	* POTFILES.in: Remove gdmchooser-strings.c and gdmsetup-strings.c.
+	* POTFILES.in: Remove mdmchooser-strings.c and mdmsetup-strings.c.
 	 Fixes bug #55635.
 
 2005-05-12  Alexander Shopov  <ash@contact.bg>
@@ -3497,7 +3497,7 @@
 
 2005-04-05  Adam Weinberger  <adamw@gnome.org>
 
-	* POTFILES.in: Added gui/gdmuser.c.
+	* POTFILES.in: Added gui/mdmuser.c.
 	* en_CA.po: Updated Canadian English translation.
 
 2005-04-01  Adam Weinberger  <adamw@gnome.org>
@@ -7428,7 +7428,7 @@ Thu Dec 20 16:57:27 2001  George Lebl <jirka@5z.com>
 
 Thu Nov 22 00:39:10 2001  George Lebl <jirka@5z.com>
 
-	* merge from gdm-2-2 up to the 2.2.5.2 release tag
+	* merge from mdm-2-2 up to the 2.2.5.2 release tag
 
 2001-11-19  Roy-Magne Mo  <rmo@sunnmore.net>
 
@@ -7445,7 +7445,7 @@ Thu Nov 22 00:39:10 2001  George Lebl <jirka@5z.com>
 
 Thu Nov 15 23:06:50 2001  George Lebl <jirka@5z.com>
 
-	* Merge from gdm-2-2:
+	* Merge from mdm-2-2:
 
 2001-11-08  Christophe Merlet  <christophe@merlet.net>
 
@@ -7727,7 +7727,7 @@ Fri Oct 12 12:50:59 2001  George Lebl <jirka@5z.com>
 
 Fri Aug 24 19:31:56 2001  George Lebl <jirka@5z.com>
 
-	* POTFILES.in: added utils/gdmaskpass.c
+	* POTFILES.in: added utils/mdmaskpass.c
 
 	* cs.po: updated translations
 
@@ -7812,7 +7812,7 @@ Tue Jul 24 20:23:04 2001  George Lebl <jirka@5z.com>
 	* POTFILES.in: add vicious-extensions stuff back,it doesn't have it's
 	  own gettext setup currently.  Anyway, if you don't have it in your
 	  tree curse cvs 3 times and then do 'cvs co vicious-extensions' in
-	  your toplevel gdm2 tree
+	  your toplevel mdm2 tree
 
 2001-07-24  Kjartan Maraas  <kmaraas@gnome.org>
 
@@ -8231,7 +8231,7 @@ Sun Apr 15 21:59:06 2001  George Lebl <jirka@5z.com>
 
 2001-04-01  Christian Meyer  <chrisime@gnome.org>
 
-	* de.po: Update for gdm-2.2.1.
+	* de.po: Update for mdm-2.2.1.
 
 2001-03-28  Christian Meyer  <chrisime@gnome.org>
 

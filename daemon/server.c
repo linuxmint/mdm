@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -42,7 +42,7 @@
 #include <ctype.h>
 #include <X11/Xlib.h>
 
-#include "gdm.h"
+#include "mdm.h"
 #include "server.h"
 #include "misc.h"
 #include "xdmcp.h"
@@ -51,35 +51,35 @@
 #include "slave.h"
 #include "getvt.h"
 
-#include "gdm-common.h"
-#include "gdm-log.h"
-#include "gdm-daemon-config.h"
+#include "mdm-common.h"
+#include "mdm-log.h"
+#include "mdm-daemon-config.h"
 
-#include "gdm-socket-protocol.h"
+#include "mdm-socket-protocol.h"
 
 #if __sun
-#define GDM_PRIO_DEFAULT NZERO
+#define MDM_PRIO_DEFAULT NZERO
 #else
-#define GDM_PRIO_DEFAULT 0
+#define MDM_PRIO_DEFAULT 0
 #endif
 
 /* Local prototypes */
-static void gdm_server_spawn (GdmDisplay *d, const char *vtarg);
-static void gdm_server_usr1_handler (gint);
-static void gdm_server_child_handler (gint);
+static void mdm_server_spawn (MdmDisplay *d, const char *vtarg);
+static void mdm_server_usr1_handler (gint);
+static void mdm_server_child_handler (gint);
 static char * get_font_path (const char *display);
 
 /* Global vars */
 static int server_signal_pipe[2];
-static GdmDisplay *d                   = NULL;
+static MdmDisplay *d                   = NULL;
 static gboolean server_signal_notified = FALSE;
-static int gdm_in_signal               = 0;
+static int mdm_in_signal               = 0;
 
-static void do_server_wait (GdmDisplay *d);
-static gboolean setup_server_wait (GdmDisplay *d);
+static void do_server_wait (MdmDisplay *d);
+static gboolean setup_server_wait (MdmDisplay *d);
 
 void
-gdm_server_whack_lockfile (GdmDisplay *disp)
+mdm_server_whack_lockfile (MdmDisplay *disp)
 {
 	    char buf[256];
 
@@ -108,18 +108,18 @@ gdm_server_whack_lockfile (GdmDisplay *disp)
 
 /* Wipe cookie files */
 void
-gdm_server_wipe_cookies (GdmDisplay *disp)
+mdm_server_wipe_cookies (MdmDisplay *disp)
 {
 	if ( ! ve_string_empty (disp->authfile)) {
 		VE_IGNORE_EINTR (g_unlink (disp->authfile));
 	}
 	g_free (disp->authfile);
 	disp->authfile = NULL;
-	if ( ! ve_string_empty (disp->authfile_gdm)) {
-		VE_IGNORE_EINTR (g_unlink (disp->authfile_gdm));
+	if ( ! ve_string_empty (disp->authfile_mdm)) {
+		VE_IGNORE_EINTR (g_unlink (disp->authfile_mdm));
 	}
-	g_free (disp->authfile_gdm);
-	disp->authfile_gdm = NULL;
+	g_free (disp->authfile_mdm);
+	disp->authfile_mdm = NULL;
 }
 
 static Jmp_buf reinitjmp;
@@ -141,7 +141,7 @@ jumpback_xioerror_handler (Display *disp)
 #define FBCONSOLE "/usr/openwin/bin/fbconsole"
 
 static void
-gdm_exec_fbconsole (GdmDisplay *disp)
+mdm_exec_fbconsole (MdmDisplay *disp)
 {
         char *argv[6];
 
@@ -151,33 +151,33 @@ gdm_exec_fbconsole (GdmDisplay *disp)
         argv[3] = disp->name;
         argv[4] = NULL;
 
-	gdm_debug ("Forking fbconsole");
+	mdm_debug ("Forking fbconsole");
 
         d->fbconsolepid = fork ();
         if (d->fbconsolepid == 0) {
-                gdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */)
+                mdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */)
 ;
                 VE_IGNORE_EINTR (execv (argv[0], argv));
 
-		gdm_error ("Can not start fallback console: %s",
+		mdm_error ("Can not start fallback console: %s",
 			   strerror (errno));
 		_exit (0);
         }
         if (d->fbconsolepid == -1) {
-                gdm_error (_("Can not start fallback console"));
+                mdm_error (_("Can not start fallback console"));
         }
 }
 #endif
 
 /**
- * gdm_server_stop:
- * @disp: Pointer to a GdmDisplay structure
+ * mdm_server_stop:
+ * @disp: Pointer to a MdmDisplay structure
  *
  * Stops a local X server, but only if it exists
  */
 
 void
-gdm_server_stop (GdmDisplay *disp)
+mdm_server_stop (MdmDisplay *disp)
 {
     static gboolean waiting_for_server = FALSE;
     int old_servstat;
@@ -189,7 +189,7 @@ gdm_server_stop (GdmDisplay *disp)
     if (disp->dsp != NULL) {
 	    /* on XDMCP servers first kill everything in sight */
 	    if (disp->type == TYPE_XDMCP)
-		    gdm_server_whack_clients (disp->dsp);
+		    mdm_server_whack_clients (disp->dsp);
 	    XCloseDisplay (disp->dsp);
 	    disp->dsp = NULL;
     }
@@ -198,7 +198,7 @@ gdm_server_stop (GdmDisplay *disp)
     if (disp->parent_dsp != NULL) {
 	    /* on XDMCP servers first kill everything in sight */
 	    if (disp->type == TYPE_XDMCP_PROXY)
-		    gdm_server_whack_clients (disp->parent_dsp);
+		    mdm_server_whack_clients (disp->parent_dsp);
 	    XCloseDisplay (disp->parent_dsp);
 	    disp->parent_dsp = NULL;
     }
@@ -206,7 +206,7 @@ gdm_server_stop (GdmDisplay *disp)
     if (disp->servpid <= 0)
 	    return;
 
-    gdm_debug ("gdm_server_stop: Server for %s going down!", disp->name);
+    mdm_debug ("mdm_server_stop: Server for %s going down!", disp->name);
 
     old_servstat = disp->servstat;
     disp->servstat = SERVER_DEAD;
@@ -214,15 +214,15 @@ gdm_server_stop (GdmDisplay *disp)
     if (disp->servpid > 0) {
 	    pid_t servpid;
 
-	    gdm_debug ("gdm_server_stop: Killing server pid %d",
+	    mdm_debug ("mdm_server_stop: Killing server pid %d",
 		       (int)disp->servpid);
 
 	    /* avoid SIGCHLD race */
-	    gdm_sigchld_block_push ();
+	    mdm_sigchld_block_push ();
 	    servpid = disp->servpid;
 
 	    if (waiting_for_server) {
-		    gdm_error ("gdm_server_stop: Some problem killing server, whacking with SIGKILL");
+		    mdm_error ("mdm_server_stop: Some problem killing server, whacking with SIGKILL");
 		    if (disp->servpid > 1)
 			    kill (disp->servpid, SIGKILL);
 
@@ -236,12 +236,12 @@ gdm_server_stop (GdmDisplay *disp)
 	    }
 	    disp->servpid = 0;
 
-	    gdm_sigchld_block_pop ();
+	    mdm_sigchld_block_pop ();
 
 	    if (old_servstat == SERVER_RUNNING)
-		    gdm_server_whack_lockfile (disp);
+		    mdm_server_whack_lockfile (disp);
 
-	    gdm_debug ("gdm_server_stop: Server pid %d dead", (int)servpid);
+	    mdm_debug ("mdm_server_stop: Server pid %d dead", (int)servpid);
 
 	    /* just in case we restart again wait at least
 	       one sec to avoid races */
@@ -249,7 +249,7 @@ gdm_server_stop (GdmDisplay *disp)
 		    d->sleep_before_run = 1;
     }
 
-    gdm_server_wipe_cookies (disp);
+    mdm_server_wipe_cookies (disp);
 
 #ifdef HAVE_FBCONSOLE
     /* Kill fbconsole if it is running */
@@ -258,19 +258,19 @@ gdm_server_stop (GdmDisplay *disp)
     d->fbconsolepid = 0;
 #endif
 
-    gdm_slave_whack_temp_auth_file ();
+    mdm_slave_whack_temp_auth_file ();
 }
 
 static gboolean
-busy_ask_user (GdmDisplay *disp)
+busy_ask_user (MdmDisplay *disp)
 {
     /* if we have "open" we can talk to the user */
-    if (g_access (LIBEXECDIR "/gdmopen", X_OK) == 0) {
+    if (g_access (LIBEXECDIR "/mdmopen", X_OK) == 0) {
 	    char *error = g_strdup_printf
 		    (C_(N_("There already appears to be an X server "
 			   "running on display %s.  Should another "
 			   "display number by tried?  Answering no will "
-			   "cause GDM to attempt starting the server "
+			   "cause MDM to attempt starting the server "
 			   "on %s again.%s")),
 		     disp->name,
 		     disp->name,
@@ -286,7 +286,7 @@ busy_ask_user (GdmDisplay *disp)
 		     );
 	    gboolean ret = TRUE;
 	    /* default ret to TRUE */
-	    if ( ! gdm_text_yesno_dialog (error, &ret))
+	    if ( ! mdm_text_yesno_dialog (error, &ret))
 		    ret = TRUE;
 	    g_free (error);
 	    return ret;
@@ -298,9 +298,9 @@ busy_ask_user (GdmDisplay *disp)
 
 /* Checks only output, no XFree86 v4 logfile */
 static gboolean
-display_parent_no_connect (GdmDisplay *disp)
+display_parent_no_connect (MdmDisplay *disp)
 {
-	char *logname = gdm_make_filename (gdm_daemon_config_get_value_string (GDM_KEY_LOG_DIR), d->name, ".log");
+	char *logname = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_LOG_DIR), d->name, ".log");
 	FILE *fp;
 	char buf[256];
 	char *getsret;
@@ -321,7 +321,7 @@ display_parent_no_connect (GdmDisplay *disp)
 		 * version 3 specific (I don't have xfree v4 to test this),
 		 * of course additions are welcome to make this more robust */
 		if (strstr (buf, "Unable to open display \"") == buf) {
-			gdm_error (_("Display '%s' cannot be opened by nested display"),
+			mdm_error (_("Display '%s' cannot be opened by nested display"),
 				   ve_sure_string (disp->parent_disp));
 			VE_IGNORE_EINTR (fclose (fp));
 			return TRUE;
@@ -330,9 +330,9 @@ display_parent_no_connect (GdmDisplay *disp)
 }
 
 static gboolean
-display_busy (GdmDisplay *disp)
+display_busy (MdmDisplay *disp)
 {
-	char *logname = gdm_make_filename (gdm_daemon_config_get_value_string (GDM_KEY_LOG_DIR), d->name, ".log");
+	char *logname = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_LOG_DIR), d->name, ".log");
 	FILE *fp;
 	char buf[256];
 	char *getsret;
@@ -352,7 +352,7 @@ display_busy (GdmDisplay *disp)
 		/* Note: this is probably XFree86 specific */
 		if (strstr (buf, "Server is already active for display")
 		    == buf) {
-			gdm_error (_("Display %s is busy. There is another "
+			mdm_error (_("Display %s is busy. There is another "
 				     "X server running already."),
 				   disp->name);
 			VE_IGNORE_EINTR (fclose (fp));
@@ -385,9 +385,9 @@ open_another_logfile (char buf[256], FILE **fp)
 }
 
 static int
-display_vt (GdmDisplay *disp)
+display_vt (MdmDisplay *disp)
 {
-	char *logname = gdm_make_filename (gdm_daemon_config_get_value_string (GDM_KEY_LOG_DIR), d->name, ".log");
+	char *logname = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_LOG_DIR), d->name, ".log");
 	FILE *fp;
 	char buf[256];
 	gboolean switched = FALSE;
@@ -430,40 +430,40 @@ static struct sigaction old_svr_wait_chld;
 static sigset_t old_svr_wait_mask;
 
 static gboolean
-setup_server_wait (GdmDisplay *d)
+setup_server_wait (MdmDisplay *d)
 {
     struct sigaction usr1, chld;
     sigset_t mask;
 
     if (pipe (server_signal_pipe) != 0) {
-	    gdm_error (_("%s: Error opening a pipe: %s"),
+	    mdm_error (_("%s: Error opening a pipe: %s"),
 		       "setup_server_wait", strerror (errno));
 	    return FALSE; 
     }
     server_signal_notified = FALSE;
 
     /* Catch USR1 from X server */
-    usr1.sa_handler = gdm_server_usr1_handler;
+    usr1.sa_handler = mdm_server_usr1_handler;
     usr1.sa_flags = SA_RESTART;
     sigemptyset (&usr1.sa_mask);
 
     if (sigaction (SIGUSR1, &usr1, NULL) < 0) {
-	    gdm_error (_("%s: Error setting up %s signal handler: %s"),
-		       "gdm_server_start", "USR1", strerror (errno));
+	    mdm_error (_("%s: Error setting up %s signal handler: %s"),
+		       "mdm_server_start", "USR1", strerror (errno));
 	    VE_IGNORE_EINTR (close (server_signal_pipe[0]));
 	    VE_IGNORE_EINTR (close (server_signal_pipe[1]));
 	    return FALSE;
     }
 
     /* Catch CHLD from X server */
-    chld.sa_handler = gdm_server_child_handler;
+    chld.sa_handler = mdm_server_child_handler;
     chld.sa_flags = SA_RESTART|SA_NOCLDSTOP;
     sigemptyset (&chld.sa_mask);
 
     if (sigaction (SIGCHLD, &chld, &old_svr_wait_chld) < 0) {
-	    gdm_error (_("%s: Error setting up %s signal handler: %s"),
-		       "gdm_server_start", "CHLD", strerror (errno));
-	    gdm_signal_ignore (SIGUSR1);
+	    mdm_error (_("%s: Error setting up %s signal handler: %s"),
+		       "mdm_server_start", "CHLD", strerror (errno));
+	    mdm_signal_ignore (SIGUSR1);
 	    VE_IGNORE_EINTR (close (server_signal_pipe[0]));
 	    VE_IGNORE_EINTR (close (server_signal_pipe[1]));
 	    return FALSE;
@@ -479,7 +479,7 @@ setup_server_wait (GdmDisplay *d)
 }
 
 static void
-do_server_wait (GdmDisplay *d)
+do_server_wait (MdmDisplay *d)
 {
     /* Wait for X server to send ready signal */
     if (d->servstat == SERVER_PENDING) {
@@ -488,7 +488,7 @@ do_server_wait (GdmDisplay *d)
 		     * just wait a few seconds and hope things just work,
 		     * fortunately there is no such case yet and probably
 		     * never will, but just for code anality's sake */
-		    gdm_sleep_no_signal (gdm_daemon_config_get_value_int(GDM_KEY_XSERVER_TIMEOUT));
+		    mdm_sleep_no_signal (mdm_daemon_config_get_value_int(MDM_KEY_XSERVER_TIMEOUT));
 	    } else if (d->server_uid != 0) {
 		    int i;
 
@@ -503,16 +503,16 @@ do_server_wait (GdmDisplay *d)
 		    /* just in case it's set */
 		    g_unsetenv ("XAUTHORITY");
 
-		    gdm_auth_set_local_auth (d);
+		    mdm_auth_set_local_auth (d);
 
 		    for (i = 0;
 			 d->dsp == NULL &&
 			 d->servstat == SERVER_PENDING &&
-			 i < gdm_daemon_config_get_value_int(GDM_KEY_XSERVER_TIMEOUT);
+			 i < mdm_daemon_config_get_value_int(MDM_KEY_XSERVER_TIMEOUT);
 			 i++) {
 			    d->dsp = XOpenDisplay (d->name);
 			    if (d->dsp == NULL)
-				    gdm_sleep_no_signal (1);
+				    mdm_sleep_no_signal (1);
 			    else
 				    d->servstat = SERVER_RUNNING;
 		    }
@@ -524,14 +524,14 @@ do_server_wait (GdmDisplay *d)
 	    } else {
 		    time_t t = time (NULL);
 
-		    gdm_debug ("do_server_wait: Before mainloop waiting for server");
+		    mdm_debug ("do_server_wait: Before mainloop waiting for server");
 
 		    do {
 			    fd_set rfds;
 			    struct timeval tv;
 
-			    /* Wait up to GDM_KEY_XSERVER_TIMEOUT seconds. */
-			    tv.tv_sec = MAX (1, gdm_daemon_config_get_value_int(GDM_KEY_XSERVER_TIMEOUT) 
+			    /* Wait up to MDM_KEY_XSERVER_TIMEOUT seconds. */
+			    tv.tv_sec = MAX (1, mdm_daemon_config_get_value_int(MDM_KEY_XSERVER_TIMEOUT) 
 			    	- (time (NULL) - t));
 			    tv.tv_usec = 0;
 
@@ -544,8 +544,8 @@ do_server_wait (GdmDisplay *d)
 				    VE_IGNORE_EINTR (read (server_signal_pipe[0], buf, 4));
 			    }
 			    if ( ! server_signal_notified &&
-				t + gdm_daemon_config_get_value_int(GDM_KEY_XSERVER_TIMEOUT) < time (NULL)) {
-				    gdm_debug ("do_server_wait: Server timeout");
+				t + mdm_daemon_config_get_value_int(MDM_KEY_XSERVER_TIMEOUT) < time (NULL)) {
+				    mdm_debug ("do_server_wait: Server timeout");
 				    d->servstat = SERVER_TIMEOUT;
 				    server_signal_notified = TRUE;
 			    }
@@ -555,12 +555,12 @@ do_server_wait (GdmDisplay *d)
 			    }
 		    } while ( ! server_signal_notified);
 
-		    gdm_debug ("gdm_server_start: After mainloop waiting for server");
+		    mdm_debug ("mdm_server_start: After mainloop waiting for server");
 	    }
     }
 
     /* restore default handlers */
-    gdm_signal_ignore (SIGUSR1);
+    mdm_signal_ignore (SIGUSR1);
     sigaction (SIGCHLD, &old_svr_wait_chld, NULL);
     sigprocmask (SIG_SETMASK, &old_svr_wait_mask, NULL);
 
@@ -578,17 +578,17 @@ do_server_wait (GdmDisplay *d)
 
 		    d->dsp = NULL;
 
-		    gdm_sigchld_block_push ();
+		    mdm_sigchld_block_push ();
 		    pid = d->servpid;
 		    d->servpid = 0;
 		    if (pid > 1 &&
 			kill (pid, SIGTERM) == 0)
 			    ve_waitpid_no_signal (pid, NULL, 0);
-		    gdm_sigchld_block_pop ();
+		    mdm_sigchld_block_pop ();
 	    }
 
 	    /* We will rebake cookies anyway, so wipe these */
-	    gdm_server_wipe_cookies (d);
+	    mdm_server_wipe_cookies (d);
     }
 }
 
@@ -600,12 +600,12 @@ do_server_wait (GdmDisplay *d)
  * all X connections have closed.
  */
 static gboolean
-connect_to_parent (GdmDisplay *d)
+connect_to_parent (MdmDisplay *d)
 {
 	int maxtries;
 	int openretries;
 
-	gdm_debug ("gdm_server_start: Connecting to parent display \'%s\'",
+	mdm_debug ("mdm_server_start: Connecting to parent display \'%s\'",
 		   d->parent_disp);
 
 	d->parent_dsp = NULL;
@@ -618,28 +618,28 @@ connect_to_parent (GdmDisplay *d)
 		d->parent_dsp = XOpenDisplay (d->parent_disp);
 
 		if G_UNLIKELY (d->parent_dsp == NULL) {
-			gdm_debug ("gdm_server_start: Sleeping %d on a retry", 1+openretries*2);
-			gdm_sleep_no_signal (1+openretries*2);
+			mdm_debug ("mdm_server_start: Sleeping %d on a retry", 1+openretries*2);
+			mdm_sleep_no_signal (1+openretries*2);
 			openretries++;
 		}
 	}
 
 	if (d->parent_dsp == NULL)
-		gdm_error (_("%s: failed to connect to parent display \'%s\'"),
-			   "gdm_server_start", d->parent_disp);
+		mdm_error (_("%s: failed to connect to parent display \'%s\'"),
+			   "mdm_server_start", d->parent_disp);
 
 	return d->parent_dsp != NULL;
 }
 
 /**
- * gdm_server_start:
- * @disp: Pointer to a GdmDisplay structure
+ * mdm_server_start:
+ * @disp: Pointer to a MdmDisplay structure
  *
  * Starts a local X server. Handles retries and fatal errors properly.
  */
 
 gboolean
-gdm_server_start (GdmDisplay *disp,
+mdm_server_start (MdmDisplay *disp,
 		  gboolean try_again_if_busy /* only affects non-flexi servers */,
 		  gboolean treat_as_flexi,
 		  int min_flexi_disp,
@@ -659,39 +659,39 @@ gdm_server_start (GdmDisplay *disp,
 #endif
 
     /* if an X server exists, wipe it */
-    gdm_server_stop (d);
+    mdm_server_stop (d);
 
     /* First clear the VT number */
     if (d->type == TYPE_STATIC ||
 	d->type == TYPE_FLEXI) {
 	    d->vt = -1;
-	    gdm_slave_send_num (GDM_SOP_VT_NUM, -1);
+	    mdm_slave_send_num (MDM_SOP_VT_NUM, -1);
     }
 
     if (SERVER_IS_FLEXI (d) ||
 	treat_as_flexi) {
-	    flexi_disp = gdm_get_free_display
-		    (MAX (gdm_daemon_config_get_high_display_num () + 1, min_flexi_disp) /* start */,
+	    flexi_disp = mdm_get_free_display
+		    (MAX (mdm_daemon_config_get_high_display_num () + 1, min_flexi_disp) /* start */,
 		     d->server_uid /* server uid */);
 
 	    g_free (d->name);
 	    d->name = g_strdup_printf (":%d", flexi_disp);
 	    d->dispnum = flexi_disp;
 
-	    gdm_slave_send_num (GDM_SOP_DISP_NUM, flexi_disp);
+	    mdm_slave_send_num (MDM_SOP_DISP_NUM, flexi_disp);
     }
 
     if (d->type == TYPE_XDMCP_PROXY &&
 	! connect_to_parent (d))
 	    return FALSE;
 
-    gdm_debug ("gdm_server_start: %s", d->name);
+    mdm_debug ("mdm_server_start: %s", d->name);
 
     /* Create new cookie */
-    if ( ! gdm_auth_secure_display (d)) 
+    if ( ! mdm_auth_secure_display (d)) 
 	    return FALSE;
-    gdm_slave_send_string (GDM_SOP_COOKIE, d->cookie);
-    gdm_slave_send_string (GDM_SOP_AUTHFILE, d->authfile);
+    mdm_slave_send_string (MDM_SOP_COOKIE, d->cookie);
+    mdm_slave_send_string (MDM_SOP_AUTHFILE, d->authfile);
     g_setenv ("DISPLAY", d->name, TRUE);
 
     if ( ! setup_server_wait (d))
@@ -701,11 +701,11 @@ gdm_server_start (GdmDisplay *disp,
 
     if (d->type == TYPE_STATIC ||
 	d->type == TYPE_FLEXI) {
-	    vtarg = gdm_get_empty_vt_argument (&vtfd, &vt);
+	    vtarg = mdm_get_empty_vt_argument (&vtfd, &vt);
     }
 
     /* fork X server process */
-    gdm_server_spawn (d, vtarg);
+    mdm_server_spawn (d, vtarg);
 
     g_free (vtarg);
 
@@ -721,18 +721,18 @@ gdm_server_start (GdmDisplay *disp,
     switch (d->servstat) {
 
     case SERVER_TIMEOUT:
-	    gdm_debug ("gdm_server_start: Temporary server failure (%s)", d->name);
+	    mdm_debug ("mdm_server_start: Temporary server failure (%s)", d->name);
 	    break;
 
     case SERVER_ABORT:
-	    gdm_debug ("gdm_server_start: Server %s died during startup!", d->name);
+	    mdm_debug ("mdm_server_start: Server %s died during startup!", d->name);
 	    break;
 
     case SERVER_RUNNING:
-	    gdm_debug ("gdm_server_start: Completed %s!", d->name);
+	    mdm_debug ("mdm_server_start: Completed %s!", d->name);
 
 	    if (SERVER_IS_FLEXI (d))
-		    gdm_slave_send_num (GDM_SOP_FLEXI_OK, 0 /* bogus */);
+		    mdm_slave_send_num (MDM_SOP_FLEXI_OK, 0 /* bogus */);
 	    if (d->type == TYPE_STATIC ||
 		d->type == TYPE_FLEXI) {
 		    if (vt >= 0)
@@ -741,11 +741,11 @@ gdm_server_start (GdmDisplay *disp,
 		    if (d->vt < 0)
 			    d->vt = display_vt (d);
 		    if (d->vt >= 0)
-			    gdm_slave_send_num (GDM_SOP_VT_NUM, d->vt);
+			    mdm_slave_send_num (MDM_SOP_VT_NUM, d->vt);
 	    }
 
 #ifdef HAVE_FBCONSOLE
-            gdm_exec_fbconsole (d);
+            mdm_exec_fbconsole (d);
 #endif
 
 	    return TRUE;
@@ -755,7 +755,7 @@ gdm_server_start (GdmDisplay *disp,
 
     if (SERVER_IS_PROXY (disp) &&
 	display_parent_no_connect (disp)) {
-	    gdm_slave_send_num (GDM_SOP_FLEXI_ERR,
+	    mdm_slave_send_num (MDM_SOP_FLEXI_ERR,
 				5 /* proxy can't connect */);
 	    _exit (DISPLAY_REMANAGE);
     }
@@ -771,42 +771,42 @@ gdm_server_start (GdmDisplay *disp,
 		     * display numbers */
 		    if (flexi_retries <= 0) {
 			    /* Send X too busy */
-			    gdm_error (_("%s: Cannot find a free "
+			    mdm_error (_("%s: Cannot find a free "
 					 "display number"),
-				       "gdm_server_start");
+				       "mdm_server_start");
 			    if (SERVER_IS_FLEXI (disp)) {
-				    gdm_slave_send_num (GDM_SOP_FLEXI_ERR,
+				    mdm_slave_send_num (MDM_SOP_FLEXI_ERR,
 							4 /* X too busy */);
 			    }
 			    /* eki eki */
 			    _exit (DISPLAY_REMANAGE);
 		    }
-		    return gdm_server_start (d, FALSE /*try_again_if_busy */,
+		    return mdm_server_start (d, FALSE /*try_again_if_busy */,
 					     treat_as_flexi,
 					     flexi_disp + 1,
 					     flexi_retries - 1);
 	    } else {
 		    if (try_again_if_busy) {
-			    gdm_debug ("%s: Display %s busy.  Trying once again "
+			    mdm_debug ("%s: Display %s busy.  Trying once again "
 				       "(after 2 sec delay)",
-				       "gdm_server_start", d->name);
-			    gdm_sleep_no_signal (2);
-			    return gdm_server_start (d,
+				       "mdm_server_start", d->name);
+			    mdm_sleep_no_signal (2);
+			    return mdm_server_start (d,
 						     FALSE /* try_again_if_busy */,
 						     treat_as_flexi,
 						     flexi_disp,
 						     flexi_retries);
 		    }
 		    if (busy_ask_user (disp)) {
-			    gdm_error (_("%s: Display %s busy.  Trying "
+			    mdm_error (_("%s: Display %s busy.  Trying "
 					 "another display number."),
-				       "gdm_server_start",
+				       "mdm_server_start",
 				       d->name);
 			    d->busy_display = TRUE;
-			    return gdm_server_start (d,
+			    return mdm_server_start (d,
 						     FALSE /*try_again_if_busy */,
 						     TRUE /* treat as flexi */,
-						     gdm_daemon_config_get_high_display_num () + 1,
+						     mdm_daemon_config_get_high_display_num () + 1,
 						     flexi_retries - 1);
 		    }
 		    _exit (DISPLAY_REMANAGE);
@@ -822,14 +822,14 @@ gdm_server_start (GdmDisplay *disp,
  * we really do need to get called a bit later, after all init is done
  * as things aren't written to disk before that */
 void
-gdm_server_checklog (GdmDisplay *disp)
+mdm_server_checklog (MdmDisplay *disp)
 {
 	if (d->vt < 0 &&
 	    (d->type == TYPE_STATIC ||
 	     d->type == TYPE_FLEXI)) {
 		d->vt = display_vt (d);
 		if (d->vt >= 0)
-			gdm_slave_send_num (GDM_SOP_VT_NUM, d->vt);
+			mdm_slave_send_num (MDM_SOP_VT_NUM, d->vt);
 	}
 }
 
@@ -857,14 +857,14 @@ safer_rename (const char *a, const char *b)
 static void
 rotate_logs (const char *dname)
 {
-	const gchar *logdir = gdm_daemon_config_get_value_string (GDM_KEY_LOG_DIR);
+	const gchar *logdir = mdm_daemon_config_get_value_string (MDM_KEY_LOG_DIR);
 
 	/* I'm too lazy to write a loop */
-	char *fname4 = gdm_make_filename (logdir, dname, ".log.4");
-	char *fname3 = gdm_make_filename (logdir, dname, ".log.3");
-	char *fname2 = gdm_make_filename (logdir, dname, ".log.2");
-	char *fname1 = gdm_make_filename (logdir, dname, ".log.1");
-	char *fname = gdm_make_filename (logdir, dname, ".log");
+	char *fname4 = mdm_make_filename (logdir, dname, ".log.4");
+	char *fname3 = mdm_make_filename (logdir, dname, ".log.3");
+	char *fname2 = mdm_make_filename (logdir, dname, ".log.2");
+	char *fname1 = mdm_make_filename (logdir, dname, ".log.1");
+	char *fname = mdm_make_filename (logdir, dname, ".log");
 
 	/* Rotate the logs (keep 4 last) */
 	VE_IGNORE_EINTR (g_unlink (fname4));
@@ -881,14 +881,14 @@ rotate_logs (const char *dname)
 }
 
 static void
-gdm_server_add_xserver_args (GdmDisplay *d, char **argv)
+mdm_server_add_xserver_args (MdmDisplay *d, char **argv)
 {
 	int count;
 	char **args;
 	int len;
 	int i;
 
-	len = gdm_vector_len (argv);
+	len = mdm_vector_len (argv);
 	g_shell_parse_argv (d->xserver_session_args, &count, &args, NULL);
 	argv = g_renew (char *, argv, len + count + 1);
 
@@ -900,15 +900,15 @@ gdm_server_add_xserver_args (GdmDisplay *d, char **argv)
 	g_strfreev (args);
 }
 
-GdmXserver *
-gdm_server_resolve (GdmDisplay *disp)
+MdmXserver *
+mdm_server_resolve (MdmDisplay *disp)
 {
 	char *bin;
-	GdmXserver *svr = NULL;
+	MdmXserver *svr = NULL;
 
 	bin = ve_first_word (disp->command);
 	if (bin != NULL && bin[0] != '/') {
-		svr = gdm_daemon_config_find_xserver (bin);
+		svr = mdm_daemon_config_find_xserver (bin);
 	}
 	g_free (bin);
 	return svr;
@@ -940,7 +940,7 @@ vector_merge (char * const *v1,
 }
 
 gboolean
-gdm_server_resolve_command_line (GdmDisplay *disp,
+mdm_server_resolve_command_line (MdmDisplay *disp,
 				 gboolean    resolve_flags,
 				 const char *vtarg,
 				 int        *argcp,
@@ -960,17 +960,17 @@ gdm_server_resolve_command_line (GdmDisplay *disp,
 	if (bin == NULL) {
 		const char *str;
 
-		gdm_error (_("Invalid server command '%s'"), disp->command);
-		str = gdm_daemon_config_get_value_string (GDM_KEY_STANDARD_XSERVER);
+		mdm_error (_("Invalid server command '%s'"), disp->command);
+		str = mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER);
        		g_shell_parse_argv (str, &argc, &argv, NULL);
 	} else if (bin[0] != '/') {
-		GdmXserver *svr = gdm_daemon_config_find_xserver (bin);
+		MdmXserver *svr = mdm_daemon_config_find_xserver (bin);
 		if (svr == NULL) {
 			const char *str;
 
-			gdm_error (_("Server name '%s' not found; "
+			mdm_error (_("Server name '%s' not found; "
 				     "using standard server"), bin);
-			str = gdm_daemon_config_get_value_string (GDM_KEY_STANDARD_XSERVER);
+			str = mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER);
 			g_shell_parse_argv (str, &argc, &argv, NULL);
 
 		} else {
@@ -989,7 +989,7 @@ gdm_server_resolve_command_line (GdmDisplay *disp,
 				&argv, &error_p);
 
 			if (argv == NULL) {
-				gdm_debug ("Problem parsing server command <%s>",
+				mdm_debug ("Problem parsing server command <%s>",
 					disp->command ? disp->command : "(null)");
 				return FALSE;
 			}
@@ -1058,7 +1058,7 @@ gdm_server_resolve_command_line (GdmDisplay *disp,
 		disp->handled = FALSE;
 		/* never ever ever use chooser here */
 		disp->use_chooser = FALSE;
-		disp->priority = GDM_PRIO_DEFAULT;
+		disp->priority = MDM_PRIO_DEFAULT;
 		/* run just one session */
 		argv[len++] = g_strdup ("-terminate");
 		argv[len++] = g_strdup ("-query");
@@ -1066,7 +1066,7 @@ gdm_server_resolve_command_line (GdmDisplay *disp,
 		query_in_arglist = TRUE;
 	}
 
-	if (resolve_flags && gdm_daemon_config_get_value_bool (GDM_KEY_DISALLOW_TCP) && ! query_in_arglist) {
+	if (resolve_flags && mdm_daemon_config_get_value_bool (MDM_KEY_DISALLOW_TCP) && ! query_in_arglist) {
 		argv[len++] = g_strdup ("-nolisten");
 		argv[len++] = g_strdup ("tcp");
 		d->tcp_disallowed = TRUE;
@@ -1088,8 +1088,8 @@ gdm_server_resolve_command_line (GdmDisplay *disp,
 }
 
 /**
- * gdm_server_spawn:
- * @disp: Pointer to a GdmDisplay structure
+ * mdm_server_spawn:
+ * @disp: Pointer to a MdmDisplay structure
  *
  * forks an actual X server process
  *
@@ -1098,7 +1098,7 @@ gdm_server_resolve_command_line (GdmDisplay *disp,
  */
 
 static void
-gdm_server_spawn (GdmDisplay *d, const char *vtarg)
+mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 {
     struct sigaction ign_signal;
     sigset_t mask;
@@ -1117,7 +1117,7 @@ gdm_server_spawn (GdmDisplay *d, const char *vtarg)
 
     d->servstat = SERVER_PENDING;
 
-    gdm_sigchld_block_push ();
+    mdm_sigchld_block_push ();
 
     /* eek, some previous copy, just wipe it */
     if (d->servpid > 0) {
@@ -1131,7 +1131,7 @@ gdm_server_spawn (GdmDisplay *d, const char *vtarg)
     /* Figure out the server command */
     argv = NULL;
     argc = 0;
-    rc = gdm_server_resolve_command_line (d,
+    rc = mdm_server_resolve_command_line (d,
 				         TRUE /* resolve flags */,
 				         vtarg,
 				         &argc,
@@ -1142,47 +1142,47 @@ gdm_server_spawn (GdmDisplay *d, const char *vtarg)
     /* Do not support additional session arguments with Xnest. */
     if (d->type != TYPE_FLEXI_XNEST) {
 	    if (d->xserver_session_args)
-		    gdm_server_add_xserver_args (d, argv);
+		    mdm_server_add_xserver_args (d, argv);
     }
 
     command = g_strjoinv (" ", argv);
 
-    /* Fork into two processes. Parent remains the gdm process. Child
+    /* Fork into two processes. Parent remains the mdm process. Child
      * becomes the X server. */
 
-    gdm_debug ("Forking X server process");
+    mdm_debug ("Forking X server process");
 
-    gdm_sigterm_block_push ();
+    mdm_sigterm_block_push ();
     pid = d->servpid = fork ();
     if (pid == 0)
-	    gdm_unset_signals ();
-    gdm_sigterm_block_pop ();
-    gdm_sigchld_block_pop ();
+	    mdm_unset_signals ();
+    mdm_sigterm_block_pop ();
+    mdm_sigchld_block_pop ();
     
     switch (pid) {
 	
     case 0:
 	/* the pops whacked mask again */
-        gdm_unset_signals ();
+        mdm_unset_signals ();
 
-	gdm_log_shutdown ();
+	mdm_log_shutdown ();
 
 	/* close things */
-	gdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */);
+	mdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */);
 
 	/* No error checking here - if it's messed the best response
          * is to ignore & try to continue */
-	gdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
-	gdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
-	gdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
+	mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
+	mdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
+	mdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
 
-	gdm_log_init ();
+	mdm_log_init ();
 
 	/* Rotate the X server logs */
 	rotate_logs (d->name);
 
         /* Log all output from spawned programs to a file */
-	logfile = gdm_make_filename (gdm_daemon_config_get_value_string (GDM_KEY_LOG_DIR), d->name, ".log");
+	logfile = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_LOG_DIR), d->name, ".log");
 	VE_IGNORE_EINTR (g_unlink (logfile));
 	VE_IGNORE_EINTR (logfd = open (logfile, O_CREAT|O_TRUNC|O_WRONLY|O_EXCL, 0644));
 
@@ -1191,8 +1191,8 @@ gdm_server_spawn (GdmDisplay *d, const char *vtarg)
 		VE_IGNORE_EINTR (dup2 (logfd, 2));
 		close (logfd);
         } else {
-		gdm_error (_("%s: Could not open logfile for display %s!"),
-			   "gdm_server_spawn", d->name);
+		mdm_error (_("%s: Could not open logfile for display %s!"),
+			   "mdm_server_spawn", d->name);
 	}
 
 	g_free (logfile);
@@ -1205,23 +1205,23 @@ gdm_server_spawn (GdmDisplay *d, const char *vtarg)
 	if (d->server_uid == 0) {
 		/* only set this if we can actually listen */
 		if (sigaction (SIGUSR1, &ign_signal, NULL) < 0) {
-			gdm_error (_("%s: Error setting %s to %s"),
-				   "gdm_server_spawn", "USR1", "SIG_IGN");
+			mdm_error (_("%s: Error setting %s to %s"),
+				   "mdm_server_spawn", "USR1", "SIG_IGN");
 			_exit (SERVER_ABORT);
 		}
 	}
 	if (sigaction (SIGTTIN, &ign_signal, NULL) < 0) {
-		gdm_error (_("%s: Error setting %s to %s"),
-			   "gdm_server_spawn", "TTIN", "SIG_IGN");
+		mdm_error (_("%s: Error setting %s to %s"),
+			   "mdm_server_spawn", "TTIN", "SIG_IGN");
 		_exit (SERVER_ABORT);
 	}
 	if (sigaction (SIGTTOU, &ign_signal, NULL) < 0) {
-		gdm_error (_("%s: Error setting %s to %s"),
-			   "gdm_server_spawn", "TTOU", "SIG_IGN");
+		mdm_error (_("%s: Error setting %s to %s"),
+			   "mdm_server_spawn", "TTOU", "SIG_IGN");
 		_exit (SERVER_ABORT);
 	}
 
-	/* And HUP and TERM are at SIG_DFL from gdm_unset_signals,
+	/* And HUP and TERM are at SIG_DFL from mdm_unset_signals,
 	   we also have an empty mask and all that fun stuff */
 
 	/* unblock signals (especially HUP/TERM/USR1) so that we
@@ -1274,18 +1274,18 @@ gdm_server_spawn (GdmDisplay *d, const char *vtarg)
 	}
 
 	if (argv[0] == NULL) {
-		gdm_error (_("%s: Empty server command for display %s"),
-			   "gdm_server_spawn",
+		mdm_error (_("%s: Empty server command for display %s"),
+			   "mdm_server_spawn",
 			   d->name);
 		_exit (SERVER_ABORT);
 	}
 
-	gdm_debug ("gdm_server_spawn: '%s'", command);
+	mdm_debug ("mdm_server_spawn: '%s'", command);
 	
-	if (d->priority != GDM_PRIO_DEFAULT) {
+	if (d->priority != MDM_PRIO_DEFAULT) {
 		if (setpriority (PRIO_PROCESS, 0, d->priority)) {
-			gdm_error (_("%s: Server priority couldn't be set to %d: %s"),
-				   "gdm_server_spawn", d->priority,
+			mdm_error (_("%s: Server priority couldn't be set to %d: %s"),
+				   "mdm_server_spawn", d->priority,
 				   strerror (errno));
 		}
 	}
@@ -1296,9 +1296,9 @@ gdm_server_spawn (GdmDisplay *d, const char *vtarg)
 		struct passwd *pwent;
 		pwent = getpwuid (d->server_uid);
 		if (pwent == NULL) {
-			gdm_error (_("%s: Server was to be spawned by uid %d but "
+			mdm_error (_("%s: Server was to be spawned by uid %d but "
 				     "that user doesn't exist"),
-				   "gdm_server_spawn",
+				   "mdm_server_spawn",
 				   (int)d->server_uid);
 			_exit (SERVER_ABORT);
 		}
@@ -1311,27 +1311,27 @@ gdm_server_spawn (GdmDisplay *d, const char *vtarg)
 		g_unsetenv ("MAIL");
 
 		if (setgid (pwent->pw_gid) < 0)  {
-			gdm_error (_("%s: Couldn't set groupid to %d"), 
-				   "gdm_server_spawn", (int)pwent->pw_gid);
+			mdm_error (_("%s: Couldn't set groupid to %d"), 
+				   "mdm_server_spawn", (int)pwent->pw_gid);
 			_exit (SERVER_ABORT);
 		}
 
 		if (initgroups (pwent->pw_name, pwent->pw_gid) < 0) {
-			gdm_error (_("%s: initgroups () failed for %s"),
-				   "gdm_server_spawn", pwent->pw_name);
+			mdm_error (_("%s: initgroups () failed for %s"),
+				   "mdm_server_spawn", pwent->pw_name);
 			_exit (SERVER_ABORT);
 		}
 
 		if (setuid (d->server_uid) < 0)  {
-			gdm_error (_("%s: Couldn't set userid to %d"),
-				   "gdm_server_spawn", (int)d->server_uid);
+			mdm_error (_("%s: Couldn't set userid to %d"),
+				   "mdm_server_spawn", (int)d->server_uid);
 			_exit (SERVER_ABORT);
 		}
 	} else {
 		gid_t groups[1] = { 0 };
 		if (setgid (0) < 0)  {
-			gdm_error (_("%s: Couldn't set groupid to 0"), 
-				   "gdm_server_spawn");
+			mdm_error (_("%s: Couldn't set groupid to 0"), 
+				   "mdm_server_spawn");
 			/* Don't error out, it's not fatal, if it fails we'll
 			 * just still be */
 		}
@@ -1344,29 +1344,29 @@ gdm_server_spawn (GdmDisplay *d, const char *vtarg)
         /* Remove old communication pipe, if present */
         char old_pipe[MAXPATHLEN];
 
-        sprintf (old_pipe, "%s/%d", GDM_SDTLOGIN_DIR, d->name);
+        sprintf (old_pipe, "%s/%d", MDM_SDTLOGIN_DIR, d->name);
         g_unlink (old_pipe);
     }
 #endif
 
 	VE_IGNORE_EINTR (execv (argv[0], argv));
 
-	gdm_fdprintf (2, "GDM: Xserver not found: %s\n"
+	mdm_fdprintf (2, "MDM: Xserver not found: %s\n"
 		      "Error: Command could not be executed!\n"
 		      "Please install the X server or correct "
-		      "GDM configuration and restart GDM.",
+		      "MDM configuration and restart MDM.",
 		      command);
 
-	gdm_error (_("%s: Xserver not found: %s"), 
-		   "gdm_server_spawn", command);
+	mdm_error (_("%s: Xserver not found: %s"), 
+		   "mdm_server_spawn", command);
 	
 	_exit (SERVER_ABORT);
 	
     case -1:
 	g_strfreev (argv);
 	g_free (command);
-	gdm_error (_("%s: Can't fork Xserver process!"),
-		   "gdm_server_spawn");
+	mdm_error (_("%s: Can't fork Xserver process!"),
+		   "mdm_server_spawn");
 	d->servpid = 0;
 	d->servstat = SERVER_DEAD;
 
@@ -1375,23 +1375,23 @@ gdm_server_spawn (GdmDisplay *d, const char *vtarg)
     default:
 	g_strfreev (argv);
 	g_free (command);
-	gdm_debug ("%s: Forked server on pid %d", 
-		   "gdm_server_spawn", (int)pid);
+	mdm_debug ("%s: Forked server on pid %d", 
+		   "mdm_server_spawn", (int)pid);
 	break;
     }
 }
 
 /**
- * gdm_server_usr1_handler:
+ * mdm_server_usr1_handler:
  * @sig: Signal value
  *
  * Received when the server is ready to accept connections
  */
 
 static void
-gdm_server_usr1_handler (gint sig)
+mdm_server_usr1_handler (gint sig)
 {
-    gdm_in_signal++;
+    mdm_in_signal++;
 
     d->servstat = SERVER_RUNNING; /* Server ready to accept connections */
     d->starttime = time (NULL);
@@ -1400,34 +1400,34 @@ gdm_server_usr1_handler (gint sig)
     /* this will quit the select */
     VE_IGNORE_EINTR (write (server_signal_pipe[1], "Yay!", 4));
 
-    gdm_in_signal--;
+    mdm_in_signal--;
 }
 
 
 /**
- * gdm_server_child_handler:
+ * mdm_server_child_handler:
  * @sig: Signal value
  *
  * Received when server died during startup
  */
 
 static void 
-gdm_server_child_handler (int signal)
+mdm_server_child_handler (int signal)
 {
-	gdm_in_signal++;
+	mdm_in_signal++;
 
 	/* go to the main child handler */
-	gdm_slave_child_handler (signal);
+	mdm_slave_child_handler (signal);
 
 	/* this will quit the select */
 	VE_IGNORE_EINTR (write (server_signal_pipe[1], "Yay!", 4));
 
-	gdm_in_signal--;
+	mdm_in_signal--;
 }
 
 
 void
-gdm_server_whack_clients (Display *dsp)
+mdm_server_whack_clients (Display *dsp)
 {
 	int i, screen_count;
 	int (* old_xerror_handler) (Display *, XErrorEvent *);
@@ -1490,7 +1490,7 @@ get_font_path (const char *display)
 		if (i != 0)
 			g_string_append_c (gs, ',');
 
-	        if (gdm_daemon_config_get_value_bool (GDM_KEY_XNEST_UNSCALED_FONT_PATH) == TRUE)
+	        if (mdm_daemon_config_get_value_bool (MDM_KEY_XNEST_UNSCALED_FONT_PATH) == TRUE)
 			g_string_append (gs, font_path[i]);
 		else {
 			gchar *unscaled_ptr = NULL;
@@ -1507,11 +1507,11 @@ get_font_path (const char *display)
 					strlen (font_path[i]) -
 					strlen (":unscaled"));
 
-gdm_debug ("font_path[i] is %s, temp_string is %s", font_path[i], temp_string);
+mdm_debug ("font_path[i] is %s, temp_string is %s", font_path[i], temp_string);
 				g_string_append (gs, temp_string);
 				g_free (temp_string);
 			} else {
-gdm_debug ("font_path[i] is %s", font_path[i]);
+mdm_debug ("font_path[i] is %s", font_path[i]);
 				g_string_append (gs, font_path[i]);
 			}
 		}

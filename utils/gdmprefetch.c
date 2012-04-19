@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 2005 Sun Microsystems, Inc.
  *
  * This program is free software; you can redistribute it and/or modify

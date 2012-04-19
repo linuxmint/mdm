@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,14 +18,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GDM_XDMCP_H
-#define GDM_XDMCP_H
+#ifndef MDM_XDMCP_H
+#define MDM_XDMCP_H
 
 /* Note that these are defined as empty stubs if there is no XDMCP support */
-gboolean	gdm_xdmcp_init	(void);
-void		gdm_xdmcp_run	(void);
-void		gdm_xdmcp_close	(void);
+gboolean	mdm_xdmcp_init	(void);
+void		mdm_xdmcp_run	(void);
+void		mdm_xdmcp_close	(void);
 
-void            gdm_xdmcp_migrate (GdmDisplay *from, GdmDisplay *to);
+void            mdm_xdmcp_migrate (MdmDisplay *from, MdmDisplay *to);
 
-#endif /* GDM_XDMCP_H */
+#endif /* MDM_XDMCP_H */

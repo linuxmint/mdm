@@ -3,102 +3,102 @@ Patch default configuration file:
 * update comments
 * update pathnames
 
-Index: gdm-2.20.7/config/gdm.conf.in
+Index: mdm-2.20.7/config/mdm.conf.in
 ===================================================================
---- gdm-2.20.7.orig/config/gdm.conf.in	2008-06-30 19:53:14.000000000 +0200
-+++ gdm-2.20.7/config/gdm.conf.in	2008-10-22 15:11:29.371844187 +0200
+--- mdm-2.20.7.orig/config/mdm.conf.in	2008-06-30 19:53:14.000000000 +0200
++++ mdm-2.20.7/config/mdm.conf.in	2008-10-22 15:11:29.371844187 +0200
 @@ -1,14 +1,8 @@
- # GDM System Defaults Configuration file.
+ # MDM System Defaults Configuration file.
  #
- # This file should not be updated by hand.  Since GDM 2.13.0.4, configuration
--# choices in the GDM Custom Configuration file will override the default
--# values specified in this file.  This GDM System Defaults Configuration file
+ # This file should not be updated by hand.  Since MDM 2.13.0.4, configuration
+-# choices in the MDM Custom Configuration file will override the default
+-# values specified in this file.  This MDM System Defaults Configuration file
 -# may be overwritten on upgrade, so to ensure that your configuration choices
--# are not lost, please make sure that your changes are made only the GDM Custom 
--# Configuration file.  The GDM Custom Configuration file is found at the
+-# are not lost, please make sure that your changes are made only the MDM Custom 
+-# Configuration file.  The MDM Custom Configuration file is found at the
 -# following location:
 -#
--# @GDM_CUSTOM_CONF@
-+# choices in the GDM System Configuration file (/etc/gdm/gdm.conf) will
+-# @MDM_CUSTOM_CONF@
++# choices in the MDM System Configuration file (/etc/mdm/mdm.conf) will
 +# override the default values specified in this file.
  #
- # If you were using an older version of GDM, your system may have the the older
- # gdm.conf configuration file on the system.  If so, then this file is used
+ # If you were using an older version of MDM, your system may have the the older
+ # mdm.conf configuration file on the system.  If so, then this file is used
 @@ -31,11 +25,13 @@
  #
  # e.g, the "Enable" key in the "[debug]" section would be "debug/Enable".
  #
--# You can also run gdm-restart or gdm-safe-restart to cause GDM to restart and
--# re-read the new configuration settings.  You can also restart GDM by sending
--# a HUP or USR1 signal to the daemon.  HUP behaves like gdm-restart and causes
--# any user session started by GDM to exit immediately while USR1 behaves like
--# gdm-safe-restart and will wait until all users log out before restarting GDM.
-+# You can also run invoke-rc.d gdm reload or invoke-rc.d gdm restart
-+# to cause GDM to restart and re-read the new configuration settings. 
-+# You can also restart GDM by sending a HUP or USR1 signal to the
+-# You can also run mdm-restart or mdm-safe-restart to cause MDM to restart and
+-# re-read the new configuration settings.  You can also restart MDM by sending
+-# a HUP or USR1 signal to the daemon.  HUP behaves like mdm-restart and causes
+-# any user session started by MDM to exit immediately while USR1 behaves like
+-# mdm-safe-restart and will wait until all users log out before restarting MDM.
++# You can also run invoke-rc.d mdm reload or invoke-rc.d mdm restart
++# to cause MDM to restart and re-read the new configuration settings. 
++# You can also restart MDM by sending a HUP or USR1 signal to the
 +# daemon.  HUP behaves like restart and causes any user session
-+# started by GDM to exit immediately while USR1 behaves like
++# started by MDM to exit immediately while USR1 behaves like
 +# reload and will wait until all users log out before
-+# restarting GDM.
++# restarting MDM.
  #
  # For full reference documentation see the GNOME help browser under
  # GNOME|System category.  You can also find the docs in HTML form on
 @@ -68,7 +64,7 @@
  
- # The greeter for attached (non-xdmcp) logins.  Change gdmlogin to gdmgreeter
+ # The greeter for attached (non-xdmcp) logins.  Change mdmlogin to mdmgreeter
  # to get the new graphical greeter.
--#Greeter=@libexecdir@/gdmlogin
-+Greeter=@libexecdir@/gdmgreeter
+-#Greeter=@libexecdir@/mdmlogin
++Greeter=@libexecdir@/mdmgreeter
  
  # The greeter for xdmcp logins, usually you want a less graphically intensive
- # greeter here so it's better to leave this with gdmlogin
+ # greeter here so it's better to leave this with mdmlogin
 @@ -83,13 +79,9 @@
  #GtkModulesList=gail:atk-bridge:@libdir@/gtk-2.0/modules/libdwellmouselistener:@libdir@/gtk-2.0/modules/libkeymouselistener
  
  # Default path to set.  The profile scripts will likely override this value.
 -# This value will be overridden with the value from /etc/default/login if it
 -# contains "ROOT=<pathvalue>".
--#DefaultPath=@GDM_USER_PATH@
+-#DefaultPath=@MDM_USER_PATH@
 +DefaultPath=/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games
  # Default path for root.  The profile scripts will likely override this value.
 -# This value will be overridden with the value from /etc/default/login if it
 -# contains "SUROOT=<pathvalue>".
--#RootPath=/sbin:/usr/sbin:@GDM_USER_PATH@
+-#RootPath=/sbin:/usr/sbin:@MDM_USER_PATH@
 +RootPath=/usr/local/bin:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/bin/X11:/usr/games
  
  # If you are having trouble with using a single server for a long time and want
- # GDM to kill/restart the server, turn this on.  On Solaris, this value is
+ # MDM to kill/restart the server, turn this on.  On Solaris, this value is
 @@ -105,7 +97,7 @@
  # To try to kill all clients started at greeter time or in the Init script.
  # does not always work, only if those clients have a window of their own.
  #KillInitClients=true
 -LogDir=@logdir@
-+LogDir=/var/log/gdm
++LogDir=/var/log/mdm
  
  # Note that a post login script is run before a PreSession script.  It is run
  # after the login is successful and before any setup is run on behalf of the
 @@ -126,9 +118,9 @@
  #
  # Reboot, Halt and suspend commands, you can add different commands separated
- # by a semicolon.  GDM will use the first one it can find.
+ # by a semicolon.  MDM will use the first one it can find.
 -RebootCommand=@REBOOT_COMMAND@
 -HaltCommand=@HALT_COMMAND@
 -SuspendCommand=@SUSPEND_COMMAND@
-+RebootCommand=/sbin/shutdown -r now "Rebooted via gdm."
-+HaltCommand=/sbin/shutdown -h now "Shut Down via gdm."
++RebootCommand=/sbin/shutdown -r now "Rebooted via mdm."
++HaltCommand=/sbin/shutdown -h now "Shut Down via mdm."
 +SuspendCommand=/usr/sbin/pm-suspend
  
- # The following options specify how GDM system commands are supported.
+ # The following options specify how MDM system commands are supported.
  #
 @@ -161,11 +153,10 @@
- BaseXsession=@gdmconfdir@/Xsession
+ BaseXsession=@mdmconfdir@/Xsession
  # This is a directory where .desktop files describing the sessions live.  It is
  # really a PATH style variable since 2.4.4.2 to allow actual interoperability
 -# with KDM.  Note that <dmconfdir>/Sessions is there for backwards
 -# compatibility reasons with 2.4.4.x.
--#SessionDesktopDir=/etc/X11/sessions/:@dmconfdir@/Sessions/:@datadir@/gdm/BuiltInSessions/:@datadir@/xsessions/
+-#SessionDesktopDir=/etc/X11/sessions/:@dmconfdir@/Sessions/:@datadir@/mdm/BuiltInSessions/:@datadir@/xsessions/
 +# with KDM.
-+SessionDesktopDir=@datadir@/gdm/BuiltInSessions/:@datadir@/xsessions/:/etc/dm/Sessions/
++SessionDesktopDir=@datadir@/mdm/BuiltInSessions/:@datadir@/xsessions/:/etc/dm/Sessions/
  # This is the default .desktop session.  One of the ones in SessionDesktopDir
 -#DefaultSession=gnome.desktop
 +DefaultSession=default.desktop
@@ -161,18 +161,18 @@ Index: gdm-2.20.7/config/gdm.conf.in
  # The default picture in the browser.
  #DefaultFace=@pixmapdir@/nobody.png
  # User ID's less than the MinimalUID value will not be included in the face
- # browser or in the gdmselection list for Automatic/Timed login.  They will not
+ # browser or in the mdmselection list for Automatic/Timed login.  They will not
  # be displayed regardless of the settings for Include and Exclude.
 -#MinimalUID=100
 +MinimalUID=1000
  # Users listed in Include will be included in the face browser and in the
- # gdmsetup selection list for Automatic/Timed login.  Users should be separated
+ # mdmsetup selection list for Automatic/Timed login.  Users should be separated
  # by commas.
 @@ -406,7 +397,7 @@
- # gdmsetup selection list for Automatic/Timed login.  Excluded users will still
+ # mdmsetup selection list for Automatic/Timed login.  Excluded users will still
  # be able to log in, but will have to type their username.  Users should be
  # separated by commas.  
--#Exclude=bin,daemon,adm,lp,sync,shutdown,halt,mail,news,uucp,operator,nobody,gdm,postgres,pvm,rpm,nfsnobody,pcap
+-#Exclude=bin,daemon,adm,lp,sync,shutdown,halt,mail,news,uucp,operator,nobody,mdm,postgres,pvm,rpm,nfsnobody,pcap
 +Exclude=nobody
  # By default, an empty include list means display no users.  By setting
  # IncludeAll to true, the password file will be scanned and all users will be
@@ -187,15 +187,15 @@ Index: gdm-2.20.7/config/gdm.conf.in
  #GlobalFaceDir=@datadir@/pixmaps/faces/
  
  # File which contains the locale we show to the user.  Likely you want to use
- # the one shipped with GDM and edit it.  It is not a standard locale.alias
- # file, although GDM will be able to read a standard locale.alias file as well.
--#LocaleFile=@gdmlocaledir@/locale.alias
-+LocaleFile=/etc/gdm/locale.conf
+ # the one shipped with MDM and edit it.  It is not a standard locale.alias
+ # file, although MDM will be able to read a standard locale.alias file as well.
+-#LocaleFile=@mdmlocaledir@/locale.alias
++LocaleFile=/etc/mdm/locale.conf
  # Logo shown in the standard greeter.
--#Logo=@pixmapdir@/gdm-foot-logo.png
-+Logo=@pixmapdir@/gdmDebianLogo.xpm
- # Logo shown on file chooser button in gdmsetup (do not modify this value).
- #ChooserButtonLogo=@pixmapdir@/gdm-foot-logo.png
+-#Logo=@pixmapdir@/mdm-foot-logo.png
++Logo=@pixmapdir@/mdmDebianLogo.xpm
+ # Logo shown on file chooser button in mdmsetup (do not modify this value).
+ #ChooserButtonLogo=@pixmapdir@/mdm-foot-logo.png
  # The standard greeter should shake if a user entered the wrong username or
 @@ -509,8 +500,8 @@
  # list then provide a list that is delimited by /: to the GraphicalThemes
@@ -205,6 +205,6 @@ Index: gdm-2.20.7/config/gdm.conf.in
 -#GraphicalThemes=circles/:happygnome
 +GraphicalTheme=debian-spacefun
 +#GraphicalThemes=debian-moreblue-orbit:/bijou/:blueswirl/:circles/:debblue-list/:debblue/:ayo/:debian-dawn/:debian-greeter/:debian/:glassfoot/:hantzley/:happygnome/:industrial/:crystal/:linsta
- GraphicalThemeDir=@datadir@/gdm/themes/
+ GraphicalThemeDir=@datadir@/mdm/themes/
  GraphicalThemeRand=false
  

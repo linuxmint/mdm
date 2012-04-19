@@ -10,35 +10,35 @@ INCLUDES = \
 	-DBINDIR=\"$(bindir)\"				\
 	-DDATADIR=\"$(datadir)\"			\
 	-DDMCONFDIR=\"$(dmconfdir)\"			\
-	-DGDMCONFDIR=\"$(gdmconfdir)\"			\
-	-DGDMLOCALEDIR=\"$(gdmlocaledir)\"		\
+	-DMDMCONFDIR=\"$(mdmconfdir)\"			\
+	-DMDMLOCALEDIR=\"$(mdmlocaledir)\"		\
 	-DLIBDIR=\"$(libdir)\"				\
 	-DLIBEXECDIR=\"$(libexecdir)\"			\
 	-DLOGDIR=\"$(logdir)\"				\
 	-DPIXMAPDIR=\"$(pixmapdir)\"			\
 	-DSBINDIR=\"$(sbindir)\"			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGDM_DEFAULTS_CONF=\"$(GDM_DEFAULTS_CONF)\"	\
-	-DGDM_CUSTOM_CONF=\"$(GDM_CUSTOM_CONF)\"	\
-	-DGDM_OLD_CONF=\"$(GDM_OLD_CONF)\"		\
+	-DMDM_DEFAULTS_CONF=\"$(MDM_DEFAULTS_CONF)\"	\
+	-DMDM_CUSTOM_CONF=\"$(MDM_CUSTOM_CONF)\"	\
+	-DMDM_OLD_CONF=\"$(MDM_OLD_CONF)\"		\
 	$(GUI_CFLAGS)					\
 	$(DAEMON_CFLAGS)				\
 	-DLANG_CONFIG_FILE=\"$(LANG_CONFIG_FILE)\"	\
 	$(GNOME_INCLUDEDIR)				\
-	-DGREETERTHEMEDIR=\""$(datadir)/gdm/themes"\"	\
+	-DGREETERTHEMEDIR=\""$(datadir)/mdm/themes"\"	\
 	$(NULL)
 
-sbin_PROGRAMS = gdm-binary		\
+sbin_PROGRAMS = mdm-binary		\
 	$(NULL)
 
-gdm_binary_SOURCES = \
-	gdm.c				\
-	gdm.h \
-	gdm-daemon-config.c \
-	gdm-daemon-config.h \
-	gdm-daemon-config-entries.h \
-	gdm-daemon-config-keys.h \
-	gdm-socket-protocol.h \
+mdm_binary_SOURCES = \
+	mdm.c				\
+	mdm.h \
+	mdm-daemon-config.c \
+	mdm-daemon-config.h \
+	mdm-daemon-config-entries.h \
+	mdm-daemon-config-keys.h \
+	mdm-socket-protocol.h \
 	display.c \
 	display.h \
 	fstype.c \
@@ -64,22 +64,22 @@ gdm_binary_SOURCES = \
 	verify.h \
 	errorgui.c \
 	errorgui.h \
-	gdm-net.c \
-	gdm-net.h \
+	mdm-net.c \
+	mdm-net.h \
 	getvt.c \
 	getvt.h	\
 	$(NULL)
 
 XDMCP_SOURCES =			\
-	gdm-xdmcp-manager.c	\
-	gdm-xdmcp-manager.h	\
+	mdm-xdmcp-manager.c	\
+	mdm-xdmcp-manager.h	\
 	$(NULL)
 
 if XDMCP_SUPPORT
-gdm_binary_SOURCES += $(XDMCP_SOURCES)
+mdm_binary_SOURCES += $(XDMCP_SOURCES)
 endif
 
-EXTRA_gdm_binary_SOURCES = 	\
+EXTRA_mdm_binary_SOURCES = 	\
 	verify-pam.c		\
 	verify-crypt.c		\
 	verify-shadow.c		\
@@ -87,25 +87,25 @@ EXTRA_gdm_binary_SOURCES = 	\
 	$(NULL)
 
 CONSOLE_KIT_SOURCES = 		\
-	gdmconsolekit.c		\
-	gdmconsolekit.h		\
+	mdmconsolekit.c		\
+	mdmconsolekit.h		\
 	$(NULL)
 
-EXTRA_gdm_binary_SOURCES += $(CONSOLE_KIT_SOURCES)
+EXTRA_mdm_binary_SOURCES += $(CONSOLE_KIT_SOURCES)
 
 # Note that these libs are in LDFLAGS because they should come before
 # everything else on the link line as they may override stuff
-gdm_binary_LDFLAGS =				\
+mdm_binary_LDFLAGS =				\
 	$(EXTRA_DAEMON_LIBS)			\
 	$(NULL)
 
-gdm_binary_LDADD = \
+mdm_binary_LDADD = \
 	$(DAEMON_LIBS)				\
 	$(INTLLIBS)				\
 	$(GLIB_LIBS)				\
 	$(GOBJECT_LIBS)				\
 	$(GDK_LIBS)				\
-	$(top_builddir)/common/libgdmcommon.a	\
+	$(top_builddir)/common/libmdmcommon.a	\
 	$(X_LIBS)				\
 	$(XINERAMA_LIBS)			\
 	$(XDMCP_LIBS)				\
@@ -116,15 +116,15 @@ gdm_binary_LDADD = \
 	$(NULL)
 
 if WITH_CONSOLE_KIT
-gdm_binary_SOURCES += $(CONSOLE_KIT_SOURCES)
-gdm_binary_LDADD += $(DBUS_LIBS)
+mdm_binary_SOURCES += $(CONSOLE_KIT_SOURCES)
+mdm_binary_LDADD += $(DBUS_LIBS)
 INCLUDES += $(DBUS_CFLAGS)
 endif
 
-sbin_SCRIPTS = gdm
-CLEANFILES = gdm
+sbin_SCRIPTS = mdm
+CLEANFILES = mdm
 
-gdm: $(srcdir)/gdm.in
-	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/gdm.in >gdm
+mdm: $(srcdir)/mdm.in
+	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/mdm.in >mdm
 
-EXTRA_DIST = gdm.in
+EXTRA_DIST = mdm.in

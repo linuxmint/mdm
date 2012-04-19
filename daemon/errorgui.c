@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -36,17 +36,17 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 
-#include "gdm.h"
+#include "mdm.h"
 #include "misc.h"
 #include "auth.h"
 #include "errorgui.h"
 #include "slave.h"
 
-#include "gdm-common.h"
-#include "gdm-log.h"
-#include "gdm-daemon-config.h"
+#include "mdm-common.h"
+#include "mdm-log.h"
+#include "mdm-daemon-config.h"
 
-#include "gdm-socket-protocol.h"
+#include "mdm-socket-protocol.h"
 
 static int screenx = 0;
 static int screeny = 0;
@@ -65,7 +65,7 @@ setup_cursor (GdkCursorType type)
 }
 
 static gboolean
-gdm_event (GSignalInvocationHint *ihint,
+mdm_event (GSignalInvocationHint *ihint,
 	   guint		n_param_values,
 	   const GValue	       *param_values,
 	   gpointer		data)
@@ -92,7 +92,7 @@ gdm_event (GSignalInvocationHint *ihint,
 }
 
 static void
-get_screen_size (GdmDisplay *d)
+get_screen_size (MdmDisplay *d)
 {
 	if (d != NULL) {
 		screenx = d->screenx;
@@ -187,51 +187,51 @@ get_error_text_view (const char *details)
 }
 
 static void
-setup_dialog (GdmDisplay *d, const char *name, int closefdexcept, gboolean set_gdm_ids, uid_t uid)
+setup_dialog (MdmDisplay *d, const char *name, int closefdexcept, gboolean set_mdm_ids, uid_t uid)
 {
 	int argc = 1;
 	char **argv;
 	struct passwd *pw;
 
-        gdm_log_shutdown ();
+        mdm_log_shutdown ();
 
 	/* No error checking here - if it's messed the best response
 	 * is to ignore & try to continue */
-	gdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
-	gdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
-	gdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
+	mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
+	mdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
+	mdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
 
-	if (set_gdm_ids) {
-		setgid (gdm_daemon_config_get_gdmgid ());
-		initgroups (gdm_daemon_config_get_value_string (GDM_KEY_USER), gdm_daemon_config_get_gdmgid ());
-		setuid (gdm_daemon_config_get_gdmuid ());
+	if (set_mdm_ids) {
+		setgid (mdm_daemon_config_get_mdmgid ());
+		initgroups (mdm_daemon_config_get_value_string (MDM_KEY_USER), mdm_daemon_config_get_mdmgid ());
+		setuid (mdm_daemon_config_get_mdmuid ());
 		pw = NULL;
 	} else {
 		pw = getpwuid (uid);
 	}
 
-	gdm_desetuid ();
+	mdm_desetuid ();
 
 	/* restore initial environment */
-	gdm_restoreenv ();
+	mdm_restoreenv ();
 
-        gdm_log_init ();
+        mdm_log_init ();
 
-	g_setenv ("LOGNAME", gdm_daemon_config_get_value_string (GDM_KEY_USER), TRUE);
-	g_setenv ("USER", gdm_daemon_config_get_value_string (GDM_KEY_USER), TRUE);
-	g_setenv ("USERNAME", gdm_daemon_config_get_value_string (GDM_KEY_USER), TRUE);
+	g_setenv ("LOGNAME", mdm_daemon_config_get_value_string (MDM_KEY_USER), TRUE);
+	g_setenv ("USER", mdm_daemon_config_get_value_string (MDM_KEY_USER), TRUE);
+	g_setenv ("USERNAME", mdm_daemon_config_get_value_string (MDM_KEY_USER), TRUE);
 
 	g_setenv ("DISPLAY", d->name, TRUE);
 	g_unsetenv ("XAUTHORITY");
 
-	g_setenv ("XAUTHORITY", GDM_AUTHFILE (d), TRUE);
+	g_setenv ("XAUTHORITY", MDM_AUTHFILE (d), TRUE);
 
 	/* sanity env stuff */
 	g_setenv ("SHELL", "/bin/sh", TRUE);
 	/* set HOME to /, we don't need no stinking HOME anyway */
 	if (pw == NULL ||
 	    ve_string_empty (pw->pw_dir))
-		g_setenv ("HOME", ve_sure_string (gdm_daemon_config_get_value_string (GDM_KEY_SERV_AUTHDIR)), TRUE);
+		g_setenv ("HOME", ve_sure_string (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR)), TRUE);
 	else
 		g_setenv ("HOME", pw->pw_dir, TRUE);
 
@@ -240,9 +240,9 @@ setup_dialog (GdmDisplay *d, const char *name, int closefdexcept, gboolean set_g
 	argc = 1;
 
 	if ( ! inhibit_gtk_modules &&
-	    gdm_daemon_config_get_value_bool (GDM_KEY_ADD_GTK_MODULES) &&
-	     ! ve_string_empty (gdm_daemon_config_get_value_string (GDM_KEY_GTK_MODULES_LIST))) {
-		argv[1] = g_strdup_printf ("--gtk-module=%s", gdm_daemon_config_get_value_string (GDM_KEY_GTK_MODULES_LIST));
+	    mdm_daemon_config_get_value_bool (MDM_KEY_ADD_GTK_MODULES) &&
+	     ! ve_string_empty (mdm_daemon_config_get_value_string (MDM_KEY_GTK_MODULES_LIST))) {
+		argv[1] = g_strdup_printf ("--gtk-module=%s", mdm_daemon_config_get_value_string (MDM_KEY_GTK_MODULES_LIST));
 		argc = 2;
 	}
 
@@ -254,7 +254,7 @@ setup_dialog (GdmDisplay *d, const char *name, int closefdexcept, gboolean set_g
 
 	if ( ! inhibit_gtk_themes) {
 		const char *theme_name;
-                const gchar *gtkrc = gdm_daemon_config_get_value_string (GDM_KEY_GTKRC);
+                const gchar *gtkrc = mdm_daemon_config_get_value_string (MDM_KEY_GTKRC);
 
 		if ( ! ve_string_empty (gtkrc) &&
 		     g_access (gtkrc, R_OK) == 0)
@@ -262,7 +262,7 @@ setup_dialog (GdmDisplay *d, const char *name, int closefdexcept, gboolean set_g
 
 		theme_name = d->theme_name;
 		if (ve_string_empty (theme_name))
-			theme_name = gdm_daemon_config_get_value_string (GDM_KEY_GTK_THEME);
+			theme_name = mdm_daemon_config_get_value_string (MDM_KEY_GTK_THEME);
 		if ( ! ve_string_empty (theme_name)) {
 			gchar *theme_dir = gtk_rc_get_theme_dir ();
 			char *theme = g_strdup_printf ("%s/%s/gtk-2.0/gtkrc", theme_dir, theme_name);
@@ -292,14 +292,14 @@ dialog_failed (int status)
 		   WEXITSTATUS (status) == 0) {
 		return FALSE;
 	} else {
-		gdm_error ("failsafe dialog failed (inhibitions: %d %d)",
+		mdm_error ("failsafe dialog failed (inhibitions: %d %d)",
 			   inhibit_gtk_modules, inhibit_gtk_themes);
 		return TRUE;
 	}
 }
 
 void
-gdm_errorgui_error_box_full (GdmDisplay *d,
+mdm_errorgui_error_box_full (MdmDisplay *d,
 			     GtkMessageType type,
 			     const char *error,
 			     const char *details_label,
@@ -310,9 +310,9 @@ gdm_errorgui_error_box_full (GdmDisplay *d,
 	GdkDisplay *gdk_display;
 	pid_t pid;
 
-	gdm_debug ("Forking extra process: error dialog");
+	mdm_debug ("Forking extra process: error dialog");
 
-	pid = gdm_fork_extra ();
+	pid = mdm_fork_extra ();
 
 	if (pid == 0) {
 		guint sid;
@@ -342,7 +342,7 @@ gdm_errorgui_error_box_full (GdmDisplay *d,
 			if G_UNLIKELY (setuid (uid) != 0)
 				details_file = NULL;
 
-			gdm_desetuid ();
+			mdm_desetuid ();
 		}
 
 		/* First read the details if they exist */
@@ -445,7 +445,7 @@ gdm_errorgui_error_box_full (GdmDisplay *d,
 				       GTK_TYPE_WIDGET);
 		g_signal_add_emission_hook (sid,
 					    0 /* detail */,
-					    gdm_event,
+					    mdm_event,
 					    NULL /* data */,
 					    NULL /* destroy_notify */);
 
@@ -479,26 +479,26 @@ gdm_errorgui_error_box_full (GdmDisplay *d,
 		_exit (0);
 	} else if (pid > 0) {
 		int status;
-		gdm_wait_for_extra (pid, &status);
+		mdm_wait_for_extra (pid, &status);
 
 		if (dialog_failed (status)) {
 			if ( ! inhibit_gtk_themes) {
 				/* on failure try again, this time without any themes
 				   which may be causing a crash */
 				inhibit_gtk_themes = TRUE;
-				gdm_errorgui_error_box_full (d, type, error, details_label, details_file, uid, gid);
+				mdm_errorgui_error_box_full (d, type, error, details_label, details_file, uid, gid);
 				inhibit_gtk_themes = FALSE;
 			} else if ( ! inhibit_gtk_modules) {
 				/* on failure try again, this time without any modules
 				   which may be causing a crash */
 				inhibit_gtk_modules = TRUE;
-				gdm_errorgui_error_box_full (d, type, error, details_label, details_file, uid, gid);
+				mdm_errorgui_error_box_full (d, type, error, details_label, details_file, uid, gid);
 				inhibit_gtk_modules = FALSE;
 			}
 		}
 	} else {
-		gdm_error (_("%s: Cannot fork to display error/info box"),
-			   "gdm_errorgui_error_box");
+		mdm_error (_("%s: Cannot fork to display error/info box"),
+			   "mdm_errorgui_error_box");
 	}
 }
 
@@ -510,20 +510,20 @@ press_ok (GtkWidget *entry, gpointer data)
 }
 
 void
-gdm_errorgui_error_box (GdmDisplay *d, GtkMessageType type, const char *error)
+mdm_errorgui_error_box (MdmDisplay *d, GtkMessageType type, const char *error)
 {
 	char *msg;
 	int id = 0;
 
 	msg = g_strdup_printf ("type=%d$$error=%s$$details_label=%s$$details_file=%s$$uid=%d$$gid=%d", type, error, "NIL", "NIL", id, id);
 
-	gdm_slave_send_string (GDM_SOP_SHOW_ERROR_DIALOG, msg);
+	mdm_slave_send_string (MDM_SOP_SHOW_ERROR_DIALOG, msg);
 
 	g_free (msg);
 }
 
 char *
-gdm_errorgui_failsafe_question (GdmDisplay *d,
+mdm_errorgui_failsafe_question (MdmDisplay *d,
 				const char *question,
 				gboolean echo)
 {
@@ -534,15 +534,15 @@ gdm_errorgui_failsafe_question (GdmDisplay *d,
 	if G_UNLIKELY (pipe (p) < 0)
 		return NULL;
 
-	gdm_debug ("Forking extra process: failsafe question");
+	mdm_debug ("Forking extra process: failsafe question");
 
-	pid = gdm_fork_extra ();
+	pid = mdm_fork_extra ();
 	if (pid == 0) {
 		guint sid;
 		GtkWidget *dlg, *label, *entry;
 		char *loc;
 
-		setup_dialog (d, "gtk-failsafe-question", p[1], TRUE /* set_gdm_ids */, 0);
+		setup_dialog (d, "gtk-failsafe-question", p[1], TRUE /* set_mdm_ids */, 0);
 
 		loc = g_locale_to_utf8 (question, -1, NULL, NULL, NULL);
 
@@ -575,7 +575,7 @@ gdm_errorgui_failsafe_question (GdmDisplay *d,
 				       GTK_TYPE_WIDGET);
 		g_signal_add_emission_hook (sid,
 					    0 /* detail */,
-					    gdm_event,
+					    mdm_event,
 					    NULL /* data */,
 					    NULL /* destroy_notify */);
 
@@ -603,7 +603,7 @@ gdm_errorgui_failsafe_question (GdmDisplay *d,
 
 		loc = g_locale_from_utf8 (ve_sure_string (gtk_entry_get_text (GTK_ENTRY (entry))), -1, NULL, NULL, NULL);
 
-		gdm_fdprintf (p[1], "%s", ve_sure_string (loc));
+		mdm_fdprintf (p[1], "%s", ve_sure_string (loc));
 
 		XSetInputFocus (GDK_DISPLAY_XDISPLAY (gdk_display),
 				PointerRoot,
@@ -618,7 +618,7 @@ gdm_errorgui_failsafe_question (GdmDisplay *d,
 
 		VE_IGNORE_EINTR (close (p[1]));
 
-		gdm_wait_for_extra (pid, &status);
+		mdm_wait_for_extra (pid, &status);
 
 		if (dialog_failed (status)) {
 			char *ret = NULL;
@@ -627,13 +627,13 @@ gdm_errorgui_failsafe_question (GdmDisplay *d,
 				/* on failure try again, this time without any themes
 				   which may be causing a crash */
 				inhibit_gtk_themes = TRUE;
-				ret = gdm_errorgui_failsafe_question (d, question, echo);
+				ret = mdm_errorgui_failsafe_question (d, question, echo);
 				inhibit_gtk_themes = FALSE;
 			} else if ( ! inhibit_gtk_modules) {
 				/* on failure try again, this time without any modules
 				   which may be causing a crash */
 				inhibit_gtk_modules = TRUE;
-				ret = gdm_errorgui_failsafe_question (d, question, echo);
+				ret = mdm_errorgui_failsafe_question (d, question, echo);
 				inhibit_gtk_modules = FALSE;
 			}
 			return ret;
@@ -647,14 +647,14 @@ gdm_errorgui_failsafe_question (GdmDisplay *d,
 		} 
 		VE_IGNORE_EINTR (close (p[0]));
 	} else {
-		gdm_error (_("%s: Cannot fork to display error/info box"),
-			   "gdm_errorgui_failsafe_question");
+		mdm_error (_("%s: Cannot fork to display error/info box"),
+			   "mdm_errorgui_failsafe_question");
 	}
 	return NULL;
 }
 
 gboolean
-gdm_errorgui_failsafe_yesno (GdmDisplay *d,
+mdm_errorgui_failsafe_yesno (MdmDisplay *d,
 			     const char *question)
 {
 	GdkDisplay *gdk_display;
@@ -664,15 +664,15 @@ gdm_errorgui_failsafe_yesno (GdmDisplay *d,
 	if G_UNLIKELY (pipe (p) < 0)
 		return FALSE;
 
-	gdm_debug ("Forking extra process: failsafe yes/no");
+	mdm_debug ("Forking extra process: failsafe yes/no");
 
-	pid = gdm_fork_extra ();
+	pid = mdm_fork_extra ();
 	if (pid == 0) {
 		guint sid;
 		GtkWidget *dlg;
 		char *loc;
 
-		setup_dialog (d, "gtk-failsafe-yesno", p[1], TRUE /* set_gdm_ids */, 0);
+		setup_dialog (d, "gtk-failsafe-yesno", p[1], TRUE /* set_mdm_ids */, 0);
 
 		loc = g_locale_to_utf8 (question, -1, NULL, NULL, NULL);
 
@@ -689,7 +689,7 @@ gdm_errorgui_failsafe_yesno (GdmDisplay *d,
 				       GTK_TYPE_WIDGET);
 		g_signal_add_emission_hook (sid,
 					    0 /* detail */,
-					    gdm_event,
+					    mdm_event,
 					    NULL /* data */,
 					    NULL /* destroy_notify */);
 
@@ -712,9 +712,9 @@ gdm_errorgui_failsafe_yesno (GdmDisplay *d,
 		setup_cursor (GDK_LEFT_PTR);
 
 		if (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_YES)
-			gdm_fdprintf (p[1], "yes\n");
+			mdm_fdprintf (p[1], "yes\n");
 		else
-			gdm_fdprintf (p[1], "no\n");
+			mdm_fdprintf (p[1], "no\n");
 
 		XSetInputFocus (GDK_DISPLAY_XDISPLAY (gdk_display),
 				PointerRoot,
@@ -729,7 +729,7 @@ gdm_errorgui_failsafe_yesno (GdmDisplay *d,
 
 		VE_IGNORE_EINTR (close (p[1]));
 
-		gdm_wait_for_extra (pid, &status);
+		mdm_wait_for_extra (pid, &status);
 
 		if (dialog_failed (status)) {
 			gboolean ret = FALSE;
@@ -738,13 +738,13 @@ gdm_errorgui_failsafe_yesno (GdmDisplay *d,
 				/* on failure try again, this time without any themes
 				   which may be causing a crash */
 				inhibit_gtk_themes = TRUE;
-				ret = gdm_errorgui_failsafe_yesno (d, question);
+				ret = mdm_errorgui_failsafe_yesno (d, question);
 				inhibit_gtk_themes = FALSE;
 			} else if ( ! inhibit_gtk_modules) {
 				/* on failure try again, this time without any modules
 				   which may be causing a crash */
 				inhibit_gtk_modules = TRUE;
-				ret = gdm_errorgui_failsafe_yesno (d, question);
+				ret = mdm_errorgui_failsafe_yesno (d, question);
 				inhibit_gtk_modules = FALSE;
 			}
 			return ret;
@@ -760,14 +760,14 @@ gdm_errorgui_failsafe_yesno (GdmDisplay *d,
 		} 
 		VE_IGNORE_EINTR (close (p[0]));
 	} else {
-		gdm_error (_("%s: Cannot fork to display error/info box"),
-			   "gdm_errorgui_failsafe_yesno");
+		mdm_error (_("%s: Cannot fork to display error/info box"),
+			   "mdm_errorgui_failsafe_yesno");
 	}
 	return FALSE;
 }
 
 int
-gdm_errorgui_failsafe_ask_buttons (GdmDisplay *d,
+mdm_errorgui_failsafe_ask_buttons (MdmDisplay *d,
 				   const char *question,
 				   char **but)
 {
@@ -778,16 +778,16 @@ gdm_errorgui_failsafe_ask_buttons (GdmDisplay *d,
 	if G_UNLIKELY (pipe (p) < 0)
 		return -1;
 
-	gdm_debug ("Forking extra process: failsafe ask buttons");
+	mdm_debug ("Forking extra process: failsafe ask buttons");
 
-	pid = gdm_fork_extra ();
+	pid = mdm_fork_extra ();
 	if (pid == 0) {
 		int i;
 		guint sid;
 		GtkWidget *dlg;
 		char *loc;
 
-		setup_dialog (d, "gtk-failsafe-ask-buttons", p[1], TRUE /* set_gdm_ids */, 0);
+		setup_dialog (d, "gtk-failsafe-ask-buttons", p[1], TRUE /* set_mdm_ids */, 0);
 
 		loc = g_locale_to_utf8 (question, -1, NULL, NULL, NULL);
 
@@ -812,7 +812,7 @@ gdm_errorgui_failsafe_ask_buttons (GdmDisplay *d,
 				       GTK_TYPE_WIDGET);
 		g_signal_add_emission_hook (sid,
 					    0 /* detail */,
-					    gdm_event,
+					    mdm_event,
 					    NULL /* data */,
 					    NULL /* destroy_notify */);
 
@@ -835,7 +835,7 @@ gdm_errorgui_failsafe_ask_buttons (GdmDisplay *d,
 		setup_cursor (GDK_LEFT_PTR);
 
 		i = gtk_dialog_run (GTK_DIALOG (dlg));
-		gdm_fdprintf (p[1], "%d\n", i);
+		mdm_fdprintf (p[1], "%d\n", i);
 
 		XSetInputFocus (GDK_DISPLAY_XDISPLAY (gdk_display),
 				PointerRoot,
@@ -850,7 +850,7 @@ gdm_errorgui_failsafe_ask_buttons (GdmDisplay *d,
 
 		VE_IGNORE_EINTR (close (p[1]));
 
-		gdm_wait_for_extra (pid, &status);
+		mdm_wait_for_extra (pid, &status);
 
 		if (dialog_failed (status)) {
 			int ret = -1;
@@ -859,13 +859,13 @@ gdm_errorgui_failsafe_ask_buttons (GdmDisplay *d,
 				/* on failure try again, this time without any themes
 				   which may be causing a crash */
 				inhibit_gtk_themes = TRUE;
-				ret = gdm_errorgui_failsafe_ask_buttons (d, question, but);
+				ret = mdm_errorgui_failsafe_ask_buttons (d, question, but);
 				inhibit_gtk_themes = FALSE;
 			} else if ( ! inhibit_gtk_modules) {
 				/* on failure try again, this time without any modules
 				   which may be causing a crash */
 				inhibit_gtk_modules = TRUE;
-				ret = gdm_errorgui_failsafe_ask_buttons (d, question, but);
+				ret = mdm_errorgui_failsafe_ask_buttons (d, question, but);
 				inhibit_gtk_modules = FALSE;
 			}
 			return ret;
@@ -883,8 +883,8 @@ gdm_errorgui_failsafe_ask_buttons (GdmDisplay *d,
 		} 
 		VE_IGNORE_EINTR (close (p[0]));
 	} else {
-		gdm_error (_("%s: Cannot fork to display error/info box"),
-			   "gdm_errorgui_failsafe_ask_buttons");
+		mdm_error (_("%s: Cannot fork to display error/info box"),
+			   "mdm_errorgui_failsafe_ask_buttons");
 	}
 	return -1;
 }

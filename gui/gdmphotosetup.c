@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- *    GDMphotosetup - graphical .gnome2/photo setup program for users
+ *    MDMphotosetup - graphical .gnome2/photo setup program for users
  *
  *    Copyright (C) 2001 Queen of England
  *    Copyright (C) 2005 William Jon McCann <mccann@jhu.edu>
@@ -34,11 +34,11 @@
 #include <gtk/gtk.h>
 #include <glade/glade.h>
 
-#include "gdm.h"
-#include "gdmcomm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm.h"
+#include "mdmcomm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
+#include "mdm-daemon-config-keys.h"
 
 static GladeXML *xml;
 static char	*photofile;
@@ -321,7 +321,7 @@ browse_button_cb (GtkWidget *widget, gpointer data)
 static void
 help_button_cb (GtkWidget *widget, gpointer data)
 {
-	g_spawn_command_line_sync ("gnome-open ghelp:gdm", NULL, NULL,
+	g_spawn_command_line_sync ("gnome-open ghelp:mdm", NULL, NULL,
   				   NULL, NULL);
 }
 
@@ -343,20 +343,20 @@ main (int argc, char *argv[])
 	photofile = g_build_filename (g_get_home_dir (), ".face", NULL);
 
 	/* Read config data in bulk */
-	gdmcomm_comm_bulk_start ();
-	face_browser = gdm_config_get_bool (GDM_KEY_BROWSER);
-	max_size     = gdm_config_get_int (GDM_KEY_USER_MAX_FILE);
-	max_width    = gdm_config_get_int (GDM_KEY_MAX_ICON_WIDTH);
-	max_height   = gdm_config_get_int (GDM_KEY_MAX_ICON_HEIGHT);
-	greeter      = gdm_config_get_string (GDM_KEY_GREETER);
-	facedir      = gdm_config_get_string (GDM_KEY_GLOBAL_FACE_DIR);
+	mdmcomm_comm_bulk_start ();
+	face_browser = mdm_config_get_bool (MDM_KEY_BROWSER);
+	max_size     = mdm_config_get_int (MDM_KEY_USER_MAX_FILE);
+	max_width    = mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH);
+	max_height   = mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT);
+	greeter      = mdm_config_get_string (MDM_KEY_GREETER);
+	facedir      = mdm_config_get_string (MDM_KEY_GLOBAL_FACE_DIR);
 	/* At this point we are done using the socket, so close it */
-	gdmcomm_comm_bulk_stop ();
+	mdmcomm_comm_bulk_stop ();
 	imagename    = NULL;
 
 	gtk_window_set_default_icon_name ("stock_person");
 
-	xml = glade_xml_new (GDM_GLADE_DIR "/gdmphotosetup.glade", NULL, NULL);
+	xml = glade_xml_new (MDM_GLADE_DIR "/mdmphotosetup.glade", NULL, NULL);
 
 	dialog	      = glade_xml_get_widget (xml, "face_dialog");
 	face_image    = glade_xml_get_widget (xml, "face_image");

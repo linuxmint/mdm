@@ -1,5 +1,5 @@
---- gdm-2.16.4.orig/xdm.templates
-+++ gdm-2.16.4/xdm.templates
+--- mdm-2.16.4.orig/xdm.templates
++++ mdm-2.16.4/xdm.templates
 @@ -0,0 +1,31 @@
 +Template: shared/default-x-display-manager
 +Type: select
@@ -32,8 +32,8 @@
 + If xdm is stopped now, any X sessions it manages will be terminated.
 + Otherwise you may leave xdm running, and the new version will take effect the
 + next time the daemon is restarted.
---- gdm-2.16.4.orig/xdm.config.in
-+++ gdm-2.16.4/xdm.config.in
+--- mdm-2.16.4.orig/xdm.config.in
++++ mdm-2.16.4/xdm.config.in
 @@ -0,0 +1,82 @@
 +#!/bin/sh
 +# Debian xdm package configuration script

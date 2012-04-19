@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,14 +18,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GDM_SERVER_H
-#define GDM_SERVER_H
+#ifndef MDM_SERVER_H
+#define MDM_SERVER_H
 
 #include "display.h"
 
-typedef struct _GdmXserver GdmXserver;
+typedef struct _MdmXserver MdmXserver;
 
-struct _GdmXserver
+struct _MdmXserver
 {
 	char *id;
 	char *name;
@@ -46,28 +46,28 @@ struct _GdmXserver
 #define SERVER_ABORT 253	/* Server failed badly. Suspending display. */
 
 /* Wipe cookie files */
-void		gdm_server_wipe_cookies	(GdmDisplay *disp);
+void		mdm_server_wipe_cookies	(MdmDisplay *disp);
 
-void		gdm_server_whack_lockfile (GdmDisplay *disp);
+void		mdm_server_whack_lockfile (MdmDisplay *disp);
 
-gboolean	gdm_server_start	(GdmDisplay *d,
+gboolean	mdm_server_start	(MdmDisplay *d,
 					 gboolean try_again_if_busy,
 					 gboolean treat_as_flexi,
 					 int min_flexi_disp,
 					 int flexi_retries);
-void		gdm_server_stop		(GdmDisplay *d);
-void		gdm_server_whack_clients (Display *dsp);
-void		gdm_server_checklog	(GdmDisplay *disp);
+void		mdm_server_stop		(MdmDisplay *d);
+void		mdm_server_whack_clients (Display *dsp);
+void		mdm_server_checklog	(MdmDisplay *disp);
 
-gboolean	gdm_server_resolve_command_line (GdmDisplay *disp,
+gboolean	mdm_server_resolve_command_line (MdmDisplay *disp,
 						 gboolean resolve_flags,
 						 const char *vtarg,
                                                  int        *argc,
                                                  char     ***argv);
-GdmXserver *	gdm_server_resolve	(GdmDisplay *disp);
+MdmXserver *	mdm_server_resolve	(MdmDisplay *disp);
 
 
 
-#endif /* GDM_SERVER_H */
+#endif /* MDM_SERVER_H */
 
 /* EOF */

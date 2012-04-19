@@ -1,11 +1,11 @@
-var/log/gdm
-var/lib/gdm
+var/log/mdm
+var/lib/mdm
 usr/share/faces
 usr/share/hosts
 usr/share/sounds
 etc/pam.d
 etc/X11
-etc/gdm/Init
-etc/gdm/PreSession
-etc/gdm/PostSession
-usr/share/gdm/themes
+etc/mdm/Init
+etc/mdm/PreSession
+etc/mdm/PostSession
+usr/share/mdm/themes

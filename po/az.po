@@ -1,5 +1,5 @@
-# translation of gdm2.HEAD.az.po to Azerbaijani
-# translation of gdm2.HEAD.az.po to Azerbaijani Turkish
+# translation of mdm2.HEAD.az.po to Azerbaijani
+# translation of mdm2.HEAD.az.po to Azerbaijani Turkish
 # Copyright (C) 1999-2000,2003, 2004 Free Software Foundation, Inc.
 # Vasif Ismailoglu MD <azerb_linux@hotmail.com>, 2001.
 # Mətin Əmirov <metin@karegen.com>, 2003, 2004.
@@ -7,7 +7,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gdm2.HEAD.az\n"
+"Project-Id-Version: mdm2.HEAD.az\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-08-16 11:21+0200\n"
 "PO-Revision-Date: 2004-08-17 22:06+0300\n"
@@ -41,11 +41,11 @@ msgstr "Bu ön qurğulu sistem iclasıdır"
 msgid ""
 "I cannot start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly.  You will need to log in on a console and rerun "
-"the X configuration program.  Then restart GDM."
+"the X configuration program.  Then restart MDM."
 msgstr ""
 "X vericini başlada bilmirəm (sizin qrafiki ara üzünüz).  Deyəsən düzgün "
 "quraşdırılmayıb.  Siz konsola girib X quraşdırma proqramını icra "
-"etməlisiniz. Sonra GDM yenidən başladıla bilər."
+"etməlisiniz. Sonra MDM yenidən başladıla bilər."
 
 #: config/gettextfoo.h:4
 msgid ""
@@ -65,10 +65,10 @@ msgstr "İndi X vericini yenidən başlatmağa cəhd edəcəyəm."
 
 #: config/gettextfoo.h:7
 msgid ""
-"I will disable this X server for now.  Restart GDM when it is configured "
+"I will disable this X server for now.  Restart MDM when it is configured "
 "correctly."
 msgstr ""
-"İndilik X vericini bağlayacağam. Düzgün quraşdırıldığı vaxt GDM-ni yenidən "
+"İndilik X vericini bağlayacağam. Düzgün quraşdırıldığı vaxt MDM-ni yenidən "
 "başladın."
 
 #: config/gettextfoo.h:8
@@ -144,10 +144,10 @@ msgstr "%s: Yeni səlahiyyət girişini yazıla bilmədi.  Deyəsən diskdə yer
 #: daemon/auth.c:74
 #, c-format
 msgid ""
-"GDM could not write a new authorization entry to disk.  Possibly out of "
+"MDM could not write a new authorization entry to disk.  Possibly out of "
 "diskspace.%s%s"
 msgstr ""
-"GDM yeni səlahiyyət girişini diskə yaza bilmədi.  Diyəsən diskdə yer "
+"MDM yeni səlahiyyət girişini diskə yaza bilmədi.  Diyəsən diskdə yer "
 "qalmayıb.%s%s"
 
 #: daemon/auth.c:204
@@ -181,7 +181,7 @@ msgstr "%s: Kökə yaza bilmədim"
 msgid "%s: Ignoring suspiciously looking cookie file %s"
 msgstr "%s: Təhlükəli görünən %s kökəsinə əhəmiyyət verilməyəcək"
 
-#: daemon/auth.c:898 daemon/gdm.c:2291
+#: daemon/auth.c:898 daemon/mdm.c:2291
 #, c-format
 msgid "Can't write to %s: %s"
 msgstr "%s faylına yazıla bilmir: %s"
@@ -191,9 +191,9 @@ msgstr "%s faylına yazıla bilmir: %s"
 #. * cought that elsewhere.  Things are just
 #. * not working out, so tell the user.
 #. * However this may have been caused by a malicious local user
-#. * zapping the display repeatedly, that shouldn't cause gdm
+#. * zapping the display repeatedly, that shouldn't cause mdm
 #. * to stop working completely so just wait for 2 minutes,
-#. * that should give people ample time to stop gdm if needed,
+#. * that should give people ample time to stop mdm if needed,
 #. * or just wait for the stupid malicious user to get bored
 #. * and go away
 #: daemon/display.c:114
@@ -214,8 +214,8 @@ msgstr "%s: Boru yaradıla bilmir"
 
 #: daemon/display.c:336
 #, c-format
-msgid "%s: Failed forking gdm slave process for %s"
-msgstr "%s : %s üçün qul gdm əməliyyatini çəngəlləyə bilmədim "
+msgid "%s: Failed forking mdm slave process for %s"
+msgstr "%s : %s üçün qul mdm əməliyyatini çəngəlləyə bilmədim "
 
 #: daemon/errorgui.c:356
 #, c-format
@@ -281,134 +281,134 @@ msgstr "%s : %s qrup tərəfindən və basqsi tərəfindən də yazila bilər ."
 msgid "%s: %s is bigger than sysadmin specified maximum file size."
 msgstr "%s sistem idarəçisinin bildirdiyi maksimal böyüklüyündən daha böyükdür: %s"
 
-#: daemon/gdm-net.c:271
+#: daemon/mdm-net.c:271
 #, c-format
 msgid "%s: Could not make socket"
 msgstr "%s: Soket yarada bilmədim!"
 
-#: daemon/gdm-net.c:302
+#: daemon/mdm-net.c:302
 #, c-format
 msgid "%s: Could not bind socket"
 msgstr "%s: Bind soketinə bağ qura bilmədim"
 
-#: daemon/gdm-net.c:388
+#: daemon/mdm-net.c:388
 #, c-format
 msgid "%s: Could not make FIFO"
 msgstr "%s: FIFO edilə bilmədi"
 
-#: daemon/gdm-net.c:396
+#: daemon/mdm-net.c:396
 #, c-format
 msgid "%s: Could not open FIFO"
 msgstr "%s: FIFO açıla bilmədi"
 
-#: daemon/gdm.c:248
+#: daemon/mdm.c:248
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this "
-"does not exist. Please correct gdm configuration %s and restart gdm."
+"does not exist. Please correct mdm configuration %s and restart mdm."
 msgstr ""
 "Verici Səlahiyyət cərgəsi (daemon/ServAuthDir) %s olaraq seçilib ancaq "
-"mövcud deyil. Xahiş edirik %s gdm qurğularını düzəldin və gdm-ni yenidən "
+"mövcud deyil. Xahiş edirik %s mdm qurğularını düzəldin və mdm-ni yenidən "
 "başladın."
 
-#: daemon/gdm.c:257
+#: daemon/mdm.c:257
 #, c-format
 msgid "%s: Authdir %s does not exist. Aborting."
 msgstr "%s: %s icazə qovluğu yoxdur . Çıxıram ."
 
-#: daemon/gdm.c:262
+#: daemon/mdm.c:262
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this is "
-"not a directory. Please correct gdm configuration %s and restart gdm."
+"not a directory. Please correct mdm configuration %s and restart mdm."
 msgstr ""
 "Verici Səlahiyyət cərgəsi (daemon/ServAuthDir) %s olaraq seçilib ancaq bu "
-"bir cərgə deyil. Xahiş edirik %s gdm qurğularını düzəldin və gdm-ni yenidən "
+"bir cərgə deyil. Xahiş edirik %s mdm qurğularını düzəldin və mdm-ni yenidən "
 "başladın."
 
-#: daemon/gdm.c:271
+#: daemon/mdm.c:271
 #, c-format
 msgid "%s: Authdir %s is not a directory. Aborting."
 msgstr "%s: %s icazə qovluğu deyildir . Çıxıram ."
 
-#: daemon/gdm.c:284
+#: daemon/mdm.c:284
 #, c-format
 msgid "%s: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s."
 msgstr "%s: %s Qeyd cərgəsi mövcud deyil ya da cərgə deyil.  %s istifadə ediləcək."
 
-#: daemon/gdm.c:313 gui/gdmlogin.c:650 gui/greeter/greeter.c:105
+#: daemon/mdm.c:313 gui/mdmlogin.c:650 gui/greeter/greeter.c:105
 #, c-format
 msgid "%s: No configuration file: %s. Using defaults."
 msgstr "%s: Quraşdırma faylı yoxdur: %s Ön qurğular işlədiləcəkdir."
 
-#: daemon/gdm.c:364
+#: daemon/mdm.c:364
 #, c-format
-msgid "%s: BaseXsession empty, using %s/gdm/Xsession"
-msgstr "%s: BaseXsession boşdur, %s/gdm/Xsession istifadə ediləcək"
+msgid "%s: BaseXsession empty, using %s/mdm/Xsession"
+msgstr "%s: BaseXsession boşdur, %s/mdm/Xsession istifadə ediləcək"
 
-#: daemon/gdm.c:408
+#: daemon/mdm.c:408
 #, c-format
 msgid "%s: Standard X server not found, trying alternatives"
 msgstr "%s: Standart X vericisi tapılmadı, alternatıv verici sınanır"
 
-#: daemon/gdm.c:440
+#: daemon/mdm.c:440
 #, c-format
 msgid "%s: XDMCP was enabled while there is no XDMCP support, turning it off"
 msgstr "%s:  XDMCP olmadığı yerdə XDMCP dəstəyi fəallaşdırılıb, bunu bağlayıram"
 
-#: daemon/gdm.c:453
+#: daemon/mdm.c:453
 #, c-format
 msgid "%s: Root cannot be autologged in, turing off automatic login"
 msgstr "%s:  Ali istifadəçi avtomatik girə bilməz, avtomatik giriş bağlanır"
 
-#: daemon/gdm.c:466
+#: daemon/mdm.c:466
 #, c-format
 msgid "%s: Root cannot be autologged in, turing off timed login"
 msgstr "%s: Ali istifadəçi avtomatik girə bilməz, vaxtlaşdırılmış giriş bağlanır"
 
-#: daemon/gdm.c:472
+#: daemon/mdm.c:472
 #, c-format
 msgid "%s: TimedLoginDelay less than 5, so I will just use 5."
 msgstr "%s: TimedLoginDelay 5-dən azdır, 5 işlədiləcək."
 
-#: daemon/gdm.c:482
+#: daemon/mdm.c:482
 #, c-format
 msgid "%s: No greeter specified."
 msgstr "%s: Salamlayıcı bildirilməyib."
 
-#: daemon/gdm.c:485
+#: daemon/mdm.c:485
 #, c-format
 msgid "%s: No remote greeter specified."
 msgstr "%s: Uzaq salamlayıcı bildirilməyib."
 
-#: daemon/gdm.c:489
+#: daemon/mdm.c:489
 #, c-format
 msgid "%s: No sessions directory specified."
 msgstr "%s: İclas qovluğu bildirilməyib."
 
-#: daemon/gdm.c:514
+#: daemon/mdm.c:514
 #, c-format
 msgid "%s: Empty server command, using standard one."
 msgstr "%s: Boş verici əmri, standart olani işlədirəm."
 
-#: daemon/gdm.c:557
+#: daemon/mdm.c:557
 #, c-format
 msgid "%s: Display number %d in use!  I will use %d"
 msgstr "%s: Ekran nömrəsi %d istifadədədir!  %d işlədəcəm"
 
-#: daemon/gdm.c:576
+#: daemon/mdm.c:576
 #, c-format
 msgid "%s: Invalid server line in config file. Ignoring!"
 msgstr "%s: Quraşdırma faylında hökmsüz verici sətiri tapıldı . Bunu rədd edirəm!"
 
-#: daemon/gdm.c:587 daemon/gdm.c:628
+#: daemon/mdm.c:587 daemon/mdm.c:628
 #, c-format
 msgid "%s: XDMCP disabled and no local servers defined. Aborting!"
 msgstr "%s: XDMCP bağlandı və heç bir yerli verici bildirilmədi. Çıxıram! "
 
 #. start
 #. server uid
-#: daemon/gdm.c:605
+#: daemon/mdm.c:605
 #, c-format
 msgid ""
 "%s: XDMCP disabled and no local servers defined. Adding %s on :%d to allow "
@@ -417,181 +417,181 @@ msgstr ""
 "%s: XDMCP fəal deyil və heç bir yerli verici tə'yin edilməyib. Qurğuya icazə "
 "vermək üçün %s-ni %d-yə əlavə edirəm! "
 
-#: daemon/gdm.c:620
+#: daemon/mdm.c:620
 #, c-format
 msgid ""
-"XDMCP is disabled and gdm cannot find any local server to start.  Aborting!  "
-"Please correct the configuration %s and restart gdm."
+"XDMCP is disabled and mdm cannot find any local server to start.  Aborting!  "
+"Please correct the configuration %s and restart mdm."
 msgstr ""
-"XDMCP fəal deyil və gdm başlamaq üçün hər hansı bir yerli verici tapa "
-"bilmir. Xahiş edirik %s gdm qurğularını düzəldin və gdm-ni yenidən başladın."
+"XDMCP fəal deyil və mdm başlamaq üçün hər hansı bir yerli verici tapa "
+"bilmir. Xahiş edirik %s mdm qurğularını düzəldin və mdm-ni yenidən başladın."
 
-#: daemon/gdm.c:642
+#: daemon/mdm.c:642
 #, c-format
 msgid ""
-"The gdm user does not exist. Please correct gdm configuration %s and restart "
-"gdm."
+"The mdm user does not exist. Please correct mdm configuration %s and restart "
+"mdm."
 msgstr ""
-"gdm istifadəçisi mövcud deyil. Xahiş edirik %s gdm qurğularını düzəldin və "
-"gdm-ni yenidən başladın."
+"mdm istifadəçisi mövcud deyil. Xahiş edirik %s mdm qurğularını düzəldin və "
+"mdm-ni yenidən başladın."
 
-#: daemon/gdm.c:649
+#: daemon/mdm.c:649
 #, c-format
-msgid "%s: Can't find the gdm user (%s). Aborting!"
-msgstr "%s: gdm istifadəçisi (%s) tapılaa bilmədi. Çıxıram!"
+msgid "%s: Can't find the mdm user (%s). Aborting!"
+msgstr "%s: mdm istifadəçisi (%s) tapılaa bilmədi. Çıxıram!"
 
-#: daemon/gdm.c:656
+#: daemon/mdm.c:656
 #, c-format
 msgid ""
-"The gdm user is set to be root, but this is not allowed since it can pose a "
-"security risk.  Please correct gdm configuration %s and restart gdm."
+"The mdm user is set to be root, but this is not allowed since it can pose a "
+"security risk.  Please correct mdm configuration %s and restart mdm."
 msgstr ""
-"gdm istifadəçisinə ali istifadəçi səlahiyyətləri verilib. Buna icazə "
-"verilmir, çünki bu təhlükəsizlik riski daşıyır.  Xahiş edirik %s gdm "
-"qurğularını düzəldin və gdm-ni yenidən başladın."
+"mdm istifadəçisinə ali istifadəçi səlahiyyətləri verilib. Buna icazə "
+"verilmir, çünki bu təhlükəsizlik riski daşıyır.  Xahiş edirik %s mdm "
+"qurğularını düzəldin və mdm-ni yenidən başladın."
 
-#: daemon/gdm.c:664
+#: daemon/mdm.c:664
 #, c-format
-msgid "%s: The gdm user should not be root. Aborting!"
-msgstr "%s: gdm istifadəçisi 'root' olmamalıdır. Çıxıram!"
+msgid "%s: The mdm user should not be root. Aborting!"
+msgstr "%s: mdm istifadəçisi 'root' olmamalıdır. Çıxıram!"
 
-#: daemon/gdm.c:671
+#: daemon/mdm.c:671
 #, c-format
 msgid ""
-"The gdm group does not exist. Please correct gdm configuration %s and "
-"restart gdm."
+"The mdm group does not exist. Please correct mdm configuration %s and "
+"restart mdm."
 msgstr ""
-"gdm qrupu mövcud deyil. Xahiş edirik %s gdm qurğularını düzəldin və gdm-ni "
+"mdm qrupu mövcud deyil. Xahiş edirik %s mdm qurğularını düzəldin və mdm-ni "
 "yenidən başladın."
 
-#: daemon/gdm.c:678
+#: daemon/mdm.c:678
 #, c-format
-msgid "%s: Can't find the gdm group (%s). Aborting!"
-msgstr "%s: (%s) gdm qrupunu tapa bilmədim. Çıxıram!"
+msgid "%s: Can't find the mdm group (%s). Aborting!"
+msgstr "%s: (%s) mdm qrupunu tapa bilmədim. Çıxıram!"
 
-#: daemon/gdm.c:685
+#: daemon/mdm.c:685
 #, c-format
 msgid ""
-"The gdm group is set to be root, but this is not allowed since it can pose a "
-"security risk. Please correct gdm configuration %s and restart gdm."
+"The mdm group is set to be root, but this is not allowed since it can pose a "
+"security risk. Please correct mdm configuration %s and restart mdm."
 msgstr ""
-"gdm qrupu ali istifadəçi qrupu olaraq verilib. Buna icazə verilmir, çünki bu "
-"təhlükəsizlik riski daşıyır.  Xahiş edirik %s gdm qurğularını düzəldin və "
-"gdm-ni yenidən başladın."
+"mdm qrupu ali istifadəçi qrupu olaraq verilib. Buna icazə verilmir, çünki bu "
+"təhlükəsizlik riski daşıyır.  Xahiş edirik %s mdm qurğularını düzəldin və "
+"mdm-ni yenidən başladın."
 
-#: daemon/gdm.c:693
+#: daemon/mdm.c:693
 #, c-format
-msgid "%s: The gdm group should not be root. Aborting!"
-msgstr "%s: gdm grupu 'root' olmamalıdır . Çıxıram!"
+msgid "%s: The mdm group should not be root. Aborting!"
+msgstr "%s: mdm grupu 'root' olmamalıdır . Çıxıram!"
 
-#: daemon/gdm.c:708
+#: daemon/mdm.c:708
 #, c-format
-msgid "%s: Greeter not found or can't be executed by the gdm user"
+msgid "%s: Greeter not found or can't be executed by the mdm user"
 msgstr "%s: Qarşılayıcı tapılmadı ya da istifadəçi icra edə bilmədi"
 
-#: daemon/gdm.c:715
+#: daemon/mdm.c:715
 #, c-format
-msgid "%s: Remote greeter not found or can't be executed by the gdm user"
+msgid "%s: Remote greeter not found or can't be executed by the mdm user"
 msgstr ""
-"%s: Uzaq qarşılayıcı tapılmadı ya da GDM istifadəçisi tərəfindən icra edə "
+"%s: Uzaq qarşılayıcı tapılmadı ya da MDM istifadəçisi tərəfindən icra edə "
 "bilmədi"
 
-#: daemon/gdm.c:726
+#: daemon/mdm.c:726
 #, c-format
-msgid "%s: Chooser not found or it can't be executed by the gdm user"
+msgid "%s: Chooser not found or it can't be executed by the mdm user"
 msgstr "%s: Seçici tapılmadı ya da istifadəçi icra edə bilmədi"
 
-#: daemon/gdm.c:735
+#: daemon/mdm.c:735
 msgid "No daemon/ServAuthDir specified in the configuration file"
 msgstr "Quraşdırma faylında daemon/ServAuthDir bildirilməyib"
 
-#: daemon/gdm.c:737
+#: daemon/mdm.c:737
 #, c-format
 msgid "%s: No daemon/ServAuthDir specified."
 msgstr "%s: daemon/ServAuthDir bildirilməyib."
 
-#: daemon/gdm.c:761
+#: daemon/mdm.c:761
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but is not "
-"owned by user %s and group %s. Please correct the ownership or gdm "
-"configuration %s and restart gdm."
+"owned by user %s and group %s. Please correct the ownership or mdm "
+"configuration %s and restart mdm."
 msgstr ""
 "Verici Səlahiyyət cərgəsi (daemon/ServAuthDir) %s olaraq seçilib ancaq onun "
-"sahibi %s istifadəçisi və %s qrupu deyil. Xahiş edirik %s gdm qurğularını "
-"düzəldin və gdm-ni yenidən başladın."
+"sahibi %s istifadəçisi və %s qrupu deyil. Xahiş edirik %s mdm qurğularını "
+"düzəldin və mdm-ni yenidən başladın."
 
-#: daemon/gdm.c:772
+#: daemon/mdm.c:772
 #, c-format
 msgid "%s: Authdir %s is not owned by user %s, group %s. Aborting."
 msgstr ""
 "%s: %s icazə qovluğu %s istifadəçisinin, ya da %s grupunun deyil. Ləğv "
 "edirəm."
 
-#: daemon/gdm.c:778
+#: daemon/mdm.c:778
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but has the "
 "wrong permissions, it should have permissions of %o. Please correct the "
-"permissions or the gdm configuration %s and restart gdm."
+"permissions or the mdm configuration %s and restart mdm."
 msgstr ""
 "Verici Səlahiyyət cərgəsi (daemon/ServAuthDir) %s olaraq seçilib ancaq səhv "
 "səlahiyyətləri var, cərgə, %o səlahiyyətinə malik olmalıdır. Xahiş edirik %s "
-"gdm qurğularını düzəldin və gdm-ni yenidən başladın."
+"mdm qurğularını düzəldin və mdm-ni yenidən başladın."
 
-#: daemon/gdm.c:789
+#: daemon/mdm.c:789
 #, c-format
 msgid "%s: Authdir %s has wrong permissions %o. Should be %o. Aborting."
 msgstr "%s: %s icazə qovluğunun %o səhv səlahiyyətləri var. %o olmalıdır. Çıxılır."
 
 #. FIXME: how to handle this?
-#: daemon/gdm.c:845 daemon/gdm.c:853 daemon/gdm.c:2073 daemon/gdm.c:2081
+#: daemon/mdm.c:845 daemon/mdm.c:853 daemon/mdm.c:2073 daemon/mdm.c:2081
 #, c-format
 msgid "Cannot write PID file %s, possibly out of diskspace.  Error: %s\n"
 msgstr "%s PID faylına yazıla bilmədi, deyəsən yer çatışmır.  Xəta: %s\n"
 
-#: daemon/gdm.c:847 daemon/gdm.c:855 daemon/gdm.c:2075 daemon/gdm.c:2083
+#: daemon/mdm.c:847 daemon/mdm.c:855 daemon/mdm.c:2075 daemon/mdm.c:2083
 #, c-format
 msgid "Cannot write PID file %s, possibly out of diskspace.  Error: %s"
 msgstr "%s PID faylına yazıla bilmədi, deyəsən yer çatışmır.  Xəta: %s"
 
-#: daemon/gdm.c:865
+#: daemon/mdm.c:865
 #, c-format
 msgid "%s: fork() failed!"
 msgstr "%s: fork() bacarılmadı!"
 
 #. should never happen
-#: daemon/gdm.c:868 daemon/slave.c:3437
+#: daemon/mdm.c:868 daemon/slave.c:3437
 #, c-format
 msgid "%s: setsid() failed: %s!"
 msgstr "%s: setsid() bacarılmadı: %s!"
 
-#: daemon/gdm.c:1038
+#: daemon/mdm.c:1038
 #, c-format
 msgid "%s: Trying failsafe X server %s"
 msgstr "%s: failsafe X verici %s sınanır"
 
-#: daemon/gdm.c:1056
+#: daemon/mdm.c:1056
 #, c-format
 msgid "%s: Running the XKeepsCrashing script"
 msgstr "%s: XKeepsCrashing skripti icra edilir"
 
-#: daemon/gdm.c:1176
+#: daemon/mdm.c:1176
 msgid ""
 "I cannot start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly. You will need to log in on a console and rerun "
-"the X configuration program.  Then restart GDM."
+"the X configuration program.  Then restart MDM."
 msgstr ""
 "X vericini başlada bilmirəm (sizin qrafiki ara üzünüz).  Deyəsən düzgün "
 "quraşdırılmayıb.  Siz konsola girib X quraşdırma proqramını yenidən icra "
-"etməlisiniz. Sonra GDM yenidən başladın."
+"etməlisiniz. Sonra MDM yenidən başladın."
 
 #. else {
 #. * At this point .... screw the user, we don't know how to
 #. * talk to him.  He's on some 'l33t system anyway, so syslog
 #. * reading will do him good
 #. * }
-#: daemon/gdm.c:1188
+#: daemon/mdm.c:1188
 #, c-format
 msgid ""
 "Failed to start X server several times in a short time period; disabling "
@@ -600,90 +600,90 @@ msgstr ""
 "Balaca zaman araliginda bir neçə dəfə X vericisini baslada bilmədim;%s "
 "ekranini bagliyiram"
 
-#: daemon/gdm.c:1196 daemon/gdm.c:2794
+#: daemon/mdm.c:1196 daemon/mdm.c:2794
 msgid "Master suspending..."
 msgstr "Usta gözlədilir..."
 
-#: daemon/gdm.c:1250
+#: daemon/mdm.c:1250
 #, c-format
 msgid "System is rebooting, please wait ..."
 msgstr "Sistem yenidən başladılır, xahiş edirik gözləyin ..."
 
-#: daemon/gdm.c:1252
+#: daemon/mdm.c:1252
 #, c-format
 msgid "System is shutting down, please wait ..."
 msgstr "Sistem söndürülür, xahiş edirik gözləyin ..."
 
-#: daemon/gdm.c:1263
+#: daemon/mdm.c:1263
 msgid "Master halting..."
 msgstr "Usta söndürülür..."
 
-#: daemon/gdm.c:1276
+#: daemon/mdm.c:1276
 #, c-format
 msgid "%s: Halt failed: %s"
 msgstr "%s: Söndürmə bacarılmadı: %s"
 
-#: daemon/gdm.c:1285
+#: daemon/mdm.c:1285
 msgid "Master rebooting..."
 msgstr "Usta yenidən başlayır..."
 
-#: daemon/gdm.c:1298
+#: daemon/mdm.c:1298
 #, c-format
 msgid "%s: Reboot failed: %s"
 msgstr "%s: Yenidən başlama bacarılmadı: %s"
 
-#: daemon/gdm.c:1396
+#: daemon/mdm.c:1396
 #, c-format
 msgid "Reboot or Halt request when there is no system menu from display %s"
 msgstr ""
 "Sistem menyusunun olmadığı %s ekranından Yenidən Başlat və ya Söndür sorğusu "
 "gəldi"
 
-#: daemon/gdm.c:1405
+#: daemon/mdm.c:1405
 #, c-format
 msgid "Restart, Reboot or Halt request from a non-local display %s"
 msgstr "Uzaq %s ekrandan Yenidən Başlama ya da Söndürmə əmri verildi"
 
 #. Bury this display for good
-#: daemon/gdm.c:1471
+#: daemon/mdm.c:1471
 #, c-format
 msgid "%s: Aborting display %s"
 msgstr "%s: %s ekranından çıxılır"
 
-#: daemon/gdm.c:1622
-msgid "GDM restarting ..."
-msgstr "GDM yenidən başlayır ..."
+#: daemon/mdm.c:1622
+msgid "MDM restarting ..."
+msgstr "MDM yenidən başlayır ..."
 
-#: daemon/gdm.c:1626
+#: daemon/mdm.c:1626
 msgid "Failed to restart self"
 msgstr "Öz özünü yenidən başlada bilmədi"
 
 #. FIXME: note that this could mean out of memory
-#: daemon/gdm.c:1700
+#: daemon/mdm.c:1700
 msgid "main daemon: Got SIGABRT, something went very wrong. Going down!"
 msgstr "əsas demon: SIGABRT alındı, nə isə çox pis getdi. Bağlanır!"
 
-#: daemon/gdm.c:1859
+#: daemon/mdm.c:1859
 msgid "Do not fork into the background"
 msgstr "Arxa plana fork etmə"
 
-#: daemon/gdm.c:1861
+#: daemon/mdm.c:1861
 msgid "No console (local) servers to be run"
 msgstr "İcra ediləcək heç bir (yerli) konsol vericisi yoxdur"
 
-#: daemon/gdm.c:1863
+#: daemon/mdm.c:1863
 msgid "Preserve LD_* variables"
 msgstr "LD_* dəyişənlərini qoru"
 
-#: daemon/gdm.c:1865
-msgid "Print GDM version"
-msgstr "GDM buraxılışını göstər"
+#: daemon/mdm.c:1865
+msgid "Print MDM version"
+msgstr "MDM buraxılışını göstər"
 
-#: daemon/gdm.c:1867
+#: daemon/mdm.c:1867
 msgid "Start the first X server but then halt until we get a GO in the fifo"
 msgstr "İlk X Vericisini başlat amma daha sonra fifo-da GO alana qədər dayan"
 
-#: daemon/gdm.c:1988 gui/gdmchooser.c:2057
+#: daemon/mdm.c:1988 gui/mdmchooser.c:2057
 #, c-format
 msgid ""
 "Error on option %s: %s.\n"
@@ -692,49 +692,49 @@ msgstr ""
 "%s seçimində xəta var : %s .\n"
 "Xahiş edirik '%s --help' ilə mümkün olan seçimləri görün.\n"
 
-#: daemon/gdm.c:2011
-msgid "Only root wants to run gdm\n"
-msgstr "Təkcə ali istifadəçi gdm-ni işə salmaq istəyir\n"
+#: daemon/mdm.c:2011
+msgid "Only root wants to run mdm\n"
+msgstr "Təkcə ali istifadəçi mdm-ni işə salmaq istəyir\n"
 
-#: daemon/gdm.c:2027 daemon/gdm.c:2031 daemon/gdm.c:2106 daemon/gdm.c:2110
-#: daemon/gdm.c:2114 daemon/gdm.c:2118 daemon/gdm.c:2128 daemon/gdm.c:2134
-#: daemon/gdm.c:2145 daemon/misc.c:1648 daemon/misc.c:1652 daemon/misc.c:1656
+#: daemon/mdm.c:2027 daemon/mdm.c:2031 daemon/mdm.c:2106 daemon/mdm.c:2110
+#: daemon/mdm.c:2114 daemon/mdm.c:2118 daemon/mdm.c:2128 daemon/mdm.c:2134
+#: daemon/mdm.c:2145 daemon/misc.c:1648 daemon/misc.c:1652 daemon/misc.c:1656
 #: daemon/misc.c:1663 daemon/misc.c:1667 daemon/misc.c:1671
 #: daemon/server.c:521 daemon/server.c:534 daemon/slave.c:811
 #: daemon/slave.c:825 daemon/slave.c:835 daemon/slave.c:845 daemon/slave.c:857
-#: gui/gdmchooser.c:1936 gui/gdmchooser.c:1939 gui/gdmchooser.c:1942
-#: gui/gdmlogin.c:3929 gui/gdmlogin.c:3937 gui/gdmlogin.c:3940
+#: gui/mdmchooser.c:1936 gui/mdmchooser.c:1939 gui/mdmchooser.c:1942
+#: gui/mdmlogin.c:3929 gui/mdmlogin.c:3937 gui/mdmlogin.c:3940
 #: gui/greeter/greeter.c:1085 gui/greeter/greeter.c:1093
 #: gui/greeter/greeter.c:1096
 #, c-format
 msgid "%s: Error setting up %s signal handler: %s"
 msgstr "%s: %s siqnal idarəçisini qurarkən xəta meydana gəldi: %s"
 
-#: daemon/gdm.c:2055
-msgid "gdm already running. Aborting!"
-msgstr "gdm onsuz da işləyir. Çıxıram!"
+#: daemon/mdm.c:2055
+msgid "mdm already running. Aborting!"
+msgstr "mdm onsuz da işləyir. Çıxıram!"
 
-#: daemon/gdm.c:2154
+#: daemon/mdm.c:2154
 #, c-format
 msgid "%s: Error setting up CHLD signal handler"
 msgstr "%s: CHLD siqnal idarəçisini qurarkən xəta meydana gəldi"
 
-#: daemon/gdm.c:2260
+#: daemon/mdm.c:2260
 #, c-format
 msgid "Can't open %s for writing"
 msgstr "%s yazılmaq üçün açıla bilmir"
 
-#: daemon/gdm.c:3527 daemon/gdm.c:3546
+#: daemon/mdm.c:3527 daemon/mdm.c:3546
 msgid "FLEXI_XSERVER request denied: Not authenticated"
 msgstr "FLEXI_XSERVER request denied: Not authenticated"
 
 #. Don't print the name to syslog as it might be
 #. * long and dangerous
-#: daemon/gdm.c:3564
+#: daemon/mdm.c:3564
 msgid "Unknown server type requested, using standard server."
 msgstr "Namə'lum verici növü sorğulandı, standart verici işlədilir."
 
-#: daemon/gdm.c:3568
+#: daemon/mdm.c:3568
 #, c-format
 msgid ""
 "Requested server %s not allowed to be used for flexible servers, using "
@@ -743,15 +743,15 @@ msgstr ""
 "Sorğulanan verici %s fleksibl vericilərdə işlədilməz, standrt verici "
 "işlədirəm."
 
-#: daemon/gdm.c:3690
+#: daemon/mdm.c:3690
 msgid "QUERY_LOGOUT_ACTION request denied: Not authenticated"
 msgstr "QUERY_LOGOUT_ACTION request denied: Not authenticated"
 
-#: daemon/gdm.c:3748 daemon/gdm.c:3803
+#: daemon/mdm.c:3748 daemon/mdm.c:3803
 msgid "SET_LOGOUT_ACTION request denied: Not authenticated"
 msgstr "SET_LOGOUT_ACTION request denied: Not authenticated"
 
-#: daemon/gdm.c:3848 daemon/gdm.c:3875
+#: daemon/mdm.c:3848 daemon/mdm.c:3875
 msgid "QUERY_VT request denied: Not authenticated"
 msgstr "QUERY_VT request denied: Not authenticated"
 
@@ -942,7 +942,7 @@ msgid ""
 "Please contact your system administrator\n"
 "or check your syslog to diagnose.\n"
 "In the meantime this display will be\n"
-"disabled.  Please restart gdm when\n"
+"disabled.  Please restart mdm when\n"
 "the problem is corrected."
 msgstr ""
 "I could not start the X\n"
@@ -951,7 +951,7 @@ msgstr ""
 "Please contact your system administrator\n"
 "or check your syslog to diagnose.\n"
 "In the meantime this display will be\n"
-"disabled.  Please restart gdm when\n"
+"disabled.  Please restart mdm when\n"
 "the problem is corrected."
 
 #: daemon/slave.c:1470
@@ -991,8 +991,8 @@ msgstr ""
 
 #: daemon/slave.c:2454 daemon/slave.c:2459
 #, c-format
-msgid "%s: Can't init pipe to gdmgreeter"
-msgstr "%s: gdmgreeter üçün boru aça bilmədim"
+msgid "%s: Can't init pipe to mdmgreeter"
+msgstr "%s: mdmgreeter üçün boru aça bilmədim"
 
 #: daemon/slave.c:2582
 msgid ""
@@ -1060,8 +1060,8 @@ msgstr "%s: %s displeyində salamlayıcını başladarkən bir xəta meydana gə
 
 #: daemon/slave.c:2676
 #, c-format
-msgid "%s: Can't fork gdmgreeter process"
-msgstr "%s: gdmgreeter əməliyyatını fork edə bilmədim"
+msgid "%s: Can't fork mdmgreeter process"
+msgstr "%s: mdmgreeter əməliyyatını fork edə bilmədim"
 
 #: daemon/slave.c:2761
 #, c-format
@@ -1070,8 +1070,8 @@ msgstr "%s: Fifo açıla bilmir!"
 
 #: daemon/slave.c:2937
 #, c-format
-msgid "%s: Can't init pipe to gdmchooser"
-msgstr "%s: gdmgreeter üçün boru açıla bilmədi"
+msgid "%s: Can't init pipe to mdmchooser"
+msgstr "%s: mdmgreeter üçün boru açıla bilmədi"
 
 #: daemon/slave.c:3035
 msgid ""
@@ -1088,8 +1088,8 @@ msgstr "%s: %s displeyində salamlayı başlarkən xəta meydana gəldi"
 
 #: daemon/slave.c:3042
 #, c-format
-msgid "%s: Can't fork gdmchooser process"
-msgstr "%s: gdmchooser əməliyyatı fork edilə bilmir"
+msgid "%s: Can't fork mdmchooser process"
+msgstr "%s: mdmchooser əməliyyatı fork edilə bilmir"
 
 #: daemon/slave.c:3338
 #, c-format
@@ -1246,12 +1246,12 @@ msgstr "%s: %s üçün ev cərgəsi: '%s' mövcud deyildir!"
 
 #: daemon/slave.c:4060
 msgid ""
-"GDM could not write to your authorization file.  This could mean that you "
+"MDM could not write to your authorization file.  This could mean that you "
 "are out of disk space or that your home directory could not be opened for "
 "writing.  In any case, it is not possible to log in.  Please contact your "
 "system administrator"
 msgstr ""
-"GDM sizin səlahiyyət faylınıza qeyd edə bilmədi. Bu, sizin diskinizdə boş "
+"MDM sizin səlahiyyət faylınıza qeyd edə bilmədi. Bu, sizin diskinizdə boş "
 "yer qalmadığını ya da ev cərgənizin yazılmaq üçün açıla bimədiyini göstərir. "
 "Buna görə siz sistemə girə bilməyəcəksiniz. Xahiş edirik sistem idarəçinizlə "
 "əlaqə qurun."
@@ -1277,8 +1277,8 @@ msgid "View details (~/.xsession-errors file)"
 msgstr "Təfərruatları göstər (~/.xsession-errors faylı)"
 
 #: daemon/slave.c:4369
-msgid "GDM detected a shutdown or reboot in progress."
-msgstr "GDM fəaliyyətdə olan söndürmə ya da yenidən başlatma aşkar etdi."
+msgid "MDM detected a shutdown or reboot in progress."
+msgstr "MDM fəaliyyətdə olan söndürmə ya da yenidən başlatma aşkar etdi."
 
 #: daemon/slave.c:4463
 #, c-format
@@ -1332,21 +1332,21 @@ msgstr "Caps Lock düyməsinin açıq olmadığından əmin olun."
 
 #. I think I'll add the buttons next to this
 #: daemon/verify-crypt.c:127 daemon/verify-pam.c:439
-#: daemon/verify-shadow.c:126 gui/gdmlogin.c:3040
+#: daemon/verify-shadow.c:126 gui/mdmlogin.c:3040
 msgid "Please enter your username"
 msgstr "Xahiş edirik, istifadəçi adını bildir"
 
 #. login: is whacked always translate to Username:
 #: daemon/verify-crypt.c:128 daemon/verify-pam.c:339 daemon/verify-pam.c:340
 #: daemon/verify-pam.c:341 daemon/verify-pam.c:426 daemon/verify-pam.c:785
-#: daemon/verify-shadow.c:127 gui/gdmlogin.c:1073 gui/gdmlogin.c:1087
-#: gui/gdmlogin.c:1873 gui/gdmlogin.c:2344 gui/greeter/greeter.c:281
+#: daemon/verify-shadow.c:127 gui/mdmlogin.c:1073 gui/mdmlogin.c:1087
+#: gui/mdmlogin.c:1873 gui/mdmlogin.c:2344 gui/greeter/greeter.c:281
 #: gui/greeter/greeter_parser.c:1061
 msgid "Username:"
 msgstr "İstifadəçi Adı:"
 
 #: daemon/verify-crypt.c:166 daemon/verify-pam.c:342 daemon/verify-pam.c:343
-#: daemon/verify-pam.c:487 daemon/verify-shadow.c:184 gui/gdmlogin.c:1905
+#: daemon/verify-pam.c:487 daemon/verify-shadow.c:184 gui/mdmlogin.c:1905
 msgid "Password:"
 msgstr "Şifrə:"
 
@@ -1626,8 +1626,8 @@ msgstr ""
 "Sistem idarəçisi müvəqqəti olaraq hesabınızı bağlayıb"
 
 #: daemon/verify-pam.c:1425 daemon/verify-pam.c:1427
-msgid "Can't find PAM configuration for gdm."
-msgstr "GDM üçün PAM quraşdırma faylını tapa bilmirəm"
+msgid "Can't find PAM configuration for mdm."
+msgstr "MDM üçün PAM quraşdırma faylını tapa bilmirəm"
 
 #: daemon/xdmcp.c:369
 #, c-format
@@ -1770,80 +1770,80 @@ msgstr "%s: Qadağan edilmiş %s qovşağından KEEPALIVE alındı"
 msgid "%s: No XDMCP support"
 msgstr "%s: XDMCP dəstəyi mövcud deyil"
 
-#: gui/gdmXnestchooser.c:166 gui/gdmXnestchooser.c:173
+#: gui/mdmXnestchooser.c:166 gui/mdmXnestchooser.c:173
 msgid "Xnest command line"
 msgstr "Xnest əmr sətiri: "
 
-#: gui/gdmXnestchooser.c:166 gui/gdmXnestchooser.c:173
+#: gui/mdmXnestchooser.c:166 gui/mdmXnestchooser.c:173
 msgid "STRING"
 msgstr "QATAR"
 
-#: gui/gdmXnestchooser.c:167 gui/gdmXnestchooser.c:174
+#: gui/mdmXnestchooser.c:167 gui/mdmXnestchooser.c:174
 msgid "Extra options for Xnest"
 msgstr "Xnest üçün əlavə seçimlər"
 
-#: gui/gdmXnestchooser.c:167 gui/gdmXnestchooser.c:174
+#: gui/mdmXnestchooser.c:167 gui/mdmXnestchooser.c:174
 msgid "OPTIONS"
 msgstr "SEÇİMLƏR"
 
-#: gui/gdmXnestchooser.c:168 gui/gdmXnestchooser.c:178
+#: gui/mdmXnestchooser.c:168 gui/mdmXnestchooser.c:178
 msgid "Run in background"
 msgstr "Arxa planda işlə"
 
-#: gui/gdmXnestchooser.c:175
+#: gui/mdmXnestchooser.c:175
 msgid "Just run Xnest, no query (no chooser)"
 msgstr "Təkcə Xnest icra et, sorğu deyil"
 
-#: gui/gdmXnestchooser.c:176
+#: gui/mdmXnestchooser.c:176
 msgid "Do direct query instead of indirect (chooser)"
 msgstr "İndirekt yerinə direkt sorğu yolla"
 
-#: gui/gdmXnestchooser.c:177
+#: gui/mdmXnestchooser.c:177
 msgid "Run broadcast instead of indirect (chooser)"
 msgstr "İndirekt yerinə translasiya işlət"
 
-#: gui/gdmXnestchooser.c:179
-msgid "Don't check for running gdm"
-msgstr "İşləyən gdm-ni yoxlama"
+#: gui/mdmXnestchooser.c:179
+msgid "Don't check for running mdm"
+msgstr "İşləyən mdm-ni yoxlama"
 
 #. markup
-#: gui/gdmXnestchooser.c:521
+#: gui/mdmXnestchooser.c:521
 msgid "Xnest doesn't exist."
 msgstr "Xnest mövcud deyil."
 
-#: gui/gdmXnestchooser.c:523
+#: gui/mdmXnestchooser.c:523
 msgid "Please ask your system administrator to install it."
 msgstr "Xahiş edirik, sistem idarəçinizdən onu qurmasını xahiş edin."
 
 #. markup
-#: gui/gdmXnestchooser.c:549
+#: gui/mdmXnestchooser.c:549
 msgid "Indirect XDMCP is not enabled"
 msgstr "Birbaşa olmayan XDMCP hazırda fəal deyil"
 
-#: gui/gdmXnestchooser.c:551 gui/gdmXnestchooser.c:572
+#: gui/mdmXnestchooser.c:551 gui/mdmXnestchooser.c:572
 msgid ""
-"Please ask your system administrator to enable it in the GDM configurator "
+"Please ask your system administrator to enable it in the MDM configurator "
 "program."
 msgstr ""
-"Xahiş edirik, sistem idarəçinizdən bunu GDM qurğulama proqramında "
+"Xahiş edirik, sistem idarəçinizdən bunu MDM qurğulama proqramında "
 "fəallaşdırmasını xahiş edin."
 
 #. markup
-#: gui/gdmXnestchooser.c:570
+#: gui/mdmXnestchooser.c:570
 msgid "XDMCP is not enabled"
 msgstr "XDMCP hazırda fəal deyil"
 
 #. markup
-#: gui/gdmXnestchooser.c:604
-msgid "GDM is not running"
-msgstr "GDM hazırda işləmir"
+#: gui/mdmXnestchooser.c:604
+msgid "MDM is not running"
+msgstr "MDM hazırda işləmir"
 
-#: gui/gdmXnestchooser.c:606
+#: gui/mdmXnestchooser.c:606
 msgid "Please ask your system administrator to start it."
 msgstr "Xahiş edirik, sistem idarəçinizdən onu başlatmasını xahiş edin."
 
 #. markup
-#: gui/gdmXnestchooser.c:623
+#: gui/mdmXnestchooser.c:623
 msgid "Could not find a free display number"
 msgstr "Boş ekran nömrəsi tapa bilmirəm"
 
@@ -1852,73 +1852,73 @@ msgstr "Boş ekran nömrəsi tapa bilmirəm"
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gui/gdmchooser-strings.c:7 gui/gdmchooser.glade.h:5
-msgid "GDM Host Chooser"
+#: gui/mdmchooser-strings.c:7 gui/mdmchooser.glade.h:5
+msgid "MDM Host Chooser"
 msgstr "Gnome Qovşaq Seçici"
 
-#: gui/gdmchooser-strings.c:8 gui/gdmchooser.glade.h:6
+#: gui/mdmchooser-strings.c:8 gui/mdmchooser.glade.h:6
 msgid "How to use this application"
 msgstr "Bu proqramın necə işlədiləcəyi barədə"
 
-#: gui/gdmchooser-strings.c:9 gui/gdmchooser.glade.h:8
+#: gui/mdmchooser-strings.c:9 gui/mdmchooser.glade.h:8
 msgid "Probe the network"
 msgstr "Şəbəkəni yoxla"
 
-#: gui/gdmchooser-strings.c:10 gui/gdmchooser.glade.h:4
+#: gui/mdmchooser-strings.c:10 gui/mdmchooser.glade.h:4
 msgid "Exit the application"
 msgstr "Proqramdan çıx"
 
-#: gui/gdmchooser-strings.c:11 gui/gdmchooser.glade.h:7
+#: gui/mdmchooser-strings.c:11 gui/mdmchooser.glade.h:7
 msgid "Open a session to the selected host"
 msgstr "Seçili qovşağa iclas aç"
 
-#: gui/gdmchooser-strings.c:12 gui/gdmchooser.glade.h:3
+#: gui/mdmchooser-strings.c:12 gui/mdmchooser.glade.h:3
 msgid "C_onnect"
 msgstr "_Bağlan"
 
-#: gui/gdmchooser-strings.c:13 gui/gdmchooser.glade.h:10
+#: gui/mdmchooser-strings.c:13 gui/mdmchooser.glade.h:10
 msgid "Status"
 msgstr "Vəziyyət"
 
-#: gui/gdmchooser-strings.c:14 gui/gdmchooser.glade.h:2
+#: gui/mdmchooser-strings.c:14 gui/mdmchooser.glade.h:2
 msgid "A_dd host: "
 msgstr "Qovşaq ə_lavə et:"
 
 #. EOF
-#: gui/gdmchooser-strings.c:15 gui/gdmchooser.glade.h:1
-#: gui/gdmsetup-strings.c:19 gui/gdmsetup-strings.c:21
-#: gui/gdmsetup-strings.c:26 gui/gdmsetup-strings.c:32
-#: gui/gdmsetup-strings.c:37 gui/gdmsetup-strings.c:47
-#: gui/gdmsetup-strings.c:85 gui/gdmsetup.glade.h:2
+#: gui/mdmchooser-strings.c:15 gui/mdmchooser.glade.h:1
+#: gui/mdmsetup-strings.c:19 gui/mdmsetup-strings.c:21
+#: gui/mdmsetup-strings.c:26 gui/mdmsetup-strings.c:32
+#: gui/mdmsetup-strings.c:37 gui/mdmsetup-strings.c:47
+#: gui/mdmsetup-strings.c:85 gui/mdmsetup.glade.h:2
 msgid "*"
 msgstr "*"
 
-#: gui/gdmchooser-strings.c:16 gui/gdmchooser.glade.h:9
+#: gui/mdmchooser-strings.c:16 gui/mdmchooser.glade.h:9
 msgid "Query and add this host to the above list"
 msgstr "Qovşağı soğula və yuxarıdakı siyahıya əlavə et"
 
-#: gui/gdmchooser-strings.c:17 gui/gdmchooser.glade.h:11
+#: gui/mdmchooser-strings.c:17 gui/mdmchooser.glade.h:11
 msgid "_Add"
 msgstr "Ə_lavə Et"
 
-#: gui/gdmchooser.c:80
+#: gui/mdmchooser.c:80
 msgid "Please wait: scanning local network..."
 msgstr "Xahiş edirik gözləyin: yerli şəbəkə axtarılır..."
 
-#: gui/gdmchooser.c:81
+#: gui/mdmchooser.c:81
 msgid "No serving hosts were found."
 msgstr "Heç verici kompüter tapıla bilmədi."
 
-#: gui/gdmchooser.c:82
+#: gui/mdmchooser.c:82
 msgid "Choose a ho_st to connect to:"
 msgstr "Bağlantı qurulacaq _qovşağı seçin:"
 
 #. markup
-#: gui/gdmchooser.c:659
+#: gui/mdmchooser.c:659
 msgid "Cannot connect to remote server"
 msgstr "Uzaq qovşağa bağlana bilmir"
 
-#: gui/gdmchooser.c:660
+#: gui/mdmchooser.c:660
 #, c-format
 msgid ""
 "The host \"%s\" is not willing to support a login session right now.  Please "
@@ -1928,11 +1928,11 @@ msgstr ""
 "sonra sınayın."
 
 #. markup
-#: gui/gdmchooser.c:1284
+#: gui/mdmchooser.c:1284
 msgid "Did not receive response from server"
 msgstr "Vericidən cavab alına bilmədi"
 
-#: gui/gdmchooser.c:1285
+#: gui/mdmchooser.c:1285
 #, c-format
 msgid ""
 "Did not receive any response from host \"%s\" in %d seconds.  Perhaps the "
@@ -1943,16 +1943,16 @@ msgstr ""
 "söndürülüb ya da hazırda giriş iclasını dəstəkləmək istəmir.  Xahiş edirik "
 "daha sonra sınayın."
 
-#: gui/gdmchooser.c:1391
+#: gui/mdmchooser.c:1391
 msgid "Cannot find host"
 msgstr "Qovşaq tapıla bilmir"
 
-#: gui/gdmchooser.c:1392
+#: gui/mdmchooser.c:1392
 #, c-format
 msgid "I cannot find the host \"%s\", perhaps you have mistyped it."
 msgstr "\"%s\" qovşağı tapıla bilmir, ola bilər ki onu düzgün daxil etməmişsiniz."
 
-#: gui/gdmchooser.c:1678
+#: gui/mdmchooser.c:1678
 msgid ""
 "The main area of this application shows the hosts on the local network that "
 "have \"XDMCP\" enabled. This allows users to login remotely to other "
@@ -1968,105 +1968,105 @@ msgstr ""
 "Şəbəkədəki yeni qovşaqları \"Yenilə\" düyməsinə basaraq yoxlaya bilərsiniz.  "
 "Qovşaqda iclası başladmaq üçün qovşağı seçib \"Bağlan\" düyməsinə basın."
 
-#: gui/gdmchooser.c:1725
+#: gui/mdmchooser.c:1725
 #, c-format
 msgid "Can't open default host icon: %s"
 msgstr "Ön qurğulu kompüter timsalı açıla bilmədi: %s"
 
-#: gui/gdmchooser.c:1950 gui/gdmlogin.c:3948 gui/gdmlogin.c:3955
+#: gui/mdmchooser.c:1950 gui/mdmlogin.c:3948 gui/mdmlogin.c:3955
 #: gui/greeter/greeter.c:1104 gui/greeter/greeter.c:1111
 msgid "Could not set signal mask!"
 msgstr "Siqnal maskasini ala bilmədim!"
 
-#: gui/gdmchooser.c:1956
+#: gui/mdmchooser.c:1956
 msgid "Socket for xdm communication"
 msgstr "XDM rabitələri üçün soket"
 
-#: gui/gdmchooser.c:1956
+#: gui/mdmchooser.c:1956
 msgid "SOCKET"
 msgstr "QAPI"
 
-#: gui/gdmchooser.c:1959
+#: gui/mdmchooser.c:1959
 msgid "Client address to return in response to xdm"
 msgstr "XDM-yə veriləcək alıcı cavabı"
 
-#: gui/gdmchooser.c:1959
+#: gui/mdmchooser.c:1959
 msgid "ADDRESS"
 msgstr "ÜNVAN"
 
-#: gui/gdmchooser.c:1962
+#: gui/mdmchooser.c:1962
 msgid "Connection type to return in response to xdm"
 msgstr "XDM-yə cavab veriləcək bağlantı növü"
 
-#: gui/gdmchooser.c:1962
+#: gui/mdmchooser.c:1962
 msgid "TYPE"
 msgstr "NÖV"
 
 #. markup
-#: gui/gdmchooser.c:2091
+#: gui/mdmchooser.c:2091
 msgid "Cannot run chooser"
 msgstr "Seçici işə salına bilmir"
 
-#: gui/gdmchooser.c:2092
+#: gui/mdmchooser.c:2092
 #, c-format
 msgid ""
 "The chooser version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr ""
 "Salamlayıcı buraxılışı (%s) demon buraxılışı ilə (%s) uyğun gəlmir. Deyəsən "
-"gdm-ni yeniləmişsiniz. Xahiş edirik, gdm demonunun yenidən başladın ya da "
+"mdm-ni yeniləmişsiniz. Xahiş edirik, mdm demonunun yenidən başladın ya da "
 "kompüteri yenidən başladın."
 
 #. markup
-#: gui/gdmcomm.c:405 gui/gdmphotosetup.c:70
-msgid "GDM (The GNOME Display Manager) is not running."
-msgstr "GDM (GNOME Ekran İdarəçisi) fəaliyyətdə deyil."
+#: gui/mdmcomm.c:405 gui/mdmphotosetup.c:70
+msgid "MDM (The GNOME Display Manager) is not running."
+msgstr "MDM (GNOME Ekran İdarəçisi) fəaliyyətdə deyil."
 
-#: gui/gdmcomm.c:408 gui/gdmphotosetup.c:73
+#: gui/mdmcomm.c:408 gui/mdmphotosetup.c:73
 msgid ""
 "You might in fact be using a different display manager, such as KDM (KDE "
 "Display Manager) or xdm."
 msgstr "KDM ya da xdm kimi ekran idarəçisini istifadə edir ola bilərsiniz."
 
-#: gui/gdmcomm.c:411 gui/gdmphotosetup.c:76
+#: gui/mdmcomm.c:411 gui/mdmphotosetup.c:76
 msgid ""
-"If you still wish to use this feature, either start GDM yourself or ask your "
-"system administrator to start GDM."
+"If you still wish to use this feature, either start MDM yourself or ask your "
+"system administrator to start MDM."
 msgstr ""
-"Yenə də bunu işlətmək istəyirsinizsə, ya GDM-ni özünüz başladın ya da sistem "
+"Yenə də bunu işlətmək istəyirsinizsə, ya MDM-ni özünüz başladın ya da sistem "
 "idarəçinizlə bu barədə görüşün."
 
 #. markup
-#: gui/gdmcomm.c:433 gui/gdmflexiserver.c:697
-msgid "Cannot communicate with GDM (The GNOME Display Manager)"
-msgstr "GDM (GNOME Ekran İdarəçisi) ilə rabitə qurula bilmir"
+#: gui/mdmcomm.c:433 gui/mdmflexiserver.c:697
+msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgstr "MDM (GNOME Ekran İdarəçisi) ilə rabitə qurula bilmir"
 
-#: gui/gdmcomm.c:436 gui/gdmflexiserver.c:700
-msgid "Perhaps you have an old version of GDM running."
-msgstr "Bəlkə GDM-nin köhnə buraxılışınaa maliksiniz?"
+#: gui/mdmcomm.c:436 gui/mdmflexiserver.c:700
+msgid "Perhaps you have an old version of MDM running."
+msgstr "Bəlkə MDM-nin köhnə buraxılışınaa maliksiniz?"
 
-#: gui/gdmcomm.c:453 gui/gdmcomm.c:456
-msgid "Cannot communicate with gdm, perhaps you have an old version running."
-msgstr "GDM ilə rabitə qurula bilmir, bəlkə köhnə buraxılışa maliksiniz."
+#: gui/mdmcomm.c:453 gui/mdmcomm.c:456
+msgid "Cannot communicate with mdm, perhaps you have an old version running."
+msgstr "MDM ilə rabitə qurula bilmir, bəlkə köhnə buraxılışa maliksiniz."
 
-#: gui/gdmcomm.c:459
+#: gui/mdmcomm.c:459
 msgid "The allowed limit of flexible X servers reached."
 msgstr "İcazə verilən fleksibl X verici miqdarı aşıldı."
 
-#: gui/gdmcomm.c:461
+#: gui/mdmcomm.c:461
 msgid "There were errors trying to start the X server."
 msgstr "X verici başlatma cəhdləri sırasında xətalar oldu."
 
-#: gui/gdmcomm.c:463
+#: gui/mdmcomm.c:463
 msgid "The X server failed.  Perhaps it is not configured well."
 msgstr "X verici iflas etdi. Deyəsən düzgün quraşdırılmayıb."
 
-#: gui/gdmcomm.c:466
+#: gui/mdmcomm.c:466
 msgid "Too many X sessions running."
 msgstr "Həddindən artıq X iclası işləyir."
 
-#: gui/gdmcomm.c:468
+#: gui/mdmcomm.c:468
 msgid ""
 "The nested X server (Xnest) cannot connect to your current X server.  You "
 "may be missing an X authorization file."
@@ -2074,37 +2074,37 @@ msgstr ""
 "Xnest sizin hazırkı X vericinizə bağlana bilmədi. Yoxsa tanıtma faylınız "
 "əksikdir."
 
-#: gui/gdmcomm.c:473
+#: gui/mdmcomm.c:473
 msgid ""
-"The nested X server (Xnest) is not available, or gdm is badly configured.\n"
+"The nested X server (Xnest) is not available, or mdm is badly configured.\n"
 "Please install the Xnest package in order to use the nested login."
 msgstr ""
-"X verici (Xnest) yoxdur ya da gdm düzgün quraşdırılmayıb.\n"
+"X verici (Xnest) yoxdur ya da mdm düzgün quraşdırılmayıb.\n"
 "Belə girişlər üçün xahiş edirik Xnest paketini qurun."
 
-#: gui/gdmcomm.c:478
-msgid "The X server is not available, it is likely that gdm is badly configured."
+#: gui/mdmcomm.c:478
+msgid "The X server is not available, it is likely that mdm is badly configured."
 msgstr "X verici yoxdur, deyəsən düzgün quraşdırılmayıb."
 
-#: gui/gdmcomm.c:482
+#: gui/mdmcomm.c:482
 msgid ""
 "Trying to set an unknown logout action, or trying to set a logout action "
 "which is not available."
 msgstr "Namə'lum çıxış gedişatı verildi."
 
-#: gui/gdmcomm.c:485
+#: gui/mdmcomm.c:485
 msgid "Virtual terminals not supported."
 msgstr "Virtual terminallar dəstəklənmir."
 
-#: gui/gdmcomm.c:487
+#: gui/mdmcomm.c:487
 msgid "Trying to change to an invalid virtual terminal number."
 msgstr "Hökmsüz terminal nönrəsinə keçməyə cəhd edilir."
 
-#: gui/gdmcomm.c:489
+#: gui/mdmcomm.c:489
 msgid "Trying to update an unsupported configuration key."
 msgstr "Dəstəklənməyən qurğu açarını yenilənməyə çalışılır."
 
-#: gui/gdmcomm.c:491
+#: gui/mdmcomm.c:491
 msgid ""
 "You do not seem to have authentication needed be for this operation.  "
 "Perhaps your .Xauthority file is not set up correctly."
@@ -2112,65 +2112,65 @@ msgstr ""
 "Bu əməliyyat üçün səlahiyyətləriniz yoxdur.  Deyəsən .Xauthority faylınız "
 "düzgün quraşdırılmayıb."
 
-#: gui/gdmcomm.c:495
-msgid "Too many messages were sent to gdm and it hung upon us."
-msgstr "gdm-yə həddindən artıq ismarış yollandı."
+#: gui/mdmcomm.c:495
+msgid "Too many messages were sent to mdm and it hung upon us."
+msgstr "mdm-yə həddindən artıq ismarış yollandı."
 
-#: gui/gdmcomm.c:498
+#: gui/mdmcomm.c:498
 msgid "Unknown error occured."
 msgstr "Namə'lum xəta baş verdi."
 
-#: gui/gdmflexiserver-xnest.desktop.in.h:1
+#: gui/mdmflexiserver-xnest.desktop.in.h:1
 msgid "Log in as another user inside a nested window"
 msgstr "Pəncərə yerinə yeni istifadəçi olaraq sistemə gir"
 
-#: gui/gdmflexiserver-xnest.desktop.in.h:2
+#: gui/mdmflexiserver-xnest.desktop.in.h:2
 msgid "New Login in a Nested Window"
 msgstr "Daxili Pəncərədə Yeni Giriş"
 
 #. markup
-#: gui/gdmflexiserver.c:100
+#: gui/mdmflexiserver.c:100
 msgid "Cannot change display"
 msgstr "Displey dəyişdirilə bilmir"
 
-#: gui/gdmflexiserver.c:177
+#: gui/mdmflexiserver.c:177
 msgid "Nobody"
 msgstr "Heçkim"
 
-#: gui/gdmflexiserver.c:212
+#: gui/mdmflexiserver.c:212
 #, c-format
 msgid "Display %s on virtual terminal %d"
 msgstr "%s displeyi %d virtual terminalında"
 
-#: gui/gdmflexiserver.c:217
+#: gui/mdmflexiserver.c:217
 #, c-format
 msgid "Nested display %s on virtual terminal %d"
 msgstr "Hopdurulmuş %s displeyi %d virtual terminalında"
 
-#: gui/gdmflexiserver.c:247 gui/gdmlogin.c:2888
+#: gui/mdmflexiserver.c:247 gui/mdmlogin.c:2888
 #: gui/greeter/greeter_item_ulist.c:449
 msgid "Username"
 msgstr "İstifadəçi adı"
 
-#: gui/gdmflexiserver.c:256
+#: gui/mdmflexiserver.c:256
 msgid "Display"
 msgstr "Displey"
 
-#: gui/gdmflexiserver.c:310
+#: gui/mdmflexiserver.c:310
 msgid "Open Displays"
 msgstr "Displeyləri Aç"
 
 #. parent
 #. flags
-#: gui/gdmflexiserver.c:313
+#: gui/mdmflexiserver.c:313
 msgid "_Open New Display"
 msgstr "_Yeni Displey Aç"
 
-#: gui/gdmflexiserver.c:315
+#: gui/mdmflexiserver.c:315
 msgid "Change to _Existing Display"
 msgstr "Mövcud Displeyə _Keç"
 
-#: gui/gdmflexiserver.c:323
+#: gui/mdmflexiserver.c:323
 msgid ""
 "There are some displays already open.  You can select one from the list "
 "below or open a new one."
@@ -2178,582 +2178,582 @@ msgstr ""
 "Onsuz da açıq displeylər mövcuddur.  Aşağıdakı siyahıdan birini seçə "
 "bilərsiniz, ya da yenisini aça bilərsiniz."
 
-#: gui/gdmflexiserver.c:390 gui/gdmflexiserver.c:785
+#: gui/mdmflexiserver.c:390 gui/mdmflexiserver.c:785
 msgid "Can't lock screen"
 msgstr "Ekran qıfıllana bilmir"
 
-#: gui/gdmflexiserver.c:393 gui/gdmflexiserver.c:788
+#: gui/mdmflexiserver.c:393 gui/mdmflexiserver.c:788
 msgid "Can't disable xscreensaver display hacks"
 msgstr "Xscreensaver ekran hekləri qeyri-fəallaşdırıla bilmir"
 
-#: gui/gdmflexiserver.c:548
+#: gui/mdmflexiserver.c:548
 msgid "Choose server"
 msgstr "Verici seç"
 
-#: gui/gdmflexiserver.c:559
+#: gui/mdmflexiserver.c:559
 msgid "Choose the X server to start"
 msgstr "Başladılacaq X vericini seç"
 
-#: gui/gdmflexiserver.c:565
+#: gui/mdmflexiserver.c:565
 msgid "Standard server"
 msgstr "Standart verici"
 
-#: gui/gdmflexiserver.c:632
-msgid "Send the specified protocol command to gdm"
-msgstr "gdm-yə bilridilən protokol əmrini yolla"
+#: gui/mdmflexiserver.c:632
+msgid "Send the specified protocol command to mdm"
+msgstr "mdm-yə bilridilən protokol əmrini yolla"
 
-#: gui/gdmflexiserver.c:632
+#: gui/mdmflexiserver.c:632
 msgid "COMMAND"
 msgstr "ƏMR"
 
-#: gui/gdmflexiserver.c:633
+#: gui/mdmflexiserver.c:633
 msgid "Xnest mode"
 msgstr "Xnest modu"
 
-#: gui/gdmflexiserver.c:634
+#: gui/mdmflexiserver.c:634
 msgid "Do not lock current screen"
 msgstr "Hazırkı ekranı qıfıllama"
 
-#: gui/gdmflexiserver.c:635
+#: gui/mdmflexiserver.c:635
 msgid "Debugging output"
 msgstr "Xəta ayıglaması yekunu"
 
-#: gui/gdmflexiserver.c:636
+#: gui/mdmflexiserver.c:636
 msgid "Authenticate before running --command"
 msgstr "--əmrdən əvvəl özünü tanıt"
 
 #. markup
-#: gui/gdmflexiserver.c:725
+#: gui/mdmflexiserver.c:725
 msgid "You do not seem to have the authentication needed for this operation"
 msgstr "Bu əməliyyatı yerinə gətirmək üçün lazımi səlahiyyətləriniz yoxdur."
 
-#: gui/gdmflexiserver.c:729
+#: gui/mdmflexiserver.c:729
 msgid "Perhaps your .Xauthority file is not set up correctly."
 msgstr "Deyəsən, .Xauthority faylınız düzgün quraşdırılmayıb."
 
 #. markup
-#: gui/gdmflexiserver.c:753
+#: gui/mdmflexiserver.c:753
 msgid "You do not seem to be logged in on the console"
 msgstr "Siz konsola girmiş görünmürsünüz."
 
-#: gui/gdmflexiserver.c:756
+#: gui/mdmflexiserver.c:756
 msgid "Starting a new login only works correctly on the console."
 msgstr "Yeni giriş hazırda yalnız konsolda işləyir."
 
 #. markup
-#: gui/gdmflexiserver.c:803
+#: gui/mdmflexiserver.c:803
 msgid "Cannot start new display"
 msgstr "Yeni ekran başladıla bilmir"
 
-#: gui/gdmflexiserver.desktop.in.h:1
+#: gui/mdmflexiserver.desktop.in.h:1
 msgid "Log in as another user without logging out"
 msgstr "Sistemdən çıxmadan yeni istifadəçi olaraq girin"
 
-#: gui/gdmflexiserver.desktop.in.h:2
+#: gui/mdmflexiserver.desktop.in.h:2
 msgid "New Login"
 msgstr "Yeni Giriş"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:53
+#: gui/mdmlanguages.c:53
 msgid "A-M|Albanian"
 msgstr "A-M|Alban dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:55
+#: gui/mdmlanguages.c:55
 msgid "A-M|Amharic"
 msgstr "A-M|Amharik dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:57
+#: gui/mdmlanguages.c:57
 msgid "A-M|Arabic (Egypt)"
 msgstr "Ə-M|Ərəbcə (Misir)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:59
+#: gui/mdmlanguages.c:59
 msgid "A-M|Arabic (Lebanon)"
 msgstr "Ə-M|Ərəbcə (Livan)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:61
+#: gui/mdmlanguages.c:61
 msgid "A-M|Armenian"
 msgstr "A-M|Ermənicə"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:63
+#: gui/mdmlanguages.c:63
 msgid "A-M|Azerbaijani"
 msgstr "A-M|Azərbaycanca"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:65
+#: gui/mdmlanguages.c:65
 msgid "A-M|Basque"
 msgstr "A-M|Basqca"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:67
+#: gui/mdmlanguages.c:67
 msgid "A-M|Belarusian"
 msgstr "A-M|Belarusca"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:69
+#: gui/mdmlanguages.c:69
 msgid "A-M|Bengali"
 msgstr "A-M|Bengal dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:71
+#: gui/mdmlanguages.c:71
 msgid "A-M|Bengali (India)"
 msgstr "A-M|Bengal dili (Hindistan)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:73
+#: gui/mdmlanguages.c:73
 msgid "A-M|Bulgarian"
 msgstr "A-M|Bolqar dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:75
+#: gui/mdmlanguages.c:75
 msgid "A-M|Bosnian"
 msgstr "A-M|Xorvatca"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:77
+#: gui/mdmlanguages.c:77
 msgid "A-M|Catalan"
 msgstr "A-M|Katalanca"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:79
+#: gui/mdmlanguages.c:79
 msgid "A-M|Chinese (simplified)"
 msgstr "A-M|Çincə (sadə)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:81
+#: gui/mdmlanguages.c:81
 msgid "A-M|Chinese (traditional)"
 msgstr "A-M|Çincə (ənənəvi)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:83
+#: gui/mdmlanguages.c:83
 msgid "A-M|Croatian"
 msgstr "A-M|Xorvatca"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:85
+#: gui/mdmlanguages.c:85
 msgid "A-M|Czech"
 msgstr "A-M|Çexcə"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:87
+#: gui/mdmlanguages.c:87
 msgid "A-M|Danish"
 msgstr "A-M|Daniya dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:89
+#: gui/mdmlanguages.c:89
 msgid "A-M|Dutch"
 msgstr "A-M|Niderland dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:91
+#: gui/mdmlanguages.c:91
 msgid "A-M|English"
 msgstr "A-M|İngiliscə"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:93
+#: gui/mdmlanguages.c:93
 msgid "A-M|English (USA)"
 msgstr "A-M|İngiliscə (ABŞ)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:95
+#: gui/mdmlanguages.c:95
 msgid "A-M|English (Australia)"
 msgstr "A-M|İngiliscə (Avstraliya)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:97
+#: gui/mdmlanguages.c:97
 msgid "A-M|English (UK)"
 msgstr "A-M|İngiliscə (BB)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:99
+#: gui/mdmlanguages.c:99
 msgid "A-M|English (Canada)"
 msgstr "A-M|İngiliscə (Kanada)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:101
+#: gui/mdmlanguages.c:101
 msgid "A-M|English (Ireland)"
 msgstr "A-M|İngiliscə (İrlandiya)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:103
+#: gui/mdmlanguages.c:103
 msgid "A-M|English (Denmark)"
 msgstr "A-M|İngiliscə (Danimarka)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:105
+#: gui/mdmlanguages.c:105
 msgid "A-M|Estonian"
 msgstr "A-M|Eston dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:107
+#: gui/mdmlanguages.c:107
 msgid "A-M|Finnish"
 msgstr "A-M|Fin dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:109
+#: gui/mdmlanguages.c:109
 msgid "A-M|French"
 msgstr "A-M|Fransızca"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:111
+#: gui/mdmlanguages.c:111
 msgid "A-M|French (Belgium)"
 msgstr "A-M|Fransızca (Belçika)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:113
+#: gui/mdmlanguages.c:113
 msgid "A-M|French (Switzerland)"
 msgstr "A-M|Fransızca (İsveçrə)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:115
+#: gui/mdmlanguages.c:115
 msgid "A-M|Galician"
 msgstr "A-M|Qal dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:117
+#: gui/mdmlanguages.c:117
 msgid "A-M|German"
 msgstr "A-M|Almanca"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:119
+#: gui/mdmlanguages.c:119
 msgid "A-M|German (Austria)"
 msgstr "A-M|Almanca (Avstriya)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:121
+#: gui/mdmlanguages.c:121
 msgid "A-M|German (Switzerland)"
 msgstr "A-M|Almanca (İsveçrə)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:123
+#: gui/mdmlanguages.c:123
 msgid "A-M|Greek"
 msgstr "A-M|Yunanca"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:125
+#: gui/mdmlanguages.c:125
 msgid "A-M|Gujarati"
 msgstr "A-M|Gujarati dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:127 gui/gdmlanguages.c:129
+#: gui/mdmlanguages.c:127 gui/mdmlanguages.c:129
 msgid "A-M|Hebrew"
 msgstr "A-M|Yəhudicə"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:131
+#: gui/mdmlanguages.c:131
 msgid "A-M|Hindi"
 msgstr "A-M|Hindu dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:133
+#: gui/mdmlanguages.c:133
 msgid "A-M|Hungarian"
 msgstr "A-M|Macarca"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:135
+#: gui/mdmlanguages.c:135
 msgid "A-M|Icelandic"
 msgstr "A-M|İslandiya  dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:137
+#: gui/mdmlanguages.c:137
 msgid "A-M|Indonesian"
 msgstr "A-M|Indonezia dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:139
+#: gui/mdmlanguages.c:139
 msgid "A-M|Interlingua"
 msgstr "A-M|Beynəlxalq  dil"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:141
+#: gui/mdmlanguages.c:141
 msgid "A-M|Irish"
 msgstr "A-M|İrlandiya dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:143
+#: gui/mdmlanguages.c:143
 msgid "A-M|Italian"
 msgstr "A-M|İtalyan dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:145
+#: gui/mdmlanguages.c:145
 msgid "A-M|Japanese"
 msgstr "A-M|Yapon dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:147
+#: gui/mdmlanguages.c:147
 msgid "A-M|Kannada"
 msgstr "A-M|Kannada dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:149
+#: gui/mdmlanguages.c:149
 msgid "A-M|Korean"
 msgstr "A-M|Koreya dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:151
+#: gui/mdmlanguages.c:151
 msgid "A-M|Latvian"
 msgstr "A-M|Latış dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:153
+#: gui/mdmlanguages.c:153
 msgid "A-M|Lithuanian"
 msgstr "A-M|Litva dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:155
+#: gui/mdmlanguages.c:155
 msgid "A-M|Macedonian"
 msgstr "A-M|Makedon dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:157
+#: gui/mdmlanguages.c:157
 msgid "A-M|Malay"
 msgstr "A-M|Malay dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:159
+#: gui/mdmlanguages.c:159
 msgid "A-M|Malayalam"
 msgstr "A-M|Malayam dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:161
+#: gui/mdmlanguages.c:161
 msgid "A-M|Marathi"
 msgstr "A-M|Marati dili"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:163
+#: gui/mdmlanguages.c:163
 msgid "A-M|Mongolian"
 msgstr "A-M|Mongol dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:165
+#: gui/mdmlanguages.c:165
 msgid "N-Z|Norwegian (bokmal)"
 msgstr "N-Z|Norveç dili (bokmal)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:167
+#: gui/mdmlanguages.c:167
 msgid "N-Z|Norwegian (nynorsk)"
 msgstr "N-Z|Norveç dili (nynorsk)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:169
+#: gui/mdmlanguages.c:169
 msgid "N-Z|Oriya"
 msgstr "N-Z|Oriya dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:171
+#: gui/mdmlanguages.c:171
 msgid "N-Z|Panjabi"
 msgstr "N-Z|Panjabi dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:173
+#: gui/mdmlanguages.c:173
 msgid "N-Z|Persian"
 msgstr "N-Z|Farsca"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:175
+#: gui/mdmlanguages.c:175
 msgid "N-Z|Polish"
 msgstr "N-Z|Polyakca"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:177
+#: gui/mdmlanguages.c:177
 msgid "N-Z|Portuguese"
 msgstr "N-Z|Portuqalca"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:179
+#: gui/mdmlanguages.c:179
 msgid "N-Z|Portuguese (Brazilian)"
 msgstr "N-Z|Portuqalca (Brazilya)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:181
+#: gui/mdmlanguages.c:181
 msgid "N-Z|Romanian"
 msgstr "N-Z|Rumınca"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:183
+#: gui/mdmlanguages.c:183
 msgid "N-Z|Russian"
 msgstr "N-Z|Rusca"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:185 gui/gdmlanguages.c:187
+#: gui/mdmlanguages.c:185 gui/mdmlanguages.c:187
 msgid "N-Z|Serbian"
 msgstr "N-Z|Serbcə"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:189
+#: gui/mdmlanguages.c:189
 msgid "N-Z|Serbian (Latin)"
 msgstr "N-Z|Serbcə (Latın)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:191
+#: gui/mdmlanguages.c:191
 msgid "N-Z|Serbian (Jekavian)"
 msgstr "N-Z|Serbcə (İyekaviyan)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:193
+#: gui/mdmlanguages.c:193
 msgid "N-Z|Slovak"
 msgstr "N-Z|Slovak dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:195
+#: gui/mdmlanguages.c:195
 msgid "N-Z|Slovenian"
 msgstr "N-Z|Sloven dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:197
+#: gui/mdmlanguages.c:197
 msgid "N-Z|Spanish"
 msgstr "N-Z|İspan dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:199
+#: gui/mdmlanguages.c:199
 msgid "N-Z|Spanish (Mexico)"
 msgstr "N-Z|İspan dili (Mexiko)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:201
+#: gui/mdmlanguages.c:201
 msgid "N-Z|Swedish"
 msgstr "N-Z|İsveç dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:203
+#: gui/mdmlanguages.c:203
 msgid "N-Z|Swedish (Finland)"
 msgstr "N-Z|İsveç dili (Finlandiya)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:205
+#: gui/mdmlanguages.c:205
 msgid "N-Z|Tamil"
 msgstr "N-Z|Tamil dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:207
+#: gui/mdmlanguages.c:207
 msgid "N-Z|Telugu"
 msgstr "N-Z|Teluqu dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:209
+#: gui/mdmlanguages.c:209
 msgid "N-Z|Thai"
 msgstr "N-Z|Tay dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:211
+#: gui/mdmlanguages.c:211
 msgid "N-Z|Turkish"
 msgstr "N-Z|Türk dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:213
+#: gui/mdmlanguages.c:213
 msgid "N-Z|Ukrainian"
 msgstr "N-Z|Ukrayna dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:215
+#: gui/mdmlanguages.c:215
 msgid "N-Z|Vietnamese"
 msgstr "N-Z|Vyetnam dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:217
+#: gui/mdmlanguages.c:217
 msgid "N-Z|Walloon"
 msgstr "N-Z|Valun dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:219
+#: gui/mdmlanguages.c:219
 msgid "N-Z|Welsh"
 msgstr "N-Z|Uels dili"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:221
+#: gui/mdmlanguages.c:221
 msgid "N-Z|Yiddish"
 msgstr "N-Z|Yid dili"
 
 #. This is the POSIX/C locale for english, should really be in Other
-#: gui/gdmlanguages.c:223
+#: gui/mdmlanguages.c:223
 msgid "Other|POSIX/C English"
 msgstr "Diqər|POSIX/C İngilis dili"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: gui/gdmlanguages.c:419
+#: gui/mdmlanguages.c:419
 msgid "A-M"
 msgstr "A-M"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: gui/gdmlanguages.c:427
+#: gui/mdmlanguages.c:427
 msgid "N-Z"
 msgstr "N-Z"
 
-#: gui/gdmlogin.c:222 gui/greeter/greeter_parser.c:1047
+#: gui/mdmlogin.c:222 gui/greeter/greeter_parser.c:1047
 #, c-format
 msgid "User %s will login in %d seconds"
 msgstr "%s istifadəçisi %d saniyə içində sistemə girəcəkdir"
 
-#: gui/gdmlogin.c:447
+#: gui/mdmlogin.c:447
 #, c-format
 msgid "%s: String too long!"
 msgstr "%s: Qatar çox uzundur!"
 
-#: gui/gdmlogin.c:449
+#: gui/mdmlogin.c:449
 #, c-format
 msgid "%sWelcome to %s%s"
 msgstr "%s%s%s-ə Xoş Gəlmisən"
 
 #. markup
-#: gui/gdmlogin.c:537
+#: gui/mdmlogin.c:537
 msgid "Could not fork a new process!"
 msgstr "Yeni gedişat fork edilə bilmədi!"
 
-#: gui/gdmlogin.c:539
+#: gui/mdmlogin.c:539
 msgid "You likely won't be able to log in either."
 msgstr "Yenə də deyəsən girə bilməyəcəksiniz."
 
-#: gui/gdmlogin.c:583 gui/greeter/greeter_system.c:45
+#: gui/mdmlogin.c:583 gui/greeter/greeter_system.c:45
 msgid "Are you sure you want to reboot the machine?"
 msgstr "Kompyuteri yenidən baslatmaq mi istəyirsən?"
 
 #. markup
-#: gui/gdmlogin.c:585 gui/gdmlogin.c:2752 gui/greeter/greeter_parser.c:1027
+#: gui/mdmlogin.c:585 gui/mdmlogin.c:2752 gui/greeter/greeter_parser.c:1027
 #: gui/greeter/greeter_system.c:47 gui/greeter/greeter_system.c:168
 msgid "_Reboot"
 msgstr "Yenidən _Başlat"
 
-#: gui/gdmlogin.c:597 gui/greeter/greeter_system.c:58
+#: gui/mdmlogin.c:597 gui/greeter/greeter_system.c:58
 msgid "Are you sure you want to shut down the machine?"
 msgstr "Həqiqətən də kompüteri söndürmək istəyirsiniz?"
 
 #. markup
-#: gui/gdmlogin.c:599 gui/gdmlogin.c:2765 gui/greeter/greeter_parser.c:1017
+#: gui/mdmlogin.c:599 gui/mdmlogin.c:2765 gui/greeter/greeter_parser.c:1017
 #: gui/greeter/greeter_system.c:60 gui/greeter/greeter_system.c:180
 msgid "Shut _Down"
 msgstr "_Söndür"
 
-#: gui/gdmlogin.c:619 gui/greeter/greeter_system.c:70
+#: gui/mdmlogin.c:619 gui/greeter/greeter_system.c:70
 msgid "Are you sure you want to suspend the machine?"
 msgstr "Həqiqətən də kompüteri gözlətmək istəyirsiniz?"
 
 #. markup
-#: gui/gdmlogin.c:621 gui/gdmlogin.c:2779 gui/greeter/greeter_system.c:72
+#: gui/mdmlogin.c:621 gui/mdmlogin.c:2779 gui/greeter/greeter_system.c:72
 msgid "_Suspend"
 msgstr "_Gözlət"
 
-#: gui/gdmlogin.c:685 gui/gdmlogin.c:3723 gui/greeter/greeter.c:164
+#: gui/mdmlogin.c:685 gui/mdmlogin.c:3723 gui/greeter/greeter.c:164
 #: gui/greeter/greeter.c:858
 msgid "Welcome"
 msgstr "Xoş Gəldiniz"
 
-#: gui/gdmlogin.c:688 gui/gdmlogin.c:3726 gui/greeter/greeter.c:167
+#: gui/mdmlogin.c:688 gui/mdmlogin.c:3726 gui/greeter/greeter.c:167
 #: gui/greeter/greeter.c:861
 #, c-format
 msgid "Welcome to %n"
 msgstr "%n Kompüterinə Xoş Gəldiniz"
 
-#: gui/gdmlogin.c:736 gui/greeter/greeter.c:192
+#: gui/mdmlogin.c:736 gui/greeter/greeter.c:192
 msgid "TimedLoginDelay was less than 5.  I'll just use 5."
 msgstr "ZamanlıGirişGecikməsi 5-dən aşağıdır.  5 istifadə ediləcəkdir."
 
-#: gui/gdmlogin.c:854 gui/greeter/greeter_session.c:119
+#: gui/mdmlogin.c:854 gui/greeter/greeter_session.c:119
 #, c-format
 msgid ""
 "Your preferred session type %s is not installed on this machine.\n"
@@ -2765,13 +2765,13 @@ msgstr ""
 #  default is nicely translated
 #  Translators: default GNOME session
 #. markup
-#: gui/gdmlogin.c:860 gui/gdmlogin.c:887 gui/gdmlogin.c:965
+#: gui/mdmlogin.c:860 gui/mdmlogin.c:887 gui/mdmlogin.c:965
 #: gui/greeter/greeter_action_language.c:143 gui/greeter/greeter_session.c:125
 #: gui/greeter/greeter_session.c:155
 msgid "Make _Default"
 msgstr "Ön Qurğulu _Olsun"
 
-#: gui/gdmlogin.c:860 gui/greeter/greeter_session.c:125
+#: gui/mdmlogin.c:860 gui/greeter/greeter_session.c:125
 msgid "Just _Log In"
 msgstr "_Yenə Də Gir"
 
@@ -2779,7 +2779,7 @@ msgstr "_Yenə Də Gir"
 #. no_group
 #. untranslated
 #. markup
-#: gui/gdmlogin.c:879 gui/gdmlogin.c:959
+#: gui/mdmlogin.c:879 gui/mdmlogin.c:959
 #: gui/greeter/greeter_action_language.c:137 gui/greeter/greeter_session.c:147
 #, c-format
 msgid ""
@@ -2789,12 +2789,12 @@ msgstr ""
 "Bu iclas üçün %s seçdiniz, amma ön qurğulu iclas %s-dır.\n"
 "Gələcəkdəki iclaslar üçün %s-ni ön qurğulu iclas etmək istəyirsiniz?"
 
-#: gui/gdmlogin.c:887 gui/gdmlogin.c:965
+#: gui/mdmlogin.c:887 gui/mdmlogin.c:965
 #: gui/greeter/greeter_action_language.c:143 gui/greeter/greeter_session.c:155
 msgid "Just For _This Session"
 msgstr "Ancaq _Bu İclas Üçün"
 
-#: gui/gdmlogin.c:897 gui/greeter/greeter_session.c:168
+#: gui/mdmlogin.c:897 gui/greeter/greeter_session.c:168
 #, c-format
 msgid ""
 "You have chosen %s for this session.\n"
@@ -2807,53 +2807,53 @@ msgstr ""
 "'switchdesk' vasitəsini icra edin\n"
 "(Panel menyusundan Sistem->Masa Üstü Keçiş vasitəsi)."
 
-#: gui/gdmlogin.c:941 gui/gdmlogin.c:950
+#: gui/mdmlogin.c:941 gui/mdmlogin.c:950
 #: gui/greeter/greeter_action_language.c:53
 #: gui/greeter/greeter_action_language.c:121
 #: gui/greeter/greeter_action_language.c:129
 msgid "System Default"
 msgstr "Sistemin Ön Qurğulusu"
 
-#: gui/gdmlogin.c:1074 gui/gdmlogin.c:1088 gui/gdmlogin.c:1875
-#: gui/gdmlogin.c:2345 gui/gdmlogin.c:2994
+#: gui/mdmlogin.c:1074 gui/mdmlogin.c:1088 gui/mdmlogin.c:1875
+#: gui/mdmlogin.c:2345 gui/mdmlogin.c:2994
 msgid "_Username:"
 msgstr "_İstifadəçi Adı:"
 
-#: gui/gdmlogin.c:1146
+#: gui/mdmlogin.c:1146
 #, c-format
 msgid "%s session selected"
 msgstr "%s iclası seçildi"
 
-#: gui/gdmlogin.c:1172 gui/gdmlogin.c:1482 gui/greeter/greeter_session.c:271
+#: gui/mdmlogin.c:1172 gui/mdmlogin.c:1482 gui/greeter/greeter_session.c:271
 msgid "_Last"
 msgstr "_Sonuncu"
 
-#: gui/gdmlogin.c:1183 gui/greeter/greeter_session.c:277
+#: gui/mdmlogin.c:1183 gui/greeter/greeter_session.c:277
 msgid "Log in using the session that you have used last time you logged in"
 msgstr "Axırıncı dəfə işlətdiyiniz iclası istifadə edərək girin."
 
-#: gui/gdmlogin.c:1194 gui/greeter/greeter_session.c:264
+#: gui/mdmlogin.c:1194 gui/greeter/greeter_session.c:264
 msgid "Failsafe Gnome"
 msgstr "Failsafe Gnome"
 
-#: gui/gdmlogin.c:1195 gui/greeter/greeter_session.c:265
+#: gui/mdmlogin.c:1195 gui/greeter/greeter_session.c:265
 msgid "Failsafe xterm"
 msgstr "Failsafe xterm"
 
-#: gui/gdmlogin.c:1344 gui/greeter/greeter_session.c:429
+#: gui/mdmlogin.c:1344 gui/greeter/greeter_session.c:429
 #, c-format
 msgid "%s: Session directory %s not found!"
 msgstr "%s: %s İclas qovluğu tapıla bilmədi!"
 
-#: gui/gdmlogin.c:1350 gui/greeter/greeter_session.c:437
+#: gui/mdmlogin.c:1350 gui/greeter/greeter_session.c:437
 msgid "Yaikes, nothing found in the session directory."
 msgstr "Ehhhhhh, icaslar qovluğunda heç bir şey tapıla bilmədi."
 
-#: gui/gdmlogin.c:1361 gui/greeter/greeter_session.c:449
+#: gui/mdmlogin.c:1361 gui/greeter/greeter_session.c:449
 msgid "Failsafe _Gnome"
 msgstr "Failsafe _Gnome"
 
-#: gui/gdmlogin.c:1363 gui/greeter/greeter_session.c:451
+#: gui/mdmlogin.c:1363 gui/greeter/greeter_session.c:451
 msgid ""
 "This is a failsafe session that will log you into GNOME.  No startup scripts "
 "will be read and it is only to be used when you can't log in otherwise.  "
@@ -2863,11 +2863,11 @@ msgstr ""
 "skripti oxunmayacaqdır. Bunu başqa cür girdiyinizdə əldə edə bilərsiniz. "
 "GNOME 'Ön qurğulu' iclası işlədəcək."
 
-#: gui/gdmlogin.c:1386 gui/greeter/greeter_session.c:473
+#: gui/mdmlogin.c:1386 gui/greeter/greeter_session.c:473
 msgid "Failsafe _Terminal"
 msgstr "Failsafe _Terminal"
 
-#: gui/gdmlogin.c:1388 gui/greeter/greeter_session.c:475
+#: gui/mdmlogin.c:1388 gui/greeter/greeter_session.c:475
 msgid ""
 "This is a failsafe session that will log you into a terminal.  No startup "
 "scripts will be read and it is only to be used when you can't log in "
@@ -2877,7 +2877,7 @@ msgstr ""
 "oxunmayacaqdır. Bunu başqa cür girdiyinizdə əldə edə bilərsiniz. Terminaldan "
 "çıxmaq üçün 'exit' yazın."
 
-#: gui/gdmlogin.c:1409 gui/greeter/greeter_session.c:495
+#: gui/mdmlogin.c:1409 gui/greeter/greeter_session.c:495
 msgid "No default session link found. Using Failsafe GNOME.\n"
 msgstr "Ön qurğulu bir iclas bağı tapıla bilmədi! Failsafe GNOME.\n"
 
@@ -2885,193 +2885,193 @@ msgstr "Ön qurğulu bir iclas bağı tapıla bilmədi! Failsafe GNOME.\n"
 #. no_group
 #. untranslated
 #. makrup
-#: gui/gdmlogin.c:1453
+#: gui/mdmlogin.c:1453
 #, c-format
 msgid "%s language selected"
 msgstr "%s dili seçildi"
 
-#: gui/gdmlogin.c:1493
+#: gui/mdmlogin.c:1493
 msgid "Log in using the language that you have used last time you logged in"
 msgstr "Axırıncı dəfə işlətdiyiniz dili istifadə edərək girin"
 
-#: gui/gdmlogin.c:1497
+#: gui/mdmlogin.c:1497
 msgid "_System Default"
 msgstr "_Sistemdə Ön Qurğulu Olan"
 
-#: gui/gdmlogin.c:1508
+#: gui/mdmlogin.c:1508
 msgid "Log in using the default system language"
 msgstr "Sistemə ön qurğulu dili işlədərək gir"
 
-#: gui/gdmlogin.c:1528
+#: gui/mdmlogin.c:1528
 msgid "_Other"
 msgstr "Baş_qa"
 
-#: gui/gdmlogin.c:1906
+#: gui/mdmlogin.c:1906
 msgid "_Password:"
 msgstr "Ş_ifrə:"
 
 #. markup
 #. translators:  This is a nice and evil eggie text, translate
 #. * to your favourite currency
-#: gui/gdmlogin.c:2130 gui/greeter/greeter.c:434
+#: gui/mdmlogin.c:2130 gui/greeter/greeter.c:434
 msgid "Please insert 25 cents to log in."
 msgstr "Xahiş edirik 25 qəpik giriş haqqı ödəyin."
 
-#: gui/gdmlogin.c:2353
+#: gui/mdmlogin.c:2353
 msgid "Doubleclick on the user to log in"
 msgstr "Girmək üçün istifadəçiyə cüt tıqlayın"
 
-#: gui/gdmlogin.c:2477
+#: gui/mdmlogin.c:2477
 msgid "GNOME Desktop Manager"
 msgstr "GNOME Masa Üstü İdarəçisi"
 
-#: gui/gdmlogin.c:2503 gui/greeter/greeter_item.c:139
+#: gui/mdmlogin.c:2503 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"
 msgstr "%a %b %d, %H:%M"
 
-#: gui/gdmlogin.c:2505 gui/greeter/greeter_item.c:143
+#: gui/mdmlogin.c:2505 gui/greeter/greeter_item.c:143
 msgid "%a %b %d, %l:%M %p"
 msgstr "%a %b %d, %l:%M %p"
 
-#: gui/gdmlogin.c:2554
+#: gui/mdmlogin.c:2554
 msgid "Finger"
 msgstr "Finger"
 
-#: gui/gdmlogin.c:2660
-msgid "GDM Login"
-msgstr "GDM Girişi"
+#: gui/mdmlogin.c:2660
+msgid "MDM Login"
+msgstr "MDM Girişi"
 
-#: gui/gdmlogin.c:2703 gui/greeter/greeter_parser.c:997
+#: gui/mdmlogin.c:2703 gui/greeter/greeter_parser.c:997
 msgid "_Session"
 msgstr "_İclas"
 
-#: gui/gdmlogin.c:2710 gui/greeter/greeter_parser.c:992
+#: gui/mdmlogin.c:2710 gui/greeter/greeter_parser.c:992
 msgid "_Language"
 msgstr "_Dil"
 
-#: gui/gdmlogin.c:2722 gui/greeter/greeter_system.c:134
+#: gui/mdmlogin.c:2722 gui/greeter/greeter_system.c:134
 msgid "_XDMCP Chooser..."
 msgstr "_XDMCP Seçicisi..."
 
-#: gui/gdmlogin.c:2729 gui/greeter/greeter_system.c:141
+#: gui/mdmlogin.c:2729 gui/greeter/greeter_system.c:141
 #: gui/greeter/greeter_system.c:331
 msgid ""
 "Run an XDMCP chooser which will allow you to log into available remote "
 "machines, if there are any."
 msgstr "Əgər varsa, mövcud uzaq maşınlara daxil olmaq üçün XDMCP vericisini işə sal."
 
-#: gui/gdmlogin.c:2738 gui/greeter/greeter_system.c:149
+#: gui/mdmlogin.c:2738 gui/greeter/greeter_system.c:149
 msgid "_Configure Login Manager..."
 msgstr "Giriş İdarəçisini _Quraşdır..."
 
-#: gui/gdmlogin.c:2745 gui/greeter/greeter_system.c:156
+#: gui/mdmlogin.c:2745 gui/greeter/greeter_system.c:156
 #: gui/greeter/greeter_system.c:351
-msgid "Configure GDM (this login manager). This will require the root password."
+msgid "Configure MDM (this login manager). This will require the root password."
 msgstr ""
-"GDMni (bu giriş idarəçisini) Quraşdırın. Bunun üçün ali istifadəçi şifrəsi "
+"MDMni (bu giriş idarəçisini) Quraşdırın. Bunun üçün ali istifadəçi şifrəsi "
 "lazımdır."
 
-#: gui/gdmlogin.c:2759 gui/greeter/greeter_system.c:175
+#: gui/mdmlogin.c:2759 gui/greeter/greeter_system.c:175
 msgid "Reboot your computer"
 msgstr "Kompüteri yenidən başlat"
 
-#: gui/gdmlogin.c:2772 gui/greeter/greeter_system.c:187
+#: gui/mdmlogin.c:2772 gui/greeter/greeter_system.c:187
 msgid "Shut down the system so that you may safely turn off the computer."
 msgstr "Kompüteri rahatca bağlaya bilmək üçün sistemi söndür."
 
-#: gui/gdmlogin.c:2786 gui/greeter/greeter_system.c:200
+#: gui/mdmlogin.c:2786 gui/greeter/greeter_system.c:200
 msgid "Suspend your computer"
 msgstr "Kompüteri gözləmə halına gətir"
 
-#: gui/gdmlogin.c:2792 gui/greeter/greeter_parser.c:1002
+#: gui/mdmlogin.c:2792 gui/greeter/greeter_parser.c:1002
 msgid "_Actions"
 msgstr "_Gedişatlar"
 
-#: gui/gdmlogin.c:2801
+#: gui/mdmlogin.c:2801
 msgid "_Theme"
 msgstr "Ö_rtük"
 
-#: gui/gdmlogin.c:2812 gui/greeter/greeter_canvas_item.c:146
+#: gui/mdmlogin.c:2812 gui/greeter/greeter_canvas_item.c:146
 #: gui/greeter/greeter_parser.c:1012
 msgid "_Quit"
 msgstr "_Çıx"
 
-#: gui/gdmlogin.c:2814 gui/greeter/greeter_canvas_item.c:148
+#: gui/mdmlogin.c:2814 gui/greeter/greeter_canvas_item.c:148
 #: gui/greeter/greeter_parser.c:1007
 msgid "D_isconnect"
 msgstr "Bağlantını _kəs"
 
-#: gui/gdmlogin.c:2881 gui/greeter/greeter_item_ulist.c:442
+#: gui/mdmlogin.c:2881 gui/greeter/greeter_item_ulist.c:442
 msgid "Icon"
 msgstr "Timsal"
 
-#: gui/gdmlogin.c:3362
+#: gui/mdmlogin.c:3362
 #, c-format
 msgid "Can't open DefaultImage: %s. Suspending face browser!"
 msgstr "Ön qurğulu rəsmi aça bilmədim: %s. Üz darayicisini ləgv edriəm ."
 
-#: gui/gdmlogin.c:3384 gui/gdmsetup.c:532 gui/greeter/greeter_item_ulist.c:297
+#: gui/mdmlogin.c:3384 gui/mdmsetup.c:532 gui/greeter/greeter_item_ulist.c:297
 msgid "Too many users to list here..."
 msgstr "İstifadəçi miqdarı burada göstərilə bilməyəcək qədər çoxdur..."
 
 #. markup
-#: gui/gdmlogin.c:3802 gui/gdmlogin.c:3833 gui/gdmlogin.c:3877
+#: gui/mdmlogin.c:3802 gui/mdmlogin.c:3833 gui/mdmlogin.c:3877
 #: gui/greeter/greeter.c:637 gui/greeter/greeter.c:668
 #: gui/greeter/greeter.c:713
 msgid "Cannot start the greeter"
 msgstr "Salamlayıcı başladıla bilmir"
 
-#: gui/gdmlogin.c:3803 gui/gdmlogin.c:3834
+#: gui/mdmlogin.c:3803 gui/mdmlogin.c:3834
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version.  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr ""
-"Salamlayıcı buraxılışı (%s) demon buraxılışı ilə uyğun gəlmir. Deyəsən gdm-"
-"ni yeniləmişsiniz. Xahiş edirik, gdm demonunun yenidən başladın ya da "
+"Salamlayıcı buraxılışı (%s) demon buraxılışı ilə uyğun gəlmir. Deyəsən mdm-"
+"ni yeniləmişsiniz. Xahiş edirik, mdm demonunun yenidən başladın ya da "
 "kompüteri yenidən başladın."
 
-#: gui/gdmlogin.c:3840 gui/gdmlogin.c:3886 gui/greeter/greeter.c:675
+#: gui/mdmlogin.c:3840 gui/mdmlogin.c:3886 gui/greeter/greeter.c:675
 #: gui/greeter/greeter.c:722
 msgid "Reboot"
 msgstr "Yenidən başlat"
 
-#: gui/gdmlogin.c:3878
+#: gui/mdmlogin.c:3878
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr ""
 "Salamlayıcı buraxılışı (%s) demon buraxılışı ilə (%s) uyğun gəlmir. Deyəsən "
-"gdm-ni yeniləmişsiniz. Xahiş edirik, gdm demonunun yenidən başladın ya da "
+"mdm-ni yeniləmişsiniz. Xahiş edirik, mdm demonunun yenidən başladın ya da "
 "kompüteri yenidən başladın."
 
-#: gui/gdmlogin.c:3884 gui/greeter/greeter.c:720
+#: gui/mdmlogin.c:3884 gui/greeter/greeter.c:720
 msgid "Restart"
 msgstr "Yenidən başla"
 
 #. markup
-#: gui/gdmlogin.c:4070 gui/greeter/greeter.c:1335
+#: gui/mdmlogin.c:4070 gui/greeter/greeter.c:1335
 msgid "Session directory is missing"
 msgstr "İclas qovluğu mövcud deyil"
 
-#: gui/gdmlogin.c:4072 gui/greeter/greeter.c:1337
+#: gui/mdmlogin.c:4072 gui/greeter/greeter.c:1337
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the gdm "
+"sessions you can use, but you should log in and correct the mdm "
 "configuration."
 msgstr ""
 "İclas qovluğunuz ya mövcud deyil ya da boşdur. Siz iki mövcud iclas işlədə "
-"bilərsiniz, yalnız əvvəlcə sistemə girib gdm qurğularını düzəltməlisiniz."
+"bilərsiniz, yalnız əvvəlcə sistemə girib mdm qurğularını düzəltməlisiniz."
 
 #. markup
-#: gui/gdmlogin.c:4096 gui/greeter/greeter.c:1362
+#: gui/mdmlogin.c:4096 gui/greeter/greeter.c:1362
 msgid "Configuration is not correct"
 msgstr "Quraşdırma səhvdir"
 
-#: gui/gdmlogin.c:4098 gui/greeter/greeter.c:1364
+#: gui/mdmlogin.c:4098 gui/greeter/greeter.c:1364
 msgid ""
 "The configuration file contains an invalid command line for the login "
 "dialog, and thus I ran the default command.  Please fix your configuration."
@@ -3080,56 +3080,56 @@ msgstr ""
 "ana əmr icra edildi. Xahiş edirik qurğularınızı düzəldin."
 
 #. markup
-#: gui/gdmlogin.c:4123 gui/greeter/greeter.c:1391
+#: gui/mdmlogin.c:4123 gui/greeter/greeter.c:1391
 msgid "No configuration was found"
 msgstr "Quraşdırma tapılmadı"
 
-#: gui/gdmlogin.c:4125 gui/greeter/greeter.c:1393
+#: gui/mdmlogin.c:4125 gui/greeter/greeter.c:1393
 msgid ""
-"The configuration was not found.  GDM is using defaults to run this "
-"session.  You should log in and create a configuration file with the GDM "
+"The configuration was not found.  MDM is using defaults to run this "
+"session.  You should log in and create a configuration file with the MDM "
 "configuration program."
 msgstr ""
-"Quraşdırma tapılmadı.  GDM bu iclası işə salmaq üçün ön qurğuları işlədir. "
-"Siz girib GDM quraşdırma proqramı ilə quraşdırma faylını yaratmalısınız."
+"Quraşdırma tapılmadı.  MDM bu iclası işə salmaq üçün ön qurğuları işlədir. "
+"Siz girib MDM quraşdırma proqramı ilə quraşdırma faylını yaratmalısınız."
 
 #. markup
-#: gui/gdmphotosetup.c:144
+#: gui/mdmphotosetup.c:144
 msgid "The face browser is not configured"
 msgstr "Sifət seçicisi quraşdırılmayıb"
 
-#: gui/gdmphotosetup.c:147
+#: gui/mdmphotosetup.c:147
 msgid ""
-"The face browser is not configured in the GDM configuration.  Please ask "
-"your system administrator to enable it in the GDM configurator program."
+"The face browser is not configured in the MDM configuration.  Please ask "
+"your system administrator to enable it in the MDM configurator program."
 msgstr ""
-"Sifət seçicisi GDM qurğularında quraşdırılmayıb. Xahiş edirik sistem "
-"idarəçinizlə görüşərək onu GDM quraşdırma proqramından fəallaşdırılmasını "
+"Sifət seçicisi MDM qurğularında quraşdırılmayıb. Xahiş edirik sistem "
+"idarəçinizlə görüşərək onu MDM quraşdırma proqramından fəallaşdırılmasını "
 "xahiş edin."
 
-#: gui/gdmphotosetup.c:157 gui/gdmphotosetup.desktop.in.h:2
+#: gui/mdmphotosetup.c:157 gui/mdmphotosetup.desktop.in.h:2
 msgid "Login Photo"
 msgstr "Giriş Rəsmi"
 
-#: gui/gdmphotosetup.c:167
+#: gui/mdmphotosetup.c:167
 msgid "Select a photograph to show in the facebrowser:"
 msgstr "Sifət səyyahında göstərmək istədiyiniz fotoqrafı seçin:"
 
-#: gui/gdmphotosetup.c:172
+#: gui/mdmphotosetup.c:172
 msgid "Browse"
 msgstr "Gəz"
 
 #. markup
-#: gui/gdmphotosetup.c:206
+#: gui/mdmphotosetup.c:206
 msgid "No picture selected."
 msgstr "Rəsm seçilməyib."
 
 #. markup
-#: gui/gdmphotosetup.c:217
+#: gui/mdmphotosetup.c:217
 msgid "Picture is too large"
 msgstr "Rəsm çox böyükdür"
 
-#: gui/gdmphotosetup.c:218
+#: gui/mdmphotosetup.c:218
 #, c-format
 msgid ""
 "The system administrator disallowed pictures larger than %d bytes to show in "
@@ -3137,11 +3137,11 @@ msgid ""
 msgstr "Sistem idarəçiniz %d baytdan böyük rəsmləri qadağan edib."
 
 #. markup
-#: gui/gdmphotosetup.c:245 gui/gdmphotosetup.c:267
+#: gui/mdmphotosetup.c:245 gui/mdmphotosetup.c:267
 msgid "Cannot open file"
 msgstr "Fayl açıla bilmir"
 
-#: gui/gdmphotosetup.c:246
+#: gui/mdmphotosetup.c:246
 #, c-format
 msgid ""
 "File %s cannot be open for reading\n"
@@ -3150,7 +3150,7 @@ msgstr ""
 "%s faylı oxunmaq üçün açıla bilmir\n"
 "Xəta: %s"
 
-#: gui/gdmphotosetup.c:268
+#: gui/mdmphotosetup.c:268
 #, c-format
 msgid ""
 "File %s cannot be open for writing\n"
@@ -3159,60 +3159,60 @@ msgstr ""
 "%s faylı yazılmaq üçün açıla bilmir\n"
 "Xəta: %s"
 
-#: gui/gdmphotosetup.desktop.in.h:1
-msgid "Change the picture that will show in the GDM (login manager) face browser"
-msgstr "GDM-də göstəriləcək şəkilinizi sifət səyyahından seçin. "
+#: gui/mdmphotosetup.desktop.in.h:1
+msgid "Change the picture that will show in the MDM (login manager) face browser"
+msgstr "MDM-də göstəriləcək şəkilinizi sifət səyyahından seçin. "
 
 #.
 #. * Translatable strings file generated by Glade.
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gui/gdmsetup-strings.c:7 gui/gdmsetup.desktop.in.h:2
-#: gui/gdmsetup.glade.h:26
+#: gui/mdmsetup-strings.c:7 gui/mdmsetup.desktop.in.h:2
+#: gui/mdmsetup.glade.h:26
 msgid "Login Screen Setup"
 msgstr "Giriş Ekranı Qurğuları"
 
-#: gui/gdmsetup-strings.c:8 gui/gdmsetup.glade.h:22
+#: gui/mdmsetup-strings.c:8 gui/mdmsetup.glade.h:22
 msgid "Greeter"
 msgstr "Salamlayıcı"
 
-#: gui/gdmsetup-strings.c:9 gui/gdmsetup-strings.c:24
-#: gui/gdmsetup-strings.c:29 gui/gdmsetup-strings.c:36
-#: gui/gdmsetup-strings.c:39 gui/gdmsetup-strings.c:42
-#: gui/gdmsetup-strings.c:65 gui/gdmsetup-strings.c:71
-#: gui/gdmsetup-strings.c:73 gui/gdmsetup-strings.c:79
-#: gui/gdmsetup-strings.c:82 gui/gdmsetup-strings.c:90 gui/gdmsetup.glade.h:1
+#: gui/mdmsetup-strings.c:9 gui/mdmsetup-strings.c:24
+#: gui/mdmsetup-strings.c:29 gui/mdmsetup-strings.c:36
+#: gui/mdmsetup-strings.c:39 gui/mdmsetup-strings.c:42
+#: gui/mdmsetup-strings.c:65 gui/mdmsetup-strings.c:71
+#: gui/mdmsetup-strings.c:73 gui/mdmsetup-strings.c:79
+#: gui/mdmsetup-strings.c:82 gui/mdmsetup-strings.c:90 gui/mdmsetup.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: gui/gdmsetup-strings.c:10 gui/gdmsetup.glade.h:24
+#: gui/mdmsetup-strings.c:10 gui/mdmsetup.glade.h:24
 msgid "L_ocal: "
 msgstr "Ye_rli: "
 
-#: gui/gdmsetup-strings.c:11 gui/gdmsetup.glade.h:66
+#: gui/mdmsetup-strings.c:11 gui/mdmsetup.glade.h:66
 msgid "_Remote: "
 msgstr "_Uzaq:"
 
-#: gui/gdmsetup-strings.c:12 gui/gdmsetup.glade.h:70
+#: gui/mdmsetup-strings.c:12 gui/mdmsetup.glade.h:70
 msgid "_Welcome string: "
 msgstr "_Xoş gəldin ismarıcı:"
 
-#: gui/gdmsetup-strings.c:13 gui/gdmsetup.glade.h:43
+#: gui/mdmsetup-strings.c:13 gui/mdmsetup.glade.h:43
 msgid "Re_mote welcome string: "
 msgstr "_Uzaq xoş gəldin ismarışı:"
 
-#: gui/gdmsetup-strings.c:14 gui/gdmsetup-strings.c:16
-#: gui/gdmsetup-strings.c:51 gui/gdmsetup.c:927 gui/gdmsetup.glade.h:50
+#: gui/mdmsetup-strings.c:14 gui/mdmsetup-strings.c:16
+#: gui/mdmsetup-strings.c:51 gui/mdmsetup.c:927 gui/mdmsetup.glade.h:50
 msgid "Standard greeter"
 msgstr "Standart salamlayıcı"
 
-#: gui/gdmsetup-strings.c:15 gui/gdmsetup-strings.c:17
-#: gui/gdmsetup-strings.c:63 gui/gdmsetup.c:929 gui/gdmsetup.glade.h:21
+#: gui/mdmsetup-strings.c:15 gui/mdmsetup-strings.c:17
+#: gui/mdmsetup-strings.c:63 gui/mdmsetup.c:929 gui/mdmsetup.glade.h:21
 msgid "Graphical greeter"
 msgstr "Qrafiki salamlayıcı"
 
-#: gui/gdmsetup-strings.c:18 gui/gdmsetup.glade.h:52
+#: gui/mdmsetup-strings.c:18 gui/mdmsetup.glade.h:52
 #, no-c-format
 msgid ""
 "String to be shown in the greeter as welcome.  You can insert %n in here and "
@@ -3221,7 +3221,7 @@ msgstr ""
 "Salamlayıcıda göstəriləcək xoş gəldiniz ismarışı. Buraya %n də daxil edə "
 "bilərsiniz, onun yerinə kompüterinizin adı göstəriləcək."
 
-#: gui/gdmsetup-strings.c:20 gui/gdmsetup.glade.h:54
+#: gui/mdmsetup-strings.c:20 gui/mdmsetup.glade.h:54
 #, no-c-format
 msgid ""
 "String to be shown in the greeter for people logging in remotely with "
@@ -3232,107 +3232,107 @@ msgstr ""
 "ismarışı. Buraya %n də daxil edə bilərsiniz, onun yerinə kompüterinizin adı "
 "göstəriləcək."
 
-#: gui/gdmsetup-strings.c:22 gui/gdmsetup.glade.h:10
+#: gui/mdmsetup-strings.c:22 gui/mdmsetup.glade.h:10
 msgid "Always use 24 hour cloc_k format"
 msgstr "Həmişə 24 saatlıq vaxt şə_klini işlət"
 
-#: gui/gdmsetup-strings.c:23 gui/gdmsetup.glade.h:12
+#: gui/mdmsetup-strings.c:23 gui/mdmsetup.glade.h:12
 msgid "Automatic Login"
 msgstr "Avtomatik Giriş"
 
-#: gui/gdmsetup-strings.c:25 gui/gdmsetup.glade.h:58
+#: gui/mdmsetup-strings.c:25 gui/mdmsetup.glade.h:58
 msgid "_Automatic login username:"
 msgstr "_Avtomatik giriş istifadəçi adı: "
 
-#: gui/gdmsetup-strings.c:27 gui/gdmsetup.glade.h:63
+#: gui/mdmsetup-strings.c:27 gui/mdmsetup.glade.h:63
 msgid "_Login a user automatically on first bootup"
 msgstr "İlk açılışda istifadəçini avtomatik _daxil et."
 
-#: gui/gdmsetup-strings.c:28 gui/gdmsetup.glade.h:55
+#: gui/mdmsetup-strings.c:28 gui/mdmsetup.glade.h:55
 msgid "Timed Login"
 msgstr "Vaxtlaşdırılmış Giriş"
 
-#: gui/gdmsetup-strings.c:30 gui/gdmsetup.glade.h:56
+#: gui/mdmsetup-strings.c:30 gui/mdmsetup.glade.h:56
 msgid "Timed login us_ername:"
 msgstr "Vaxtlaşdırılmış giriş _istifadəçi adı: "
 
-#: gui/gdmsetup-strings.c:31 gui/gdmsetup.glade.h:68
+#: gui/mdmsetup-strings.c:31 gui/mdmsetup.glade.h:68
 msgid "_Seconds before login:"
 msgstr "Girişdən əvvəl qalan _saniyə: "
 
-#: gui/gdmsetup-strings.c:33 gui/gdmsetup.glade.h:27
+#: gui/mdmsetup-strings.c:33 gui/mdmsetup.glade.h:27
 msgid "Login a user automa_tically after a specified number of seconds"
 msgstr "İstifadəçini bildirilən saniyə müddəti sonra avtomatik gir"
 
-#: gui/gdmsetup-strings.c:34 gui/gdmsetup.glade.h:20
+#: gui/mdmsetup-strings.c:34 gui/mdmsetup.glade.h:20
 msgid "General"
 msgstr "Ümumi"
 
-#: gui/gdmsetup-strings.c:35 gui/gdmsetup.glade.h:28
+#: gui/mdmsetup-strings.c:35 gui/mdmsetup.glade.h:28
 msgid "Logo"
 msgstr "Loqo"
 
-#: gui/gdmsetup-strings.c:38 gui/gdmsetup.glade.h:35
+#: gui/mdmsetup-strings.c:38 gui/mdmsetup.glade.h:35
 msgid "Miscellaneous"
 msgstr "Müxtə'lif"
 
-#: gui/gdmsetup-strings.c:40 gui/gdmsetup.glade.h:47
+#: gui/mdmsetup-strings.c:40 gui/mdmsetup.glade.h:47
 msgid "Show choosable user images (_face browser)"
 msgstr "Seçilə bilən istifadəçi rəsimlərini göstər (_üz səyyarını fəallaşdır)"
 
-#: gui/gdmsetup-strings.c:41 gui/gdmsetup.glade.h:13
+#: gui/mdmsetup-strings.c:41 gui/mdmsetup.glade.h:13
 msgid "Background"
 msgstr "Arxa plan"
 
-#: gui/gdmsetup-strings.c:43 gui/gdmsetup.glade.h:64
+#: gui/mdmsetup-strings.c:43 gui/mdmsetup.glade.h:64
 msgid "_No background"
 msgstr "Arxa plan_sız"
 
-#: gui/gdmsetup-strings.c:44 gui/gdmsetup.glade.h:61
+#: gui/mdmsetup-strings.c:44 gui/mdmsetup.glade.h:61
 msgid "_Image"
 msgstr "_Rəsm"
 
-#: gui/gdmsetup-strings.c:45 gui/gdmsetup.glade.h:14
+#: gui/mdmsetup-strings.c:45 gui/mdmsetup.glade.h:14
 msgid "Co_lor"
 msgstr "Rə_ng"
 
-#: gui/gdmsetup-strings.c:46 gui/gdmsetup.glade.h:67
+#: gui/mdmsetup-strings.c:46 gui/mdmsetup.glade.h:67
 msgid "_Scale background image to fit"
 msgstr "Arxa plan rəsmini uyğunlaşdırma üçün _miqyaslandır"
 
-#: gui/gdmsetup-strings.c:48 gui/gdmsetup.glade.h:65
+#: gui/mdmsetup-strings.c:48 gui/mdmsetup.glade.h:65
 msgid "_Only color on remote displays"
 msgstr "Uzaq ekranlarda _təkcə rəng"
 
-#: gui/gdmsetup-strings.c:49 gui/gdmsetup.glade.h:59
+#: gui/mdmsetup-strings.c:49 gui/mdmsetup.glade.h:59
 msgid "_Background color: "
 msgstr "_Arxa Plan Rəngi :"
 
-#: gui/gdmsetup-strings.c:50 gui/gdmsetup.glade.h:39
+#: gui/mdmsetup-strings.c:50 gui/mdmsetup.glade.h:39
 msgid "Pick a color"
 msgstr "Rəng Seç"
 
-#: gui/gdmsetup-strings.c:52 gui/gdmsetup.glade.h:42
+#: gui/mdmsetup-strings.c:52 gui/mdmsetup.glade.h:42
 msgid "Preview:"
 msgstr "Nümayiş:"
 
-#: gui/gdmsetup-strings.c:53 gui/gdmsetup.glade.h:37
+#: gui/mdmsetup-strings.c:53 gui/mdmsetup.glade.h:37
 msgid "No screenshot available"
 msgstr "Ekran Nümayişi Yoxdur"
 
-#: gui/gdmsetup-strings.c:54 gui/gdmsetup.glade.h:16
+#: gui/mdmsetup-strings.c:54 gui/mdmsetup.glade.h:16
 msgid "Description:"
 msgstr "İzahat:"
 
-#: gui/gdmsetup-strings.c:55 gui/gdmsetup.glade.h:15
+#: gui/mdmsetup-strings.c:55 gui/mdmsetup.glade.h:15
 msgid "Copyright:"
 msgstr "Tə'lif hüququ:"
 
-#: gui/gdmsetup-strings.c:56 gui/gdmsetup.glade.h:11
+#: gui/mdmsetup-strings.c:56 gui/mdmsetup.glade.h:11
 msgid "Author:"
 msgstr "Müəllif:"
 
-#: gui/gdmsetup-strings.c:57 gui/gdmsetup.glade.h:74
+#: gui/mdmsetup-strings.c:57 gui/mdmsetup.glade.h:74
 msgid ""
 "description\n"
 "widget"
@@ -3340,39 +3340,39 @@ msgstr ""
 "izah\n"
 "pəncərəcik"
 
-#: gui/gdmsetup-strings.c:59 gui/gdmsetup.glade.h:72
+#: gui/mdmsetup-strings.c:59 gui/mdmsetup.glade.h:72
 msgid "author"
 msgstr "müəllif"
 
-#: gui/gdmsetup-strings.c:60 gui/gdmsetup.glade.h:73
+#: gui/mdmsetup-strings.c:60 gui/mdmsetup.glade.h:73
 msgid "copyright"
 msgstr "Tə'lif Haqqı"
 
-#: gui/gdmsetup-strings.c:61 gui/gdmsetup.glade.h:62
+#: gui/mdmsetup-strings.c:61 gui/mdmsetup.glade.h:62
 msgid "_Install new theme"
 msgstr "Yeni örtü _qur"
 
-#: gui/gdmsetup-strings.c:62 gui/gdmsetup.glade.h:60
+#: gui/mdmsetup-strings.c:62 gui/mdmsetup.glade.h:60
 msgid "_Delete theme"
 msgstr "Örtüyü _sil"
 
-#: gui/gdmsetup-strings.c:64 gui/gdmsetup-strings.c:78 gui/gdmsetup.glade.h:38
+#: gui/mdmsetup-strings.c:64 gui/mdmsetup-strings.c:78 gui/mdmsetup.glade.h:38
 msgid "Options"
 msgstr "Seçimlər"
 
-#: gui/gdmsetup-strings.c:66 gui/gdmsetup.glade.h:5
-msgid "Allow _root to login with GDM"
-msgstr "_Ali istifadəçiyə GDM ilə girməyə icazə ver"
+#: gui/mdmsetup-strings.c:66 gui/mdmsetup.glade.h:5
+msgid "Allow _root to login with MDM"
+msgstr "_Ali istifadəçiyə MDM ilə girməyə icazə ver"
 
-#: gui/gdmsetup-strings.c:67 gui/gdmsetup.glade.h:8
-msgid "Allow root to login r_emotely with GDM"
-msgstr "Ali istifadəçiyə GDM ilə _uzaqdan girməyə icazə ver"
+#: gui/mdmsetup-strings.c:67 gui/mdmsetup.glade.h:8
+msgid "Allow root to login r_emotely with MDM"
+msgstr "Ali istifadəçiyə MDM ilə _uzaqdan girməyə icazə ver"
 
-#: gui/gdmsetup-strings.c:68 gui/gdmsetup.glade.h:7
+#: gui/mdmsetup-strings.c:68 gui/mdmsetup.glade.h:7
 msgid "Allow remote _timed logins"
 msgstr "Uzaq _vaxtı sərhədli girişlərə icazə ver"
 
-#: gui/gdmsetup-strings.c:69 gui/gdmsetup.glade.h:48
+#: gui/mdmsetup-strings.c:69 gui/mdmsetup.glade.h:48
 msgid ""
 "Show the \"Actions\" menu (formerly known as the \"System\" menu).  If not "
 "set, none of the system commands will be available (this includes reboot, "
@@ -3382,19 +3382,19 @@ msgstr ""
 "Əgər seçili deyilsə, yenidən başlatma, söndürmə, quraşdırma və seçici sistem "
 "əmrlərindən heç biri göstərilməyəcək."
 
-#: gui/gdmsetup-strings.c:70 gui/gdmsetup.glade.h:46
+#: gui/mdmsetup-strings.c:70 gui/mdmsetup.glade.h:46
 msgid "Show _actions menu"
 msgstr "_Gedişatlar menyusunu göstər"
 
-#: gui/gdmsetup-strings.c:72 gui/gdmsetup.glade.h:6
+#: gui/mdmsetup-strings.c:72 gui/mdmsetup.glade.h:6
 msgid "Allow c_onfiguration from the login screen"
 msgstr "Giriş ekranından _quraşdırmalara icazə ver"
 
-#: gui/gdmsetup-strings.c:74 gui/gdmsetup.glade.h:4
+#: gui/mdmsetup-strings.c:74 gui/mdmsetup.glade.h:4
 msgid "Allo_w running XDMCP chooser from the login screen"
 msgstr "Giriş ekranından XDMCP seçicisinin işə _salınmasına icazə ver"
 
-#: gui/gdmsetup-strings.c:75 gui/gdmsetup.glade.h:9
+#: gui/mdmsetup-strings.c:75 gui/mdmsetup.glade.h:9
 msgid ""
 "Always disallow TCP connections to _X server (disables all remote "
 "connections)"
@@ -3402,96 +3402,96 @@ msgstr ""
 "_X vericisinə TCP bağlantılarına qətiyyən icazə vermə (bütün uzaq "
 "bağlantıları qeyri-fəallaşdırır)"
 
-#: gui/gdmsetup-strings.c:76 gui/gdmsetup.glade.h:44
+#: gui/mdmsetup-strings.c:76 gui/mdmsetup.glade.h:44
 msgid "Retry _delay (seconds) :"
 msgstr "Yeniden sınama _ertələməsi (saniyə): "
 
-#: gui/gdmsetup-strings.c:77 gui/gdmsetup.glade.h:45
+#: gui/mdmsetup-strings.c:77 gui/mdmsetup.glade.h:45
 msgid "Security"
 msgstr "Təhlükəsizlik"
 
-#: gui/gdmsetup-strings.c:80 gui/gdmsetup.glade.h:19
+#: gui/mdmsetup-strings.c:80 gui/mdmsetup.glade.h:19
 msgid "Enable _accessibility modules"
 msgstr "Yetişmə qabiliyyəti modullarını _fəallaşdır"
 
-#: gui/gdmsetup-strings.c:81 gui/gdmsetup.glade.h:29
+#: gui/mdmsetup-strings.c:81 gui/mdmsetup.glade.h:29
 msgid "Make a _sound when login window is ready"
 msgstr "Giriş pəncərəsi hazır olanda _səs çıxart"
 
-#: gui/gdmsetup-strings.c:83 gui/gdmsetup.glade.h:71
+#: gui/mdmsetup-strings.c:83 gui/mdmsetup.glade.h:71
 msgid "acc_sound_file_box"
 msgstr "acc_sound_file_box"
 
-#: gui/gdmsetup-strings.c:84 gui/gdmsetup.glade.h:49
+#: gui/mdmsetup-strings.c:84 gui/mdmsetup.glade.h:49
 msgid "Sound _file:"
 msgstr "Səs _faylı:"
 
-#: gui/gdmsetup-strings.c:86 gui/gdmsetup.glade.h:69
+#: gui/mdmsetup-strings.c:86 gui/mdmsetup.glade.h:69
 msgid "_Test sound"
 msgstr "_Səsi sına"
 
-#: gui/gdmsetup-strings.c:87 gui/gdmsetup.glade.h:3
+#: gui/mdmsetup-strings.c:87 gui/mdmsetup.glade.h:3
 msgid "Accessibility"
 msgstr "Yetişmə Qabiliyyəti"
 
-#: gui/gdmsetup-strings.c:88 gui/gdmsetup.glade.h:36
+#: gui/mdmsetup-strings.c:88 gui/mdmsetup.glade.h:36
 msgid ""
 "No XDMCP support in the binary.  To enable XDMCP support you must recompile "
-"GDM with the XDMCP libraries."
+"MDM with the XDMCP libraries."
 msgstr ""
-"İcraçıda XDMCP dəstəyi yoxdur. XDMCP dəstəyini fəallaşdırmaq üçün GDM-ni "
+"İcraçıda XDMCP dəstəyi yoxdur. XDMCP dəstəyini fəallaşdırmaq üçün MDM-ni "
 "XDMCP kitabxanaları ilə dərləməlisiniz."
 
-#: gui/gdmsetup-strings.c:89 gui/gdmsetup.glade.h:18
+#: gui/mdmsetup-strings.c:89 gui/mdmsetup.glade.h:18
 msgid "Enable _XDMCP"
 msgstr "_XDMCP-ni fəallaşdır"
 
-#: gui/gdmsetup-strings.c:91 gui/gdmsetup.glade.h:23
+#: gui/mdmsetup-strings.c:91 gui/mdmsetup.glade.h:23
 msgid "Honour _indirect requests"
 msgstr "_Vasitəli tələbləri şərəfləndir"
 
-#: gui/gdmsetup-strings.c:92 gui/gdmsetup.glade.h:25
+#: gui/mdmsetup-strings.c:92 gui/mdmsetup.glade.h:25
 msgid "Listen on _UDP port: "
 msgstr "_UDP qapısına qulaq as: "
 
-#: gui/gdmsetup-strings.c:93 gui/gdmsetup.glade.h:31
+#: gui/mdmsetup-strings.c:93 gui/mdmsetup.glade.h:31
 msgid "Maximum _pending requests:"
 msgstr "Maksimal _gözləyən tələb:"
 
-#: gui/gdmsetup-strings.c:94 gui/gdmsetup.glade.h:30
+#: gui/mdmsetup-strings.c:94 gui/mdmsetup.glade.h:30
 msgid "Max p_ending indirect requests:"
 msgstr "Maksimal gözləyən vasitəli _tələb:"
 
-#: gui/gdmsetup-strings.c:95 gui/gdmsetup.glade.h:32
+#: gui/mdmsetup-strings.c:95 gui/mdmsetup.glade.h:32
 msgid "Maximum _remote sessions:"
 msgstr "Maksimal _uzaq iclas:"
 
-#: gui/gdmsetup-strings.c:96 gui/gdmsetup.glade.h:33
+#: gui/mdmsetup-strings.c:96 gui/mdmsetup.glade.h:33
 msgid "Maximum _wait time:"
 msgstr "Maksimal _gözləmə vaxtı:"
 
-#: gui/gdmsetup-strings.c:97 gui/gdmsetup.glade.h:34
+#: gui/mdmsetup-strings.c:97 gui/mdmsetup.glade.h:34
 msgid "Maximum indirect w_ait time:"
 msgstr "Maksimal _vasitəli gözləmə vaxtı:"
 
-#: gui/gdmsetup-strings.c:98 gui/gdmsetup.glade.h:17
+#: gui/mdmsetup-strings.c:98 gui/mdmsetup.glade.h:17
 msgid "Displays per _host:"
 msgstr "Q_ovşaq başına ekran:"
 
-#: gui/gdmsetup-strings.c:99 gui/gdmsetup.glade.h:40
+#: gui/mdmsetup-strings.c:99 gui/mdmsetup.glade.h:40
 msgid "Pin_g interval (seconds):"
 msgstr "Pin_g aralığı (saniyə):"
 
-#: gui/gdmsetup-strings.c:100 gui/gdmsetup.glade.h:41
+#: gui/mdmsetup-strings.c:100 gui/mdmsetup.glade.h:41
 msgid "Ping interval (seconds):"
 msgstr "Ping aralığı (saniyə):"
 
-#: gui/gdmsetup-strings.c:101 gui/gdmsetup.glade.h:57
+#: gui/mdmsetup-strings.c:101 gui/mdmsetup.glade.h:57
 msgid "XDMCP"
 msgstr "XDMCP"
 
 #. markup
-#: gui/gdmsetup.c:163
+#: gui/mdmsetup.c:163
 msgid ""
 "An error occured while trying to contact the login screens.  Not all updates "
 "may have taken effect."
@@ -3500,75 +3500,75 @@ msgstr ""
 "hamısı yerinə icra edilməyə bilər."
 
 #. markup
-#: gui/gdmsetup.c:486
+#: gui/mdmsetup.c:486
 msgid "Autologin or timed login to the superuser (root) account is not allowed."
 msgstr "Avtomatik giriş ya da ali istifadəçinin zamanlanmış girişinə icazə verilmir."
 
-#: gui/gdmsetup.c:1714
+#: gui/mdmsetup.c:1714
 msgid "Archive is not of a subdirectory"
 msgstr "Arxiv alt cərgələrdən ibarət deyil"
 
-#: gui/gdmsetup.c:1722
+#: gui/mdmsetup.c:1722
 msgid "Archive is not of a single subdirectory"
 msgstr "Arxiv tək cərgədən ibarət deyil"
 
-#: gui/gdmsetup.c:1746 gui/gdmsetup.c:1826
+#: gui/mdmsetup.c:1746 gui/mdmsetup.c:1826
 msgid "File not a tar.gz or tar archive"
 msgstr "Fayl tar.gz ya da tar arxiv növündən deyil"
 
-#: gui/gdmsetup.c:1748
-msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr "Arxiv GdmGreeterTheme.info faylını daxil etmir"
+#: gui/mdmsetup.c:1748
+msgid "Archive does not include a MdmGreeterTheme.info file"
+msgstr "Arxiv MdmGreeterTheme.info faylını daxil etmir"
 
-#: gui/gdmsetup.c:1770
+#: gui/mdmsetup.c:1770
 msgid "File does not exist"
 msgstr "Fayl mövcud deyil"
 
 #. markup
-#: gui/gdmsetup.c:1884
+#: gui/mdmsetup.c:1884
 msgid "No file selected"
 msgstr "Heç bir fayl seçilməyib"
 
 #. markup
-#: gui/gdmsetup.c:1912
+#: gui/mdmsetup.c:1912
 msgid "Not a theme archive"
 msgstr "Örtük arxivi deyil"
 
-#: gui/gdmsetup.c:1913
+#: gui/mdmsetup.c:1913
 #, c-format
 msgid "Details: %s"
 msgstr "Ətraflı: %s"
 
 #. FIXME: if exists already perhaps we could also have an
 #. * option to change the dir name
-#: gui/gdmsetup.c:1931
+#: gui/mdmsetup.c:1931
 #, c-format
 msgid "Theme directory '%s' seems to be already installed, install again anyway?"
 msgstr "'%s' Örtük cərgəsi onsuzda qurulub, yenidən qurmaq istəyirsiniz?"
 
 #. markup
-#: gui/gdmsetup.c:2017
+#: gui/mdmsetup.c:2017
 msgid "Some error occured when installing the theme"
 msgstr "Örtük qurulurkən bəzi xətalar meydana gəldi"
 
-#: gui/gdmsetup.c:2063
+#: gui/mdmsetup.c:2063
 msgid "Select new theme archive to install"
 msgstr "Qurulacaq yeni örtük arxivini seçin"
 
-#: gui/gdmsetup.c:2067
+#: gui/mdmsetup.c:2067
 msgid "_Install"
 msgstr "_Qur"
 
-#: gui/gdmsetup.c:2131
+#: gui/mdmsetup.c:2131
 #, c-format
 msgid "Do you really wish to remove theme '%s' from the system?"
 msgstr "Həqiqətən də '%s' örtüyünü sisteminizdən silmək istəyirsiniz?"
 
 #. This is the temporary help dialog
-#: gui/gdmsetup.c:2344
+#: gui/mdmsetup.c:2344
 #, c-format
 msgid ""
-"This configuration window changes settings for the GDM daemon, which is the "
+"This configuration window changes settings for the MDM daemon, which is the "
 "graphical login screen for GNOME.  Changes that you make will take effect "
 "immediately.\n"
 "\n"
@@ -3578,7 +3578,7 @@ msgid ""
 "For complete documentation see the GNOME help browser Under the category "
 "GNOME/System."
 msgstr ""
-"Bu pəncərə GDM demonunun qurğularını dəyişdirən quraşdırma pəncərəsidir.  "
+"Bu pəncərə MDM demonunun qurğularını dəyişdirən quraşdırma pəncərəsidir.  "
 "Etdiyiniz dəyişiklər birbaşa fəal olacaq.\n"
 "\n"
 "Qeyd edin ki bütün quraşdırma səçənəkləri burada göstərilməyib.  "
@@ -3588,37 +3588,37 @@ msgstr ""
 "seçin."
 
 #. markup
-#: gui/gdmsetup.c:2755
-msgid "You must be the superuser (root) to configure GDM."
-msgstr "GDM-i qurasdırmaq üçün ali istifadəçi (root) olmalısınız."
+#: gui/mdmsetup.c:2755
+msgid "You must be the superuser (root) to configure MDM."
+msgstr "MDM-i qurasdırmaq üçün ali istifadəçi (root) olmalısınız."
 
 #. EOF
-#: gui/gdmsetup.desktop.in.h:1
-msgid "A graphical application for configuring the GNOME Display Manager (GDM)"
-msgstr "GNOME Ekran İdarəçisinin (GDM) qrafiki quraşdırma proqramı"
+#: gui/mdmsetup.desktop.in.h:1
+msgid "A graphical application for configuring the GNOME Display Manager (MDM)"
+msgstr "GNOME Ekran İdarəçisinin (MDM) qrafiki quraşdırma proqramı"
 
 #: gui/greeter/greeter.c:638 gui/greeter/greeter.c:669
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version.\n"
-"You have probably just upgraded gdm.\n"
-"Please restart the gdm daemon or reboot the computer."
+"You have probably just upgraded mdm.\n"
+"Please restart the mdm daemon or reboot the computer."
 msgstr ""
 "Qarşılayıcı buraxılışı (%s) demon buraxılışına uyğun gəlmir.\n"
-"Deyəsən gdm güncəlləməsi aparmısınız.\n"
-"Xahiş edirik, gdm demonunun yenidən başladın ya da kompüteri sündöröb "
+"Deyəsən mdm güncəlləməsi aparmısınız.\n"
+"Xahiş edirik, mdm demonunun yenidən başladın ya da kompüteri sündöröb "
 "yenidən yandırın."
 
 #: gui/greeter/greeter.c:714
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).\n"
-"You have probably just upgraded gdm.\n"
-"Please restart the gdm daemon or reboot the computer."
+"You have probably just upgraded mdm.\n"
+"Please restart the mdm daemon or reboot the computer."
 msgstr ""
 "Qarşılayıcı buraxılışı (%s) demon buraxılışına (%s) uyğun gəlmir.\n"
-"Deyəsən gdm güncəlləməsi aparmısınız.\n"
-"Xahiş edirik, gdm demonunun yenidən başladın ya da kompüteri sündöröb "
+"Deyəsən mdm güncəlləməsi aparmısınız.\n"
+"Xahiş edirik, mdm demonunun yenidən başladın ya da kompüteri sündöröb "
 "yenidən yandırın."
 
 #: gui/greeter/greeter.c:1173
@@ -3652,10 +3652,10 @@ msgstr ""
 #: gui/greeter/greeter.c:1284
 msgid ""
 "I could not start the standard greeter.  This display will abort and you may "
-"have to login another way and fix the installation of gdm"
+"have to login another way and fix the installation of mdm"
 msgstr ""
 "Standart salamlayıcını başlada bilmədim. İndi bu ekrandan çıxacaqsınız və "
-"başqa bir yolla girib gdm qurğularını düzəltməlisiniz"
+"başqa bir yolla girib mdm qurğularını düzəltməlisiniz"
 
 #: gui/greeter/greeter_action_language.c:46
 msgid "Last"
@@ -3744,45 +3744,45 @@ msgstr "_XDMCP seçicisini icra et"
 msgid "Confi_gure the login manager"
 msgstr "Giriş idarəçisini _quraşdır"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 Bond, James Bond"
 msgstr "(c) 2002 Bond, Jeyms Bond"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:2
 msgid "Bond, James Bond"
 msgstr "Bond, Jeyms Bond"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:3
 msgid "Circles"
 msgstr "Dairələr"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:4
 msgid "Theme with blue circles"
 msgstr "Mavi dairəli örtü"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:1
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 GNOME"
 msgstr "(c) 2002 GNOME"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles with a Face Browser"
 msgstr "Sifət seçicili dairələrdən əmələ gələn GNOME sənət variasiyası"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:3
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:3
 msgid "GNOME Artists"
 msgstr "GNOME Sənətkarları"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME with Browser"
 msgstr "Seçicili Xöşbəxt GNOME"
 
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles"
 msgstr "Dairələrin GNOME Sənət Dəyişmələri"
 
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME"
 msgstr "Xöşbəxt GNOME"
 
@@ -3795,12 +3795,12 @@ msgstr ""
 "(%2$s)-a bağlı olan (%1$s)\n"
 "işə salınmaq istənirkən xəta yarandı"
 
-#: utils/gdmaskpass.c:26
+#: utils/mdmaskpass.c:26
 #, c-format
-msgid "gdmaskpass only runs as root\n"
-msgstr "gdmaskpass təkcə ali istifadəçi olaraq icra edilir\n"
+msgid "mdmaskpass only runs as root\n"
+msgstr "mdmaskpass təkcə ali istifadəçi olaraq icra edilir\n"
 
-#: utils/gdmaskpass.c:42 utils/gdmaskpass.c:48
+#: utils/mdmaskpass.c:42 utils/mdmaskpass.c:48
 #, c-format
 msgid "Authentication failure!\n"
 msgstr "Təsdiqləmə bacarılmadı!\n"

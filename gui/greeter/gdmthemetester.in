@@ -1,6 +1,6 @@
 #!/bin/sh
 
-gdmwhich () {
+mdmwhich () {
   COMMAND="$1"
   OUTPUT=
   IFS=:
@@ -17,16 +17,16 @@ gdmwhich () {
 }
 
 echo
-echo "GDM Theme Tester"
+echo "MDM Theme Tester"
 echo
 echo "Be sure to test all the environments:"
 echo " console, console-timed, flexi, remote-flexi, xdmcp"
 echo "Also be sure to test using caps lock"
 echo
 
-XNEST=`gdmwhich Xnest`
-GDMXNEST=`gdmwhich gdmXnest`
-GDMGREETER="@libexecdir@/gdmgreeter"
+XNEST=`mdmwhich Xnest`
+MDMXNEST=`mdmwhich mdmXnest`
+MDMGREETER="@libexecdir@/mdmgreeter"
 
 if [ x$XNEST = x ]; then
 	echo "ERROR: Xnest not found"
@@ -34,14 +34,14 @@ if [ x$XNEST = x ]; then
 	exit 1
 fi
 
-if [ x$GDMXNEST = x ]; then
-	echo "ERROR: gdmXnest not found"
+if [ x$MDMXNEST = x ]; then
+	echo "ERROR: mdmXnest not found"
         echo ""
 	exit 1
 fi
 
-if [ x$GDMGREETER = x ]; then
-	echo "ERROR: gdmgreeter not found"
+if [ x$MDMGREETER = x ]; then
+	echo "ERROR: mdmgreeter not found"
         echo ""
 	exit 1
 fi
@@ -59,29 +59,29 @@ if [ "$#" != 2 ]; then
 	exit 1
 fi
 
-GDM_THEME="$2"
-DOING_GDM_DEVELOPMENT=yes
-GDM_PARENT_DISPLAY="$DISPLAY"
-export GDM_THEME DOING_GDM_DEVELOPMENT GDM_PARENT_DISPLAY
+MDM_THEME="$2"
+DOING_MDM_DEVELOPMENT=yes
+MDM_PARENT_DISPLAY="$DISPLAY"
+export MDM_THEME DOING_MDM_DEVELOPMENT MDM_PARENT_DISPLAY
 
 case $1 in
 console)
-	GDM_IS_LOCAL=yes
-	export GDM_IS_LOCAL
+	MDM_IS_LOCAL=yes
+	export MDM_IS_LOCAL
 	;;
 console-timed)
-	GDM_IS_LOCAL=yes
-	GDM_FAKE_TIMED=yes
-	export GDM_IS_LOCAL GDM_FAKE_TIMED
+	MDM_IS_LOCAL=yes
+	MDM_FAKE_TIMED=yes
+	export MDM_IS_LOCAL MDM_FAKE_TIMED
 	;;
 flexi)
-	GDM_IS_LOCAL=yes
-	GDM_FLEXI_SERVER=yes
-	export GDM_IS_LOCAL GDM_FLEXI_SERVER
+	MDM_IS_LOCAL=yes
+	MDM_FLEXI_SERVER=yes
+	export MDM_IS_LOCAL MDM_FLEXI_SERVER
 	;;
 remote-flexi)
-	GDM_FLEXI_SERVER=yes
-	export GDM_FLEXI_SERVER
+	MDM_FLEXI_SERVER=yes
+	export MDM_FLEXI_SERVER
 	;;
 xdmcp)
 	;;
@@ -92,13 +92,13 @@ xdmcp)
 esac
 
 if [ "x$XNESTSIZE" = x ] ; then
-  eval `gdmXnest -b`
+  eval `mdmXnest -b`
 else
-  eval `gdmXnest -b -o "-geometry $XNESTSIZE"`
+  eval `mdmXnest -b -o "-geometry $XNESTSIZE"`
 fi
 export DISPLAY
 
-if [ "x$GDM_PARENT_DISPLAY" = "x$DISPLAY" ]; then
+if [ "x$MDM_PARENT_DISPLAY" = "x$DISPLAY" ]; then
 	echo "ERROR: Can't start the Xnest server"
 	exit 1
 fi
@@ -106,4 +106,4 @@ fi
 # This may not be necessary
 sleep 1
 
-@libexecdir@/gdmgreeter
+@libexecdir@/mdmgreeter

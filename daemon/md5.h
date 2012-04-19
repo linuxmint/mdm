@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -16,26 +16,26 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GdmMD5_H
-#define GdmMD5_H
+#ifndef MdmMD5_H
+#define MdmMD5_H
 
 #include <glib.h>
 
-struct GdmMD5Context {
+struct MdmMD5Context {
 	guint32 buf[4];
 	guint32 bits[2];
 	unsigned char in[64];
 };
 
-void gdm_md5_init (struct GdmMD5Context *context);
-void gdm_md5_update (struct GdmMD5Context *context, unsigned char const *buf,
+void mdm_md5_init (struct MdmMD5Context *context);
+void mdm_md5_update (struct MdmMD5Context *context, unsigned char const *buf,
 		     unsigned len);
-void gdm_md5_final (unsigned char digest[16], struct GdmMD5Context *context);
-void gdm_md5_transform (guint32 buf[4], guint32 const in[16]);
+void mdm_md5_final (unsigned char digest[16], struct MdmMD5Context *context);
+void mdm_md5_transform (guint32 buf[4], guint32 const in[16]);
 
 /*
  * This is needed to make RSAREF happy on some MS-DOS compilers.
  */
-/* typedef struct gdm_md5_Context gdm_md5__CTX; */
+/* typedef struct mdm_md5_Context mdm_md5__CTX; */
 
-#endif /* !GdmMD5_H */
+#endif /* !MdmMD5_H */

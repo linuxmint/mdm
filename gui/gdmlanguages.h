@@ -1,4 +1,4 @@
-/* GDM - The Gnome Display Manager
+/* MDM - The Gnome Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2001 George Lebl
@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GDM_LANGUAGES_H
-#define GDM_LANGUAGES_H
+#ifndef MDM_LANGUAGES_H
+#define MDM_LANGUAGES_H
 
 #include <glib.h>
 
@@ -38,33 +38,33 @@ enum {
 /* This is the interface for translating languages.  Language translations
  * are now hardocded in, but that may change */
 
-const char *	gdm_lang_group1		(void);
-const char *	gdm_lang_group2		(void);
+const char *	mdm_lang_group1		(void);
+const char *	mdm_lang_group2		(void);
 
-char *		gdm_lang_name		(const char *language,
+char *		mdm_lang_name		(const char *language,
 					 gboolean never_encoding,
 					 gboolean no_group,
 					 gboolean untranslated,
 					 gboolean markup);
-gboolean	gdm_lang_name_translated (const char *language);
+gboolean	mdm_lang_name_translated (const char *language);
 
 /* NULL if not found */
-char *		gdm_lang_untranslated_name (const char *language,
+char *		mdm_lang_untranslated_name (const char *language,
 					    gboolean markup);
 
-GList *		gdm_lang_read_locale_file (const char *file);
+GList *		mdm_lang_read_locale_file (const char *file);
 
-GtkListStore *	gdm_lang_get_model		(void);
-void		gdm_lang_initialize_model	(gchar *locale_file);
-gchar *		gdm_lang_check_language		(const char      *old_language);
-void		gdm_lang_set			(char *language);
-void            gdm_lang_set_restart_dialog     (char *language);
-gint		gdm_lang_get_savelang_setting	(void);
-void		gdm_lang_handler		(gpointer user_data);
-void		gdm_lang_op_lang		(const gchar *args);
-void		gdm_lang_op_slang		(const gchar *args);
-void		gdm_lang_op_setlang		(const gchar *args);
-void		gdm_lang_op_always_restart	(const gchar *args);
-gint            gdm_lang_ask_restart            (gchar *language);
+GtkListStore *	mdm_lang_get_model		(void);
+void		mdm_lang_initialize_model	(gchar *locale_file);
+gchar *		mdm_lang_check_language		(const char      *old_language);
+void		mdm_lang_set			(char *language);
+void            mdm_lang_set_restart_dialog     (char *language);
+gint		mdm_lang_get_savelang_setting	(void);
+void		mdm_lang_handler		(gpointer user_data);
+void		mdm_lang_op_lang		(const gchar *args);
+void		mdm_lang_op_slang		(const gchar *args);
+void		mdm_lang_op_setlang		(const gchar *args);
+void		mdm_lang_op_always_restart	(const gchar *args);
+gint            mdm_lang_ask_restart            (gchar *language);
 
-#endif /* GDM_LANGUAGES_H */
+#endif /* MDM_LANGUAGES_H */

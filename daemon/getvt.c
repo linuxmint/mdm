@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -32,21 +32,21 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-#include "gdm.h"
+#include "mdm.h"
 #include "misc.h"
 #include "getvt.h"
 #include "display.h"
 
-#include "gdm-common.h"
-#include "gdm-daemon-config.h"
-#include "gdm-log.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config.h"
+#include "mdm-log.h"
 
 /*
  * Get the VT number associated with the display via the XFree86_VT
  * Atom.
  */
 long
-gdm_get_current_vtnum (Display *display)
+mdm_get_current_vtnum (Display *display)
 {
 	Atom prop;
 	Atom actualtype;
@@ -61,17 +61,17 @@ gdm_get_current_vtnum (Display *display)
 
 	prop = XInternAtom (display, "XFree86_VT", True);
 	if (prop == None) {
-	        gdm_debug ("no XFree86_VT atom\n");
+	        mdm_debug ("no XFree86_VT atom\n");
 	        return -1;
 	}
 	if (XGetWindowProperty (display, DefaultRootWindow (display), prop, 0, 1,
 		False, AnyPropertyType, &actualtype, &actualformat,
 		&nitems, &bytes_after, &buf)) {
-		gdm_debug ("no XFree86_VT property\n");
+		mdm_debug ("no XFree86_VT property\n");
 		return -1;
 	}
 	if (nitems != 1) {
-		gdm_debug ("%lu items in XFree86_VT property!\n", nitems);
+		mdm_debug ("%lu items in XFree86_VT property!\n", nitems);
 		XFree (buf);
 		return -1;
 	}
@@ -91,13 +91,13 @@ gdm_get_current_vtnum (Display *display)
 			num = (*(uint32_t *)(void *)buf);
 			break;
 		default:
-			gdm_debug ("format %d in XFree86_VT property!\n", actualformat);
+			mdm_debug ("format %d in XFree86_VT property!\n", actualformat);
 			XFree (buf);
 			return -1;
 		}
 		break;
 	default:
-		gdm_debug ("type %lx in XFree86_VT property!\n", actualtype);
+		mdm_debug ("type %lx in XFree86_VT property!\n", actualtype);
 		XFree (buf);
 		return -1;
 	}
@@ -105,9 +105,9 @@ gdm_get_current_vtnum (Display *display)
 	return num;
 }
 
-#if defined (GDM_USE_SYS_VT)
+#if defined (MDM_USE_SYS_VT)
 #include <sys/vt.h>
-#elif defined (GDM_USE_CONSIO_VT)
+#elif defined (MDM_USE_CONSIO_VT)
 #include <sys/consio.h>
 
 static const char*
@@ -127,29 +127,29 @@ __itovty (int val)
 
 
 gchar *
-gdm_get_vt_device (int vtno)
+mdm_get_vt_device (int vtno)
 {
    gchar *vtname = NULL;
 
-#if defined (GDM_USE_SYS_VT)
+#if defined (MDM_USE_SYS_VT)
 #ifdef __sun
      vtname = g_strdup_printf ("/dev/vt/%d", vtno);
 #else
      vtname = g_strdup_printf ("/dev/tty%d", vtno);
 #endif
-#elif defined (GDM_USE_CONSIO_VT)
+#elif defined (MDM_USE_CONSIO_VT)
      vtname = g_strdup_printf ("/dev/ttyv%s", __itovty (vtno - 1));
 #endif
 
    return vtname;
 }
 
-#if defined (GDM_USE_SYS_VT) || defined (GDM_USE_CONSIO_VT)
+#if defined (MDM_USE_SYS_VT) || defined (MDM_USE_CONSIO_VT)
 
 #ifdef __sun
-#define GDMCONSOLEDEVICE "/dev/vt/0"
+#define MDMCONSOLEDEVICE "/dev/vt/0"
 #else
-#define GDMCONSOLEDEVICE "/dev/console"
+#define MDMCONSOLEDEVICE "/dev/console"
 #endif
 
 
@@ -159,7 +159,7 @@ open_vt (int vtno)
 	char *vtname = NULL;
 	int fd = -1;
 
-	vtname = gdm_get_vt_device (vtno);
+	vtname = mdm_get_vt_device (vtno);
 
 	do {
 		errno = 0;
@@ -175,7 +175,7 @@ open_vt (int vtno)
 	return fd;
 }
 
-#if defined (GDM_USE_SYS_VT)
+#if defined (MDM_USE_SYS_VT)
 
 static int 
 get_free_vt_sys (int *vtfd)
@@ -189,7 +189,7 @@ get_free_vt_sys (int *vtfd)
 
 	do {
 		errno = 0;
-		fd = open (GDMCONSOLEDEVICE,
+		fd = open (MDMCONSOLEDEVICE,
 			   O_WRONLY
 #ifdef O_NOCTTY
 			   |O_NOCTTY
@@ -204,7 +204,7 @@ get_free_vt_sys (int *vtfd)
 		return -1;
 	}
 
-	for (vtno = gdm_daemon_config_get_value_int (GDM_KEY_FIRST_VT), vtmask = 1 << vtno;
+	for (vtno = mdm_daemon_config_get_value_int (MDM_KEY_FIRST_VT), vtmask = 1 << vtno;
 			vtstat.v_state & vtmask; vtno++, vtmask <<= 1);
 	if (!vtmask) {
 		VE_IGNORE_EINTR (close (fd));
@@ -220,7 +220,7 @@ get_free_vt_sys (int *vtfd)
 	return vtno;
 }
 
-#elif defined (GDM_USE_CONSIO_VT)
+#elif defined (MDM_USE_CONSIO_VT)
 
 static int
 get_free_vt_consio (int *vtfd)
@@ -233,7 +233,7 @@ get_free_vt_consio (int *vtfd)
 
 	do {
 		errno = 0;
-		fd = open (GDMCONSOLEDEVICE,
+		fd = open (MDMCONSOLEDEVICE,
 			   O_WRONLY
 #ifdef O_NOCTTY
 			   |O_NOCTTY
@@ -254,7 +254,7 @@ get_free_vt_consio (int *vtfd)
 		return -1;
 	}
 
-	while (vtno < gdm_daemon_config_get_value_int (GDM_KEY_FIRST_VT)) {
+	while (vtno < mdm_daemon_config_get_value_int (MDM_KEY_FIRST_VT)) {
 		int oldvt = vtno;
 		to_close_vts = g_list_prepend (to_close_vts,
 					       GINT_TO_POINTER (fdv));
@@ -288,16 +288,16 @@ cleanup:
 #endif
 
 char *
-gdm_get_empty_vt_argument (int *fd, int *vt)
+mdm_get_empty_vt_argument (int *fd, int *vt)
 {
-	if ( ! gdm_daemon_config_get_value_bool (GDM_KEY_VT_ALLOCATION)) {
+	if ( ! mdm_daemon_config_get_value_bool (MDM_KEY_VT_ALLOCATION)) {
 		*fd = -1;
 		return NULL;
 	}
 
-#if defined (GDM_USE_SYS_VT)
+#if defined (MDM_USE_SYS_VT)
 	*vt = get_free_vt_sys (fd);
-#elif defined (GDM_USE_CONSIO_VT)
+#elif defined (MDM_USE_CONSIO_VT)
 	*vt = get_free_vt_consio (fd);
 #endif
 
@@ -309,7 +309,7 @@ gdm_get_empty_vt_argument (int *fd, int *vt)
 
 /* change to an existing vt */
 void
-gdm_change_vt (int vt)
+mdm_change_vt (int vt)
 {
 	int fd;
 	int rc;
@@ -318,7 +318,7 @@ gdm_change_vt (int vt)
 
 	do {
 		errno = 0;
-		fd = open (GDMCONSOLEDEVICE,
+		fd = open (MDMCONSOLEDEVICE,
 			   O_WRONLY
 #ifdef O_NOCTTY
 			   |O_NOCTTY
@@ -335,18 +335,18 @@ gdm_change_vt (int vt)
 }
 
 int
-gdm_get_current_vt (void)
+mdm_get_current_vt (void)
 {
-#if defined (GDM_USE_SYS_VT)
+#if defined (MDM_USE_SYS_VT)
 	struct vt_stat s;
-#elif defined (GDM_USE_CONSIO_VT)
+#elif defined (MDM_USE_CONSIO_VT)
 	int vtno;
 #endif
 	int fd;
 
 	do {
 		errno = 0;
-		fd = open (GDMCONSOLEDEVICE,
+		fd = open (MDMCONSOLEDEVICE,
 			   O_WRONLY
 #ifdef O_NOCTTY
 			   |O_NOCTTY
@@ -355,7 +355,7 @@ gdm_get_current_vt (void)
 	} while G_UNLIKELY (errno == EINTR);
 	if (fd < 0)
 		return -1;
-#if defined (GDM_USE_SYS_VT)
+#if defined (MDM_USE_SYS_VT)
 	ioctl (fd, VT_GETSTATE, &s);
 
 	VE_IGNORE_EINTR (close (fd));
@@ -366,7 +366,7 @@ gdm_get_current_vt (void)
 	*/
 
 	return s.v_active;
-#elif defined (GDM_USE_CONSIO_VT)
+#elif defined (MDM_USE_CONSIO_VT)
 	if (ioctl (fd, VT_GETACTIVE, &vtno) == -1) {
 		VE_IGNORE_EINTR (close (fd));
 		return -1;
@@ -383,13 +383,13 @@ VE_IGNORE_EINTR (close (fd));
 #endif
 }
 
-#else /* GDM_USE_SYS_VT || GDM_USE_CONSIO_VT - Here this is just
+#else /* MDM_USE_SYS_VT || MDM_USE_CONSIO_VT - Here this is just
        * a stub, we do not know how to support this on other
        * platforms
        */
 
 char *
-gdm_get_empty_vt_argument (int *fd, int *vt)
+mdm_get_empty_vt_argument (int *fd, int *vt)
 {
 	*fd = -1;
 	*vt = -1;
@@ -397,13 +397,13 @@ gdm_get_empty_vt_argument (int *fd, int *vt)
 }
 
 void
-gdm_change_vt (int vt)
+mdm_change_vt (int vt)
 {
 	return;
 }
 
 int
-gdm_get_current_vt (void)
+mdm_get_current_vt (void)
 {
 	return -1;
 }

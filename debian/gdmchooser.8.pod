@@ -1,20 +1,20 @@
 =head1 NAME
 
-gdmchooser - GNOME Display Manager host chooser window
+mdmchooser - GNOME Display Manager host chooser window
 
 =head1 SYNOPSIS
 
-gdmchooser
+mdmchooser
 
 =head1 DESCRIPTION
 
-B<gdmchooser> is invoked by gdm(8). It displays a list of hosts that
-are candidates for logging into via a gdm(8) daemon or compatible,
+B<mdmchooser> is invoked by mdm(8). It displays a list of hosts that
+are candidates for logging into via a mdm(8) daemon or compatible,
 such as xdm(1x) or wdm(1x).
 
 =head1 SEE ALSO
 
-gdm(8)
+mdm(8)
 
 =head1 AUTHOR
 

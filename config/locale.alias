@@ -1,14 +1,14 @@
-# NOTE! This is a broken way to do things.  GDM currently reads languages ONLY
+# NOTE! This is a broken way to do things.  MDM currently reads languages ONLY
 # from this file.  This is Broken(tm).  This setup will be replaced in some
 # future version to be replaced by some automatic detection of available
 # locales.  This file is not really a locale.alias file and the first word
-# is used as a label in case gdm doesn't know this language personally,
+# is used as a label in case mdm doesn't know this language personally,
 # else it's ignored.
 #
 # The format of this file is SIMILAR (but not the same to the locale.alias
-# format).  You could however point gdm at a real locale.alias and it would
+# format).  You could however point mdm at a real locale.alias and it would
 # still concievably work.  Note that the first word cannot contain any spaces.
-# The second word can be a comma separated list of locales to try.  GDM will
+# The second word can be a comma separated list of locales to try.  MDM will
 # try if each locale exists and only if it does will it show that locale.  The
 # list is tried in order and the first working one is used.
 #

@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -16,20 +16,20 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GDM_AUTH_H
-#define GDM_AUTH_H
+#ifndef MDM_AUTH_H
+#define MDM_AUTH_H
 
-#include "gdm.h"
+#include "mdm.h"
 
-gboolean gdm_auth_secure_display (GdmDisplay *d);
-gboolean gdm_auth_user_add       (GdmDisplay *d, uid_t user, const char *homedir);
-void     gdm_auth_user_remove    (GdmDisplay *d, uid_t user);
+gboolean mdm_auth_secure_display (MdmDisplay *d);
+gboolean mdm_auth_user_add       (MdmDisplay *d, uid_t user, const char *homedir);
+void     mdm_auth_user_remove    (MdmDisplay *d, uid_t user);
 
 /* Call XSetAuthorization */
-void	 gdm_auth_set_local_auth (GdmDisplay *d);
+void	 mdm_auth_set_local_auth (MdmDisplay *d);
 
-void     gdm_auth_free_auth_list (GSList *list);
+void     mdm_auth_free_auth_list (GSList *list);
 
-#endif /* GDM_AUTH_H */
+#endif /* MDM_AUTH_H */
 
 /* EOF */

@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -16,26 +16,26 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GDM_VERIFY_H
-#define GDM_VERIFY_H
+#ifndef MDM_VERIFY_H
+#define MDM_VERIFY_H
 
-#include "gdm.h"
+#include "mdm.h"
 #include "display.h"
 
 /* If username is NULL, we ask, if local is FALSE, don't start
  * the timed login timer */
-gchar *gdm_verify_user			 (GdmDisplay *d,
+gchar *mdm_verify_user			 (MdmDisplay *d,
 					  const char *username,
 					  gboolean allow_retry);
-void   gdm_verify_cleanup		 (GdmDisplay *d);
-void   gdm_verify_select_user		 (const char *user);
+void   mdm_verify_cleanup		 (MdmDisplay *d);
+void   mdm_verify_select_user		 (const char *user);
 
 /* used in pam */
-gboolean gdm_verify_setup_env  (GdmDisplay *d);
-gboolean gdm_verify_setup_user (GdmDisplay *d,
+gboolean mdm_verify_setup_env  (MdmDisplay *d);
+gboolean mdm_verify_setup_user (MdmDisplay *d,
 				const gchar *login,
 				char **new_login);
 
-#endif /* GDM_VERIFY_H */
+#endif /* MDM_VERIFY_H */
 
 /* EOF */

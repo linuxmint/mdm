@@ -19,50 +19,50 @@
  */
 
 
-#ifndef __GDM_XDMCP_MANAGER_H
-#define __GDM_XDMCP_MANAGER_H
+#ifndef __MDM_XDMCP_MANAGER_H
+#define __MDM_XDMCP_MANAGER_H
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_XDMCP_MANAGER         (gdm_xdmcp_manager_get_type ())
-#define GDM_XDMCP_MANAGER(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDM_TYPE_XDMCP_MANAGER, GdmXdmcpManager))
-#define GDM_XDMCP_MANAGER_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GDM_TYPE_XDMCP_MANAGER, GdmXdmcpManagerClass))
-#define GDM_IS_XDMCP_MANAGER(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDM_TYPE_XDMCP_MANAGER))
-#define GDM_IS_XDMCP_MANAGER_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDM_TYPE_XDMCP_MANAGER))
-#define GDM_XDMCP_MANAGER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GDM_TYPE_XDMCP_MANAGER, GdmXdmcpManagerClass))
+#define MDM_TYPE_XDMCP_MANAGER         (mdm_xdmcp_manager_get_type ())
+#define MDM_XDMCP_MANAGER(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), MDM_TYPE_XDMCP_MANAGER, MdmXdmcpManager))
+#define MDM_XDMCP_MANAGER_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), MDM_TYPE_XDMCP_MANAGER, MdmXdmcpManagerClass))
+#define MDM_IS_XDMCP_MANAGER(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), MDM_TYPE_XDMCP_MANAGER))
+#define MDM_IS_XDMCP_MANAGER_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), MDM_TYPE_XDMCP_MANAGER))
+#define MDM_XDMCP_MANAGER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), MDM_TYPE_XDMCP_MANAGER, MdmXdmcpManagerClass))
 
-typedef struct GdmXdmcpManagerPrivate GdmXdmcpManagerPrivate;
+typedef struct MdmXdmcpManagerPrivate MdmXdmcpManagerPrivate;
 
 typedef struct
 {
 	GObject		        parent;
-	GdmXdmcpManagerPrivate *priv;
-} GdmXdmcpManager;
+	MdmXdmcpManagerPrivate *priv;
+} MdmXdmcpManager;
 
 typedef struct
 {
 	GObjectClass   parent_class;
-} GdmXdmcpManagerClass;
+} MdmXdmcpManagerClass;
 
 typedef enum
 {
-	 GDM_XDMCP_MANAGER_ERROR_GENERAL
-} GdmXdmcpManagerError;
+	 MDM_XDMCP_MANAGER_ERROR_GENERAL
+} MdmXdmcpManagerError;
 
-#define GDM_XDMCP_MANAGER_ERROR gdm_xdmcp_manager_error_quark ()
+#define MDM_XDMCP_MANAGER_ERROR mdm_xdmcp_manager_error_quark ()
 
-GQuark		    gdm_xdmcp_manager_error_quark	      (void);
-GType		    gdm_xdmcp_manager_get_type		      (void);
+GQuark		    mdm_xdmcp_manager_error_quark	      (void);
+GType		    mdm_xdmcp_manager_get_type		      (void);
 
-GdmXdmcpManager *   gdm_xdmcp_manager_new		      (void);
+MdmXdmcpManager *   mdm_xdmcp_manager_new		      (void);
 
-void                gdm_xdmcp_manager_set_port                (GdmXdmcpManager *manager,
+void                mdm_xdmcp_manager_set_port                (MdmXdmcpManager *manager,
 							       guint            port);
-gboolean            gdm_xdmcp_manager_start                   (GdmXdmcpManager *manager,
+gboolean            mdm_xdmcp_manager_start                   (MdmXdmcpManager *manager,
 							       GError         **error);
 
 G_END_DECLS
 
-#endif /* __GDM_XDMCP_MANAGER_H */
+#endif /* __MDM_XDMCP_MANAGER_H */

@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003 George Lebl
@@ -29,28 +29,28 @@
 
 #include "config.h"
 
-#include "gdm.h"
-#include "gdmcommon.h"
-#include "gdmcomm.h"
-#include "gdmconfig.h"
+#include "mdm.h"
+#include "mdmcommon.h"
+#include "mdmcomm.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-log.h"
+#include "mdm-common.h"
+#include "mdm-log.h"
 
 #include "server.h"
 
 static GHashTable *int_hash       = NULL;
 static GHashTable *bool_hash      = NULL;
 static GHashTable *string_hash    = NULL;
-static gboolean gdm_never_cache   = FALSE;
+static gboolean mdm_never_cache   = FALSE;
 static int comm_tries             = 5;
 
 /**
- * gdm_config_never_cache
+ * mdm_config_never_cache
  *
  * Most programs want config data to be cached to avoid constantly
  * grabbing the information over the wire and are happy calling 
- * gdm_update_config to update a key value.  However, gdmsetup
+ * mdm_update_config to update a key value.  However, mdmsetup
  * really does want the latest value each time it accesses a 
  * config option.  To avoid needing to call update_config 
  * for each key to be retrieved, just calling this function will
@@ -58,31 +58,31 @@ static int comm_tries             = 5;
  * sockets connection.
  */
 void
-gdm_config_never_cache (gboolean never_cache)
+mdm_config_never_cache (gboolean never_cache)
 {
-   gdm_never_cache = never_cache;
+   mdm_never_cache = never_cache;
 }
 
 /**
- * gdm_config_set_comm_retries
+ * mdm_config_set_comm_retries
  *
  * If a client wants to specify how many times it will retry to
  * get a config value, this function can be used.
  */
 void
-gdm_config_set_comm_retries (int tries)
+mdm_config_set_comm_retries (int tries)
 {
     comm_tries = tries;
 }
 
 /**
- * gdm_config_hash_lookup
+ * mdm_config_hash_lookup
  *
  * Accesses hash with key, stripping it so it doesn't contain
  * a default value.
  */
 static gpointer
-gdm_config_hash_lookup (GHashTable *hash,
+mdm_config_hash_lookup (GHashTable *hash,
 			const gchar *key)
 {
 	gchar *p;
@@ -100,13 +100,13 @@ gdm_config_hash_lookup (GHashTable *hash,
 }
 
 /**
- * gdm_config_add_hash
+ * mdm_config_add_hash
  *
  * Adds value to hash, stripping the key so it doesn't contain
  * a default value.
  */
 static void
-gdm_config_add_hash (GHashTable *hash,
+mdm_config_add_hash (GHashTable *hash,
 		     const gchar *key,
 		     gpointer value)
 {
@@ -123,13 +123,13 @@ gdm_config_add_hash (GHashTable *hash,
 }
 
 /**
- * gdm_config_get_result
+ * mdm_config_get_result
  *
  * Calls daemon to get config result, stripping the key so it
  * doesn't contain a default value.
  */
 static gchar *
-gdm_config_get_result (const gchar *key)
+mdm_config_get_result (const gchar *key)
 {
 	gchar *p;
 	gchar *newkey  = g_strdup (key);
@@ -148,7 +148,7 @@ gdm_config_get_result (const gchar *key)
 	else
 		command = g_strdup_printf ("GET_CONFIG %s %s", newkey, display);
 
-	result  = gdmcomm_call_gdm (command, NULL /* auth cookie */,
+	result  = mdmcomm_call_mdm (command, NULL /* auth cookie */,
 	          "2.13.0.1", comm_tries);
 
 	g_free (display);
@@ -158,12 +158,12 @@ gdm_config_get_result (const gchar *key)
 }
 
 /**
- * gdm_config_get_xserver_details
+ * mdm_config_get_xserver_details
  *
  * Calls daemon to get details for an xserver config.
  */
 static gchar *
-gdm_config_get_xserver_details (const gchar *xserver,
+mdm_config_get_xserver_details (const gchar *xserver,
 				const gchar *key)
 {
 	gchar *command = NULL;
@@ -171,7 +171,7 @@ gdm_config_get_xserver_details (const gchar *xserver,
 	gchar *temp;
 
 	command = g_strdup_printf ("GET_SERVER_DETAILS %s %s", xserver, key);
-	result = gdmcomm_call_gdm (command, NULL /* auth cookie */,
+	result = mdmcomm_call_mdm (command, NULL /* auth cookie */,
 		"2.13.0.1", comm_tries);
 
 	g_free (command);
@@ -179,7 +179,7 @@ gdm_config_get_xserver_details (const gchar *xserver,
 	if (! result || ve_string_empty (result) ||
 	    strncmp (result, "OK ", 3) != 0) {
 
-		gdm_common_error ("Could not access xserver configuration");
+		mdm_common_error ("Could not access xserver configuration");
 
 		if (result)
 			g_free (result);
@@ -194,12 +194,12 @@ gdm_config_get_xserver_details (const gchar *xserver,
 }
 
 /**
- * gdm_config_get_xservers
+ * mdm_config_get_xservers
  *
  * Calls daemon to get xserver config.
  */
 GSList *
-gdm_config_get_xservers (gboolean flexible)
+mdm_config_get_xservers (gboolean flexible)
 {
 	GSList *xservers = NULL;
         gchar **splitstr, **sec;
@@ -208,7 +208,7 @@ gdm_config_get_xservers (gboolean flexible)
 	gchar *temp;
 
 	command = g_strdup_printf ("GET_SERVER_LIST");
-	result = gdmcomm_call_gdm (command, NULL /* auth cookie */,
+	result = mdmcomm_call_mdm (command, NULL /* auth cookie */,
 		"2.13.0.1", comm_tries);
 
 	g_free (command);
@@ -216,7 +216,7 @@ gdm_config_get_xservers (gboolean flexible)
 	if (! result || ve_string_empty (result) ||
 	    strncmp (result, "OK ", 3) != 0) {
 
-		gdm_common_error ("Could not access xserver configuration");
+		mdm_common_error ("Could not access xserver configuration");
 
 		if (result)
 			g_free (result);
@@ -229,28 +229,28 @@ gdm_config_get_xservers (gboolean flexible)
 	g_free (result);
 
 	while (sec != NULL && *sec != NULL) {
-		GdmXserver *svr = g_new0 (GdmXserver, 1);
+		MdmXserver *svr = g_new0 (MdmXserver, 1);
 
-		temp = gdm_config_get_xserver_details (*sec, "ID");
+		temp = mdm_config_get_xserver_details (*sec, "ID");
 		if (temp == NULL) {
 			g_free (svr);
 			continue;
 		}
 		svr->id = temp;
-		temp = gdm_config_get_xserver_details (*sec, "NAME");
+		temp = mdm_config_get_xserver_details (*sec, "NAME");
 		if (temp == NULL) {
 			g_free (svr);
 			continue;
 		}
 		svr->name = temp;
-		temp = gdm_config_get_xserver_details (*sec, "COMMAND");
+		temp = mdm_config_get_xserver_details (*sec, "COMMAND");
 		if (temp == NULL) {
 			g_free (svr);
 			continue;
 		}
 		svr->command = temp;
 
-		temp = gdm_config_get_xserver_details (*sec, "FLEXIBLE");
+		temp = mdm_config_get_xserver_details (*sec, "FLEXIBLE");
 		if (temp == NULL) {
 			g_free (svr);
 			continue;
@@ -260,7 +260,7 @@ gdm_config_get_xservers (gboolean flexible)
 			svr->flexible = FALSE;
 		g_free (temp);
 
-		temp = gdm_config_get_xserver_details (*sec, "CHOOSABLE");
+		temp = mdm_config_get_xserver_details (*sec, "CHOOSABLE");
 		if (temp == NULL) {
 			g_free (svr);
 			continue;
@@ -270,7 +270,7 @@ gdm_config_get_xservers (gboolean flexible)
 			svr->choosable = FALSE;
 		g_free (temp);
 
-		temp = gdm_config_get_xserver_details (*sec, "HANDLED");
+		temp = mdm_config_get_xserver_details (*sec, "HANDLED");
 		if (temp == NULL) {
 			g_free (svr);
 			continue;
@@ -280,7 +280,7 @@ gdm_config_get_xservers (gboolean flexible)
 			svr->handled = FALSE;
 		g_free (temp);
 
-		temp = gdm_config_get_xserver_details (*sec, "CHOOSER");
+		temp = mdm_config_get_xserver_details (*sec, "CHOOSER");
 		if (temp == NULL) {
 			g_free (svr);
 			continue;
@@ -290,7 +290,7 @@ gdm_config_get_xservers (gboolean flexible)
 			svr->chooser = FALSE;
 		g_free (temp);
 
-		temp = gdm_config_get_xserver_details (*sec, "PRIORITY");
+		temp = mdm_config_get_xserver_details (*sec, "PRIORITY");
 		if (temp == NULL) {
 			g_free (svr);
 			continue;
@@ -315,14 +315,14 @@ gdm_config_get_xservers (gboolean flexible)
 }
 
 /**
- * gdm_config_get_string
+ * mdm_config_get_string
  *
  * Gets string configuration value from daemon via GET_CONFIG
  * socket command.  It stores the value in a hash so subsequent
  * access is faster.
  */
 static gchar *
-_gdm_config_get_string (const gchar *key,
+_mdm_config_get_string (const gchar *key,
 			gboolean reload,
 			gboolean *changed,
 			gboolean doing_translated)
@@ -334,12 +334,12 @@ _gdm_config_get_string (const gchar *key,
         if (string_hash == NULL)
 		string_hash = g_hash_table_new (g_str_hash, g_str_equal);
 
-	hashretval = gdm_config_hash_lookup (string_hash, key);
+	hashretval = mdm_config_hash_lookup (string_hash, key);
 
 	if (reload == FALSE && hashretval != NULL)
 		return hashretval;
 
-	result = gdm_config_get_result (key);
+	result = mdm_config_get_result (key);
 
 	if ( ! result || ve_string_empty (result) ||
 	    strncmp (result, "OK ", 3) != 0) {
@@ -356,7 +356,7 @@ _gdm_config_get_string (const gchar *key,
 			return NULL;
 		}
 
-		gdm_common_error ("Could not access configuration key <%s>", key);
+		mdm_common_error ("Could not access configuration key <%s>", key);
 
 		/* Return the compiled in value associated with the key, if available. */
 		getdefault = strchr (key, '=');
@@ -365,7 +365,7 @@ _gdm_config_get_string (const gchar *key,
 
 		temp = g_strdup (getdefault);
 
-		gdm_common_error ("Using compiled in value <%s> for <%s>", temp, key);
+		mdm_common_error ("Using compiled in value <%s> for <%s>", temp, key);
 	} else {
 
 		/* skip the "OK " */
@@ -380,7 +380,7 @@ _gdm_config_get_string (const gchar *key,
 		if (changed != NULL)
 			*changed = TRUE;
 
-		gdm_config_add_hash (string_hash, key, temp);
+		mdm_config_add_hash (string_hash, key, temp);
 	} else {
 		if (changed != NULL) {
 			if (strcmp (ve_sure_string (hashretval), temp) != 0)
@@ -394,16 +394,16 @@ _gdm_config_get_string (const gchar *key,
 }
 
 gchar *
-gdm_config_get_string (const gchar *key)
+mdm_config_get_string (const gchar *key)
 {
-   if (gdm_never_cache == TRUE)
-      return _gdm_config_get_string (key, TRUE, NULL, FALSE);
+   if (mdm_never_cache == TRUE)
+      return _mdm_config_get_string (key, TRUE, NULL, FALSE);
    else
-      return _gdm_config_get_string (key, FALSE, NULL, FALSE);
+      return _mdm_config_get_string (key, FALSE, NULL, FALSE);
 }
 
 /**
- * gdm_config_get_translated_string
+ * mdm_config_get_translated_string
  *
  * Gets translated string configuration value from daemon via
  * GET_CONFIG socket command.  It stores the value in a hash so
@@ -413,7 +413,7 @@ gdm_config_get_string (const gchar *key)
  * found.
  */ 
 static gchar *
-_gdm_config_get_translated_string (const gchar *key,
+_mdm_config_get_translated_string (const gchar *key,
 				   gboolean reload,
 				   gboolean *changed)
 {
@@ -439,7 +439,7 @@ _gdm_config_get_translated_string (const gchar *key,
 		 * failing to find the key, since this is expected
 		 */
 		full = g_strdup_printf ("%s[%s]", newkey, langs[i]);
-		val = _gdm_config_get_string (full, reload, changed, TRUE);
+		val = _mdm_config_get_string (full, reload, changed, TRUE);
 
 		g_free (full);
 
@@ -452,27 +452,27 @@ _gdm_config_get_translated_string (const gchar *key,
 	g_free (newkey);
 
 	/* Print error if it fails this time */
-	return _gdm_config_get_string (key, reload, changed, FALSE);
+	return _mdm_config_get_string (key, reload, changed, FALSE);
 }
 
 gchar *
-gdm_config_get_translated_string (const gchar *key)
+mdm_config_get_translated_string (const gchar *key)
 {
-   if (gdm_never_cache == TRUE)
-      return _gdm_config_get_translated_string (key, TRUE, NULL);
+   if (mdm_never_cache == TRUE)
+      return _mdm_config_get_translated_string (key, TRUE, NULL);
    else
-      return _gdm_config_get_translated_string (key, FALSE, NULL);
+      return _mdm_config_get_translated_string (key, FALSE, NULL);
 }
 
 /**
- * gdm_config_get_int
+ * mdm_config_get_int
  *
  * Gets int configuration value from daemon via GET_CONFIG
  * socket command.  It stores the value in a hash so subsequent
  * access is faster.
  */
 static gint
-_gdm_config_get_int (const gchar *key,
+_mdm_config_get_int (const gchar *key,
 		     gboolean reload,
 		     gboolean *changed)
 {
@@ -483,18 +483,18 @@ _gdm_config_get_int (const gchar *key,
         if (int_hash == NULL)
 		int_hash = g_hash_table_new (g_str_hash, g_str_equal);
 
-	hashretval = gdm_config_hash_lookup (int_hash, key);
+	hashretval = mdm_config_hash_lookup (int_hash, key);
 	if (reload == FALSE && hashretval != NULL)
 		return *hashretval;
 
-	result = gdm_config_get_result (key);
+	result = mdm_config_get_result (key);
 
 	if ( ! result || ve_string_empty (result) ||
 	    strncmp (result, "OK ", 3) != 0) {
 
 		gchar *getdefault;
 
-		gdm_common_error ("Could not access configuration key <%s>", key);
+		mdm_common_error ("Could not access configuration key <%s>", key);
 
 		/* Return the compiled in value associated with the key, if available. */
 		getdefault = strchr (key, '=');
@@ -503,7 +503,7 @@ _gdm_config_get_int (const gchar *key,
 
 		temp = atoi (getdefault);
 
-		gdm_common_error ("Using compiled in value <%d> for <%s>", temp, key);
+		mdm_common_error ("Using compiled in value <%d> for <%s>", temp, key);
 
 	} else {
 
@@ -517,7 +517,7 @@ _gdm_config_get_int (const gchar *key,
 	if (hashretval == NULL) {
 		gint *intval = g_new0 (gint, 1);
 		*intval      = temp;
-		gdm_config_add_hash (int_hash, key, intval);
+		mdm_config_add_hash (int_hash, key, intval);
 
 		if (changed != NULL)
 			*changed = TRUE;
@@ -537,23 +537,23 @@ _gdm_config_get_int (const gchar *key,
 }
 
 gint
-gdm_config_get_int (const gchar *key)
+mdm_config_get_int (const gchar *key)
 {
-   if (gdm_never_cache == TRUE)
-      return _gdm_config_get_int (key, TRUE, NULL);
+   if (mdm_never_cache == TRUE)
+      return _mdm_config_get_int (key, TRUE, NULL);
    else
-      return _gdm_config_get_int (key, FALSE, NULL);
+      return _mdm_config_get_int (key, FALSE, NULL);
 }
 
 /**
- * gdm_config_get_bool
+ * mdm_config_get_bool
  *
  * Gets int configuration value from daemon via GET_CONFIG
  * socket command.  It stores the value in a hash so subsequent
  * access is faster.
  */
 static gboolean
-_gdm_config_get_bool (const gchar *key,
+_mdm_config_get_bool (const gchar *key,
 		      gboolean reload,
 		      gboolean *changed)
 {
@@ -564,18 +564,18 @@ _gdm_config_get_bool (const gchar *key,
         if (bool_hash == NULL)
            bool_hash = g_hash_table_new (g_str_hash, g_str_equal);
 
-	hashretval = gdm_config_hash_lookup (bool_hash, key);
+	hashretval = mdm_config_hash_lookup (bool_hash, key);
 	if (reload == FALSE && hashretval != NULL)
 		return *hashretval;
 
-	result = gdm_config_get_result (key);
+	result = mdm_config_get_result (key);
 
 	if ( ! result || ve_string_empty (result) ||
 	    strncmp (result, "OK ", 3) != 0) {
 
 		gchar *getdefault;
 
-		gdm_common_error ("Could not access configuration key <%s>", key);
+		mdm_common_error ("Could not access configuration key <%s>", key);
 
 		/* Return the compiled in value associated with the key, if available. */
 		getdefault = strchr (key, '=');
@@ -590,10 +590,10 @@ _gdm_config_get_bool (const gchar *key,
 		    getdefault[0] == 'y' ||
 		    atoi (getdefault) != 0)) {
 			temp = TRUE;
-			gdm_common_error ("Using compiled in value <TRUE> for <%s>", key);
+			mdm_common_error ("Using compiled in value <TRUE> for <%s>", key);
 		} else {
 			temp = FALSE;
-			gdm_common_error ("Using compiled in value <FALSE> for <%s>", key);
+			mdm_common_error ("Using compiled in value <FALSE> for <%s>", key);
 		}
 	} else {
 
@@ -610,7 +610,7 @@ _gdm_config_get_bool (const gchar *key,
 	if (hashretval == NULL) {
 		gboolean *boolval = g_new0 (gboolean, 1);
 		*boolval          = temp;
-		gdm_config_add_hash (bool_hash, key, boolval);
+		mdm_config_add_hash (bool_hash, key, boolval);
 
 		if (changed != NULL)
 			*changed = TRUE;
@@ -630,59 +630,59 @@ _gdm_config_get_bool (const gchar *key,
 }
 
 gboolean
-gdm_config_get_bool (const gchar *key)
+mdm_config_get_bool (const gchar *key)
 {
-   if (gdm_never_cache == TRUE)
-      return _gdm_config_get_bool (key, TRUE, NULL);
+   if (mdm_never_cache == TRUE)
+      return _mdm_config_get_bool (key, TRUE, NULL);
    else
-      return _gdm_config_get_bool (key, FALSE, NULL);
+      return _mdm_config_get_bool (key, FALSE, NULL);
 }
 
 /**
- * gdm_config_reload_string
- * gdm_config_reload_int
- * gdm_config_reload_bool
+ * mdm_config_reload_string
+ * mdm_config_reload_int
+ * mdm_config_reload_bool
  * 
  * Reload values returning TRUE if value changed, FALSE
  * otherwise.
  */
 gboolean
-gdm_config_reload_string (const gchar *key)
+mdm_config_reload_string (const gchar *key)
 {
 	gboolean changed;
-	_gdm_config_get_string (key, TRUE, &changed, FALSE);
+	_mdm_config_get_string (key, TRUE, &changed, FALSE);
 	return changed;
 }
 
 gboolean
-gdm_config_reload_int (const gchar *key)
+mdm_config_reload_int (const gchar *key)
 {
 	gboolean changed;
-	_gdm_config_get_int (key, TRUE, &changed);
+	_mdm_config_get_int (key, TRUE, &changed);
 	return changed;
 }
 
 gboolean
-gdm_config_reload_bool (const gchar *key)
+mdm_config_reload_bool (const gchar *key)
 {
 	gboolean changed;
-	_gdm_config_get_bool (key, TRUE, &changed);
+	_mdm_config_get_bool (key, TRUE, &changed);
 	return changed;
 }
 
 void
-gdm_save_customlist_data (const gchar *file,
+mdm_save_customlist_data (const gchar *file,
 			  const gchar *key,
 			  const gchar *id)
 {
 	GKeyFile *cfg;
 
-	gdm_debug ("Saving custom configuration data to file=%s, key=%s",
+	mdm_debug ("Saving custom configuration data to file=%s, key=%s",
 		file, key);
-	cfg = gdm_common_config_load (file, NULL);
+	cfg = mdm_common_config_load (file, NULL);
 	if (cfg == NULL) {
 		gint fd = -1;
-                gdm_debug ("creating file: %s", file);
+                mdm_debug ("creating file: %s", file);
 		VE_IGNORE_EINTR (fd = g_open (file,
 			O_CREAT | O_TRUNC | O_RDWR, 0644));
 
@@ -691,27 +691,27 @@ gdm_save_customlist_data (const gchar *file,
 
 		write (fd, "\n", 2);
 		close (fd);
-		cfg = gdm_common_config_load (file, NULL);
+		cfg = mdm_common_config_load (file, NULL);
 		if (cfg == NULL) {
 			return;
 		}
 	}
 
 	g_key_file_set_string (cfg, "GreeterInfo", key, ve_sure_string (id));
-	gdm_common_config_save (cfg, file, NULL);
+	mdm_common_config_save (cfg, file, NULL);
 	g_key_file_free (cfg);
 }
 
 gchar *
-gdm_get_theme_greeter (const gchar *file,
+mdm_get_theme_greeter (const gchar *file,
 		       const char *fallback)
 {
 	GKeyFile *config;
 	gchar *s;
 
-	config = gdm_common_config_load (file, NULL);
+	config = mdm_common_config_load (file, NULL);
 	s = NULL;
-	gdm_common_config_get_translated_string (config, "GdmGreeterTheme/Greeter", &s, NULL);
+	mdm_common_config_get_translated_string (config, "MdmGreeterTheme/Greeter", &s, NULL);
 
 	if (s == NULL || s[0] == '\0') {
 		g_free (s);

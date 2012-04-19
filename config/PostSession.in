@@ -3,7 +3,7 @@
 PATH="@X_PATH@:$PATH:/bin:/usr/bin"
 OLD_IFS=$IFS
 
-gdmwhich () {
+mdmwhich () {
   COMMAND="$1"
   OUTPUT=
   IFS=:

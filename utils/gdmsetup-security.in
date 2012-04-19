@@ -1,5 +1,5 @@
 USER=root
-PROGRAM=@sbindir@/gdmsetup
+PROGRAM=@sbindir@/mdmsetup
 SESSION=true
 FALLBACK=false
 

@@ -1,7 +1,7 @@
-# translation of gdm2.HEAD.po to Mongolian
-# translation of gdm2.gnome-2-4.po to Mongolian
-# translation of gdm2.gnome-2-4.mn.po to Mongolian
-# translation of gdm2.HEAD.mn.po to Mongolian
+# translation of mdm2.HEAD.po to Mongolian
+# translation of mdm2.gnome-2-4.po to Mongolian
+# translation of mdm2.gnome-2-4.mn.po to Mongolian
+# translation of mdm2.HEAD.mn.po to Mongolian
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Ochirbat Batzaya <buuvei@yahoo.com>, 2003.
@@ -12,7 +12,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gdm2.HEAD\n"
+"Project-Id-Version: mdm2.HEAD\n"
 "POT-Creation-Date: 2004-03-05 04:10+0100\n"
 "PO-Revision-Date: 2004-03-06 23:01+0800\n"
 "Last-Translator: Dulmandakh Sukhbaatar <sdulmandakh@yahoo.com>\n"
@@ -40,8 +40,8 @@ msgstr "Энэ бол системийн стандарт суулт"
 #. DON\'T CHANGE THIS BY HAND! CHANGE THE SCRIPT THIS IS GENERATED
 #. ALWAYS ADD A CHANGELOG OR I WILL PERSONALLY KICK YOUR ASS!
 #: config/gettextfoo.h:3
-msgid "I cannot start the X server (your graphical interface).  It is likely that it is not set up correctly.  You will need to log in on a console and rerun the X configuration program.  Then restart GDM."
-msgstr "X-сервер (Таны график гадаргуу) эхлэхгүй байна. Магад тэр зөв бус суусан. Та консол руу нэвтрээд өөрийн Х-тохируулгын файлыг дахин ажиллуулна уу. Тэгээд дараа нь GDM -шинээр эхлүүлнэ үү."
+msgid "I cannot start the X server (your graphical interface).  It is likely that it is not set up correctly.  You will need to log in on a console and rerun the X configuration program.  Then restart MDM."
+msgstr "X-сервер (Таны график гадаргуу) эхлэхгүй байна. Магад тэр зөв бус суусан. Та консол руу нэвтрээд өөрийн Х-тохируулгын файлыг дахин ажиллуулна уу. Тэгээд дараа нь MDM -шинээр эхлүүлнэ үү."
 
 #: config/gettextfoo.h:4
 msgid "Would you like me to try to run the X configuration program?  Note that you will need the root password for this."
@@ -56,8 +56,8 @@ msgid "I will now try to restart the X server again."
 msgstr "X-Серверийг шинээр эхлэхүүлэх."
 
 #: config/gettextfoo.h:7
-msgid "I will disable this X server for now.  Restart GDM when it is configured correctly."
-msgstr "Энэ X-сервэр хаагдав. Та GDM зөв тохируулсан бол түүнийг шинээр эхлүүлээнэ үү."
+msgid "I will disable this X server for now.  Restart MDM when it is configured correctly."
+msgstr "Энэ X-сервэр хаагдав. Та MDM зөв тохируулсан бол түүнийг шинээр эхлүүлээнэ үү."
 
 #: config/gettextfoo.h:8
 msgid "I cannot start the X server (your graphical interface).  It is likely that it is not set up correctly.  Would you like to view the X server output to diagnose the problem?"
@@ -103,8 +103,8 @@ msgstr "%s: Шинэ гэрчилгээ бичигдсэнгүй.  Дискын 
 
 #: daemon/auth.c:66
 #, c-format
-msgid "GDM could not write a new authorization entry to disk.  Possibly out of diskspace.%s%s"
-msgstr "GDM шинэ гэрчилгээг дискэн дээр бичиж чадсангүй. Дискын хязгаараас халих боломжтой.%s%s"
+msgid "MDM could not write a new authorization entry to disk.  Possibly out of diskspace.%s%s"
+msgstr "MDM шинэ гэрчилгээг дискэн дээр бичиж чадсангүй. Дискын хязгаараас халих боломжтой.%s%s"
 
 #: daemon/auth.c:196
 #, c-format
@@ -142,7 +142,7 @@ msgid "%s: Ignoring suspiciously looking cookie file %s"
 msgstr "%s: Сэжигтэй харагдаж буй %s Cookie-файлыг үл хэрэгсэх"
 
 #: daemon/auth.c:890
-#: daemon/gdm.c:2259
+#: daemon/mdm.c:2259
 #, c-format
 msgid "Can't write to %s: %s"
 msgstr "%s рүү бичиж чадахгүй байна: %s"
@@ -152,9 +152,9 @@ msgstr "%s рүү бичиж чадахгүй байна: %s"
 #. * cought that elsewhere.  Things are just
 #. * not working out, so tell the user.
 #. * However this may have been caused by a malicious local user
-#. * zapping the display repeatedly, that shouldn't cause gdm
+#. * zapping the display repeatedly, that shouldn't cause mdm
 #. * to stop working completely so just wait for 2 minutes,
-#. * that should give people ample time to stop gdm if needed,
+#. * that should give people ample time to stop mdm if needed,
 #. * or just wait for the stupid malicious user to get bored
 #. * and go away
 #: daemon/display.c:114
@@ -169,8 +169,8 @@ msgstr "%s: Шугам үүсгэгдсэнгүй"
 
 #: daemon/display.c:316
 #, c-format
-msgid "%s: Failed forking gdm slave process for %s"
-msgstr "%s: %s-н gdm-Slave-процессын тусгаарлалт нурлаа."
+msgid "%s: Failed forking mdm slave process for %s"
+msgstr "%s: %s-н mdm-Slave-процессын тусгаарлалт нурлаа."
 
 #: daemon/errorgui.c:356
 #, c-format
@@ -244,357 +244,357 @@ msgstr "%s: %s групп/бусадаар бичигдэх боломжтой."
 msgid "%s: %s is bigger than sysadmin specified maximum file size."
 msgstr "%s: %s нь системийн зохион байгуулагчийн тогтоосон максимум файлын хэмжээнээс том байна."
 
-#: daemon/gdm-net.c:271
+#: daemon/mdm-net.c:271
 #, c-format
 msgid "%s: Could not make socket"
 msgstr "%s:соккет үүсгэгдэхгүй байна"
 
-#: daemon/gdm-net.c:302
+#: daemon/mdm-net.c:302
 #, c-format
 msgid "%s: Could not bind socket"
 msgstr "%s: соккет холбогдохгүй байна."
 
-#: daemon/gdm-net.c:388
+#: daemon/mdm-net.c:388
 #, c-format
 msgid "%s: Could not make FIFO"
 msgstr "%s: FIFO үүсгэгдэхгүй байна"
 
-#: daemon/gdm-net.c:396
+#: daemon/mdm-net.c:396
 #, c-format
 msgid "%s: Could not open FIFO"
 msgstr "%s: FIFO нээгдэхгүй байна"
 
-#: daemon/gdm.c:246
+#: daemon/mdm.c:246
 #, c-format
-msgid "Server Authorization directory (daemon/ServAuthDir) is set to %s but this does not exist. Please correct gdm configuration %s and restart gdm."
-msgstr "Сервер гэрчилгээ лавлах  (daemon/ServAuthDir) %s дээр тавигдсан боловч алга. Та GDM-тохируулга %s -ээ засаад GDM ээ шинээр эхлүүлнэ үү."
+msgid "Server Authorization directory (daemon/ServAuthDir) is set to %s but this does not exist. Please correct mdm configuration %s and restart mdm."
+msgstr "Сервер гэрчилгээ лавлах  (daemon/ServAuthDir) %s дээр тавигдсан боловч алга. Та MDM-тохируулга %s -ээ засаад MDM ээ шинээр эхлүүлнэ үү."
 
-#: daemon/gdm.c:255
+#: daemon/mdm.c:255
 #, c-format
 msgid "%s: Authdir %s does not exist. Aborting."
 msgstr "%s: гэрчилгээ лавлах %s алга. Тасралт."
 
-#: daemon/gdm.c:260
+#: daemon/mdm.c:260
 #, c-format
-msgid "Server Authorization directory (daemon/ServAuthDir) is set to %s but this is not a directory. Please correct gdm configuration %s and restart gdm."
-msgstr "Сервер -гэрчилгээ лавлах (daemon/ServAuthDir) %s дээр тавигдсан ба энэ лавлах биш. Та GDM-тохируулга %s -ээ засаад GDM ээ шинээр эхлүүлнэ үү."
+msgid "Server Authorization directory (daemon/ServAuthDir) is set to %s but this is not a directory. Please correct mdm configuration %s and restart mdm."
+msgstr "Сервер -гэрчилгээ лавлах (daemon/ServAuthDir) %s дээр тавигдсан ба энэ лавлах биш. Та MDM-тохируулга %s -ээ засаад MDM ээ шинээр эхлүүлнэ үү."
 
-#: daemon/gdm.c:269
+#: daemon/mdm.c:269
 #, c-format
 msgid "%s: Authdir %s is not a directory. Aborting."
 msgstr "%s: Гэрчилгээ %s лавлах биш. Тасралт."
 
-#: daemon/gdm.c:282
+#: daemon/mdm.c:282
 #, c-format
 msgid "%s: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s."
 msgstr "%s: Протокол лавлах %s байхгүй байна эсвэл лавлах биш байна. %s серверийн батламж лавлахаар хэрэглэгдэж байна."
 
-#: daemon/gdm.c:311
-#: gui/gdmlogin.c:650
+#: daemon/mdm.c:311
+#: gui/mdmlogin.c:650
 #: gui/greeter/greeter.c:101
 #, c-format
 msgid "%s: No configuration file: %s. Using defaults."
 msgstr "%s: Ямар ч тохируулгын файл алга. »%s«. стандартаар хэрэглэгдэж байна."
 
-#: daemon/gdm.c:356
+#: daemon/mdm.c:356
 #, c-format
-msgid "%s: BaseXsession empty, using %s/gdm/Xsession"
-msgstr "%s: BaseXsession хоосон, %s/gdm/Xsession хэрэглэгдэж байна"
+msgid "%s: BaseXsession empty, using %s/mdm/Xsession"
+msgstr "%s: BaseXsession хоосон, %s/mdm/Xsession хэрэглэгдэж байна"
 
-#: daemon/gdm.c:399
+#: daemon/mdm.c:399
 #, c-format
 msgid "%s: Standard X server not found, trying alternatives"
 msgstr "%s: Стандарт X-сервер олдсонгүй, Хоёрдогчоор оролдоно уу"
 
-#: daemon/gdm.c:431
+#: daemon/mdm.c:431
 #, c-format
 msgid "%s: XDMCP was enabled while there is no XDMCP support, turning it off"
 msgstr "%s: XDMCP идэвхижлээ, XDMCP дэмжигдээгүй байна. Хаана уу."
 
-#: daemon/gdm.c:444
+#: daemon/mdm.c:444
 #, c-format
 msgid "%s: Root cannot be autologged in, turing off automatic login"
 msgstr "%s: »root« автоматаар нэвтрэхгүй байна. Автоматаар нэвтрэлтийг хаах."
 
-#: daemon/gdm.c:457
+#: daemon/mdm.c:457
 #, c-format
 msgid "%s: Root cannot be autologged in, turing off timed login"
 msgstr "%s: »root« автоматаар нэвтрэхгүй байна. Хугацааны удирдлагатай нэвтрэлтийг хаах."
 
-#: daemon/gdm.c:463
+#: daemon/mdm.c:463
 #, c-format
 msgid "%s: TimedLoginDelay less than 5, so I will just use 5."
 msgstr "%s: Хугацааны удирдлагатай нэвтрэлтийн хүлээлт (TimedLoginDelay) 5 аас бага байгаа тул зүгээр л 5 -г хэрэглэнэ үү."
 
-#: daemon/gdm.c:473
+#: daemon/mdm.c:473
 #, c-format
 msgid "%s: No greeter specified."
 msgstr "%s: Мэндчилгээ өгөгдөөгүй"
 
-#: daemon/gdm.c:476
+#: daemon/mdm.c:476
 #, c-format
 msgid "%s: No remote greeter specified."
 msgstr "%s: Алсын мэндчилгээ өгөгдөөгүй"
 
-#: daemon/gdm.c:480
+#: daemon/mdm.c:480
 #, c-format
 msgid "%s: No sessions directory specified."
 msgstr "%s: Суултын лавлах өгөгдөөгүй."
 
-#: daemon/gdm.c:505
+#: daemon/mdm.c:505
 #, c-format
 msgid "%s: Empty server command, using standard one."
 msgstr "%s:Хоосон сервер тушаал, нэг стандарыг хэрэглэх."
 
-#: daemon/gdm.c:548
+#: daemon/mdm.c:548
 #, c-format
 msgid "%s: Display number %d in use!  I will use %d"
 msgstr "%s: Дэлгэцийн дугаар %d хэрэглэгдэж байна! %d -г хэрэглэхийг хүсэж байна."
 
-#: daemon/gdm.c:567
+#: daemon/mdm.c:567
 #, c-format
 msgid "%s: Invalid server line in config file. Ignoring!"
 msgstr "%s: Тохируулга файлд хүчингүй сервер мөр. Үл хэрэгсэх!"
 
-#: daemon/gdm.c:578
-#: daemon/gdm.c:619
+#: daemon/mdm.c:578
+#: daemon/mdm.c:619
 #, c-format
 msgid "%s: XDMCP disabled and no local servers defined. Aborting!"
 msgstr "%s: XDMCP хаагдсан ба дотоод серверүүд тодорхойлогдоогүй. Таслах!"
 
 #. start
 #. server uid
-#: daemon/gdm.c:596
+#: daemon/mdm.c:596
 #, c-format
 msgid "%s: XDMCP disabled and no local servers defined. Adding %s on :%d to allow configuration!"
 msgstr "%s: XDMCP хаагдсан ба дотоод серверүүд тодорхойлогдоогүй. Тохируулгыг зөвшөөрөхийн тулд %s-г %d дээр нэмэх хэрэгтэй!"
 
-#: daemon/gdm.c:611
+#: daemon/mdm.c:611
 #, c-format
-msgid "XDMCP is disabled and gdm cannot find any local server to start.  Aborting!  Please correct the configuration %s and restart gdm."
-msgstr "XDMCP хаагдсан ба GDM ямар нэг эхлүүлэх дотоод сервер олсонгүй. Таслаж байна! Та %s тохируулгаа засаад GDM ээ шинээр эхлүүлнэ үү."
+msgid "XDMCP is disabled and mdm cannot find any local server to start.  Aborting!  Please correct the configuration %s and restart mdm."
+msgstr "XDMCP хаагдсан ба MDM ямар нэг эхлүүлэх дотоод сервер олсонгүй. Таслаж байна! Та %s тохируулгаа засаад MDM ээ шинээр эхлүүлнэ үү."
 
-#: daemon/gdm.c:633
+#: daemon/mdm.c:633
 #, c-format
-msgid "The gdm user does not exist. Please correct gdm configuration %s and restart gdm."
-msgstr "GDM-хэрэглэгч алга. Та GDM-тохируулга %s -ээ засаад GDM ээ шинээр эхлүүлнэ үү."
+msgid "The mdm user does not exist. Please correct mdm configuration %s and restart mdm."
+msgstr "MDM-хэрэглэгч алга. Та MDM-тохируулга %s -ээ засаад MDM ээ шинээр эхлүүлнэ үү."
 
-#: daemon/gdm.c:640
+#: daemon/mdm.c:640
 #, c-format
-msgid "%s: Can't find the gdm user (%s). Aborting!"
-msgstr "%s: GDM-хэрэглэгч (%s) олдсонгүй.Таслалт!"
+msgid "%s: Can't find the mdm user (%s). Aborting!"
+msgstr "%s: MDM-хэрэглэгч (%s) олдсонгүй.Таслалт!"
 
-#: daemon/gdm.c:647
+#: daemon/mdm.c:647
 #, c-format
-msgid "The gdm user is set to be root, but this is not allowed since it can pose a security risk.  Please correct gdm configuration %s and restart gdm."
-msgstr "GDM-хэрэглэгя »root« -р тогтоогджээ, Энэ нь аюулгүй байдлын үүднээс зөвшөөрөгдөөгүй л дээ.  Та GDM-тохируулга %s -ээ засаад GDM ээ шинээр эхлүүлнэ үү."
+msgid "The mdm user is set to be root, but this is not allowed since it can pose a security risk.  Please correct mdm configuration %s and restart mdm."
+msgstr "MDM-хэрэглэгя »root« -р тогтоогджээ, Энэ нь аюулгүй байдлын үүднээс зөвшөөрөгдөөгүй л дээ.  Та MDM-тохируулга %s -ээ засаад MDM ээ шинээр эхлүүлнэ үү."
 
-#: daemon/gdm.c:655
+#: daemon/mdm.c:655
 #, c-format
-msgid "%s: The gdm user should not be root. Aborting!"
-msgstr "%s: gdm-хэрэглэгч »root« байх ёсгүй.Таслалт!"
+msgid "%s: The mdm user should not be root. Aborting!"
+msgstr "%s: mdm-хэрэглэгч »root« байх ёсгүй.Таслалт!"
 
-#: daemon/gdm.c:662
+#: daemon/mdm.c:662
 #, c-format
-msgid "The gdm group does not exist. Please correct gdm configuration %s and restart gdm."
-msgstr "»gdm«-групп алга. Та GDM-тохируулга %s -ээ засаад GDM ээ шинээр эхлүүлнэ үү."
+msgid "The mdm group does not exist. Please correct mdm configuration %s and restart mdm."
+msgstr "»mdm«-групп алга. Та MDM-тохируулга %s -ээ засаад MDM ээ шинээр эхлүүлнэ үү."
 
-#: daemon/gdm.c:669
+#: daemon/mdm.c:669
 #, c-format
-msgid "%s: Can't find the gdm group (%s). Aborting!"
-msgstr "%s: GDM-групп (%s) олдсонгүй. Таслалт!"
+msgid "%s: Can't find the mdm group (%s). Aborting!"
+msgstr "%s: MDM-групп (%s) олдсонгүй. Таслалт!"
 
-#: daemon/gdm.c:676
+#: daemon/mdm.c:676
 #, c-format
-msgid "The gdm group is set to be root, but this is not allowed since it can pose a security risk. Please correct gdm configuration %s and restart gdm."
-msgstr "GDM-групп »root« -р тогтоогджээ, Энэ нь аюулгүй байдлын үүднээс зөвшөөрөгдөөгүй л дээ. Та GDM-тохируулга %s -ээ засаад GDM ээ шинээр эхлүүлнэ үү."
+msgid "The mdm group is set to be root, but this is not allowed since it can pose a security risk. Please correct mdm configuration %s and restart mdm."
+msgstr "MDM-групп »root« -р тогтоогджээ, Энэ нь аюулгүй байдлын үүднээс зөвшөөрөгдөөгүй л дээ. Та MDM-тохируулга %s -ээ засаад MDM ээ шинээр эхлүүлнэ үү."
 
-#: daemon/gdm.c:684
+#: daemon/mdm.c:684
 #, c-format
-msgid "%s: The gdm group should not be root. Aborting!"
-msgstr "%s: GDM-групп »root« байх ёсгүй. Тасралт!"
+msgid "%s: The mdm group should not be root. Aborting!"
+msgstr "%s: MDM-групп »root« байх ёсгүй. Тасралт!"
 
-#: daemon/gdm.c:699
+#: daemon/mdm.c:699
 #, c-format
-msgid "%s: Greeter not found or can't be executed by the gdm user"
-msgstr "%s: Мэндчилэгч олдсонгүй эсвэл GDM-хэрэглэгчээр гүйцэтгэгдэхгүй"
+msgid "%s: Greeter not found or can't be executed by the mdm user"
+msgstr "%s: Мэндчилэгч олдсонгүй эсвэл MDM-хэрэглэгчээр гүйцэтгэгдэхгүй"
 
-#: daemon/gdm.c:706
+#: daemon/mdm.c:706
 #, c-format
-msgid "%s: Remote greeter not found or can't be executed by the gdm user"
-msgstr "%s: Алсын мэндчилэгч олдсонгүй эсвэл GDM-хэрэглэгчээр гүйцэтгэгдэхгүй"
+msgid "%s: Remote greeter not found or can't be executed by the mdm user"
+msgstr "%s: Алсын мэндчилэгч олдсонгүй эсвэл MDM-хэрэглэгчээр гүйцэтгэгдэхгүй"
 
-#: daemon/gdm.c:717
+#: daemon/mdm.c:717
 #, c-format
-msgid "%s: Chooser not found or it can't be executed by the gdm user"
-msgstr "%s: Сонгогч олдсонгүй эсвэл тэр GDM-хэрэглэгчээр гүйцэтгэгдэхгүй"
+msgid "%s: Chooser not found or it can't be executed by the mdm user"
+msgstr "%s: Сонгогч олдсонгүй эсвэл тэр MDM-хэрэглэгчээр гүйцэтгэгдэхгүй"
 
-#: daemon/gdm.c:726
+#: daemon/mdm.c:726
 msgid "No daemon/ServAuthDir specified in the configuration file"
 msgstr "Тохируулгын файл доторх daemon/ServAuthDir өгөгдөөгүй"
 
-#: daemon/gdm.c:728
+#: daemon/mdm.c:728
 #, c-format
 msgid "%s: No daemon/ServAuthDir specified."
 msgstr "%s: Хэвтүүл алга/Гэрчилгээний лавлах өгөгдөөгүй."
 
-#: daemon/gdm.c:752
+#: daemon/mdm.c:752
 #, c-format
-msgid "Server Authorization directory (daemon/ServAuthDir) is set to %s but is not owned by user %s and group %s. Please correct the ownership or gdm configuration %s and restart gdm."
-msgstr "Сервер -гэрчилгээ лавлах (daemon/ServAuthDir) %s дээр тавигдсан ба %s хэрэглэгч ба %s группээр эзэмшигдээгүй байна. Та GDM-тохируулга %s -ээ засаад GDM ээ шинээр эхлүүлнэ үү."
+msgid "Server Authorization directory (daemon/ServAuthDir) is set to %s but is not owned by user %s and group %s. Please correct the ownership or mdm configuration %s and restart mdm."
+msgstr "Сервер -гэрчилгээ лавлах (daemon/ServAuthDir) %s дээр тавигдсан ба %s хэрэглэгч ба %s группээр эзэмшигдээгүй байна. Та MDM-тохируулга %s -ээ засаад MDM ээ шинээр эхлүүлнэ үү."
 
-#: daemon/gdm.c:763
+#: daemon/mdm.c:763
 #, c-format
 msgid "%s: Authdir %s is not owned by user %s, group %s. Aborting."
 msgstr "%s: Гэрчилгээ лавлах %s нь %s хэрэглэгч ба %s группээр эзэмшигдээгүй байна. Тасралт."
 
-#: daemon/gdm.c:769
+#: daemon/mdm.c:769
 #, c-format
-msgid "Server Authorization directory (daemon/ServAuthDir) is set to %s but has the wrong permissions, it should have permissions of %o. Please correct the permissions or the gdm configuration %s and restart gdm."
-msgstr "Сервер гэрчилгээ лавлах (daemon/ServAuthDir) %s дээр тавигдсан ба буруу хандалдын эрхтэй байна. ( %o дээр тавигдах ёстойсон). Та хандалын эрхээ эсвэл GDM-тохируулга %s -ээ засаад GDM -ээ шинээр эхлүүлнэ үү."
+msgid "Server Authorization directory (daemon/ServAuthDir) is set to %s but has the wrong permissions, it should have permissions of %o. Please correct the permissions or the mdm configuration %s and restart mdm."
+msgstr "Сервер гэрчилгээ лавлах (daemon/ServAuthDir) %s дээр тавигдсан ба буруу хандалдын эрхтэй байна. ( %o дээр тавигдах ёстойсон). Та хандалын эрхээ эсвэл MDM-тохируулга %s -ээ засаад MDM -ээ шинээр эхлүүлнэ үү."
 
-#: daemon/gdm.c:780
+#: daemon/mdm.c:780
 #, c-format
 msgid "%s: Authdir %s has wrong permissions %o. Should be %o. Aborting."
 msgstr "%s: Гэрчилгээ лавлах %s буруу хандалтын эрхүүдтэй (%o) байна.  %o байх ёстой. Тасралт."
 
 #. FIXME: how to handle this?
-#: daemon/gdm.c:836
-#: daemon/gdm.c:844
-#: daemon/gdm.c:2043
-#: daemon/gdm.c:2051
+#: daemon/mdm.c:836
+#: daemon/mdm.c:844
+#: daemon/mdm.c:2043
+#: daemon/mdm.c:2051
 #, c-format
 msgid "Cannot write PID file %s, possibly out of diskspace.  Error: %s\n"
 msgstr "PID файл %s рүү бичиж чадахгүй байна. Дискийн хязгаарлалтаас халих боломжтой. Алдаа: %s\n"
 
-#: daemon/gdm.c:838
-#: daemon/gdm.c:846
-#: daemon/gdm.c:2045
-#: daemon/gdm.c:2053
+#: daemon/mdm.c:838
+#: daemon/mdm.c:846
+#: daemon/mdm.c:2045
+#: daemon/mdm.c:2053
 #, c-format
 msgid "Cannot write PID file %s, possibly out of diskspace.  Error: %s"
 msgstr "PID файл %s рүү бичиж чадахгүй байна. Дискийн хязгаарлалтаас халих боломжтой.  Алдаа: %s"
 
-#: daemon/gdm.c:856
+#: daemon/mdm.c:856
 #, c-format
 msgid "%s: fork() failed!"
 msgstr "%s: fork() бүтэлгүйтэв!"
 
 #. should never happen
-#: daemon/gdm.c:859
+#: daemon/mdm.c:859
 #: daemon/slave.c:3437
 #, c-format
 msgid "%s: setsid() failed: %s!"
 msgstr "%s: setsid() бүтэлгүйтэв: %s!"
 
-#: daemon/gdm.c:1029
+#: daemon/mdm.c:1029
 #, c-format
 msgid "%s: Trying failsafe X server %s"
 msgstr "%s: Хамгаалалттай X-Сервер %s -г оролдож үзэх"
 
-#: daemon/gdm.c:1047
+#: daemon/mdm.c:1047
 #, c-format
 msgid "%s: Running the XKeepsCrashing script"
 msgstr "%s: Скрипт XKeepsCrashing эхэлж байна"
 
-#: daemon/gdm.c:1159
-msgid "I cannot start the X server (your graphical interface).  It is likely that it is not set up correctly. You will need to log in on a console and rerun the X configuration program.  Then restart GDM."
-msgstr "Der X-сервер (Ihre grafische Oberfläche) konnte nicht gestartet werden. Wahrscheinlich ist er nicht korrekt eingerichtet. Sie werden sich auf einer Konsole anmelden und das X-Konfigurationsprogramm erneut ausführen müssen. Starten Sie GDM dann neu."
+#: daemon/mdm.c:1159
+msgid "I cannot start the X server (your graphical interface).  It is likely that it is not set up correctly. You will need to log in on a console and rerun the X configuration program.  Then restart MDM."
+msgstr "Der X-сервер (Ihre grafische Oberfläche) konnte nicht gestartet werden. Wahrscheinlich ist er nicht korrekt eingerichtet. Sie werden sich auf einer Konsole anmelden und das X-Konfigurationsprogramm erneut ausführen müssen. Starten Sie MDM dann neu."
 
 #. else {
 #. * At this point .... screw the user, we don't know how to
 #. * talk to him.  He's on some 'l33t system anyway, so syslog
 #. * reading will do him good
 #. * }
-#: daemon/gdm.c:1171
+#: daemon/mdm.c:1171
 #, c-format
 msgid "Failed to start X server several times in a short time period; disabling display %s"
 msgstr "X-сервер богино хугацаан дотор эхэлж чадахгүй; Дэлгэц %s хаагдаж байна"
 
-#: daemon/gdm.c:1179
-#: daemon/gdm.c:2762
+#: daemon/mdm.c:1179
+#: daemon/mdm.c:2762
 msgid "Master suspending..."
 msgstr "Мастер унтуулж байна..."
 
-#: daemon/gdm.c:1233
+#: daemon/mdm.c:1233
 #, c-format
 msgid "System is rebooting, please wait ..."
 msgstr "Системийг шинээр эхлүүлж байна, хүлээнэ үү ..."
 
-#: daemon/gdm.c:1235
+#: daemon/mdm.c:1235
 #, c-format
 msgid "System is shutting down, please wait ..."
 msgstr "Системийг унтрааж байна, түр хүлээнэ үү ..."
 
-#: daemon/gdm.c:1246
+#: daemon/mdm.c:1246
 msgid "Master halting..."
 msgstr "Мастер зогсоож байна..."
 
-#: daemon/gdm.c:1259
+#: daemon/mdm.c:1259
 #, c-format
 msgid "%s: Halt failed: %s"
 msgstr "%s: Зосоолт бүтэлгүйтэв: %s!"
 
-#: daemon/gdm.c:1268
+#: daemon/mdm.c:1268
 msgid "Master rebooting..."
 msgstr "Мастер шинээр эхэлж байна..."
 
-#: daemon/gdm.c:1281
+#: daemon/mdm.c:1281
 #, c-format
 msgid "%s: Reboot failed: %s"
 msgstr "%s: Шинээх эхлүүлэх бүтэлгүйтэв: %s!"
 
-#: daemon/gdm.c:1379
+#: daemon/mdm.c:1379
 #, c-format
 msgid "Reboot or Halt request when there is no system menu from display %s"
 msgstr "%s дэлгэцийн системийн цэс байхгүй байх үеийн шинээр эхлүүлэх эсвэл унтраах хүсэлт "
 
-#: daemon/gdm.c:1388
+#: daemon/mdm.c:1388
 #, c-format
 msgid "Restart, Reboot or Halt request from a non-local display %s"
 msgstr "Алсын дэлгэц %s -н шинээр эхлүүлэх-, дахин эхлүүлэх эсвэл зогсоох хүсэлт"
 
 #. Bury this display for good
-#: daemon/gdm.c:1454
+#: daemon/mdm.c:1454
 #, c-format
 msgid "%s: Aborting display %s"
 msgstr "%s: %s дэлгэцийг тасалж байна"
 
-#: daemon/gdm.c:1592
-msgid "GDM restarting ..."
-msgstr "GDM шинээр эхэлж байна..."
+#: daemon/mdm.c:1592
+msgid "MDM restarting ..."
+msgstr "MDM шинээр эхэлж байна..."
 
-#: daemon/gdm.c:1596
+#: daemon/mdm.c:1596
 msgid "Failed to restart self"
 msgstr "Шинэ эхлэл бүтсэнгүй"
 
 #. FIXME: note that this could mean out of memory
-#: daemon/gdm.c:1670
+#: daemon/mdm.c:1670
 msgid "main daemon: Got SIGABRT, something went very wrong. Going down!"
 msgstr "Үндсэн хэвтүүл:  Got SIGABRT, ямар нэг маш буруу явна. Уналаа!"
 
-#: daemon/gdm.c:1829
+#: daemon/mdm.c:1829
 msgid "Do not fork into the background"
 msgstr "Дэвсгэр лүү хатгахгүй"
 
-#: daemon/gdm.c:1831
+#: daemon/mdm.c:1831
 msgid "No console (local) servers to be run"
 msgstr "Ажлуулах (дотоод) консол бус серверүүд"
 
-#: daemon/gdm.c:1833
+#: daemon/mdm.c:1833
 msgid "Preserve LD_* variables"
 msgstr "LD_*-хувьсагчууд агуулаж байх"
 
-#: daemon/gdm.c:1835
-msgid "Print GDM version"
-msgstr "GDM хувилбарыг хэвлэх"
+#: daemon/mdm.c:1835
+msgid "Print MDM version"
+msgstr "MDM хувилбарыг хэвлэх"
 
-#: daemon/gdm.c:1837
+#: daemon/mdm.c:1837
 msgid "Start the first X server but then halt until we get a GO in the fifo"
 msgstr "Эхний Х сервер эхлүүлэх fifo руу GO авах хүртэл барь"
 
-#: daemon/gdm.c:1958
-#: gui/gdmchooser.c:2045
+#: daemon/mdm.c:1958
+#: gui/mdmchooser.c:2045
 #, c-format
 msgid ""
 "Error on option %s: %s.\n"
@@ -604,19 +604,19 @@ msgstr ""
 "Та бүрэн жигсаалтыг харахдаа '%s --help' гэж ажиллууна уу \n"
 "Тушаалын мөрийн параметр хүлээн авах.\n"
 
-#: daemon/gdm.c:1981
-msgid "Only root wants to run gdm\n"
-msgstr "Зөвхөн root gdm -г эхлүүлэх болно\n"
+#: daemon/mdm.c:1981
+msgid "Only root wants to run mdm\n"
+msgstr "Зөвхөн root mdm -г эхлүүлэх болно\n"
 
-#: daemon/gdm.c:1997
-#: daemon/gdm.c:2001
-#: daemon/gdm.c:2076
-#: daemon/gdm.c:2080
-#: daemon/gdm.c:2084
-#: daemon/gdm.c:2088
-#: daemon/gdm.c:2098
-#: daemon/gdm.c:2104
-#: daemon/gdm.c:2115
+#: daemon/mdm.c:1997
+#: daemon/mdm.c:2001
+#: daemon/mdm.c:2076
+#: daemon/mdm.c:2080
+#: daemon/mdm.c:2084
+#: daemon/mdm.c:2088
+#: daemon/mdm.c:2098
+#: daemon/mdm.c:2104
+#: daemon/mdm.c:2115
 #: daemon/misc.c:1603
 #: daemon/misc.c:1607
 #: daemon/misc.c:1611
@@ -630,12 +630,12 @@ msgstr "Зөвхөн root gdm -г эхлүүлэх болно\n"
 #: daemon/slave.c:835
 #: daemon/slave.c:845
 #: daemon/slave.c:857
-#: gui/gdmchooser.c:1924
-#: gui/gdmchooser.c:1927
-#: gui/gdmchooser.c:1930
-#: gui/gdmlogin.c:3928
-#: gui/gdmlogin.c:3936
-#: gui/gdmlogin.c:3939
+#: gui/mdmchooser.c:1924
+#: gui/mdmchooser.c:1927
+#: gui/mdmchooser.c:1930
+#: gui/mdmlogin.c:3928
+#: gui/mdmlogin.c:3936
+#: gui/mdmlogin.c:3939
 #: gui/greeter/greeter.c:1083
 #: gui/greeter/greeter.c:1091
 #: gui/greeter/greeter.c:1094
@@ -643,47 +643,47 @@ msgstr "Зөвхөн root gdm -г эхлүүлэх болно\n"
 msgid "%s: Error setting up %s signal handler: %s"
 msgstr "%s: %s-сигнал боловсруулагчийн тохируулагын алдаа: %s"
 
-#: daemon/gdm.c:2025
-msgid "gdm already running. Aborting!"
-msgstr "gdm хэдийнэ ажиллаж байна. Тасралт!"
+#: daemon/mdm.c:2025
+msgid "mdm already running. Aborting!"
+msgstr "mdm хэдийнэ ажиллаж байна. Тасралт!"
 
-#: daemon/gdm.c:2124
+#: daemon/mdm.c:2124
 #, c-format
 msgid "%s: Error setting up CHLD signal handler"
 msgstr "%s: CHLD-сигнал боловсруулагчийн тохируулагын алдаа"
 
-#: daemon/gdm.c:2228
+#: daemon/mdm.c:2228
 #, c-format
 msgid "Can't open %s for writing"
 msgstr "%s бичихээр нээгдсэнгүй"
 
-#: daemon/gdm.c:3495
-#: daemon/gdm.c:3514
+#: daemon/mdm.c:3495
+#: daemon/mdm.c:3514
 msgid "Flexible server request denied: Not authenticated"
 msgstr "Уян серверийн хүсэлт зөвшөөрөгдсөнгүй: Гэрчилэгдээгүй"
 
 #. Don't print the name to syslog as it might be
 #. * long and dangerous
-#: daemon/gdm.c:3532
+#: daemon/mdm.c:3532
 msgid "Unknown server type requested, using standard server."
 msgstr "Тодорхойгүй серверийн төрөл шаардагдсан, Стандарт сервер хэрэглэх."
 
-#: daemon/gdm.c:3536
+#: daemon/mdm.c:3536
 #, c-format
 msgid "Requested server %s not allowed to be used for flexible servers, using standard server."
 msgstr "Хүсэгдсэн сервер %s уян серверээр хэрэглэгдэх боломжгүй. Стандарт сервер хэрэглэх."
 
-#: daemon/gdm.c:3658
+#: daemon/mdm.c:3658
 msgid "Query logout action request denied: Not authenticated"
 msgstr "Үйлдлээс гарах хүсэлт зөвшөөрөгдсөнгүй: Гэрчилэгдээгүй"
 
-#: daemon/gdm.c:3716
-#: daemon/gdm.c:3771
+#: daemon/mdm.c:3716
+#: daemon/mdm.c:3771
 msgid "Set logout action request denied: Not authenticated"
 msgstr "Үйлдлээс гарах хүсэлт зөвшөөрөгдсөнгүй: Гэрчилэгдээгүй"
 
-#: daemon/gdm.c:3816
-#: daemon/gdm.c:3843
+#: daemon/mdm.c:3816
+#: daemon/mdm.c:3843
 msgid "Query vt request denied: Not authenticated"
 msgstr "vt хүсэлт зөвшөөрөгдсөнгүй: Гэрчилэгдээгүй"
 
@@ -866,7 +866,7 @@ msgid ""
 "Please contact your system administrator\n"
 "or check your syslog to diagnose.\n"
 "In the meantime this display will be\n"
-"disabled.  Please restart gdm when\n"
+"disabled.  Please restart mdm when\n"
 "the problem is corrected."
 msgstr ""
 "X-сервер (Таны график орчин)\n"
@@ -875,7 +875,7 @@ msgstr ""
 "Та системийн зохион байгуулагчдаа хандана уу\n"
 "эсвэл та алдаа оношлогооны syslog -оо шалгана уу.\n"
 "Тиймээс энэ дэлгэц хаагдлаа. Та алдааг зассан\n"
-"бол GDM -н шинээр эхлүүлнэ үү."
+"бол MDM -н шинээр эхлүүлнэ үү."
 
 #: daemon/slave.c:1470
 #, c-format
@@ -907,8 +907,8 @@ msgstr ""
 #: daemon/slave.c:2454
 #: daemon/slave.c:2459
 #, c-format
-msgid "%s: Can't init pipe to gdmgreeter"
-msgstr "%s: gdmgreeter шугамыг инициацилж чадахгүй байна."
+msgid "%s: Can't init pipe to mdmgreeter"
+msgstr "%s: mdmgreeter шугамыг инициацилж чадахгүй байна."
 
 #: daemon/slave.c:2582
 msgid "No servers were defined in the configuration file and XDMCP was disabled.  This can only be a configuration error.  So I have started a single server for you.  You should log in and fix the configuration.  Note that automatic and timed logins are disabled now."
@@ -954,8 +954,8 @@ msgstr "%s: Мэндчилгээг %s дэлгэц дээр эхлүүлэхэд
 
 #: daemon/slave.c:2676
 #, c-format
-msgid "%s: Can't fork gdmgreeter process"
-msgstr "%s: gdmgreeter-процесс хуваагдахгүй байна"
+msgid "%s: Can't fork mdmgreeter process"
+msgstr "%s: mdmgreeter-процесс хуваагдахгүй байна"
 
 #: daemon/slave.c:2761
 #, c-format
@@ -964,8 +964,8 @@ msgstr "%s: FIFO нээгдэхгүй байна!"
 
 #: daemon/slave.c:2937
 #, c-format
-msgid "%s: Can't init pipe to gdmchooser"
-msgstr "%s: gdmchooser шугамыг инициацилж чадахгүй байна."
+msgid "%s: Can't init pipe to mdmchooser"
+msgstr "%s: mdmchooser шугамыг инициацилж чадахгүй байна."
 
 #: daemon/slave.c:3035
 msgid "Cannot start the chooser program, you will probably not be able to log in.  Please contact the system administrator."
@@ -978,8 +978,8 @@ msgstr "%s: Сонгогчийг %s дэлгэц дээр эхлүүлэхэд �
 
 #: daemon/slave.c:3042
 #, c-format
-msgid "%s: Can't fork gdmchooser process"
-msgstr "%s: gdmchooser процесс хуваагдахгүй байна"
+msgid "%s: Can't fork mdmchooser process"
+msgstr "%s: mdmchooser процесс хуваагдахгүй байна"
 
 #: daemon/slave.c:3338
 #, c-format
@@ -1112,9 +1112,9 @@ msgid "%s: Home directory for %s: '%s' does not exist!"
 msgstr "%s: Эхлэл лавлах »%s« %s -д алга!"
 
 #: daemon/slave.c:4037
-msgid "GDM could not write to your authorization file.  This could mean that you are out of disk space or that your home directory could not be opened for writing.  In any case, it is not possible to log in.  Please contact your system administrator"
+msgid "MDM could not write to your authorization file.  This could mean that you are out of disk space or that your home directory could not be opened for writing.  In any case, it is not possible to log in.  Please contact your system administrator"
 msgstr ""
-"GDM таны гэрчилгээний файлыг бичиж чадахгүй байна. Энэ дискэн дээр чинь\n"
+"MDM таны гэрчилгээний файлыг бичиж чадахгүй байна. Энэ дискэн дээр чинь\n"
 "сул зай байхгүй эсвэл таны эхлэл лавлах бичихээр нээгдээгүй байж болно.\n"
 "Ямар ч гэсэн та нэвтэрч чадахгүй.Системийн зохион байгуулагчдаа хандана уу."
 
@@ -1135,8 +1135,8 @@ msgid "View details (~/.xsession-errors file)"
 msgstr "Дэлгэрэнгүй харах (~/.xsession-errors file)"
 
 #: daemon/slave.c:4346
-msgid "GDM detected a shutdown or reboot in progress."
-msgstr "GDM унтраах эсвэл шинээр эхлүүлэх процесс илрүүллээ."
+msgid "MDM detected a shutdown or reboot in progress."
+msgstr "MDM унтраах эсвэл шинээр эхлүүлэх процесс илрүүллээ."
 
 #: daemon/slave.c:4440
 #, c-format
@@ -1193,7 +1193,7 @@ msgstr "Caps Lock товчилуур унтраалттай эсэхийг ня�
 #: daemon/verify-crypt.c:127
 #: daemon/verify-pam.c:176
 #: daemon/verify-shadow.c:126
-#: gui/gdmlogin.c:3052
+#: gui/mdmlogin.c:3052
 msgid "Please enter your username"
 msgstr "Та нэвтрэх нэрээ өгнө үү"
 
@@ -1205,10 +1205,10 @@ msgstr "Та нэвтрэх нэрээ өгнө үү"
 #: daemon/verify-pam.c:170
 #: daemon/verify-pam.c:512
 #: daemon/verify-shadow.c:127
-#: gui/gdmlogin.c:1073
-#: gui/gdmlogin.c:1087
-#: gui/gdmlogin.c:1873
-#: gui/gdmlogin.c:2342
+#: gui/mdmlogin.c:1073
+#: gui/mdmlogin.c:1087
+#: gui/mdmlogin.c:1873
+#: gui/mdmlogin.c:2342
 #: gui/greeter/greeter.c:272
 #: gui/greeter/greeter_parser.c:1061
 msgid "Username:"
@@ -1219,7 +1219,7 @@ msgstr "Хэрэглэгчийн нэр:"
 #: daemon/verify-pam.c:96
 #: daemon/verify-pam.c:223
 #: daemon/verify-shadow.c:184
-#: gui/gdmlogin.c:1905
+#: gui/mdmlogin.c:1905
 msgid "Password:"
 msgstr "Нууц үг:"
 
@@ -1525,8 +1525,8 @@ msgstr ""
 
 #: daemon/verify-pam.c:1069
 #: daemon/verify-pam.c:1071
-msgid "Can't find PAM configuration for gdm."
-msgstr "gdm -н PAM-тохируулга олдсонгүй"
+msgid "Can't find PAM configuration for mdm."
+msgstr "mdm -н PAM-тохируулга олдсонгүй"
 
 #: daemon/xdmcp.c:369
 #, c-format
@@ -1687,82 +1687,82 @@ msgstr "%s: Түгжигдсэн %s хостоос KEEPALIVE -г авлаа"
 msgid "%s: No XDMCP support"
 msgstr "%s: XDMCP-дэмжилэг алга"
 
-#: gui/gdmXnestchooser.c:166
-#: gui/gdmXnestchooser.c:173
+#: gui/mdmXnestchooser.c:166
+#: gui/mdmXnestchooser.c:173
 msgid "Xnest command line"
 msgstr "Xnest-тушаалын мөр"
 
-#: gui/gdmXnestchooser.c:166
-#: gui/gdmXnestchooser.c:173
+#: gui/mdmXnestchooser.c:166
+#: gui/mdmXnestchooser.c:173
 msgid "STRING"
 msgstr "СТРИНГ"
 
-#: gui/gdmXnestchooser.c:167
-#: gui/gdmXnestchooser.c:174
+#: gui/mdmXnestchooser.c:167
+#: gui/mdmXnestchooser.c:174
 msgid "Extra options for Xnest"
 msgstr "Xnest -н нэмэлт сонголтууд"
 
-#: gui/gdmXnestchooser.c:167
-#: gui/gdmXnestchooser.c:174
+#: gui/mdmXnestchooser.c:167
+#: gui/mdmXnestchooser.c:174
 msgid "OPTIONS"
 msgstr "СОНГОЛТУУД"
 
-#: gui/gdmXnestchooser.c:168
-#: gui/gdmXnestchooser.c:178
+#: gui/mdmXnestchooser.c:168
+#: gui/mdmXnestchooser.c:178
 msgid "Run in background"
 msgstr "Ард ажиллуулах"
 
-#: gui/gdmXnestchooser.c:175
+#: gui/mdmXnestchooser.c:175
 msgid "Just run Xnest, no query (no chooser)"
 msgstr "Зөвхөн Xnest ажиллана, хүсэлт алга (сонгогч алга)"
 
-#: gui/gdmXnestchooser.c:176
+#: gui/mdmXnestchooser.c:176
 msgid "Do direct query instead of indirect (chooser)"
 msgstr "Шууд бусын оронд шууд хүсэлт (Сонгогч)"
 
-#: gui/gdmXnestchooser.c:177
+#: gui/mdmXnestchooser.c:177
 msgid "Run broadcast instead of indirect (chooser)"
 msgstr "Шууд бусын оронд цацалт ажиллуурах (Сонгогч)"
 
-#: gui/gdmXnestchooser.c:179
-msgid "Don't check for running gdm"
-msgstr "GDM -н ажиллагааг шалгахгүй байх"
+#: gui/mdmXnestchooser.c:179
+msgid "Don't check for running mdm"
+msgstr "MDM -н ажиллагааг шалгахгүй байх"
 
 #. markup
-#: gui/gdmXnestchooser.c:521
+#: gui/mdmXnestchooser.c:521
 msgid "Xnest doesn't exist."
 msgstr "Xnest үл оршино."
 
-#: gui/gdmXnestchooser.c:523
+#: gui/mdmXnestchooser.c:523
 msgid "Please ask your system administrator to install it."
 msgstr "Та системийн зохион байгуулагчаасаа, үүнийг суулгаж өгөхийг хүснэ үү."
 
 #. markup
-#: gui/gdmXnestchooser.c:549
+#: gui/mdmXnestchooser.c:549
 msgid "Indirect XDMCP is not enabled"
 msgstr "Шууд бус XDMCP нээгдээгүй байна"
 
-#: gui/gdmXnestchooser.c:551
-#: gui/gdmXnestchooser.c:572
-msgid "Please ask your system administrator to enable it in the GDM configurator program."
-msgstr "Шууд бус XDMCP идэвхижээгүй байна. Та системийн зохион байгуулагчаасаа GDM-тохируулгын программ дотроос үүнийг идэвхижүүлэхийг хүснэ үү"
+#: gui/mdmXnestchooser.c:551
+#: gui/mdmXnestchooser.c:572
+msgid "Please ask your system administrator to enable it in the MDM configurator program."
+msgstr "Шууд бус XDMCP идэвхижээгүй байна. Та системийн зохион байгуулагчаасаа MDM-тохируулгын программ дотроос үүнийг идэвхижүүлэхийг хүснэ үү"
 
 #. markup
-#: gui/gdmXnestchooser.c:570
+#: gui/mdmXnestchooser.c:570
 msgid "XDMCP is not enabled"
 msgstr "XDMCP нээгдээгүй байна"
 
 #. markup
-#: gui/gdmXnestchooser.c:604
-msgid "GDM is not running"
-msgstr "GDM ажиллахгүй байна."
+#: gui/mdmXnestchooser.c:604
+msgid "MDM is not running"
+msgstr "MDM ажиллахгүй байна."
 
-#: gui/gdmXnestchooser.c:606
+#: gui/mdmXnestchooser.c:606
 msgid "Please ask your system administrator to start it."
 msgstr "Та системийн зохион байгуулагчаасаа эхлүүлж өгөхийг хүснэ үү."
 
 #. markup
-#: gui/gdmXnestchooser.c:623
+#: gui/mdmXnestchooser.c:623
 msgid "Could not find a free display number"
 msgstr "Сул дэлгэцийн дугаар олдсонгүй"
 
@@ -1771,112 +1771,112 @@ msgstr "Сул дэлгэцийн дугаар олдсонгүй"
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gui/gdmchooser-strings.c:7
-#: gui/gdmchooser.glade.h:5
-msgid "GDM Host Chooser"
-msgstr "GDM-хост сонгогч"
+#: gui/mdmchooser-strings.c:7
+#: gui/mdmchooser.glade.h:5
+msgid "MDM Host Chooser"
+msgstr "MDM-хост сонгогч"
 
-#: gui/gdmchooser-strings.c:8
-#: gui/gdmchooser.glade.h:6
+#: gui/mdmchooser-strings.c:8
+#: gui/mdmchooser.glade.h:6
 msgid "How to use this application"
 msgstr "Энэ программын хэрэглээ"
 
-#: gui/gdmchooser-strings.c:9
-#: gui/gdmchooser.glade.h:8
+#: gui/mdmchooser-strings.c:9
+#: gui/mdmchooser.glade.h:8
 msgid "Probe the network"
 msgstr "Сүлжээ хайх"
 
-#: gui/gdmchooser-strings.c:10
-#: gui/gdmchooser.glade.h:4
+#: gui/mdmchooser-strings.c:10
+#: gui/mdmchooser.glade.h:4
 msgid "Exit the application"
 msgstr "Программаас гарах"
 
-#: gui/gdmchooser-strings.c:11
-#: gui/gdmchooser.glade.h:7
+#: gui/mdmchooser-strings.c:11
+#: gui/mdmchooser.glade.h:7
 msgid "Open a session to the selected host"
 msgstr "Сонгосон хост дээр суулт нээх"
 
-#: gui/gdmchooser-strings.c:12
-#: gui/gdmchooser.glade.h:3
+#: gui/mdmchooser-strings.c:12
+#: gui/mdmchooser.glade.h:3
 msgid "C_onnect"
 msgstr "_Холбох"
 
-#: gui/gdmchooser-strings.c:13
-#: gui/gdmchooser.glade.h:10
+#: gui/mdmchooser-strings.c:13
+#: gui/mdmchooser.glade.h:10
 msgid "Status"
 msgstr "Төлөв"
 
-#: gui/gdmchooser-strings.c:14
-#: gui/gdmchooser.glade.h:2
+#: gui/mdmchooser-strings.c:14
+#: gui/mdmchooser.glade.h:2
 msgid "A_dd host: "
 msgstr "Хост _нэмэх:"
 
 #. EOF
-#: gui/gdmchooser-strings.c:15
-#: gui/gdmchooser.glade.h:1
-#: gui/gdmsetup-strings.c:19
-#: gui/gdmsetup-strings.c:21
-#: gui/gdmsetup-strings.c:26
-#: gui/gdmsetup-strings.c:32
-#: gui/gdmsetup-strings.c:37
-#: gui/gdmsetup-strings.c:47
-#: gui/gdmsetup-strings.c:85
-#: gui/gdmsetup.glade.h:2
+#: gui/mdmchooser-strings.c:15
+#: gui/mdmchooser.glade.h:1
+#: gui/mdmsetup-strings.c:19
+#: gui/mdmsetup-strings.c:21
+#: gui/mdmsetup-strings.c:26
+#: gui/mdmsetup-strings.c:32
+#: gui/mdmsetup-strings.c:37
+#: gui/mdmsetup-strings.c:47
+#: gui/mdmsetup-strings.c:85
+#: gui/mdmsetup.glade.h:2
 msgid "*"
 msgstr "*"
 
-#: gui/gdmchooser-strings.c:16
-#: gui/gdmchooser.glade.h:9
+#: gui/mdmchooser-strings.c:16
+#: gui/mdmchooser.glade.h:9
 msgid "Query and add this host to the above list"
 msgstr "Энэ хостыг шалгаад дээд жагсаалтад нэм"
 
-#: gui/gdmchooser-strings.c:17
-#: gui/gdmchooser.glade.h:11
+#: gui/mdmchooser-strings.c:17
+#: gui/mdmchooser.glade.h:11
 msgid "_Add"
 msgstr "_Нэмэх"
 
-#: gui/gdmchooser.c:79
+#: gui/mdmchooser.c:79
 msgid "Please wait: scanning local network..."
 msgstr "Та хүлээнэ үү. дотоод сүлжээг шалгаж байна ..."
 
-#: gui/gdmchooser.c:80
+#: gui/mdmchooser.c:80
 msgid "No serving hosts were found."
 msgstr "Санал болгочих хост олдсонгүй."
 
-#: gui/gdmchooser.c:81
+#: gui/mdmchooser.c:81
 msgid "Choose a ho_st to connect to:"
 msgstr "Та доорхи жигсаалтаас холбогдохийг хүссэн _хостоо сонгоно уу."
 
 #. markup
-#: gui/gdmchooser.c:645
+#: gui/mdmchooser.c:645
 msgid "Cannot connect to remote server"
 msgstr "Алсын сервер лүү холбогдсонгүй"
 
-#: gui/gdmchooser.c:646
+#: gui/mdmchooser.c:646
 #, c-format
 msgid "The host \"%s\" is not willing to support a login session right now.  Please try again later."
 msgstr "\"%s\" хост яг одоо нэвтрэх суулт нийлүүлэхэд бэлэн бус байна. Дараа оролдоно уу."
 
 #. markup
-#: gui/gdmchooser.c:1270
+#: gui/mdmchooser.c:1270
 msgid "Did not receive response from server"
 msgstr "Серверээс хариу хүлээн авсангүй"
 
-#: gui/gdmchooser.c:1271
+#: gui/mdmchooser.c:1271
 #, c-format
 msgid "Did not receive any response from host \"%s\" in %d seconds.  Perhaps the host is not turned on, or is not willing to support a login session right now.  Please try again later."
 msgstr "\"%s\" хостоос %d секундэд хариу ирсэнгүй.  Магад хост унтраалттай эсвэл яг одоо нэвтрэх суулт нийлүүлэхэд бэлэн бус байна. Дараа оролдоно уу."
 
-#: gui/gdmchooser.c:1377
+#: gui/mdmchooser.c:1377
 msgid "Cannot find host"
 msgstr "Хост олдсонгүй"
 
-#: gui/gdmchooser.c:1378
+#: gui/mdmchooser.c:1378
 #, c-format
 msgid "I cannot find the host \"%s\", perhaps you have mistyped it."
 msgstr "\"%s\" хостыг олсонгүй. магадгүй та буруу бичсэн байх."
 
-#: gui/gdmchooser.c:1664
+#: gui/mdmchooser.c:1664
 msgid ""
 "The main area of this application shows the hosts on the local network that have \"XDMCP\" enabled. This allows users to login remotely to other machines as if they were logged on using the console.\n"
 "\n"
@@ -1886,765 +1886,765 @@ msgstr ""
 "\n"
 "Та »Шинэчлэх« ийг товшиж сүлжээнд байгаа шинэ хостуудыг шалгаж болно. Хэрвээ та хостоо сонгосон бол энэ машин дээрхи суултаа эхлэхдээ »Холбох« -г дарна уу."
 
-#: gui/gdmchooser.c:1718
+#: gui/mdmchooser.c:1718
 #, c-format
 msgid "Can't open default host icon: %s"
 msgstr "Стандарт хост-эмблем нээгдсэнгүй: %s"
 
-#: gui/gdmchooser.c:1938
-#: gui/gdmlogin.c:3947
-#: gui/gdmlogin.c:3954
+#: gui/mdmchooser.c:1938
+#: gui/mdmlogin.c:3947
+#: gui/mdmlogin.c:3954
 #: gui/greeter/greeter.c:1102
 #: gui/greeter/greeter.c:1109
 msgid "Could not set signal mask!"
 msgstr "Сигналын маск хийгдсэнгүй!"
 
-#: gui/gdmchooser.c:1944
+#: gui/mdmchooser.c:1944
 msgid "Socket for xdm communication"
 msgstr "xdm-холбооны соккет"
 
-#: gui/gdmchooser.c:1944
+#: gui/mdmchooser.c:1944
 msgid "SOCKET"
 msgstr "СОККЕТ"
 
 # CHECK
-#: gui/gdmchooser.c:1947
+#: gui/mdmchooser.c:1947
 msgid "Client address to return in response to xdm"
 msgstr "xdm руу хариулт илгээх клиент хаяг "
 
-#: gui/gdmchooser.c:1947
+#: gui/mdmchooser.c:1947
 msgid "ADDRESS"
 msgstr "ХАЯГ"
 
 # CHECK
-#: gui/gdmchooser.c:1950
+#: gui/mdmchooser.c:1950
 msgid "Connection type to return in response to xdm"
 msgstr "xdm руу хариулт илгээх холболтын төрөл"
 
-#: gui/gdmchooser.c:1950
+#: gui/mdmchooser.c:1950
 msgid "TYPE"
 msgstr "ТӨРӨЛ"
 
 #. markup
-#: gui/gdmchooser.c:2079
+#: gui/mdmchooser.c:2079
 msgid "Cannot run chooser"
 msgstr "Сонгогчийг ажиллуулж чадсангүй"
 
-#: gui/gdmchooser.c:2080
+#: gui/mdmchooser.c:2080
 #, c-format
-msgid "The chooser version (%s) does not match the daemon version (%s).  You have probably just upgraded gdm.  Please restart the gdm daemon or reboot the computer."
-msgstr "Сонгогчийн хувилбар (%s) хэвтүүлийн хувилбартай (%s) тохирохгүй байна.Та магад сая gdm -г шинэчилсэн.Та gdm-хэвтүүлээ эсвэл компьютераа шинээр эхлүүлнэ үү."
+msgid "The chooser version (%s) does not match the daemon version (%s).  You have probably just upgraded mdm.  Please restart the mdm daemon or reboot the computer."
+msgstr "Сонгогчийн хувилбар (%s) хэвтүүлийн хувилбартай (%s) тохирохгүй байна.Та магад сая mdm -г шинэчилсэн.Та mdm-хэвтүүлээ эсвэл компьютераа шинээр эхлүүлнэ үү."
 
 #. markup
-#: gui/gdmcomm.c:405
-#: gui/gdmphotosetup.c:70
-msgid "GDM (The GNOME Display Manager) is not running."
-msgstr "GDM (The ГНОМЕ Display Manager) ажиллаагүй байна."
+#: gui/mdmcomm.c:405
+#: gui/mdmphotosetup.c:70
+msgid "MDM (The GNOME Display Manager) is not running."
+msgstr "MDM (The ГНОМЕ Display Manager) ажиллаагүй байна."
 
-#: gui/gdmcomm.c:408
-#: gui/gdmphotosetup.c:73
+#: gui/mdmcomm.c:408
+#: gui/mdmphotosetup.c:73
 msgid "You might in fact be using a different display manager, such as KDM (KDE Display Manager) or xdm."
 msgstr "Та KDM (KDE дэлгэц хянагч) эсвэл xdm гэх мэт өөр дэлгэц хянагч хэрэглэж болно."
 
-#: gui/gdmcomm.c:411
-#: gui/gdmphotosetup.c:76
-msgid "If you still wish to use this feature, either start GDM yourself or ask your system administrator to start GDM."
-msgstr "Хэрвээ та энийг ашиглахыг хүссээр байвал GDM -г өөрөө эхлүүлэх эсвэл системийн зохион байгуулагчаасаа эхлүүлж өгөхийг хүснэ үү."
+#: gui/mdmcomm.c:411
+#: gui/mdmphotosetup.c:76
+msgid "If you still wish to use this feature, either start MDM yourself or ask your system administrator to start MDM."
+msgstr "Хэрвээ та энийг ашиглахыг хүссээр байвал MDM -г өөрөө эхлүүлэх эсвэл системийн зохион байгуулагчаасаа эхлүүлж өгөхийг хүснэ үү."
 
 #. markup
-#: gui/gdmcomm.c:433
-#: gui/gdmflexiserver.c:697
-msgid "Cannot communicate with GDM (The GNOME Display Manager)"
-msgstr "GDM  (The GNOME Display Manager) холбогдоогүй байна."
+#: gui/mdmcomm.c:433
+#: gui/mdmflexiserver.c:697
+msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgstr "MDM  (The GNOME Display Manager) холбогдоогүй байна."
 
-#: gui/gdmcomm.c:436
-#: gui/gdmflexiserver.c:700
-msgid "Perhaps you have an old version of GDM running."
-msgstr "Магад таны GDM-н хувилбар хуучирсан байх."
+#: gui/mdmcomm.c:436
+#: gui/mdmflexiserver.c:700
+msgid "Perhaps you have an old version of MDM running."
+msgstr "Магад таны MDM-н хувилбар хуучирсан байх."
 
-#: gui/gdmcomm.c:453
-#: gui/gdmcomm.c:456
-msgid "Cannot communicate with gdm, perhaps you have an old version running."
-msgstr "GDM холбогдоогүй байна, магад таны хувилбар хуучирсан байх."
+#: gui/mdmcomm.c:453
+#: gui/mdmcomm.c:456
+msgid "Cannot communicate with mdm, perhaps you have an old version running."
+msgstr "MDM холбогдоогүй байна, магад таны хувилбар хуучирсан байх."
 
-#: gui/gdmcomm.c:459
+#: gui/mdmcomm.c:459
 msgid "The allowed limit of flexible X servers reached."
 msgstr "Уян X-серверийн зөвшөөрсөн хязгаарт хүрлээ."
 
-#: gui/gdmcomm.c:461
+#: gui/mdmcomm.c:461
 msgid "There were errors trying to start the X server."
 msgstr "X-серверийг эхлүүлэхэд алдаа гарлаа."
 
-#: gui/gdmcomm.c:463
+#: gui/mdmcomm.c:463
 msgid "The X server failed.  Perhaps it is not configured well."
 msgstr "X-сервер нурлаа. Тэр магад зөв тохируулагдаагүй."
 
-#: gui/gdmcomm.c:466
+#: gui/mdmcomm.c:466
 msgid "Too many X sessions running."
 msgstr "Хэтэрхий олон идэвхитэй X-суултууд."
 
-#: gui/gdmcomm.c:468
+#: gui/mdmcomm.c:468
 msgid "The nested X server (Xnest) cannot connect to your current X server.  You may be missing an X authorization file."
 msgstr "Үүрэн X-сервер (Xnest) идэвхитэй X-сервертэй холболт хийж чадахгүй байна. Магад X-гэрчилгээ файл алга болсон."
 
-#: gui/gdmcomm.c:473
+#: gui/mdmcomm.c:473
 msgid ""
-"The nested X server (Xnest) is not available, or gdm is badly configured.\n"
+"The nested X server (Xnest) is not available, or mdm is badly configured.\n"
 "Please install the Xnest package in order to use the nested login."
 msgstr ""
-"Үүрэн X-сервер (Xnest) байхгүй эсвэл GDM алдаатай тохируулагдсан.\n"
+"Үүрэн X-сервер (Xnest) байхгүй эсвэл MDM алдаатай тохируулагдсан.\n"
 " Та үүрэн нэвтрэлт хэрэглэхийн тулд Xnest-пакет суулгана уу ."
 
-#: gui/gdmcomm.c:478
-msgid "The X server is not available, it is likely that gdm is badly configured."
-msgstr "X-сервер байхгүй байна, магад GDM алдаатай тохируулагдсан."
+#: gui/mdmcomm.c:478
+msgid "The X server is not available, it is likely that mdm is badly configured."
+msgstr "X-сервер байхгүй байна, магад MDM алдаатай тохируулагдсан."
 
-#: gui/gdmcomm.c:482
+#: gui/mdmcomm.c:482
 msgid "Trying to set an unknown logout action, or trying to set a logout action which is not available."
 msgstr "Тодорхойгүй гарах үйлдэл тогтоохыг оролдох эсвэл байхгүй гарах үйлдэл хийхээр оролдож байна."
 
-#: gui/gdmcomm.c:485
+#: gui/mdmcomm.c:485
 msgid "Virtual terminals not supported."
 msgstr "Виртуал терминалууд дэмжигдээгүй."
 
-#: gui/gdmcomm.c:487
+#: gui/mdmcomm.c:487
 msgid "Trying to change to an invalid virtual terminal number."
 msgstr "Хүчингүй виртуал терминалын дугаарыг солихыг оролдох."
 
-#: gui/gdmcomm.c:489
+#: gui/mdmcomm.c:489
 msgid "Trying to update an unsupported configuration key."
 msgstr "Дэмжигдээгүй тохируулгын түлхүүр идэвхижүүлэхийг оролдов."
 
-#: gui/gdmcomm.c:491
+#: gui/mdmcomm.c:491
 msgid "You do not seem to have authentication needed be for this operation.  Perhaps your .Xauthority file is not set up correctly."
 msgstr "Таньд энэ үйлдэлд шаардлагатай эрх алга. Магад таны »Xauthority«-файл буруу тохируулагдсан."
 
-#: gui/gdmcomm.c:495
-msgid "Too many messages were sent to gdm and it hung upon us."
-msgstr "Хэтэрхий олон зурвас gdm рүү илгээгдсэн ба тэр тэнцвэржилт хийж байна."
+#: gui/mdmcomm.c:495
+msgid "Too many messages were sent to mdm and it hung upon us."
+msgstr "Хэтэрхий олон зурвас mdm рүү илгээгдсэн ба тэр тэнцвэржилт хийж байна."
 
-#: gui/gdmcomm.c:498
+#: gui/mdmcomm.c:498
 msgid "Unknown error occured."
 msgstr "Тодорхойгүй алдаа гарлаа."
 
-#: gui/gdmflexiserver-xnest.desktop.in.h:1
+#: gui/mdmflexiserver-xnest.desktop.in.h:1
 msgid "Log in as another user inside a nested window"
 msgstr "Хайрцагласан цонхонд өөр хэрэглэгчээр нэвтрэх"
 
-#: gui/gdmflexiserver-xnest.desktop.in.h:2
+#: gui/mdmflexiserver-xnest.desktop.in.h:2
 msgid "New Login in a Nested Window"
 msgstr "Хайрцагласан цонхонд шинээр нэвтрэх"
 
 #. markup
-#: gui/gdmflexiserver.c:100
+#: gui/mdmflexiserver.c:100
 msgid "Cannot change display"
 msgstr "Дэлгэцийг өөрчилж чадсангүй"
 
-#: gui/gdmflexiserver.c:177
+#: gui/mdmflexiserver.c:177
 msgid "Nobody"
 msgstr "Хэнчбиш"
 
-#: gui/gdmflexiserver.c:212
+#: gui/mdmflexiserver.c:212
 #, c-format
 msgid "Display %s on virtual terminal %d"
 msgstr "%s дэлгэц %d виртуал терминалд байна"
 
-#: gui/gdmflexiserver.c:217
+#: gui/mdmflexiserver.c:217
 #, c-format
 msgid "Nested display %s on virtual terminal %d"
 msgstr "Нягташсан %s дэлгэц %d виртуал терминалд байна"
 
-#: gui/gdmflexiserver.c:247
-#: gui/gdmlogin.c:2904
+#: gui/mdmflexiserver.c:247
+#: gui/mdmlogin.c:2904
 #: gui/greeter/greeter_item_ulist.c:436
 msgid "Username"
 msgstr "Хэрэглэгчийн нэр"
 
-#: gui/gdmflexiserver.c:256
+#: gui/mdmflexiserver.c:256
 msgid "Display"
 msgstr "Дэлгэц"
 
-#: gui/gdmflexiserver.c:310
+#: gui/mdmflexiserver.c:310
 msgid "Open Displays"
 msgstr "Дэлгэц нээх"
 
 #. parent
 #. flags
-#: gui/gdmflexiserver.c:313
+#: gui/mdmflexiserver.c:313
 msgid "_Open New Display"
 msgstr "_Шинэ дэлгэц нээх"
 
-#: gui/gdmflexiserver.c:315
+#: gui/mdmflexiserver.c:315
 msgid "Change to _Existing Display"
 msgstr "_Байгаа дэлгэц рүү солих"
 
-#: gui/gdmflexiserver.c:323
+#: gui/mdmflexiserver.c:323
 msgid "There are some displays already open.  You can select one from the list below or open a new one."
 msgstr "Хэдэн нээлттэй дэлгэц байсаар байна. Та доорхи жагсаалтаас нэгийг сонгох эсвэл шинээр нээж чадна."
 
-#: gui/gdmflexiserver.c:390
-#: gui/gdmflexiserver.c:785
+#: gui/mdmflexiserver.c:390
+#: gui/mdmflexiserver.c:785
 msgid "Can't lock screen"
 msgstr "Дэлгэц түгжигдэхгүй байна"
 
-#: gui/gdmflexiserver.c:393
-#: gui/gdmflexiserver.c:788
+#: gui/mdmflexiserver.c:393
+#: gui/mdmflexiserver.c:788
 msgid "Can't disable xscreensaver display hacks"
 msgstr "XScreenSaver-дэлгэц-hacks хаагдахгүй байна"
 
-#: gui/gdmflexiserver.c:548
+#: gui/mdmflexiserver.c:548
 msgid "Choose server"
 msgstr "Сервер сонгох"
 
-#: gui/gdmflexiserver.c:559
+#: gui/mdmflexiserver.c:559
 msgid "Choose the X server to start"
 msgstr "Эхлэх X-сервер сонгох"
 
-#: gui/gdmflexiserver.c:565
+#: gui/mdmflexiserver.c:565
 msgid "Standard server"
 msgstr "Стандарт сервер"
 
-#: gui/gdmflexiserver.c:632
-msgid "Send the specified protocol command to gdm"
-msgstr "Өгөгдсөн протоколлын тушаалыг GDM -д илгээх"
+#: gui/mdmflexiserver.c:632
+msgid "Send the specified protocol command to mdm"
+msgstr "Өгөгдсөн протоколлын тушаалыг MDM -д илгээх"
 
-#: gui/gdmflexiserver.c:632
+#: gui/mdmflexiserver.c:632
 msgid "COMMAND"
 msgstr "ТУШААЛ"
 
-#: gui/gdmflexiserver.c:633
+#: gui/mdmflexiserver.c:633
 msgid "Xnest mode"
 msgstr "Xnest-горим"
 
-#: gui/gdmflexiserver.c:634
+#: gui/mdmflexiserver.c:634
 msgid "Do not lock current screen"
 msgstr "Идэвхитэй дэлгэцийг түгжих "
 
-#: gui/gdmflexiserver.c:635
+#: gui/mdmflexiserver.c:635
 msgid "Debugging output"
 msgstr "Оношилгооны үр дүн"
 
-#: gui/gdmflexiserver.c:636
+#: gui/mdmflexiserver.c:636
 msgid "Authenticate before running --command"
 msgstr "«--command» ажиллуулахын өмнө баталгаажуул"
 
 #. markup
-#: gui/gdmflexiserver.c:725
+#: gui/mdmflexiserver.c:725
 msgid "You do not seem to have the authentication needed for this operation"
 msgstr "Таньд энэ үйлдэлд шаардлагатай эрх алга."
 
-#: gui/gdmflexiserver.c:729
+#: gui/mdmflexiserver.c:729
 msgid "Perhaps your .Xauthority file is not set up correctly."
 msgstr "Магад таны »Xauthority«-файл буруу тохируулагдсан."
 
 #. markup
-#: gui/gdmflexiserver.c:753
+#: gui/mdmflexiserver.c:753
 msgid "You do not seem to be logged in on the console"
 msgstr "Та консолоор нэвтрээгүй юм шиг байна."
 
-#: gui/gdmflexiserver.c:756
+#: gui/mdmflexiserver.c:756
 msgid "Starting a new login only works correctly on the console."
 msgstr "Шинэ нэвтрэлт эхлүүлэх зөвхөн консолд зөв ажиллана."
 
 #. markup
-#: gui/gdmflexiserver.c:803
+#: gui/mdmflexiserver.c:803
 msgid "Cannot start new display"
 msgstr "Шинэ дэлгэц эхлүүлж чадсангүй"
 
-#: gui/gdmflexiserver.desktop.in.h:1
+#: gui/mdmflexiserver.desktop.in.h:1
 msgid "Log in as another user without logging out"
 msgstr "Өөрөө гаралгүйгээр өөр нэрээр нэвтрэх"
 
-#: gui/gdmflexiserver.desktop.in.h:2
+#: gui/mdmflexiserver.desktop.in.h:2
 msgid "New Login"
 msgstr "Шинэ нэвтрэлт"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:53
+#: gui/mdmlanguages.c:53
 msgid "A-M|Albanian"
 msgstr "A-M|Албани"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:55
+#: gui/mdmlanguages.c:55
 msgid "A-M|Amharic"
 msgstr "A-M|Амхарик"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:57
+#: gui/mdmlanguages.c:57
 msgid "A-M|Arabic (Egypt)"
 msgstr "A-M|Араб (Египет)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:59
+#: gui/mdmlanguages.c:59
 msgid "A-M|Arabic (Lebanon)"
 msgstr "A-M|Араб (Ливан)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:61
+#: gui/mdmlanguages.c:61
 msgid "A-M|Azerbaijani"
 msgstr "A-M|Азербайжан"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:63
+#: gui/mdmlanguages.c:63
 msgid "A-M|Basque"
 msgstr "A-M|Баски"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:65
+#: gui/mdmlanguages.c:65
 msgid "A-M|Belarusian"
 msgstr "N-Z|Белорусс"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:67
+#: gui/mdmlanguages.c:67
 msgid "A-M|Bengali"
 msgstr "A-M|Бенгаль"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:69
+#: gui/mdmlanguages.c:69
 msgid "A-M|Bengali (India)"
 msgstr "A-M|Бенгаль (Энэтхэг)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:71
+#: gui/mdmlanguages.c:71
 msgid "A-M|Bulgarian"
 msgstr "N-Z|Болгар"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:73
+#: gui/mdmlanguages.c:73
 msgid "A-M|Bosnian"
 msgstr "A-M|Босни"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:75
+#: gui/mdmlanguages.c:75
 msgid "A-M|Catalan"
 msgstr "A-M|Каталан"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:77
+#: gui/mdmlanguages.c:77
 msgid "A-M|Chinese (simplified)"
 msgstr "A-M|Хятад (энгийн)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:79
+#: gui/mdmlanguages.c:79
 msgid "A-M|Chinese (traditional)"
 msgstr "A-M|Хятад (уламжлалт)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:81
+#: gui/mdmlanguages.c:81
 msgid "A-M|Croatian"
 msgstr "A-M|Хорват"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:83
+#: gui/mdmlanguages.c:83
 msgid "A-M|Czech"
 msgstr "N-Z|Чех"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:85
+#: gui/mdmlanguages.c:85
 msgid "A-M|Danish"
 msgstr "A-M|Дани"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:87
+#: gui/mdmlanguages.c:87
 msgid "A-M|Dutch"
 msgstr "N-Z|Голланд"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:89
+#: gui/mdmlanguages.c:89
 msgid "A-M|English"
 msgstr "A-M|Англи"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:91
+#: gui/mdmlanguages.c:91
 msgid "A-M|English (American)"
 msgstr "A-M|Англи (Америк)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:93
+#: gui/mdmlanguages.c:93
 msgid "A-M|English (Australian)"
 msgstr "A-M|Англи (Австрали)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:95
+#: gui/mdmlanguages.c:95
 msgid "A-M|English (British)"
 msgstr "A-M|Англи (Их Британ)"
 
 #  Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:97
+#: gui/mdmlanguages.c:97
 msgid "A-M|English (Canadian)"
 msgstr "A-M|Англи (Канад)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:99
+#: gui/mdmlanguages.c:99
 msgid "A-M|English (Ireland)"
 msgstr "A-M|Англи (Ирланд)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:101
+#: gui/mdmlanguages.c:101
 msgid "A-M|Estonian"
 msgstr "A-M|Эстон"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:103
+#: gui/mdmlanguages.c:103
 msgid "A-M|Finnish"
 msgstr "A-M|Финн"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:105
+#: gui/mdmlanguages.c:105
 msgid "A-M|French"
 msgstr "A-M|Франц"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:107
+#: gui/mdmlanguages.c:107
 msgid "A-M|Galician"
 msgstr "A-M|Галицын"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:109
+#: gui/mdmlanguages.c:109
 msgid "A-M|German"
 msgstr "A-M|Герман"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:111
+#: gui/mdmlanguages.c:111
 msgid "A-M|Greek"
 msgstr "A-M|Грек"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:113
+#: gui/mdmlanguages.c:113
 msgid "A-M|Gujarati"
 msgstr "A-M|Хорват"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:115
-#: gui/gdmlanguages.c:117
+#: gui/mdmlanguages.c:115
+#: gui/mdmlanguages.c:117
 msgid "A-M|Hebrew"
 msgstr "A-M|Хэбрэй/Жүүд"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:119
+#: gui/mdmlanguages.c:119
 msgid "A-M|Hindi"
 msgstr "A-M|Хинди"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:121
+#: gui/mdmlanguages.c:121
 msgid "A-M|Hungarian"
 msgstr "N-Z|Унгар"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:123
+#: gui/mdmlanguages.c:123
 msgid "A-M|Icelandic"
 msgstr "A-M|Исланд"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:125
+#: gui/mdmlanguages.c:125
 msgid "A-M|Indonesian"
 msgstr "A-M|Индонез"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:127
+#: gui/mdmlanguages.c:127
 msgid "A-M|Interlingua"
 msgstr "A-M|Олон улсын хэл"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:129
+#: gui/mdmlanguages.c:129
 msgid "A-M|Irish"
 msgstr "A-M|Ирланд"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:131
+#: gui/mdmlanguages.c:131
 msgid "A-M|Italian"
 msgstr "A-M|Итали"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:133
+#: gui/mdmlanguages.c:133
 msgid "A-M|Japanese"
 msgstr "A-M|Япон"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:135
+#: gui/mdmlanguages.c:135
 msgid "A-M|Kannada"
 msgstr "A-M|Канад"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:137
+#: gui/mdmlanguages.c:137
 msgid "A-M|Korean"
 msgstr "A-M|Солонгос"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:139
+#: gui/mdmlanguages.c:139
 msgid "A-M|Latvian"
 msgstr "A-M|Латви"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:141
+#: gui/mdmlanguages.c:141
 msgid "A-M|Lithuanian"
 msgstr "A-M|Литв"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:143
+#: gui/mdmlanguages.c:143
 msgid "A-M|Macedonian"
 msgstr "A-M|Македони"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:145
+#: gui/mdmlanguages.c:145
 msgid "A-M|Malay"
 msgstr "A-M|Малай"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:147
+#: gui/mdmlanguages.c:147
 msgid "A-M|Malayalam"
 msgstr "A-M|Малай"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:149
+#: gui/mdmlanguages.c:149
 msgid "A-M|Marathi"
 msgstr "A-M|Марати"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:151
+#: gui/mdmlanguages.c:151
 msgid "A-M|Mongolian"
 msgstr "A-M|Монгол"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:153
+#: gui/mdmlanguages.c:153
 msgid "N-Z|Norwegian (bokmal)"
 msgstr "N-Z|Норвег (bokmal)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:155
+#: gui/mdmlanguages.c:155
 msgid "N-Z|Norwegian (nynorsk)"
 msgstr "N-Z|Норвег (nyorsk)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:157
+#: gui/mdmlanguages.c:157
 msgid "N-Z|Oriya"
 msgstr "N-Z|Ория"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:159
+#: gui/mdmlanguages.c:159
 msgid "N-Z|Panjabi"
 msgstr "N-Z|Панжаби"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:161
+#: gui/mdmlanguages.c:161
 msgid "N-Z|Persian"
 msgstr "N-Z|Перс"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:163
+#: gui/mdmlanguages.c:163
 msgid "N-Z|Polish"
 msgstr "N-Z|Польш"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:165
+#: gui/mdmlanguages.c:165
 msgid "N-Z|Portuguese"
 msgstr "N-Z|Португал"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:167
+#: gui/mdmlanguages.c:167
 msgid "N-Z|Portuguese (Brazilian)"
 msgstr "N-Z|Португал (Бразил)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:169
+#: gui/mdmlanguages.c:169
 msgid "N-Z|Romanian"
 msgstr "N-Z|Румын"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:171
+#: gui/mdmlanguages.c:171
 msgid "N-Z|Russian"
 msgstr "N-Z|Орос"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:173
-#: gui/gdmlanguages.c:175
+#: gui/mdmlanguages.c:173
+#: gui/mdmlanguages.c:175
 msgid "N-Z|Serbian"
 msgstr "N-Z|Серви"
 
 #  Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:177
+#: gui/mdmlanguages.c:177
 msgid "N-Z|Serbian (Latin)"
 msgstr "N-Z|Серби(Латин)"
 
 #  Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:179
+#: gui/mdmlanguages.c:179
 msgid "N-Z|Serbian (Jekavian)"
 msgstr "N-Z|Серби(Жекавиан)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:181
+#: gui/mdmlanguages.c:181
 msgid "N-Z|Slovak"
 msgstr "N-Z|Словак"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:183
+#: gui/mdmlanguages.c:183
 msgid "N-Z|Slovenian"
 msgstr "N-Z|Словени"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:185
+#: gui/mdmlanguages.c:185
 msgid "N-Z|Spanish"
 msgstr "N-Z|Испани"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:187
+#: gui/mdmlanguages.c:187
 msgid "N-Z|Spanish (Mexico)"
 msgstr "N-Z|Испани (Мексик)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:189
+#: gui/mdmlanguages.c:189
 msgid "N-Z|Swedish"
 msgstr "N-Z|Швед"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:191
+#: gui/mdmlanguages.c:191
 msgid "N-Z|Swedish (Finland)"
 msgstr "N-Z|Швед (Финлянд)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:193
+#: gui/mdmlanguages.c:193
 msgid "N-Z|Tamil"
 msgstr "N-Z|Тамил"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:195
+#: gui/mdmlanguages.c:195
 msgid "N-Z|Telugu"
 msgstr "N-Z|Тэлэгү"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:197
+#: gui/mdmlanguages.c:197
 msgid "N-Z|Thai"
 msgstr "N-Z|Тай"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:199
+#: gui/mdmlanguages.c:199
 msgid "N-Z|Turkish"
 msgstr "N-Z|Турк"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:201
+#: gui/mdmlanguages.c:201
 msgid "N-Z|Ukrainian"
 msgstr "N-Z|Украин"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:203
+#: gui/mdmlanguages.c:203
 msgid "N-Z|Vietnamese"
 msgstr "N-Z|Вьетнам"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:205
+#: gui/mdmlanguages.c:205
 msgid "N-Z|Walloon"
 msgstr "N-Z|Валлон"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:207
+#: gui/mdmlanguages.c:207
 msgid "N-Z|Welsh"
 msgstr "N-Z|Вэлш"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:209
+#: gui/mdmlanguages.c:209
 msgid "N-Z|Yiddish"
 msgstr "N-Z|Юүд"
 
 #. This is the POSIX/C locale for english, should really be in Other
-#: gui/gdmlanguages.c:211
+#: gui/mdmlanguages.c:211
 msgid "Other|POSIX/C English"
 msgstr "Бусад|POSIX/C Englisch"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: gui/gdmlanguages.c:407
+#: gui/mdmlanguages.c:407
 msgid "A-M"
 msgstr "A-M"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: gui/gdmlanguages.c:415
+#: gui/mdmlanguages.c:415
 msgid "N-Z"
 msgstr "N-Z"
 
-#: gui/gdmlogin.c:222
+#: gui/mdmlogin.c:222
 #: gui/greeter/greeter_parser.c:1047
 #, c-format
 msgid "User %s will login in %d seconds"
 msgstr "Хэрэглэгч %s дараагийн %d секундэд нэвтэрч орж ирнэ"
 
-#: gui/gdmlogin.c:447
+#: gui/mdmlogin.c:447
 #, c-format
 msgid "%s: String too long!"
 msgstr "%s: тэмдэгт мөр хэт урт!"
 
-#: gui/gdmlogin.c:449
+#: gui/mdmlogin.c:449
 #, c-format
 msgid "%sWelcome to %s%s"
 msgstr "%sТавтай морилно уу %s%s"
 
 #. markup
-#: gui/gdmlogin.c:537
+#: gui/mdmlogin.c:537
 msgid "Could not fork a new process!"
 msgstr "Шинэ процессыг салаалуулж чадсангүй!"
 
-#: gui/gdmlogin.c:539
+#: gui/mdmlogin.c:539
 msgid "You likely won't be able to log in either."
 msgstr "Та нэвтэрч чадахгүй юм шиг."
 
-#: gui/gdmlogin.c:583
+#: gui/mdmlogin.c:583
 #: gui/greeter/greeter_system.c:56
 msgid "Are you sure you want to reboot the machine?"
 msgstr "Та копьютерээ шинээр асаахыг хүсч байна уу?"
 
 #. markup
-#: gui/gdmlogin.c:585
-#: gui/gdmlogin.c:2768
+#: gui/mdmlogin.c:585
+#: gui/mdmlogin.c:2768
 #: gui/greeter/greeter_parser.c:1027
 #: gui/greeter/greeter_system.c:58
 #: gui/greeter/greeter_system.c:184
 msgid "_Reboot"
 msgstr "_Шинээр эхлүүлэх"
 
-#: gui/gdmlogin.c:597
+#: gui/mdmlogin.c:597
 #: gui/greeter/greeter_system.c:69
 msgid "Are you sure you want to shut down the machine?"
 msgstr "Та копьютерээ унтраахыг хүсч байна уу?"
 
 #. markup
-#: gui/gdmlogin.c:599
+#: gui/mdmlogin.c:599
 msgid "Shut _Down"
 msgstr "_Унтраах"
 
-#: gui/gdmlogin.c:619
+#: gui/mdmlogin.c:619
 #: gui/greeter/greeter_system.c:81
 msgid "Are you sure you want to suspend the machine?"
 msgstr "Та копьютерээ унтаа төлөвт оруулахыг хүсч байна уу?"
 
 #. markup
-#: gui/gdmlogin.c:621
-#: gui/gdmlogin.c:2795
+#: gui/mdmlogin.c:621
+#: gui/mdmlogin.c:2795
 #: gui/greeter/greeter_system.c:83
 msgid "_Suspend"
 msgstr "_Унтуулах"
 
-#: gui/gdmlogin.c:685
-#: gui/gdmlogin.c:3722
+#: gui/mdmlogin.c:685
+#: gui/mdmlogin.c:3722
 #: gui/greeter/greeter.c:155
 #: gui/greeter/greeter.c:849
 msgid "Welcome"
 msgstr "Тавтай морил"
 
-#: gui/gdmlogin.c:688
-#: gui/gdmlogin.c:3725
+#: gui/mdmlogin.c:688
+#: gui/mdmlogin.c:3725
 #: gui/greeter/greeter.c:158
 #: gui/greeter/greeter.c:852
 #, c-format
 msgid "Welcome to %n"
 msgstr "%n-д тавтай морил!"
 
-#: gui/gdmlogin.c:736
+#: gui/mdmlogin.c:736
 #: gui/greeter/greeter.c:183
 msgid "TimedLoginDelay was less than 5.  I'll just use 5."
 msgstr "Хугацаат нэвтрэлтийн хүлээлт 5.-аас бага байсан тул 5 ашиглалаа."
 
-#: gui/gdmlogin.c:854
+#: gui/mdmlogin.c:854
 #: gui/greeter/greeter_session.c:119
 #, c-format
 msgid ""
@@ -2655,16 +2655,16 @@ msgstr ""
 "Та %s-ийг таны цаашдын суултуудад стандартаарашиглахыг хүсч байна уу?"
 
 #. markup
-#: gui/gdmlogin.c:860
-#: gui/gdmlogin.c:887
-#: gui/gdmlogin.c:965
+#: gui/mdmlogin.c:860
+#: gui/mdmlogin.c:887
+#: gui/mdmlogin.c:965
 #: gui/greeter/greeter_action_language.c:143
 #: gui/greeter/greeter_session.c:125
 #: gui/greeter/greeter_session.c:155
 msgid "Make _Default"
 msgstr "_Стандартаар хийх"
 
-#: gui/gdmlogin.c:860
+#: gui/mdmlogin.c:860
 #: gui/greeter/greeter_session.c:125
 msgid "Just _Log In"
 msgstr "Одоо _нэвтрэх"
@@ -2673,8 +2673,8 @@ msgstr "Одоо _нэвтрэх"
 #. no_group
 #. untranslated
 #. markup
-#: gui/gdmlogin.c:879
-#: gui/gdmlogin.c:959
+#: gui/mdmlogin.c:879
+#: gui/mdmlogin.c:959
 #: gui/greeter/greeter_action_language.c:137
 #: gui/greeter/greeter_session.c:147
 #, c-format
@@ -2685,14 +2685,14 @@ msgstr ""
 "Энэ суултад та %s -ийг сонгожээ. Харин таны стандарт тохируулга бол %s юм байна.\n"
 "та %s -ийг таны цаашдын суултад стандартаарашиглахыг хүсч байна уу?"
 
-#: gui/gdmlogin.c:887
-#: gui/gdmlogin.c:965
+#: gui/mdmlogin.c:887
+#: gui/mdmlogin.c:965
 #: gui/greeter/greeter_action_language.c:143
 #: gui/greeter/greeter_session.c:155
 msgid "Just For _This Session"
 msgstr "Яг энэ _суултын хувьд"
 
-#: gui/gdmlogin.c:897
+#: gui/mdmlogin.c:897
 #: gui/greeter/greeter_session.c:168
 #, c-format
 msgid ""
@@ -2706,80 +2706,80 @@ msgstr ""
 "ашиглахыг хүсч байгаа бол 'switchdesk'-ийг ажиллуулаарай\n"
 "(самбарын цэсний Системийн->Дэлгэцийн-Сэлгүүр)."
 
-#: gui/gdmlogin.c:941
-#: gui/gdmlogin.c:950
+#: gui/mdmlogin.c:941
+#: gui/mdmlogin.c:950
 #: gui/greeter/greeter_action_language.c:53
 #: gui/greeter/greeter_action_language.c:121
 #: gui/greeter/greeter_action_language.c:129
 msgid "System Default"
 msgstr "Системийн стандарт"
 
-#: gui/gdmlogin.c:1074
-#: gui/gdmlogin.c:1088
-#: gui/gdmlogin.c:1875
-#: gui/gdmlogin.c:2343
-#: gui/gdmlogin.c:3010
+#: gui/mdmlogin.c:1074
+#: gui/mdmlogin.c:1088
+#: gui/mdmlogin.c:1875
+#: gui/mdmlogin.c:2343
+#: gui/mdmlogin.c:3010
 msgid "_Username:"
 msgstr "Хэрэглэгчийн _нэр:"
 
-#: gui/gdmlogin.c:1146
+#: gui/mdmlogin.c:1146
 #, c-format
 msgid "%s session selected"
 msgstr "Суулт %s -ыг сонголоо"
 
-#: gui/gdmlogin.c:1172
-#: gui/gdmlogin.c:1482
+#: gui/mdmlogin.c:1172
+#: gui/mdmlogin.c:1482
 #: gui/greeter/greeter_session.c:271
 msgid "_Last"
 msgstr "_Сүүлчийн"
 
-#: gui/gdmlogin.c:1183
+#: gui/mdmlogin.c:1183
 #: gui/greeter/greeter_session.c:277
 msgid "Log in using the session that you have used last time you logged in"
 msgstr "Өмнөх удаад нэвтрэхдээ хэрэглэсэн суултын тохируулгыг ашиглан нэвтрэх."
 
-#: gui/gdmlogin.c:1194
+#: gui/mdmlogin.c:1194
 #: gui/greeter/greeter_session.c:264
 msgid "Failsafe Gnome"
 msgstr "Аюулгүй ГНОМЕ"
 
-#: gui/gdmlogin.c:1195
+#: gui/mdmlogin.c:1195
 #: gui/greeter/greeter_session.c:265
 msgid "Failsafe xterm"
 msgstr "Аюулгүй xterm"
 
-#: gui/gdmlogin.c:1344
+#: gui/mdmlogin.c:1344
 #: gui/greeter/greeter_session.c:429
 #, c-format
 msgid "%s: Session directory %s not found!"
 msgstr "%s: Суултын лавлах %s олдсонгүй."
 
-#: gui/gdmlogin.c:1350
+#: gui/mdmlogin.c:1350
 #: gui/greeter/greeter_session.c:437
 msgid "Yaikes, nothing found in the session directory."
 msgstr "Өө, суултын лавлахад юу ч алга."
 
-#: gui/gdmlogin.c:1361
+#: gui/mdmlogin.c:1361
 #: gui/greeter/greeter_session.c:449
 msgid "Failsafe _Gnome"
 msgstr "Хамгаалалттай _Gnome"
 
-#: gui/gdmlogin.c:1363
+#: gui/mdmlogin.c:1363
 #: gui/greeter/greeter_session.c:451
 msgid "This is a failsafe session that will log you into GNOME.  No startup scripts will be read and it is only to be used when you can't log in otherwise.  GNOME will use the 'Default' session."
 msgstr "Энэ бол таныг терминалдаа нэвтрэхэд ашиглах суултын аюулгүй хэлбэр. Энд ямар ч эхлэлийн скрипт уншигдахгүй бөгөөд зөвхөн таныг өөрөөр нэвтрэх боломжгүй үед л хэрэглэгдэнэ. ГНОМЕ стандарт суултыг ашиглахаар боллоо."
 
-#: gui/gdmlogin.c:1386
+#: gui/mdmlogin.c:1386
 #: gui/greeter/greeter_session.c:473
 msgid "Failsafe _Terminal"
 msgstr "Хамгаалалттай _Tерминал"
 
-#: gui/gdmlogin.c:1388
+#: gui/mdmlogin.c:1388
 #: gui/greeter/greeter_session.c:475
 msgid "This is a failsafe session that will log you into a terminal.  No startup scripts will be read and it is only to be used when you can't log in otherwise.  To exit the terminal, type 'exit'."
 msgstr "Энэ бол таныг терминалдаа нэвтрэхэд ашиглах суултын аюулгүй хэлбэр. Энд ямар ч эхлэлийн скрипт уншигдахгүй бөгөөд зөвхөн таныг өөрөөр нэвтрэх боломжгүй үед л хэрэглэгдэнэ. Терминалаас гарахын тулд «exit» команд өгөөрэй."
 
-#: gui/gdmlogin.c:1409
+#: gui/mdmlogin.c:1409
 #: gui/greeter/greeter_session.c:495
 msgid "No default session link found. Using Failsafe GNOME.\n"
 msgstr "Суултын стандарт тохируулга олдсонгүй. ГНОМЕ-ын аюулгүйн хэлбэрийг ашиглалаа.\n"
@@ -2788,272 +2788,272 @@ msgstr "Суултын стандарт тохируулга олдсонгүй.
 #. no_group
 #. untranslated
 #. makrup
-#: gui/gdmlogin.c:1453
+#: gui/mdmlogin.c:1453
 #, c-format
 msgid "%s language selected"
 msgstr "%s хэлийг сонголоо"
 
-#: gui/gdmlogin.c:1493
+#: gui/mdmlogin.c:1493
 msgid "Log in using the language that you have used last time you logged in"
 msgstr "Өмнө нь орохдоо хэрэглэж байсан хэлээ хэрэглэх"
 
-#: gui/gdmlogin.c:1497
+#: gui/mdmlogin.c:1497
 msgid "_System Default"
 msgstr "_Системийн стандарт"
 
-#: gui/gdmlogin.c:1508
+#: gui/mdmlogin.c:1508
 msgid "Log in using the default system language"
 msgstr "Системээс өгөгдсөн стандарт хэлийг хэрэглэх."
 
-#: gui/gdmlogin.c:1528
+#: gui/mdmlogin.c:1528
 msgid "_Other"
 msgstr "_Бусад"
 
-#: gui/gdmlogin.c:1906
+#: gui/mdmlogin.c:1906
 msgid "_Password:"
 msgstr "_Нууц үг:"
 
 #. markup
 #. translators:  This is a nice and evil eggie text, translate
 #. * to your favourite currency
-#: gui/gdmlogin.c:2128
+#: gui/mdmlogin.c:2128
 #: gui/greeter/greeter.c:425
 msgid "Please insert 25 cents to log in."
 msgstr "Өөрийгөө бүртгүүлж нэвтрэхийн тулд 25 Мөнгө хийнэ үү."
 
-#: gui/gdmlogin.c:2351
+#: gui/mdmlogin.c:2351
 msgid "Doubleclick on the user to log in"
 msgstr "Хэрэглэгч нэврэхэд давхар шалгах"
 
-#: gui/gdmlogin.c:2475
+#: gui/mdmlogin.c:2475
 msgid "GNOME Desktop Manager"
 msgstr "ГНОМЕ-Дэлгэцийн Менежер"
 
-#: gui/gdmlogin.c:2501
+#: gui/mdmlogin.c:2501
 #: gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"
 msgstr "%a, %d. %b, %H.%M"
 
-#: gui/gdmlogin.c:2503
+#: gui/mdmlogin.c:2503
 #: gui/greeter/greeter_item.c:143
 msgid "%a %b %d, %l:%M %p"
 msgstr "%a %b %d, %l:%M %p"
 
-#: gui/gdmlogin.c:2563
+#: gui/mdmlogin.c:2563
 msgid "Finger"
 msgstr "Хуруу"
 
-#: gui/gdmlogin.c:2676
-msgid "GDM Login"
-msgstr "GDM-Нэвтрэлт"
+#: gui/mdmlogin.c:2676
+msgid "MDM Login"
+msgstr "MDM-Нэвтрэлт"
 
-#: gui/gdmlogin.c:2719
+#: gui/mdmlogin.c:2719
 #: gui/greeter/greeter_parser.c:997
 msgid "_Session"
 msgstr "_Суулт"
 
-#: gui/gdmlogin.c:2726
+#: gui/mdmlogin.c:2726
 #: gui/greeter/greeter_parser.c:992
 msgid "_Language"
 msgstr "_Хэл"
 
-#: gui/gdmlogin.c:2738
+#: gui/mdmlogin.c:2738
 #: gui/greeter/greeter_system.c:146
 msgid "_XDMCP Chooser..."
 msgstr "_XDMCP сонгогч ..."
 
-#: gui/gdmlogin.c:2745
+#: gui/mdmlogin.c:2745
 #: gui/greeter/greeter_system.c:153
 #: gui/greeter/greeter_system.c:345
 msgid "Run an XDMCP chooser which will allow you to log into available remote machines, if there are any."
 msgstr "Ямар нэг сул алсын машинаар нэвтрэх боломж олгох XDMCP сонгогч ажиллуулах."
 
-#: gui/gdmlogin.c:2754
+#: gui/mdmlogin.c:2754
 #: gui/greeter/greeter_system.c:161
 msgid "_Configure Login Manager..."
 msgstr "Нэвтрэлт хянагчийн _тохиргоо..."
 
-#: gui/gdmlogin.c:2761
+#: gui/mdmlogin.c:2761
 #: gui/greeter/greeter_system.c:168
 #: gui/greeter/greeter_system.c:365
-msgid "Configure GDM (this login manager). This will require the root password."
-msgstr "GDM (энэ хандалтын менежерйг)-ийн тохиргоо хийх. Ингэхийн тулд «root»-нууц үг шаардлагатай болно."
+msgid "Configure MDM (this login manager). This will require the root password."
+msgstr "MDM (энэ хандалтын менежерйг)-ийн тохиргоо хийх. Ингэхийн тулд «root»-нууц үг шаардлагатай болно."
 
-#: gui/gdmlogin.c:2775
+#: gui/mdmlogin.c:2775
 #: gui/greeter/greeter_system.c:191
 msgid "Reboot your computer"
 msgstr "таны компьютерийг шинээр эхлүүлэх"
 
 #. markup
-#: gui/gdmlogin.c:2781
+#: gui/mdmlogin.c:2781
 #: gui/greeter/greeter_parser.c:1017
 #: gui/greeter/greeter_system.c:71
 #: gui/greeter/greeter_system.c:196
 msgid "Shut_down"
 msgstr "_Унтраах"
 
-#: gui/gdmlogin.c:2788
+#: gui/mdmlogin.c:2788
 #: gui/greeter/greeter_system.c:203
 msgid "Shut down the system so that you may safely turn off the computer."
 msgstr "Та компьютерээ аюулгүй унтраахын тулд системээ зогсоох хэрэгтэй."
 
-#: gui/gdmlogin.c:2802
+#: gui/mdmlogin.c:2802
 #: gui/greeter/greeter_system.c:216
 msgid "Suspend your computer"
 msgstr "Компьютерийг унтаа төлөвт аваачих"
 
-#: gui/gdmlogin.c:2808
+#: gui/mdmlogin.c:2808
 #: gui/greeter/greeter_parser.c:1002
 msgid "_Actions"
 msgstr "_Үйлдлүүд"
 
-#: gui/gdmlogin.c:2817
+#: gui/mdmlogin.c:2817
 msgid "_Theme"
 msgstr "_Дүрс"
 
-#: gui/gdmlogin.c:2828
+#: gui/mdmlogin.c:2828
 #: gui/greeter/greeter_canvas_item.c:145
 #: gui/greeter/greeter_parser.c:1012
 msgid "_Quit"
 msgstr "_Гарах"
 
-#: gui/gdmlogin.c:2830
+#: gui/mdmlogin.c:2830
 #: gui/greeter/greeter_canvas_item.c:147
 #: gui/greeter/greeter_parser.c:1007
 msgid "D_isconnect"
 msgstr "_Салгах"
 
-#: gui/gdmlogin.c:2897
+#: gui/mdmlogin.c:2897
 #: gui/greeter/greeter_item_ulist.c:429
 msgid "Icon"
 msgstr "Тэмдэг"
 
-#: gui/gdmlogin.c:3361
+#: gui/mdmlogin.c:3361
 #, c-format
 msgid "Can't open DefaultImage: %s. Suspending face browser!"
 msgstr "Урьдчилан хийсэн зургийн тохиргоо нээгдсэнгүй: %s. Нүүрийн харагчийг унтраалаа."
 
-#: gui/gdmlogin.c:3383
-#: gui/gdmsetup.c:516
+#: gui/mdmlogin.c:3383
+#: gui/mdmsetup.c:516
 #: gui/greeter/greeter_item_ulist.c:284
 msgid "Too many users to list here..."
 msgstr "Энэ жагсаалтад хэт олон хэрэглэгч байна..."
 
 #. markup
-#: gui/gdmlogin.c:3801
-#: gui/gdmlogin.c:3832
-#: gui/gdmlogin.c:3876
+#: gui/mdmlogin.c:3801
+#: gui/mdmlogin.c:3832
+#: gui/mdmlogin.c:3876
 #: gui/greeter/greeter.c:628
 #: gui/greeter/greeter.c:659
 #: gui/greeter/greeter.c:704
 msgid "Cannot start the greeter"
 msgstr "Мэндчилэгч эхлүүлж чадсангүй"
 
-#: gui/gdmlogin.c:3802
-#: gui/gdmlogin.c:3833
+#: gui/mdmlogin.c:3802
+#: gui/mdmlogin.c:3833
 #, c-format
-msgid "The greeter version (%s) does not match the daemon version.  You have probably just upgraded gdm.  Please restart the gdm daemon or reboot the computer."
+msgid "The greeter version (%s) does not match the daemon version.  You have probably just upgraded mdm.  Please restart the mdm daemon or reboot the computer."
 msgstr ""
 "Мэндчилэгчийн хувилбар (%s) нь хэвтүүлийн хувилбартай авцалдахгүй байна.\n"
-"Та саяхан gdm-ийн сайжруулалт хийсэн бололтой.\n"
-"Та gdm-хэвтүүлийг шинээр эхлүүлэх эсвэл компьютерээ унтрааж асаах хэрэгтэй."
+"Та саяхан mdm-ийн сайжруулалт хийсэн бололтой.\n"
+"Та mdm-хэвтүүлийг шинээр эхлүүлэх эсвэл компьютерээ унтрааж асаах хэрэгтэй."
 
-#: gui/gdmlogin.c:3839
-#: gui/gdmlogin.c:3885
+#: gui/mdmlogin.c:3839
+#: gui/mdmlogin.c:3885
 #: gui/greeter/greeter.c:666
 #: gui/greeter/greeter.c:713
 msgid "Reboot"
 msgstr "Шинээр эхлүүлэх"
 
-#: gui/gdmlogin.c:3877
+#: gui/mdmlogin.c:3877
 #, c-format
-msgid "The greeter version (%s) does not match the daemon version (%s).  You have probably just upgraded gdm.  Please restart the gdm daemon or reboot the computer."
+msgid "The greeter version (%s) does not match the daemon version (%s).  You have probably just upgraded mdm.  Please restart the mdm daemon or reboot the computer."
 msgstr ""
 "Мэндчилгээний хувилбар (%s) нь хэвтүүлийн хувилбар (%s)-тай авцалдахгүй байна.\n"
-"Та саяхан gdm-ийн сайжруулалт хийсэн бололтой. Та gdm-хэвтүүлийг шинээр эхлүүлэх эсвэл компьютерээ унтрааж асаах хэрэгтэй."
+"Та саяхан mdm-ийн сайжруулалт хийсэн бололтой. Та mdm-хэвтүүлийг шинээр эхлүүлэх эсвэл компьютерээ унтрааж асаах хэрэгтэй."
 
-#: gui/gdmlogin.c:3883
+#: gui/mdmlogin.c:3883
 #: gui/greeter/greeter.c:711
 msgid "Restart"
 msgstr "Шинээр эхлүүлэх"
 
 #. markup
-#: gui/gdmlogin.c:4069
+#: gui/mdmlogin.c:4069
 #: gui/greeter/greeter.c:1331
 msgid "Session directory is missing"
 msgstr "Суултын лавлах өгөгдөөгүй."
 
-#: gui/gdmlogin.c:4071
+#: gui/mdmlogin.c:4071
 #: gui/greeter/greeter.c:1333
-msgid "Your session directory is missing or empty!  There are two available sessions you can use, but you should log in and correct the gdm configuration."
-msgstr "Таны суултын лавлах байхгүй эсхүл хоосон байна! Одоогоор та хэрэглэж болохоор суултын хоёр лавлах байна. Харин та бүртгүүлж gdm-тохируулгаа өөрчлөх хэрэгтэй."
+msgid "Your session directory is missing or empty!  There are two available sessions you can use, but you should log in and correct the mdm configuration."
+msgstr "Таны суултын лавлах байхгүй эсхүл хоосон байна! Одоогоор та хэрэглэж болохоор суултын хоёр лавлах байна. Харин та бүртгүүлж mdm-тохируулгаа өөрчлөх хэрэгтэй."
 
 #. markup
-#: gui/gdmlogin.c:4095
+#: gui/mdmlogin.c:4095
 #: gui/greeter/greeter.c:1358
 msgid "Configuration is not correct"
 msgstr "Тохируулга буруу"
 
-#: gui/gdmlogin.c:4097
+#: gui/mdmlogin.c:4097
 #: gui/greeter/greeter.c:1360
 msgid "The configuration file contains an invalid command line for the login dialog, and thus I ran the default command.  Please fix your configuration."
 msgstr "Тохируулгын файл дотор хандалтын диалогийн худлаа командын мөр байна. Тиймээс оронд нь стандарт команд гүйцэтгэгдлээ. Тохируулгаа засварлана уу"
 
 #. markup
-#: gui/gdmlogin.c:4122
+#: gui/mdmlogin.c:4122
 #: gui/greeter/greeter.c:1387
 msgid "No configuration was found"
 msgstr "Тохируулга олдсонгүй"
 
-#: gui/gdmlogin.c:4124
+#: gui/mdmlogin.c:4124
 #: gui/greeter/greeter.c:1389
-msgid "The configuration was not found.  GDM is using defaults to run this session.  You should log in and create a configuration file with the GDM configuration program."
-msgstr "Шаардлагатай тохируулга олдсонгүй. GDM энэ удаагийн хандалтыг цааш нь явуулахын тулд стандарт тохируулгаа ашиглалаа. Та өөрийгөө бүртгүүлж GDM-тохируулгын программын тусламжтайгаар тохируулгын файл үүсгэнэ үү."
+msgid "The configuration was not found.  MDM is using defaults to run this session.  You should log in and create a configuration file with the MDM configuration program."
+msgstr "Шаардлагатай тохируулга олдсонгүй. MDM энэ удаагийн хандалтыг цааш нь явуулахын тулд стандарт тохируулгаа ашиглалаа. Та өөрийгөө бүртгүүлж MDM-тохируулгын программын тусламжтайгаар тохируулгын файл үүсгэнэ үү."
 
 #. markup
-#: gui/gdmphotosetup.c:144
+#: gui/mdmphotosetup.c:144
 msgid "The face browser is not configured"
 msgstr "Нүүр хөтөч тохируулагдаагүй."
 
-#: gui/gdmphotosetup.c:147
-msgid "The face browser is not configured in the GDM configuration.  Please ask your system administrator to enable it in the GDM configurator program."
-msgstr "Нүүр хөтөч програм тохируулга хийгдээгүй байна, та үүнийг системийн администратор-саа  GDM-тохируулгын программд идэвхжүүлж өгөхийг хүснэ үү."
+#: gui/mdmphotosetup.c:147
+msgid "The face browser is not configured in the MDM configuration.  Please ask your system administrator to enable it in the MDM configurator program."
+msgstr "Нүүр хөтөч програм тохируулга хийгдээгүй байна, та үүнийг системийн администратор-саа  MDM-тохируулгын программд идэвхжүүлж өгөхийг хүснэ үү."
 
-#: gui/gdmphotosetup.c:157
-#: gui/gdmphotosetup.desktop.in.h:2
+#: gui/mdmphotosetup.c:157
+#: gui/mdmphotosetup.desktop.in.h:2
 msgid "Login Photo"
 msgstr "Бүртгүүлэх фото зураг"
 
-#: gui/gdmphotosetup.c:167
+#: gui/mdmphotosetup.c:167
 msgid "Select a photograph to show in the facebrowser:"
 msgstr "Нүүрийн хөтчид гарах фото зургаа сонгоно уу:"
 
-#: gui/gdmphotosetup.c:172
+#: gui/mdmphotosetup.c:172
 msgid "Browse"
 msgstr "Хөтлөх (зорчих)"
 
 #. markup
-#: gui/gdmphotosetup.c:206
+#: gui/mdmphotosetup.c:206
 msgid "No picture selected."
 msgstr "Зураг сонгогдоогүй."
 
 #. markup
-#: gui/gdmphotosetup.c:217
+#: gui/mdmphotosetup.c:217
 msgid "Picture is too large"
 msgstr "Зураг хэт том байна"
 
-#: gui/gdmphotosetup.c:218
+#: gui/mdmphotosetup.c:218
 #, c-format
 msgid "The system administrator disallowed pictures larger than %d bytes to show in the face browser"
 msgstr "Системийн администратор нүүрийн хөтчийн харах зургийн хэмжээг %d Байтаас илүү байхааргүй болгож тохируулсан байна"
 
 #. markup
-#: gui/gdmphotosetup.c:245
-#: gui/gdmphotosetup.c:267
+#: gui/mdmphotosetup.c:245
+#: gui/mdmphotosetup.c:267
 msgid "Cannot open file"
 msgstr "Файл нээгдэхгүй байна"
 
-#: gui/gdmphotosetup.c:246
+#: gui/mdmphotosetup.c:246
 #, c-format
 msgid ""
 "File %s cannot be open for reading\n"
@@ -3062,7 +3062,7 @@ msgstr ""
 "Файл %s уншигдах зорилгоор нээгдэхгүй байна\n"
 "Алдаа: %s"
 
-#: gui/gdmphotosetup.c:268
+#: gui/mdmphotosetup.c:268
 #, c-format
 msgid ""
 "File %s cannot be open for writing\n"
@@ -3071,217 +3071,217 @@ msgstr ""
 "Файл %s бичигдэх зорилгоор нээгдэхгүй байна\n"
 "Алдаа: %s"
 
-#: gui/gdmphotosetup.desktop.in.h:1
-msgid "Change the picture that will show in the GDM (login manager) face browser"
-msgstr "GDM (хандалтын менежер)-ээс нүүрийн хөтчийн харуулах зургийг өөрчлөх"
+#: gui/mdmphotosetup.desktop.in.h:1
+msgid "Change the picture that will show in the MDM (login manager) face browser"
+msgstr "MDM (хандалтын менежер)-ээс нүүрийн хөтчийн харуулах зургийг өөрчлөх"
 
 #.
 #. * Translatable strings file generated by Glade.
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gui/gdmsetup-strings.c:7
-#: gui/gdmsetup.desktop.in.h:2
-#: gui/gdmsetup.glade.h:26
+#: gui/mdmsetup-strings.c:7
+#: gui/mdmsetup.desktop.in.h:2
+#: gui/mdmsetup.glade.h:26
 msgid "Login Screen Setup"
 msgstr "Нэвтрэх цонхны тохиргоо"
 
-#: gui/gdmsetup-strings.c:8
-#: gui/gdmsetup.glade.h:22
+#: gui/mdmsetup-strings.c:8
+#: gui/mdmsetup.glade.h:22
 msgid "Greeter"
 msgstr "Мэндлэгч"
 
-#: gui/gdmsetup-strings.c:9
-#: gui/gdmsetup-strings.c:24
-#: gui/gdmsetup-strings.c:29
-#: gui/gdmsetup-strings.c:36
-#: gui/gdmsetup-strings.c:39
-#: gui/gdmsetup-strings.c:42
-#: gui/gdmsetup-strings.c:65
-#: gui/gdmsetup-strings.c:71
-#: gui/gdmsetup-strings.c:73
-#: gui/gdmsetup-strings.c:79
-#: gui/gdmsetup-strings.c:82
-#: gui/gdmsetup-strings.c:90
-#: gui/gdmsetup.glade.h:1
+#: gui/mdmsetup-strings.c:9
+#: gui/mdmsetup-strings.c:24
+#: gui/mdmsetup-strings.c:29
+#: gui/mdmsetup-strings.c:36
+#: gui/mdmsetup-strings.c:39
+#: gui/mdmsetup-strings.c:42
+#: gui/mdmsetup-strings.c:65
+#: gui/mdmsetup-strings.c:71
+#: gui/mdmsetup-strings.c:73
+#: gui/mdmsetup-strings.c:79
+#: gui/mdmsetup-strings.c:82
+#: gui/mdmsetup-strings.c:90
+#: gui/mdmsetup.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: gui/gdmsetup-strings.c:10
-#: gui/gdmsetup.glade.h:24
+#: gui/mdmsetup-strings.c:10
+#: gui/mdmsetup.glade.h:24
 msgid "L_ocal: "
 msgstr "_Дотоодын: "
 
-#: gui/gdmsetup-strings.c:11
-#: gui/gdmsetup.glade.h:66
+#: gui/mdmsetup-strings.c:11
+#: gui/mdmsetup.glade.h:66
 msgid "_Remote: "
 msgstr "_Алсын:"
 
-#: gui/gdmsetup-strings.c:12
-#: gui/gdmsetup.glade.h:70
+#: gui/mdmsetup-strings.c:12
+#: gui/mdmsetup.glade.h:70
 msgid "_Welcome string: "
 msgstr "_Мэндчилгээний өгүүлбэр: "
 
-#: gui/gdmsetup-strings.c:13
-#: gui/gdmsetup.glade.h:43
+#: gui/mdmsetup-strings.c:13
+#: gui/mdmsetup.glade.h:43
 msgid "Re_mote welcome string: "
 msgstr "_мэндчилгээний өгүүлбэр устгах:"
 
-#: gui/gdmsetup-strings.c:14
-#: gui/gdmsetup-strings.c:16
-#: gui/gdmsetup-strings.c:51
-#: gui/gdmsetup.c:911
-#: gui/gdmsetup.glade.h:50
+#: gui/mdmsetup-strings.c:14
+#: gui/mdmsetup-strings.c:16
+#: gui/mdmsetup-strings.c:51
+#: gui/mdmsetup.c:911
+#: gui/mdmsetup.glade.h:50
 msgid "Standard greeter"
 msgstr "Стандарт мэндчилэгч"
 
-#: gui/gdmsetup-strings.c:15
-#: gui/gdmsetup-strings.c:17
-#: gui/gdmsetup-strings.c:63
-#: gui/gdmsetup.c:913
-#: gui/gdmsetup.glade.h:21
+#: gui/mdmsetup-strings.c:15
+#: gui/mdmsetup-strings.c:17
+#: gui/mdmsetup-strings.c:63
+#: gui/mdmsetup.c:913
+#: gui/mdmsetup.glade.h:21
 msgid "Graphical greeter"
 msgstr "Зургийн мэндчилгээ"
 
-#: gui/gdmsetup-strings.c:18
-#: gui/gdmsetup.glade.h:52
+#: gui/mdmsetup-strings.c:18
+#: gui/mdmsetup.glade.h:52
 #, no-c-format
 msgid "String to be shown in the greeter as welcome.  You can insert %n in here and it will be replaced by the name of your computer."
 msgstr "Мэндчилэгчийн тавтай морил гэхийн оронд харуулах өгүүлбэр.  Та энд %n -г оруулж болох ба энэ нь таны компьютерийн нэрээр солигдоно."
 
-#: gui/gdmsetup-strings.c:20
-#: gui/gdmsetup.glade.h:54
+#: gui/mdmsetup-strings.c:20
+#: gui/mdmsetup.glade.h:54
 #, no-c-format
 msgid "String to be shown in the greeter for people logging in remotely with XDMCP.  You can insert %n in here and it will be replaced by the name of your computer."
 msgstr "Мэндчилэгчийн XDMCP ашиглан алсаас нэвтрэх хүмүүст харуулах өгүүлбэр. Та энд %n -г оруулж болох ба энэ нь таны компьютерийн нэрээр солигдоно."
 
-#: gui/gdmsetup-strings.c:22
-#: gui/gdmsetup.glade.h:10
+#: gui/mdmsetup-strings.c:22
+#: gui/mdmsetup.glade.h:10
 msgid "Always use 24 hour cloc_k format"
 msgstr "Байнга 24 _цагийн хэлбэрийг ашиглах"
 
-#: gui/gdmsetup-strings.c:23
-#: gui/gdmsetup.glade.h:12
+#: gui/mdmsetup-strings.c:23
+#: gui/mdmsetup.glade.h:12
 msgid "Automatic Login"
 msgstr "Автомат нэвтрэлт"
 
-#: gui/gdmsetup-strings.c:25
-#: gui/gdmsetup.glade.h:58
+#: gui/mdmsetup-strings.c:25
+#: gui/mdmsetup.glade.h:58
 msgid "_Automatic login username:"
 msgstr "_Автоматаар хандах хэрэглэгчийн нэр"
 
-#: gui/gdmsetup-strings.c:27
-#: gui/gdmsetup.glade.h:63
+#: gui/mdmsetup-strings.c:27
+#: gui/mdmsetup.glade.h:63
 msgid "_Login a user automatically on first bootup"
 msgstr "Эхний асаалтаар автоматаар нэгэн хэрэглэгчийг _хандуулах"
 
-#: gui/gdmsetup-strings.c:28
-#: gui/gdmsetup.glade.h:55
+#: gui/mdmsetup-strings.c:28
+#: gui/mdmsetup.glade.h:55
 msgid "Timed Login"
 msgstr "Хугацаат нэвтрэлт"
 
-#: gui/gdmsetup-strings.c:30
-#: gui/gdmsetup.glade.h:56
+#: gui/mdmsetup-strings.c:30
+#: gui/mdmsetup.glade.h:56
 msgid "Timed login us_ername:"
 msgstr "Цагийн хуваарьтай хандалтын хэрэглэгчийн нэр:"
 
-#: gui/gdmsetup-strings.c:31
-#: gui/gdmsetup.glade.h:68
+#: gui/mdmsetup-strings.c:31
+#: gui/mdmsetup.glade.h:68
 msgid "_Seconds before login:"
 msgstr "_хандалтын өмнөх секунд: "
 
-#: gui/gdmsetup-strings.c:33
-#: gui/gdmsetup.glade.h:27
+#: gui/mdmsetup-strings.c:33
+#: gui/mdmsetup.glade.h:27
 msgid "Login a user automa_tically after a specified number of seconds"
 msgstr "Хэрэглэгчийг тодорхой зааж өгсөн секундын дараа хандуулах"
 
-#: gui/gdmsetup-strings.c:34
-#: gui/gdmsetup.glade.h:20
+#: gui/mdmsetup-strings.c:34
+#: gui/mdmsetup.glade.h:20
 msgid "General"
 msgstr "Ерөнхий"
 
-#: gui/gdmsetup-strings.c:35
-#: gui/gdmsetup.glade.h:28
+#: gui/mdmsetup-strings.c:35
+#: gui/mdmsetup.glade.h:28
 msgid "Logo"
 msgstr "Лого"
 
-#: gui/gdmsetup-strings.c:38
-#: gui/gdmsetup.glade.h:35
+#: gui/mdmsetup-strings.c:38
+#: gui/mdmsetup.glade.h:35
 msgid "Miscellaneous"
 msgstr "Элдэв"
 
-#: gui/gdmsetup-strings.c:40
-#: gui/gdmsetup.glade.h:47
+#: gui/mdmsetup-strings.c:40
+#: gui/mdmsetup.glade.h:47
 msgid "Show choosable user images (_face browser)"
 msgstr "Зургийн боломжит хэлбэрүүдийг харуулах (_нүүр хөтөч)"
 
-#: gui/gdmsetup-strings.c:41
-#: gui/gdmsetup.glade.h:13
+#: gui/mdmsetup-strings.c:41
+#: gui/mdmsetup.glade.h:13
 msgid "Background"
 msgstr "Дэвсгэр"
 
-#: gui/gdmsetup-strings.c:43
-#: gui/gdmsetup.glade.h:64
+#: gui/mdmsetup-strings.c:43
+#: gui/mdmsetup.glade.h:64
 msgid "_No background"
 msgstr "Дэвсгэр _байхгүй"
 
-#: gui/gdmsetup-strings.c:44
-#: gui/gdmsetup.glade.h:61
+#: gui/mdmsetup-strings.c:44
+#: gui/mdmsetup.glade.h:61
 msgid "_Image"
 msgstr "_Зураг"
 
-#: gui/gdmsetup-strings.c:45
-#: gui/gdmsetup.glade.h:14
+#: gui/mdmsetup-strings.c:45
+#: gui/mdmsetup.glade.h:14
 msgid "Co_lor"
 msgstr "_Өнгө"
 
-#: gui/gdmsetup-strings.c:46
-#: gui/gdmsetup.glade.h:67
+#: gui/mdmsetup-strings.c:46
+#: gui/mdmsetup.glade.h:67
 msgid "_Scale background image to fit"
 msgstr "Дэвсгэрийн зургийг _масштаблаж тааруулах "
 
-#: gui/gdmsetup-strings.c:48
-#: gui/gdmsetup.glade.h:65
+#: gui/mdmsetup-strings.c:48
+#: gui/mdmsetup.glade.h:65
 msgid "_Only color on remote displays"
 msgstr "_Алсадмал дэлгэцэнд өнгө"
 
-#: gui/gdmsetup-strings.c:49
-#: gui/gdmsetup.glade.h:59
+#: gui/mdmsetup-strings.c:49
+#: gui/mdmsetup.glade.h:59
 msgid "_Background color: "
 msgstr "_Дэвсгэр өнгө: "
 
-#: gui/gdmsetup-strings.c:50
-#: gui/gdmsetup.glade.h:39
+#: gui/mdmsetup-strings.c:50
+#: gui/mdmsetup.glade.h:39
 msgid "Pick a color"
 msgstr "Нэг өнгө сонго"
 
-#: gui/gdmsetup-strings.c:52
-#: gui/gdmsetup.glade.h:42
+#: gui/mdmsetup-strings.c:52
+#: gui/mdmsetup.glade.h:42
 msgid "Preview:"
 msgstr "Урьдчилан харах:"
 
-#: gui/gdmsetup-strings.c:53
-#: gui/gdmsetup.glade.h:37
+#: gui/mdmsetup-strings.c:53
+#: gui/mdmsetup.glade.h:37
 msgid "No screenshot available"
 msgstr "Агшин-дэлгэц үзүүлэх боломжгүй"
 
-#: gui/gdmsetup-strings.c:54
-#: gui/gdmsetup.glade.h:16
+#: gui/mdmsetup-strings.c:54
+#: gui/mdmsetup.glade.h:16
 msgid "Description:"
 msgstr "Тайлбар:"
 
-#: gui/gdmsetup-strings.c:55
-#: gui/gdmsetup.glade.h:15
+#: gui/mdmsetup-strings.c:55
+#: gui/mdmsetup.glade.h:15
 msgid "Copyright:"
 msgstr "Зохиогчийн эрх:"
 
-#: gui/gdmsetup-strings.c:56
-#: gui/gdmsetup.glade.h:11
+#: gui/mdmsetup-strings.c:56
+#: gui/mdmsetup.glade.h:11
 msgid "Author:"
 msgstr "Зохиогч:"
 
-#: gui/gdmsetup-strings.c:57
-#: gui/gdmsetup.glade.h:74
+#: gui/mdmsetup-strings.c:57
+#: gui/mdmsetup.glade.h:74
 msgid ""
 "description\n"
 "widget"
@@ -3289,295 +3289,295 @@ msgstr ""
 "Тайлбар\n"
 "Объект"
 
-#: gui/gdmsetup-strings.c:59
-#: gui/gdmsetup.glade.h:72
+#: gui/mdmsetup-strings.c:59
+#: gui/mdmsetup.glade.h:72
 msgid "author"
 msgstr "Зохиогч"
 
-#: gui/gdmsetup-strings.c:60
-#: gui/gdmsetup.glade.h:73
+#: gui/mdmsetup-strings.c:60
+#: gui/mdmsetup.glade.h:73
 msgid "copyright"
 msgstr "Copyright"
 
-#: gui/gdmsetup-strings.c:61
-#: gui/gdmsetup.glade.h:62
+#: gui/mdmsetup-strings.c:61
+#: gui/mdmsetup.glade.h:62
 msgid "_Install new theme"
 msgstr "Шинэ дэлгэцийн хэлбэрийг суулгах"
 
-#: gui/gdmsetup-strings.c:62
-#: gui/gdmsetup.glade.h:60
+#: gui/mdmsetup-strings.c:62
+#: gui/mdmsetup.glade.h:60
 msgid "_Delete theme"
 msgstr "Хэлбэр _устгах"
 
-#: gui/gdmsetup-strings.c:64
-#: gui/gdmsetup-strings.c:78
-#: gui/gdmsetup.glade.h:38
+#: gui/mdmsetup-strings.c:64
+#: gui/mdmsetup-strings.c:78
+#: gui/mdmsetup.glade.h:38
 msgid "Options"
 msgstr "Сонголтууд"
 
-#: gui/gdmsetup-strings.c:66
-#: gui/gdmsetup.glade.h:5
-msgid "Allow _root to login with GDM"
-msgstr "_root-д GDM-ээр хандахыг зөвшөөрөх"
+#: gui/mdmsetup-strings.c:66
+#: gui/mdmsetup.glade.h:5
+msgid "Allow _root to login with MDM"
+msgstr "_root-д MDM-ээр хандахыг зөвшөөрөх"
 
-#: gui/gdmsetup-strings.c:67
-#: gui/gdmsetup.glade.h:8
-msgid "Allow root to login r_emotely with GDM"
-msgstr "»root«-д, _алсаас GDM-ээр хандахыг зөвшөөрөх"
+#: gui/mdmsetup-strings.c:67
+#: gui/mdmsetup.glade.h:8
+msgid "Allow root to login r_emotely with MDM"
+msgstr "»root«-д, _алсаас MDM-ээр хандахыг зөвшөөрөх"
 
-#: gui/gdmsetup-strings.c:68
-#: gui/gdmsetup.glade.h:7
+#: gui/mdmsetup-strings.c:68
+#: gui/mdmsetup.glade.h:7
 msgid "Allow remote _timed logins"
 msgstr "_Цагийн хуваарьтай алсын хандалтыг хүлээж авах"
 
-#: gui/gdmsetup-strings.c:69
-#: gui/gdmsetup.glade.h:48
+#: gui/mdmsetup-strings.c:69
+#: gui/mdmsetup.glade.h:48
 msgid "Show the \"Actions\" menu (formerly known as the \"System\" menu).  If not set, none of the system commands will be available (this includes reboot, shutdown, configure, chooser)"
 msgstr "\"Үйлдлүүд\" цэсийг харуулах (Ер нь \"Систем\" цэс гэдэг).  Хэрвээ өөрчилөгдөхгүй бол системтйн ямар ч тушаал алга гэсэн үг (Энэ нь шинээр эхлүүлэх, унтраах, тохируулах, сонгогч зэргийг агуулдаг)"
 
-#: gui/gdmsetup-strings.c:70
-#: gui/gdmsetup.glade.h:46
+#: gui/mdmsetup-strings.c:70
+#: gui/mdmsetup.glade.h:46
 msgid "Show _actions menu"
 msgstr "Ү_йлдлүүд цэсийг харуулах"
 
-#: gui/gdmsetup-strings.c:72
-#: gui/gdmsetup.glade.h:6
+#: gui/mdmsetup-strings.c:72
+#: gui/mdmsetup.glade.h:6
 msgid "Allow c_onfiguration from the login screen"
 msgstr "_Тохируулгыг анх бүртгүүлэх дэлгэцнээс хийхийг зөвшөөрөх"
 
-#: gui/gdmsetup-strings.c:74
-#: gui/gdmsetup.glade.h:4
+#: gui/mdmsetup-strings.c:74
+#: gui/mdmsetup.glade.h:4
 msgid "Allo_w running XDMCP chooser from the login screen"
 msgstr "_XDMCP сонгогчийг анх бүртгүүлэх дэлгэцнээс ажиллуулахыг зөвшөөрөх"
 
-#: gui/gdmsetup-strings.c:75
-#: gui/gdmsetup.glade.h:9
+#: gui/mdmsetup-strings.c:75
+#: gui/mdmsetup.glade.h:9
 msgid "Always disallow TCP connections to _X server (disables all remote connections)"
 msgstr "_X сервер рүү TCP -р холбогдохыг хэзээч үл зөвшөөрөх (Бүх алсын холболтыг хаах)"
 
-#: gui/gdmsetup-strings.c:76
-#: gui/gdmsetup.glade.h:44
+#: gui/mdmsetup-strings.c:76
+#: gui/mdmsetup.glade.h:44
 msgid "Retry _delay (seconds) :"
 msgstr "Дахин оролдлого болтол _хүлээх хугацаа (секунд):"
 
-#: gui/gdmsetup-strings.c:77
-#: gui/gdmsetup.glade.h:45
+#: gui/mdmsetup-strings.c:77
+#: gui/mdmsetup.glade.h:45
 msgid "Security"
 msgstr "Хамгаалалт"
 
-#: gui/gdmsetup-strings.c:80
-#: gui/gdmsetup.glade.h:19
+#: gui/mdmsetup-strings.c:80
+#: gui/mdmsetup.glade.h:19
 msgid "Enable _accessibility modules"
 msgstr "_Хялбаршуулалтын модулуудыг идэвхижүүлэх"
 
-#: gui/gdmsetup-strings.c:81
-#: gui/gdmsetup.glade.h:29
+#: gui/mdmsetup-strings.c:81
+#: gui/mdmsetup.glade.h:29
 msgid "Make a _sound when login window is ready"
 msgstr "Хэрэв нэвтрэх цонх бэлэн болбол _чимээ өгөх"
 
-#: gui/gdmsetup-strings.c:83
-#: gui/gdmsetup.glade.h:71
+#: gui/mdmsetup-strings.c:83
+#: gui/mdmsetup.glade.h:71
 msgid "acc_sound_file_box"
 msgstr "acc_sound_file_box"
 
-#: gui/gdmsetup-strings.c:84
-#: gui/gdmsetup.glade.h:49
+#: gui/mdmsetup-strings.c:84
+#: gui/mdmsetup.glade.h:49
 msgid "Sound _file:"
 msgstr "Дууны _файл:"
 
-#: gui/gdmsetup-strings.c:86
-#: gui/gdmsetup.glade.h:69
+#: gui/mdmsetup-strings.c:86
+#: gui/mdmsetup.glade.h:69
 msgid "_Test sound"
 msgstr "_Дуу шалгах"
 
-#: gui/gdmsetup-strings.c:87
-#: gui/gdmsetup.glade.h:3
+#: gui/mdmsetup-strings.c:87
+#: gui/mdmsetup.glade.h:3
 msgid "Accessibility"
 msgstr "Хялбаршуулалт"
 
-#: gui/gdmsetup-strings.c:88
-#: gui/gdmsetup.glade.h:36
-msgid "No XDMCP support in the binary.  To enable XDMCP support you must recompile GDM with the XDMCP libraries."
-msgstr "Программд XDMCP-тэй зохицохгүй байна. XDMCP-ийг зохицолдуулахын тулдта GDM-ийг XDMCP-ийн сантай компиляц хийх хэрэгтэй."
+#: gui/mdmsetup-strings.c:88
+#: gui/mdmsetup.glade.h:36
+msgid "No XDMCP support in the binary.  To enable XDMCP support you must recompile MDM with the XDMCP libraries."
+msgstr "Программд XDMCP-тэй зохицохгүй байна. XDMCP-ийг зохицолдуулахын тулдта MDM-ийг XDMCP-ийн сантай компиляц хийх хэрэгтэй."
 
-#: gui/gdmsetup-strings.c:89
-#: gui/gdmsetup.glade.h:18
+#: gui/mdmsetup-strings.c:89
+#: gui/mdmsetup.glade.h:18
 msgid "Enable _XDMCP"
 msgstr "_XDMCP-ийг идэвхжүүлэх"
 
-#: gui/gdmsetup-strings.c:91
-#: gui/gdmsetup.glade.h:23
+#: gui/mdmsetup-strings.c:91
+#: gui/mdmsetup.glade.h:23
 msgid "Honour _indirect requests"
 msgstr "_Шууд бус хандалтыг хүлээж авах"
 
-#: gui/gdmsetup-strings.c:92
-#: gui/gdmsetup.glade.h:25
+#: gui/mdmsetup-strings.c:92
+#: gui/mdmsetup.glade.h:25
 msgid "Listen on _UDP port: "
 msgstr "_UDP портыг сонсох: "
 
-#: gui/gdmsetup-strings.c:93
-#: gui/gdmsetup.glade.h:31
+#: gui/mdmsetup-strings.c:93
+#: gui/mdmsetup.glade.h:31
 msgid "Maximum _pending requests:"
 msgstr "Хүлээгдэж _буй хандалтын максимум хэмжээ:"
 
-#: gui/gdmsetup-strings.c:94
-#: gui/gdmsetup.glade.h:30
+#: gui/mdmsetup-strings.c:94
+#: gui/mdmsetup.glade.h:30
 msgid "Max p_ending indirect requests:"
 msgstr "Хүлээгдэж буй _шууд бус хандалтын максимум хэмжээ:"
 
-#: gui/gdmsetup-strings.c:95
-#: gui/gdmsetup.glade.h:32
+#: gui/mdmsetup-strings.c:95
+#: gui/mdmsetup.glade.h:32
 msgid "Maximum _remote sessions:"
 msgstr "_Алсын хандалтын максимум тоо:"
 
-#: gui/gdmsetup-strings.c:96
-#: gui/gdmsetup.glade.h:33
+#: gui/mdmsetup-strings.c:96
+#: gui/mdmsetup.glade.h:33
 msgid "Maximum _wait time:"
 msgstr "_Хүлээх максимум хугацаа: "
 
-#: gui/gdmsetup-strings.c:97
-#: gui/gdmsetup.glade.h:34
+#: gui/mdmsetup-strings.c:97
+#: gui/mdmsetup.glade.h:34
 msgid "Maximum indirect w_ait time:"
 msgstr "Хү_лээх дам максимум хугацаа:"
 
-#: gui/gdmsetup-strings.c:98
-#: gui/gdmsetup.glade.h:17
+#: gui/mdmsetup-strings.c:98
+#: gui/mdmsetup.glade.h:17
 msgid "Displays per _host:"
 msgstr "_Хост бүрийг харуулах:"
 
-#: gui/gdmsetup-strings.c:99
-#: gui/gdmsetup.glade.h:40
+#: gui/mdmsetup-strings.c:99
+#: gui/mdmsetup.glade.h:40
 msgid "Pin_g interval (seconds):"
 msgstr "Pin_g-завсар (Секунд):"
 
-#: gui/gdmsetup-strings.c:100
-#: gui/gdmsetup.glade.h:41
+#: gui/mdmsetup-strings.c:100
+#: gui/mdmsetup.glade.h:41
 msgid "Ping interval (seconds):"
 msgstr "Ping-завсар (Секунд):"
 
-#: gui/gdmsetup-strings.c:101
-#: gui/gdmsetup.glade.h:57
+#: gui/mdmsetup-strings.c:101
+#: gui/mdmsetup.glade.h:57
 msgid "XDMCP"
 msgstr "XDMCP"
 
 #. markup
-#: gui/gdmsetup.c:147
+#: gui/mdmsetup.c:147
 msgid "An error occured while trying to contact the login screens.  Not all updates may have taken effect."
 msgstr "Хандалт/бүргүүлэх дэлгэцтэй холбоо тогтооход алдаа гарлаа. Магадгүй, оруулсан өөрчлөлтүүд ажилд ороогүй байж болох."
 
 #. markup
-#: gui/gdmsetup.c:470
+#: gui/mdmsetup.c:470
 msgid "Autologin or timed login to the superuser (root) account is not allowed."
 msgstr "Супер хэрэглэгч  (root=эзэн) хэрэглэгч автоматаар эсвэл хугацаатайгаар нэврэх зөвшөөрөгдөөгүй."
 
-#: gui/gdmsetup.c:1698
+#: gui/mdmsetup.c:1698
 msgid "Archive is not of a subdirectory"
 msgstr "Архив дотор ганц ч дэд лавлах алга."
 
-#: gui/gdmsetup.c:1706
+#: gui/mdmsetup.c:1706
 msgid "Archive is not of a single subdirectory"
 msgstr "Архив дотор ганц ч дэд лавлах алга."
 
-#: gui/gdmsetup.c:1730
-#: gui/gdmsetup.c:1809
+#: gui/mdmsetup.c:1730
+#: gui/mdmsetup.c:1809
 msgid "File not a tar.gz or tar archive"
 msgstr "Энэ файл бол tar.gz- эсвэл tar-архив биш."
 
-#: gui/gdmsetup.c:1732
-msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr "Архив дотор GdmGreeter-ийн төрлийн файл алга .инфо файл"
+#: gui/mdmsetup.c:1732
+msgid "Archive does not include a MdmGreeterTheme.info file"
+msgstr "Архив дотор MdmGreeter-ийн төрлийн файл алга .инфо файл"
 
-#: gui/gdmsetup.c:1754
+#: gui/mdmsetup.c:1754
 msgid "File does not exist"
 msgstr "Файл үл оршино."
 
 #. markup
-#: gui/gdmsetup.c:1867
+#: gui/mdmsetup.c:1867
 msgid "No file selected"
 msgstr "Ямар ч файл сонгогдоогүй байна"
 
 #. markup
-#: gui/gdmsetup.c:1895
+#: gui/mdmsetup.c:1895
 msgid "Not a theme archive"
 msgstr "Дэлгэцийн зургийн архив биш байна"
 
-#: gui/gdmsetup.c:1896
+#: gui/mdmsetup.c:1896
 #, c-format
 msgid "Details: %s"
 msgstr "Тодруулга: %s"
 
 #. FIXME: if exists already perhaps we could also have an
 #. * option to change the dir name
-#: gui/gdmsetup.c:1914
+#: gui/mdmsetup.c:1914
 #, c-format
 msgid "Theme directory '%s' seems to be already installed, install again anyway?"
 msgstr "Дэлгэцийн зургийн лавлах »%s« хэдийнэ суусан байна. Дахин дарж суулгах уу?"
 
 #. markup
-#: gui/gdmsetup.c:1992
+#: gui/mdmsetup.c:1992
 msgid "Some error occured when installing the theme"
 msgstr "Дэлгэцийн зургийг суулгахад дор хаяж нэг алдаа гарлаа."
 
-#: gui/gdmsetup.c:2038
+#: gui/mdmsetup.c:2038
 msgid "Select new theme archive to install"
 msgstr "Суулгах дэлгэцийн хэлбэрийн шинэ санг сонго."
 
-#: gui/gdmsetup.c:2042
+#: gui/mdmsetup.c:2042
 msgid "_Install"
 msgstr "_Суулгах"
 
-#: gui/gdmsetup.c:2106
+#: gui/mdmsetup.c:2106
 #, c-format
 msgid "Do you really wish to remove theme '%s' from the system?"
 msgstr "Та хэлбэр '%s' -г системээс устгахыг үнэхээр хүсэж байна уу?"
 
 #. This is the temporary help dialog
-#: gui/gdmsetup.c:2317
+#: gui/mdmsetup.c:2317
 #, c-format
 msgid ""
-"This configuration window changes settings for the GDM daemon, which is the graphical login screen for GNOME.  Changes that you make will take effect immediately.\n"
+"This configuration window changes settings for the MDM daemon, which is the graphical login screen for GNOME.  Changes that you make will take effect immediately.\n"
 "\n"
 "Note that not all configuration options are listed here.  You may want to edit %s if you cannot find what you are looking for.\n"
 "\n"
 "For complete documentation see the GNOME help browser Under the category GNOME/System."
 msgstr ""
-"Энэ тохируулгын цонх нь ГНОМЫН хандалтын дэлгэц болох GDM-хэвтүүлийнтохиргоог хийдэг. Энд оруулсан өөрчлөлтүүд тэр дороо хүчинтэй.\n"
+"Энэ тохируулгын цонх нь ГНОМЫН хандалтын дэлгэц болох MDM-хэвтүүлийнтохиргоог хийдэг. Энд оруулсан өөрчлөлтүүд тэр дороо хүчинтэй.\n"
 "\n"
 "Боломжит бүх хувилбарууд энд байхгүй гэдгийг анхаарна уу. Таны эрж байгаа оруулга байхгүй бол та %s-ийг өөрөө боловсруулах болно. \n"
 "Бүрэн хэмжээний баримтжуулалтыг ГНОМЕ тусламж хөтөчөөр ГНОМЕ/System гэсэн ангилал доор үз."
 
 #. markup
-#: gui/gdmsetup.c:2733
-msgid "You must be the superuser (root) to configure GDM."
-msgstr "Та GDM-ийг тохируулгыг өөрчлөхийн тулд супер хэрэглэгч(root) байх ёстой ."
+#: gui/mdmsetup.c:2733
+msgid "You must be the superuser (root) to configure MDM."
+msgstr "Та MDM-ийг тохируулгыг өөрчлөхийн тулд супер хэрэглэгч(root) байх ёстой ."
 
 #. EOF
-#: gui/gdmsetup.desktop.in.h:1
-msgid "A graphical application for configuring the GNOME Display Manager (GDM)"
-msgstr "ГНОМЕ-ийн дэлгэцийн менежер(GDM)-ийн тохируулга хийх зориулалт бүхий график дүрслэлийн программ"
+#: gui/mdmsetup.desktop.in.h:1
+msgid "A graphical application for configuring the GNOME Display Manager (MDM)"
+msgstr "ГНОМЕ-ийн дэлгэцийн менежер(MDM)-ийн тохируулга хийх зориулалт бүхий график дүрслэлийн программ"
 
 #: gui/greeter/greeter.c:629
 #: gui/greeter/greeter.c:660
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version.\n"
-"You have probably just upgraded gdm.\n"
-"Please restart the gdm daemon or reboot the computer."
+"You have probably just upgraded mdm.\n"
+"Please restart the mdm daemon or reboot the computer."
 msgstr ""
 "Мэндчилгээний хувилбар (%s) нь Демоны хувилбартай авцалдахгүй байна.\n"
-"Та саяхан gdm-ийн сайжруулалт хийсэн бололтой.\n"
-"Та gdm-Демон-ыг шинээр эхлүүлэх эсвэл компьютерээ унтрааж асаах хэрэгтэй."
+"Та саяхан mdm-ийн сайжруулалт хийсэн бололтой.\n"
+"Та mdm-Демон-ыг шинээр эхлүүлэх эсвэл компьютерээ унтрааж асаах хэрэгтэй."
 
 #: gui/greeter/greeter.c:705
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).\n"
-"You have probably just upgraded gdm.\n"
-"Please restart the gdm daemon or reboot the computer."
+"You have probably just upgraded mdm.\n"
+"Please restart the mdm daemon or reboot the computer."
 msgstr ""
 "Мэндчилгээний хувилбар (%s) нь Демоны хувилбар (%s)-тай авцалдахгүй байна.\n"
-"Та саяхан gdm-ийн сайжруулалт хийсэн бололтой.\n"
-"Та gdm-Демон-ыг шинээр эхлүүлэх эсвэл компьютерээ унтрааж асаах хэрэгтэй."
+"Та саяхан mdm-ийн сайжруулалт хийсэн бололтой.\n"
+"Та mdm-Демон-ыг шинээр эхлүүлэх эсвэл компьютерээ унтрааж асаах хэрэгтэй."
 
 #: gui/greeter/greeter.c:1171
 #, c-format
@@ -3600,8 +3600,8 @@ msgstr "Нүүрний зургийг ачаалахад алдаа гарсан
 
 #. markup
 #: gui/greeter/greeter.c:1282
-msgid "I could not start the standard greeter.  This display will abort and you may have to login another way and fix the installation of gdm"
-msgstr "Стандарт мэндчилгээ ажилласангүй. Энэ дэлгэц одоо унтарч та өөр статусаар дотогш нэвтэрч GDM-ийг засварлахад хүрч магад."
+msgid "I could not start the standard greeter.  This display will abort and you may have to login another way and fix the installation of mdm"
+msgstr "Стандарт мэндчилгээ ажилласангүй. Энэ дэлгэц одоо унтарч та өөр статусаар дотогш нэвтэрч MDM-ийг засварлахад хүрч магад."
 
 #: gui/greeter/greeter_action_language.c:46
 msgid "Last"
@@ -3689,45 +3689,45 @@ msgstr "_XDMCP сонгогч ажиллуулах"
 msgid "_Configure the login manager"
 msgstr "Нэвтрэлт хянагчийг _тохируулах"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 Bond, James Bond"
 msgstr "(c) 2002 Бонд, Жеймс Бонд"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:2
 msgid "Bond, James Bond"
 msgstr "Бонд, Жеймс Бонд"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:3
 msgid "Circles"
 msgstr "Цагирагууд"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:4
 msgid "Theme with blue circles"
 msgstr "Цэнхэр цагираг бүхий хэлбэр"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:1
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 GNOME"
 msgstr "(c) 2002 ГНОМЕ"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles with a Face Browser"
 msgstr "Нүүр хөтөчтэй ГНОМЕ цагирагуудын уран сайхны хэлбэрүүд"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:3
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:3
 msgid "GNOME Artists"
 msgstr "ГНОМЫН урлагийнхан"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME with Browser"
 msgstr "Хөтөчтэй жаргалтай-ГНОМЕ"
 
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles"
 msgstr "ГНОМЕ Цагирагуудын уран сайхны хэлбэрүүд"
 
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME"
 msgstr "Жаргалтай-ГНОМЕ"
 
@@ -3741,13 +3741,13 @@ msgstr ""
 "(%s)-г ажиллуулахад алдаа \n"
 "(тэр (%s) рүү холбогдсон)"
 
-#: utils/gdmaskpass.c:26
+#: utils/mdmaskpass.c:26
 #, c-format
-msgid "gdmaskpass only runs as root\n"
-msgstr "gdmaskpass нь зөвхөн »root« дээр л ажиллана\n"
+msgid "mdmaskpass only runs as root\n"
+msgstr "mdmaskpass нь зөвхөн »root« дээр л ажиллана\n"
 
-#: utils/gdmaskpass.c:42
-#: utils/gdmaskpass.c:48
+#: utils/mdmaskpass.c:42
+#: utils/mdmaskpass.c:48
 #, c-format
 msgid "Authentication failure!\n"
 msgstr "Эрх олголт амжилтгүй боллоо!\n"

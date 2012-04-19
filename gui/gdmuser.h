@@ -1,4 +1,4 @@
-/* GDM - The Gnome Display Manager
+/* MDM - The Gnome Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003 George Lebl
@@ -21,11 +21,11 @@
 
 #include "misc.h"
 
-#ifndef GDM_USER_H
-#define GDM_USER_H
+#ifndef MDM_USER_H
+#define MDM_USER_H
 
-typedef struct _GdmUser GdmUser;
-struct _GdmUser {
+typedef struct _MdmUser MdmUser;
+struct _MdmUser {
     uid_t uid;
     char *login;
     char *homedir;
@@ -33,12 +33,12 @@ struct _GdmUser {
     GdkPixbuf *picture;
 };
 
-gboolean    gdm_is_user_valid		(const char *username);
-gint        gdm_user_uid                (const char *username);
+gboolean    mdm_is_user_valid		(const char *username);
+gint        mdm_user_uid                (const char *username);
 const char *get_root_user               (void);
-void        gdm_users_init              (GList **users, GList **users_string,
+void        mdm_users_init              (GList **users, GList **users_string,
 					char *exclude_user, GdkPixbuf *defface,
 					int *size_of_users, gboolean is_local,
 					gboolean read_faces);
 
-#endif /* GDM_USER_H */
+#endif /* MDM_USER_H */

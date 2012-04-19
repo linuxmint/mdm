@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,8 +23,8 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "gdm-common.h"
-#include "gdm-socket-protocol.h"
+#include "mdm-common.h"
+#include "mdm-socket-protocol.h"
 
 #include "greeter.h"
 #include "greeter_item.h"
@@ -34,9 +34,9 @@
 #include "greeter_parser.h"
 #include "greeter_configuration.h"
 #include "greeter_canvas_item.h"
-#include "gdm.h"
-#include "gdmwm.h"
-#include "gdmcommon.h"
+#include "mdm.h"
+#include "mdmwm.h"
+#include "mdmcommon.h"
 
 static gboolean messages_to_give = FALSE;
 static gboolean replace_msg = TRUE;
@@ -85,7 +85,7 @@ evil (GtkEntry *entry, const char *user)
 {
 	/* do not translate */
 	if (strcmp (user, "Gimme Random Cursor") == 0) {
-		gdm_common_setup_cursor (((rand () >> 3) % (GDK_LAST_CURSOR/2)) * 2);
+		mdm_common_setup_cursor (((rand () >> 3) % (GDK_LAST_CURSOR/2)) * 2);
 		gtk_entry_set_text (GTK_ENTRY (entry), "");
 		return TRUE;
 		/* do not translate */
@@ -146,7 +146,7 @@ greeter_item_pam_login (GtkEntry *entry, GreeterItemInfo *info)
       greeter_item_timed_is_timed ())
     {
       /* timed interruption */
-      printf ("%c%c%c\n", STX, BEL, GDM_INTERRUPT_TIMED_LOGIN);
+      printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_TIMED_LOGIN);
       fflush (stdout);
       return;
     }
@@ -225,7 +225,7 @@ greeter_item_pam_setup (void)
       GtkWidget *entry = GNOME_CANVAS_WIDGET (entry_info->item)->widget;
       gtk_widget_grab_focus (entry);
 
-      if ( ! DOING_GDM_DEVELOPMENT)
+      if ( ! DOING_MDM_DEVELOPMENT)
         {
           /* hack.  For some reason if we leave it blank,
            * we'll get a little bit of activity on first keystroke,
@@ -266,7 +266,7 @@ greeter_item_pam_prompt (const char *message,
       /*
        * Add Accessibility text for entry field.
        * Might be nice to set ATK_RELATION_LABEL_FOR, LABELLED_BY between
-       * the label (pam-prompt) and the entry, but gdmgreeter doesn't use real
+       * the label (pam-prompt) and the entry, but mdmgreeter doesn't use real
        * GTK widgets for text fields.  For now, just set the entry field's
        * name.
        */
@@ -436,7 +436,7 @@ greeter_item_pam_leftover_messages (void)
 	  GtkWidget *dlg;
 
 	  /* we should be now fine for focusing new windows */
-	  gdm_wm_focus_new_windows (TRUE);
+	  mdm_wm_focus_new_windows (TRUE);
 
 	  dlg = hig_dialog_new (NULL /* parent */,
                                 GTK_DIALOG_MODAL /* flags */,
@@ -446,12 +446,12 @@ greeter_item_pam_leftover_messages (void)
                                 "");
 	  gtk_dialog_set_has_separator (GTK_DIALOG (dlg), FALSE);
 	  gtk_window_set_modal (GTK_WINDOW (dlg), TRUE);
-	  gdm_wm_center_window (GTK_WINDOW (dlg));
+	  mdm_wm_center_window (GTK_WINDOW (dlg));
 
-	  gdm_wm_no_login_focus_push ();
+	  mdm_wm_no_login_focus_push ();
 	  gtk_dialog_run (GTK_DIALOG (dlg));
 	  gtk_widget_destroy (dlg);
-	  gdm_wm_no_login_focus_pop ();
+	  mdm_wm_no_login_focus_pop ();
 	}
       messages_to_give = FALSE;
     }

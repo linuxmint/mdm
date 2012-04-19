@@ -1,4 +1,4 @@
-/* GDM - The Gnome Display Manager
+/* MDM - The Gnome Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003-2007 Sun Microsystems, Inc.
@@ -37,10 +37,10 @@
  
 /*
  * Note that CONFIGFILE will have to be changed to something more generic
- * if this module is ever moved outside of gdm.
+ * if this module is ever moved outside of mdm.
  */
 
-#define CONFIGFILE GDMCONFDIR "/modules/AccessDwellMouseEvents"
+#define CONFIGFILE MDMCONFDIR "/modules/AccessDwellMouseEvents"
 #define iseol(ch)       ((ch) == '\r' || (ch) == '\f' || (ch) == '\0' || \
                         (ch) == '\n')
 
@@ -635,12 +635,12 @@ G_MODULE_EXPORT void gtk_module_init (int *argc, char* argv[]);
 
 void gtk_module_init (int *argc, char* argv[])
 {
-	if (g_getenv ("GDM_DEBUG_GESTURES") != NULL)
+	if (g_getenv ("MDM_DEBUG_GESTURES") != NULL)
 		debug_gestures = TRUE;
 
 	if (debug_gestures) {
-		/* If not running under GDM, then need to openlog ourselves */
-		if (g_getenv ("RUNNING_UNDER_GDM") == NULL)
+		/* If not running under MDM, then need to openlog ourselves */
+		if (g_getenv ("RUNNING_UNDER_MDM") == NULL)
 			openlog ("gesturelistener", LOG_PID, LOG_DAEMON);
 
 		syslog (LOG_WARNING, "dwellmouselistener loaded.");

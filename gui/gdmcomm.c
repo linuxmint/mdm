@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- *    GDMcommunication routines
+ *    MDMcommunication routines
  *    (c)2001 Queen of England, (c)2002,2003 George Lebl
  *
  *    This program is free software; you can redistribute it and/or modify
@@ -36,14 +36,14 @@
 #include <sys/un.h>
 #include <errno.h>
 
-#include "gdm.h"
-#include "gdmcommon.h"
-#include "gdmcomm.h"
-#include "gdmconfig.h"
+#include "mdm.h"
+#include "mdmcommon.h"
+#include "mdmcomm.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-socket-protocol.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-socket-protocol.h"
+#include "mdm-daemon-config-keys.h"
 
 static gboolean bulk_acs = FALSE;
 static gboolean quiet    = FALSE;
@@ -54,7 +54,7 @@ static int      num_cmds = 0;
  * display of error messages.
  */
 void
-gdmcomm_set_quiet_errors (gboolean enable)
+mdmcomm_set_quiet_errors (gboolean enable)
 {
 	quiet = enable;
 }
@@ -70,7 +70,7 @@ do_command (int fd, const char *command, gboolean get_response)
 	void (*old_handler)(int);
 #endif
 
-        gdm_common_debug ("Sending command: '%s'", command);
+        mdm_common_debug ("Sending command: '%s'", command);
 
 	cstr = g_strdup_printf ("%s\n", command);
 
@@ -87,7 +87,7 @@ do_command (int fd, const char *command, gboolean get_response)
 
 	if (ret < 0) {
 		if ( !quiet)
-			gdm_common_debug ("Command failed, no data returned");
+			mdm_common_debug ("Command failed, no data returned");
 		return NULL;
 	}
 
@@ -101,7 +101,7 @@ do_command (int fd, const char *command, gboolean get_response)
 		g_string_append_c (str, buf[0]);
 	}
 
-        gdm_common_debug ("  Got response: '%s'", str->str);
+        mdm_common_debug ("  Got response: '%s'", str->str);
 
 	cstr = str->str;
 	g_string_free (str, FALSE);
@@ -119,7 +119,7 @@ do_command (int fd, const char *command, gboolean get_response)
 	if (ve_string_empty (cstr) ||
 	    strcmp (ve_sure_string (cstr), "ERROR 200 Too many messages") == 0) {
 		if ( !quiet)
-			gdm_common_debug ("Command failed, daemon busy.");
+			mdm_common_debug ("Command failed, daemon busy.");
 		g_free (cstr);
 		return NULL;
 	}
@@ -152,7 +152,7 @@ static gboolean did_sleep_on_failure = FALSE;
 static int comm_fd                   = 0;
 
 static char *
-gdmcomm_call_gdm_real (const char *command,
+mdmcomm_call_mdm_real (const char *command,
 		       const char *auth_cookie,
 		       const char *min_version,
 		       int tries,
@@ -164,9 +164,9 @@ gdmcomm_call_gdm_real (const char *command,
          * If already sent the max number of commands, close the connection
          * and reopen.  Subtract 1 to allow the "CLOSE" to get through.
          */
-	if (num_cmds == (GDM_SUP_MAX_MESSAGES - 1)) {
-		gdm_common_debug ("  Closing and reopening connection.");
-		do_command (comm_fd, GDM_SUP_CLOSE, FALSE);
+	if (num_cmds == (MDM_SUP_MAX_MESSAGES - 1)) {
+		mdm_common_debug ("  Closing and reopening connection.");
+		do_command (comm_fd, MDM_SUP_CLOSE, FALSE);
 		VE_IGNORE_EINTR (close (comm_fd));
 		comm_fd  = 0;
 		num_cmds = 0;
@@ -174,25 +174,25 @@ gdmcomm_call_gdm_real (const char *command,
 
 	if (tries <= 0) {
 		if ( !quiet)
-			gdm_common_debug ("  Command failed %d times, aborting.", try_start);
+			mdm_common_debug ("  Command failed %d times, aborting.", try_start);
 		return NULL;
 	}
 
 	if (!quiet && tries != try_start) {
-		gdm_common_debug ("  Trying failed command again.  Try %d of %d.",
+		mdm_common_debug ("  Trying failed command again.  Try %d of %d.",
 				  (try_start - tries + 1), try_start);
 	}
 
 	if (comm_fd <= 0) {
 		struct sockaddr_un addr;
-		strcpy (addr.sun_path, GDM_SUP_SOCKET);
+		strcpy (addr.sun_path, MDM_SUP_SOCKET);
 		addr.sun_family = AF_UNIX;
 		comm_fd = socket (AF_UNIX, SOCK_STREAM, 0);
 		if (comm_fd < 0) {
 			if ( !quiet)
-				gdm_common_debug ("  Failed to open socket");
+				mdm_common_debug ("  Failed to open socket");
 
-			return gdmcomm_call_gdm_real (command, auth_cookie, min_version, tries - 1, try_start);
+			return mdmcomm_call_mdm_real (command, auth_cookie, min_version, tries - 1, try_start);
 		}
 
 		if (connect (comm_fd, (struct sockaddr *)&addr, sizeof (addr)) < 0) {
@@ -218,16 +218,16 @@ gdmcomm_call_gdm_real (const char *command,
 				 */
 				if (tries > 1) {
 					if ( !quiet)
-						gdm_common_debug ("  Failed to connect to socket, sleep 1 second and retry");
+						mdm_common_debug ("  Failed to connect to socket, sleep 1 second and retry");
 					sleep (1);
 				}
 			} else {
 				if ( !quiet)
-					gdm_common_debug ("  Failed to connect to socket, not sleeping");
+					mdm_common_debug ("  Failed to connect to socket, not sleeping");
 			}
 			VE_IGNORE_EINTR (close (comm_fd));
 			comm_fd = 0;
-			return gdmcomm_call_gdm_real (command, auth_cookie,
+			return mdmcomm_call_mdm_real (command, auth_cookie,
 						      min_version, tries - 1, try_start);
 		}
 
@@ -240,30 +240,30 @@ gdmcomm_call_gdm_real (const char *command,
                 did_sleep_on_failure = FALSE;
 
 		/* Version check first - only check first time */
-		ret = do_command (comm_fd, GDM_SUP_VERSION, TRUE);
+		ret = do_command (comm_fd, MDM_SUP_VERSION, TRUE);
 		if (ret == NULL) {
 			if ( !quiet)
-				gdm_common_debug ("  Version check failed");
+				mdm_common_debug ("  Version check failed");
 			VE_IGNORE_EINTR (close (comm_fd));
 			comm_fd = 0;
-			return gdmcomm_call_gdm_real (command, auth_cookie,
+			return mdmcomm_call_mdm_real (command, auth_cookie,
 						      min_version, tries - 1, try_start);
 		}
-		if (strncmp (ret, "GDM ", strlen ("GDM ")) != 0) {
+		if (strncmp (ret, "MDM ", strlen ("MDM ")) != 0) {
 			if ( !quiet)
-				gdm_common_debug ("  Version check failed, bad name");
+				mdm_common_debug ("  Version check failed, bad name");
 
 			g_free (ret);
-			do_command (comm_fd, GDM_SUP_CLOSE, FALSE);
+			do_command (comm_fd, MDM_SUP_CLOSE, FALSE);
 			VE_IGNORE_EINTR (close (comm_fd));
 			comm_fd = 0;
 			return NULL;
 		}
 		if ( ! version_ok_p (&ret[4], min_version)) {
 			if ( !quiet)
-				gdm_common_debug ("  Version check failed, bad version");
+				mdm_common_debug ("  Version check failed, bad version");
 			g_free (ret);
-			do_command (comm_fd, GDM_SUP_CLOSE, FALSE);
+			do_command (comm_fd, MDM_SUP_CLOSE, FALSE);
 			VE_IGNORE_EINTR (close (comm_fd));
 			comm_fd = 0;
 			return NULL;
@@ -274,20 +274,20 @@ gdmcomm_call_gdm_real (const char *command,
 	/* require authentication */
 	if (auth_cookie != NULL)  {
 		char *auth_cmd = g_strdup_printf
-			(GDM_SUP_AUTH_LOCAL " %s", auth_cookie);
+			(MDM_SUP_AUTH_LOCAL " %s", auth_cookie);
 		ret = do_command (comm_fd, auth_cmd, TRUE);
 		g_free (auth_cmd);
 		if (ret == NULL) {
 			VE_IGNORE_EINTR (close (comm_fd));
 			comm_fd = 0;
-			return gdmcomm_call_gdm_real (command, auth_cookie,
+			return mdmcomm_call_mdm_real (command, auth_cookie,
 						      min_version, tries - 1, try_start);
 		}
 		/* not auth'ed */
 		if (strcmp (ve_sure_string (ret), "OK") != 0) {
 			if ( !quiet)
-				gdm_common_debug ("  Error, auth check failed");
-			do_command (comm_fd, GDM_SUP_CLOSE, FALSE);
+				mdm_common_debug ("  Error, auth check failed");
+			do_command (comm_fd, MDM_SUP_CLOSE, FALSE);
 			VE_IGNORE_EINTR (close (comm_fd));
 			comm_fd = 0;
 			/* returns the error */
@@ -300,7 +300,7 @@ gdmcomm_call_gdm_real (const char *command,
 	if (ret == NULL) {
 		VE_IGNORE_EINTR (close (comm_fd));
 		comm_fd = 0;
-		return gdmcomm_call_gdm_real (command, auth_cookie,
+		return mdmcomm_call_mdm_real (command, auth_cookie,
 					      min_version, tries - 1, try_start);
 	}
 
@@ -308,7 +308,7 @@ gdmcomm_call_gdm_real (const char *command,
 	 * We want to leave the connection open if bulk_acs is set to
 	 * true, so clients can read as much config data in one 
 	 * sockets connection when it is set.  This requires that
-	 * GDM client programs ensure that they call the bulk_start
+	 * MDM client programs ensure that they call the bulk_start
 	 * and bulk_stop functions around blocks of code that
 	 * need to read data in bulk.  If a client reads config data
 	 * outside of the bulk_start/stop functions, then this
@@ -316,7 +316,7 @@ gdmcomm_call_gdm_real (const char *command,
 	 * socket will be opened to read that config data.
 	 */
 	if (bulk_acs == FALSE) {
-		do_command (comm_fd, GDM_SUP_CLOSE, FALSE);
+		do_command (comm_fd, MDM_SUP_CLOSE, FALSE);
 		VE_IGNORE_EINTR (close (comm_fd));
 		comm_fd = 0;
 	}
@@ -325,13 +325,13 @@ gdmcomm_call_gdm_real (const char *command,
 }
 
 char *
-gdmcomm_call_gdm (const char *command, const char * auth_cookie,
+mdmcomm_call_mdm (const char *command, const char * auth_cookie,
 		  const char *min_version, int tries)
 {
 
 	char *retstr;
 
-	retstr = gdmcomm_call_gdm_real (command, auth_cookie, min_version,
+	retstr = mdmcomm_call_mdm_real (command, auth_cookie, min_version,
 					tries, tries);
 
 	/*
@@ -346,37 +346,37 @@ gdmcomm_call_gdm (const char *command, const char * auth_cookie,
 }
 
 /**
- * gdmcomm_did_connection_fail
+ * mdmcomm_did_connection_fail
  *
  * If allow_sleep is TRUE, then connection was able to go through.
  * so the client can call this function after calling to see if
  * the failure was due to the connection being too busy.  This is
- * useful for gdmdynamic.
+ * useful for mdmdynamic.
  */
 gboolean
-gdmcomm_did_connection_fail (void)
+mdmcomm_did_connection_fail (void)
 {
 	return !allow_sleep;
 }
 
 void
-gdmcomm_set_allow_sleep (gboolean val)
+mdmcomm_set_allow_sleep (gboolean val)
 {
 	allow_sleep = val;
 }
 
 void
-gdmcomm_comm_bulk_start (void)
+mdmcomm_comm_bulk_start (void)
 {
 	bulk_acs = TRUE;
 }
 
 void
-gdmcomm_comm_bulk_stop (void)
+mdmcomm_comm_bulk_stop (void)
 {
 	/* Close the connection */
 	if (comm_fd > 0) {
-		do_command (comm_fd, GDM_SUP_CLOSE, FALSE);
+		do_command (comm_fd, MDM_SUP_CLOSE, FALSE);
 		VE_IGNORE_EINTR (close (comm_fd));
 	}
 	comm_fd  = 0;
@@ -385,7 +385,7 @@ gdmcomm_comm_bulk_stop (void)
 }
 
 const char *
-gdmcomm_get_display (void)
+mdmcomm_get_display (void)
 {
 	static char *display = NULL;
 
@@ -400,7 +400,7 @@ gdmcomm_get_display (void)
 			}
 		}
 
-		/* whack screen part, GDM doesn't like those */
+		/* whack screen part, MDM doesn't like those */
 		p = strchr (display, '.');
 		if (p != NULL)
 			*p = '\0';
@@ -416,7 +416,7 @@ get_dispnum (void)
 
 	if (number == NULL) {
 		char *p;
-		number = g_strdup (gdmcomm_get_display ());
+		number = g_strdup (mdmcomm_get_display ());
 
 		/* whee! handles even DECnet */
 		number = strchr (number, ':');
@@ -437,7 +437,7 @@ get_dispnum (void)
 
 /* This just gets a cookie of MIT-MAGIC-COOKIE-1 type */
 char *
-gdmcomm_get_a_cookie (gboolean binary)
+mdmcomm_get_a_cookie (gboolean binary)
 {
 	FILE *fp;
 	char *number;
@@ -454,10 +454,10 @@ gdmcomm_get_a_cookie (gboolean binary)
 	cookie = NULL;
 
 	while ((xau = XauReadAuth (fp)) != NULL) {
-		/* Just find the FIRST magic cookie, that's what gdm uses */
+		/* Just find the FIRST magic cookie, that's what mdm uses */
 		if (xau->number_length != strlen (number) ||
 		    strncmp (xau->number, number, xau->number_length) != 0 ||
-		    /* gdm sends MIT-MAGIC-COOKIE-1 cookies of length 16,
+		    /* mdm sends MIT-MAGIC-COOKIE-1 cookies of length 16,
 		     * so just do those */
 		    xau->data_length != 16 ||
 		    xau->name_length != strlen ("MIT-MAGIC-COOKIE-1") ||
@@ -494,7 +494,7 @@ gdmcomm_get_a_cookie (gboolean binary)
 }
 
 char *
-gdmcomm_get_auth_cookie (void)
+mdmcomm_get_auth_cookie (void)
 {
 	FILE *fp;
 	char *number;
@@ -524,12 +524,12 @@ gdmcomm_get_auth_cookie (void)
 
 		/* Only Family local things are considered, all console
 		 * logins DO have this family (and even some local xdmcp
-		 * logins, though those will not pass by gdm itself of
+		 * logins, though those will not pass by mdm itself of
 		 * course) */
 		if (xau->family != FamilyLocal ||
 		    xau->number_length != strlen (number) ||
 		    strncmp (xau->number, number, xau->number_length) != 0 ||
-		    /* gdm sends MIT-MAGIC-COOKIE-1 cookies of length 16,
+		    /* mdm sends MIT-MAGIC-COOKIE-1 cookies of length 16,
 		     * so just do those */
 		    xau->data_length != 16 ||
 		    xau->name_length != strlen ("MIT-MAGIC-COOKIE-1") ||
@@ -550,8 +550,8 @@ gdmcomm_get_auth_cookie (void)
 
 		XauDisposeAuth (xau);
 
-		cmd = g_strdup_printf (GDM_SUP_AUTH_LOCAL " %s", buffer);
-		ret = gdmcomm_call_gdm (cmd, NULL /* auth cookie */, "2.2.4.0", 5);
+		cmd = g_strdup_printf (MDM_SUP_AUTH_LOCAL " %s", buffer);
+		ret = mdmcomm_call_mdm (cmd, NULL /* auth cookie */, "2.2.4.0", 5);
 		g_free (cmd);
 		if (ret != NULL &&
 		    strcmp (ve_sure_string (ret), "OK") == 0) {
@@ -594,7 +594,7 @@ hig_dialog_new (GtkWindow      *parent,
 }
 
 gboolean
-gdmcomm_check (gboolean show_dialog)
+mdmcomm_check (gboolean show_dialog)
 {
 	GtkWidget *dialog;
 	FILE *fp = NULL;
@@ -603,7 +603,7 @@ gdmcomm_check (gboolean show_dialog)
 	struct stat s;
 	int statret;
 
-	pidfile = GDM_PID_FILE;
+	pidfile = MDM_PID_FILE;
 
 	pid = 0;
 	if (pidfile != NULL)
@@ -625,14 +625,14 @@ gdmcomm_check (gboolean show_dialog)
                                                  GTK_DIALOG_MODAL /* flags */,
                                                  GTK_MESSAGE_WARNING,
                                                  GTK_BUTTONS_OK,
-                                                 _("GDM (GNOME Display Manager) is not "
+                                                 _("MDM (GNOME Display Manager) is not "
                                                    "running."),
                                                  _("You might be using a different display "
                                                    "manager, such as KDM (KDE Display "
                                                    "Manager), CDE login (dtlogin), or xdm. "
                                                    "If you wish to use this feature, then "
                                                    "your system will need to be configured "
-                                                   "to use GDM instead."));
+                                                   "to use MDM instead."));
 
 			gtk_widget_show_all (dialog);
 			gtk_dialog_run (GTK_DIALOG (dialog));
@@ -641,19 +641,19 @@ gdmcomm_check (gboolean show_dialog)
 		return FALSE;
 	}
 
-	VE_IGNORE_EINTR (statret = g_stat (GDM_SUP_SOCKET, &s));
+	VE_IGNORE_EINTR (statret = g_stat (MDM_SUP_SOCKET, &s));
 	if (statret < 0 ||
 	    s.st_uid != 0 ||
-	    g_access (GDM_SUP_SOCKET, R_OK|W_OK) != 0) {
+	    g_access (MDM_SUP_SOCKET, R_OK|W_OK) != 0) {
 		if (show_dialog) {
 			dialog = hig_dialog_new (NULL /* parent */,
                                                  GTK_DIALOG_MODAL /* flags */,
                                                  GTK_MESSAGE_WARNING,
                                                  GTK_BUTTONS_OK,
-                                                 _("Cannot communicate with GDM "
+                                                 _("Cannot communicate with MDM "
                                                    "(The GNOME Display Manager)"),
                                                  _("Perhaps you have an old version "
-                                                   "of GDM running."));
+                                                   "of MDM running."));
 			gtk_widget_show_all (dialog);
 			gtk_dialog_run (GTK_DIALOG (dialog));
 			gtk_widget_destroy (dialog);
@@ -665,14 +665,14 @@ gdmcomm_check (gboolean show_dialog)
 }
 
 const char *
-gdmcomm_get_error_message (const char *ret, gboolean use_xnest)
+mdmcomm_get_error_message (const char *ret, gboolean use_xnest)
 {
 	/* These need a bit more refinement */
 	if (ret == NULL) {
-		return _("Cannot communicate with GDM. Perhaps "
+		return _("Cannot communicate with MDM. Perhaps "
 			 "you have an old version running.");
 	} else if (strncmp (ret, "ERROR 0 ", strlen ("ERROR 0 ")) == 0) {
-		return _("Cannot communicate with GDM. Perhaps "
+		return _("Cannot communicate with MDM. Perhaps "
 			 "you have an old version running.");
 	} else if (strncmp (ret, "ERROR 1 ", strlen ("ERROR 1 ")) == 0) {
 		return _("The allowed limit of flexible X servers reached.");
@@ -690,12 +690,12 @@ gdmcomm_get_error_message (const char *ret, gboolean use_xnest)
 	} else if (strncmp (ret, "ERROR 6 ", strlen ("ERROR 6 ")) == 0) {
 		if (use_xnest)
 			return _("The nested X server is not available, "
-				 "or GDM is badly configured.\n"
+				 "or MDM is badly configured.\n"
 				 "Please install the Xnest package in "
 				 "order to use the nested login.");
 		else
 			return _("The X server is not available. "
-				 "GDM may be misconfigured.");
+				 "MDM may be misconfigured.");
 	} else if (strncmp (ret, "ERROR 7 ", strlen ("ERROR 7 ")) == 0) {
 		return _("Trying to set an unknown logout action, or trying "
 			 "to set a logout action which is not available.");
@@ -710,7 +710,7 @@ gdmcomm_get_error_message (const char *ret, gboolean use_xnest)
 			 "for this operation.  Perhaps your .Xauthority "
 			 "file is not set up correctly.");
 	} else if (strncmp (ret, "ERROR 200 ", strlen ("ERROR 200 ")) == 0) {
-		return _("Too many messages were sent to GDM and it hung up "
+		return _("Too many messages were sent to MDM and it hung up "
 			 "on us.");
 	} else {
 		return _("Unknown error occurred.");

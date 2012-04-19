@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -52,17 +52,17 @@
 
 #include <glib/gi18n.h>
 
-#include "gdm.h"
+#include "mdm.h"
 #include "misc.h"
 #include "xdmcp.h"
 #include "slave.h"
 
-#include "gdm-common.h"
-#include "gdm-log.h"
-#include "gdm-daemon-config.h"
+#include "mdm-common.h"
+#include "mdm-log.h"
+#include "mdm-daemon-config.h"
 
 extern char **environ;
-extern pid_t gdm_main_pid;
+extern pid_t mdm_main_pid;
 extern pid_t extra_process;
 
 #ifdef ENABLE_IPV6
@@ -175,7 +175,7 @@ have_ipv6 (void)
 #endif
 
 void
-gdm_fdprintf (int fd, const gchar *format, ...)
+mdm_fdprintf (int fd, const gchar *format, ...)
 {
 	va_list args;
 	gchar *s;
@@ -212,7 +212,7 @@ gdm_fdprintf (int fd, const gchar *format, ...)
  * this environment variable is always available.
  */
 void
-gdm_clearenv_no_lang (void)
+mdm_clearenv_no_lang (void)
 {
 	int i;
 	GList *li, *envs = NULL;
@@ -239,7 +239,7 @@ gdm_clearenv_no_lang (void)
 static GList *stored_env = NULL;
 
 void
-gdm_saveenv (void)
+mdm_saveenv (void)
 {
 	int i;
 
@@ -254,7 +254,7 @@ gdm_saveenv (void)
 }
 
 const char *
-gdm_saved_getenv (const char *var)
+mdm_saved_getenv (const char *var)
 {
 	int len;
 	GList *li;
@@ -273,7 +273,7 @@ gdm_saved_getenv (const char *var)
 
 /* leaks */
 void
-gdm_restoreenv (void)
+mdm_restoreenv (void)
 {
 	GList *li;
 
@@ -286,7 +286,7 @@ gdm_restoreenv (void)
 
 /* Evil function to figure out which display number is free */
 int
-gdm_get_free_display (int start, uid_t server_uid)
+mdm_get_free_display (int start, uid_t server_uid)
 {
 	int sock;
 	int i;
@@ -308,10 +308,10 @@ gdm_get_free_display (int start, uid_t server_uid)
 		int r;
 		gboolean try_ipv4 = TRUE;
 
-                displays = gdm_daemon_config_get_display_list ();
+                displays = mdm_daemon_config_get_display_list ();
 
 		for (li = displays; li != NULL; li = li->next) {
-			GdmDisplay *dsp = li->data;
+			MdmDisplay *dsp = li->data;
 			if (SERVER_IS_LOCAL (dsp) &&
 			    dsp->dispnum == i)
 				break;
@@ -423,15 +423,15 @@ gdm_get_free_display (int start, uid_t server_uid)
 }
 
 gboolean
-gdm_text_message_dialog (const char *msg)
+mdm_text_message_dialog (const char *msg)
 {
 	char *dialog; /* do we have dialog? */
 	char *msg_quoted;
 
-    if ( ! gdm_daemon_config_get_value_bool (GDM_KEY_CONSOLE_NOTIFY))
+    if ( ! mdm_daemon_config_get_value_bool (MDM_KEY_CONSOLE_NOTIFY))
 		return FALSE;
 
-	if (g_access (LIBEXECDIR "/gdmopen", X_OK) != 0)
+	if (g_access (LIBEXECDIR "/mdmopen", X_OK) != 0)
 		return FALSE;
 
 	if (msg[0] == '-') {
@@ -448,7 +448,7 @@ gdm_text_message_dialog (const char *msg)
 	if (dialog != NULL) {
 		char *argv[6];
 
-		if ( ! gdm_ok_console_language ()) {
+		if ( ! mdm_ok_console_language ()) {
 			g_unsetenv ("LANG");
 			g_unsetenv ("LC_ALL");
 			g_unsetenv ("LC_MESSAGES");
@@ -456,7 +456,7 @@ gdm_text_message_dialog (const char *msg)
 			g_setenv ("UNSAFE_TO_TRANSLATE", "yes", TRUE);
 		}
 		
-		argv[0] = LIBEXECDIR "/gdmopen";
+		argv[0] = LIBEXECDIR "/mdmopen";
 		argv[1] = "-l";
 		argv[2] = "/bin/sh";
 		argv[3] = "-c";
@@ -465,7 +465,7 @@ gdm_text_message_dialog (const char *msg)
 		argv[5] = NULL;
 
 		/* Make sure gdialog wouldn't get confused */
-		if (gdm_exec_wait (argv, TRUE /* no display */,
+		if (mdm_exec_wait (argv, TRUE /* no display */,
 				   TRUE /* de_setuid */) < 0) {
 			g_free (dialog);
 			g_free (msg_quoted);
@@ -478,7 +478,7 @@ gdm_text_message_dialog (const char *msg)
 	} else {
 		char *argv[6];
 
-		argv[0] = LIBEXECDIR "/gdmopen";
+		argv[0] = LIBEXECDIR "/mdmopen";
 		argv[1] = "-l";
 		argv[2] = "/bin/sh";
 		argv[3] = "-c";
@@ -488,7 +488,7 @@ gdm_text_message_dialog (const char *msg)
 			 msg_quoted);
 		argv[5] = NULL;
 
-		if (gdm_exec_wait (argv, TRUE /* no display */,
+		if (mdm_exec_wait (argv, TRUE /* no display */,
 				   TRUE /* de_setuid */) < 0) {
 			g_free (argv[4]);
 			g_free (msg_quoted);
@@ -501,15 +501,15 @@ gdm_text_message_dialog (const char *msg)
 }
 
 gboolean
-gdm_text_yesno_dialog (const char *msg, gboolean *ret)
+mdm_text_yesno_dialog (const char *msg, gboolean *ret)
 {
 	char *dialog; /* do we have dialog? */
 	char *msg_quoted;
 
-    if ( ! gdm_daemon_config_get_value_bool (GDM_KEY_CONSOLE_NOTIFY))
+    if ( ! mdm_daemon_config_get_value_bool (MDM_KEY_CONSOLE_NOTIFY))
 		return FALSE;
 	
-	if (g_access (LIBEXECDIR "/gdmopen", X_OK) != 0)
+	if (g_access (LIBEXECDIR "/mdmopen", X_OK) != 0)
 		return FALSE;
 
 	if (ret != NULL)
@@ -530,7 +530,7 @@ gdm_text_yesno_dialog (const char *msg, gboolean *ret)
 		char *argv[6];
 		int retint;
 
-		if ( ! gdm_ok_console_language ()) {
+		if ( ! mdm_ok_console_language ()) {
 			g_unsetenv ("LANG");
 			g_unsetenv ("LC_ALL");
 			g_unsetenv ("LC_MESSAGES");
@@ -538,7 +538,7 @@ gdm_text_yesno_dialog (const char *msg, gboolean *ret)
 			g_setenv ("UNSAFE_TO_TRANSLATE", "yes", TRUE);
 		}
 
-		argv[0] = LIBEXECDIR "/gdmopen";
+		argv[0] = LIBEXECDIR "/mdmopen";
 		argv[1] = "-l";
 		argv[2] = "/bin/sh";
 		argv[3] = "-c";
@@ -550,7 +550,7 @@ gdm_text_yesno_dialog (const char *msg, gboolean *ret)
                  * Will unset DISPLAY and XAUTHORITY if they exist
 		 * so that gdialog (if used) doesn't get confused
                  */
-		retint = gdm_exec_wait (argv, TRUE /* no display */,
+		retint = mdm_exec_wait (argv, TRUE /* no display */,
 					TRUE /* de_setuid */);
 		if (retint < 0) {
 			g_free (argv[4]);
@@ -568,7 +568,7 @@ gdm_text_yesno_dialog (const char *msg, gboolean *ret)
 
 		return TRUE;
 	} else {
-		char tempname[] = "/tmp/gdm-yesno-XXXXXX";
+		char tempname[] = "/tmp/mdm-yesno-XXXXXX";
 		int tempfd;
 		FILE *fp;
 		char buf[256];
@@ -582,7 +582,7 @@ gdm_text_yesno_dialog (const char *msg, gboolean *ret)
 
 		VE_IGNORE_EINTR (close (tempfd));
 
-		argv[0] = LIBEXECDIR "/gdmopen";
+		argv[0] = LIBEXECDIR "/mdmopen";
 		argv[1] = "-l";
 		argv[2] = "/bin/sh";
 		argv[3] = "-c";
@@ -596,7 +596,7 @@ gdm_text_yesno_dialog (const char *msg, gboolean *ret)
 			 tempname);
 		argv[5] = NULL;
 
-		if (gdm_exec_wait (argv, TRUE /* no display */,
+		if (mdm_exec_wait (argv, TRUE /* no display */,
 				   TRUE /* de_setuid */) < 0) {
 			g_free (argv[4]);
 			g_free (msg_quoted);
@@ -625,7 +625,7 @@ gdm_text_yesno_dialog (const char *msg, gboolean *ret)
 }
 
 int
-gdm_exec_wait (char * const *argv,
+mdm_exec_wait (char * const *argv,
 	       gboolean no_display,
 	       gboolean de_setuid)
 {
@@ -637,27 +637,27 @@ gdm_exec_wait (char * const *argv,
 	    g_access (argv[0], X_OK) != 0)
 		return -1;
 
-	gdm_debug ("Forking extra process: %s", argv[0]);
+	mdm_debug ("Forking extra process: %s", argv[0]);
 
-	pid = gdm_fork_extra ();
+	pid = mdm_fork_extra ();
 	if (pid == 0) {
-		gdm_log_shutdown ();
+		mdm_log_shutdown ();
 
-		gdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */);
+		mdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */);
 
 		/*
                  * No error checking here - if it's messed the best response
 		 * is to ignore & try to continue
                  */
-		gdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
-		gdm_open_dev_null (O_RDWR);   /* open stdout - fd 1 */
-		gdm_open_dev_null (O_RDWR);   /* open stderr - fd 2 */
+		mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
+		mdm_open_dev_null (O_RDWR);   /* open stdout - fd 1 */
+		mdm_open_dev_null (O_RDWR);   /* open stderr - fd 2 */
 
 		if (de_setuid) {
-			gdm_desetuid ();
+			mdm_desetuid ();
 		}
 
-		gdm_log_init ();
+		mdm_log_init ();
 
 		if (no_display) {
 			g_unsetenv ("DISPLAY");
@@ -672,7 +672,7 @@ gdm_exec_wait (char * const *argv,
 	if (pid < 0)
 		return -1;
 
-	gdm_wait_for_extra (pid, &status);
+	mdm_wait_for_extra (pid, &status);
 
 	if (WIFEXITED (status))
 		return WEXITSTATUS (status);
@@ -690,7 +690,7 @@ static int sigusr2_blocked = 0;
 static sigset_t sigusr2block_mask, sigusr2block_oldmask;
 
 void
-gdm_sigchld_block_push (void)
+mdm_sigchld_block_push (void)
 {
 	sigchld_blocked++;
 
@@ -703,7 +703,7 @@ gdm_sigchld_block_push (void)
 }
 
 void
-gdm_sigchld_block_pop (void)
+mdm_sigchld_block_pop (void)
 {
 	sigchld_blocked --;
 
@@ -714,7 +714,7 @@ gdm_sigchld_block_pop (void)
 }
 
 void
-gdm_sigterm_block_push (void)
+mdm_sigterm_block_push (void)
 {
 	sigterm_blocked++;
 
@@ -729,7 +729,7 @@ gdm_sigterm_block_push (void)
 }
 
 void
-gdm_sigterm_block_pop (void)
+mdm_sigterm_block_pop (void)
 {
 	sigterm_blocked --;
 
@@ -740,7 +740,7 @@ gdm_sigterm_block_pop (void)
 }
 
 void
-gdm_sigusr2_block_push (void)
+mdm_sigusr2_block_push (void)
 {
 	sigset_t oldmask;
 
@@ -757,7 +757,7 @@ gdm_sigusr2_block_push (void)
 }
 
 void
-gdm_sigusr2_block_pop (void)
+mdm_sigusr2_block_pop (void)
 {
 	sigset_t oldmask;
 
@@ -772,12 +772,12 @@ gdm_sigusr2_block_pop (void)
 }
 
 pid_t
-gdm_fork_extra (void)
+mdm_fork_extra (void)
 {
 	pid_t pid;
 
-	gdm_sigchld_block_push ();
-	gdm_sigterm_block_push ();
+	mdm_sigchld_block_push ();
+	mdm_sigterm_block_push ();
 
 	pid = fork ();
 	if (pid < 0)
@@ -788,17 +788,17 @@ gdm_fork_extra (void)
 		 * later as the block_pop will whack
 		 * our signal mask
                  */
-		gdm_unset_signals ();
+		mdm_unset_signals ();
 
-	gdm_sigterm_block_pop ();
-	gdm_sigchld_block_pop ();
+	mdm_sigterm_block_pop ();
+	mdm_sigchld_block_pop ();
 
 	if (pid == 0) {
 		/*
                  * In the child setup empty mask and set all signals to
 		 * default values
                  */
-		gdm_unset_signals ();
+		mdm_unset_signals ();
 
 		/*
                  * Also make a new process group so that we may use
@@ -810,20 +810,20 @@ gdm_fork_extra (void)
 		/* Harmless in children, but in case we'd run
 		   extra processes from main daemon would fix
 		   problems ... */
-		if (gdm_daemon_config_get_value_bool (GDM_KEY_XDMCP))
-			gdm_xdmcp_close ();
+		if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP))
+			mdm_xdmcp_close ();
 	}
 
 	return pid;
 }
 
 void
-gdm_wait_for_extra (pid_t pid,
+mdm_wait_for_extra (pid_t pid,
 		    int  *statusp)
 {
 	int status;
 
-	gdm_sigchld_block_push ();
+	mdm_sigchld_block_push ();
 
 	if (pid > 1) {
 		ve_waitpid_no_signal (pid, &status, 0);
@@ -832,7 +832,7 @@ gdm_wait_for_extra (pid_t pid,
 	if (statusp != NULL)
 		*statusp = status;
 
-	gdm_sigchld_block_pop ();
+	mdm_sigchld_block_pop ();
 }
 
 static void
@@ -884,7 +884,7 @@ ensure_tmp_socket_dir (const char *dir)
  * by gid-root), and it ignores the Solaris /tmp/.X11-pipe directory.
  */
 void
-gdm_ensure_sanity (void)
+mdm_ensure_sanity (void)
 {
 	uid_t old_euid;
 	gid_t old_egid;
@@ -905,7 +905,7 @@ gdm_ensure_sanity (void)
 }
 
 const GList *
-gdm_address_peek_local_list (void)
+mdm_address_peek_local_list (void)
 {
 	static GList *the_list = NULL;
 	static time_t last_time = 0;
@@ -927,7 +927,7 @@ gdm_address_peek_local_list (void)
 
 	hostbuf[BUFSIZ-1] = '\0';
 	if (gethostname (hostbuf, BUFSIZ-1) != 0) {
-		gdm_debug ("%s: Could not get server hostname, using localhost", "gdm_peek_local_address_list");
+		mdm_debug ("%s: Could not get server hostname, using localhost", "mdm_peek_local_address_list");
 		snprintf (hostbuf, BUFSIZ-1, "localhost");
 	}
 
@@ -945,7 +945,7 @@ gdm_address_peek_local_list (void)
 #endif
 
 	if (getaddrinfo (hostbuf, NULL, &hints, &result) != 0) {
-		gdm_debug ("%s: Could not get address from hostname!", "gdm_peek_local_address_list");
+		mdm_debug ("%s: Could not get address from hostname!", "mdm_peek_local_address_list");
 
 		return NULL;
 	}
@@ -970,20 +970,20 @@ gdm_address_peek_local_list (void)
 
 
 gboolean
-gdm_address_is_local (struct sockaddr_storage *sa)
+mdm_address_is_local (struct sockaddr_storage *sa)
 {
 	const GList *list;
 
-	if (gdm_address_is_loopback (sa)) {
+	if (mdm_address_is_loopback (sa)) {
 		return TRUE;
 	}
 
-	list = gdm_address_peek_local_list ();
+	list = mdm_address_peek_local_list ();
 
 	while (list != NULL) {
 		struct sockaddr_storage *addr = list->data;
 
-		if (gdm_address_equal (sa, addr)) {
+		if (mdm_address_equal (sa, addr)) {
 			return TRUE;
 		}
 
@@ -994,19 +994,19 @@ gdm_address_is_local (struct sockaddr_storage *sa)
 }
 
 gboolean
-gdm_setup_gids (const char *login, gid_t gid)
+mdm_setup_gids (const char *login, gid_t gid)
 {
 	/*
          * FIXME: perhaps for *BSD there should be setusercontext
 	 * stuff here
          */
 	if G_UNLIKELY (setgid (gid) < 0)  {
-		gdm_error (_("Could not setgid %d. Aborting."), (int)gid);
+		mdm_error (_("Could not setgid %d. Aborting."), (int)gid);
 		return FALSE;
 	}
 
 	if G_UNLIKELY (initgroups (login, gid) < 0) {
-		gdm_error (_("initgroups () failed for %s. Aborting."), login);
+		mdm_error (_("initgroups () failed for %s. Aborting."), login);
 		return FALSE;
 	}
 
@@ -1014,7 +1014,7 @@ gdm_setup_gids (const char *login, gid_t gid)
 }
 
 void
-gdm_desetuid (void)
+mdm_desetuid (void)
 {
 	uid_t uid = getuid (); 
 	gid_t gid = getgid (); 
@@ -1033,7 +1033,7 @@ gdm_desetuid (void)
 }
 
 gboolean
-gdm_test_opt (const char *cmd, const char *help, const char *option)
+mdm_test_opt (const char *cmd, const char *help, const char *option)
 {
 	char *q;
 	char *full;
@@ -1106,7 +1106,7 @@ gdm_test_opt (const char *cmd, const char *help, const char *option)
 }
 
 int
-gdm_fdgetc (int fd)
+mdm_fdgetc (int fd)
 {
 	unsigned char buf[1];
 	int bytes;
@@ -1125,13 +1125,13 @@ gdm_fdgetc (int fd)
 }
 
 char *
-gdm_fdgets (int fd)
+mdm_fdgets (int fd)
 {
 	int c;
 	int bytes = 0;
 	GString *gs = g_string_new (NULL);
 	for (;;) {
-		c = gdm_fdgetc (fd);
+		c = mdm_fdgetc (fd);
 		if (c == '\n')
 			return g_string_free (gs, FALSE);
 		/* on EOF */
@@ -1150,7 +1150,7 @@ gdm_fdgets (int fd)
 }
 
 void
-gdm_close_all_descriptors (int from, int except, int except2)
+mdm_close_all_descriptors (int from, int except, int except2)
 {
 	DIR *dir;
 	struct dirent *ent;
@@ -1194,7 +1194,7 @@ gdm_close_all_descriptors (int from, int except, int except2)
 			 * leaking fds somewhere badly, this
 			 * should be very high
                          */
-			i = gdm_open_dev_null (O_RDONLY);
+			i = mdm_open_dev_null (O_RDONLY);
 			max = MAX (i+1, 4096);
 		}
 		for (i = from; i < max; i++) {
@@ -1205,7 +1205,7 @@ gdm_close_all_descriptors (int from, int except, int except2)
 }
 
 int
-gdm_open_dev_null (mode_t mode)
+mdm_open_dev_null (mode_t mode)
 {
 	int ret;
 	VE_IGNORE_EINTR (ret = open ("/dev/null", mode));
@@ -1214,41 +1214,41 @@ gdm_open_dev_null (mode_t mode)
                  * Never output anything, we're likely in some
 		 * strange state right now
                  */
-		gdm_signal_ignore (SIGPIPE);
+		mdm_signal_ignore (SIGPIPE);
 		VE_IGNORE_EINTR (close (2));
-		gdm_fail ("Cannot open /dev/null, system on crack!");
+		mdm_fail ("Cannot open /dev/null, system on crack!");
 	}
 
 	return ret;
 }
 
 void
-gdm_unset_signals (void)
+mdm_unset_signals (void)
 {
 	sigset_t mask;
 
 	sigemptyset (&mask);
 	sigprocmask (SIG_SETMASK, &mask, NULL);
 
-	gdm_signal_default (SIGUSR1);
-	gdm_signal_default (SIGUSR2);
-	gdm_signal_default (SIGCHLD);
-	gdm_signal_default (SIGTERM);
-	gdm_signal_default (SIGINT);
-	gdm_signal_default (SIGPIPE);
-	gdm_signal_default (SIGALRM);
-	gdm_signal_default (SIGHUP);
-	gdm_signal_default (SIGABRT);
+	mdm_signal_default (SIGUSR1);
+	mdm_signal_default (SIGUSR2);
+	mdm_signal_default (SIGCHLD);
+	mdm_signal_default (SIGTERM);
+	mdm_signal_default (SIGINT);
+	mdm_signal_default (SIGPIPE);
+	mdm_signal_default (SIGALRM);
+	mdm_signal_default (SIGHUP);
+	mdm_signal_default (SIGABRT);
 #ifdef SIGXFSZ
-	gdm_signal_default (SIGXFSZ);
+	mdm_signal_default (SIGXFSZ);
 #endif
 #ifdef SIGXCPU
-	gdm_signal_default (SIGXCPU);
+	mdm_signal_default (SIGXCPU);
 #endif
 }
 
 void
-gdm_signal_ignore (int signal)
+mdm_signal_ignore (int signal)
 {
 	struct sigaction ign_signal;
 
@@ -1257,12 +1257,12 @@ gdm_signal_ignore (int signal)
 	sigemptyset (&ign_signal.sa_mask);
 
 	if G_UNLIKELY (sigaction (signal, &ign_signal, NULL) < 0)
-		gdm_error (_("%s: Error setting signal %d to %s"),
-			   "gdm_signal_ignore", signal, "SIG_IGN");
+		mdm_error (_("%s: Error setting signal %d to %s"),
+			   "mdm_signal_ignore", signal, "SIG_IGN");
 }
 
 void
-gdm_signal_default (int signal)
+mdm_signal_default (int signal)
 {
 	struct sigaction def_signal;
 
@@ -1271,21 +1271,21 @@ gdm_signal_default (int signal)
 	sigemptyset (&def_signal.sa_mask);
 
 	if G_UNLIKELY (sigaction (signal, &def_signal, NULL) < 0)
-		gdm_error (_("%s: Error setting signal %d to %s"),
-			   "gdm_signal_ignore", signal, "SIG_DFL");
+		mdm_error (_("%s: Error setting signal %d to %s"),
+			   "mdm_signal_ignore", signal, "SIG_DFL");
 }
 
-static GdmHostent *
+static MdmHostent *
 fillout_addrinfo (struct addrinfo *res,
 		  struct sockaddr *ia,
 		  const char *name)
 {
-	GdmHostent *he;
+	MdmHostent *he;
 	gint i;
 	gint addr_count = 0;
 	struct addrinfo *tempaddrinfo;
 
-	he = g_new0 (GdmHostent, 1);
+	he = g_new0 (MdmHostent, 1);
 
 	he->addrs = NULL;
 	he->addr_count = 0;
@@ -1402,34 +1402,34 @@ jumpback_sighandler (int signal)
     sigemptyset (&term.sa_mask);					\
 									\
     if G_UNLIKELY (sigaction (SIGTERM, &term, &oldterm) < 0) 		\
-	gdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
+	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
 		  "SETUP_INTERRUPTS_FOR_TERM", "TERM", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGINT, &term, &oldint) < 0)		\
-	gdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
+	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
 		  "SETUP_INTERRUPTS_FOR_TERM", "INT", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGHUP, &term, &oldhup) < 0) 		\
-	gdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
+	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
 		  "SETUP_INTERRUPTS_FOR_TERM", "HUP", strerror (errno)); \
 
 #define SETUP_INTERRUPTS_FOR_TERM_TEARDOWN \
     do_jumpback = FALSE;						\
 									\
     if G_UNLIKELY (sigaction (SIGTERM, &oldterm, NULL) < 0) 		\
-	gdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
+	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
 		  "SETUP_INTERRUPTS_FOR_TERM", "TERM", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGINT, &oldint, NULL) < 0) 		\
-	gdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
+	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
 		  "SETUP_INTERRUPTS_FOR_TERM", "INT", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGHUP, &oldhup, NULL) < 0) 		\
-	gdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
+	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
 		  "SETUP_INTERRUPTS_FOR_TERM", "HUP", strerror (errno));
 
-GdmHostent *
-gdm_gethostbyname (const char *name)
+MdmHostent *
+mdm_gethostbyname (const char *name)
 {
 	struct addrinfo hints;
 	/* static because of Setjmp */
@@ -1438,7 +1438,7 @@ gdm_gethostbyname (const char *name)
 	SETUP_INTERRUPTS_FOR_TERM_DECLS
 
 	/* The cached address */
-	static GdmHostent *he = NULL;
+	static MdmHostent *he = NULL;
 	static time_t last_time = 0;
 	static char *cached_hostname = NULL;
 
@@ -1446,7 +1446,7 @@ gdm_gethostbyname (const char *name)
 	    strcmp (cached_hostname, name) == 0) {
 		/* Don't check more then every 60 seconds */
 		if (last_time + 60 > time (NULL))
-			return gdm_hostent_copy (he);
+			return mdm_hostent_copy (he);
 	}
 
 	SETUP_INTERRUPTS_FOR_TERM_SETUP
@@ -1476,16 +1476,16 @@ gdm_gethostbyname (const char *name)
 	g_free (cached_hostname);
 	cached_hostname = g_strdup (name);
 
-	gdm_hostent_free (he);
+	mdm_hostent_free (he);
 
 	he = fillout_addrinfo (result, NULL, name);
 
 	last_time = time (NULL);
-	return gdm_hostent_copy (he);
+	return mdm_hostent_copy (he);
 }
 
-GdmHostent *
-gdm_gethostbyaddr (struct sockaddr_storage *ia)
+MdmHostent *
+mdm_gethostbyaddr (struct sockaddr_storage *ia)
 {
 	struct addrinfo hints;
 	/* static because of Setjmp */
@@ -1497,7 +1497,7 @@ gdm_gethostbyaddr (struct sockaddr_storage *ia)
 	SETUP_INTERRUPTS_FOR_TERM_DECLS
 
 	/* The cached address */
-	static GdmHostent *he = NULL;
+	static MdmHostent *he = NULL;
 	static time_t last_time = 0;
 	static struct in_addr cached_addr;
 
@@ -1505,12 +1505,12 @@ gdm_gethostbyaddr (struct sockaddr_storage *ia)
 		if ((ia->ss_family == AF_INET6) && (memcmp (cached_addr6.s6_addr, ((struct sockaddr_in6 *) ia)->sin6_addr.s6_addr, sizeof (struct in6_addr)) == 0)) {
 			/* Don't check more then every 60 seconds */
 			if (last_time + 60 > time (NULL))
-				return gdm_hostent_copy (he);
+				return mdm_hostent_copy (he);
 		} else if (ia->ss_family == AF_INET) {
 			if (memcmp (&cached_addr, &(((struct sockaddr_in *)ia)->sin_addr), sizeof (struct in_addr)) == 0) {
 				/* Don't check more then every 60 seconds */
 				if (last_time + 60 > time (NULL))
-					return gdm_hostent_copy (he);
+					return mdm_hostent_copy (he);
 			}
 		}
 	}
@@ -1577,18 +1577,18 @@ gdm_gethostbyaddr (struct sockaddr_storage *ia)
 	}
 
 	last_time = time (NULL);
-	return gdm_hostent_copy (he);
+	return mdm_hostent_copy (he);
 }
 
-GdmHostent *
-gdm_hostent_copy (GdmHostent *he)
+MdmHostent *
+mdm_hostent_copy (MdmHostent *he)
 {
-	GdmHostent *cpy;
+	MdmHostent *cpy;
 
 	if (he == NULL)
 		return NULL;
 
-	cpy = g_new0 (GdmHostent, 1);
+	cpy = g_new0 (MdmHostent, 1);
 	cpy->not_found = he->not_found;
 	cpy->hostname = g_strdup (he->hostname);
 	if (he->addr_count == 0) {
@@ -1603,7 +1603,7 @@ gdm_hostent_copy (GdmHostent *he)
 }
 
 void
-gdm_hostent_free (GdmHostent *he)
+mdm_hostent_free (MdmHostent *he)
 {
 	if (he == NULL)
 		return;
@@ -1619,7 +1619,7 @@ gdm_hostent_free (GdmHostent *he)
 
 /* Like fopen with "w" */
 FILE *
-gdm_safe_fopen_w (const char *file, mode_t perm)
+mdm_safe_fopen_w (const char *file, mode_t perm)
 {
 	int fd;
 	FILE *ret;
@@ -1643,7 +1643,7 @@ gdm_safe_fopen_w (const char *file, mode_t perm)
 
 /* Like fopen with "a+" */
 FILE *
-gdm_safe_fopen_ap (const char *file, mode_t perm)
+mdm_safe_fopen_ap (const char *file, mode_t perm)
 {
 	int fd;
 	FILE *ret;
@@ -1694,7 +1694,7 @@ gdm_safe_fopen_ap (const char *file, mode_t perm)
 static struct rlimit limits[NUM_OF_LIMITS];
 
 void
-gdm_get_initial_limits (void)
+mdm_get_initial_limits (void)
 {
 	int i;
 
@@ -1708,7 +1708,7 @@ gdm_get_initial_limits (void)
 }
 
 void
-gdm_reset_limits (void)
+mdm_reset_limits (void)
 {
 	int i;
 
@@ -1750,17 +1750,17 @@ gdm_reset_limits (void)
       }
 
 void
-gdm_reset_locale (void)
+mdm_reset_locale (void)
 {
     char *i18n_file_contents;
     gsize i18n_file_length, i;
     GString *line;
     const gchar *p, *q;
-    const gchar *gdmlang = g_getenv ("GDM_LANG");
+    const gchar *mdmlang = g_getenv ("MDM_LANG");
 
-    if (gdmlang)
+    if (mdmlang)
       {
-	g_setenv ("LANG", gdmlang, TRUE);
+	g_setenv ("LANG", mdmlang, TRUE);
 	g_unsetenv ("LC_ALL");
 	g_unsetenv ("LC_MESSAGES");
 	setlocale (LC_ALL, "");
@@ -1860,7 +1860,7 @@ static struct rlimit limit_pthread = { RLIM_INFINITY, RLIM_INFINITY };
 #endif
 
 void
-gdm_get_initial_limits (void)
+mdm_get_initial_limits (void)
 {
 	/* Note: I don't really know which ones are really very standard
 	   and which ones are not, so I just test for them all one by one */
@@ -1910,7 +1910,7 @@ gdm_get_initial_limits (void)
 }
 
 void
-gdm_reset_limits (void)
+mdm_reset_limits (void)
 {
 	/* Note: I don't really know which ones are really very standard
 	   and which ones are not, so I just test for them all one by one */
@@ -1962,7 +1962,7 @@ gdm_reset_limits (void)
 #endif /* NUM_OF_LIMITS */
 
 const char *
-gdm_root_user (void)
+mdm_root_user (void)
 {
 	static char *root_user = NULL;
 	struct passwd *pwent;
@@ -1979,7 +1979,7 @@ gdm_root_user (void)
 }
 
 void
-gdm_sleep_no_signal (int secs)
+mdm_sleep_no_signal (int secs)
 {
 	time_t endtime = time (NULL)+secs;
 
@@ -1995,7 +1995,7 @@ gdm_sleep_no_signal (int secs)
 }
 
 char *
-gdm_make_filename (const char *dir, const char *name, const char *extension)
+mdm_make_filename (const char *dir, const char *name, const char *extension)
 {
 	char *base = g_strconcat (name, extension, NULL);
 	char *full = g_build_filename (dir, base, NULL);
@@ -2004,7 +2004,7 @@ gdm_make_filename (const char *dir, const char *name, const char *extension)
 }
 
 char *
-gdm_ensure_extension (const char *name, const char *extension)
+mdm_ensure_extension (const char *name, const char *extension)
 {
 	const char *p;
 
@@ -2021,7 +2021,7 @@ gdm_ensure_extension (const char *name, const char *extension)
 }
 
 char *
-gdm_strip_extension (const char *name, const char *extension)
+mdm_strip_extension (const char *name, const char *extension)
 {
 	const char *p = strrchr (name, '.');
 	if (p != NULL &&
@@ -2036,7 +2036,7 @@ gdm_strip_extension (const char *name, const char *extension)
 }
 
 void
-gdm_twiddle_pointer (GdmDisplay *disp)
+mdm_twiddle_pointer (MdmDisplay *disp)
 {
 	if (disp == NULL ||
 	    disp->dsp == NULL)
@@ -2087,7 +2087,7 @@ compress_string (const char *s)
 
 
 char *
-gdm_get_last_info (const char *username)
+mdm_get_last_info (const char *username)
 {
 	char *info = NULL;
 	const char *cmd = NULL;
@@ -2127,14 +2127,14 @@ gdm_get_last_info (const char *username)
 }
 
 gboolean
-gdm_ok_console_language (void)
+mdm_ok_console_language (void)
 {
 	int i;
 	char **v;
 	static gboolean cached = FALSE;
 	static gboolean is_ok;
 	const char *loc;
-	const char *consolecannothandle = gdm_daemon_config_get_value_string (GDM_KEY_CONSOLE_CANNOT_HANDLE);
+	const char *consolecannothandle = mdm_daemon_config_get_value_string (MDM_KEY_CONSOLE_CANNOT_HANDLE);
 
 	if (cached)
 		return is_ok;
@@ -2168,23 +2168,23 @@ gdm_ok_console_language (void)
 }
 
 const char *
-gdm_console_translate (const char *str)
+mdm_console_translate (const char *str)
 {
-	if (gdm_ok_console_language ())
+	if (mdm_ok_console_language ())
 		return _(str);
 	else
 		return str;
 }
 
 /*
- * gdm_read_default
+ * mdm_read_default
  *
  * This function is used to support systems that have the /etc/default/login
  * interface to control programs that affect security.  This is a Solaris
  * thing, though some users on other systems may find it useful.
  */
 gchar *
-gdm_read_default (gchar *key)
+mdm_read_default (gchar *key)
 {
 #ifdef HAVE_DEFOPEN
     gchar *retval = NULL;
@@ -2204,15 +2204,15 @@ gdm_read_default (gchar *key)
 }
 
 /**
- * gdm_fail:
+ * mdm_fail:
  * @format: printf style format string
  * @...: Optional arguments
  *
  * Logs fatal error condition and aborts master daemon.  Also sleeps
- * for 30 seconds to avoid looping if gdm is started by init.
+ * for 30 seconds to avoid looping if mdm is started by init.
  */
 void
-gdm_fail (const gchar *format, ...)
+mdm_fail (const gchar *format, ...)
 {
     va_list args;
     char *s;
@@ -2222,26 +2222,26 @@ gdm_fail (const gchar *format, ...)
     va_end (args);
 
     /* Log to both syslog and stderr */
-    gdm_error (s);
-    if (getpid () == gdm_main_pid) {
-	    gdm_fdprintf (2, "%s\n", s);
+    mdm_error (s);
+    if (getpid () == mdm_main_pid) {
+	    mdm_fdprintf (2, "%s\n", s);
     }
 
     g_free (s);
 
     /* If main process do final cleanup to kill all processes */
-    if (getpid () == gdm_main_pid) {
-            gdm_final_cleanup ();
-    } else if ( ! gdm_slave_final_cleanup ()) {
+    if (getpid () == mdm_main_pid) {
+            mdm_final_cleanup ();
+    } else if ( ! mdm_slave_final_cleanup ()) {
             /* If we weren't even a slave do some random cleanup only */
             /* FIXME: is this all fine? */
-            gdm_sigchld_block_push ();
+            mdm_sigchld_block_push ();
             if (extra_process > 1 && extra_process != getpid ()) {
                     /* we sigterm extra processes, and we don't wait */
                     kill (-(extra_process), SIGTERM);
                     extra_process = 0;
             }
-            gdm_sigchld_block_pop ();
+            mdm_sigchld_block_pop ();
     }
 
     /* Slow down respawning if we're started from init */

@@ -1,8 +1,8 @@
 NULL =
 
-DEFS = @DEFS@ -DGDM_CONFIG_FILE=\"$(gdmconfdir)/gdm.conf\" \
-	-DGDM_FACTORY_CONFIG_FILE=\"$(gdmconfdir)/factory-gdm.conf\" \
-	-DGDM_GLADE_DIR=\"@datadir@/gdm\"
+DEFS = @DEFS@ -DMDM_CONFIG_FILE=\"$(mdmconfdir)/mdm.conf\" \
+	-DMDM_FACTORY_CONFIG_FILE=\"$(mdmconfdir)/factory-mdm.conf\" \
+	-DMDM_GLADE_DIR=\"@datadir@/mdm\"
 
 INCLUDES = \
 	-I.						\
@@ -16,77 +16,77 @@ edit = sed \
 	-e 's|@sbindir[@]|$(sbindir)|g' \
 	-e 's|@sysconfdir[@]|$(sysconfdir)|g' \
 	-e 's|@localstatedir[@]|$(localstatedir)|g' \
-	-e 's|@GDM_PID_FILE[@]|$(GDM_PID_FILE)|g'
+	-e 's|@MDM_PID_FILE[@]|$(MDM_PID_FILE)|g'
 
-gdm-stop: gdm-stop.in Makefile
+mdm-stop: mdm-stop.in Makefile
 	$(edit) $< >$@
-gdm-restart: gdm-restart.in Makefile
+mdm-restart: mdm-restart.in Makefile
 	$(edit) $< >$@
-gdm-safe-restart: gdm-safe-restart.in Makefile
+mdm-safe-restart: mdm-safe-restart.in Makefile
 	$(edit) $< >$@
-gdmsetup: gdmsetup-security.in
-	$(edit) <gdmsetup-security.in >gdmsetup
+mdmsetup: mdmsetup-security.in
+	$(edit) <mdmsetup-security.in >mdmsetup
 
 
 sbin_SCRIPTS = 			\
-	gdm-stop		\
-	gdm-restart		\
-	gdm-safe-restart	\
+	mdm-stop		\
+	mdm-restart		\
+	mdm-safe-restart	\
 	$(NULL)
 
 EXTRA_DIST = 			\
-	gdm-ssh-session		\
-	gdm-stop.in		\
-	gdm-restart.in		\
-	gdm-safe-restart.in	\
-	gdmsetup-pam		\
-	gdmsetup-security.in	\
+	mdm-ssh-session		\
+	mdm-stop.in		\
+	mdm-restart.in		\
+	mdm-safe-restart.in	\
+	mdmsetup-pam		\
+	mdmsetup-security.in	\
 	$(NULL)
 
 libexec_SCRIPTS = \
-	@GDMSSHSESSION@
+	@MDMSSHSESSION@
 
 libexec_PROGRAMS = \
-	@GDMASKPASS@	\
-	@GDMOPEN@	\
-	@GDMPREFETCH@	\
-	gdmtranslate
+	@MDMASKPASS@	\
+	@MDMOPEN@	\
+	@MDMPREFETCH@	\
+	mdmtranslate
 
 if DMX_SUPPORT
-bin_PROGRAMS = gdm-dmx-reconnect-proxy
+bin_PROGRAMS = mdm-dmx-reconnect-proxy
 endif
 
-EXTRA_SCRIPTS = gdm-ssh-session
-EXTRA_PROGRAMS = gdmaskpass gdmopen gdmprefetch
+EXTRA_SCRIPTS = mdm-ssh-session
+EXTRA_PROGRAMS = mdmaskpass mdmopen mdmprefetch
 
-gdmaskpass_SOURCES = \
-	gdmaskpass.c
+mdmaskpass_SOURCES = \
+	mdmaskpass.c
 
-gdmtranslate_SOURCES = \
-	gdmtranslate.c
+mdmtranslate_SOURCES = \
+	mdmtranslate.c
 
-gdmopen_SOURCES = \
-	gdmopen.c
+mdmopen_SOURCES = \
+	mdmopen.c
 
-gdmprefetch_SOURCES = \
-	gdmprefetch.c
+mdmprefetch_SOURCES = \
+	mdmprefetch.c
 
-gdmaskpass_LDADD = \
+mdmaskpass_LDADD = \
 	$(INTLLIBS)		\
 	-lpam			\
-	$(EXTRA_GDMASKPASS_LIBS)
+	$(EXTRA_MDMASKPASS_LIBS)
 
-gdmopen_LDADD = \
+mdmopen_LDADD = \
 	$(INTLLIBS)
 
-gdmtranslate_LDADD = \
+mdmtranslate_LDADD = \
 	$(INTLLIBS)
 
 if DMX_SUPPORT
-gdm_dmx_reconnect_proxy_SOURCES = \
-	gdm-dmx-reconnect-proxy.c
+mdm_dmx_reconnect_proxy_SOURCES = \
+	mdm-dmx-reconnect-proxy.c
 
-gdm_dmx_reconnect_proxy_LDADD = \
+mdm_dmx_reconnect_proxy_LDADD = \
 	$(GLIB_LIBS) \
         $(X_EXTRA_LIBS) \
         $(X_LIBS) \
@@ -96,23 +96,23 @@ endif
 
 if CONSOLE_HELPER
 cappsdir = $(PAM_PREFIX)/security/console.apps
-capps_DATA = gdmsetup
+capps_DATA = mdmsetup
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(PAM_PREFIX)/pam.d
-	$(INSTALL_DATA) $(srcdir)/gdmsetup-pam $(DESTDIR)$(PAM_PREFIX)/pam.d/gdmsetup
+	$(INSTALL_DATA) $(srcdir)/mdmsetup-pam $(DESTDIR)$(PAM_PREFIX)/pam.d/mdmsetup
 else
 install-data-local:
 endif
 
 CLEANFILES = 			\
-	gdmsetup-security	\
+	mdmsetup-security	\
 	$(NULL)
 
 DISTCLEANFILES = 		\
-	gdmsetup		\
-	gdm-stop		\
-	gdm-restart		\
-	gdm-safe-restart	\
+	mdmsetup		\
+	mdm-stop		\
+	mdm-restart		\
+	mdm-safe-restart	\
 	$(NULL)
 

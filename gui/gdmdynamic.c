@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- *    gdmdynamic
+ *    mdmdynamic
  *    (C) 2005-2007 Sun Microsystems, Inc.
  *    
  *    This program is free software; you can redistribute it and/or modify
@@ -36,15 +36,15 @@
 
 #include <glib/gi18n.h>
 
-#include "gdm.h"
-#include "gdmcomm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
+#include "mdm.h"
+#include "mdmcomm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-log.h"
-#include "gdm-socket-protocol.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-log.h"
+#include "mdm-socket-protocol.h"
+#include "mdm-daemon-config-keys.h"
 
 static char *myname = NULL;  /* name of this program */
 
@@ -61,10 +61,10 @@ usage ()
 }
 
 /*
- * Note: gdmdynamic does work to deal with the socket being congested
- * because it is intended that the an umlimited number of gdmdynamic
+ * Note: mdmdynamic does work to deal with the socket being congested
+ * because it is intended that the an umlimited number of mdmdynamic
  * requests could be made at any moment.  It is the responsibility of
- * gdmdynamic to manage the socket connection to the daemon to make sure
+ * mdmdynamic to manage the socket connection to the daemon to make sure
  * that it does not starve the socket, especially since the GUI login
  * program will also be using the socket on startup.
  */
@@ -104,7 +104,7 @@ main (int argc, char *argv[])
                 error = FALSE;
             else
                 error = TRUE;
-            command = GDM_SUP_ADD_DYNAMIC_DISPLAY;
+            command = MDM_SUP_ADD_DYNAMIC_DISPLAY;
             params = optarg;
             break;
 
@@ -117,7 +117,7 @@ main (int argc, char *argv[])
                 error = FALSE;
             else
                 error = TRUE;
-            command = GDM_SUP_REMOVE_DYNAMIC_DISPLAY;
+            command = MDM_SUP_REMOVE_DYNAMIC_DISPLAY;
             params = optarg;
             break;
 
@@ -126,13 +126,13 @@ main (int argc, char *argv[])
                 error = FALSE;
             else
                 error = TRUE;
-            command = GDM_SUP_ATTACHED_SERVERS;
+            command = MDM_SUP_ATTACHED_SERVERS;
             break;
 
         case 'r':
             if (command == NULL)
                 error = FALSE;
-            command = GDM_SUP_RELEASE_DYNAMIC_DISPLAYS;
+            command = MDM_SUP_RELEASE_DYNAMIC_DISPLAYS;
             params = optarg;
             break;
 
@@ -159,7 +159,7 @@ main (int argc, char *argv[])
     }
 
     /* process remaining option arguments for -l */
-    if (command != NULL && strcmp (command, GDM_SUP_ATTACHED_SERVERS) == 0)
+    if (command != NULL && strcmp (command, MDM_SUP_ATTACHED_SERVERS) == 0)
         for (; optind<argc; optind++)
             params = argv[optind];
 
@@ -174,15 +174,15 @@ main (int argc, char *argv[])
         }
     }
 
-    gdm_log_init ();
-    gdm_log_set_debug (verbose);
+    mdm_log_init ();
+    mdm_log_set_debug (verbose);
 
     /*
      * If verbose is not on, then set quiet errors to TRUE since
-     * errors are expected and managed by gdmdynamic, so we want
+     * errors are expected and managed by mdmdynamic, so we want
      * errors to be quiet.
      */ 
-    gdmcomm_set_quiet_errors (!verbose);
+    mdmcomm_set_quiet_errors (!verbose);
 
     if (params && strlen (params))
         cstr = g_strdup_printf ("%s %s", command, params);
@@ -193,24 +193,24 @@ main (int argc, char *argv[])
     srand (getpid () * time (NULL));
 
     /*
-     * Setting comm_retries to 1 ensures that gdmdynamic will fail if
+     * Setting comm_retries to 1 ensures that mdmdynamic will fail if
      * it fails the first time to connect.  We manage sleeping and
-     * retrying in gdmdynamic instead of wanting gdmcomm to manage
+     * retrying in mdmdynamic instead of wanting mdmcomm to manage
      * this.
      */
-    gdm_config_set_comm_retries (1);
+    mdm_config_set_comm_retries (1);
 
     /*
      * Never cache config data because if it fails to connect, then
      * we want it to reload config data over the socket and not 
      * default to the compiled in value.
      */
-    gdm_config_never_cache (TRUE);
+    mdm_config_never_cache (TRUE);
 
     /*
      * If the connection is so busy that it fails, then we do not
-     * want gdmdynamic to retry and further congest the connection.
-     * Instead gdmdynamic will manage backing off and trying again
+     * want mdmdynamic to retry and further congest the connection.
+     * Instead mdmdynamic will manage backing off and trying again
      * after waiting.
      */
     do {
@@ -222,9 +222,9 @@ main (int argc, char *argv[])
 	 * check if doing LIST since this does not much much load on the
 	 * daemon.
 	 */
-	if (strcmp (command, GDM_SUP_ATTACHED_SERVERS) != 0) {
-		ret = gdmcomm_call_gdm (GDM_SUP_SERVER_BUSY, NULL, version, 1);
-		conn_failed = gdmcomm_did_connection_fail ();
+	if (strcmp (command, MDM_SUP_ATTACHED_SERVERS) != 0) {
+		ret = mdmcomm_call_mdm (MDM_SUP_SERVER_BUSY, NULL, version, 1);
+		conn_failed = mdmcomm_did_connection_fail ();
 		if (ret == NULL)
 			conn_failed = TRUE;
 		else if (strncmp (ret, "OK", 2) == 0) {
@@ -241,7 +241,7 @@ main (int argc, char *argv[])
 	}
 
 	/* Start reading config data in bulk */
-	gdmcomm_comm_bulk_start ();
+	mdmcomm_comm_bulk_start ();
 
 	/*
 	 * All other commands besides LIST need root cookie.  Only bother
@@ -249,15 +249,15 @@ main (int argc, char *argv[])
          * this in a loop.
 	 */
 	if (conn_failed == FALSE &&
-            (strcmp (command, GDM_SUP_ATTACHED_SERVERS) != 0) &&
+            (strcmp (command, MDM_SUP_ATTACHED_SERVERS) != 0) &&
             (cookie == NULL)) {
-		gchar *GdmServAuthDir = NULL;
+		gchar *MdmServAuthDir = NULL;
 		char  *filename;
 		FILE  *fp;
 		char  buf[BUFSIZ];
 
-		GdmServAuthDir = gdm_config_get_string (GDM_KEY_SERV_AUTHDIR);
-		conn_failed    = gdmcomm_did_connection_fail ();
+		MdmServAuthDir = mdm_config_get_string (MDM_KEY_SERV_AUTHDIR);
+		conn_failed    = mdmcomm_did_connection_fail ();
 
 		/*
 		 * We can't build a cookie if the auth dir is NULL.
@@ -266,13 +266,13 @@ main (int argc, char *argv[])
 		 * subconnections, for example.  So consider this
 		 * getting a NULL value back a connection failed.
 		 */
-		if (ve_string_empty (GdmServAuthDir)) {
+		if (ve_string_empty (MdmServAuthDir)) {
 			conn_failed = TRUE;				
 		}
 		
 		if (conn_failed == FALSE) {
 
-			filename = g_build_filename (GdmServAuthDir, ".cookie", NULL);
+			filename = g_build_filename (MdmServAuthDir, ".cookie", NULL);
 
 			VE_IGNORE_EINTR (fp = fopen (filename, "r"));
 			if (fp != NULL) {
@@ -286,10 +286,10 @@ main (int argc, char *argv[])
 
 	if (conn_failed == FALSE) {
                 /* Allow to fail if connection fails after 1 try */
-		ret = gdmcomm_call_gdm (cstr, cookie, version, 1);
+		ret = mdmcomm_call_mdm (cstr, cookie, version, 1);
 
                 /* Verify the connection did not fail */
-		conn_failed = gdmcomm_did_connection_fail ();
+		conn_failed = mdmcomm_did_connection_fail ();
 
 		/*
 		 * If the call returned NULL, there must be a failure
@@ -302,11 +302,11 @@ main (int argc, char *argv[])
 	}
 
 	/* Done reading config data */
-	gdmcomm_comm_bulk_stop ();
+	mdmcomm_comm_bulk_stop ();
 
 	/*
          * If the connection failed, sleep and try again.  The sleep time is
-         * somewhat random to ensure that if multiple calls to gdmdynamic 
+         * somewhat random to ensure that if multiple calls to mdmdynamic 
          * all all failing to connect that they do not retry all at the
          * same time.
          */
@@ -331,7 +331,7 @@ main (int argc, char *argv[])
 		sleep (rand_sleep);
 
 		/* Reset the connection failed flag so it can be tried again */
-		gdmcomm_set_allow_sleep (TRUE);
+		mdmcomm_set_allow_sleep (TRUE);
 	}
     } while ((conn_failed == TRUE) && (try_num < max_tries));
 
@@ -358,7 +358,7 @@ main (int argc, char *argv[])
     if (ret != NULL &&
         strncmp (ret, "OK", 2) == 0) {
 
-        if (strcmp (command, GDM_SUP_ATTACHED_SERVERS) == 0) {
+        if (strcmp (command, MDM_SUP_ATTACHED_SERVERS) == 0) {
             ret += 2;
             if (strlen (ret)) {
                 ret++;   /* skip over space char */

@@ -8,10 +8,10 @@ INCLUDES = \
 	-I$(top_srcdir)/common				\
 	-DAUTHDIR=\""$(authdir)"\"		 	\
 	-DDATADIR=\""$(datadir)"\"		 	\
-	-DGDM_DATADIR=\""$(pkgdatadir)"\"		\
+	-DMDM_DATADIR=\""$(pkgdatadir)"\"		\
 	-DDMCONFDIR=\""$(dmconfdir)"\"		 	\
-	-DGDM_CONFIG_FILE=\"$(gdmconfdir)/gdm.conf\"	\
-	-DGDMLOCALEDIR=\""$(gdmlocaledir)"\"		\
+	-DMDM_CONFIG_FILE=\"$(mdmconfdir)/mdm.conf\"	\
+	-DMDMLOCALEDIR=\""$(mdmlocaledir)"\"		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" 	\
 	-DLIBEXECDIR=\""$(libexecdir)"\" 		\
 	-DSBINDIR=\""$(sbindir)"\"		 	\
@@ -30,18 +30,18 @@ INCLUDES = \
 #
 
 libexec_PROGRAMS = \
-	gdmgreeter
+	mdmgreeter
 
 bin_SCRIPTS = \
-	gdmthemetester
+	mdmthemetester
 
-CLEANFILES = gdmthemetester
+CLEANFILES = mdmthemetester
 
-gdmthemetester: $(srcdir)/gdmthemetester.in
+mdmthemetester: $(srcdir)/mdmthemetester.in
 	sed -e 's,[@]libexecdir[@],$(libexecdir),g' \
-		<$(srcdir)/gdmthemetester.in >gdmthemetester
+		<$(srcdir)/mdmthemetester.in >mdmthemetester
 
-gdmgreeter_SOURCES =  \
+mdmgreeter_SOURCES =  \
 	greeter.c \
 	greeter.h \
 	greeter_canvas_text.c \
@@ -74,13 +74,13 @@ gdmgreeter_SOURCES =  \
 	greeter_system.c \
 	greeter_system.h
 
-gdmgreeter_LDADD = \
+mdmgreeter_LDADD = \
 	$(EXTRA_GREETER_LIBS)   \
 	-L$(top_builddir)/gui	\
-	-lgdmwm			\
-	-lgdmcommon		\
-	-lgdmgreeter		\
-	$(top_builddir)/common/libgdmcommon.a \
+	-lmdmwm			\
+	-lmdmcommon		\
+	-lmdmgreeter		\
+	$(top_builddir)/common/libmdmcommon.a \
 	$(GLIB_LIBS)		\
 	$(GOBJECT_LIBS)		\
 	$(PANGO_LIBS)		\
@@ -95,5 +95,5 @@ gdmgreeter_LDADD = \
 	-lfontconfig
 
 EXTRA_DIST = \
-	gdmthemetester.in \
+	mdmthemetester.in \
 	greeter.dtd

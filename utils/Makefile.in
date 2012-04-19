@@ -34,11 +34,11 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-libexec_PROGRAMS = @GDMASKPASS@ @GDMOPEN@ @GDMPREFETCH@ \
-	gdmtranslate$(EXEEXT)
-@DMX_SUPPORT_TRUE@bin_PROGRAMS = gdm-dmx-reconnect-proxy$(EXEEXT)
-EXTRA_PROGRAMS = gdmaskpass$(EXEEXT) gdmopen$(EXEEXT) \
-	gdmprefetch$(EXEEXT)
+libexec_PROGRAMS = @MDMASKPASS@ @MDMOPEN@ @MDMPREFETCH@ \
+	mdmtranslate$(EXEEXT)
+@DMX_SUPPORT_TRUE@bin_PROGRAMS = mdm-dmx-reconnect-proxy$(EXEEXT)
+EXTRA_PROGRAMS = mdmaskpass$(EXEEXT) mdmopen$(EXEEXT) \
+	mdmprefetch$(EXEEXT)
 subdir = utils
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -56,27 +56,27 @@ am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" \
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 libexecPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS) $(libexec_PROGRAMS)
-am__gdm_dmx_reconnect_proxy_SOURCES_DIST = gdm-dmx-reconnect-proxy.c
-@DMX_SUPPORT_TRUE@am_gdm_dmx_reconnect_proxy_OBJECTS =  \
-@DMX_SUPPORT_TRUE@	gdm-dmx-reconnect-proxy.$(OBJEXT)
-gdm_dmx_reconnect_proxy_OBJECTS =  \
-	$(am_gdm_dmx_reconnect_proxy_OBJECTS)
+am__mdm_dmx_reconnect_proxy_SOURCES_DIST = mdm-dmx-reconnect-proxy.c
+@DMX_SUPPORT_TRUE@am_mdm_dmx_reconnect_proxy_OBJECTS =  \
+@DMX_SUPPORT_TRUE@	mdm-dmx-reconnect-proxy.$(OBJEXT)
+mdm_dmx_reconnect_proxy_OBJECTS =  \
+	$(am_mdm_dmx_reconnect_proxy_OBJECTS)
 am__DEPENDENCIES_1 =
-@DMX_SUPPORT_TRUE@gdm_dmx_reconnect_proxy_DEPENDENCIES =  \
+@DMX_SUPPORT_TRUE@mdm_dmx_reconnect_proxy_DEPENDENCIES =  \
 @DMX_SUPPORT_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 @DMX_SUPPORT_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
-am_gdmaskpass_OBJECTS = gdmaskpass.$(OBJEXT)
-gdmaskpass_OBJECTS = $(am_gdmaskpass_OBJECTS)
-gdmaskpass_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
-am_gdmopen_OBJECTS = gdmopen.$(OBJEXT)
-gdmopen_OBJECTS = $(am_gdmopen_OBJECTS)
-gdmopen_DEPENDENCIES = $(am__DEPENDENCIES_1)
-am_gdmprefetch_OBJECTS = gdmprefetch.$(OBJEXT)
-gdmprefetch_OBJECTS = $(am_gdmprefetch_OBJECTS)
-gdmprefetch_LDADD = $(LDADD)
-am_gdmtranslate_OBJECTS = gdmtranslate.$(OBJEXT)
-gdmtranslate_OBJECTS = $(am_gdmtranslate_OBJECTS)
-gdmtranslate_DEPENDENCIES = $(am__DEPENDENCIES_1)
+am_mdmaskpass_OBJECTS = mdmaskpass.$(OBJEXT)
+mdmaskpass_OBJECTS = $(am_mdmaskpass_OBJECTS)
+mdmaskpass_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+am_mdmopen_OBJECTS = mdmopen.$(OBJEXT)
+mdmopen_OBJECTS = $(am_mdmopen_OBJECTS)
+mdmopen_DEPENDENCIES = $(am__DEPENDENCIES_1)
+am_mdmprefetch_OBJECTS = mdmprefetch.$(OBJEXT)
+mdmprefetch_OBJECTS = $(am_mdmprefetch_OBJECTS)
+mdmprefetch_LDADD = $(LDADD)
+am_mdmtranslate_OBJECTS = mdmtranslate.$(OBJEXT)
+mdmtranslate_OBJECTS = $(am_mdmtranslate_OBJECTS)
+mdmtranslate_DEPENDENCIES = $(am__DEPENDENCIES_1)
 libexecSCRIPT_INSTALL = $(INSTALL_SCRIPT)
 sbinSCRIPT_INSTALL = $(INSTALL_SCRIPT)
 SCRIPTS = $(libexec_SCRIPTS) $(sbin_SCRIPTS)
@@ -92,12 +92,12 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(gdm_dmx_reconnect_proxy_SOURCES) $(gdmaskpass_SOURCES) \
-	$(gdmopen_SOURCES) $(gdmprefetch_SOURCES) \
-	$(gdmtranslate_SOURCES)
-DIST_SOURCES = $(am__gdm_dmx_reconnect_proxy_SOURCES_DIST) \
-	$(gdmaskpass_SOURCES) $(gdmopen_SOURCES) \
-	$(gdmprefetch_SOURCES) $(gdmtranslate_SOURCES)
+SOURCES = $(mdm_dmx_reconnect_proxy_SOURCES) $(mdmaskpass_SOURCES) \
+	$(mdmopen_SOURCES) $(mdmprefetch_SOURCES) \
+	$(mdmtranslate_SOURCES)
+DIST_SOURCES = $(am__mdm_dmx_reconnect_proxy_SOURCES_DIST) \
+	$(mdmaskpass_SOURCES) $(mdmopen_SOURCES) \
+	$(mdmprefetch_SOURCES) $(mdmtranslate_SOURCES)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -141,9 +141,9 @@ DATADIR = @DATADIR@
 DATADIRNAME = @DATADIRNAME@
 DBUS_CFLAGS = @DBUS_CFLAGS@
 DBUS_LIBS = @DBUS_LIBS@
-DEFS = @DEFS@ -DGDM_CONFIG_FILE=\"$(gdmconfdir)/gdm.conf\" \
-	-DGDM_FACTORY_CONFIG_FILE=\"$(gdmconfdir)/factory-gdm.conf\" \
-	-DGDM_GLADE_DIR=\"@datadir@/gdm\"
+DEFS = @DEFS@ -DMDM_CONFIG_FILE=\"$(mdmconfdir)/mdm.conf\" \
+	-DMDM_FACTORY_CONFIG_FILE=\"$(mdmconfdir)/factory-mdm.conf\" \
+	-DMDM_GLADE_DIR=\"@datadir@/mdm\"
 
 DEPDIR = @DEPDIR@
 DISTCHECK_CONFIGURE_FLAGS = @DISTCHECK_CONFIGURE_FLAGS@
@@ -157,7 +157,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 EXTRA_CHOOSER_LIBS = @EXTRA_CHOOSER_LIBS@
 EXTRA_DAEMON_LIBS = @EXTRA_DAEMON_LIBS@
-EXTRA_GDMASKPASS_LIBS = @EXTRA_GDMASKPASS_LIBS@
+EXTRA_MDMASKPASS_LIBS = @EXTRA_MDMASKPASS_LIBS@
 EXTRA_GREETER_LIBS = @EXTRA_GREETER_LIBS@
 EXTRA_NSL_LIB = @EXTRA_NSL_LIB@
 EXTRA_SOCKET_LIB = @EXTRA_SOCKET_LIB@
@@ -167,22 +167,22 @@ GDKPIXBUF_CFLAGS = @GDKPIXBUF_CFLAGS@
 GDKPIXBUF_LIBS = @GDKPIXBUF_LIBS@
 GDK_CFLAGS = @GDK_CFLAGS@
 GDK_LIBS = @GDK_LIBS@
-GDMASKPASS = @GDMASKPASS@
-GDMCHOOSER = @GDMCHOOSER@
-GDMGNOMESESSIONCMD = @GDMGNOMESESSIONCMD@
-GDMOPEN = @GDMOPEN@
-GDMPREFETCH = @GDMPREFETCH@
-GDMPREFETCHCMD = @GDMPREFETCHCMD@
-GDMPREFETCHLIST = @GDMPREFETCHLIST@
-GDMSSHSESSION = @GDMSSHSESSION@
-GDMSSHSESSIONCMD = @GDMSSHSESSIONCMD@
-GDMXNESTCHOOSER = @GDMXNESTCHOOSER@
-GDM_CUSTOM_CONF = @GDM_CUSTOM_CONF@
-GDM_DEFAULTS_CONF = @GDM_DEFAULTS_CONF@
-GDM_OLD_CONF = @GDM_OLD_CONF@
-GDM_PID_FILE = @GDM_PID_FILE@
-GDM_RBAC_SYSCMD_KEYS = @GDM_RBAC_SYSCMD_KEYS@
-GDM_USER_PATH = @GDM_USER_PATH@
+MDMASKPASS = @MDMASKPASS@
+MDMCHOOSER = @MDMCHOOSER@
+MDMGNOMESESSIONCMD = @MDMGNOMESESSIONCMD@
+MDMOPEN = @MDMOPEN@
+MDMPREFETCH = @MDMPREFETCH@
+MDMPREFETCHCMD = @MDMPREFETCHCMD@
+MDMPREFETCHLIST = @MDMPREFETCHLIST@
+MDMSSHSESSION = @MDMSSHSESSION@
+MDMSSHSESSIONCMD = @MDMSSHSESSIONCMD@
+MDMXNESTCHOOSER = @MDMXNESTCHOOSER@
+MDM_CUSTOM_CONF = @MDM_CUSTOM_CONF@
+MDM_DEFAULTS_CONF = @MDM_DEFAULTS_CONF@
+MDM_OLD_CONF = @MDM_OLD_CONF@
+MDM_PID_FILE = @MDM_PID_FILE@
+MDM_RBAC_SYSCMD_KEYS = @MDM_RBAC_SYSCMD_KEYS@
+MDM_USER_PATH = @MDM_USER_PATH@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_LIBS = @GLIB_LIBS@
@@ -315,8 +315,8 @@ dmconfdir = @dmconfdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
-gdmconfdir = @gdmconfdir@
-gdmlocaledir = @gdmlocaledir@
+mdmconfdir = @mdmconfdir@
+mdmlocaledir = @mdmlocaledir@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -361,54 +361,54 @@ edit = sed \
 	-e 's|@sbindir[@]|$(sbindir)|g' \
 	-e 's|@sysconfdir[@]|$(sysconfdir)|g' \
 	-e 's|@localstatedir[@]|$(localstatedir)|g' \
-	-e 's|@GDM_PID_FILE[@]|$(GDM_PID_FILE)|g'
+	-e 's|@MDM_PID_FILE[@]|$(MDM_PID_FILE)|g'
 
 sbin_SCRIPTS = \
-	gdm-stop		\
-	gdm-restart		\
-	gdm-safe-restart	\
+	mdm-stop		\
+	mdm-restart		\
+	mdm-safe-restart	\
 	$(NULL)
 
 EXTRA_DIST = \
-	gdm-ssh-session		\
-	gdm-stop.in		\
-	gdm-restart.in		\
-	gdm-safe-restart.in	\
-	gdmsetup-pam		\
-	gdmsetup-security.in	\
+	mdm-ssh-session		\
+	mdm-stop.in		\
+	mdm-restart.in		\
+	mdm-safe-restart.in	\
+	mdmsetup-pam		\
+	mdmsetup-security.in	\
 	$(NULL)
 
 libexec_SCRIPTS = \
-	@GDMSSHSESSION@
+	@MDMSSHSESSION@
 
-EXTRA_SCRIPTS = gdm-ssh-session
-gdmaskpass_SOURCES = \
-	gdmaskpass.c
+EXTRA_SCRIPTS = mdm-ssh-session
+mdmaskpass_SOURCES = \
+	mdmaskpass.c
 
-gdmtranslate_SOURCES = \
-	gdmtranslate.c
+mdmtranslate_SOURCES = \
+	mdmtranslate.c
 
-gdmopen_SOURCES = \
-	gdmopen.c
+mdmopen_SOURCES = \
+	mdmopen.c
 
-gdmprefetch_SOURCES = \
-	gdmprefetch.c
+mdmprefetch_SOURCES = \
+	mdmprefetch.c
 
-gdmaskpass_LDADD = \
+mdmaskpass_LDADD = \
 	$(INTLLIBS)		\
 	-lpam			\
-	$(EXTRA_GDMASKPASS_LIBS)
+	$(EXTRA_MDMASKPASS_LIBS)
 
-gdmopen_LDADD = \
+mdmopen_LDADD = \
 	$(INTLLIBS)
 
-gdmtranslate_LDADD = \
+mdmtranslate_LDADD = \
 	$(INTLLIBS)
 
-@DMX_SUPPORT_TRUE@gdm_dmx_reconnect_proxy_SOURCES = \
-@DMX_SUPPORT_TRUE@	gdm-dmx-reconnect-proxy.c
+@DMX_SUPPORT_TRUE@mdm_dmx_reconnect_proxy_SOURCES = \
+@DMX_SUPPORT_TRUE@	mdm-dmx-reconnect-proxy.c
 
-@DMX_SUPPORT_TRUE@gdm_dmx_reconnect_proxy_LDADD = \
+@DMX_SUPPORT_TRUE@mdm_dmx_reconnect_proxy_LDADD = \
 @DMX_SUPPORT_TRUE@	$(GLIB_LIBS) \
 @DMX_SUPPORT_TRUE@        $(X_EXTRA_LIBS) \
 @DMX_SUPPORT_TRUE@        $(X_LIBS) \
@@ -416,16 +416,16 @@ gdmtranslate_LDADD = \
 @DMX_SUPPORT_TRUE@	$(DMX_LIBS)
 
 @CONSOLE_HELPER_TRUE@cappsdir = $(PAM_PREFIX)/security/console.apps
-@CONSOLE_HELPER_TRUE@capps_DATA = gdmsetup
+@CONSOLE_HELPER_TRUE@capps_DATA = mdmsetup
 CLEANFILES = \
-	gdmsetup-security	\
+	mdmsetup-security	\
 	$(NULL)
 
 DISTCLEANFILES = \
-	gdmsetup		\
-	gdm-stop		\
-	gdm-restart		\
-	gdm-safe-restart	\
+	mdmsetup		\
+	mdm-stop		\
+	mdm-restart		\
+	mdm-safe-restart	\
 	$(NULL)
 
 all: all-am
@@ -517,21 +517,21 @@ clean-libexecPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-gdm-dmx-reconnect-proxy$(EXEEXT): $(gdm_dmx_reconnect_proxy_OBJECTS) $(gdm_dmx_reconnect_proxy_DEPENDENCIES) 
-	@rm -f gdm-dmx-reconnect-proxy$(EXEEXT)
-	$(LINK) $(gdm_dmx_reconnect_proxy_OBJECTS) $(gdm_dmx_reconnect_proxy_LDADD) $(LIBS)
-gdmaskpass$(EXEEXT): $(gdmaskpass_OBJECTS) $(gdmaskpass_DEPENDENCIES) 
-	@rm -f gdmaskpass$(EXEEXT)
-	$(LINK) $(gdmaskpass_OBJECTS) $(gdmaskpass_LDADD) $(LIBS)
-gdmopen$(EXEEXT): $(gdmopen_OBJECTS) $(gdmopen_DEPENDENCIES) 
-	@rm -f gdmopen$(EXEEXT)
-	$(LINK) $(gdmopen_OBJECTS) $(gdmopen_LDADD) $(LIBS)
-gdmprefetch$(EXEEXT): $(gdmprefetch_OBJECTS) $(gdmprefetch_DEPENDENCIES) 
-	@rm -f gdmprefetch$(EXEEXT)
-	$(LINK) $(gdmprefetch_OBJECTS) $(gdmprefetch_LDADD) $(LIBS)
-gdmtranslate$(EXEEXT): $(gdmtranslate_OBJECTS) $(gdmtranslate_DEPENDENCIES) 
-	@rm -f gdmtranslate$(EXEEXT)
-	$(LINK) $(gdmtranslate_OBJECTS) $(gdmtranslate_LDADD) $(LIBS)
+mdm-dmx-reconnect-proxy$(EXEEXT): $(mdm_dmx_reconnect_proxy_OBJECTS) $(mdm_dmx_reconnect_proxy_DEPENDENCIES) 
+	@rm -f mdm-dmx-reconnect-proxy$(EXEEXT)
+	$(LINK) $(mdm_dmx_reconnect_proxy_OBJECTS) $(mdm_dmx_reconnect_proxy_LDADD) $(LIBS)
+mdmaskpass$(EXEEXT): $(mdmaskpass_OBJECTS) $(mdmaskpass_DEPENDENCIES) 
+	@rm -f mdmaskpass$(EXEEXT)
+	$(LINK) $(mdmaskpass_OBJECTS) $(mdmaskpass_LDADD) $(LIBS)
+mdmopen$(EXEEXT): $(mdmopen_OBJECTS) $(mdmopen_DEPENDENCIES) 
+	@rm -f mdmopen$(EXEEXT)
+	$(LINK) $(mdmopen_OBJECTS) $(mdmopen_LDADD) $(LIBS)
+mdmprefetch$(EXEEXT): $(mdmprefetch_OBJECTS) $(mdmprefetch_DEPENDENCIES) 
+	@rm -f mdmprefetch$(EXEEXT)
+	$(LINK) $(mdmprefetch_OBJECTS) $(mdmprefetch_LDADD) $(LIBS)
+mdmtranslate$(EXEEXT): $(mdmtranslate_OBJECTS) $(mdmtranslate_DEPENDENCIES) 
+	@rm -f mdmtranslate$(EXEEXT)
+	$(LINK) $(mdmtranslate_OBJECTS) $(mdmtranslate_LDADD) $(LIBS)
 install-libexecSCRIPTS: $(libexec_SCRIPTS)
 	@$(NORMAL_INSTALL)
 	test -z "$(libexecdir)" || $(MKDIR_P) "$(DESTDIR)$(libexecdir)"
@@ -577,11 +577,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdm-dmx-reconnect-proxy.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmaskpass.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmopen.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmprefetch.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmtranslate.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdm-dmx-reconnect-proxy.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmaskpass.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmopen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmprefetch.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmtranslate.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -817,18 +817,18 @@ uninstall-am: uninstall-binPROGRAMS uninstall-cappsDATA \
 	uninstall-libexecSCRIPTS uninstall-sbinSCRIPTS
 
 
-gdm-stop: gdm-stop.in Makefile
+mdm-stop: mdm-stop.in Makefile
 	$(edit) $< >$@
-gdm-restart: gdm-restart.in Makefile
+mdm-restart: mdm-restart.in Makefile
 	$(edit) $< >$@
-gdm-safe-restart: gdm-safe-restart.in Makefile
+mdm-safe-restart: mdm-safe-restart.in Makefile
 	$(edit) $< >$@
-gdmsetup: gdmsetup-security.in
-	$(edit) <gdmsetup-security.in >gdmsetup
+mdmsetup: mdmsetup-security.in
+	$(edit) <mdmsetup-security.in >mdmsetup
 
 @CONSOLE_HELPER_TRUE@install-data-local:
 @CONSOLE_HELPER_TRUE@	$(mkinstalldirs) $(DESTDIR)$(PAM_PREFIX)/pam.d
-@CONSOLE_HELPER_TRUE@	$(INSTALL_DATA) $(srcdir)/gdmsetup-pam $(DESTDIR)$(PAM_PREFIX)/pam.d/gdmsetup
+@CONSOLE_HELPER_TRUE@	$(INSTALL_DATA) $(srcdir)/mdmsetup-pam $(DESTDIR)$(PAM_PREFIX)/pam.d/mdmsetup
 @CONSOLE_HELPER_FALSE@install-data-local:
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

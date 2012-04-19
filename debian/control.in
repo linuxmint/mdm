@@ -1,4 +1,4 @@
-Source: gdm
+Source: mdm
 Section: gnome
 Priority: optional
 Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
@@ -35,7 +35,7 @@ Build-Depends: libpam0g-dev,
                xserver-xorg
 Standards-Version: 3.9.0
 
-Package: gdm
+Package: mdm
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
@@ -48,7 +48,7 @@ Depends: ${shlibs:Depends},
          librsvg2-common
 Recommends: whiptail | dialog,
             zenity,
-            gdm-themes,
+            mdm-themes,
             xserver-xephyr | xnest,
             xserver-xorg
 Suggests: locales,
@@ -60,7 +60,7 @@ Conflicts: fast-user-switch-applet (<< 2.17.4),
            gnome-panel (<< 2.19.2),
            gnome-screensaver (<< 2.17.7)
 Description: GNOME Display Manager
- gdm provides the equivalent of a "login:" prompt for X displays- it
+ mdm provides the equivalent of a "login:" prompt for X displays- it
  pops up a login window and starts an X session.
  .
  It provides all the functionality of xdm, including XDMCP support for

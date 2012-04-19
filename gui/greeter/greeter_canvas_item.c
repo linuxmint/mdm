@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,12 +24,12 @@
 #include <glib/gi18n.h>
 #include <librsvg/rsvg.h>
 
-#include "gdm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
+#include "mdm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config-keys.h"
 
 #include "greeter.h"
 #include "greeter_item.h"
@@ -185,11 +185,11 @@ make_menubar (void)
 	/* Do note that the order is important, we always want "Quit" for
 	 * flexi, even if not local (non-local xnest).  and Disconnect
 	 * only for xdmcp */
-	if ( ! ve_string_empty (g_getenv ("GDM_FLEXI_SERVER"))) {
+	if ( ! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER"))) {
 		w = gtk_image_menu_item_new_with_mnemonic (_("_Quit"));
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w), 
 			gtk_image_new_from_icon_name ("system-log-out", GTK_ICON_SIZE_MENU));
-	} else if (ve_string_empty (g_getenv ("GDM_IS_LOCAL"))) {
+	} else if (ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
 		w = gtk_image_menu_item_new_with_mnemonic (_("D_isconnect"));
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w), 
 			gtk_image_new_from_icon_name ("system-log-out", GTK_ICON_SIZE_MENU));
@@ -373,7 +373,7 @@ greeter_item_create_canvas_item (GreeterItemInfo *item)
 					  NULL);
     break;
   case GREETER_ITEM_TYPE_LABEL:
-    text = gdm_common_expand_text (item->data.text.orig_text);
+    text = mdm_common_expand_text (item->data.text.orig_text);
 
     /* Justification is taken from the anchor */
     if (item->anchor == GTK_ANCHOR_NORTH_WEST ||
@@ -464,9 +464,9 @@ greeter_item_create_canvas_item (GreeterItemInfo *item)
     gtk_widget_set_name (entry, "user-pw-entry");
     gtk_entry_set_has_frame (GTK_ENTRY (entry), FALSE);
 
-    if (gdm_config_get_bool (GDM_KEY_ENTRY_INVISIBLE))
+    if (mdm_config_get_bool (MDM_KEY_ENTRY_INVISIBLE))
       gtk_entry_set_invisible_char (GTK_ENTRY (entry), 0);
-    else if (gdm_config_get_bool (GDM_KEY_ENTRY_CIRCLES))
+    else if (mdm_config_get_bool (MDM_KEY_ENTRY_CIRCLES))
       gtk_entry_set_invisible_char (GTK_ENTRY (entry), 0x25cf);
 
     gtk_widget_modify_font (entry, item->data.text.fonts[GREETER_ITEM_STATE_NORMAL]);
@@ -514,7 +514,7 @@ greeter_item_create_canvas_item (GreeterItemInfo *item)
 					NULL);
 
     /* cursor blinking is evil on remote displays, don't do it forever */
-    gdm_common_setup_blinking_entry (entry);
+    mdm_common_setup_blinking_entry (entry);
 
     break;
 

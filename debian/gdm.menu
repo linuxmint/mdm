@@ -1,20 +1,20 @@
-?package(gdm):needs="X11" section="Applications/System/Administration" \
-  title="GDM flexiserver" command="gdmflexiserver"\
+?package(mdm):needs="X11" section="Applications/System/Administration" \
+  title="MDM flexiserver" command="mdmflexiserver"\
   hints="Display Manager"\
-  icon="/usr/share/pixmaps/gdm.xpm"\
-  longtitle="New GDM Session"
-?package(gdm):needs="X11" section="Applications/System/Administration" \
-  title="GDM flexiserver in Xnest" command="gdmflexiserver -n"\
+  icon="/usr/share/pixmaps/mdm.xpm"\
+  longtitle="New MDM Session"
+?package(mdm):needs="X11" section="Applications/System/Administration" \
+  title="MDM flexiserver in Xnest" command="mdmflexiserver -n"\
   hints="Display Manager"\
-  icon="/usr/share/pixmaps/gdm.xpm"\
-  longtitle="New GDM Session in Xnest"
-?package(gdm):needs="X11" section="Applications/System/Administration" \
-  title="GDM Photo Setup" command="gdmphotosetup"\
+  icon="/usr/share/pixmaps/mdm.xpm"\
+  longtitle="New MDM Session in Xnest"
+?package(mdm):needs="X11" section="Applications/System/Administration" \
+  title="MDM Photo Setup" command="mdmphotosetup"\
   hints="Display Manager"\
-  icon="/usr/share/pixmaps/gdm.xpm"\
-  longtitle="Select a photo for GDM"
-?package(gdm):needs="X11" section="Applications/System/Administration" \
-  title="GDM Setup" command="su-to-root -X -p root -c /usr/sbin/gdmsetup"\
+  icon="/usr/share/pixmaps/mdm.xpm"\
+  longtitle="Select a photo for MDM"
+?package(mdm):needs="X11" section="Applications/System/Administration" \
+  title="MDM Setup" command="su-to-root -X -p root -c /usr/sbin/mdmsetup"\
   hints="Display Manager"\
-  icon="/usr/share/pixmaps/gdm.xpm"\
-  longtitle="GDM Setup"
+  icon="/usr/share/pixmaps/mdm.xpm"\
+  longtitle="MDM Setup"

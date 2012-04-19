@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _GDM_DISPLAY_H
-#define _GDM_DISPLAY_H
+#ifndef _MDM_DISPLAY_H
+#define _MDM_DISPLAY_H
 
 #include <X11/Xlib.h> /* for Display */
 #include <X11/Xmd.h> /* for CARD32 */
@@ -27,13 +27,13 @@
 #include <sys/socket.h>
 #include <netinet/in.h> /* for in_addr */
 
-typedef struct _GdmDisplay GdmDisplay;
+typedef struct _MdmDisplay MdmDisplay;
 
-#include "gdm-net.h" /* for GdmConnection */
+#include "mdm-net.h" /* for MdmConnection */
 
-#include "gdm.h" /* for GDM_CUSTOM_COMMAND_MAX */
+#include "mdm.h" /* for MDM_CUSTOM_COMMAND_MAX */
 
-#define TYPE_STATIC 1		/* X server defined in GDM configuration */
+#define TYPE_STATIC 1		/* X server defined in MDM configuration */
 #define TYPE_XDMCP 2		/* Remote display/Xserver */
 #define TYPE_FLEXI 3		/* Local Flexi X server */
 #define TYPE_FLEXI_XNEST 4	/* Local Flexi Nested server */
@@ -52,22 +52,22 @@ typedef struct _GdmDisplay GdmDisplay;
 			    (d)->type == TYPE_XDMCP_PROXY)
 
 /* Use this to get the right authfile name */
-#define GDM_AUTHFILE(display) \
-	(display->authfile_gdm != NULL ? display->authfile_gdm : display->authfile)
+#define MDM_AUTHFILE(display) \
+	(display->authfile_mdm != NULL ? display->authfile_mdm : display->authfile)
 
-/* Values between GDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST and
-   GDM_LOGOUT_ACTION_CUSTOM_CMD_LAST are reserved and should not be used */
+/* Values between MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST and
+   MDM_LOGOUT_ACTION_CUSTOM_CMD_LAST are reserved and should not be used */
 typedef enum {
-	GDM_LOGOUT_ACTION_NONE = 0,
-	GDM_LOGOUT_ACTION_HALT,
-	GDM_LOGOUT_ACTION_REBOOT,
-	GDM_LOGOUT_ACTION_SUSPEND,
-	GDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST,
-	GDM_LOGOUT_ACTION_CUSTOM_CMD_LAST = GDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + GDM_CUSTOM_COMMAND_MAX - 1,
-	GDM_LOGOUT_ACTION_LAST
-} GdmLogoutAction;
+	MDM_LOGOUT_ACTION_NONE = 0,
+	MDM_LOGOUT_ACTION_HALT,
+	MDM_LOGOUT_ACTION_REBOOT,
+	MDM_LOGOUT_ACTION_SUSPEND,
+	MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST,
+	MDM_LOGOUT_ACTION_CUSTOM_CMD_LAST = MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + MDM_CUSTOM_COMMAND_MAX - 1,
+	MDM_LOGOUT_ACTION_LAST
+} MdmLogoutAction;
 
-struct _GdmDisplay
+struct _MdmDisplay
 {
 	/* ALL DISPLAY TYPES */
 
@@ -108,7 +108,7 @@ struct _GdmDisplay
 	gchar *bcookie;
 
 	gchar *authfile;     /* authfile for the server */
-	gchar *authfile_gdm; /* authfile readable by gdm user
+	gchar *authfile_mdm; /* authfile readable by mdm user
 				if necessary */
 	GSList *auths;
 	GSList *local_auths;
@@ -162,7 +162,7 @@ struct _GdmDisplay
 	gchar *device_name;
 
 	/* Only set in the main daemon as that's the only place that cares */
-	GdmLogoutAction logout_action;
+	MdmLogoutAction logout_action;
 
 	/* XDMCP TYPE */
 
@@ -181,7 +181,7 @@ struct _GdmDisplay
 
 	/* ALL LOCAL TYPE (static, flexi) */
 
-	int vt;     /* The VT number used when starting via GDM */
+	int vt;     /* The VT number used when starting via MDM */
 	int vtnum;  /* The VT number of the display */
 	pid_t servpid;
 	guint8 servstat;
@@ -203,7 +203,7 @@ struct _GdmDisplay
 
 	char *preset_user;
 	uid_t server_uid;
-	GdmConnection *socket_conn;
+	MdmConnection *socket_conn;
 
 
 	/* PROXY/Parented TYPE (flexi-xnest or xdmcp proxy) */
@@ -221,11 +221,11 @@ struct _GdmDisplay
 	char *parent_temp_auth_file;
 };
 
-GdmDisplay *gdm_display_alloc    (gint id, const gchar *command, const gchar *device);
-gboolean    gdm_display_manage   (GdmDisplay *d);
-void        gdm_display_dispose  (GdmDisplay *d);
-void        gdm_display_unmanage (GdmDisplay *d);
-GdmDisplay *gdm_display_lookup   (pid_t pid);
+MdmDisplay *mdm_display_alloc    (gint id, const gchar *command, const gchar *device);
+gboolean    mdm_display_manage   (MdmDisplay *d);
+void        mdm_display_dispose  (MdmDisplay *d);
+void        mdm_display_unmanage (MdmDisplay *d);
+MdmDisplay *mdm_display_lookup   (pid_t pid);
 
-#endif /* _GDM_DISPLAY_H */
+#endif /* _MDM_DISPLAY_H */
 

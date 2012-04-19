@@ -1,17 +1,17 @@
-Debian #189615, #238337; Use gksu to start gdmsetup as it needs root
+Debian #189615, #238337; Use gksu to start mdmsetup as it needs root
 permissions.
 
-Index: gdm-2.18.1/gui/gdmsetup.desktop.in.in
+Index: mdm-2.18.1/gui/mdmsetup.desktop.in.in
 ===================================================================
---- gdm-2.18.1.orig/gui/gdmsetup.desktop.in.in	2007-04-09 07:15:10.000000000 +0200
-+++ gdm-2.18.1/gui/gdmsetup.desktop.in.in	2007-05-02 10:38:54.000000000 +0200
+--- mdm-2.18.1.orig/gui/mdmsetup.desktop.in.in	2007-04-09 07:15:10.000000000 +0200
++++ mdm-2.18.1/gui/mdmsetup.desktop.in.in	2007-05-02 10:38:54.000000000 +0200
 @@ -3,7 +3,7 @@
  _Name=Login Window
- _Comment=Configure GDM login window appearance and behavior
- TryExec=@sbindir@/gdmsetup
--Exec=@sbindir@/gdmsetup
-+Exec=gksu @sbindir@/gdmsetup
- Icon=gdmsetup
+ _Comment=Configure MDM login window appearance and behavior
+ TryExec=@sbindir@/mdmsetup
+-Exec=@sbindir@/mdmsetup
++Exec=gksu @sbindir@/mdmsetup
+ Icon=mdmsetup
  StartupNotify=true
  Terminal=false
 

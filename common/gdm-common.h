@@ -19,8 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef _GDM_COMMON_H
-#define _GDM_COMMON_H
+#ifndef _MDM_COMMON_H
+#define _MDM_COMMON_H
 
 #include <glib.h>
 #include <glib/gstdio.h>
@@ -33,20 +33,20 @@
 #include <netdb.h>
 
 #include "ve-signal.h"
-#include "gdm-common-config.h"
-#include "gdm-config.h"
+#include "mdm-common-config.h"
+#include "mdm-config.h"
 
 G_BEGIN_DECLS
 
-#define		gdm_sockaddr_len(sa)	(((struct sockaddr *)sa)->sa_family == AF_INET6 ? sizeof(struct sockaddr_in6) : sizeof(struct sockaddr_in))
+#define		mdm_sockaddr_len(sa)	(((struct sockaddr *)sa)->sa_family == AF_INET6 ? sizeof(struct sockaddr_in6) : sizeof(struct sockaddr_in))
 
-gboolean     gdm_address_equal        (struct sockaddr_storage *sa,
+gboolean     mdm_address_equal        (struct sockaddr_storage *sa,
                                        struct sockaddr_storage *sb);
-gboolean     gdm_address_is_loopback  (struct sockaddr_storage *sa);
-void         gdm_address_get_info     (struct sockaddr_storage *sa,
+gboolean     mdm_address_is_loopback  (struct sockaddr_storage *sa);
+void         mdm_address_get_info     (struct sockaddr_storage *sa,
                                        char                   **host,
                                        char                   **port);
-int          gdm_vector_len           (char * const *v);
+int          mdm_vector_len           (char * const *v);
 
 void           ve_clearenv (void);
 char *	       ve_first_word (const char *s);
@@ -84,4 +84,4 @@ gboolean       ve_locale_exists (const char *loc);
 
 G_END_DECLS
 
-#endif /* _GDM_COMMON_H */
+#endif /* _MDM_COMMON_H */

@@ -1,6 +1,6 @@
-# translation of gdm2 to Kinyarwanda.
+# translation of mdm2 to Kinyarwanda.
 # Copyright (C) 2005 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gdm2 package.
+# This file is distributed under the same license as the mdm2 package.
 # Steve Murphy <murf@e-tools.com>, 2005
 # Steve performed initial rough translation from compendium built from translations provided by the following translators:
 # Philibert Ndandali  <ndandali@yahoo.fr>, 2005.
@@ -13,7 +13,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gdm2 2.12\n"
+"Project-Id-Version: mdm2 2.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-31 17:01-0700\n"
 "PO-Revision-Date: 2005-03-28 19:34-0700\n"
@@ -49,7 +49,7 @@ msgstr "ni Mburabuzi Sisitemu Umukoro"
 msgid ""
 "I cannot start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly.  You will need to log in on a console and rerun "
-"the X configuration program.  Then restart GDM."
+"the X configuration program.  Then restart MDM."
 msgstr ""
 "Gutangira Seriveri ni ni OYA Gushyiraho Hejuru Kuri LOG in ku a Na Iboneza "
 "Porogaramu Ongera utangire"
@@ -75,7 +75,7 @@ msgstr "NONEAHA Kuri Ongera utangire Seriveri"
 #: config/gettextfoo.h:7
 #, fuzzy
 msgid ""
-"I will disable this X server for now.  Restart GDM when it is configured "
+"I will disable this X server for now.  Restart MDM when it is configured "
 "correctly."
 msgstr "iyi Seriveri kugirango NONEAHA Ryari: ni"
 
@@ -155,7 +155,7 @@ msgstr "%s:OYA Gishya Icyinjijwe Inyuma Bya"
 #: daemon/auth.c:74
 #, fuzzy, c-format
 msgid ""
-"GDM could not write a new authorization entry to disk.  Possibly out of "
+"MDM could not write a new authorization entry to disk.  Possibly out of "
 "diskspace.%s%s"
 msgstr "OYA a Gishya Icyinjijwe Kuri Inyuma Bya"
 
@@ -190,7 +190,7 @@ msgstr "%s:OYA"
 msgid "%s: Ignoring suspiciously looking cookie file %s"
 msgstr "%s:Kwirengagiza IDOSIYE"
 
-#: daemon/auth.c:898 daemon/gdm.c:2017 daemon/gdm.c:2373
+#: daemon/auth.c:898 daemon/mdm.c:2017 daemon/mdm.c:2373
 #, fuzzy, c-format
 msgid "Can't write to %s: %s"
 msgstr "Kuri"
@@ -200,9 +200,9 @@ msgstr "Kuri"
 #. * cought that elsewhere.  Things are just
 #. * not working out, so tell the user.
 #. * However this may have been caused by a malicious local user
-#. * zapping the display repeatedly, that shouldn't cause gdm
+#. * zapping the display repeatedly, that shouldn't cause mdm
 #. * to stop working completely so just wait for 2 minutes,
-#. * that should give people ample time to stop gdm if needed,
+#. * that should give people ample time to stop mdm if needed,
 #. * or just wait for the stupid malicious user to get bored
 #. * and go away
 #: daemon/display.c:111
@@ -222,7 +222,7 @@ msgstr "%s:Kurema"
 
 #: daemon/display.c:333
 #, fuzzy, c-format
-msgid "%s: Failed forking gdm slave process for %s"
+msgid "%s: Failed forking mdm slave process for %s"
 msgstr "%s:kugirango"
 
 #: daemon/errorgui.c:356
@@ -288,290 +288,290 @@ msgstr "%s:%sni ku Itsinda Ikindi"
 msgid "%s: %s is bigger than sysadmin specified maximum file size."
 msgstr "%s:%sni Kinini IDOSIYE Ingano"
 
-#: daemon/gdm-net.c:271
+#: daemon/mdm-net.c:271
 #, fuzzy, c-format
 msgid "%s: Could not make socket"
 msgstr "%s:OYA Ubwoko"
 
-#: daemon/gdm-net.c:302
+#: daemon/mdm-net.c:302
 #, fuzzy, c-format
 msgid "%s: Could not bind socket"
 msgstr "%s:OYA"
 
-#: daemon/gdm-net.c:388
+#: daemon/mdm-net.c:388
 #, fuzzy, c-format
 msgid "%s: Could not make FIFO"
 msgstr "%s:OYA Ubwoko"
 
-#: daemon/gdm-net.c:396
+#: daemon/mdm-net.c:396
 #, fuzzy, c-format
 msgid "%s: Could not open FIFO"
 msgstr "%s:OYA Gufungura"
 
-#: daemon/gdm.c:264
+#: daemon/mdm.c:264
 #, fuzzy, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this "
-"does not exist. Please correct gdm configuration %s and restart gdm."
+"does not exist. Please correct mdm configuration %s and restart mdm."
 msgstr "bushyinguro ni Gushyiraho Kuri iyi OYA Iboneza Na Ongera utangire"
 
-#: daemon/gdm.c:273
+#: daemon/mdm.c:273
 #, fuzzy, c-format
 msgid "%s: Authdir %s does not exist. Aborting."
 msgstr "%s:OYA"
 
-#: daemon/gdm.c:278
+#: daemon/mdm.c:278
 #, fuzzy, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this is "
-"not a directory. Please correct gdm configuration %s and restart gdm."
+"not a directory. Please correct mdm configuration %s and restart mdm."
 msgstr ""
 "bushyinguro ni Gushyiraho Kuri iyi ni OYA a bushyinguro Iboneza Na Ongera "
 "utangire"
 
-#: daemon/gdm.c:287
+#: daemon/mdm.c:287
 #, fuzzy, c-format
 msgid "%s: Authdir %s is not a directory. Aborting."
 msgstr "%s:ni OYA a bushyinguro"
 
-#: daemon/gdm.c:300
+#: daemon/mdm.c:300
 #, fuzzy, c-format
 msgid ""
 "%s: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s."
 msgstr "%s:OYA Cyangwa a bushyinguro"
 
-#: daemon/gdm.c:329 gui/gdmlogin.c:646 gui/greeter/greeter.c:108
+#: daemon/mdm.c:329 gui/mdmlogin.c:646 gui/greeter/greeter.c:108
 #, fuzzy, c-format
 msgid "%s: No configuration file: %s. Using defaults."
 msgstr "%s:Iboneza IDOSIYE"
 
-#: daemon/gdm.c:380
+#: daemon/mdm.c:380
 #, fuzzy, c-format
-msgid "%s: BaseXsession empty; using %s/gdm/Xsession"
+msgid "%s: BaseXsession empty; using %s/mdm/Xsession"
 msgstr "%s:ubusa ikoresha"
 
-#: daemon/gdm.c:424
+#: daemon/mdm.c:424
 #, fuzzy, c-format
 msgid "%s: Standard X server not found; trying alternatives"
 msgstr "%s:Seriveri OYA Byabonetse"
 
-#: daemon/gdm.c:456
+#: daemon/mdm.c:456
 #, fuzzy, c-format
 msgid "%s: XDMCP was enabled while there is no XDMCP support; turning it off"
 msgstr "%s:Bikora ni Oya Gushigikira Bidakora"
 
-#: daemon/gdm.c:469
+#: daemon/mdm.c:469
 #, fuzzy, c-format
 msgid "%s: Root cannot be autologged in; turning off automatic login"
 msgstr "%s:in Bidakora Byikoresha Ifashayinjira"
 
-#: daemon/gdm.c:482
+#: daemon/mdm.c:482
 #, fuzzy, c-format
 msgid "%s: Root cannot be autologged in, turing off timed login"
 msgstr "%s:in Bidakora Ifashayinjira"
 
-#: daemon/gdm.c:488
+#: daemon/mdm.c:488
 #, fuzzy, c-format
 msgid "%s: TimedLoginDelay less than 5, so I will just use 5."
 msgstr "%s:Birutwa 5 Gukoresha 5"
 
-#: daemon/gdm.c:498
+#: daemon/mdm.c:498
 #, c-format
 msgid "%s: No greeter specified."
 msgstr ""
 
-#: daemon/gdm.c:501
+#: daemon/mdm.c:501
 #, c-format
 msgid "%s: No remote greeter specified."
 msgstr ""
 
-#: daemon/gdm.c:505
+#: daemon/mdm.c:505
 #, fuzzy, c-format
 msgid "%s: No sessions directory specified."
 msgstr "%s:bushyinguro"
 
-#: daemon/gdm.c:530
+#: daemon/mdm.c:530
 #, fuzzy, c-format
 msgid "%s: Empty server command; using standard command."
 msgstr "%s:Seriveri Komandi: ikoresha Bisanzwe Komandi:"
 
-#: daemon/gdm.c:573
+#: daemon/mdm.c:573
 #, fuzzy, c-format
 msgid "%s: Display number %d in use!  I will use %d"
 msgstr "%s:Umubare in Gukoresha Gukoresha"
 
-#: daemon/gdm.c:592
+#: daemon/mdm.c:592
 #, fuzzy, c-format
 msgid "%s: Invalid server line in config file. Ignoring!"
 msgstr "%s:Seriveri Umurongo in IDOSIYE Kwirengagiza"
 
-#: daemon/gdm.c:603 daemon/gdm.c:644
+#: daemon/mdm.c:603 daemon/mdm.c:644
 #, fuzzy, c-format
 msgid "%s: XDMCP disabled and no local servers defined. Aborting!"
 msgstr "%s:Yahagaritswe Na Oya"
 
 #. start
 #. server uid
-#: daemon/gdm.c:621
+#: daemon/mdm.c:621
 #, fuzzy, c-format
 msgid ""
 "%s: XDMCP disabled and no local servers defined. Adding %s on :%d to allow "
 "configuration!"
 msgstr "%s:Yahagaritswe Na Oya ku Kuri Kwemerera Iboneza"
 
-#: daemon/gdm.c:636
+#: daemon/mdm.c:636
 #, fuzzy, c-format
 msgid ""
-"XDMCP is disabled and gdm cannot find any local server to start.  Aborting!  "
-"Please correct the configuration %s and restart gdm."
+"XDMCP is disabled and mdm cannot find any local server to start.  Aborting!  "
+"Please correct the configuration %s and restart mdm."
 msgstr ""
 "ni Yahagaritswe Na Gushaka Seriveri Kuri Gutangira Iboneza Na Ongera utangire"
 
-#: daemon/gdm.c:658
+#: daemon/mdm.c:658
 #, fuzzy, c-format
 msgid ""
-"The gdm user does not exist. Please correct gdm configuration %s and restart "
-"gdm."
+"The mdm user does not exist. Please correct mdm configuration %s and restart "
+"mdm."
 msgstr "Ukoresha: OYA Iboneza Na Ongera utangire"
 
-#: daemon/gdm.c:665
+#: daemon/mdm.c:665
 #, fuzzy, c-format
-msgid "%s: Can't find the gdm user (%s). Aborting!"
+msgid "%s: Can't find the mdm user (%s). Aborting!"
 msgstr "%s:Gushaka Ukoresha:"
 
-#: daemon/gdm.c:672
+#: daemon/mdm.c:672
 #, fuzzy, c-format
 msgid ""
-"The gdm user is set to be root, but this is not allowed since it can pose a "
-"security risk.  Please correct gdm configuration %s and restart gdm."
+"The mdm user is set to be root, but this is not allowed since it can pose a "
+"security risk.  Please correct mdm configuration %s and restart mdm."
 msgstr ""
 "Ukoresha: ni Gushyiraho Kuri Imizi iyi ni OYA guhera a Umutekano Iboneza Na "
 "Ongera utangire"
 
-#: daemon/gdm.c:680
+#: daemon/mdm.c:680
 #, fuzzy, c-format
-msgid "%s: The gdm user should not be root. Aborting!"
+msgid "%s: The mdm user should not be root. Aborting!"
 msgstr "%s:Ukoresha: OYA Imizi"
 
-#: daemon/gdm.c:687
+#: daemon/mdm.c:687
 #, fuzzy, c-format
 msgid ""
-"The gdm group does not exist. Please correct gdm configuration %s and "
-"restart gdm."
+"The mdm group does not exist. Please correct mdm configuration %s and "
+"restart mdm."
 msgstr "Itsinda OYA Iboneza Na Ongera utangire"
 
-#: daemon/gdm.c:694
+#: daemon/mdm.c:694
 #, fuzzy, c-format
-msgid "%s: Can't find the gdm group (%s). Aborting!"
+msgid "%s: Can't find the mdm group (%s). Aborting!"
 msgstr "%s:Gushaka Itsinda"
 
-#: daemon/gdm.c:701
+#: daemon/mdm.c:701
 #, fuzzy, c-format
 msgid ""
-"The gdm group is set to be root, but this is not allowed since it can pose a "
-"security risk. Please correct gdm configuration %s and restart gdm."
+"The mdm group is set to be root, but this is not allowed since it can pose a "
+"security risk. Please correct mdm configuration %s and restart mdm."
 msgstr ""
 "Itsinda ni Gushyiraho Kuri Imizi iyi ni OYA guhera a Umutekano Iboneza Na "
 "Ongera utangire"
 
-#: daemon/gdm.c:709
+#: daemon/mdm.c:709
 #, fuzzy, c-format
-msgid "%s: The gdm group should not be root. Aborting!"
+msgid "%s: The mdm group should not be root. Aborting!"
 msgstr "%s:Itsinda OYA Imizi"
 
-#: daemon/gdm.c:724
+#: daemon/mdm.c:724
 #, fuzzy, c-format
-msgid "%s: Greeter not found or can't be executed by the gdm user"
+msgid "%s: Greeter not found or can't be executed by the mdm user"
 msgstr "%s:OYA Byabonetse Cyangwa ku Ukoresha:"
 
-#: daemon/gdm.c:731
+#: daemon/mdm.c:731
 #, fuzzy, c-format
-msgid "%s: Remote greeter not found or can't be executed by the gdm user"
+msgid "%s: Remote greeter not found or can't be executed by the mdm user"
 msgstr "%s:OYA Byabonetse Cyangwa ku Ukoresha:"
 
-#: daemon/gdm.c:742
+#: daemon/mdm.c:742
 #, fuzzy, c-format
-msgid "%s: Chooser not found or it can't be executed by the gdm user"
+msgid "%s: Chooser not found or it can't be executed by the mdm user"
 msgstr "%s:OYA Byabonetse Cyangwa ku Ukoresha:"
 
-#: daemon/gdm.c:751
+#: daemon/mdm.c:751
 #, fuzzy
 msgid "No daemon/ServAuthDir specified in the configuration file"
 msgstr "in Iboneza IDOSIYE"
 
-#: daemon/gdm.c:753
+#: daemon/mdm.c:753
 #, c-format
 msgid "%s: No daemon/ServAuthDir specified."
 msgstr ""
 
-#: daemon/gdm.c:777
+#: daemon/mdm.c:777
 #, fuzzy, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but is not "
-"owned by user %s and group %s. Please correct the ownership or gdm "
-"configuration %s and restart gdm."
+"owned by user %s and group %s. Please correct the ownership or mdm "
+"configuration %s and restart mdm."
 msgstr ""
 "bushyinguro ni Gushyiraho Kuri ni OYA ku Ukoresha: Na Itsinda Cyangwa "
 "Iboneza Na Ongera utangire"
 
-#: daemon/gdm.c:788
+#: daemon/mdm.c:788
 #, fuzzy, c-format
 msgid "%s: Authdir %s is not owned by user %s, group %s. Aborting."
 msgstr "%s:ni OYA ku Ukoresha: Itsinda"
 
-#: daemon/gdm.c:794
+#: daemon/mdm.c:794
 #, fuzzy, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but has the "
 "wrong permissions: it should have permissions of %o. Please correct the "
-"permissions or the gdm configuration %s and restart gdm."
+"permissions or the mdm configuration %s and restart mdm."
 msgstr ""
 "bushyinguro ni Gushyiraho Kuri Uruhushya Uruhushya Bya Uruhushya Cyangwa "
 "Iboneza Na Ongera utangire"
 
-#: daemon/gdm.c:805
+#: daemon/mdm.c:805
 #, fuzzy, c-format
 msgid "%s: Authdir %s has wrong permissions %o. Should be %o. Aborting."
 msgstr "%s:Uruhushya"
 
 #. FIXME: how to handle this?
-#: daemon/gdm.c:861 daemon/gdm.c:869 daemon/gdm.c:2148 daemon/gdm.c:2156
+#: daemon/mdm.c:861 daemon/mdm.c:869 daemon/mdm.c:2148 daemon/mdm.c:2156
 #, fuzzy, c-format
 msgid "Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"
 msgstr "IDOSIYE Inyuma Bya"
 
-#: daemon/gdm.c:863 daemon/gdm.c:871 daemon/gdm.c:2150 daemon/gdm.c:2158
+#: daemon/mdm.c:863 daemon/mdm.c:871 daemon/mdm.c:2150 daemon/mdm.c:2158
 #, fuzzy, c-format
 msgid "Cannot write PID file %s: possibly out of diskspace.  Error: %s"
 msgstr "IDOSIYE Inyuma Bya"
 
-#: daemon/gdm.c:881
+#: daemon/mdm.c:881
 #, fuzzy, c-format
 msgid "%s: fork() failed!"
 msgstr "%s:Byanze"
 
 #. should never happen
-#: daemon/gdm.c:884 daemon/slave.c:3432
+#: daemon/mdm.c:884 daemon/slave.c:3432
 #, fuzzy, c-format
 msgid "%s: setsid() failed: %s!"
 msgstr "%s:Byanze"
 
-#: daemon/gdm.c:1071
+#: daemon/mdm.c:1071
 #, fuzzy, c-format
 msgid "%s: Trying failsafe X server %s"
 msgstr "%s:Seriveri"
 
-#: daemon/gdm.c:1089
+#: daemon/mdm.c:1089
 #, fuzzy, c-format
 msgid "%s: Running the XKeepsCrashing script"
 msgstr "%s:IYANDIKA"
 
-#: daemon/gdm.c:1209
+#: daemon/mdm.c:1209
 #, fuzzy
 msgid ""
 "I cannot start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly. You will need to log in on a console and rerun "
-"the X configuration program.  Then restart GDM."
+"the X configuration program.  Then restart MDM."
 msgstr ""
 "Gutangira Seriveri ni ni OYA Gushyiraho Hejuru Kuri LOG in ku a Na Iboneza "
 "Porogaramu Ongera utangire"
@@ -581,155 +581,155 @@ msgstr ""
 #. * talk to him.  He's on some 'l33t system anyway, so syslog
 #. * reading will do him good
 #. * }
-#: daemon/gdm.c:1221
+#: daemon/mdm.c:1221
 #, fuzzy, c-format
 msgid ""
 "Failed to start X server several times in a short time period; disabling "
 "display %s"
 msgstr "Kuri Gutangira Seriveri Times in a Igihe Igihe Kugaragaza"
 
-#: daemon/gdm.c:1229 daemon/gdm.c:2876
+#: daemon/mdm.c:1229 daemon/mdm.c:2876
 msgid "Master suspending..."
 msgstr ""
 
-#: daemon/gdm.c:1283
+#: daemon/mdm.c:1283
 #, fuzzy, c-format
 msgid "System is rebooting, please wait ..."
 msgstr "ni Tegereza"
 
-#: daemon/gdm.c:1285
+#: daemon/mdm.c:1285
 #, fuzzy, c-format
 msgid "System is shutting down, please wait ..."
 msgstr "ni Hasi Tegereza"
 
-#: daemon/gdm.c:1296
+#: daemon/mdm.c:1296
 msgid "Master halting..."
 msgstr ""
 
-#: daemon/gdm.c:1309
+#: daemon/mdm.c:1309
 #, fuzzy, c-format
 msgid "%s: Halt failed: %s"
 msgstr "%s:Byanze"
 
-#: daemon/gdm.c:1318
+#: daemon/mdm.c:1318
 msgid "Master rebooting..."
 msgstr ""
 
-#: daemon/gdm.c:1331
+#: daemon/mdm.c:1331
 #, fuzzy, c-format
 msgid "%s: Reboot failed: %s"
 msgstr "%s:Byanze"
 
-#: daemon/gdm.c:1429
+#: daemon/mdm.c:1429
 #, fuzzy, c-format
 msgid "Reboot or Halt request when there is no system menu from display %s"
 msgstr "Cyangwa Kubaza... Ryari: ni Oya Sisitemu Ibikubiyemo Bivuye Kugaragaza"
 
-#: daemon/gdm.c:1438
+#: daemon/mdm.c:1438
 #, fuzzy, c-format
 msgid "Restart, Reboot or Halt request from a non-local display %s"
 msgstr "Cyangwa Kubaza... Bivuye a Kugaragaza"
 
 #. Bury this display for good
-#: daemon/gdm.c:1504
+#: daemon/mdm.c:1504
 #, fuzzy, c-format
 msgid "%s: Aborting display %s"
 msgstr "%s:Kugaragaza"
 
-#: daemon/gdm.c:1655
-msgid "GDM restarting ..."
+#: daemon/mdm.c:1655
+msgid "MDM restarting ..."
 msgstr ""
 
-#: daemon/gdm.c:1659
+#: daemon/mdm.c:1659
 #, fuzzy
 msgid "Failed to restart self"
 msgstr "Kuri Ongera utangire"
 
 #. FIXME: note that this could mean out of memory
-#: daemon/gdm.c:1733
+#: daemon/mdm.c:1733
 #, fuzzy
 msgid "main daemon: Got SIGABRT. Something went very wrong. Going down!"
 msgstr "Hasi"
 
-#: daemon/gdm.c:1891
+#: daemon/mdm.c:1891
 #, fuzzy
 msgid "Do not fork into the background"
 msgstr "OYA Mbuganyuma"
 
-#: daemon/gdm.c:1893
+#: daemon/mdm.c:1893
 #, fuzzy
 msgid "No console (local) servers to be run"
 msgstr "Kuri Gukoresha"
 
-#: daemon/gdm.c:1895
+#: daemon/mdm.c:1895
 #, fuzzy
 msgid "Preserve LD_* variables"
 msgstr "Ibihinduka"
 
-#: daemon/gdm.c:1897
+#: daemon/mdm.c:1897
 #, fuzzy
-msgid "Print GDM version"
+msgid "Print MDM version"
 msgstr "Verisiyo"
 
-#: daemon/gdm.c:1899
+#: daemon/mdm.c:1899
 #, fuzzy
 msgid "Start the first X server but then halt until we get a GO in the fifo"
 msgstr "Gutangira Itangira Seriveri Hanyuma Twebwe Kubona a GO in"
 
-#: daemon/gdm.c:2006 daemon/gdm.c:2342
+#: daemon/mdm.c:2006 daemon/mdm.c:2342
 #, fuzzy, c-format
 msgid "Can't open %s for writing"
 msgstr "Gufungura kugirango"
 
-#: daemon/gdm.c:2063 gui/gdmchooser.c:2057
+#: daemon/mdm.c:2063 gui/mdmchooser.c:2057
 #, fuzzy, c-format
 msgid ""
 "Error on option %s: %s.\n"
 "Run '%s --help' to see a full list of available command line options.\n"
 msgstr "ku Ihitamo Kuri a Urutonde Bya Bihari Komandi: Umurongo Amahitamo"
 
-#: daemon/gdm.c:2086
+#: daemon/mdm.c:2086
 #, fuzzy
-msgid "Only root wants to run gdm\n"
+msgid "Only root wants to run mdm\n"
 msgstr "Imizi Kuri Gukoresha"
 
-#: daemon/gdm.c:2102 daemon/gdm.c:2106 daemon/gdm.c:2181 daemon/gdm.c:2185
-#: daemon/gdm.c:2189 daemon/gdm.c:2193 daemon/gdm.c:2203 daemon/gdm.c:2209
-#: daemon/gdm.c:2220 daemon/misc.c:1746 daemon/misc.c:1750 daemon/misc.c:1754
+#: daemon/mdm.c:2102 daemon/mdm.c:2106 daemon/mdm.c:2181 daemon/mdm.c:2185
+#: daemon/mdm.c:2189 daemon/mdm.c:2193 daemon/mdm.c:2203 daemon/mdm.c:2209
+#: daemon/mdm.c:2220 daemon/misc.c:1746 daemon/misc.c:1750 daemon/misc.c:1754
 #: daemon/misc.c:1761 daemon/misc.c:1765 daemon/misc.c:1769
 #: daemon/server.c:521 daemon/server.c:534 daemon/slave.c:813
 #: daemon/slave.c:827 daemon/slave.c:837 daemon/slave.c:847 daemon/slave.c:859
-#: gui/gdmchooser.c:1936 gui/gdmchooser.c:1939 gui/gdmchooser.c:1942
-#: gui/gdmlogin.c:3687 gui/gdmlogin.c:3695 gui/gdmlogin.c:3698
+#: gui/mdmchooser.c:1936 gui/mdmchooser.c:1939 gui/mdmchooser.c:1942
+#: gui/mdmlogin.c:3687 gui/mdmlogin.c:3695 gui/mdmlogin.c:3698
 #: gui/greeter/greeter.c:1088 gui/greeter/greeter.c:1096
 #: gui/greeter/greeter.c:1099
 #, fuzzy, c-format
 msgid "%s: Error setting up %s signal handler: %s"
 msgstr "%s:Igenamiterere Hejuru"
 
-#: daemon/gdm.c:2130
-msgid "gdm already running. Aborting!"
+#: daemon/mdm.c:2130
+msgid "mdm already running. Aborting!"
 msgstr ""
 
-#: daemon/gdm.c:2229
+#: daemon/mdm.c:2229
 #, fuzzy, c-format
 msgid "%s: Error setting up CHLD signal handler"
 msgstr "%s:Igenamiterere Hejuru"
 
-#: daemon/gdm.c:3632 daemon/gdm.c:3651 daemon/gdm.c:3813 daemon/gdm.c:3871
-#: daemon/gdm.c:3926 daemon/gdm.c:3971 daemon/gdm.c:3998
+#: daemon/mdm.c:3632 daemon/mdm.c:3651 daemon/mdm.c:3813 daemon/mdm.c:3871
+#: daemon/mdm.c:3926 daemon/mdm.c:3971 daemon/mdm.c:3998
 #, fuzzy, c-format
 msgid "%s request denied: Not authenticated"
 msgstr "%sKubaza..."
 
 #. Don't print the name to syslog as it might be
 #. * long and dangerous
-#: daemon/gdm.c:3669
+#: daemon/mdm.c:3669
 #, fuzzy
 msgid "Unknown server type requested; using standard server."
 msgstr "Seriveri Ubwoko ikoresha Bisanzwe Seriveri"
 
-#: daemon/gdm.c:3673
+#: daemon/mdm.c:3673
 #, fuzzy, c-format
 msgid ""
 "Requested server %s not allowed to be used for flexible servers; using "
@@ -927,7 +927,7 @@ msgid ""
 "Please contact your system administrator\n"
 "or check your syslog to diagnose.\n"
 "In the meantime this display will be\n"
-"disabled.  Please restart gdm when\n"
+"disabled.  Please restart mdm when\n"
 "the problem is corrected."
 msgstr ""
 "OYA Gutangira Kuri By'imbere Ikosa Umuntu Sisitemu Kugenzura... Kuri iyi "
@@ -967,7 +967,7 @@ msgstr "Nka Imizi Kuri Gukoresha Iboneza"
 
 #: daemon/slave.c:2450 daemon/slave.c:2455
 #, fuzzy, c-format
-msgid "%s: Can't init pipe to gdmgreeter"
+msgid "%s: Can't init pipe to mdmgreeter"
 msgstr "%s:Kuri"
 
 #: daemon/slave.c:2578
@@ -1034,7 +1034,7 @@ msgstr "%s:ku Kugaragaza"
 
 #: daemon/slave.c:2672
 #, c-format
-msgid "%s: Can't fork gdmgreeter process"
+msgid "%s: Can't fork mdmgreeter process"
 msgstr ""
 
 #: daemon/slave.c:2757
@@ -1044,7 +1044,7 @@ msgstr "%s:Gufungura"
 
 #: daemon/slave.c:2933
 #, fuzzy, c-format
-msgid "%s: Can't init pipe to gdmchooser"
+msgid "%s: Can't init pipe to mdmchooser"
 msgstr "%s:Kuri"
 
 #: daemon/slave.c:3030
@@ -1062,7 +1062,7 @@ msgstr "%s:ku Kugaragaza"
 
 #: daemon/slave.c:3037
 #, c-format
-msgid "%s: Can't fork gdmchooser process"
+msgid "%s: Can't fork mdmchooser process"
 msgstr ""
 
 #: daemon/slave.c:3333
@@ -1221,7 +1221,7 @@ msgstr "%s:bushyinguro kugirango OYA"
 #: daemon/slave.c:4071
 #, fuzzy
 msgid ""
-"GDM could not write to your authorization file.  This could mean that you "
+"MDM could not write to your authorization file.  This could mean that you "
 "are out of disk space or that your home directory could not be opened for "
 "writing.  In any case, it is not possible to log in.  Please contact your "
 "system administrator"
@@ -1253,7 +1253,7 @@ msgstr "Birambuye Amakosa IDOSIYE"
 
 #: daemon/slave.c:4379
 #, fuzzy
-msgid "GDM detected a shutdown or reboot in progress."
+msgid "MDM detected a shutdown or reboot in progress."
 msgstr "a Zimya Cyangwa in Aho bigeze"
 
 #: daemon/slave.c:4473
@@ -1307,7 +1307,7 @@ msgstr "Ubwoko Urufunguzo ni OYA Bikora"
 
 #. I think I'll add the buttons next to this
 #: daemon/verify-crypt.c:127 daemon/verify-pam.c:441
-#: daemon/verify-shadow.c:126 gui/gdmlogin.c:3062
+#: daemon/verify-shadow.c:126 gui/mdmlogin.c:3062
 #, fuzzy
 msgid "Please enter your username"
 msgstr "Injiza Izina ry'ukoresha"
@@ -1315,8 +1315,8 @@ msgstr "Injiza Izina ry'ukoresha"
 #. login: is whacked always translate to Username:
 #: daemon/verify-crypt.c:128 daemon/verify-pam.c:341 daemon/verify-pam.c:342
 #: daemon/verify-pam.c:343 daemon/verify-pam.c:428 daemon/verify-pam.c:787
-#: daemon/verify-shadow.c:127 gui/gdmlogin.c:1073 gui/gdmlogin.c:1087
-#: gui/gdmlogin.c:1884 gui/gdmlogin.c:2384 gui/greeter/greeter.c:284
+#: daemon/verify-shadow.c:127 gui/mdmlogin.c:1073 gui/mdmlogin.c:1087
+#: gui/mdmlogin.c:1884 gui/mdmlogin.c:2384 gui/greeter/greeter.c:284
 #: gui/greeter/greeter_parser.c:1065
 #, fuzzy
 msgid "Username:"
@@ -1324,7 +1324,7 @@ msgstr "Izina ry'ukoresha"
 
 # sc/source\ui\src\scstring.src:SCSTR_PASSWORD.text
 #: daemon/verify-crypt.c:166 daemon/verify-pam.c:344 daemon/verify-pam.c:345
-#: daemon/verify-pam.c:489 daemon/verify-shadow.c:184 gui/gdmlogin.c:1917
+#: daemon/verify-pam.c:489 daemon/verify-shadow.c:184 gui/mdmlogin.c:1917
 msgid "Password:"
 msgstr "Ijambobanga:"
 
@@ -1616,7 +1616,7 @@ msgstr "Sisitemu umuyobozi/ uyobora Yahagaritswe Kuri Sisitemu By'igihe gito"
 
 #: daemon/verify-pam.c:1433 daemon/verify-pam.c:1435
 #, fuzzy
-msgid "Can't find PAM configuration for gdm."
+msgid "Can't find PAM configuration for mdm."
 msgstr "Gushaka Iboneza kugirango"
 
 #: daemon/xdmcp.c:369
@@ -1760,95 +1760,95 @@ msgstr "%s:Bivuye Ubuturo"
 msgid "%s: No XDMCP support"
 msgstr "%s:Gushigikira"
 
-#: gui/gdmXnestchooser.c:166 gui/gdmXnestchooser.c:173
+#: gui/mdmXnestchooser.c:166 gui/mdmXnestchooser.c:173
 #, fuzzy
 msgid "Xnest command line"
 msgstr "Komandi: Umurongo"
 
 # svx/source\options\optcolor.src:RID_SVXPAGE_COLORCONFIG.CT_COLORCONFIG.WN_SCROLL.FT_BASICSTRING.text
-#: gui/gdmXnestchooser.c:166 gui/gdmXnestchooser.c:173
+#: gui/mdmXnestchooser.c:166 gui/mdmXnestchooser.c:173
 #, fuzzy
 msgid "STRING"
 msgstr "Ikurikiranyanyuguti"
 
-#: gui/gdmXnestchooser.c:167 gui/gdmXnestchooser.c:174
+#: gui/mdmXnestchooser.c:167 gui/mdmXnestchooser.c:174
 #, fuzzy
 msgid "Extra options for Xnest"
 msgstr "Amahitamo kugirango"
 
 # basctl/source\basicide\moduldlg.src:RID_DLG_LIBS.RID_FL_OPTIONS.text
-#: gui/gdmXnestchooser.c:167 gui/gdmXnestchooser.c:174
+#: gui/mdmXnestchooser.c:167 gui/mdmXnestchooser.c:174
 #, fuzzy
 msgid "OPTIONS"
 msgstr "Amahitamo"
 
-#: gui/gdmXnestchooser.c:168 gui/gdmXnestchooser.c:178
+#: gui/mdmXnestchooser.c:168 gui/mdmXnestchooser.c:178
 #, fuzzy
 msgid "Run in background"
 msgstr "in Mbuganyuma"
 
-#: gui/gdmXnestchooser.c:175
+#: gui/mdmXnestchooser.c:175
 #, fuzzy
 msgid "Just run Xnest, no query (no chooser)"
 msgstr "Gukoresha Oya Ikibazo# Oya"
 
-#: gui/gdmXnestchooser.c:176
+#: gui/mdmXnestchooser.c:176
 #, fuzzy
 msgid "Do direct query instead of indirect (chooser)"
 msgstr "Ikibazo# Bya BUZIGUYE"
 
-#: gui/gdmXnestchooser.c:177
+#: gui/mdmXnestchooser.c:177
 #, fuzzy
 msgid "Run broadcast instead of indirect (chooser)"
 msgstr "Bya BUZIGUYE"
 
-#: gui/gdmXnestchooser.c:179
+#: gui/mdmXnestchooser.c:179
 #, fuzzy
-msgid "Don't check for running gdm"
+msgid "Don't check for running mdm"
 msgstr "Kugenzura... kugirango"
 
 #. markup
-#: gui/gdmXnestchooser.c:521
+#: gui/mdmXnestchooser.c:521
 msgid "Xnest doesn't exist."
 msgstr ""
 
-#: gui/gdmXnestchooser.c:523
+#: gui/mdmXnestchooser.c:523
 #, fuzzy
 msgid "Please ask your system administrator to install it."
 msgstr "Sisitemu umuyobozi/ uyobora Kuri Kwinjiza porogaramu"
 
 #. markup
-#: gui/gdmXnestchooser.c:549
+#: gui/mdmXnestchooser.c:549
 #, fuzzy
 msgid "Indirect XDMCP is not enabled"
 msgstr "ni OYA Bikora"
 
-#: gui/gdmXnestchooser.c:551 gui/gdmXnestchooser.c:572
+#: gui/mdmXnestchooser.c:551 gui/mdmXnestchooser.c:572
 #, fuzzy
 msgid ""
-"Please ask your system administrator to enable it in the GDM configurator "
+"Please ask your system administrator to enable it in the MDM configurator "
 "program."
 msgstr "Sisitemu umuyobozi/ uyobora Kuri Gushoboza in Porogaramu"
 
 #. markup
-#: gui/gdmXnestchooser.c:570
+#: gui/mdmXnestchooser.c:570
 #, fuzzy
 msgid "XDMCP is not enabled"
 msgstr "ni OYA Bikora"
 
 #. markup
-#: gui/gdmXnestchooser.c:604
+#: gui/mdmXnestchooser.c:604
 #, fuzzy
-msgid "GDM is not running"
+msgid "MDM is not running"
 msgstr "ni OYA"
 
-#: gui/gdmXnestchooser.c:606
+#: gui/mdmXnestchooser.c:606
 #, fuzzy
 msgid "Please ask your system administrator to start it."
 msgstr "Sisitemu umuyobozi/ uyobora Kuri Gutangira"
 
 #. markup
-#: gui/gdmXnestchooser.c:623
+#: gui/mdmXnestchooser.c:623
 #, fuzzy
 msgid "Could not find a free display number"
 msgstr "OYA Gushaka a Kigenga Kugaragaza Umubare"
@@ -1858,84 +1858,84 @@ msgstr "OYA Gushaka a Kigenga Kugaragaza Umubare"
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gui/gdmchooser-strings.c:7 gui/gdmchooser.glade.h:5
-msgid "GDM Host Chooser"
+#: gui/mdmchooser-strings.c:7 gui/mdmchooser.glade.h:5
+msgid "MDM Host Chooser"
 msgstr ""
 
-#: gui/gdmchooser-strings.c:8 gui/gdmchooser.glade.h:6
+#: gui/mdmchooser-strings.c:8 gui/mdmchooser.glade.h:6
 #, fuzzy
 msgid "How to use this application"
 msgstr "Kuri Gukoresha iyi Porogaramu"
 
-#: gui/gdmchooser-strings.c:9 gui/gdmchooser.glade.h:8
+#: gui/mdmchooser-strings.c:9 gui/mdmchooser.glade.h:8
 #, fuzzy
 msgid "Probe the network"
 msgstr "urusobe"
 
-#: gui/gdmchooser-strings.c:10 gui/gdmchooser.glade.h:4
+#: gui/mdmchooser-strings.c:10 gui/mdmchooser.glade.h:4
 #, fuzzy
 msgid "Exit the application"
 msgstr "Porogaramu"
 
-#: gui/gdmchooser-strings.c:11 gui/gdmchooser.glade.h:7
+#: gui/mdmchooser-strings.c:11 gui/mdmchooser.glade.h:7
 #, fuzzy
 msgid "Open a session to the selected host"
 msgstr "a Umukoro Kuri Byahiswemo Ubuturo"
 
-#: gui/gdmchooser-strings.c:12 gui/gdmchooser.glade.h:3
+#: gui/mdmchooser-strings.c:12 gui/mdmchooser.glade.h:3
 #, fuzzy
 msgid "C_onnect"
 msgstr "Kwihuza"
 
-#: gui/gdmchooser-strings.c:13 gui/gdmchooser.glade.h:10
+#: gui/mdmchooser-strings.c:13 gui/mdmchooser.glade.h:10
 msgid "Status"
 msgstr "Imimerere"
 
-#: gui/gdmchooser-strings.c:14 gui/gdmchooser.glade.h:2
+#: gui/mdmchooser-strings.c:14 gui/mdmchooser.glade.h:2
 #, fuzzy
 msgid "A_dd host: "
 msgstr "Ubuturo"
 
 #. EOF
-#: gui/gdmchooser-strings.c:15 gui/gdmchooser.glade.h:1
-#: gui/gdmsetup-strings.c:15 gui/gdmsetup-strings.c:17
-#: gui/gdmsetup-strings.c:68 gui/gdmsetup-strings.c:75 gui/gdmsetup.glade.h:2
+#: gui/mdmchooser-strings.c:15 gui/mdmchooser.glade.h:1
+#: gui/mdmsetup-strings.c:15 gui/mdmsetup-strings.c:17
+#: gui/mdmsetup-strings.c:68 gui/mdmsetup-strings.c:75 gui/mdmsetup.glade.h:2
 msgid "*"
 msgstr "*"
 
-#: gui/gdmchooser-strings.c:16 gui/gdmchooser.glade.h:9
+#: gui/mdmchooser-strings.c:16 gui/mdmchooser.glade.h:9
 #, fuzzy
 msgid "Query and add this host to the above list"
 msgstr "Na Kongeramo iyi Ubuturo Kuri hejuru Urutonde"
 
-#: gui/gdmchooser-strings.c:17 gui/gdmchooser.glade.h:11
-#: gui/gdmsetup-strings.c:69 gui/gdmsetup-strings.c:76 gui/gdmsetup.glade.h:75
+#: gui/mdmchooser-strings.c:17 gui/mdmchooser.glade.h:11
+#: gui/mdmsetup-strings.c:69 gui/mdmsetup-strings.c:76 gui/mdmsetup.glade.h:75
 #, fuzzy
 msgid "_Add"
 msgstr "Kongeramo"
 
-#: gui/gdmchooser.c:80
+#: gui/mdmchooser.c:80
 #, fuzzy
 msgid "Please wait: scanning local network..."
 msgstr "Tegereza urusobe"
 
-#: gui/gdmchooser.c:81
+#: gui/mdmchooser.c:81
 #, fuzzy
 msgid "No serving hosts were found."
 msgstr "Byabonetse"
 
-#: gui/gdmchooser.c:82
+#: gui/mdmchooser.c:82
 #, fuzzy
 msgid "Choose a ho_st to connect to:"
 msgstr "a Ubuturo Kuri Kwihuza Kuri"
 
 #. markup
-#: gui/gdmchooser.c:659
+#: gui/mdmchooser.c:659
 #, fuzzy
 msgid "Cannot connect to remote server"
 msgstr "Kwihuza Kuri Seriveri"
 
-#: gui/gdmchooser.c:660
+#: gui/mdmchooser.c:660
 #, fuzzy, c-format
 msgid ""
 "The host \"%s\" is not willing to support a login session right now.  Please "
@@ -1943,12 +1943,12 @@ msgid ""
 msgstr "Usabwekwongeramukanya."
 
 #. markup
-#: gui/gdmchooser.c:1284
+#: gui/mdmchooser.c:1284
 #, fuzzy
 msgid "Did not receive response from server"
 msgstr "OYA Akira Bivuye Seriveri"
 
-#: gui/gdmchooser.c:1285
+#: gui/mdmchooser.c:1285
 #, fuzzy, c-format
 msgid ""
 "Did not receive any response from host \"%s\" in %d seconds.  Perhaps the "
@@ -1956,17 +1956,17 @@ msgid ""
 "now.  Please try again later."
 msgstr "Usabwekwongeramukanya."
 
-#: gui/gdmchooser.c:1391
+#: gui/mdmchooser.c:1391
 #, fuzzy
 msgid "Cannot find host"
 msgstr "Gushaka Ubuturo"
 
-#: gui/gdmchooser.c:1392
+#: gui/mdmchooser.c:1392
 #, fuzzy, c-format
 msgid "I cannot find the host \"%s\". Perhaps you have mistyped it."
 msgstr "Gushaka Ubuturo"
 
-#: gui/gdmchooser.c:1678
+#: gui/mdmchooser.c:1678
 #, fuzzy
 msgid ""
 "The main area of this application shows the hosts on the local network that "
@@ -1980,139 +1980,139 @@ msgstr ""
 "Nka NIBA ku ikoresha urusobe kugirango Gishya ku Byahiswemo a Ubuturo Kanda "
 "Kuri Gufungura a Umukoro Kuri"
 
-#: gui/gdmchooser.c:1725
+#: gui/mdmchooser.c:1725
 #, fuzzy, c-format
 msgid "Can't open default host icon: %s"
 msgstr "Gufungura Mburabuzi Ubuturo Agashushondanga"
 
-#: gui/gdmchooser.c:1950 gui/gdmlogin.c:3706 gui/gdmlogin.c:3713
+#: gui/mdmchooser.c:1950 gui/mdmlogin.c:3706 gui/mdmlogin.c:3713
 #: gui/greeter/greeter.c:1107 gui/greeter/greeter.c:1114
 #, fuzzy
 msgid "Could not set signal mask!"
 msgstr "OYA Gushyiraho"
 
-#: gui/gdmchooser.c:1956
+#: gui/mdmchooser.c:1956
 #, fuzzy
 msgid "Socket for xdm communication"
 msgstr "kugirango Itumanaho"
 
-#: gui/gdmchooser.c:1956
+#: gui/mdmchooser.c:1956
 msgid "SOCKET"
 msgstr ""
 
-#: gui/gdmchooser.c:1959
+#: gui/mdmchooser.c:1959
 #, fuzzy
 msgid "Client address to return in response to xdm"
 msgstr "Aderesi Kuri Garuka in Kuri"
 
 # sc/source\core\src\compiler.src:RID_SC_FUNCTION_NAMES.SC_OPCODE_ADRESS.text
-#: gui/gdmchooser.c:1959
+#: gui/mdmchooser.c:1959
 msgid "ADDRESS"
 msgstr "ADERESI"
 
-#: gui/gdmchooser.c:1962
+#: gui/mdmchooser.c:1962
 #, fuzzy
 msgid "Connection type to return in response to xdm"
 msgstr "Ubwoko Kuri Garuka in Kuri"
 
 # sc/source\core\src\compiler.src:RID_SC_FUNCTION_NAMES.SC_OPCODE_TYPE.text
-#: gui/gdmchooser.c:1962
+#: gui/mdmchooser.c:1962
 msgid "TYPE"
 msgstr "UBWOKO"
 
 #. markup
-#: gui/gdmchooser.c:2091
+#: gui/mdmchooser.c:2091
 #, fuzzy
 msgid "Cannot run chooser"
 msgstr "Gukoresha"
 
-#: gui/gdmchooser.c:2092
+#: gui/mdmchooser.c:2092
 #, fuzzy, c-format
 msgid ""
 "The chooser version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr "Verisiyo OYA BIHUYE Verisiyo Ongera utangire Cyangwa"
 
 #. markup
-#: gui/gdmcomm.c:405 gui/gdmphotosetup.c:76
+#: gui/mdmcomm.c:405 gui/mdmphotosetup.c:76
 #, fuzzy
-msgid "GDM (The GNOME Display Manager) is not running."
+msgid "MDM (The GNOME Display Manager) is not running."
 msgstr "ni OYA"
 
-#: gui/gdmcomm.c:408 gui/gdmphotosetup.c:79
+#: gui/mdmcomm.c:408 gui/mdmphotosetup.c:79
 #, fuzzy
 msgid ""
 "You might in fact be using a different display manager, such as KDM (KDE "
 "Display Manager) or xdm."
 msgstr "in FACT ikoresha a Kugaragaza Muyobozi Nka Cyangwa"
 
-#: gui/gdmcomm.c:411 gui/gdmphotosetup.c:82
+#: gui/mdmcomm.c:411 gui/mdmphotosetup.c:82
 #, fuzzy
 msgid ""
-"If you still wish to use this feature, either start GDM yourself or ask your "
-"system administrator to start GDM."
+"If you still wish to use this feature, either start MDM yourself or ask your "
+"system administrator to start MDM."
 msgstr ""
 "Kuri Gukoresha iyi Gutangira Cyangwa Sisitemu umuyobozi/ uyobora Kuri "
 "Gutangira"
 
 #. markup
-#: gui/gdmcomm.c:433 gui/gdmflexiserver.c:697
+#: gui/mdmcomm.c:433 gui/mdmflexiserver.c:697
 #, fuzzy
-msgid "Cannot communicate with GDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The GNOME Display Manager)"
 msgstr "Na:"
 
-#: gui/gdmcomm.c:436 gui/gdmflexiserver.c:700
+#: gui/mdmcomm.c:436 gui/mdmflexiserver.c:700
 #, fuzzy
-msgid "Perhaps you have an old version of GDM running."
+msgid "Perhaps you have an old version of MDM running."
 msgstr "ki/ bishaje Verisiyo Bya"
 
-#: gui/gdmcomm.c:453 gui/gdmcomm.c:456
+#: gui/mdmcomm.c:453 gui/mdmcomm.c:456
 #, fuzzy
-msgid "Cannot communicate with gdm. Perhaps you have an old version running."
+msgid "Cannot communicate with mdm. Perhaps you have an old version running."
 msgstr "Na: ki/ bishaje Verisiyo"
 
-#: gui/gdmcomm.c:459
+#: gui/mdmcomm.c:459
 #, fuzzy
 msgid "The allowed limit of flexible X servers reached."
 msgstr "Bya"
 
-#: gui/gdmcomm.c:461
+#: gui/mdmcomm.c:461
 #, fuzzy
 msgid "There were errors trying to start the X server."
 msgstr "Amakosa Kuri Gutangira Seriveri"
 
-#: gui/gdmcomm.c:463
+#: gui/mdmcomm.c:463
 #, fuzzy
 msgid "The X server failed.  Perhaps it is not configured well."
 msgstr "Seriveri Byanze ni OYA"
 
-#: gui/gdmcomm.c:466
+#: gui/mdmcomm.c:466
 msgid "Too many X sessions running."
 msgstr ""
 
-#: gui/gdmcomm.c:468
+#: gui/mdmcomm.c:468
 #, fuzzy
 msgid ""
 "The nested X server (Xnest) cannot connect to your current X server.  You "
 "may be missing an X authorization file."
 msgstr "Seriveri Kwihuza Kuri KIGEZWEHO Seriveri Gicurasi Ibuze IDOSIYE"
 
-#: gui/gdmcomm.c:473
+#: gui/mdmcomm.c:473
 #, fuzzy
 msgid ""
-"The nested X server (Xnest) is not available, or gdm is badly configured.\n"
+"The nested X server (Xnest) is not available, or mdm is badly configured.\n"
 "Please install the Xnest package in order to use the nested login."
 msgstr ""
 "Seriveri ni OYA Bihari Cyangwa ni Kwinjiza porogaramu in Itondekanya Kuri "
 "Gukoresha Ifashayinjira"
 
-#: gui/gdmcomm.c:478
+#: gui/mdmcomm.c:478
 #, fuzzy
-msgid "The X server is not available. Gdm may be misconfigured."
+msgid "The X server is not available. Mdm may be misconfigured."
 msgstr "Seriveri ni OYA Bihari Gicurasi"
 
-#: gui/gdmcomm.c:481
+#: gui/mdmcomm.c:481
 #, fuzzy
 msgid ""
 "Trying to set an unknown logout action, or trying to set a logout action "
@@ -2121,793 +2121,793 @@ msgstr ""
 "Kuri Gushyiraho Kitazwi Gufunga Igikorwa Cyangwa Kuri Gushyiraho a Gufunga "
 "Igikorwa ni OYA Bihari"
 
-#: gui/gdmcomm.c:484
+#: gui/mdmcomm.c:484
 #, fuzzy
 msgid "Virtual terminals not supported."
 msgstr "OYA"
 
-#: gui/gdmcomm.c:486
+#: gui/mdmcomm.c:486
 #, fuzzy
 msgid "Trying to change to an invalid virtual terminal number."
 msgstr "Kuri Guhindura>> Kuri Sibyo Kitaboneka Umubare"
 
-#: gui/gdmcomm.c:488
+#: gui/mdmcomm.c:488
 #, fuzzy
 msgid "Trying to update an unsupported configuration key."
 msgstr "Kuri Kuvugurura Iboneza Urufunguzo"
 
-#: gui/gdmcomm.c:490
+#: gui/mdmcomm.c:490
 #, fuzzy
 msgid ""
 "You do not seem to have authentication needed be for this operation.  "
 "Perhaps your .Xauthority file is not set up correctly."
 msgstr "OYA Kuri kugirango iyi IDOSIYE ni OYA Gushyiraho Hejuru"
 
-#: gui/gdmcomm.c:494
+#: gui/mdmcomm.c:494
 #, fuzzy
-msgid "Too many messages were sent to gdm and it hung upon us."
+msgid "Too many messages were sent to mdm and it hung upon us."
 msgstr "Ubutumwa Yoherejwe: Kuri Na RW"
 
 # starmath/source\smres.src:RID_ERR_UNKOWN.text
-#: gui/gdmcomm.c:497
+#: gui/mdmcomm.c:497
 #, fuzzy
 msgid "Unknown error occurred."
 msgstr "Habazwi ikosa ritazwi"
 
-#: gui/gdmflexiserver-xnest.desktop.in.h:1
+#: gui/mdmflexiserver-xnest.desktop.in.h:1
 #, fuzzy
 msgid "Log in as another user inside a nested window"
 msgstr "in Nka Ukoresha: Mo Imbere a Idirishya"
 
-#: gui/gdmflexiserver-xnest.desktop.in.h:2
+#: gui/mdmflexiserver-xnest.desktop.in.h:2
 #, fuzzy
 msgid "New Login in a Nested Window"
 msgstr "in a"
 
 #. markup
-#: gui/gdmflexiserver.c:100
+#: gui/mdmflexiserver.c:100
 #, fuzzy
 msgid "Cannot change display"
 msgstr "Guhindura>> Kugaragaza"
 
-#: gui/gdmflexiserver.c:177
+#: gui/mdmflexiserver.c:177
 msgid "Nobody"
 msgstr ""
 
-#: gui/gdmflexiserver.c:212
+#: gui/mdmflexiserver.c:212
 #, fuzzy, c-format
 msgid "Display %s on virtual terminal %d"
 msgstr "ku Kitaboneka"
 
-#: gui/gdmflexiserver.c:217
+#: gui/mdmflexiserver.c:217
 #, fuzzy, c-format
 msgid "Nested display %s on virtual terminal %d"
 msgstr "Kugaragaza ku Kitaboneka"
 
-#: gui/gdmflexiserver.c:247 gui/gdmlogin.c:2908
+#: gui/mdmflexiserver.c:247 gui/mdmlogin.c:2908
 #: gui/greeter/greeter_item_ulist.c:180
 msgid "Username"
 msgstr "Izina ry'ukoresha"
 
 # offmgr/source\offapp\dialog\optgdlg.src:OFA_TP_VIEW.GB_APPEARANCE.text
-#: gui/gdmflexiserver.c:256
+#: gui/mdmflexiserver.c:256
 msgid "Display"
 msgstr "Kugaragaza"
 
-#: gui/gdmflexiserver.c:310
+#: gui/mdmflexiserver.c:310
 msgid "Open Displays"
 msgstr ""
 
 #. parent
 #. flags
-#: gui/gdmflexiserver.c:313
+#: gui/mdmflexiserver.c:313
 msgid "_Open New Display"
 msgstr ""
 
-#: gui/gdmflexiserver.c:315
+#: gui/mdmflexiserver.c:315
 #, fuzzy
 msgid "Change to _Existing Display"
 msgstr "Kuri"
 
-#: gui/gdmflexiserver.c:323
+#: gui/mdmflexiserver.c:323
 #, fuzzy
 msgid ""
 "There are some displays already open.  You can select one from the list "
 "below or open a new one."
 msgstr "Gufungura Guhitamo Bivuye Urutonde munsi Cyangwa Gufungura a Gishya"
 
-#: gui/gdmflexiserver.c:390 gui/gdmflexiserver.c:785
+#: gui/mdmflexiserver.c:390 gui/mdmflexiserver.c:785
 #, fuzzy
 msgid "Can't lock screen"
 msgstr "Mugaragaza"
 
-#: gui/gdmflexiserver.c:393 gui/gdmflexiserver.c:788
+#: gui/mdmflexiserver.c:393 gui/mdmflexiserver.c:788
 #, fuzzy
 msgid "Can't disable xscreensaver display hacks"
 msgstr "Kugaragaza"
 
-#: gui/gdmflexiserver.c:548
+#: gui/mdmflexiserver.c:548
 #, fuzzy
 msgid "Choose server"
 msgstr "Seriveri"
 
-#: gui/gdmflexiserver.c:559
+#: gui/mdmflexiserver.c:559
 #, fuzzy
 msgid "Choose the X server to start"
 msgstr "Seriveri Kuri Gutangira"
 
-#: gui/gdmflexiserver.c:565
+#: gui/mdmflexiserver.c:565
 #, fuzzy
 msgid "Standard server"
 msgstr "Seriveri"
 
-#: gui/gdmflexiserver.c:632
+#: gui/mdmflexiserver.c:632
 #, fuzzy
-msgid "Send the specified protocol command to gdm"
+msgid "Send the specified protocol command to mdm"
 msgstr "Porotokole Komandi: Kuri"
 
 # padmin/source\rtsetup.src:RID_RTS_RTSDIALOG.RID_RTS_RTSDIALOG_TABCONTROL.RID_RTS_COMMANDPAGE.text
-#: gui/gdmflexiserver.c:632
+#: gui/mdmflexiserver.c:632
 #, fuzzy
 msgid "COMMAND"
 msgstr "Icyo wifuza"
 
-#: gui/gdmflexiserver.c:633
+#: gui/mdmflexiserver.c:633
 #, fuzzy
 msgid "Xnest mode"
 msgstr "Ubwoko"
 
-#: gui/gdmflexiserver.c:634
+#: gui/mdmflexiserver.c:634
 #, fuzzy
 msgid "Do not lock current screen"
 msgstr "OYA KIGEZWEHO Mugaragaza"
 
-#: gui/gdmflexiserver.c:635
+#: gui/mdmflexiserver.c:635
 #, fuzzy
 msgid "Debugging output"
 msgstr "Ibisohoka"
 
-#: gui/gdmflexiserver.c:636
+#: gui/mdmflexiserver.c:636
 #, fuzzy
 msgid "Authenticate before running --command"
 msgstr "Mbere Komandi:"
 
 #. markup
-#: gui/gdmflexiserver.c:725
+#: gui/mdmflexiserver.c:725
 #, fuzzy
 msgid "You do not seem to have the authentication needed for this operation"
 msgstr "OYA Kuri kugirango iyi"
 
-#: gui/gdmflexiserver.c:729
+#: gui/mdmflexiserver.c:729
 #, fuzzy
 msgid "Perhaps your .Xauthority file is not set up correctly."
 msgstr "IDOSIYE ni OYA Gushyiraho Hejuru"
 
 #. markup
-#: gui/gdmflexiserver.c:753
+#: gui/mdmflexiserver.c:753
 #, fuzzy
 msgid "You do not seem to be logged in on the console"
 msgstr "OYA Kuri in ku"
 
-#: gui/gdmflexiserver.c:756
+#: gui/mdmflexiserver.c:756
 #, fuzzy
 msgid "Starting a new login only works correctly on the console."
 msgstr "a Gishya Ifashayinjira ku"
 
 #. markup
-#: gui/gdmflexiserver.c:803
+#: gui/mdmflexiserver.c:803
 #, fuzzy
 msgid "Cannot start new display"
 msgstr "Gutangira Gishya Kugaragaza"
 
-#: gui/gdmflexiserver.desktop.in.h:1
+#: gui/mdmflexiserver.desktop.in.h:1
 #, fuzzy
 msgid "Log in as another user without logging out"
 msgstr "in Nka Ukoresha: Inyuma"
 
-#: gui/gdmflexiserver.desktop.in.h:2
+#: gui/mdmflexiserver.desktop.in.h:2
 msgid "New Login"
 msgstr ""
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:53
+#: gui/mdmlanguages.c:53
 #, fuzzy
 msgid "A-M|Afrikaans"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:55
+#: gui/mdmlanguages.c:55
 #, fuzzy
 msgid "A-M|Albanian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:57
+#: gui/mdmlanguages.c:57
 #, fuzzy
 msgid "A-M|Amharic"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:59
+#: gui/mdmlanguages.c:59
 #, fuzzy
 msgid "A-M|Arabic (Egypt)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:61
+#: gui/mdmlanguages.c:61
 #, fuzzy
 msgid "A-M|Arabic (Lebanon)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:63
+#: gui/mdmlanguages.c:63
 #, fuzzy
 msgid "A-M|Armenian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:65
+#: gui/mdmlanguages.c:65
 #, fuzzy
 msgid "A-M|Azerbaijani"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:67
+#: gui/mdmlanguages.c:67
 #, fuzzy
 msgid "A-M|Basque"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:69
+#: gui/mdmlanguages.c:69
 #, fuzzy
 msgid "A-M|Belarusian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:71
+#: gui/mdmlanguages.c:71
 #, fuzzy
 msgid "A-M|Bengali"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:73
+#: gui/mdmlanguages.c:73
 #, fuzzy
 msgid "A-M|Bengali (India)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:75
+#: gui/mdmlanguages.c:75
 #, fuzzy
 msgid "A-M|Bulgarian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:77
+#: gui/mdmlanguages.c:77
 #, fuzzy
 msgid "A-M|Bosnian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:79
+#: gui/mdmlanguages.c:79
 #, fuzzy
 msgid "A-M|Catalan"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:81
+#: gui/mdmlanguages.c:81
 #, fuzzy
 msgid "A-M|Chinese (China Mainland)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:83
+#: gui/mdmlanguages.c:83
 #, fuzzy
 msgid "A-M|Chinese (Hong Kong)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:85
+#: gui/mdmlanguages.c:85
 #, fuzzy
 msgid "A-M|Chinese (Singapore)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:87
+#: gui/mdmlanguages.c:87
 #, fuzzy
 msgid "A-M|Chinese (Taiwan)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:89
+#: gui/mdmlanguages.c:89
 #, fuzzy
 msgid "A-M|Croatian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:91
+#: gui/mdmlanguages.c:91
 #, fuzzy
 msgid "A-M|Czech"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:93
+#: gui/mdmlanguages.c:93
 #, fuzzy
 msgid "A-M|Danish"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:95
+#: gui/mdmlanguages.c:95
 #, fuzzy
 msgid "A-M|Dutch"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:97
+#: gui/mdmlanguages.c:97
 #, fuzzy
 msgid "A-M|English (USA)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:99
+#: gui/mdmlanguages.c:99
 #, fuzzy
 msgid "A-M|English (Australia)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:101
+#: gui/mdmlanguages.c:101
 #, fuzzy
 msgid "A-M|English (UK)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:103
+#: gui/mdmlanguages.c:103
 #, fuzzy
 msgid "A-M|English (Canada)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:105
+#: gui/mdmlanguages.c:105
 #, fuzzy
 msgid "A-M|English (Ireland)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:107
+#: gui/mdmlanguages.c:107
 #, fuzzy
 msgid "A-M|English (Denmark)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:109
+#: gui/mdmlanguages.c:109
 #, fuzzy
 msgid "A-M|English (South Africa)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:111
+#: gui/mdmlanguages.c:111
 #, fuzzy
 msgid "A-M|Estonian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:113
+#: gui/mdmlanguages.c:113
 #, fuzzy
 msgid "A-M|Finnish"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:115
+#: gui/mdmlanguages.c:115
 #, fuzzy
 msgid "A-M|French"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:117
+#: gui/mdmlanguages.c:117
 #, fuzzy
 msgid "A-M|French (Belgium)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:119
+#: gui/mdmlanguages.c:119
 #, fuzzy
 msgid "A-M|French (Switzerland)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:121
+#: gui/mdmlanguages.c:121
 #, fuzzy
 msgid "A-M|Galician"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:123
+#: gui/mdmlanguages.c:123
 #, fuzzy
 msgid "A-M|German"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:125
+#: gui/mdmlanguages.c:125
 #, fuzzy
 msgid "A-M|German (Austria)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:127
+#: gui/mdmlanguages.c:127
 #, fuzzy
 msgid "A-M|German (Switzerland)"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:129
+#: gui/mdmlanguages.c:129
 #, fuzzy
 msgid "A-M|Greek"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:131
+#: gui/mdmlanguages.c:131
 #, fuzzy
 msgid "A-M|Gujarati"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:133 gui/gdmlanguages.c:135
+#: gui/mdmlanguages.c:133 gui/mdmlanguages.c:135
 #, fuzzy
 msgid "A-M|Hebrew"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:137
+#: gui/mdmlanguages.c:137
 #, fuzzy
 msgid "A-M|Hindi"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:139
+#: gui/mdmlanguages.c:139
 #, fuzzy
 msgid "A-M|Hungarian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:141
+#: gui/mdmlanguages.c:141
 #, fuzzy
 msgid "A-M|Icelandic"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:143
+#: gui/mdmlanguages.c:143
 #, fuzzy
 msgid "A-M|Indonesian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:145
+#: gui/mdmlanguages.c:145
 #, fuzzy
 msgid "A-M|Interlingua"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:147
+#: gui/mdmlanguages.c:147
 #, fuzzy
 msgid "A-M|Irish"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:149
+#: gui/mdmlanguages.c:149
 #, fuzzy
 msgid "A-M|Italian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:151
+#: gui/mdmlanguages.c:151
 #, fuzzy
 msgid "A-M|Japanese"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:153
+#: gui/mdmlanguages.c:153
 #, fuzzy
 msgid "A-M|Kannada"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:156
+#: gui/mdmlanguages.c:156
 #, fuzzy
 msgid "A-M|Kinyarwanda"
 msgstr "A"
 
-#: gui/gdmlanguages.c:157
+#: gui/mdmlanguages.c:157
 #, fuzzy
 msgid "A-M|Korean"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:159
+#: gui/mdmlanguages.c:159
 #, fuzzy
 msgid "A-M|Latvian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:161
+#: gui/mdmlanguages.c:161
 #, fuzzy
 msgid "A-M|Lithuanian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:163
+#: gui/mdmlanguages.c:163
 #, fuzzy
 msgid "A-M|Macedonian"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:165
+#: gui/mdmlanguages.c:165
 #, fuzzy
 msgid "A-M|Malay"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:167
+#: gui/mdmlanguages.c:167
 #, fuzzy
 msgid "A-M|Malayalam"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:169
+#: gui/mdmlanguages.c:169
 #, fuzzy
 msgid "A-M|Marathi"
 msgstr "A"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:171
+#: gui/mdmlanguages.c:171
 #, fuzzy
 msgid "A-M|Mongolian"
 msgstr "A"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:173
+#: gui/mdmlanguages.c:173
 msgid "N-Z|Northern Sotho"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:175
+#: gui/mdmlanguages.c:175
 msgid "N-Z|Norwegian (bokmal)"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:177
+#: gui/mdmlanguages.c:177
 msgid "N-Z|Norwegian (nynorsk)"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:179
+#: gui/mdmlanguages.c:179
 msgid "N-Z|Oriya"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:181
+#: gui/mdmlanguages.c:181
 msgid "N-Z|Panjabi"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:183
+#: gui/mdmlanguages.c:183
 msgid "N-Z|Persian"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:185
+#: gui/mdmlanguages.c:185
 msgid "N-Z|Polish"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:187
+#: gui/mdmlanguages.c:187
 msgid "N-Z|Portuguese"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:189
+#: gui/mdmlanguages.c:189
 msgid "N-Z|Portuguese (Brazilian)"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:191
+#: gui/mdmlanguages.c:191
 msgid "N-Z|Romanian"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:193
+#: gui/mdmlanguages.c:193
 msgid "N-Z|Russian"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:195 gui/gdmlanguages.c:197
+#: gui/mdmlanguages.c:195 gui/mdmlanguages.c:197
 msgid "N-Z|Serbian"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:199
+#: gui/mdmlanguages.c:199
 msgid "N-Z|Serbian (Latin)"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:201
+#: gui/mdmlanguages.c:201
 msgid "N-Z|Serbian (Jekavian)"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:203
+#: gui/mdmlanguages.c:203
 msgid "N-Z|Slovak"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:205
+#: gui/mdmlanguages.c:205
 msgid "N-Z|Slovenian"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:207
+#: gui/mdmlanguages.c:207
 msgid "N-Z|Spanish"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:209
+#: gui/mdmlanguages.c:209
 msgid "N-Z|Spanish (Mexico)"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:211
+#: gui/mdmlanguages.c:211
 msgid "N-Z|Swedish"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:213
+#: gui/mdmlanguages.c:213
 msgid "N-Z|Swedish (Finland)"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:215
+#: gui/mdmlanguages.c:215
 msgid "N-Z|Tamil"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:217
+#: gui/mdmlanguages.c:217
 msgid "N-Z|Telugu"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:219
+#: gui/mdmlanguages.c:219
 msgid "N-Z|Thai"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:221
+#: gui/mdmlanguages.c:221
 msgid "N-Z|Turkish"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:223
+#: gui/mdmlanguages.c:223
 msgid "N-Z|Ukrainian"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:225
+#: gui/mdmlanguages.c:225
 msgid "N-Z|Vietnamese"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:227
+#: gui/mdmlanguages.c:227
 msgid "N-Z|Walloon"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:229
+#: gui/mdmlanguages.c:229
 msgid "N-Z|Welsh"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:231
+#: gui/mdmlanguages.c:231
 msgid "N-Z|Yiddish"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:233
+#: gui/mdmlanguages.c:233
 msgid "N-Z|Zulu"
 msgstr ""
 
 #. This is the POSIX/C locale for english, should really be in Other
-#: gui/gdmlanguages.c:235
+#: gui/mdmlanguages.c:235
 #, fuzzy
 msgid "Other|POSIX/C English"
 msgstr "C"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: gui/gdmlanguages.c:419
+#: gui/mdmlanguages.c:419
 #, fuzzy
 msgid "A-M"
 msgstr "A"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: gui/gdmlanguages.c:427
+#: gui/mdmlanguages.c:427
 msgid "N-Z"
 msgstr ""
 
-#: gui/gdmlogin.c:218
+#: gui/mdmlogin.c:218
 #, fuzzy, c-format
 msgid "User %s will login in %d seconds"
 msgstr "Ifashayinjira in amasogonda"
 
-#: gui/gdmlogin.c:443
+#: gui/mdmlogin.c:443
 #, c-format
 msgid "%s: String too long!"
 msgstr ""
 
-#: gui/gdmlogin.c:445
+#: gui/mdmlogin.c:445
 #, fuzzy, c-format
 msgid "%sWelcome to %s%s"
 msgstr "%sWelcomeKuri"
 
 #. markup
-#: gui/gdmlogin.c:533
+#: gui/mdmlogin.c:533
 #, fuzzy
 msgid "Could not fork a new process!"
 msgstr "OYA a Gishya"
 
-#: gui/gdmlogin.c:535
+#: gui/mdmlogin.c:535
 #, fuzzy
 msgid "You likely won't be able to log in either."
 msgstr "Kuri LOG in"
 
-#: gui/gdmlogin.c:579 gui/greeter/greeter_system.c:45
+#: gui/mdmlogin.c:579 gui/greeter/greeter_system.c:45
 #, fuzzy
 msgid "Are you sure you want to reboot the machine?"
 msgstr "Kuri"
 
 #. markup
-#: gui/gdmlogin.c:581 gui/gdmlogin.c:2775 gui/greeter/greeter_parser.c:1027
+#: gui/mdmlogin.c:581 gui/mdmlogin.c:2775 gui/greeter/greeter_parser.c:1027
 #: gui/greeter/greeter_system.c:47 gui/greeter/greeter_system.c:168
 msgid "_Reboot"
 msgstr ""
 
-#: gui/gdmlogin.c:593 gui/greeter/greeter_system.c:58
+#: gui/mdmlogin.c:593 gui/greeter/greeter_system.c:58
 #, fuzzy
 msgid "Are you sure you want to shut down the machine?"
 msgstr "Kuri Hasi"
 
 #. markup
-#: gui/gdmlogin.c:595 gui/gdmlogin.c:2788 gui/greeter/greeter_parser.c:1017
+#: gui/mdmlogin.c:595 gui/mdmlogin.c:2788 gui/greeter/greeter_parser.c:1017
 #: gui/greeter/greeter_system.c:60 gui/greeter/greeter_system.c:180
 msgid "Shut _Down"
 msgstr ""
 
-#: gui/gdmlogin.c:615 gui/greeter/greeter_system.c:70
+#: gui/mdmlogin.c:615 gui/greeter/greeter_system.c:70
 #, fuzzy
 msgid "Are you sure you want to suspend the machine?"
 msgstr "Kuri"
 
 #. markup
-#: gui/gdmlogin.c:617 gui/gdmlogin.c:2802 gui/greeter/greeter_system.c:72
+#: gui/mdmlogin.c:617 gui/mdmlogin.c:2802 gui/greeter/greeter_system.c:72
 msgid "_Suspend"
 msgstr ""
 
-#: gui/gdmlogin.c:681 gui/gdmlogin.c:3471 gui/greeter/greeter.c:168
+#: gui/mdmlogin.c:681 gui/mdmlogin.c:3471 gui/greeter/greeter.c:168
 #: gui/greeter/greeter.c:858
 msgid "Welcome"
 msgstr "Urakaza neza"
 
 # setup2/source\ui\pages\ppatch.src:RESID_PAGE_PATCH.FT_INFO1.text
-#: gui/gdmlogin.c:684 gui/gdmlogin.c:3474 gui/greeter/greeter.c:171
+#: gui/mdmlogin.c:684 gui/mdmlogin.c:3474 gui/greeter/greeter.c:171
 #: gui/greeter/greeter.c:861
 #, fuzzy, c-format
 msgid "Welcome to %n"
 msgstr "Ikaze kuri %n%PRODUCTPATCHNAME"
 
-#: gui/gdmlogin.c:735 gui/greeter/greeter.c:198
+#: gui/mdmlogin.c:735 gui/greeter/greeter.c:198
 #, fuzzy
 msgid "TimedLoginDelay was less than 5.  I'll just use 5."
 msgstr "Birutwa 5 Gukoresha 5"
 
-#: gui/gdmlogin.c:853 gui/greeter/greeter_session.c:119
+#: gui/mdmlogin.c:853 gui/greeter/greeter_session.c:119
 #, fuzzy, c-format
 msgid ""
 "Your preferred session type %s is not installed on this machine.\n"
@@ -2915,13 +2915,13 @@ msgid ""
 msgstr "Umukoro Ubwoko ni OYA ku iyi Kuri Ubwoko Mburabuzi kugirango"
 
 #. markup
-#: gui/gdmlogin.c:859 gui/gdmlogin.c:886 gui/gdmlogin.c:964
+#: gui/mdmlogin.c:859 gui/mdmlogin.c:886 gui/mdmlogin.c:964
 #: gui/greeter/greeter_action_language.c:143 gui/greeter/greeter_session.c:125
 #: gui/greeter/greeter_session.c:155
 msgid "Make _Default"
 msgstr ""
 
-#: gui/gdmlogin.c:859 gui/greeter/greeter_session.c:125
+#: gui/mdmlogin.c:859 gui/greeter/greeter_session.c:125
 msgid "Just _Log In"
 msgstr ""
 
@@ -2929,7 +2929,7 @@ msgstr ""
 #. no_group
 #. untranslated
 #. markup
-#: gui/gdmlogin.c:878 gui/gdmlogin.c:958
+#: gui/mdmlogin.c:878 gui/mdmlogin.c:958
 #: gui/greeter/greeter_action_language.c:137 gui/greeter/greeter_session.c:147
 #, fuzzy, c-format
 msgid ""
@@ -2939,12 +2939,12 @@ msgstr ""
 "kugirango iyi Umukoro Mburabuzi Igenamiterere ni Kuri Ubwoko Mburabuzi "
 "kugirango"
 
-#: gui/gdmlogin.c:886 gui/gdmlogin.c:964
+#: gui/mdmlogin.c:886 gui/mdmlogin.c:964
 #: gui/greeter/greeter_action_language.c:143 gui/greeter/greeter_session.c:155
 msgid "Just For _This Session"
 msgstr ""
 
-#: gui/gdmlogin.c:896 gui/greeter/greeter_session.c:168
+#: gui/mdmlogin.c:896 gui/greeter/greeter_session.c:168
 #, fuzzy, c-format
 msgid ""
 "You have chosen %s for this session.\n"
@@ -2955,57 +2955,57 @@ msgstr ""
 "kugirango iyi Umukoro Kuri Ubwoko Mburabuzi kugirango Gukoresha Bivuye "
 "Ibikubiyemo"
 
-#: gui/gdmlogin.c:940 gui/gdmlogin.c:949
+#: gui/mdmlogin.c:940 gui/mdmlogin.c:949
 #: gui/greeter/greeter_action_language.c:53
 #: gui/greeter/greeter_action_language.c:121
 #: gui/greeter/greeter_action_language.c:129
 msgid "System Default"
 msgstr ""
 
-#: gui/gdmlogin.c:1074 gui/gdmlogin.c:1088 gui/gdmlogin.c:1886
-#: gui/gdmlogin.c:2385 gui/gdmlogin.c:3014
+#: gui/mdmlogin.c:1074 gui/mdmlogin.c:1088 gui/mdmlogin.c:1886
+#: gui/mdmlogin.c:2385 gui/mdmlogin.c:3014
 #, fuzzy
 msgid "_Username:"
 msgstr "Izina ry'ukoresha"
 
-#: gui/gdmlogin.c:1162
+#: gui/mdmlogin.c:1162
 #, fuzzy, c-format
 msgid "%s session selected"
 msgstr "%sUmukoro Byahiswemo"
 
-#: gui/gdmlogin.c:1188 gui/gdmlogin.c:1498 gui/greeter/greeter_session.c:271
+#: gui/mdmlogin.c:1188 gui/mdmlogin.c:1498 gui/greeter/greeter_session.c:271
 #, fuzzy
 msgid "_Last"
 msgstr "Iheruka"
 
-#: gui/gdmlogin.c:1199 gui/greeter/greeter_session.c:277
+#: gui/mdmlogin.c:1199 gui/greeter/greeter_session.c:277
 #, fuzzy
 msgid "Log in using the session that you have used last time you logged in"
 msgstr "in ikoresha Umukoro Iheruka Igihe in"
 
-#: gui/gdmlogin.c:1210
+#: gui/mdmlogin.c:1210
 msgid "Failsafe GNOME"
 msgstr ""
 
-#: gui/gdmlogin.c:1211 gui/greeter/greeter_session.c:265
+#: gui/mdmlogin.c:1211 gui/greeter/greeter_session.c:265
 msgid "Failsafe xterm"
 msgstr ""
 
-#: gui/gdmlogin.c:1360 gui/greeter/greeter_session.c:429
+#: gui/mdmlogin.c:1360 gui/greeter/greeter_session.c:429
 #, fuzzy, c-format
 msgid "%s: Session directory %s not found!"
 msgstr "%s:bushyinguro OYA Byabonetse"
 
-#: gui/gdmlogin.c:1366 gui/greeter/greeter_session.c:437
+#: gui/mdmlogin.c:1366 gui/greeter/greeter_session.c:437
 #, fuzzy
 msgid "Yaikes, nothing found in the session directory."
 msgstr "Byabonetse in Umukoro bushyinguro"
 
-#: gui/gdmlogin.c:1377
+#: gui/mdmlogin.c:1377
 msgid "Failsafe _GNOME"
 msgstr ""
 
-#: gui/gdmlogin.c:1379 gui/greeter/greeter_session.c:451
+#: gui/mdmlogin.c:1379 gui/greeter/greeter_session.c:451
 #, fuzzy
 msgid ""
 "This is a failsafe session that will log you into GNOME.  No startup scripts "
@@ -3015,11 +3015,11 @@ msgstr ""
 "ni a Umukoro LOG Inyandikoporogaramu Gusoma Na ni Kuri Ryari: LOG in "
 "Gukoresha Umukoro"
 
-#: gui/gdmlogin.c:1402 gui/greeter/greeter_session.c:473
+#: gui/mdmlogin.c:1402 gui/greeter/greeter_session.c:473
 msgid "Failsafe _Terminal"
 msgstr ""
 
-#: gui/gdmlogin.c:1404 gui/greeter/greeter_session.c:475
+#: gui/mdmlogin.c:1404 gui/greeter/greeter_session.c:475
 #, fuzzy
 msgid ""
 "This is a failsafe session that will log you into a terminal.  No startup "
@@ -3029,7 +3029,7 @@ msgstr ""
 "ni a Umukoro LOG a Inyandikoporogaramu Gusoma Na ni Kuri Ryari: LOG in "
 "Gusohoka Ubwoko"
 
-#: gui/gdmlogin.c:1425 gui/greeter/greeter_session.c:495
+#: gui/mdmlogin.c:1425 gui/greeter/greeter_session.c:495
 #, fuzzy
 msgid "No default session link found. Using Failsafe GNOME.\n"
 msgstr "Mburabuzi Umukoro Ihuza Byabonetse"
@@ -3038,33 +3038,33 @@ msgstr "Mburabuzi Umukoro Ihuza Byabonetse"
 #. no_group
 #. untranslated
 #. makrup
-#: gui/gdmlogin.c:1469
+#: gui/mdmlogin.c:1469
 #, fuzzy, c-format
 msgid "%s language selected"
 msgstr "%sUrurimi Byahiswemo"
 
-#: gui/gdmlogin.c:1509
+#: gui/mdmlogin.c:1509
 #, fuzzy
 msgid "Log in using the language that you have used last time you logged in"
 msgstr "in ikoresha Ururimi Iheruka Igihe in"
 
-#: gui/gdmlogin.c:1513
+#: gui/mdmlogin.c:1513
 msgid "_System Default"
 msgstr ""
 
-#: gui/gdmlogin.c:1524
+#: gui/mdmlogin.c:1524
 #, fuzzy
 msgid "Log in using the default system language"
 msgstr "in ikoresha Mburabuzi Sisitemu Ururimi"
 
 # framework/source\classes\fltdlg.src:STR_FILTER_OTHERS.text
-#: gui/gdmlogin.c:1544
+#: gui/mdmlogin.c:1544
 #, fuzzy
 msgid "_Other"
 msgstr "Ikindi"
 
 # basctl/source\basicide\moduldlg.src:RID_TP_LIBS.RID_PB_PASSWORD.text
-#: gui/gdmlogin.c:1918
+#: gui/mdmlogin.c:1918
 #, fuzzy
 msgid "_Password:"
 msgstr "Ijambobanga..."
@@ -3072,48 +3072,48 @@ msgstr "Ijambobanga..."
 #. markup
 #. translators:  This is a nice and evil eggie text, translate
 #. * to your favourite currency
-#: gui/gdmlogin.c:2144 gui/greeter/greeter.c:436
+#: gui/mdmlogin.c:2144 gui/greeter/greeter.c:436
 #, fuzzy
 msgid "Please insert 25 cents to log in."
 msgstr "Kongeramo 25% Kuri LOG in"
 
-#: gui/gdmlogin.c:2500
+#: gui/mdmlogin.c:2500
 msgid "GNOME Desktop Manager"
 msgstr ""
 
-#: gui/gdmlogin.c:2526 gui/greeter/greeter_item.c:139
+#: gui/mdmlogin.c:2526 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"
 msgstr ""
 
-#: gui/gdmlogin.c:2528 gui/greeter/greeter_item.c:143
+#: gui/mdmlogin.c:2528 gui/greeter/greeter_item.c:143
 #, fuzzy
 msgid "%a %b %d, %l:%M %p"
 msgstr "%a%b%d,%l:%M%p"
 
-#: gui/gdmlogin.c:2577
+#: gui/mdmlogin.c:2577
 msgid "Finger"
 msgstr ""
 
-#: gui/gdmlogin.c:2683
-msgid "GDM Login"
+#: gui/mdmlogin.c:2683
+msgid "MDM Login"
 msgstr ""
 
-#: gui/gdmlogin.c:2726 gui/greeter/greeter_parser.c:997
+#: gui/mdmlogin.c:2726 gui/greeter/greeter_parser.c:997
 #, fuzzy
 msgid "_Session"
 msgstr "Umukoro"
 
 # sc/source\ui\src\sortdlg.src:RID_SCPAGE_SORT_OPTIONS.FT_LANGUAGE.text
-#: gui/gdmlogin.c:2733 gui/greeter/greeter_parser.c:992
+#: gui/mdmlogin.c:2733 gui/greeter/greeter_parser.c:992
 #, fuzzy
 msgid "_Language"
 msgstr "Ururimi"
 
-#: gui/gdmlogin.c:2745 gui/greeter/greeter_system.c:134
+#: gui/mdmlogin.c:2745 gui/greeter/greeter_system.c:134
 msgid "_XDMCP Chooser..."
 msgstr ""
 
-#: gui/gdmlogin.c:2752 gui/greeter/greeter_system.c:141
+#: gui/mdmlogin.c:2752 gui/greeter/greeter_system.c:141
 #: gui/greeter/greeter_system.c:331
 #, fuzzy
 msgid ""
@@ -3121,81 +3121,81 @@ msgid ""
 "machines, if there are any."
 msgstr "Kwemerera Kuri LOG Bihari NIBA"
 
-#: gui/gdmlogin.c:2761 gui/greeter/greeter_system.c:149
+#: gui/mdmlogin.c:2761 gui/greeter/greeter_system.c:149
 msgid "_Configure Login Manager..."
 msgstr ""
 
-#: gui/gdmlogin.c:2768 gui/greeter/greeter_system.c:156
+#: gui/mdmlogin.c:2768 gui/greeter/greeter_system.c:156
 #: gui/greeter/greeter_system.c:351
 #, fuzzy
 msgid ""
-"Configure GDM (this login manager). This will require the root password."
+"Configure MDM (this login manager). This will require the root password."
 msgstr "iyi Ifashayinjira Muyobozi Imizi Ijambobanga..."
 
-#: gui/gdmlogin.c:2782 gui/greeter/greeter_system.c:175
+#: gui/mdmlogin.c:2782 gui/greeter/greeter_system.c:175
 msgid "Reboot your computer"
 msgstr ""
 
-#: gui/gdmlogin.c:2795 gui/greeter/greeter_system.c:187
+#: gui/mdmlogin.c:2795 gui/greeter/greeter_system.c:187
 #, fuzzy
 msgid "Shut down the system so that you may safely turn off the computer."
 msgstr "Hasi Sisitemu Gicurasi Bidakora"
 
-#: gui/gdmlogin.c:2809 gui/greeter/greeter_system.c:200
+#: gui/mdmlogin.c:2809 gui/greeter/greeter_system.c:200
 msgid "Suspend your computer"
 msgstr ""
 
-#: gui/gdmlogin.c:2815 gui/greeter/greeter_parser.c:1002
+#: gui/mdmlogin.c:2815 gui/greeter/greeter_parser.c:1002
 msgid "_Actions"
 msgstr ""
 
-#: gui/gdmlogin.c:2824
+#: gui/mdmlogin.c:2824
 msgid "_Theme"
 msgstr ""
 
-#: gui/gdmlogin.c:2835 gui/greeter/greeter_canvas_item.c:146
+#: gui/mdmlogin.c:2835 gui/greeter/greeter_canvas_item.c:146
 #: gui/greeter/greeter_parser.c:1012
 #, fuzzy
 msgid "_Quit"
 msgstr "Kuvamo"
 
-#: gui/gdmlogin.c:2837 gui/greeter/greeter_canvas_item.c:148
+#: gui/mdmlogin.c:2837 gui/greeter/greeter_canvas_item.c:148
 #: gui/greeter/greeter_parser.c:1007
 #, fuzzy
 msgid "D_isconnect"
 msgstr "Gucomora"
 
 # sfx2/source\toolbox\tbxopdlg.src:TP_CONFIG_OBJECTBAR.STR_SYMBOL.text
-#: gui/gdmlogin.c:2901 gui/greeter/greeter_item_ulist.c:173
+#: gui/mdmlogin.c:2901 gui/greeter/greeter_item_ulist.c:173
 msgid "Icon"
 msgstr "Agashushondanga"
 
 #. markup
-#: gui/gdmlogin.c:3550 gui/gdmlogin.c:3581 gui/gdmlogin.c:3625
+#: gui/mdmlogin.c:3550 gui/mdmlogin.c:3581 gui/mdmlogin.c:3625
 #: gui/greeter/greeter.c:669 gui/greeter/greeter.c:701
 #: gui/greeter/greeter.c:746
 #, fuzzy
 msgid "Cannot start the greeter"
 msgstr "Gutangira"
 
-#: gui/gdmlogin.c:3551 gui/gdmlogin.c:3582
+#: gui/mdmlogin.c:3551 gui/mdmlogin.c:3582
 #, fuzzy, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version.  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr "Verisiyo OYA BIHUYE Verisiyo Ongera utangire Cyangwa"
 
-#: gui/gdmlogin.c:3588 gui/gdmlogin.c:3634 gui/greeter/greeter.c:708
+#: gui/mdmlogin.c:3588 gui/mdmlogin.c:3634 gui/greeter/greeter.c:708
 #: gui/greeter/greeter.c:755
 msgid "Reboot"
 msgstr ""
 
-#: gui/gdmlogin.c:3626
+#: gui/mdmlogin.c:3626
 #, fuzzy, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr "Verisiyo OYA BIHUYE Verisiyo Ongera utangire Cyangwa"
 
@@ -3205,37 +3205,37 @@ msgstr "Verisiyo OYA BIHUYE Verisiyo Ongera utangire Cyangwa"
 # setup2/source\ui\pages\phavefun.src:RESID_PAGE_PAGEHAVEFUN.STR_RESTART_BTN_YES.text
 # #-#-#-#-#  setup2.pot (Gnome 2.12)  #-#-#-#-#
 # setup2/source\ui\pages\vefun.src:RESID_PAGE_PAGEHAVEFUN.STR_RESTART_BTN_YES.text
-#: gui/gdmlogin.c:3632 gui/greeter/greeter.c:753
+#: gui/mdmlogin.c:3632 gui/greeter/greeter.c:753
 msgid "Restart"
 msgstr "Ongera utangire"
 
-#: gui/gdmlogin.c:3664
+#: gui/mdmlogin.c:3664
 #, fuzzy, c-format
 msgid "Can't open DefaultImage: %s. Suspending face browser!"
 msgstr "Gufungura Mucukumbuzi"
 
 #. markup
-#: gui/gdmlogin.c:3828 gui/greeter/greeter.c:1341
+#: gui/mdmlogin.c:3828 gui/greeter/greeter.c:1341
 #, fuzzy
 msgid "Session directory is missing"
 msgstr "bushyinguro ni Ibuze"
 
-#: gui/gdmlogin.c:3830 gui/greeter/greeter.c:1343
+#: gui/mdmlogin.c:3830 gui/greeter/greeter.c:1343
 #, fuzzy
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the gdm "
+"sessions you can use, but you should log in and correct the mdm "
 "configuration."
 msgstr ""
 "Umukoro bushyinguro ni Ibuze Cyangwa ubusa Bihari Gukoresha LOG in Na Iboneza"
 
 #. markup
-#: gui/gdmlogin.c:3854 gui/greeter/greeter.c:1368
+#: gui/mdmlogin.c:3854 gui/greeter/greeter.c:1368
 #, fuzzy
 msgid "Configuration is not correct"
 msgstr "ni OYA"
 
-#: gui/gdmlogin.c:3856 gui/greeter/greeter.c:1370
+#: gui/mdmlogin.c:3856 gui/greeter/greeter.c:1370
 #, fuzzy
 msgid ""
 "The configuration file contains an invalid command line for the login "
@@ -3245,82 +3245,82 @@ msgstr ""
 "Ikiganiro Na Mburabuzi Komandi: Iboneza"
 
 #. markup
-#: gui/gdmlogin.c:3881 gui/greeter/greeter.c:1397
+#: gui/mdmlogin.c:3881 gui/greeter/greeter.c:1397
 #, fuzzy
 msgid "No configuration was found"
 msgstr "Iboneza Byabonetse"
 
-#: gui/gdmlogin.c:3883 gui/greeter/greeter.c:1399
+#: gui/mdmlogin.c:3883 gui/greeter/greeter.c:1399
 #, fuzzy
 msgid ""
-"The configuration was not found.  GDM is using defaults to run this "
-"session.  You should log in and create a configuration file with the GDM "
+"The configuration was not found.  MDM is using defaults to run this "
+"session.  You should log in and create a configuration file with the MDM "
 "configuration program."
 msgstr ""
 "Iboneza OYA Byabonetse ni ikoresha Kuri Gukoresha iyi Umukoro LOG in Na "
 "Kurema a Iboneza IDOSIYE Na: Iboneza Porogaramu"
 
 # sfx2/sdi\sfxslots.src:SID_OPENDOC.text
-#: gui/gdmphotosetup.c:180 gui/gdmsetup.c:1337 gui/gdmsetup.c:1880
+#: gui/mdmphotosetup.c:180 gui/mdmsetup.c:1337 gui/mdmsetup.c:1880
 msgid "Open File"
 msgstr "Gufungura Dosiye"
 
-#: gui/gdmphotosetup.c:198 gui/gdmsetup.c:1352
+#: gui/mdmphotosetup.c:198 gui/mdmsetup.c:1352
 #, fuzzy
 msgid "PNG and JPEG"
 msgstr "Na"
 
 #. markup
-#: gui/gdmphotosetup.c:266
+#: gui/mdmphotosetup.c:266
 #, fuzzy
 msgid "The face browser is not configured"
 msgstr "Mucukumbuzi ni OYA"
 
-#: gui/gdmphotosetup.c:269
+#: gui/mdmphotosetup.c:269
 #, fuzzy
 msgid ""
-"The face browser is not configured in the GDM configuration.  Please ask "
-"your system administrator to enable it in the GDM configurator program."
+"The face browser is not configured in the MDM configuration.  Please ask "
+"your system administrator to enable it in the MDM configurator program."
 msgstr ""
 "Mucukumbuzi ni OYA in Iboneza Sisitemu umuyobozi/ uyobora Kuri Gushoboza in "
 "Porogaramu"
 
-#: gui/gdmphotosetup.c:279 gui/gdmphotosetup.desktop.in.h:2
+#: gui/mdmphotosetup.c:279 gui/mdmphotosetup.desktop.in.h:2
 msgid "Login Photo"
 msgstr ""
 
-#: gui/gdmphotosetup.c:289
+#: gui/mdmphotosetup.c:289
 #, fuzzy
 msgid "Select a photograph to show in the facebrowser:"
 msgstr "a Kuri Garagaza in"
 
 # setup2/source\ui\pages\pasupath.src:RESID_PAGE_PAGEASRV_USERPATH.PB_SEARCH.text
-#: gui/gdmphotosetup.c:315
+#: gui/mdmphotosetup.c:315
 #, fuzzy
 msgid "_Browse"
 msgstr "Gushakisha"
 
 #. markup
-#: gui/gdmphotosetup.c:348
+#: gui/mdmphotosetup.c:348
 #, fuzzy
 msgid "No picture selected."
 msgstr "y'Ishusho Byahiswemo"
 
 #. markup
-#: gui/gdmphotosetup.c:372
+#: gui/mdmphotosetup.c:372
 #, fuzzy
 msgid "Cannot open file"
 msgstr "Gufungura IDOSIYE"
 
-#: gui/gdmphotosetup.c:373
+#: gui/mdmphotosetup.c:373
 #, fuzzy, c-format
 msgid "File %s cannot be opened for writing\n"
 msgstr "Idosiye kugirango"
 
-#: gui/gdmphotosetup.desktop.in.h:1
+#: gui/mdmphotosetup.desktop.in.h:1
 #, fuzzy
 msgid ""
-"Change the picture that will show in the GDM (login manager) face browser"
+"Change the picture that will show in the MDM (login manager) face browser"
 msgstr "y'Ishusho Garagaza in Ifashayinjira Muyobozi Mucukumbuzi"
 
 #.
@@ -3328,50 +3328,50 @@ msgstr "y'Ishusho Garagaza in Ifashayinjira Muyobozi Mucukumbuzi"
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gui/gdmsetup-strings.c:7 gui/gdmsetup.desktop.in.h:2
-#: gui/gdmsetup.glade.h:35
+#: gui/mdmsetup-strings.c:7 gui/mdmsetup.desktop.in.h:2
+#: gui/mdmsetup.glade.h:35
 msgid "Login Screen Setup"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:8 gui/gdmsetup.glade.h:30
+#: gui/mdmsetup-strings.c:8 gui/mdmsetup.glade.h:30
 msgid "Greeter"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:9 gui/gdmsetup-strings.c:25
-#: gui/gdmsetup-strings.c:30 gui/gdmsetup-strings.c:37
-#: gui/gdmsetup-strings.c:41 gui/gdmsetup-strings.c:81
-#: gui/gdmsetup-strings.c:88 gui/gdmsetup-strings.c:90
-#: gui/gdmsetup-strings.c:96 gui/gdmsetup-strings.c:100
-#: gui/gdmsetup-strings.c:107 gui/gdmsetup.glade.h:1
+#: gui/mdmsetup-strings.c:9 gui/mdmsetup-strings.c:25
+#: gui/mdmsetup-strings.c:30 gui/mdmsetup-strings.c:37
+#: gui/mdmsetup-strings.c:41 gui/mdmsetup-strings.c:81
+#: gui/mdmsetup-strings.c:88 gui/mdmsetup-strings.c:90
+#: gui/mdmsetup-strings.c:96 gui/mdmsetup-strings.c:100
+#: gui/mdmsetup-strings.c:107 gui/mdmsetup.glade.h:1
 msgid "    "
 msgstr ""
 
-#: gui/gdmsetup-strings.c:10 gui/gdmsetup.glade.h:33
+#: gui/mdmsetup-strings.c:10 gui/mdmsetup.glade.h:33
 msgid "L_ocal: "
 msgstr ""
 
-#: gui/gdmsetup-strings.c:11 gui/gdmsetup.glade.h:86
+#: gui/mdmsetup-strings.c:11 gui/mdmsetup.glade.h:86
 msgid "_Remote: "
 msgstr ""
 
-#: gui/gdmsetup-strings.c:12 gui/gdmsetup.glade.h:91
+#: gui/mdmsetup-strings.c:12 gui/mdmsetup.glade.h:91
 #, fuzzy
 msgid "_Welcome string: "
 msgstr "Ikurikiranyanyuguti"
 
-#: gui/gdmsetup-strings.c:13 gui/gdmsetup.glade.h:55
+#: gui/mdmsetup-strings.c:13 gui/mdmsetup.glade.h:55
 #, fuzzy, no-c-format
 msgid "Re_mote welcome string (%n = hostname): "
 msgstr "Urakaza neza Ikurikiranyanyuguti Izina ry'inturo:"
 
-#: gui/gdmsetup-strings.c:14 gui/gdmsetup.glade.h:61
+#: gui/mdmsetup-strings.c:14 gui/mdmsetup.glade.h:61
 #, fuzzy, no-c-format
 msgid ""
 "String to be shown in the greeter as welcome.  You can insert %n in here and "
 "it will be replaced by the name of your computer."
 msgstr "Kuri in Nka Urakaza neza Kongeramo in Na ku Izina: Bya"
 
-#: gui/gdmsetup-strings.c:16 gui/gdmsetup.glade.h:63
+#: gui/mdmsetup-strings.c:16 gui/mdmsetup.glade.h:63
 #, fuzzy, no-c-format
 msgid ""
 "String to be shown in the greeter for people logging in remotely with "
@@ -3379,33 +3379,33 @@ msgid ""
 "your computer."
 msgstr "Kuri in kugirango Abantu in Na: Kongeramo in Na ku Izina: Bya"
 
-#: gui/gdmsetup-strings.c:18 gui/gdmsetup.glade.h:12
+#: gui/mdmsetup-strings.c:18 gui/mdmsetup.glade.h:12
 #, fuzzy
 msgid "Always use 24 hour cloc_k format"
 msgstr "Gukoresha ISAHA Imiterere"
 
-#: gui/gdmsetup-strings.c:19 gui/gdmsetup-strings.c:21
+#: gui/mdmsetup-strings.c:19 gui/mdmsetup-strings.c:21
 msgid "GTK+ Greeter"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:20 gui/gdmsetup-strings.c:22
+#: gui/mdmsetup-strings.c:20 gui/mdmsetup-strings.c:22
 msgid "Themed Greeter"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:23
+#: gui/mdmsetup-strings.c:23
 msgid "Disabled"
 msgstr "Yahagaritswe"
 
-#: gui/gdmsetup-strings.c:24 gui/gdmsetup.glade.h:15
+#: gui/mdmsetup-strings.c:24 gui/mdmsetup.glade.h:15
 msgid "Automatic Login"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:26 gui/gdmsetup.glade.h:76
+#: gui/mdmsetup-strings.c:26 gui/mdmsetup.glade.h:76
 #, fuzzy
 msgid "_Automatic login username:"
 msgstr "Ifashayinjira Izina ry'ukoresha"
 
-#: gui/gdmsetup-strings.c:27 gui/gdmsetup.glade.h:83
+#: gui/mdmsetup-strings.c:27 gui/mdmsetup.glade.h:83
 #, fuzzy
 msgid "_Login a user automatically on first bootup"
 msgstr "a Ukoresha: ku buryo bwikora ku Itangira"
@@ -3416,30 +3416,30 @@ msgstr "a Ukoresha: ku buryo bwikora ku Itangira"
 # sc/source\ui\src\filter.src:RID_SCDLG_SPEC_FILTER.FT_DBAREA.text
 # #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
 # sc/source\ui\src\filter.src:RID_SCDLG_PIVOTFILTER.FT_DBAREA.text
-#: gui/gdmsetup-strings.c:28 gui/gdmsetup-strings.c:34 gui/gdmsetup.glade.h:96
+#: gui/mdmsetup-strings.c:28 gui/mdmsetup-strings.c:34 gui/mdmsetup.glade.h:96
 msgid "dummy"
 msgstr "Ishusho"
 
-#: gui/gdmsetup-strings.c:29 gui/gdmsetup.glade.h:65
+#: gui/mdmsetup-strings.c:29 gui/mdmsetup.glade.h:65
 msgid "Timed Login"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:31 gui/gdmsetup.glade.h:90
+#: gui/mdmsetup-strings.c:31 gui/mdmsetup.glade.h:90
 #, fuzzy
 msgid "_Timed login username:"
 msgstr "Ifashayinjira Izina ry'ukoresha"
 
-#: gui/gdmsetup-strings.c:32 gui/gdmsetup.glade.h:88
+#: gui/mdmsetup-strings.c:32 gui/mdmsetup.glade.h:88
 #, fuzzy
 msgid "_Seconds before login:"
 msgstr "Mbere Ifashayinjira"
 
-#: gui/gdmsetup-strings.c:33 gui/gdmsetup.glade.h:36
+#: gui/mdmsetup-strings.c:33 gui/mdmsetup.glade.h:36
 #, fuzzy
 msgid "Login a _user automatically after a specified number of seconds"
 msgstr "a Ukoresha: ku buryo bwikora Nyuma a Umubare Bya amasogonda"
 
-#: gui/gdmsetup-strings.c:35 gui/gdmsetup.glade.h:68
+#: gui/mdmsetup-strings.c:35 gui/mdmsetup.glade.h:68
 msgid "_1 General"
 msgstr ""
 
@@ -3447,18 +3447,18 @@ msgstr ""
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Wizard.Agenda.Logo.Visible.text
 # #-#-#-#-#  officecfg.pot (Gnome 2.12)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Wizard.Letter.Print.Logo.text
-#: gui/gdmsetup-strings.c:36 gui/gdmsetup.glade.h:37
+#: gui/mdmsetup-strings.c:36 gui/mdmsetup.glade.h:37
 msgid "Logo"
 msgstr "ikirango"
 
 # toolkit/source\awt\accessiblestrings.src:RID_STR_ACC_NAME_BROWSEBUTTON.text
-#: gui/gdmsetup-strings.c:38 gui/gdmsetup-strings.c:46
-#: gui/gdmsetup-strings.c:102 gui/gdmsetup.glade.h:17
+#: gui/mdmsetup-strings.c:38 gui/mdmsetup-strings.c:46
+#: gui/mdmsetup-strings.c:102 gui/mdmsetup.glade.h:17
 msgid "Browse"
 msgstr "Gushakisha"
 
 # sw/source\ui\wizard\wizlogo.src:DLG_Lgo_RBtn_NoLogo.text
-#: gui/gdmsetup-strings.c:39 gui/gdmsetup.glade.h:45
+#: gui/mdmsetup-strings.c:39 gui/mdmsetup.glade.h:45
 #, fuzzy
 msgid "No Logo"
 msgstr "Nta kirangantego"
@@ -3467,11 +3467,11 @@ msgstr "Nta kirangantego"
 # officecfg/registry\schema\org\openoffice\Office\WriterWeb.xcs:....Print.Content.Background.text
 # #-#-#-#-#  officecfg.pot (Gnome 2.12)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Print.Content.Background.text
-#: gui/gdmsetup-strings.c:40 gui/gdmsetup.glade.h:16
+#: gui/mdmsetup-strings.c:40 gui/mdmsetup.glade.h:16
 msgid "Background"
 msgstr "Mbuganyuma"
 
-#: gui/gdmsetup-strings.c:42 gui/gdmsetup.glade.h:84
+#: gui/mdmsetup-strings.c:42 gui/mdmsetup.glade.h:84
 #, fuzzy
 msgid "_No background"
 msgstr "Mbuganyuma"
@@ -3480,115 +3480,115 @@ msgstr "Mbuganyuma"
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.text
 # #-#-#-#-#  officecfg.pot (Gnome 2.12)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Enable.text
-#: gui/gdmsetup-strings.c:43 gui/gdmsetup.glade.h:80
+#: gui/mdmsetup-strings.c:43 gui/mdmsetup.glade.h:80
 #, fuzzy
 msgid "_Image"
 msgstr "Ishusho"
 
 # goodies/source\filter.vcl\eps\dlgeps.src:DLG_EXPORT_EPS.RB_COLOR.text
-#: gui/gdmsetup-strings.c:44 gui/gdmsetup.glade.h:78
+#: gui/mdmsetup-strings.c:44 gui/mdmsetup.glade.h:78
 #, fuzzy
 msgid "_Color"
 msgstr "Ibara"
 
-#: gui/gdmsetup-strings.c:45 gui/gdmsetup.glade.h:87
+#: gui/mdmsetup-strings.c:45 gui/mdmsetup.glade.h:87
 #, fuzzy
 msgid "_Scale background image to fit"
 msgstr "Mbuganyuma Ishusho Kuri"
 
-#: gui/gdmsetup-strings.c:47 gui/gdmsetup.glade.h:44
+#: gui/mdmsetup-strings.c:47 gui/mdmsetup.glade.h:44
 msgid "No Background"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:48 gui/gdmsetup.glade.h:85
+#: gui/mdmsetup-strings.c:48 gui/mdmsetup.glade.h:85
 #, fuzzy
 msgid "_Only color on remote displays"
 msgstr "Ibara ku"
 
 # svx/source\items\svxitems.src:RID_SVXITEMS_BACKGROUND_COLOR.text
-#: gui/gdmsetup-strings.c:49 gui/gdmsetup.glade.h:77
+#: gui/mdmsetup-strings.c:49 gui/mdmsetup.glade.h:77
 #, fuzzy
 msgid "_Background color: "
 msgstr "Ibara rya mbuganyuma:"
 
-#: gui/gdmsetup-strings.c:50 gui/gdmsetup.glade.h:50
+#: gui/mdmsetup-strings.c:50 gui/mdmsetup.glade.h:50
 #, fuzzy
 msgid "Pick a color"
 msgstr "a Ibara"
 
-#: gui/gdmsetup-strings.c:51 gui/gdmsetup.glade.h:69
+#: gui/mdmsetup-strings.c:51 gui/mdmsetup.glade.h:69
 msgid "_2 GTK+ Greeter"
 msgstr ""
 
 # svx/source\dialog\rubydialog.src:RID_SVXDLG_RUBY.FT_PREVIEW.text
-#: gui/gdmsetup-strings.c:52 gui/gdmsetup.glade.h:53
+#: gui/mdmsetup-strings.c:52 gui/mdmsetup.glade.h:53
 msgid "Preview:"
 msgstr "Igaragazambere:"
 
-#: gui/gdmsetup-strings.c:53 gui/gdmsetup.glade.h:48
+#: gui/mdmsetup-strings.c:53 gui/mdmsetup.glade.h:48
 #, fuzzy
 msgid "No screenshot available"
 msgstr "Bihari"
 
-#: gui/gdmsetup-strings.c:54 gui/gdmsetup.glade.h:20
+#: gui/mdmsetup-strings.c:54 gui/mdmsetup.glade.h:20
 msgid "Description:"
 msgstr "Umwirondoro"
 
-#: gui/gdmsetup-strings.c:55 gui/gdmsetup.glade.h:18
+#: gui/mdmsetup-strings.c:55 gui/mdmsetup.glade.h:18
 #, fuzzy
 msgid "Copyright:"
 msgstr "Uburenganzira bw'umuhimbyi"
 
 # shell/source\win32\shlxthandler\shlxthdl.lng:%AUTHOR_COLON%.text
-#: gui/gdmsetup-strings.c:56 gui/gdmsetup.glade.h:14
+#: gui/mdmsetup-strings.c:56 gui/mdmsetup.glade.h:14
 msgid "Author:"
 msgstr "Umwanditsi:"
 
-#: gui/gdmsetup-strings.c:57 gui/gdmsetup.glade.h:94
+#: gui/mdmsetup-strings.c:57 gui/mdmsetup.glade.h:94
 msgid ""
 "description\n"
 "widget"
 msgstr ""
 
 # sc/source\ui\miscdlgs\acredlin.src:RID_POPUP_CHANGES.SC_SUB_SORT.SC_SORT_AUTHOR.text
-#: gui/gdmsetup-strings.c:59 gui/gdmsetup.glade.h:92
+#: gui/mdmsetup-strings.c:59 gui/mdmsetup.glade.h:92
 #, fuzzy
 msgid "author"
 msgstr "Umwanditsi"
 
-#: gui/gdmsetup-strings.c:60 gui/gdmsetup.glade.h:93
+#: gui/mdmsetup-strings.c:60 gui/mdmsetup.glade.h:93
 #, fuzzy
 msgid "copyright"
 msgstr "Uburenganzira bw'umuhimbyi"
 
-#: gui/gdmsetup-strings.c:61 gui/gdmsetup.glade.h:82
+#: gui/mdmsetup-strings.c:61 gui/mdmsetup.glade.h:82
 #, fuzzy
 msgid "_Install new theme"
 msgstr "Gishya"
 
-#: gui/gdmsetup-strings.c:62 gui/gdmsetup.glade.h:79
+#: gui/mdmsetup-strings.c:62 gui/mdmsetup.glade.h:79
 msgid "_Delete theme"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:63 gui/gdmsetup.glade.h:70
+#: gui/mdmsetup-strings.c:63 gui/mdmsetup.glade.h:70
 msgid "_3 Themed Greeter"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:64 gui/gdmsetup.glade.h:89
+#: gui/mdmsetup-strings.c:64 gui/mdmsetup.glade.h:89
 #, fuzzy
 msgid "_Show choosable user images (Face Browser)"
 msgstr "Ukoresha: Ishusho"
 
-#: gui/gdmsetup-strings.c:65 gui/gdmsetup.glade.h:81
+#: gui/mdmsetup-strings.c:65 gui/mdmsetup.glade.h:81
 msgid "_Include All Users"
 msgstr ""
 
 # sc/source\ui\src\miscdlgs.src:RID_SCDLG_GROUP.STR_GROUP.text
-#: gui/gdmsetup-strings.c:66 gui/gdmsetup.glade.h:32
+#: gui/mdmsetup-strings.c:66 gui/mdmsetup.glade.h:32
 msgid "Include"
 msgstr "Gushyiramo"
 
-#: gui/gdmsetup-strings.c:67 gui/gdmsetup.glade.h:66
+#: gui/mdmsetup-strings.c:67 gui/mdmsetup.glade.h:66
 #, fuzzy
 msgid "User to Include"
 msgstr "Kuri"
@@ -3597,7 +3597,7 @@ msgstr "Kuri"
 # basctl/source\basicide\basidesh.src:RID_POPUP_TABBAR.SID_BASICIDE_DELETECURRENT.text
 # #-#-#-#-#  basctl.pot (Gnome 2.12)  #-#-#-#-#
 # basctl/source\basicide\brkdlg.src:RID_BASICIDE_BREAKPOINTDLG.RID_PB_DEL.text
-#: gui/gdmsetup-strings.c:70 gui/gdmsetup-strings.c:77 gui/gdmsetup.glade.h:19
+#: gui/mdmsetup-strings.c:70 gui/mdmsetup-strings.c:77 gui/mdmsetup.glade.h:19
 msgid "Delete"
 msgstr "Gusiba"
 
@@ -3613,7 +3613,7 @@ msgstr "Gusiba"
 # sc/source\ui\src\filter.src:RID_SCDLG_PIVOTFILTER.LB_COND2.2.text
 # #-#-#-#-#  sc.pot (Gnome 2.12)  #-#-#-#-#
 # sc/source\ui\src\filter.src:RID_SCDLG_PIVOTFILTER.LB_COND3.2.text
-#: gui/gdmsetup-strings.c:71 gui/gdmsetup.glade.h:3
+#: gui/mdmsetup-strings.c:71 gui/mdmsetup.glade.h:3
 msgid "<"
 msgstr "<"
 
@@ -3629,52 +3629,52 @@ msgstr "<"
 # sc/source\ui\src\filter.src:RID_SCDLG_PIVOTFILTER.LB_COND2.3.text
 # #-#-#-#-#  sc.pot (Gnome 2.12)  #-#-#-#-#
 # sc/source\ui\src\filter.src:RID_SCDLG_PIVOTFILTER.LB_COND3.3.text
-#: gui/gdmsetup-strings.c:72 gui/gdmsetup.glade.h:4
+#: gui/mdmsetup-strings.c:72 gui/mdmsetup.glade.h:4
 msgid ">"
 msgstr ">"
 
-#: gui/gdmsetup-strings.c:73 gui/gdmsetup.glade.h:24
+#: gui/mdmsetup-strings.c:73 gui/mdmsetup.glade.h:24
 msgid "Exclude"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:74 gui/gdmsetup.glade.h:67
+#: gui/mdmsetup-strings.c:74 gui/mdmsetup.glade.h:67
 #, fuzzy
 msgid "User to exclude"
 msgstr "Kuri"
 
 # offmgr/source\offapp\dialog\fontsubs.src:RID_SVX_FONT_SUBSTITUTION.TBX_SUBSTNEWDEL.BT_SUBSTAPPLY.text
-#: gui/gdmsetup-strings.c:78 gui/gdmsetup.glade.h:13
+#: gui/mdmsetup-strings.c:78 gui/mdmsetup.glade.h:13
 msgid "Apply"
 msgstr "Gukurikiza"
 
-#: gui/gdmsetup-strings.c:79 gui/gdmsetup.glade.h:71
+#: gui/mdmsetup-strings.c:79 gui/mdmsetup.glade.h:71
 msgid "_4 Face Browser"
 msgstr ""
 
 # basctl/source\basicide\moduldlg.src:RID_DLG_LIBS.RID_FL_OPTIONS.text
-#: gui/gdmsetup-strings.c:80 gui/gdmsetup-strings.c:95 gui/gdmsetup.glade.h:49
+#: gui/mdmsetup-strings.c:80 gui/mdmsetup-strings.c:95 gui/mdmsetup.glade.h:49
 msgid "Options"
 msgstr "Amahitamo"
 
-#: gui/gdmsetup-strings.c:82 gui/gdmsetup.glade.h:22
+#: gui/mdmsetup-strings.c:82 gui/mdmsetup.glade.h:22
 msgid "Enable _XDMCP"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:83 gui/gdmsetup.glade.h:6
+#: gui/mdmsetup-strings.c:83 gui/mdmsetup.glade.h:6
 #, fuzzy
-msgid "Allow _root to login with GDM"
+msgid "Allow _root to login with MDM"
 msgstr "Imizi Kuri Ifashayinjira Na:"
 
-#: gui/gdmsetup-strings.c:84 gui/gdmsetup.glade.h:8
+#: gui/mdmsetup-strings.c:84 gui/mdmsetup.glade.h:8
 #, fuzzy
-msgid "Allow root to login r_emotely with GDM"
+msgid "Allow root to login r_emotely with MDM"
 msgstr "Imizi Kuri Ifashayinjira Na:"
 
-#: gui/gdmsetup-strings.c:85 gui/gdmsetup.glade.h:7
+#: gui/mdmsetup-strings.c:85 gui/mdmsetup.glade.h:7
 msgid "Allow remote _timed logins"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:86 gui/gdmsetup.glade.h:58
+#: gui/mdmsetup-strings.c:86 gui/mdmsetup.glade.h:58
 #, fuzzy
 msgid ""
 "Show the \"Actions\" menu (formerly known as the \"System\" menu).  If not "
@@ -3684,130 +3684,130 @@ msgstr ""
 "Ibikubiyemo Nka Ibikubiyemo OYA Gushyiraho Ntacyo Bya Sisitemu Amabwiriza "
 "Bihari iyi Zimya Kugena Imiterere"
 
-#: gui/gdmsetup-strings.c:87 gui/gdmsetup.glade.h:57
+#: gui/mdmsetup-strings.c:87 gui/mdmsetup.glade.h:57
 #, fuzzy
 msgid "Show _actions menu"
 msgstr "Ibikubiyemo"
 
-#: gui/gdmsetup-strings.c:89 gui/gdmsetup.glade.h:5
+#: gui/mdmsetup-strings.c:89 gui/mdmsetup.glade.h:5
 #, fuzzy
 msgid "Allow _configuration from the login screen"
 msgstr "Iboneza Bivuye Ifashayinjira Mugaragaza"
 
-#: gui/gdmsetup-strings.c:91 gui/gdmsetup.glade.h:9
+#: gui/mdmsetup-strings.c:91 gui/mdmsetup.glade.h:9
 #, fuzzy
 msgid "Allow running _XDMCP chooser from the login screen"
 msgstr "Bivuye Ifashayinjira Mugaragaza"
 
-#: gui/gdmsetup-strings.c:92 gui/gdmsetup.glade.h:11
+#: gui/mdmsetup-strings.c:92 gui/mdmsetup.glade.h:11
 #, fuzzy
 msgid ""
 "Always _disallow TCP connections to X server (disables all remote "
 "connections)"
 msgstr "Ukwihuza Kuri Seriveri Byose Ukwihuza"
 
-#: gui/gdmsetup-strings.c:93 gui/gdmsetup.glade.h:56
+#: gui/mdmsetup-strings.c:93 gui/mdmsetup.glade.h:56
 #, fuzzy
 msgid "Retry _delay (seconds) :"
 msgstr "Wongereugerageze Gutinda amasogonda"
 
-#: gui/gdmsetup-strings.c:94 gui/gdmsetup.glade.h:72
+#: gui/mdmsetup-strings.c:94 gui/mdmsetup.glade.h:72
 msgid "_5 Security"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:97 gui/gdmsetup.glade.h:23
+#: gui/mdmsetup-strings.c:97 gui/mdmsetup.glade.h:23
 #, fuzzy
 msgid "Enable _accessibility modules"
 msgstr "Ubushobozi bwo gukoreshwa Modire"
 
-#: gui/gdmsetup-strings.c:98 gui/gdmsetup.glade.h:10
+#: gui/mdmsetup-strings.c:98 gui/mdmsetup.glade.h:10
 #, fuzzy
 msgid "Allow theme selection in _GTK+ Greeter."
 msgstr "Ihitamo in"
 
-#: gui/gdmsetup-strings.c:99 gui/gdmsetup.glade.h:38
+#: gui/mdmsetup-strings.c:99 gui/mdmsetup.glade.h:38
 #, fuzzy
 msgid "Make a _sound when login window is ready"
 msgstr "a Ijwi Ryari: Ifashayinjira Idirishya ni Cyiteguye"
 
-#: gui/gdmsetup-strings.c:101 gui/gdmsetup.glade.h:59
+#: gui/mdmsetup-strings.c:101 gui/mdmsetup.glade.h:59
 #, fuzzy
 msgid "Sound file:"
 msgstr "IDOSIYE"
 
-#: gui/gdmsetup-strings.c:103 gui/gdmsetup.glade.h:46
+#: gui/mdmsetup-strings.c:103 gui/mdmsetup.glade.h:46
 msgid "No Sound"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:104 gui/gdmsetup.glade.h:64
+#: gui/mdmsetup-strings.c:104 gui/mdmsetup.glade.h:64
 msgid "Test Sound"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:105 gui/gdmsetup.glade.h:73
+#: gui/mdmsetup-strings.c:105 gui/mdmsetup.glade.h:73
 msgid "_6 Accessibility"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:106 gui/gdmsetup.glade.h:47
+#: gui/mdmsetup-strings.c:106 gui/mdmsetup.glade.h:47
 #, fuzzy
 msgid ""
 "No XDMCP support in the binary.  To enable XDMCP support you must recompile "
-"GDM with the XDMCP libraries."
+"MDM with the XDMCP libraries."
 msgstr "Gushigikira in Nyabibiri Gushoboza Gushigikira Na: Amasomero"
 
-#: gui/gdmsetup-strings.c:108 gui/gdmsetup.glade.h:31
+#: gui/mdmsetup-strings.c:108 gui/mdmsetup.glade.h:31
 #, fuzzy
 msgid "Honour _indirect requests"
 msgstr "BUZIGUYE"
 
-#: gui/gdmsetup-strings.c:109 gui/gdmsetup.glade.h:34
+#: gui/mdmsetup-strings.c:109 gui/mdmsetup.glade.h:34
 #, fuzzy
 msgid "Listen on _UDP port: "
 msgstr "ku Umuyoboro"
 
-#: gui/gdmsetup-strings.c:110 gui/gdmsetup.glade.h:40
+#: gui/mdmsetup-strings.c:110 gui/mdmsetup.glade.h:40
 msgid "Maximum _pending requests:"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:111 gui/gdmsetup.glade.h:39
+#: gui/mdmsetup-strings.c:111 gui/mdmsetup.glade.h:39
 #, fuzzy
 msgid "Max p_ending indirect requests:"
 msgstr "BUZIGUYE"
 
-#: gui/gdmsetup-strings.c:112 gui/gdmsetup.glade.h:41
+#: gui/mdmsetup-strings.c:112 gui/mdmsetup.glade.h:41
 msgid "Maximum _remote sessions:"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:113 gui/gdmsetup.glade.h:42
+#: gui/mdmsetup-strings.c:113 gui/mdmsetup.glade.h:42
 #, fuzzy
 msgid "Maximum _wait time:"
 msgstr "Tegereza Igihe"
 
-#: gui/gdmsetup-strings.c:114 gui/gdmsetup.glade.h:43
+#: gui/mdmsetup-strings.c:114 gui/mdmsetup.glade.h:43
 #, fuzzy
 msgid "Maximum indirect w_ait time:"
 msgstr "BUZIGUYE Tegereza Igihe"
 
-#: gui/gdmsetup-strings.c:115 gui/gdmsetup.glade.h:21
+#: gui/mdmsetup-strings.c:115 gui/mdmsetup.glade.h:21
 #, fuzzy
 msgid "Displays per _host:"
 msgstr "Ubuturo"
 
-#: gui/gdmsetup-strings.c:116 gui/gdmsetup.glade.h:51
+#: gui/mdmsetup-strings.c:116 gui/mdmsetup.glade.h:51
 #, fuzzy
 msgid "Pin_g interval (seconds):"
 msgstr "Intera amasogonda"
 
-#: gui/gdmsetup-strings.c:117 gui/gdmsetup.glade.h:52
+#: gui/mdmsetup-strings.c:117 gui/mdmsetup.glade.h:52
 #, fuzzy
 msgid "Ping interval (seconds):"
 msgstr "Intera amasogonda"
 
-#: gui/gdmsetup-strings.c:118 gui/gdmsetup.glade.h:74
+#: gui/mdmsetup-strings.c:118 gui/mdmsetup.glade.h:74
 msgid "_7 XDMCP"
 msgstr ""
 
 #. markup
-#: gui/gdmsetup.c:194
+#: gui/mdmsetup.c:194
 #, fuzzy
 msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
@@ -3815,79 +3815,79 @@ msgid ""
 msgstr "Ikosa Kuri Umuntu Ifashayinjira Byose Gicurasi INGARUKA"
 
 #. markup
-#: gui/gdmsetup.c:572
+#: gui/mdmsetup.c:572
 #, fuzzy
 msgid ""
 "Autologin or timed login to the superuser (root) account is not allowed."
 msgstr "Cyangwa Ifashayinjira Kuri Imizi Aderesi ni OYA"
 
 # goodies/source\filter.vcl\eps\dlgeps.src:DLG_EXPORT_EPS.RB_COMPRESSION_NONE.text
-#: gui/gdmsetup.c:1779 gui/gdmsetup.c:1809 gui/gdmsetup.c:1936
+#: gui/mdmsetup.c:1779 gui/mdmsetup.c:1809 gui/mdmsetup.c:1936
 msgid "None"
 msgstr "Nta na kimwe"
 
 # 146
-#: gui/gdmsetup.c:1888
+#: gui/mdmsetup.c:1888
 msgid "All files"
 msgstr "amadosiye yose"
 
-#: gui/gdmsetup.c:2471
+#: gui/mdmsetup.c:2471
 #, fuzzy
 msgid "Archive is not of a subdirectory"
 msgstr "ni OYA Bya a"
 
-#: gui/gdmsetup.c:2479
+#: gui/mdmsetup.c:2479
 #, fuzzy
 msgid "Archive is not of a single subdirectory"
 msgstr "ni OYA Bya a UMWE"
 
-#: gui/gdmsetup.c:2503 gui/gdmsetup.c:2583
+#: gui/mdmsetup.c:2503 gui/mdmsetup.c:2583
 #, fuzzy
 msgid "File not a tar.gz or tar archive"
 msgstr "Idosiye OYA a Cyangwa"
 
-#: gui/gdmsetup.c:2505
+#: gui/mdmsetup.c:2505
 #, fuzzy
-msgid "Archive does not include a GdmGreeterTheme.info file"
+msgid "Archive does not include a MdmGreeterTheme.info file"
 msgstr "OYA Gushyiramo a Ibisobanuro IDOSIYE"
 
-#: gui/gdmsetup.c:2527
+#: gui/mdmsetup.c:2527
 #, fuzzy
 msgid "File does not exist"
 msgstr "Idosiye OYA"
 
 #. markup
-#: gui/gdmsetup.c:2641
+#: gui/mdmsetup.c:2641
 #, fuzzy
 msgid "No file selected"
 msgstr "IDOSIYE Byahiswemo"
 
 #. markup
-#: gui/gdmsetup.c:2669
+#: gui/mdmsetup.c:2669
 #, fuzzy
 msgid "Not a theme archive"
 msgstr "a"
 
-#: gui/gdmsetup.c:2670
+#: gui/mdmsetup.c:2670
 #, fuzzy, c-format
 msgid "Details: %s"
 msgstr "Birambuye<<"
 
 #. FIXME: if exists already perhaps we could also have an
 #. * option to change the dir name
-#: gui/gdmsetup.c:2688
+#: gui/mdmsetup.c:2688
 #, fuzzy, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
 msgstr "bushyinguro Kuri"
 
 #. markup
-#: gui/gdmsetup.c:2774
+#: gui/mdmsetup.c:2774
 #, fuzzy
 msgid "Some error occurred when installing the theme"
 msgstr "Ikosa Ryari: gukora iyinjizaporogaramu:%s"
 
-#: gui/gdmsetup.c:2814
+#: gui/mdmsetup.c:2814
 #, fuzzy
 msgid "Select new theme archive to install"
 msgstr "Gishya Kuri Kwinjiza porogaramu"
@@ -3896,25 +3896,25 @@ msgstr "Gishya Kuri Kwinjiza porogaramu"
 # setup2/source\ui\pages\plang.src:RESID_PAGE_PAGELANGUAGE.STR_PROG.text
 # #-#-#-#-#  setup2.pot (Gnome 2.12)  #-#-#-#-#
 # setup2/source\uibase\agentdlg.src:RC_AGENTDLG.RESID_DLG_AGENT_STR_INSTALL.text
-#: gui/gdmsetup.c:2818
+#: gui/mdmsetup.c:2818
 #, fuzzy
 msgid "_Install"
 msgstr "Kwinjiza porogaramu"
 
-#: gui/gdmsetup.c:2882
+#: gui/mdmsetup.c:2882
 #, fuzzy, c-format
 msgid "Do you really wish to remove theme '%s' from the system?"
 msgstr "Kuri Gukuraho... Bivuye Sisitemu"
 
-#: gui/gdmsetup.c:2900
+#: gui/mdmsetup.c:2900
 msgid "_Remove Theme"
 msgstr ""
 
 #. This is the temporary help dialog
-#: gui/gdmsetup.c:3095
+#: gui/mdmsetup.c:3095
 #, fuzzy, c-format
 msgid ""
-"This configuration window changes settings for the GDM daemon, which is the "
+"This configuration window changes settings for the MDM daemon, which is the "
 "graphical login screen for GNOME.  Changes that you make will take effect "
 "immediately.\n"
 "\n"
@@ -3930,24 +3930,24 @@ msgstr ""
 "Mucukumbuzi Icyiciro"
 
 #. markup
-#: gui/gdmsetup.c:3507
+#: gui/mdmsetup.c:3507
 #, fuzzy
-msgid "You must be the superuser (root) to configure GDM."
+msgid "You must be the superuser (root) to configure MDM."
 msgstr "Imizi Kuri Kugena Imiterere"
 
 #. EOF
-#: gui/gdmsetup.desktop.in.h:1
+#: gui/mdmsetup.desktop.in.h:1
 #, fuzzy
 msgid "Configure the login screen (GNOME Display Manager)"
 msgstr "i Ifashayinjira Mugaragaza"
 
-#: gui/gdmsetup.glade.h:25
+#: gui/mdmsetup.glade.h:25
 msgid ""
 "GTK+ Greeter\n"
 "Themed Greeter"
 msgstr ""
 
-#: gui/gdmsetup.glade.h:27
+#: gui/mdmsetup.glade.h:27
 msgid ""
 "GTK+ Greeter\n"
 "Themed Greeter\n"
@@ -3958,16 +3958,16 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version.\n"
-"You have probably just upgraded gdm.\n"
-"Please restart the gdm daemon or reboot the computer."
+"You have probably just upgraded mdm.\n"
+"Please restart the mdm daemon or reboot the computer."
 msgstr "Verisiyo OYA BIHUYE Verisiyo Ongera utangire Cyangwa"
 
 #: gui/greeter/greeter.c:747
 #, fuzzy, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).\n"
-"You have probably just upgraded gdm.\n"
-"Please restart the gdm daemon or reboot the computer."
+"You have probably just upgraded mdm.\n"
+"Please restart the mdm daemon or reboot the computer."
 msgstr "Verisiyo OYA BIHUYE Verisiyo Ongera utangire Cyangwa"
 
 #: gui/greeter/greeter.c:1176
@@ -4002,7 +4002,7 @@ msgstr "Ikosa Itangira... Na Mburabuzi OYA Kuri Gutangira Bisanzwe"
 #, fuzzy
 msgid ""
 "I could not start the standard greeter.  This display will abort and you may "
-"have to login another way and fix the installation of gdm"
+"have to login another way and fix the installation of mdm"
 msgstr ""
 "OYA Gutangira Bisanzwe Kugaragaza Kureka Na Gicurasi Kuri Ifashayinjira Na "
 "iyinjizaporogaramu Bya"
@@ -4124,52 +4124,52 @@ msgstr ""
 msgid "Confi_gure the login manager"
 msgstr "Ifashayinjira Muyobozi"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:1
 #, fuzzy
 msgid "(c) 2002 Bond, James Bond"
 msgstr "(C"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:2
 msgid "Bond, James Bond"
 msgstr ""
 
 # svx/source\svdraw\svdstr.src:STR_ObjNamePluralCIRC.text
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:3
 msgid "Circles"
 msgstr "Inziga"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:4
 #, fuzzy
 msgid "Theme with blue circles"
 msgstr "Na: Ubururu Inziga"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:1
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:1
 #, fuzzy
 msgid "(c) 2002 GNOME"
 msgstr "(C"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:2
 #, fuzzy
 msgid "GNOME Art variation of Circles with a Face Browser"
 msgstr "Bya Na: a"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:3
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:3
 msgid "GNOME Artists"
 msgstr ""
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:4
 #, fuzzy
 msgid "Happy GNOME with Browser"
 msgstr "Na:"
 
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:2
 #, fuzzy
 msgid "GNOME Art variation of Circles"
 msgstr "Bya"
 
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME"
 msgstr ""
 
@@ -4186,12 +4186,12 @@ msgstr "Kuri Gukoresha ni Kuri"
 msgid "Cannot open gestures file: %s\n"
 msgstr "Gufungura IDOSIYE"
 
-#: utils/gdmaskpass.c:26
+#: utils/mdmaskpass.c:26
 #, fuzzy, c-format
-msgid "gdmaskpass only runs as root\n"
+msgid "mdmaskpass only runs as root\n"
 msgstr "Nka"
 
-#: utils/gdmaskpass.c:42 utils/gdmaskpass.c:48
+#: utils/mdmaskpass.c:42 utils/mdmaskpass.c:48
 #, c-format
 msgid "Authentication failure!\n"
 msgstr ""

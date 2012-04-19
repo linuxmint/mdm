@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2001 George Lebl
@@ -28,19 +28,19 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "gdm.h"
-#include "gdmwm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
-#include "gdmlanguages.h"
+#include "mdm.h"
+#include "mdmwm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
+#include "mdmlanguages.h"
 
-#include "gdm-socket-protocol.h"
+#include "mdm-socket-protocol.h"
 
 #define LAST_LANGUAGE "Last"
 #define DEFAULT_LANGUAGE "Default"
 
 /*
- * This function does nothing for gdmlogin, but for gdmgreeter it sets the
+ * This function does nothing for mdmlogin, but for mdmgreeter it sets the
  * custom list when the language list has changed in the language dialog
  * (launched from language button or F10 menu)
  */
@@ -54,7 +54,7 @@ static gchar        *dialog_selected_language = NULL;
 static gint          dont_savelang            = GTK_RESPONSE_YES;
 static gboolean      always_restart           = FALSE;
 
-#include "gdm-common.h"
+#include "mdm-common.h"
 
 typedef struct _Language Language;
 struct _Language {
@@ -321,7 +321,7 @@ static Language languages [] = {
 static GHashTable *lang_names = NULL;
 
 static void
-gdm_lang_init (void)
+mdm_lang_init (void)
 {
 	int i;
 	if (lang_names != NULL)
@@ -408,12 +408,12 @@ find_lang (const char *language, gboolean *clean)
 }
 
 gboolean
-gdm_lang_name_translated (const char *language)
+mdm_lang_name_translated (const char *language)
 {
 	Language *lang;
 	gboolean clean;
 
-	gdm_lang_init ();
+	mdm_lang_init ();
 
 	lang = find_lang (language, &clean);
 	if (lang == NULL)
@@ -426,7 +426,7 @@ gdm_lang_name_translated (const char *language)
 }
 
 char *
-gdm_lang_name (const char *language,
+mdm_lang_name (const char *language,
 	       gboolean never_encoding,
 	       gboolean no_group,
 	       gboolean untranslated,
@@ -437,7 +437,7 @@ gdm_lang_name (const char *language,
 	gboolean clean;
 	const char *encoding;
 
-	gdm_lang_init ();
+	mdm_lang_init ();
 
 	lang = find_lang (language, &clean);
 	if (lang == NULL)
@@ -480,13 +480,13 @@ gdm_lang_name (const char *language,
 
 /* NULL if not found */
 char *
-gdm_lang_untranslated_name (const char *language,
+mdm_lang_untranslated_name (const char *language,
 			    gboolean markup)
 {
 	Language *lang;
 	gboolean clean;
 
-	gdm_lang_init ();
+	mdm_lang_init ();
 
 	lang = find_lang (language, &clean);
 	if (lang == NULL)
@@ -496,7 +496,7 @@ gdm_lang_untranslated_name (const char *language,
 }
 
 const char *
-gdm_lang_group1 (void)
+mdm_lang_group1 (void)
 {
 	/* This should be the same as in the front of the language strings
 	 * else the languages will appear in the "Other" submenu */
@@ -504,7 +504,7 @@ gdm_lang_group1 (void)
 }
 
 const char *
-gdm_lang_group2 (void)
+mdm_lang_group2 (void)
 {
 	/* This should be the same as in the front of the language strings
 	 * else the languages will appear in the "Other" submenu */
@@ -546,7 +546,7 @@ lang_collate (gconstpointer a, gconstpointer b)
 }
 
 GList *
-gdm_lang_read_locale_file (const char *locale_file)
+mdm_lang_read_locale_file (const char *locale_file)
 {
 	FILE *langlist;
 	char curline[256];
@@ -565,7 +565,7 @@ gdm_lang_read_locale_file (const char *locale_file)
 	if (langlist == NULL)
 		return NULL;
 
-	gdm_lang_init ();
+	mdm_lang_init ();
 
 	dupcheck = g_hash_table_new (g_str_hash, g_str_equal);
 
@@ -656,18 +656,18 @@ gdm_lang_read_locale_file (const char *locale_file)
 }
 
 GtkListStore *
-gdm_lang_get_model (void)
+mdm_lang_get_model (void)
 {
    return lang_model;
 }
 
 void
-gdm_lang_initialize_model (gchar * locale_file)
+mdm_lang_initialize_model (gchar * locale_file)
 {
   GList *list, *li;
   GtkTreeIter iter;
 
-  list = gdm_lang_read_locale_file (locale_file);
+  list = mdm_lang_read_locale_file (locale_file);
 
   lang_model = gtk_list_store_new (NUM_COLUMNS,
 				   G_TYPE_STRING,
@@ -696,18 +696,18 @@ gdm_lang_initialize_model (gchar * locale_file)
 
       li->data = NULL;
 
-      if (!gdm_common_locale_is_displayable (lang)) {
+      if (!mdm_common_locale_is_displayable (lang)) {
         g_free (lang);
         continue;
       }
 
-      name = gdm_lang_name (lang,
+      name = mdm_lang_name (lang,
 			    FALSE /* never_encoding */,
 			    TRUE /* no_group */,
 			    FALSE /* untranslated */,
 			    FALSE /* markup */);
 
-      untranslated = gdm_lang_untranslated_name (lang,
+      untranslated = mdm_lang_untranslated_name (lang,
 						 TRUE /* markup */);
 
       gtk_list_store_append (lang_model, &iter);
@@ -725,13 +725,13 @@ gdm_lang_initialize_model (gchar * locale_file)
 }
 
 gint
-gdm_lang_get_savelang_setting (void)
+mdm_lang_get_savelang_setting (void)
 {
   return dont_savelang;
 }
 
 gchar *
-gdm_lang_check_language (const char *old_language)
+mdm_lang_check_language (const char *old_language)
 {
   gchar *retval = NULL;
 
@@ -759,7 +759,7 @@ gdm_lang_check_language (const char *old_language)
 	  if (strcmp (current_language, DEFAULT_LANGUAGE) == 0)
 	    current_name = g_strdup (_("System Default"));
 	  else
-	    current_name = gdm_lang_name (current_language,
+	    current_name = mdm_lang_name (current_language,
 					  FALSE /* never_encoding */,
 					  TRUE /* no_group */,
 					  TRUE /* untranslated */,
@@ -767,7 +767,7 @@ gdm_lang_check_language (const char *old_language)
 	  if (strcmp (old_language, "") == 0)
 	    saved_name = g_strdup (_("System Default"));
 	  else
-	    saved_name = gdm_lang_name (old_language,
+	    saved_name = mdm_lang_name (old_language,
 					FALSE /* never_encoding */,
 					TRUE /* no_group */,
 					TRUE /* untranslated */,
@@ -780,7 +780,7 @@ gdm_lang_check_language (const char *old_language)
 	  g_free (current_name);
 	  g_free (saved_name);
 
-	  dont_savelang = gdm_wm_query_dialog (primary_message, secondary_message,
+	  dont_savelang = mdm_wm_query_dialog (primary_message, secondary_message,
 		_("Just For _This Session"), _("Make _Default"), TRUE);
 	  g_free (primary_message);
 	  g_free (secondary_message);
@@ -825,7 +825,7 @@ tree_row_activated (GtkTreeView         *view,
 }
 
 static void
-gdm_lang_setup_treeview (void)
+mdm_lang_setup_treeview (void)
 {
   if (dialog == NULL)
     {
@@ -902,8 +902,8 @@ gdm_lang_setup_treeview (void)
       gtk_box_pack_start (GTK_BOX (main_vbox),
 			  swindow, TRUE, TRUE, 0);
       gtk_window_set_default_size (GTK_WINDOW (dialog),
-				   MIN (400, gdm_wm_screen.width),
-				   MIN (600, gdm_wm_screen.height));
+				   MIN (400, mdm_wm_screen.width),
+				   MIN (600, mdm_wm_screen.height));
       g_signal_connect (G_OBJECT (gtk_tree_view_get_selection (GTK_TREE_VIEW (tv))),
 			"changed",
 			(GCallback) selection_changed,
@@ -918,7 +918,7 @@ gdm_lang_setup_treeview (void)
 }
 
 gint
-gdm_lang_ask_restart (gchar *language)
+mdm_lang_ask_restart (gchar *language)
 {
 	gchar *firstmsg;
 	gchar *secondmsg;
@@ -935,7 +935,7 @@ gdm_lang_ask_restart (gchar *language)
 	                             login,
 	                             language);
 
-	response = gdm_wm_query_dialog (firstmsg, secondmsg, _("_Yes"), _("_No"), FALSE);
+	response = mdm_wm_query_dialog (firstmsg, secondmsg, _("_Yes"), _("_No"), FALSE);
 
 	g_free (firstmsg);
 	g_free (secondmsg);
@@ -944,13 +944,13 @@ gdm_lang_ask_restart (gchar *language)
 }
 
 static void
-gdm_lang_set_restart_state (gboolean do_restart)
+mdm_lang_set_restart_state (gboolean do_restart)
 {
   always_restart = do_restart;
 }
 
 void
-gdm_lang_set_restart_dialog (char *language)
+mdm_lang_set_restart_dialog (char *language)
 {
    /*
     * Don't do anything if the language is already set to
@@ -963,16 +963,16 @@ gdm_lang_set_restart_dialog (char *language)
        gint response = GTK_RESPONSE_YES;
 
        if (strcmp (language, LAST_LANGUAGE))
-         response = gdm_lang_ask_restart (language);
+         response = mdm_lang_ask_restart (language);
 
-       gdm_lang_set (language);
+       mdm_lang_set (language);
 
        if (strcmp (language, LAST_LANGUAGE) &&
           (response == GTK_RESPONSE_YES))
          {
            printf ("%c%c%c%c%s\n", STX,
                    BEL,
-                   GDM_INTERRUPT_SELECT_LANG,
+                   MDM_INTERRUPT_SELECT_LANG,
                    response == GTK_RESPONSE_YES ? 1 : 0,
                    language);
            fflush (stdout);
@@ -982,7 +982,7 @@ gdm_lang_set_restart_dialog (char *language)
 }
 
 void
-gdm_lang_set (char *language)
+mdm_lang_set (char *language)
 {
    char *locale;
    GtkTreeSelection *selection;
@@ -992,7 +992,7 @@ gdm_lang_set (char *language)
    current_language = g_strdup (language);
 
    if (dialog == NULL)
-     gdm_lang_setup_treeview ();
+     mdm_lang_setup_treeview ();
 
    if (language == NULL)
       return;
@@ -1022,15 +1022,15 @@ gdm_lang_set (char *language)
  * cannot depend on callback data being passed in.
  */
 void
-gdm_lang_handler (gpointer user_data)
+mdm_lang_handler (gpointer user_data)
 {
   if (dialog == NULL)
-    gdm_lang_setup_treeview ();
+    mdm_lang_setup_treeview ();
 
   gtk_widget_show_all (dialog);
-  gdm_wm_center_window (GTK_WINDOW (dialog));
+  mdm_wm_center_window (GTK_WINDOW (dialog));
 
-  gdm_wm_no_login_focus_push ();
+  mdm_wm_no_login_focus_push ();
   if (tv != NULL)
     {
       GtkTreeSelection *selection;
@@ -1058,8 +1058,8 @@ gdm_lang_handler (gpointer user_data)
         {
           gchar *language = g_strdup (dialog_selected_language);
 
-          /* dialog_selected_language will be freed in gdm_lang_set */
-          gdm_lang_set_restart_dialog (language);
+          /* dialog_selected_language will be freed in mdm_lang_set */
+          mdm_lang_set_restart_dialog (language);
           g_free (language);
         }
 
@@ -1069,19 +1069,19 @@ gdm_lang_handler (gpointer user_data)
       break;
     }
 
-  gdm_wm_no_login_focus_pop ();
+  mdm_wm_no_login_focus_pop ();
 
   if (dialog)
     gtk_widget_hide (dialog);
 }
 
 void
-gdm_lang_op_lang (const gchar *args)
+mdm_lang_op_lang (const gchar *args)
 {
-  gchar *language = gdm_lang_check_language (args);
+  gchar *language = mdm_lang_check_language (args);
 
-  if (gdm_lang_get_savelang_setting () == GTK_RESPONSE_CANCEL)
-    printf ("%c%s\n", STX, GDM_RESPONSE_CANCEL);
+  if (mdm_lang_get_savelang_setting () == GTK_RESPONSE_CANCEL)
+    printf ("%c%s\n", STX, MDM_RESPONSE_CANCEL);
   else
     printf ("%c%s\n", STX, language);
 
@@ -1090,9 +1090,9 @@ gdm_lang_op_lang (const gchar *args)
 }
 
 void
-gdm_lang_op_slang (const gchar *args)
+mdm_lang_op_slang (const gchar *args)
 {
-  if (gdm_lang_get_savelang_setting () == GTK_RESPONSE_NO)
+  if (mdm_lang_get_savelang_setting () == GTK_RESPONSE_NO)
     printf ("%cY\n", STX);
   else
     printf ("%c\n", STX);
@@ -1101,24 +1101,24 @@ gdm_lang_op_slang (const gchar *args)
 }
 
 void
-gdm_lang_op_setlang (const gchar *args)
+mdm_lang_op_setlang (const gchar *args)
 {
   if (args)
-    gdm_lang_set ((char*)args);
+    mdm_lang_set ((char*)args);
 
   printf ("%c\n", STX);
   fflush (stdout);
 }
 
 void
-gdm_lang_op_always_restart (const gchar *args)
+mdm_lang_op_always_restart (const gchar *args)
 {
   if (args)
     {
       if (g_ascii_strcasecmp (args, "y") == 0)
-        gdm_lang_set_restart_state (TRUE);
+        mdm_lang_set_restart_state (TRUE);
       else if (g_ascii_strcasecmp (args, "n") == 0)
-        gdm_lang_set_restart_state (FALSE);
+        mdm_lang_set_restart_state (FALSE);
     }
 
   printf ("%c\n", STX);

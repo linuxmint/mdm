@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -57,9 +57,9 @@
 #include <gtk/gtk.h>
 
 /* Needed for signal handling */
-#include "gdm-common.h"
+#include "mdm-common.h"
 
-#include "gdm.h"
+#include "mdm.h"
 #include "misc.h"
 #include "slave.h"
 #include "server.h"
@@ -67,14 +67,14 @@
 #include "display.h"
 #include "choose.h"
 #include "getvt.h"
-#include "gdm-net.h"
+#include "mdm-net.h"
 #include "cookie.h"
 #include "filecheck.h"
 #include "errorgui.h"
 
-#include "gdm-socket-protocol.h"
-#include "gdm-daemon-config.h"
-#include "gdm-log.h"
+#include "mdm-socket-protocol.h"
+#include "mdm-daemon-config.h"
+#include "mdm-log.h"
 
 #include "xdmcp.h"
 
@@ -83,17 +83,17 @@
 #define DYNAMIC_REMOVE  2
 
 /* Local functions */
-static void gdm_handle_message (GdmConnection *conn,
+static void mdm_handle_message (MdmConnection *conn,
 				const gchar *msg,
 				gpointer data);
-static void gdm_handle_user_message (GdmConnection *conn,
+static void mdm_handle_user_message (MdmConnection *conn,
 				     const gchar *msg,
 				     gpointer data);
-static void gdm_daemonify (void);
-static void gdm_safe_restart (void);
-static void gdm_try_logout_action (GdmDisplay *disp);
-static void gdm_restart_now (void);
-static void handle_flexi_server (GdmConnection *conn,
+static void mdm_daemonify (void);
+static void mdm_safe_restart (void);
+static void mdm_try_logout_action (MdmDisplay *disp);
+static void mdm_restart_now (void);
+static void handle_flexi_server (MdmConnection *conn,
 				 int type,
 				 const gchar *server,
 				 gboolean handled,
@@ -112,9 +112,9 @@ gint flexi_servers         = 0; /* Number of flexi servers */
 pid_t extra_process = 0;        /* An extra process.  Used for quickie
                                    processes, so that they also get whacked */
 static int extra_status    = 0; /* Last status from the last extra process */
-pid_t gdm_main_pid         = 0; /* PID of the main daemon */
+pid_t mdm_main_pid         = 0; /* PID of the main daemon */
 
-gboolean gdm_wait_for_go         = FALSE; /* wait for a GO in the fifo */
+gboolean mdm_wait_for_go         = FALSE; /* wait for a GO in the fifo */
 static gboolean print_version    = FALSE; /* print version number and quit */
 static gboolean preserve_ld_vars = FALSE; /* Preserve the ld environment
                                              variables */
@@ -124,19 +124,19 @@ static gboolean no_console       = FALSE; /* There are no static servers, this
                                              and second, don't display info on
                                              the console */
 
-GdmConnection *fifoconn = NULL; /* Fifo connection */
-GdmConnection *pipeconn = NULL; /* slavepipe (handled just like Fifo for
+MdmConnection *fifoconn = NULL; /* Fifo connection */
+MdmConnection *pipeconn = NULL; /* slavepipe (handled just like Fifo for
                                    compatibility) connection */
-GdmConnection *unixconn = NULL; /* UNIX Socket connection */
+MdmConnection *unixconn = NULL; /* UNIX Socket connection */
 int slave_fifo_pipe_fd = -1;    /* The slavepipe connection */
 
-unsigned char *gdm_global_cookie  = NULL;
-unsigned char *gdm_global_bcookie = NULL;
-char *gdm_system_locale = NULL;
+unsigned char *mdm_global_cookie  = NULL;
+unsigned char *mdm_global_bcookie = NULL;
+char *mdm_system_locale = NULL;
 
-gboolean gdm_first_login = TRUE;
+gboolean mdm_first_login = TRUE;
 
-static GdmLogoutAction safe_logout_action = GDM_LOGOUT_ACTION_NONE;
+static MdmLogoutAction safe_logout_action = MDM_LOGOUT_ACTION_NONE;
 
 /* set in the main function */
 gchar **stored_argv = NULL;
@@ -144,7 +144,7 @@ int stored_argc     = 0;
 
 static GMainLoop *main_loop       = NULL;
 static gchar *config_file         = NULL;
-static gboolean gdm_restart_mode  = FALSE;
+static gboolean mdm_restart_mode  = FALSE;
 static gboolean monte_carlo_sqrt2 = FALSE;
 
 /*
@@ -158,10 +158,10 @@ mark_display_exists (int num)
 	GSList *li;
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *disp = li->data;
+		MdmDisplay *disp = li->data;
 		if (disp->dispnum == num) {
 			disp->removeconf = FALSE;
 			return TRUE;
@@ -171,38 +171,38 @@ mark_display_exists (int num)
 }
 
 /**
- * gdm_daemonify:
+ * mdm_daemonify:
  *
- * Detach gdm daemon from the controlling terminal
+ * Detach mdm daemon from the controlling terminal
  */
 static void
-gdm_daemonify (void)
+mdm_daemonify (void)
 {
 	FILE *pf;
 	pid_t pid;
 
 	pid = fork ();
 	if (pid > 0) {
-		const char *pidfile = GDM_PID_FILE;
+		const char *pidfile = MDM_PID_FILE;
 
 		errno = 0;
-		if ((pf = gdm_safe_fopen_w (pidfile, 0644)) != NULL) {
+		if ((pf = mdm_safe_fopen_w (pidfile, 0644)) != NULL) {
 			errno = 0;
 			VE_IGNORE_EINTR (fprintf (pf, "%d\n", (int)pid));
 			VE_IGNORE_EINTR (fclose (pf));
 			if G_UNLIKELY (errno != 0) {
 				/* FIXME: how to handle this? */
-				gdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
+				mdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
 					      pidfile, strerror (errno));
-				gdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
+				mdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
 					   pidfile, strerror (errno));
 
 			}
 		} else if G_UNLIKELY (errno != 0) {
 			/* FIXME: how to handle this? */
-			gdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
+			mdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
 				      pidfile, strerror (errno));
-			gdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
+			mdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
 				   pidfile, strerror (errno));
 
 		}
@@ -210,46 +210,46 @@ gdm_daemonify (void)
 		exit (EXIT_SUCCESS);
 	}
 
-	gdm_main_pid = getpid ();
+	mdm_main_pid = getpid ();
 
 	if G_UNLIKELY (pid < 0)
-		gdm_fail (_("%s: fork () failed!"), "gdm_daemonify");
+		mdm_fail (_("%s: fork () failed!"), "mdm_daemonify");
 
 	if G_UNLIKELY (setsid () < 0)
-		gdm_fail (_("%s: setsid () failed: %s!"), "gdm_daemonify",
+		mdm_fail (_("%s: setsid () failed: %s!"), "mdm_daemonify",
 			  strerror (errno));
 
-	VE_IGNORE_EINTR (g_chdir (gdm_daemon_config_get_value_string (GDM_KEY_SERV_AUTHDIR)));
+	VE_IGNORE_EINTR (g_chdir (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR)));
 	umask (022);
 
 	VE_IGNORE_EINTR (close (0));
 	VE_IGNORE_EINTR (close (1));
 	VE_IGNORE_EINTR (close (2));
 
-	gdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
-	gdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
-	gdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
+	mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
+	mdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
+	mdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
 }
 
 static void
-gdm_start_first_unborn_local (int delay)
+mdm_start_first_unborn_local (int delay)
 {
 	GSList *li;
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
 	/* tickle the random stuff */
-	gdm_random_tick ();
+	mdm_random_tick ();
 
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *d = li->data;
+		MdmDisplay *d = li->data;
 
 		if (d != NULL &&
 		    d->type == TYPE_STATIC &&
 		    d->dispstat == DISPLAY_UNBORN) {
-			GdmXserver *svr;
-			gdm_debug ("gdm_start_first_unborn_local: "
+			MdmXserver *svr;
+			mdm_debug ("mdm_start_first_unborn_local: "
 				   "Starting %s", d->name);
 
 			/* well sleep at least 'delay' seconds
@@ -258,20 +258,20 @@ gdm_start_first_unborn_local (int delay)
 
 			/* only the first static display has
 			 * timed login going on */
-			if (gdm_first_login)
+			if (mdm_first_login)
 				d->timed_login_ok = TRUE;
 
-			svr = gdm_server_resolve (d);
+			svr = mdm_server_resolve (d);
 
-			if ( ! gdm_display_manage (d)) {
-				gdm_display_unmanage (d);
+			if ( ! mdm_display_manage (d)) {
+				mdm_display_unmanage (d);
 				/* only the first static display where
 				   we actually log in gets
 				   autologged in */
 				if (svr != NULL &&
 				    svr->handled &&
 				    ! svr->chooser)
-					gdm_first_login = FALSE;
+					mdm_first_login = FALSE;
 			} else {
 				/* only the first static display where
 				   we actually log in gets
@@ -279,7 +279,7 @@ gdm_start_first_unborn_local (int delay)
 				if (svr != NULL &&
 				    svr->handled &&
 				    ! svr->chooser)
-					gdm_first_login = FALSE;
+					mdm_first_login = FALSE;
 				break;
 			}
 		}
@@ -287,7 +287,7 @@ gdm_start_first_unborn_local (int delay)
 }
 
 void
-gdm_final_cleanup (void)
+mdm_final_cleanup (void)
 {
 	GSList *list, *li;
 	const char *pidfile;
@@ -310,9 +310,9 @@ gdm_final_cleanup (void)
 	sigaction (SIGXFSZ, &sig, NULL);
 #endif
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
-	gdm_debug ("gdm_final_cleanup");
+	mdm_debug ("mdm_final_cleanup");
 
 	if (extra_process > 1) {
 		/* we sigterm extra processes, and we
@@ -324,7 +324,7 @@ gdm_final_cleanup (void)
 	/* First off whack all XDMCP and FLEXI_XNEST
 	   slaves, we'll wait for them later */
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *d = li->data;
+		MdmDisplay *d = li->data;
 		if (SERVER_IS_XDMCP (d) ||
 		    SERVER_IS_PROXY (d)) {
 			/* set to DEAD so that we won't kill it again */
@@ -342,7 +342,7 @@ gdm_final_cleanup (void)
 	 * the right vt */
 	list = g_slist_reverse (list);
 	for (li = list; li != NULL; li = li->next) {
-		GdmDisplay *d = li->data;
+		MdmDisplay *d = li->data;
 		if (SERVER_IS_XDMCP (d) ||
 		    SERVER_IS_PROXY (d))
 			continue;
@@ -352,10 +352,10 @@ gdm_final_cleanup (void)
 		if ( ! first) {
 			/* there could be signals happening
 			   here */
-			gdm_sleep_no_signal (2);
+			mdm_sleep_no_signal (2);
 		}
 		first = FALSE;
-		gdm_display_unmanage (d);
+		mdm_display_unmanage (d);
 	}
 	g_slist_free (list);
 
@@ -365,29 +365,29 @@ gdm_final_cleanup (void)
 
 	list = g_slist_copy (displays);
 	for (li = list; li != NULL; li = li->next) {
-		GdmDisplay *d = li->data;
+		MdmDisplay *d = li->data;
 		if (SERVER_IS_XDMCP (d) ||
 		    SERVER_IS_PROXY (d))
-			gdm_display_unmanage (d);
+			mdm_display_unmanage (d);
 	}
 	g_slist_free (list);
 
 	/* Close stuff */
 
-	if (gdm_daemon_config_get_value_bool (GDM_KEY_XDMCP))
-		gdm_xdmcp_close ();
+	if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP))
+		mdm_xdmcp_close ();
 
 	if (fifoconn != NULL) {
 		char *path;
-		gdm_connection_close (fifoconn);
-		path = g_build_filename (gdm_daemon_config_get_value_string (GDM_KEY_SERV_AUTHDIR), ".gdmfifo", NULL);
+		mdm_connection_close (fifoconn);
+		path = g_build_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR), ".mdmfifo", NULL);
 		VE_IGNORE_EINTR (g_unlink (path));
 		g_free (path);
 		fifoconn = NULL;
 	}
 
 	if (pipeconn != NULL) {
-		gdm_connection_close (pipeconn);
+		mdm_connection_close (pipeconn);
 		pipeconn = NULL;
 	}
 
@@ -397,25 +397,25 @@ gdm_final_cleanup (void)
 	}
 
 	if (unixconn != NULL) {
-		gdm_connection_close (unixconn);
-		VE_IGNORE_EINTR (g_unlink (GDM_SUP_SOCKET));
+		mdm_connection_close (unixconn);
+		VE_IGNORE_EINTR (g_unlink (MDM_SUP_SOCKET));
 		unixconn = NULL;
 	}
 
-	pidfile = GDM_PID_FILE;
+	pidfile = MDM_PID_FILE;
 	if (pidfile != NULL) {
 		VE_IGNORE_EINTR (g_unlink (pidfile));
 	}
 
-	gdm_daemon_config_close ();
+	mdm_daemon_config_close ();
 }
 
 static gboolean
-deal_with_x_crashes (GdmDisplay *d)
+deal_with_x_crashes (MdmDisplay *d)
 {
 	gboolean just_abort = FALSE;
-	const char *failsafe = gdm_daemon_config_get_value_string (GDM_KEY_FAILSAFE_XSERVER);
-	const char *keepscrashing = gdm_daemon_config_get_value_string (GDM_KEY_X_KEEPS_CRASHING);
+	const char *failsafe = mdm_daemon_config_get_value_string (MDM_KEY_FAILSAFE_XSERVER);
+	const char *keepscrashing = mdm_daemon_config_get_value_string (MDM_KEY_X_KEEPS_CRASHING);
 
 	if ( ! d->failsafe_xserver &&
 	     ! ve_string_empty (failsafe)) {
@@ -423,7 +423,7 @@ deal_with_x_crashes (GdmDisplay *d)
 		/* Yay we have a failsafe */
 		if ( ! ve_string_empty (bin) &&
 		     g_access (bin, X_OK) == 0) {
-			gdm_info (_("%s: Trying failsafe X "
+			mdm_info (_("%s: Trying failsafe X "
 				    "server %s"),
 				  "deal_with_x_crashes",
 				  failsafe);
@@ -441,7 +441,7 @@ deal_with_x_crashes (GdmDisplay *d)
 	     g_access (keepscrashing, X_OK|R_OK) == 0) {
 		pid_t pid;
 
-		gdm_info (_("%s: Running the "
+		mdm_info (_("%s: Running the "
 			    "XKeepsCrashing script"),
 			  "deal_with_x_crashes");
 
@@ -451,30 +451,30 @@ deal_with_x_crashes (GdmDisplay *d)
 
 		if (pid == 0) {
 			char *argv[2];
-			char *xlog = gdm_make_filename (gdm_daemon_config_get_value_string (GDM_KEY_LOG_DIR), d->name, ".log");
+			char *xlog = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_LOG_DIR), d->name, ".log");
 
-			gdm_unset_signals ();
+			mdm_unset_signals ();
 
 			/* Also make a new process group so that we may use
 			 * kill -(extra_process) to kill extra process and all its
 			 * possible children */
 			setsid ();
 
-			if (gdm_daemon_config_get_value_bool (GDM_KEY_XDMCP))
-				gdm_xdmcp_close ();
+			if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP))
+				mdm_xdmcp_close ();
 
-			gdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */);
+			mdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */);
 
 			/* No error checking here - if it's messed the best response
 			 * is to ignore & try to continue */
-			gdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
-			gdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
-			gdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
+			mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
+			mdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
+			mdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
 
-			argv[0] = (char *)gdm_daemon_config_get_value_string (GDM_KEY_X_KEEPS_CRASHING);
+			argv[0] = (char *)mdm_daemon_config_get_value_string (MDM_KEY_X_KEEPS_CRASHING);
 			argv[1] = NULL;
 
-			gdm_restoreenv ();
+			mdm_restoreenv ();
 
 			/* unset DISPLAY and XAUTHORITY if they exist
 			 * so that gdialog (if used) doesn't get confused */
@@ -486,13 +486,13 @@ deal_with_x_crashes (GdmDisplay *d)
 			g_setenv ("BINDIR", BINDIR, TRUE);
 			g_setenv ("SBINDIR", SBINDIR, TRUE);
 			g_setenv ("LIBEXECDIR", LIBEXECDIR, TRUE);
-			g_setenv ("SYSCONFDIR", GDMCONFDIR, TRUE);
+			g_setenv ("SYSCONFDIR", MDMCONFDIR, TRUE);
 
 			/* To enable gettext stuff in the script */
 			g_setenv ("TEXTDOMAIN", GETTEXT_PACKAGE, TRUE);
 			g_setenv ("TEXTDOMAINDIR", GNOMELOCALEDIR, TRUE);
 
-			if ( ! gdm_ok_console_language ()) {
+			if ( ! mdm_ok_console_language ()) {
 				g_unsetenv ("LANG");
 				g_unsetenv ("LC_ALL");
 				g_unsetenv ("LC_MESSAGES");
@@ -520,7 +520,7 @@ deal_with_x_crashes (GdmDisplay *d)
 					errno = 0;
 					ret = waitpid (extra_process, &status, WNOHANG);
 					storeerrno = errno;
-					if ((ret <= 0) && gdm_daemon_config_signal_terminthup_was_notified ()) {
+					if ((ret <= 0) && mdm_daemon_config_signal_terminthup_was_notified ()) {
 						kill (-(extra_process), killsignal);
 						killsignal = SIGKILL;
 					}
@@ -550,7 +550,7 @@ deal_with_x_crashes (GdmDisplay *d)
 	/* if we have "open" we can talk to the user, not as user
 	 * friendly as the above script, but getting there */
 	if ( ! just_abort &&
-	     g_access (LIBEXECDIR "/gdmopen", X_OK) == 0) {
+	     g_access (LIBEXECDIR "/mdmopen", X_OK) == 0) {
 		/* Shit if we knew what the program was to tell the user,
 		 * the above script would have been defined and we'd run
 		 * it for them */
@@ -559,15 +559,15 @@ deal_with_x_crashes (GdmDisplay *d)
 			      "cannot be started.  It is likely that it is not "
 			      "set up correctly.  You will need to log in on a "
 			      "console and rerun the X configuration "
-			      "application, then restart GDM."));
-		gdm_text_message_dialog (error);
+			      "application, then restart MDM."));
+		mdm_text_message_dialog (error);
 	} /* else {
 	   * At this point .... screw the user, we don't know how to
 	   * talk to him.  He's on some 'l33t system anyway, so syslog
 	   * reading will do him good
 	   * } */
 
-	gdm_error (_("Failed to start X server several times in a short time period; disabling display %s"), d->name);
+	mdm_error (_("Failed to start X server several times in a short time period; disabling display %s"), d->name);
 
 	return FALSE;
 }
@@ -579,23 +579,23 @@ try_command (const char *command)
 	gboolean res;
 	int      status;
 
-	gdm_debug ("Running %s", command);
+	mdm_debug ("Running %s", command);
 
 	error = NULL;
 	res = g_spawn_command_line_sync (command, NULL, NULL, &status, &error);
 	if (error != NULL) {
-		gdm_debug ("Command failed %s: %s", command, error->message);
+		mdm_debug ("Command failed %s: %s", command, error->message);
 		g_error_free (error);		
 	}
 	else {
 		if (WIFEXITED (status)) {
 			if (WEXITSTATUS (status) != 0) {
-				gdm_error ("Command '%s' exited with status %u", command, WEXITSTATUS (status));
+				mdm_error ("Command '%s' exited with status %u", command, WEXITSTATUS (status));
 				res = FALSE;
 			}
 		}
 		else if (WIFSIGNALED (status)) {
-			gdm_error ("Command '%s' was killed by signal '%s'", command, g_strsignal (WTERMSIG (status)));
+			mdm_error ("Command '%s' was killed by signal '%s'", command, g_strsignal (WTERMSIG (status)));
 			res = FALSE;
 		}
 	}
@@ -627,9 +627,9 @@ suspend_machine (void)
 {
 	const gchar **suspend;
 
-	suspend = gdm_daemon_config_get_value_string_array (GDM_KEY_SUSPEND);
+	suspend = mdm_daemon_config_get_value_string_array (MDM_KEY_SUSPEND);
 
-	gdm_info (_("Master suspending..."));
+	mdm_info (_("Master suspending..."));
 
 	if (suspend == NULL) {
 		return;
@@ -642,7 +642,7 @@ suspend_machine (void)
 static void
 change_to_first_and_clear (gboolean restart)
 {
-	gdm_change_vt (1);
+	mdm_change_vt (1);
 	VE_IGNORE_EINTR (close (0));
 	VE_IGNORE_EINTR (close (1));
 	VE_IGNORE_EINTR (close (2));
@@ -673,15 +673,15 @@ halt_machine (void)
 {
 	const char **s;
 
-	gdm_debug (_("Master halting..."));
+	mdm_debug (_("Master halting..."));
 
-	s = gdm_daemon_config_get_value_string_array (GDM_KEY_HALT);
+	s = mdm_daemon_config_get_value_string_array (MDM_KEY_HALT);
 
 	if (try_commands (s)) {
 		/* maybe these don't run but oh well - there isn't
 		   really a good way to know a priori if the command
 		   will succeed. */
-		gdm_final_cleanup ();
+		mdm_final_cleanup ();
 		VE_IGNORE_EINTR (g_chdir ("/"));
 #ifdef __linux__
 		change_to_first_and_clear (FALSE);
@@ -696,12 +696,12 @@ restart_machine (void)
 {
 	const char **s;
 
-	gdm_debug (_("Restarting computer..."));
+	mdm_debug (_("Restarting computer..."));
 
-	s = gdm_daemon_config_get_value_string_array (GDM_KEY_REBOOT);
+	s = mdm_daemon_config_get_value_string_array (MDM_KEY_REBOOT);
 
 	if (try_commands (s)) {
-		gdm_final_cleanup ();
+		mdm_final_cleanup ();
 		VE_IGNORE_EINTR (g_chdir ("/"));
 
 #ifdef __linux__
@@ -717,15 +717,15 @@ custom_cmd (long cmd_id)
 {
         gchar * key_string;
 
-        if (cmd_id < 0 || cmd_id >= GDM_CUSTOM_COMMAND_MAX) {
+        if (cmd_id < 0 || cmd_id >= MDM_CUSTOM_COMMAND_MAX) {
 		/* We are just feeling very paranoid */
-		gdm_error (_("custom_cmd: Custom command index %ld outside permitted range [0,%d)"),
-			   cmd_id, GDM_CUSTOM_COMMAND_MAX);
+		mdm_error (_("custom_cmd: Custom command index %ld outside permitted range [0,%d)"),
+			   cmd_id, MDM_CUSTOM_COMMAND_MAX);
 		return;
 	}
 
-        key_string = g_strdup_printf ("%s%ld=", GDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE, cmd_id);
-        if (gdm_daemon_config_get_value_bool (key_string))
+        key_string = g_strdup_printf ("%s%ld=", MDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE, cmd_id);
+        if (mdm_daemon_config_get_value_bool (key_string))
 	        custom_cmd_no_restart (cmd_id);
 	else
 	        custom_cmd_restart (cmd_id);
@@ -740,7 +740,7 @@ custom_cmd_restart (long cmd_id)
 	char **argv;
 	const char *s;
 
-        gdm_debug (_("Executing custom command %ld with restart option..."), cmd_id);
+        mdm_debug (_("Executing custom command %ld with restart option..."), cmd_id);
 
 	VE_IGNORE_EINTR (g_chdir ("/"));
 
@@ -748,24 +748,24 @@ custom_cmd_restart (long cmd_id)
 	change_to_first_and_clear (TRUE);
 #endif /* __linux */
 
-	key_string = g_strdup_printf ("%s%ld=", GDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_id);
+	key_string = g_strdup_printf ("%s%ld=", MDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_id);
 
 	argv = NULL;
-	s = gdm_daemon_config_get_value_string (key_string);
+	s = mdm_daemon_config_get_value_string (key_string);
 	g_free (key_string);
 	if (s != NULL) {
 		g_shell_parse_argv (s, NULL, &argv, NULL);
 	}
 
-	gdm_final_cleanup ();
+	mdm_final_cleanup ();
 
 	if (argv != NULL && argv[0] != NULL)
 		VE_IGNORE_EINTR (execv (argv[0], argv));
 
 	g_strfreev (argv);
 
-	gdm_error (_("%s: Execution of custom command failed: %s"),
-		   "gdm_child_action", strerror (errno));
+	mdm_error (_("%s: Execution of custom command failed: %s"),
+		   "mdm_child_action", strerror (errno));
 }
 
 static void
@@ -773,13 +773,13 @@ custom_cmd_no_restart (long cmd_id)
 {
         pid_t pid;
 
-        gdm_debug (_("Executing custom command %ld with no restart option ..."), cmd_id);
+        mdm_debug (_("Executing custom command %ld with no restart option ..."), cmd_id);
 
         pid = fork ();
 
 	if (pid < 0) {
 	        /*failed fork*/
-	        gdm_error (_("custom_cmd: forking process for custom command %ld failed"), cmd_id);
+	        mdm_error (_("custom_cmd: forking process for custom command %ld failed"), cmd_id);
 		return;
 	}
 	else if (pid == 0) {
@@ -788,10 +788,10 @@ custom_cmd_no_restart (long cmd_id)
 		const char *s;
 		gchar *key_string;
 
-		key_string = g_strdup_printf ("%s%ld=", GDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_id);
+		key_string = g_strdup_printf ("%s%ld=", MDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_id);
 
 		argv = NULL;
-		s = gdm_daemon_config_get_value_string (key_string);
+		s = mdm_daemon_config_get_value_string (key_string);
 		g_free (key_string);
 		if (s != NULL) {
 			g_shell_parse_argv (s, NULL, &argv, NULL);
@@ -802,8 +802,8 @@ custom_cmd_no_restart (long cmd_id)
 
 		g_strfreev (argv);
 
-		gdm_error (_("%s: Execution of custom command failed: %s"),
-			   "gdm_child_action", strerror (errno));
+		mdm_error (_("%s: Execution of custom command failed: %s"),
+			   "mdm_child_action", strerror (errno));
 		_exit (0);
 	}
 	else {
@@ -813,7 +813,7 @@ custom_cmd_no_restart (long cmd_id)
 		if (p_stat > 0) {
 			if G_LIKELY (WIFEXITED (exitstatus)){
 				status = WEXITSTATUS (exitstatus);
-				gdm_debug (_("custom_cmd: child %d returned %d"), p_stat, status);
+				mdm_debug (_("custom_cmd: child %d returned %d"), p_stat, status);
 			}
 			return;
 		}
@@ -821,10 +821,10 @@ custom_cmd_no_restart (long cmd_id)
 }
 
 static gboolean
-gdm_cleanup_children (void)
+mdm_cleanup_children (void)
 {
 	gint exitstatus = 0, status;
-	GdmDisplay *d = NULL;
+	MdmDisplay *d = NULL;
 	gboolean crashed;
 	gboolean sysmenu;
 	pid_t pid;
@@ -838,7 +838,7 @@ gdm_cleanup_children (void)
 	if G_LIKELY (WIFEXITED (exitstatus)) {
 		status = WEXITSTATUS (exitstatus);
 		crashed = FALSE;
-		gdm_debug ("gdm_cleanup_children: child %d returned %d", pid, status);
+		mdm_debug ("mdm_cleanup_children: child %d returned %d", pid, status);
 	} else {
 		status = EXIT_SUCCESS;
 		crashed = TRUE;
@@ -849,14 +849,14 @@ gdm_cleanup_children (void)
 				 * We send these signals, sometimes children
 				 * do not handle them
 				 */
-				gdm_debug ("gdm_cleanup_children: child %d died of signal %d (TERM/INT)", pid,
+				mdm_debug ("mdm_cleanup_children: child %d died of signal %d (TERM/INT)", pid,
 					   (int)WTERMSIG (exitstatus));
 			} else {
-				gdm_error ("gdm_cleanup_children: child %d crashed of signal %d", pid,
+				mdm_error ("mdm_cleanup_children: child %d crashed of signal %d", pid,
 					   (int)WTERMSIG (exitstatus));
 			}
 		} else {
-			gdm_error ("gdm_cleanup_children: child %d crashed", pid);
+			mdm_error ("mdm_cleanup_children: child %d crashed", pid);
 		}
 	}
 
@@ -868,17 +868,17 @@ gdm_cleanup_children (void)
 	}
 
 	/* Find out who this slave belongs to */
-	d = gdm_display_lookup (pid);
+	d = mdm_display_lookup (pid);
 
 	if (d == NULL)
 		return TRUE;
 
 	/* Whack connections about this display */
 	if (unixconn != NULL)
-		gdm_kill_subconnections_with_display (unixconn, d);
+		mdm_kill_subconnections_with_display (unixconn, d);
 
 	if G_UNLIKELY (crashed) {
-		gdm_error ("gdm_cleanup_children: Slave crashed, killing its "
+		mdm_error ("mdm_cleanup_children: Slave crashed, killing its "
 			   "children");
 
 		if (d->sesspid > 1)
@@ -894,13 +894,13 @@ gdm_cleanup_children (void)
 			kill (d->servpid, SIGTERM);
 		d->servpid = 0;
 
-		if (gdm_daemon_config_get_value_bool (GDM_KEY_DYNAMIC_XSERVERS)) {
+		if (mdm_daemon_config_get_value_bool (MDM_KEY_DYNAMIC_XSERVERS)) {
 			/* XXX - This needs to be handled better */
-			gdm_server_whack_lockfile (d);
+			mdm_server_whack_lockfile (d);
 		}
 
 		/* Race avoider */
-		gdm_sleep_no_signal (1);
+		mdm_sleep_no_signal (1);
 	}
 
 	/* null all these, they are not valid most definately */
@@ -918,7 +918,7 @@ gdm_cleanup_children (void)
 	d->slavepid = 0;
 	d->dispstat = DISPLAY_DEAD;
 
-	if (status == DISPLAY_RESTARTGDM ||
+	if (status == DISPLAY_RESTARTMDM ||
 	    status == DISPLAY_REBOOT     ||
 	    status == DISPLAY_SUSPEND    ||
 	    status == DISPLAY_HALT) {
@@ -926,32 +926,32 @@ gdm_cleanup_children (void)
 		 * Reset status to DISPLAY_REMANAGE if it is not valid to
 		 * perform the operation
 		 */
-		sysmenu = gdm_daemon_config_get_value_bool_per_display (
-			GDM_KEY_SYSTEM_MENU, d->name);
+		sysmenu = mdm_daemon_config_get_value_bool_per_display (
+			MDM_KEY_SYSTEM_MENU, d->name);
 
 		if (!sysmenu) {
-			gdm_info (_("Restart GDM, Restart machine, Suspend, or Halt request when there is no system menu from display %s"), d->name);
+			mdm_info (_("Restart MDM, Restart machine, Suspend, or Halt request when there is no system menu from display %s"), d->name);
 			status = DISPLAY_REMANAGE;
 		}
 
 
 		if ( ! d->attached) {
-			gdm_info (_("Restart GDM, Restart machine, Suspend or Halt request from a non-static display %s"), d->name);
+			mdm_info (_("Restart MDM, Restart machine, Suspend or Halt request from a non-static display %s"), d->name);
 			status = DISPLAY_REMANAGE;
 		}
 
 		/* checkout if we can actually do stuff */
 		switch (status) {
 		case DISPLAY_REBOOT:
-			if (gdm_daemon_config_get_value_string_array (GDM_KEY_REBOOT) == NULL)
+			if (mdm_daemon_config_get_value_string_array (MDM_KEY_REBOOT) == NULL)
 				status = DISPLAY_REMANAGE;
 			break;
 		case DISPLAY_HALT:
-			if (gdm_daemon_config_get_value_string_array (GDM_KEY_HALT) == NULL)
+			if (mdm_daemon_config_get_value_string_array (MDM_KEY_HALT) == NULL)
 				status = DISPLAY_REMANAGE;
 			break;
 		case DISPLAY_SUSPEND:
-			if (gdm_daemon_config_get_value_string_array (GDM_KEY_SUSPEND) == NULL)
+			if (mdm_daemon_config_get_value_string_array (MDM_KEY_SUSPEND) == NULL)
 				status = DISPLAY_REMANAGE;
 			break;
 		default:
@@ -960,13 +960,13 @@ gdm_cleanup_children (void)
 	}
 
 	if (status == DISPLAY_RUN_CHOOSER) {
-		sysmenu = gdm_daemon_config_get_value_bool_per_display (
-			GDM_KEY_SYSTEM_MENU, d->name);
+		sysmenu = mdm_daemon_config_get_value_bool_per_display (
+			MDM_KEY_SYSTEM_MENU, d->name);
 
 		/* Use the chooser on the next run (but only if allowed) */
 		if (sysmenu &&
-		    gdm_daemon_config_get_value_bool_per_display (
-			GDM_KEY_CHOOSER_BUTTON, d->name)) {
+		    mdm_daemon_config_get_value_bool_per_display (
+			MDM_KEY_CHOOSER_BUTTON, d->name)) {
 			d->use_chooser = TRUE;
 		}
 
@@ -1013,16 +1013,16 @@ gdm_cleanup_children (void)
 	switch (status) {
 
 	case DISPLAY_ABORT:		/* Bury this display for good */
-		gdm_info (_("%s: Aborting display %s"),
-			  "gdm_child_action", d->name);
+		mdm_info (_("%s: Aborting display %s"),
+			  "mdm_child_action", d->name);
 
-		gdm_try_logout_action (d);
-		gdm_safe_restart ();
+		mdm_try_logout_action (d);
+		mdm_safe_restart ();
 
-		gdm_display_unmanage (d);
+		mdm_display_unmanage (d);
 
 		/* If there are some pending statics, start them now */
-		gdm_start_first_unborn_local (3 /* delay */);
+		mdm_start_first_unborn_local (3 /* delay */);
 		break;
 
 	case DISPLAY_REBOOT:	/* Restart machine */
@@ -1041,29 +1041,29 @@ gdm_cleanup_children (void)
 
 	case DISPLAY_SUSPEND:	/* Suspend machine */
 		/* XXX: this is ugly, why should there be a suspend like this,
-		 * see GDM_SOP_SUSPEND_MACHINE */
+		 * see MDM_SOP_SUSPEND_MACHINE */
 		suspend_machine ();
 
 		status = DISPLAY_REMANAGE;
 		goto start_autopsy;
 		break;
 
-	case DISPLAY_RESTARTGDM:
-		gdm_restart_now ();
+	case DISPLAY_RESTARTMDM:
+		mdm_restart_now ();
 		break;
 
 	case DISPLAY_XFAILED:       /* X sucks */
-		gdm_debug ("X failed!");
+		mdm_debug ("X failed!");
 		/* inform about error if needed */
 		if (d->socket_conn != NULL) {
-			GdmConnection *conn = d->socket_conn;
+			MdmConnection *conn = d->socket_conn;
 			d->socket_conn = NULL;
-			gdm_connection_set_close_notify (conn, NULL, NULL);
-			gdm_connection_write (conn, "ERROR 3 X failed\n");
+			mdm_connection_set_close_notify (conn, NULL, NULL);
+			mdm_connection_write (conn, "ERROR 3 X failed\n");
 		}
 
-		gdm_try_logout_action (d);
-		gdm_safe_restart ();
+		mdm_try_logout_action (d);
+		mdm_safe_restart ();
 
 		/* in remote/flexi case just drop to _REMANAGE */
 		if (d->type == TYPE_STATIC) {
@@ -1078,22 +1078,22 @@ gdm_cleanup_children (void)
 				/* Sleep at least 3 seconds before starting */
 				d->sleep_before_run = 3;
 			} else if (d->x_faileds >= 3) {
-				gdm_debug ("gdm_child_action: dealing with X crashes");
+				mdm_debug ("mdm_child_action: dealing with X crashes");
 				if ( ! deal_with_x_crashes (d)) {
-					gdm_debug ("gdm_child_action: Aborting display");
+					mdm_debug ("mdm_child_action: Aborting display");
 					/*
 					 * An original way to deal with these
 					 * things:
 					 * "Screw you guys, I'm going home!"
 					 */
-					gdm_display_unmanage (d);
+					mdm_display_unmanage (d);
 
 					/* If there are some pending statics,
 					 * start them now */
-					gdm_start_first_unborn_local (3 /* delay */);
+					mdm_start_first_unborn_local (3 /* delay */);
 					break;
 				}
-				gdm_debug ("gdm_child_action: Trying again");
+				mdm_debug ("mdm_child_action: Trying again");
 
 				/* reset */
 				d->x_faileds     = 0;
@@ -1112,7 +1112,7 @@ gdm_cleanup_children (void)
 
 	case DISPLAY_REMANAGE:	/* Remanage display */
 	default:
-		gdm_debug ("gdm_child_action: In remanage");
+		mdm_debug ("mdm_child_action: In remanage");
 
 		/*
 		 * If we did REMANAGE, that means that we are no longer
@@ -1126,22 +1126,22 @@ gdm_cleanup_children (void)
 
 		/* inform about error if needed */
 		if (d->socket_conn != NULL) {
-			GdmConnection *conn = d->socket_conn;
+			MdmConnection *conn = d->socket_conn;
 			d->socket_conn = NULL;
-			gdm_connection_set_close_notify (conn, NULL, NULL);
-			gdm_connection_write (conn, "ERROR 2 Startup errors\n");
+			mdm_connection_set_close_notify (conn, NULL, NULL);
+			mdm_connection_write (conn, "ERROR 2 Startup errors\n");
 		}
 
-		gdm_try_logout_action (d);
-		gdm_safe_restart ();
+		mdm_try_logout_action (d);
+		mdm_safe_restart ();
 
 		/* This is a static server so we start a new slave */
 		if (d->type == TYPE_STATIC) {
-			if ( ! gdm_display_manage (d)) {
-				gdm_display_unmanage (d);
+			if ( ! mdm_display_manage (d)) {
+				mdm_display_unmanage (d);
 				/* If there are some pending statics,
 				 * start them now */
-				gdm_start_first_unborn_local (3 /* delay */);
+				mdm_start_first_unborn_local (3 /* delay */);
 			}
 		} else if (d->type == TYPE_FLEXI || d->type == TYPE_FLEXI_XNEST) {
 			/*
@@ -1150,121 +1150,121 @@ gdm_cleanup_children (void)
 			 * manage and choose that host
 			 */
 			if (d->chosen_hostname != NULL || d->use_chooser) {
-				if ( ! gdm_display_manage (d)) {
-					gdm_display_unmanage (d);
+				if ( ! mdm_display_manage (d)) {
+					mdm_display_unmanage (d);
 				}
 			} else {
 				/* else, this is a one time thing */
-				gdm_display_unmanage (d);
+				mdm_display_unmanage (d);
 			}
 			/* Remote displays will send a request to be managed */
 		} else /* TYPE_XDMCP */ {
-			gdm_display_unmanage (d);
+			mdm_display_unmanage (d);
 		}
 
 		break;
 	}
 
-	gdm_try_logout_action (d);
-	gdm_safe_restart ();
+	mdm_try_logout_action (d);
+	mdm_safe_restart ();
 
 	return TRUE;
 }
 
 static void
-gdm_restart_now (void)
+mdm_restart_now (void)
 {
-	gdm_info (_("GDM restarting ..."));
-	gdm_final_cleanup ();
-	gdm_restoreenv ();
+	mdm_info (_("MDM restarting ..."));
+	mdm_final_cleanup ();
+	mdm_restoreenv ();
 	VE_IGNORE_EINTR (execvp (stored_argv[0], stored_argv));
-	gdm_error (_("Failed to restart self"));
+	mdm_error (_("Failed to restart self"));
 	_exit (1);
 }
 
 static void
-gdm_safe_restart (void)
+mdm_safe_restart (void)
 {
 	GSList *li;
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
-	if ( ! gdm_restart_mode)
+	if ( ! mdm_restart_mode)
 		return;
 
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *d = li->data;
+		MdmDisplay *d = li->data;
 
 		if (d->logged_in)
 			return;
 	}
 
-	gdm_restart_now ();
+	mdm_restart_now ();
 }
 
 static void
-gdm_do_logout_action (GdmLogoutAction logout_action)
+mdm_do_logout_action (MdmLogoutAction logout_action)
 {
 	switch (logout_action) {
-	case GDM_LOGOUT_ACTION_HALT:
+	case MDM_LOGOUT_ACTION_HALT:
 		halt_machine ();
 		break;
 
-	case GDM_LOGOUT_ACTION_REBOOT:
+	case MDM_LOGOUT_ACTION_REBOOT:
 		restart_machine ();
 		break;
 
-	case GDM_LOGOUT_ACTION_SUSPEND:
+	case MDM_LOGOUT_ACTION_SUSPEND:
 		suspend_machine ();
 		break;
 
 	default:
 	        /* This is a bit ugly but its the only place we can
 		   check for the range of values */
-	        if (logout_action >= GDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST &&
-		    logout_action <= GDM_LOGOUT_ACTION_CUSTOM_CMD_LAST)
-			custom_cmd (logout_action - GDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST);
+	        if (logout_action >= MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST &&
+		    logout_action <= MDM_LOGOUT_ACTION_CUSTOM_CMD_LAST)
+			custom_cmd (logout_action - MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST);
 		break;
 	}
 }
 
 static void
-gdm_try_logout_action (GdmDisplay *disp)
+mdm_try_logout_action (MdmDisplay *disp)
 {
 	GSList *li;
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
 	if (disp != NULL &&
-	    disp->logout_action != GDM_LOGOUT_ACTION_NONE &&
+	    disp->logout_action != MDM_LOGOUT_ACTION_NONE &&
 	    ! disp->logged_in) {
-		gdm_do_logout_action (disp->logout_action);
-		disp->logout_action = GDM_LOGOUT_ACTION_NONE;
+		mdm_do_logout_action (disp->logout_action);
+		disp->logout_action = MDM_LOGOUT_ACTION_NONE;
 		return;
 	}
 
-	if (safe_logout_action == GDM_LOGOUT_ACTION_NONE)
+	if (safe_logout_action == MDM_LOGOUT_ACTION_NONE)
 		return;
 
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *d = li->data;
+		MdmDisplay *d = li->data;
 
 		if (d->logged_in)
 			return;
 	}
 
-	gdm_do_logout_action (safe_logout_action);
-	safe_logout_action = GDM_LOGOUT_ACTION_NONE;
+	mdm_do_logout_action (safe_logout_action);
+	safe_logout_action = MDM_LOGOUT_ACTION_NONE;
 }
 
 static void
 main_daemon_abrt (int sig)
 {
 	/* FIXME: note that this could mean out of memory */
-	gdm_error (_("main daemon: Got SIGABRT. Something went very wrong. Going down!"));
-	gdm_final_cleanup ();
+	mdm_error (_("main daemon: Got SIGABRT. Something went very wrong. Going down!"));
+	mdm_final_cleanup ();
 	exit (EXIT_FAILURE);
 }
 
@@ -1272,44 +1272,44 @@ static gboolean
 mainloop_sig_callback (int sig, gpointer data)
 {
 	/* signals are at somewhat random times aren't they? */
-	gdm_random_tick ();
+	mdm_random_tick ();
 
-	gdm_debug ("mainloop_sig_callback: Got signal %d", (int)sig);
+	mdm_debug ("mainloop_sig_callback: Got signal %d", (int)sig);
 	switch (sig)
 		{
 		case SIGCHLD:
-			while (gdm_cleanup_children ())
+			while (mdm_cleanup_children ())
 				;
 			break;
 
 		case SIGINT:
 		case SIGTERM:
-			gdm_debug ("mainloop_sig_callback: Got TERM/INT. Going down!");
-			gdm_final_cleanup ();
+			mdm_debug ("mainloop_sig_callback: Got TERM/INT. Going down!");
+			mdm_final_cleanup ();
 			exit (EXIT_SUCCESS);
 			break;
 
 #ifdef SIGXFSZ
 		case SIGXFSZ:
-			gdm_error ("main daemon: Hit file size rlimit, restarting!");
-			gdm_restart_now ();
+			mdm_error ("main daemon: Hit file size rlimit, restarting!");
+			mdm_restart_now ();
 			break;
 #endif
 
 #ifdef SIGXCPU
 		case SIGXCPU:
-			gdm_error ("main daemon: Hit CPU rlimit, restarting!");
-			gdm_restart_now ();
+			mdm_error ("main daemon: Hit CPU rlimit, restarting!");
+			mdm_restart_now ();
 			break;
 #endif
 
 		case SIGHUP:
-			gdm_restart_now ();
+			mdm_restart_now ();
 			break;
 
 		case SIGUSR1:
-			gdm_restart_mode = TRUE;
-			gdm_safe_restart ();
+			mdm_restart_mode = TRUE;
+			mdm_safe_restart ();
 			break;
 
 		default:
@@ -1338,7 +1338,7 @@ store_argv (int argc, char *argv[])
 static void
 close_notify (gpointer data)
 {
-	GdmConnection **conn = data;
+	MdmConnection **conn = data;
 	* conn = NULL;
 }
 
@@ -1348,16 +1348,16 @@ create_connections (void)
 	int p[2];
 	gchar *path;
 
-	path = g_build_filename (gdm_daemon_config_get_value_string (GDM_KEY_SERV_AUTHDIR), ".gdmfifo", NULL);
-	fifoconn = gdm_connection_open_fifo (path, 0660);
+	path = g_build_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR), ".mdmfifo", NULL);
+	fifoconn = mdm_connection_open_fifo (path, 0660);
 	g_free (path);
 
 	if G_LIKELY (fifoconn != NULL) {
-		gdm_connection_set_handler (fifoconn,
-					    gdm_handle_message,
+		mdm_connection_set_handler (fifoconn,
+					    mdm_handle_message,
 					    NULL /* data */,
 					    NULL /* destroy_notify */);
-		gdm_connection_set_close_notify (fifoconn,
+		mdm_connection_set_close_notify (fifoconn,
 						 &fifoconn,
 						 close_notify);
 	}
@@ -1367,15 +1367,15 @@ create_connections (void)
 		pipeconn = NULL;
 	} else {
 		slave_fifo_pipe_fd = p[1];
-		pipeconn = gdm_connection_open_fd (p[0]);
+		pipeconn = mdm_connection_open_fd (p[0]);
 	}
 
 	if G_LIKELY (pipeconn != NULL) {
-		gdm_connection_set_handler (pipeconn,
-					    gdm_handle_message,
+		mdm_connection_set_handler (pipeconn,
+					    mdm_handle_message,
 					    NULL /* data */,
 					    NULL /* destroy_notify */);
-		gdm_connection_set_close_notify (pipeconn,
+		mdm_connection_set_close_notify (pipeconn,
 						 &pipeconn,
 						 close_notify);
 	} else {
@@ -1384,15 +1384,15 @@ create_connections (void)
 		slave_fifo_pipe_fd = -1;
 	}
 
-	unixconn = gdm_connection_open_unix (GDM_SUP_SOCKET, 0666);
+	unixconn = mdm_connection_open_unix (MDM_SUP_SOCKET, 0666);
 
 	if G_LIKELY (unixconn != NULL) {
-		gdm_connection_set_handler (unixconn,
-					    gdm_handle_user_message,
+		mdm_connection_set_handler (unixconn,
+					    mdm_handle_user_message,
 					    NULL /* data */,
 					    NULL /* destroy_notify */);
-		gdm_connection_set_nonblock (unixconn, TRUE);
-		gdm_connection_set_close_notify (unixconn,
+		mdm_connection_set_nonblock (unixconn, TRUE);
+		mdm_connection_set_close_notify (unixconn,
 						 &unixconn,
 						 close_notify);
 	}
@@ -1424,13 +1424,13 @@ GOptionEntry options [] = {
 	{ "no-console", '\0', 0, G_OPTION_ARG_NONE,
 	  &no_console, N_("No console (static) servers to be run"), NULL },
 	{ "config", '\0', 0, G_OPTION_ARG_STRING,
-	  &config_file, N_("Alternative GDM System Defaults configuration file"), N_("CONFIGFILE") },
+	  &config_file, N_("Alternative MDM System Defaults configuration file"), N_("CONFIGFILE") },
 	{ "preserve-ld-vars", '\0', 0, G_OPTION_ARG_NONE,
 	  &preserve_ld_vars, N_("Preserve LD_* variables"), NULL },
 	{ "version", '\0', 0, G_OPTION_ARG_NONE,
-	  &print_version, N_("Print GDM version"), NULL },
+	  &print_version, N_("Print MDM version"), NULL },
 	{ "wait-for-go", '\0', 0, G_OPTION_ARG_NONE,
-	  &gdm_wait_for_go, N_("Start the first X server but then halt until we get a GO in the fifo"), NULL },
+	  &mdm_wait_for_go, N_("Start the first X server but then halt until we get a GO in the fifo"), NULL },
 	{ "monte-carlo-sqrt2", 0, 0, G_OPTION_ARG_NONE,
 	  &monte_carlo_sqrt2, NULL, NULL },
 	{ NULL }
@@ -1471,7 +1471,7 @@ ensure_desc_012 (void)
 	 * we of course count on the fact that open
 	 * opens the lowest available descriptor */
 	for (;;) {
-		fd = gdm_open_dev_null (O_RDWR);
+		fd = mdm_open_dev_null (O_RDWR);
 		/* Once we are up to 3, we're beyond stdin,
 		 * stdout and stderr */
 		if (fd >= 3) {
@@ -1492,30 +1492,30 @@ initial_term_int (int signal)
 }
 
 static void
-gdm_make_global_cookie (void)
+mdm_make_global_cookie (void)
 {
 	FILE *fp;
 	char *file;
 
-	gdm_cookie_generate ((char **)&gdm_global_cookie, (char **)&gdm_global_bcookie);
+	mdm_cookie_generate ((char **)&mdm_global_cookie, (char **)&mdm_global_bcookie);
 
-	file = g_build_filename (gdm_daemon_config_get_value_string (GDM_KEY_SERV_AUTHDIR), ".cookie", NULL);
+	file = g_build_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR), ".cookie", NULL);
 	VE_IGNORE_EINTR (g_unlink (file));
 
-	fp = gdm_safe_fopen_w (file, 0600);
+	fp = mdm_safe_fopen_w (file, 0600);
 	if G_UNLIKELY (fp == NULL) {
-		gdm_error (_("Can't open %s for writing"), file);
+		mdm_error (_("Can't open %s for writing"), file);
 		g_free (file);
 		return;
 	}
 
-	VE_IGNORE_EINTR (fprintf (fp, "%s\n", gdm_global_cookie));
+	VE_IGNORE_EINTR (fprintf (fp, "%s\n", mdm_global_cookie));
 
 	/* FIXME: What about out of disk space errors? */
 	errno = 0;
 	VE_IGNORE_EINTR (fclose (fp));
 	if G_UNLIKELY (errno != 0) {
-		gdm_error (_("Can't write to %s: %s"), file,
+		mdm_error (_("Can't write to %s: %s"), file,
 			   strerror (errno));
 	}
 
@@ -1533,17 +1533,17 @@ main (int argc, char *argv[])
 	int i;
 
 	/* semi init pseudorandomness */
-	gdm_random_tick ();
+	mdm_random_tick ();
 
-	gdm_main_pid = getpid ();
+	mdm_main_pid = getpid ();
 
 	/* We here ensure descriptors 0, 1 and 2 */
 	ensure_desc_012 ();
 
 	/* store all initial stuff, args, env, rlimits, runlevel */
 	store_argv (argc, argv);
-	gdm_saveenv ();
-	gdm_get_initial_limits ();
+	mdm_saveenv ();
+	mdm_get_initial_limits ();
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	textdomain (GETTEXT_PACKAGE);
@@ -1575,48 +1575,48 @@ main (int argc, char *argv[])
 	}
 
 	if (print_version) {
-		printf ("GDM %s\n", VERSION);
+		printf ("MDM %s\n", VERSION);
 		fflush (stdout);
 		exit (0);
 	}
 
-	gdm_log_init ();
+	mdm_log_init ();
 	/* Parse configuration file */
-	gdm_daemon_config_parse (config_file, no_console);
+	mdm_daemon_config_parse (config_file, no_console);
 
 	/* XDM compliant error message */
 	if G_UNLIKELY (getuid () != 0) {
 		/* make sure the pid file doesn't get wiped */
-		gdm_error (_("Only root wants to run GDM\n"));
+		mdm_error (_("Only root wants to run MDM\n"));
 		exit (-1);
 	}
 
 	main_loop = g_main_loop_new (NULL, FALSE);
 
-	gdm_system_locale = g_strdup (setlocale (LC_MESSAGES, NULL));
+	mdm_system_locale = g_strdup (setlocale (LC_MESSAGES, NULL));
 	/* initial TERM/INT handler */
 	sig.sa_handler = initial_term_int;
 	sig.sa_flags = SA_RESTART;
 	sigemptyset (&sig.sa_mask);
 
 	/*
-	 * Do not call gdm_fail before calling gdm_config_parse ()
-	 * since the gdm_fail function uses config data
+	 * Do not call mdm_fail before calling mdm_config_parse ()
+	 * since the mdm_fail function uses config data
 	 */
 	if G_UNLIKELY (sigaction (SIGTERM, &sig, NULL) < 0)
-		gdm_fail (_("%s: Error setting up %s signal handler: %s"),
+		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
 			  "main", "TERM", strerror (errno));
 
 	if G_UNLIKELY (sigaction (SIGINT, &sig, NULL) < 0)
-		gdm_fail (_("%s: Error setting up %s signal handler: %s"),
+		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
 			  "main", "INT", strerror (errno));
 
 	/* get the name of the root user */
-	gdm_root_user ();
+	mdm_root_user ();
 
-	pidfile = GDM_PID_FILE;
+	pidfile = MDM_PID_FILE;
 
-	/* Check if another gdm process is already running */
+	/* Check if another mdm process is already running */
 	if (g_access (pidfile, R_OK) == 0) {
 
 		/* Check if the existing process is still alive. */
@@ -1630,7 +1630,7 @@ main (int argc, char *argv[])
 		    linux_only_is_running (pidv)) {
 			/* make sure the pid file doesn't get wiped */
 			VE_IGNORE_EINTR (fclose (pf));
-			gdm_fail (_("GDM already running. Aborting!"));
+			mdm_fail (_("MDM already running. Aborting!"));
 		}
 
 		if (pf != NULL)
@@ -1642,45 +1642,45 @@ main (int argc, char *argv[])
 
 		/* Write pid to pidfile */
 		errno = 0;
-		if ((pf = gdm_safe_fopen_w (pidfile, 0644)) != NULL) {
+		if ((pf = mdm_safe_fopen_w (pidfile, 0644)) != NULL) {
 			errno = 0;
 			VE_IGNORE_EINTR (fprintf (pf, "%d\n", (int)getpid ()));
 			VE_IGNORE_EINTR (fclose (pf));
 			if (errno != 0) {
 				/* FIXME: how to handle this? */
-				gdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
+				mdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
 					      pidfile, strerror (errno));
-				gdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
+				mdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
 					   pidfile, strerror (errno));
 
 			}
 		} else if (errno != 0) {
 			/* FIXME: how to handle this? */
-			gdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
+			mdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
 				      pidfile, strerror (errno));
-			gdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
+			mdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
 				   pidfile, strerror (errno));
 
 		}
 
-		VE_IGNORE_EINTR (g_chdir (gdm_daemon_config_get_value_string (GDM_KEY_SERV_AUTHDIR)));
+		VE_IGNORE_EINTR (g_chdir (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR)));
 		umask (022);
 	}
 	else
-		gdm_daemonify ();
+		mdm_daemonify ();
 
 #ifdef __sun
 	{
 		struct stat statbuf;
 		int r;
 
-		r = stat (GDM_DT_DIR, &statbuf);
+		r = stat (MDM_DT_DIR, &statbuf);
 		if (r < 0) {
-			g_mkdir (GDM_DT_DIR, 0755);
+			g_mkdir (MDM_DT_DIR, 0755);
 		}
 		
-		g_remove (GDM_SDTLOGIN_DIR);
-		g_mkdir (GDM_SDTLOGIN_DIR, 0700);
+		g_remove (MDM_SDTLOGIN_DIR);
+		g_mkdir (MDM_SDTLOGIN_DIR, 0700);
 	}
 #endif
 
@@ -1696,19 +1696,19 @@ main (int argc, char *argv[])
 	sigemptyset (&sig.sa_mask);
 
 	if G_UNLIKELY (sigaction (SIGTERM, &sig, NULL) < 0)
-		gdm_fail (_("%s: Error setting up %s signal handler: %s"),
+		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
 			  "main", "TERM", strerror (errno));
 
 	if G_UNLIKELY (sigaction (SIGINT, &sig, NULL) < 0)
-		gdm_fail (_("%s: Error setting up %s signal handler: %s"),
+		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
 			  "main", "INT", strerror (errno));
 
 	if G_UNLIKELY (sigaction (SIGHUP, &sig, NULL) < 0)
-		gdm_fail (_("%s: Error setting up %s signal handler: %s"),
+		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
 			  "main", "HUP", strerror (errno));
 
 	if G_UNLIKELY (sigaction (SIGUSR1, &sig, NULL) < 0)
-		gdm_fail (_("%s: Error setting up %s signal handler: %s"),
+		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
 			  "main", "USR1", strerror (errno));
 
 	/* some process limit signals we catch and restart on,
@@ -1718,13 +1718,13 @@ main (int argc, char *argv[])
 #ifdef SIGXCPU
 	ve_signal_add (SIGXCPU, mainloop_sig_callback, NULL);
 	if G_UNLIKELY (sigaction (SIGXCPU, &sig, NULL) < 0)
-		gdm_fail (_("%s: Error setting up %s signal handler: %s"),
+		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
 			  "main", "XCPU", strerror (errno));
 #endif
 #ifdef SIGXFSZ
 	ve_signal_add (SIGXFSZ, mainloop_sig_callback, NULL);
 	if G_UNLIKELY (sigaction (SIGXFSZ, &sig, NULL) < 0)
-		gdm_fail (_("%s: Error setting up %s signal handler: %s"),
+		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
 			  "main", "XFSZ", strerror (errno));
 #endif
 
@@ -1735,7 +1735,7 @@ main (int argc, char *argv[])
 	sigemptyset (&abrt.sa_mask);
 
 	if G_UNLIKELY (sigaction (SIGABRT, &abrt, NULL) < 0)
-		gdm_fail (_("%s: Error setting up %s signal handler: %s"),
+		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
 			  "main", "ABRT", strerror (errno));
 
 	child.sa_handler = ve_signal_notify;
@@ -1744,7 +1744,7 @@ main (int argc, char *argv[])
 	sigaddset (&child.sa_mask, SIGCHLD);
 
 	if G_UNLIKELY (sigaction (SIGCHLD, &child, NULL) < 0)
-		gdm_fail (_("%s: Error setting up CHLD signal handler"), "gdm_main");
+		mdm_fail (_("%s: Error setting up CHLD signal handler"), "mdm_main");
 
 	sigemptyset (&mask);
 	sigaddset (&mask, SIGINT);
@@ -1761,42 +1761,42 @@ main (int argc, char *argv[])
 #endif
 	sigprocmask (SIG_UNBLOCK, &mask, NULL);
 
-	gdm_signal_ignore (SIGUSR2);
-	gdm_signal_ignore (SIGPIPE);
+	mdm_signal_ignore (SIGUSR2);
+	mdm_signal_ignore (SIGPIPE);
 
 	/* ignore power failures, up to user processes to
 	 * handle things correctly */
 #ifdef SIGPWR
-	gdm_signal_ignore (SIGPWR);
+	mdm_signal_ignore (SIGPWR);
 #endif
 	/* can we ever even get this one? */
 #ifdef SIGLOST
-	gdm_signal_ignore (SIGLOST);
+	mdm_signal_ignore (SIGLOST);
 #endif
 
-	gdm_debug ("gdm_main: Here we go...");
+	mdm_debug ("mdm_main: Here we go...");
 
 	/* Init XDMCP if applicable */
-	if (gdm_daemon_config_get_value_bool (GDM_KEY_XDMCP) && ! gdm_wait_for_go) {
-		gdm_xdmcp_init ();
+	if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP) && ! mdm_wait_for_go) {
+		mdm_xdmcp_init ();
 	}
 
 	create_connections ();
 
 	/* make sure things (currently /tmp/.ICE-unix and /tmp/.X11-unix)
 	 * are sane */
-	gdm_ensure_sanity () ;
+	mdm_ensure_sanity () ;
 
 	/* Make us a unique global cookie to authenticate */
-	gdm_make_global_cookie ();
+	mdm_make_global_cookie ();
 
 	/* Start static X servers */
-	gdm_start_first_unborn_local (0 /* delay */);
+	mdm_start_first_unborn_local (0 /* delay */);
 
 	/* Accept remote connections */
-	if (gdm_daemon_config_get_value_bool (GDM_KEY_XDMCP) && ! gdm_wait_for_go) {
-		gdm_debug ("Accepting XDMCP connections...");
-		gdm_xdmcp_run ();
+	if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP) && ! mdm_wait_for_go) {
+		mdm_debug ("Accepting XDMCP connections...");
+		mdm_xdmcp_run ();
 	}
 
 	/* We always exit via exit (), and sadly we need to g_main_quit ()
@@ -1806,7 +1806,7 @@ main (int argc, char *argv[])
 	while (1)
 		{
 			g_main_loop_run (main_loop);
-			gdm_debug ("main: Exited main loop");
+			mdm_debug ("main: Exited main loop");
 		}
 
 	return EXIT_SUCCESS;	/* Not reached */
@@ -1818,9 +1818,9 @@ order_exists (int order)
 	GSList *li;
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *d = li->data;
+		MdmDisplay *d = li->data;
 		if (d->x_servers_order == order)
 			return TRUE;
 	}
@@ -1828,13 +1828,13 @@ order_exists (int order)
 }
 
 static int
-get_new_order (GdmDisplay *d)
+get_new_order (MdmDisplay *d)
 {
 	int order;
 	GSList *li;
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 	/* first try the position in the 'displays' list as
 	 * our order */
 	for (order = 0, li = displays; li != NULL; order++, li = li->next) {
@@ -1848,19 +1848,19 @@ get_new_order (GdmDisplay *d)
 }
 
 static void
-write_x_servers (GdmDisplay *d)
+write_x_servers (MdmDisplay *d)
 {
 	FILE *fp;
-	char *file = gdm_make_filename (gdm_daemon_config_get_value_string (GDM_KEY_SERV_AUTHDIR), d->name, ".Xservers");
+	char *file = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR), d->name, ".Xservers");
 	int i;
 	int bogusname;
 
 	if (d->x_servers_order < 0)
 		d->x_servers_order = get_new_order (d);
 
-	fp = gdm_safe_fopen_w (file, 0644);
+	fp = mdm_safe_fopen_w (file, 0644);
 	if G_UNLIKELY (fp == NULL) {
-		gdm_error (_("Can't open %s for writing"), file);
+		mdm_error (_("Can't open %s for writing"), file);
 		g_free (file);
 		return;
 	}
@@ -1881,7 +1881,7 @@ write_x_servers (GdmDisplay *d)
 
 		argc = 0;
 		argv = NULL;
-		rc   = gdm_server_resolve_command_line (d,
+		rc   = mdm_server_resolve_command_line (d,
 						        FALSE, /* resolve_flags */
 						        NULL, /* vtarg */
 						        &argc,
@@ -1904,7 +1904,7 @@ write_x_servers (GdmDisplay *d)
 	errno = 0;
 	VE_IGNORE_EINTR (fclose (fp));
 	if G_UNLIKELY (errno != 0) {
-		gdm_error (_("Can't write to %s: %s"), file,
+		mdm_error (_("Can't write to %s: %s"), file,
 			   strerror (errno));
 	}
 
@@ -1912,12 +1912,12 @@ write_x_servers (GdmDisplay *d)
 }
 
 static void
-send_slave_ack_dialog_int (GdmDisplay *d, int type, int response)
+send_slave_ack_dialog_int (MdmDisplay *d, int type, int response)
 {
 	if (d->master_notify_fd >= 0) {
 		char *not;
 
-		not = g_strdup_printf ("%c%c%d\n", GDM_SLAVE_NOTIFY_RESPONSE, type, response);
+		not = g_strdup_printf ("%c%c%d\n", MDM_SLAVE_NOTIFY_RESPONSE, type, response);
 		VE_IGNORE_EINTR (write (d->master_notify_fd, not, strlen (not)));
 
 		g_free (not);
@@ -1932,19 +1932,19 @@ send_slave_ack_dialog_int (GdmDisplay *d, int type, int response)
 }
 
 static void
-send_slave_ack_dialog_char (GdmDisplay *d, int type, const char *resp)
+send_slave_ack_dialog_char (MdmDisplay *d, int type, const char *resp)
 {
 	if (d->master_notify_fd >= 0) {
 		if (resp == NULL) {
 			char not[3];
 
-			not[0] = GDM_SLAVE_NOTIFY_RESPONSE;
+			not[0] = MDM_SLAVE_NOTIFY_RESPONSE;
 			not[1] = type;
 			not[2] = '\n';
 			VE_IGNORE_EINTR (write (d->master_notify_fd, not, 3));
 		} else {
 			char *not = g_strdup_printf ("%c%c%s\n",
-						     GDM_SLAVE_NOTIFY_RESPONSE,
+						     MDM_SLAVE_NOTIFY_RESPONSE,
 						     type,
 						     resp);
 			VE_IGNORE_EINTR (write (d->master_notify_fd, not, strlen (not)));
@@ -1961,17 +1961,17 @@ send_slave_ack_dialog_char (GdmDisplay *d, int type, const char *resp)
 }
 
 static void
-send_slave_ack (GdmDisplay *d, const char *resp)
+send_slave_ack (MdmDisplay *d, const char *resp)
 {
 	if (d->master_notify_fd >= 0) {
 		if (resp == NULL) {
 			char not[2];
-			not[0] = GDM_SLAVE_NOTIFY_ACK;
+			not[0] = MDM_SLAVE_NOTIFY_ACK;
 			not[1] = '\n';
 			VE_IGNORE_EINTR (write (d->master_notify_fd, not, 2));
 		} else {
 			char *not = g_strdup_printf ("%c%s\n",
-						     GDM_SLAVE_NOTIFY_ACK,
+						     MDM_SLAVE_NOTIFY_ACK,
 						     resp);
 			VE_IGNORE_EINTR (write (d->master_notify_fd, not, strlen (not)));
 			g_free (not);
@@ -1988,11 +1988,11 @@ send_slave_ack (GdmDisplay *d, const char *resp)
 }
 
 static void
-send_slave_command (GdmDisplay *d, const char *command)
+send_slave_command (MdmDisplay *d, const char *command)
 {
 	if (d->master_notify_fd >= 0) {
 		char *cmd = g_strdup_printf ("%c%s\n",
-					     GDM_SLAVE_NOTIFY_COMMAND,
+					     MDM_SLAVE_NOTIFY_COMMAND,
 					     command);
 		VE_IGNORE_EINTR (write (d->master_notify_fd, cmd, strlen (cmd)));
 		g_free (cmd);
@@ -2008,36 +2008,36 @@ send_slave_command (GdmDisplay *d, const char *command)
 }
 
 static void
-gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
+mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 {
 	/* Evil!, all this for debugging? */
-	if G_UNLIKELY (gdm_daemon_config_get_value_bool (GDM_KEY_DEBUG)) {
-		if (strncmp (msg, GDM_SOP_COOKIE " ",
-			     strlen (GDM_SOP_COOKIE " ")) == 0) {
+	if G_UNLIKELY (mdm_daemon_config_get_value_bool (MDM_KEY_DEBUG)) {
+		if (strncmp (msg, MDM_SOP_COOKIE " ",
+			     strlen (MDM_SOP_COOKIE " ")) == 0) {
 			char *s = g_strndup
-				(msg, strlen (GDM_SOP_COOKIE " XXXX XX"));
+				(msg, strlen (MDM_SOP_COOKIE " XXXX XX"));
 			/* cut off most of the cookie for "security" */
-			gdm_debug ("Handling message: '%s...'", s);
+			mdm_debug ("Handling message: '%s...'", s);
 			g_free (s);
-		} else if (strncmp (msg, GDM_SOP_SYSLOG " ",
-				    strlen (GDM_SOP_SYSLOG " ")) != 0) {
+		} else if (strncmp (msg, MDM_SOP_SYSLOG " ",
+				    strlen (MDM_SOP_SYSLOG " ")) != 0) {
 			/* Don't print out the syslog message as it will
 			 * be printed out anyway as that's the whole point
 			 * of the message. */
-			gdm_debug ("Handling message: '%s'", msg);
+			mdm_debug ("Handling message: '%s'", msg);
 		}
 	}
 
-	if (strncmp (msg, GDM_SOP_CHOSEN " ",
-		     strlen (GDM_SOP_CHOSEN " ")) == 0) {
-		gdm_choose_data (msg);
-	} else if (strncmp (msg, GDM_SOP_CHOSEN_LOCAL " ",
-		            strlen (GDM_SOP_CHOSEN_LOCAL " ")) == 0) {
-		GdmDisplay *d;
+	if (strncmp (msg, MDM_SOP_CHOSEN " ",
+		     strlen (MDM_SOP_CHOSEN " ")) == 0) {
+		mdm_choose_data (msg);
+	} else if (strncmp (msg, MDM_SOP_CHOSEN_LOCAL " ",
+		            strlen (MDM_SOP_CHOSEN_LOCAL " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		char *p;
 
-		if (sscanf (msg, GDM_SOP_CHOSEN_LOCAL " %ld", &slave_pid)
+		if (sscanf (msg, MDM_SOP_CHOSEN_LOCAL " %ld", &slave_pid)
 		    != 1)
 			return;
 		p = strchr (msg, ' ');
@@ -2048,167 +2048,167 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 		p++;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			g_free (d->chosen_hostname);
 			d->chosen_hostname = g_strdup (p);
-			gdm_debug ("Got CHOSEN_LOCAL == %s", p);
+			mdm_debug ("Got CHOSEN_LOCAL == %s", p);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_XPID " ",
-		            strlen (GDM_SOP_XPID " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_XPID " ",
+		            strlen (MDM_SOP_XPID " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid, pid;
 
-		if (sscanf (msg, GDM_SOP_XPID " %ld %ld", &slave_pid, &pid)
+		if (sscanf (msg, MDM_SOP_XPID " %ld %ld", &slave_pid, &pid)
 		    != 2)
 			return;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			d->servpid = pid;
-			gdm_debug ("Got XPID == %ld", (long)pid);
+			mdm_debug ("Got XPID == %ld", (long)pid);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_SESSPID " ",
-		            strlen (GDM_SOP_SESSPID " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_SESSPID " ",
+		            strlen (MDM_SOP_SESSPID " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid, pid;
 
-		if (sscanf (msg, GDM_SOP_SESSPID " %ld %ld", &slave_pid, &pid)
+		if (sscanf (msg, MDM_SOP_SESSPID " %ld %ld", &slave_pid, &pid)
 		    != 2)
 			return;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			d->sesspid = pid;
-			gdm_debug ("Got SESSPID == %ld", (long)pid);
+			mdm_debug ("Got SESSPID == %ld", (long)pid);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_GREETPID " ",
-		            strlen (GDM_SOP_GREETPID " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_GREETPID " ",
+		            strlen (MDM_SOP_GREETPID " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid, pid;
 
-		if (sscanf (msg, GDM_SOP_GREETPID " %ld %ld", &slave_pid, &pid)
+		if (sscanf (msg, MDM_SOP_GREETPID " %ld %ld", &slave_pid, &pid)
 		    != 2)
 			return;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			d->greetpid = pid;
-			gdm_debug ("Got GREETPID == %ld", (long)pid);
+			mdm_debug ("Got GREETPID == %ld", (long)pid);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_CHOOSERPID " ",
-		            strlen (GDM_SOP_CHOOSERPID " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_CHOOSERPID " ",
+		            strlen (MDM_SOP_CHOOSERPID " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid, pid;
 
-		if (sscanf (msg, GDM_SOP_CHOOSERPID " %ld %ld",
+		if (sscanf (msg, MDM_SOP_CHOOSERPID " %ld %ld",
 			    &slave_pid, &pid) != 2)
 			return;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			d->chooserpid = pid;
-			gdm_debug ("Got CHOOSERPID == %ld", (long)pid);
+			mdm_debug ("Got CHOOSERPID == %ld", (long)pid);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_LOGGED_IN " ",
-		            strlen (GDM_SOP_LOGGED_IN " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_LOGGED_IN " ",
+		            strlen (MDM_SOP_LOGGED_IN " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		int logged_in;
-		if (sscanf (msg, GDM_SOP_LOGGED_IN " %ld %d", &slave_pid,
+		if (sscanf (msg, MDM_SOP_LOGGED_IN " %ld %d", &slave_pid,
 			    &logged_in) != 2)
 			return;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			d->logged_in = logged_in ? TRUE : FALSE;
-			gdm_debug ("Got logged in == %s",
+			mdm_debug ("Got logged in == %s",
 				   d->logged_in ? "TRUE" : "FALSE");
 
 			/* whack connections about this display if a user
 			 * just logged out since we don't want such
 			 * connections persisting to be authenticated */
 			if ( ! logged_in && unixconn != NULL)
-				gdm_kill_subconnections_with_display (unixconn, d);
+				mdm_kill_subconnections_with_display (unixconn, d);
 
 			/* if the user just logged out,
 			 * let's see if it's safe to restart */
 			if ( ! d->logged_in) {
-				gdm_try_logout_action (d);
-				gdm_safe_restart ();
+				mdm_try_logout_action (d);
+				mdm_safe_restart ();
 			}
 
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_DISP_NUM " ",
-		            strlen (GDM_SOP_DISP_NUM " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_DISP_NUM " ",
+		            strlen (MDM_SOP_DISP_NUM " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		int disp_num;
 
-		if (sscanf (msg, GDM_SOP_DISP_NUM " %ld %d",
+		if (sscanf (msg, MDM_SOP_DISP_NUM " %ld %d",
 			    &slave_pid, &disp_num) != 2)
 			return;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			g_free (d->name);
 			d->name = g_strdup_printf (":%d", disp_num);
 			d->dispnum = disp_num;
-			gdm_debug ("Got DISP_NUM == %d", disp_num);
+			mdm_debug ("Got DISP_NUM == %d", disp_num);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_VT_NUM " ",
-		            strlen (GDM_SOP_VT_NUM " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_VT_NUM " ",
+		            strlen (MDM_SOP_VT_NUM " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		int vt_num;
 
-		if (sscanf (msg, GDM_SOP_VT_NUM " %ld %d",
+		if (sscanf (msg, MDM_SOP_VT_NUM " %ld %d",
 			    &slave_pid, &vt_num) != 2)
 			return;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			d->vt = vt_num;
-			gdm_debug ("Got VT_NUM == %d", vt_num);
+			mdm_debug ("Got VT_NUM == %d", vt_num);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_LOGIN " ",
-		            strlen (GDM_SOP_LOGIN " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_LOGIN " ",
+		            strlen (MDM_SOP_LOGIN " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		char *p;
 
-		if (sscanf (msg, GDM_SOP_LOGIN " %ld",
+		if (sscanf (msg, MDM_SOP_LOGIN " %ld",
 			    &slave_pid) != 1)
 			return;
 		p = strchr (msg, ' ');
@@ -2220,22 +2220,22 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 		p++;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			g_free (d->login);
 			d->login = g_strdup (p);
-			gdm_debug ("Got LOGIN == %s", p);
+			mdm_debug ("Got LOGIN == %s", p);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_QUERYLOGIN " ",
-		            strlen (GDM_SOP_QUERYLOGIN " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_QUERYLOGIN " ",
+		            strlen (MDM_SOP_QUERYLOGIN " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		char *p;
 
-		if (sscanf (msg, GDM_SOP_QUERYLOGIN " %ld",
+		if (sscanf (msg, MDM_SOP_QUERYLOGIN " %ld",
 			    &slave_pid) != 1)
 			return;
 		p = strchr (msg, ' ');
@@ -2247,17 +2247,17 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 		p++;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			GString *resp = NULL;
 			GSList *li;
 			GSList *displays;
 
-			displays = gdm_daemon_config_get_display_list ();
-			gdm_debug ("Got QUERYLOGIN %s", p);
+			displays = mdm_daemon_config_get_display_list ();
+			mdm_debug ("Got QUERYLOGIN %s", p);
 			for (li = displays; li != NULL; li = li->next) {
-				GdmDisplay *di = li->data;
+				MdmDisplay *di = li->data;
 				if (di->logged_in &&
 				    di->login != NULL &&
 				    strcmp (di->login, p) == 0) {
@@ -2273,7 +2273,7 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 
 					if (d->attached && di->attached && di->vt > 0)
 						migratable = TRUE;
-					else if (gdm_daemon_config_get_value_string (GDM_KEY_XDMCP_PROXY_RECONNECT) != NULL &&
+					else if (mdm_daemon_config_get_value_string (MDM_KEY_XDMCP_PROXY_RECONNECT) != NULL &&
 						 d->type == TYPE_XDMCP_PROXY && di->type == TYPE_XDMCP_PROXY)
 						migratable = TRUE;
 
@@ -2289,17 +2289,17 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 				send_slave_ack (d, NULL);
 			}
 		}
-	} else if (strncmp (msg, GDM_SOP_MIGRATE " ",
-		            strlen (GDM_SOP_MIGRATE " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_MIGRATE " ",
+		            strlen (MDM_SOP_MIGRATE " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		char *p;
 		GSList *li;
 		GSList *displays;
 
-		displays = gdm_daemon_config_get_display_list ();
+		displays = mdm_daemon_config_get_display_list ();
 
-		if (sscanf (msg, GDM_SOP_MIGRATE " %ld", &slave_pid) != 1)
+		if (sscanf (msg, MDM_SOP_MIGRATE " %ld", &slave_pid) != 1)
 			return;
 		p = strchr (msg, ' ');
 		if (p != NULL)
@@ -2310,28 +2310,28 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 		p++;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 		if (d == NULL)
 			return;
 
-		gdm_debug ("Got MIGRATE %s", p);
+		mdm_debug ("Got MIGRATE %s", p);
 		for (li = displays; li != NULL; li = li->next) {
-			GdmDisplay *di = li->data;
+			MdmDisplay *di = li->data;
 			if (di->logged_in && strcmp (di->name, p) == 0) {
 				if (d->attached && di->vt > 0)
-					gdm_change_vt (di->vt);
+					mdm_change_vt (di->vt);
 				else if (d->type == TYPE_XDMCP_PROXY && di->type == TYPE_XDMCP_PROXY)
-					gdm_xdmcp_migrate (d, di);
+					mdm_xdmcp_migrate (d, di);
 			}
 		}
 		send_slave_ack (d, NULL);
-	} else if (strncmp (msg, GDM_SOP_COOKIE " ",
-		            strlen (GDM_SOP_COOKIE " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_COOKIE " ",
+		            strlen (MDM_SOP_COOKIE " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		char *p;
 
-		if (sscanf (msg, GDM_SOP_COOKIE " %ld",
+		if (sscanf (msg, MDM_SOP_COOKIE " %ld",
 			    &slave_pid) != 1)
 			return;
 		p = strchr (msg, ' ');
@@ -2343,22 +2343,22 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 		p++;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			g_free (d->cookie);
 			d->cookie = g_strdup (p);
-			gdm_debug ("Got COOKIE == <secret>");
+			mdm_debug ("Got COOKIE == <secret>");
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_AUTHFILE " ",
-		            strlen (GDM_SOP_AUTHFILE " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_AUTHFILE " ",
+		            strlen (MDM_SOP_AUTHFILE " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		char *p;
 
-		if (sscanf (msg, GDM_SOP_AUTHFILE " %ld",
+		if (sscanf (msg, MDM_SOP_AUTHFILE " %ld",
 			    &slave_pid) != 1)
 			return;
 		p = strchr (msg, ' ');
@@ -2370,35 +2370,35 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 		p++;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			g_free (d->authfile);
 			d->authfile = g_strdup (p);
-			gdm_debug ("Got AUTHFILE == %s", d->authfile);
+			mdm_debug ("Got AUTHFILE == %s", d->authfile);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_FLEXI_ERR " ",
-		            strlen (GDM_SOP_FLEXI_ERR " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_FLEXI_ERR " ",
+		            strlen (MDM_SOP_FLEXI_ERR " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		int err;
 
-		if (sscanf (msg, GDM_SOP_FLEXI_ERR " %ld %d",
+		if (sscanf (msg, MDM_SOP_FLEXI_ERR " %ld %d",
 			    &slave_pid, &err) != 2)
 			return;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			char *error = NULL;
-			GdmConnection *conn = d->socket_conn;
+			MdmConnection *conn = d->socket_conn;
 			d->socket_conn = NULL;
 
 			if (conn != NULL)
-				gdm_connection_set_close_notify (conn,
+				mdm_connection_set_close_notify (conn,
 								 NULL, NULL);
 
 			if (err == 3)
@@ -2410,62 +2410,62 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 			else
 				error = "ERROR 999 Unknown error\n";
 			if (conn != NULL)
-				gdm_connection_write (conn, error);
+				mdm_connection_write (conn, error);
 
-			gdm_debug ("Got FLEXI_ERR == %d", err);
+			mdm_debug ("Got FLEXI_ERR == %d", err);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_FLEXI_OK " ",
-		            strlen (GDM_SOP_FLEXI_OK " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_FLEXI_OK " ",
+		            strlen (MDM_SOP_FLEXI_OK " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 
-		if (sscanf (msg, GDM_SOP_FLEXI_OK " %ld",
+		if (sscanf (msg, MDM_SOP_FLEXI_OK " %ld",
 			    &slave_pid) != 1)
 			return;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
-			GdmConnection *conn = d->socket_conn;
+			MdmConnection *conn = d->socket_conn;
 			d->socket_conn = NULL;
 
 			if (conn != NULL) {
-				gdm_connection_set_close_notify (conn,
+				mdm_connection_set_close_notify (conn,
 								 NULL, NULL);
-				if ( ! gdm_connection_printf (conn, "OK %s\n", d->name))
-					gdm_display_unmanage (d);
+				if ( ! mdm_connection_printf (conn, "OK %s\n", d->name))
+					mdm_display_unmanage (d);
 			}
 
-			gdm_debug ("Got FLEXI_OK");
+			mdm_debug ("Got FLEXI_OK");
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strcmp (msg, GDM_SOP_SOFT_RESTART) == 0) {
-		gdm_restart_mode = TRUE;
-		gdm_safe_restart ();
-	} else if (strcmp (msg, GDM_SOP_DIRTY_SERVERS) == 0) {
+	} else if (strcmp (msg, MDM_SOP_SOFT_RESTART) == 0) {
+		mdm_restart_mode = TRUE;
+		mdm_safe_restart ();
+	} else if (strcmp (msg, MDM_SOP_DIRTY_SERVERS) == 0) {
 		GSList *li;
 		GSList *displays;
 
-		displays = gdm_daemon_config_get_display_list ();
+		displays = mdm_daemon_config_get_display_list ();
 		for (li = displays; li != NULL; li = li->next) {
-			GdmDisplay *d = li->data;
-			send_slave_command (d, GDM_NOTIFY_DIRTY_SERVERS);
+			MdmDisplay *d = li->data;
+			send_slave_command (d, MDM_NOTIFY_DIRTY_SERVERS);
 		}
-	} else if (strcmp (msg, GDM_SOP_SOFT_RESTART_SERVERS) == 0) {
+	} else if (strcmp (msg, MDM_SOP_SOFT_RESTART_SERVERS) == 0) {
 		GSList *li;
 		GSList *displays;
 
-		displays = gdm_daemon_config_get_display_list ();
+		displays = mdm_daemon_config_get_display_list ();
 		for (li = displays; li != NULL; li = li->next) {
-			GdmDisplay *d = li->data;
-			send_slave_command (d, GDM_NOTIFY_SOFT_RESTART_SERVERS);
+			MdmDisplay *d = li->data;
+			send_slave_command (d, MDM_NOTIFY_SOFT_RESTART_SERVERS);
 		}
-	} else if (strncmp (msg, GDM_SOP_SYSLOG " ",
-		            strlen (GDM_SOP_SYSLOG " ")) == 0) {
+	} else if (strncmp (msg, MDM_SOP_SYSLOG " ",
+		            strlen (MDM_SOP_SYSLOG " ")) == 0) {
 		char *p;
 		long pid;
 	       	int type;
@@ -2487,52 +2487,52 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 			return;
 		p++;
 
-		/* FIXME: use g_critical or gdm_debug when required */
-		gdm_debug ("(child %ld) %s", pid, p);
-	} else if (strcmp (msg, GDM_SOP_START_NEXT_LOCAL) == 0) {
-		gdm_start_first_unborn_local (3 /* delay */);
-	} else if (strcmp (msg, GDM_SOP_HUP_ALL_GREETERS) == 0) {
+		/* FIXME: use g_critical or mdm_debug when required */
+		mdm_debug ("(child %ld) %s", pid, p);
+	} else if (strcmp (msg, MDM_SOP_START_NEXT_LOCAL) == 0) {
+		mdm_start_first_unborn_local (3 /* delay */);
+	} else if (strcmp (msg, MDM_SOP_HUP_ALL_GREETERS) == 0) {
 		/* probably shouldn't be done too often */
 		GSList *li;
 		GSList *displays;
 
-		displays = gdm_daemon_config_get_display_list ();
+		displays = mdm_daemon_config_get_display_list ();
 		for (li = displays; li != NULL; li = li->next) {
-			GdmDisplay *d = li->data;
+			MdmDisplay *d = li->data;
 			if (d->greetpid > 1)
 				kill (d->greetpid, SIGHUP);
 			else if (d->chooserpid > 1)
 				kill (d->chooserpid, SIGHUP);
 		}
-	} else if (strcmp (msg, GDM_SOP_GO) == 0) {
+	} else if (strcmp (msg, MDM_SOP_GO) == 0) {
 		GSList *li;
-		gboolean old_wait = gdm_wait_for_go;
+		gboolean old_wait = mdm_wait_for_go;
 		GSList *displays;
 
-		displays = gdm_daemon_config_get_display_list ();
-		gdm_wait_for_go = FALSE;
+		displays = mdm_daemon_config_get_display_list ();
+		mdm_wait_for_go = FALSE;
 		for (li = displays; li != NULL; li = li->next) {
-			GdmDisplay *d = li->data;
-			send_slave_command (d, GDM_NOTIFY_GO);
+			MdmDisplay *d = li->data;
+			send_slave_command (d, MDM_NOTIFY_GO);
 		}
 		/* Init XDMCP if applicable */
-		if (old_wait && gdm_daemon_config_get_value_bool (GDM_KEY_XDMCP)) {
-			if (gdm_xdmcp_init ()) {
-				gdm_debug ("Accepting XDMCP connections...");
-				gdm_xdmcp_run ();
+		if (old_wait && mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP)) {
+			if (mdm_xdmcp_init ()) {
+				mdm_debug ("Accepting XDMCP connections...");
+				mdm_xdmcp_run ();
 			}
 		}
-	} else if (strncmp (msg, GDM_SOP_WRITE_X_SERVERS " ",
-		            strlen (GDM_SOP_WRITE_X_SERVERS " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_WRITE_X_SERVERS " ",
+		            strlen (MDM_SOP_WRITE_X_SERVERS " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 
-		if (sscanf (msg, GDM_SOP_WRITE_X_SERVERS " %ld",
+		if (sscanf (msg, MDM_SOP_WRITE_X_SERVERS " %ld",
 			    &slave_pid) != 1)
 			return;
 
 		/* Find out who this slave belongs to */
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			write_x_servers (d);
@@ -2540,31 +2540,31 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_SUSPEND_MACHINE " ",
-			    strlen (GDM_SOP_SUSPEND_MACHINE " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_SUSPEND_MACHINE " ",
+			    strlen (MDM_SOP_SUSPEND_MACHINE " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		gboolean sysmenu;
 
-		if (sscanf (msg, GDM_SOP_SUSPEND_MACHINE " %ld", &slave_pid) != 1)
+		if (sscanf (msg, MDM_SOP_SUSPEND_MACHINE " %ld", &slave_pid) != 1)
 			return;
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
-		gdm_info (_("Master suspending..."));
+		mdm_info (_("Master suspending..."));
 
-		sysmenu = gdm_daemon_config_get_value_bool_per_display (GDM_KEY_SYSTEM_MENU, d->name);
-		if (sysmenu && gdm_daemon_config_get_value_string_array (GDM_KEY_SUSPEND) != NULL) {
+		sysmenu = mdm_daemon_config_get_value_bool_per_display (MDM_KEY_SYSTEM_MENU, d->name);
+		if (sysmenu && mdm_daemon_config_get_value_string_array (MDM_KEY_SUSPEND) != NULL) {
 			suspend_machine ();
 		}
-	} else if (strncmp (msg, GDM_SOP_CHOSEN_THEME " ",
-		            strlen (GDM_SOP_CHOSEN_THEME " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_CHOSEN_THEME " ",
+		            strlen (MDM_SOP_CHOSEN_THEME " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		const char *p;
 
-		if (sscanf (msg, GDM_SOP_CHOSEN_THEME " %ld", &slave_pid) != 1)
+		if (sscanf (msg, MDM_SOP_CHOSEN_THEME " %ld", &slave_pid) != 1)
 			return;
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 			g_free (d->theme_name);
@@ -2586,32 +2586,32 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, GDM_SOP_CUSTOM_CMD " ",
-		            strlen (GDM_SOP_CUSTOM_CMD " ")) == 0) {
-		GdmDisplay *d;
+	} else if (strncmp (msg, MDM_SOP_CUSTOM_CMD " ",
+		            strlen (MDM_SOP_CUSTOM_CMD " ")) == 0) {
+		MdmDisplay *d;
 		long slave_pid;
 		long cmd_id;
 
-		if (sscanf (msg, GDM_SOP_CUSTOM_CMD " %ld %ld", &slave_pid, &cmd_id) != 2)
+		if (sscanf (msg, MDM_SOP_CUSTOM_CMD " %ld %ld", &slave_pid, &cmd_id) != 2)
 			return;
-		d = gdm_display_lookup (slave_pid);
+		d = mdm_display_lookup (slave_pid);
 
 		if (d != NULL) {
 		        custom_cmd (cmd_id);
 			send_slave_ack (d, NULL);
 		}
-	} else if (strcmp (msg, GDM_SOP_FLEXI_XSERVER) == 0) {
-		handle_flexi_server (NULL, TYPE_FLEXI, gdm_daemon_config_get_value_string (GDM_KEY_STANDARD_XSERVER),
+	} else if (strcmp (msg, MDM_SOP_FLEXI_XSERVER) == 0) {
+		handle_flexi_server (NULL, TYPE_FLEXI, mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER),
 				     TRUE /* handled */,
 				     FALSE /* chooser */,
 				     NULL, 0, NULL, NULL, NULL);
-	} else if (strncmp (msg, "opcode="GDM_SOP_SHOW_ERROR_DIALOG,
-			    strlen ("opcode="GDM_SOP_SHOW_ERROR_DIALOG)) == 0) {
+	} else if (strncmp (msg, "opcode="MDM_SOP_SHOW_ERROR_DIALOG,
+			    strlen ("opcode="MDM_SOP_SHOW_ERROR_DIALOG)) == 0) {
 		char **list;
 		list = g_strsplit (msg, "$$", -1);
 
-		if (gdm_vector_len (list) == 8) {
-			GdmDisplay *d;
+		if (mdm_vector_len (list) == 8) {
+			MdmDisplay *d;
 			GtkMessageType type;
 			char *ptr;
 			char *error;
@@ -2644,25 +2644,25 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 			ptr = strchr (list[7], '=');
 			gid = atoi (ptr + 1);
 
-			d = gdm_display_lookup (slave_pid);
+			d = mdm_display_lookup (slave_pid);
 
 			if (d != NULL) {
-				if (GDM_AUTHFILE (d)) {
+				if (MDM_AUTHFILE (d)) {
 					VE_IGNORE_EINTR (
-						chmod (GDM_AUTHFILE (d), 0644));
+						chmod (MDM_AUTHFILE (d), 0644));
 				}
 
 				/* FIXME: this is really bad */
-				gdm_errorgui_error_box_full (d, type, error,
+				mdm_errorgui_error_box_full (d, type, error,
 				     details_label, details_file, 0, 0);
 
-				if (GDM_AUTHFILE (d)) {
+				if (MDM_AUTHFILE (d)) {
 					VE_IGNORE_EINTR (
-						chmod (GDM_AUTHFILE (d), 0640));
+						chmod (MDM_AUTHFILE (d), 0640));
 				}
 
 				send_slave_ack_dialog_char (d,
-					GDM_SLAVE_NOTIFY_ERROR_RESPONSE, NULL);
+					MDM_SLAVE_NOTIFY_ERROR_RESPONSE, NULL);
 			}
 
 			g_free (error);
@@ -2670,13 +2670,13 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 			g_free (details_file);
 		}
 		g_strfreev (list);
-	} else if (strncmp (msg, "opcode="GDM_SOP_SHOW_YESNO_DIALOG,
-                            strlen ("opcode="GDM_SOP_SHOW_YESNO_DIALOG)) == 0) {
+	} else if (strncmp (msg, "opcode="MDM_SOP_SHOW_YESNO_DIALOG,
+                            strlen ("opcode="MDM_SOP_SHOW_YESNO_DIALOG)) == 0) {
 		char **list;
 		list = g_strsplit (msg, "$$", -1);
 
-		if (gdm_vector_len (list) == 3) {
-			GdmDisplay *d;
+		if (mdm_vector_len (list) == 3) {
+			MdmDisplay *d;
 			char *ptr;
 			char *yesno_msg;
 			long slave_pid;
@@ -2689,37 +2689,37 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 			yesno_msg = g_malloc0 (strlen (ptr));
 			strcpy (yesno_msg, ptr + 1);
 
-			d = gdm_display_lookup (slave_pid);
+			d = mdm_display_lookup (slave_pid);
 			if (d != NULL) {
-				if (GDM_AUTHFILE (d)) {
+				if (MDM_AUTHFILE (d)) {
 					VE_IGNORE_EINTR (
-						chmod (GDM_AUTHFILE (d), 0644));
+						chmod (MDM_AUTHFILE (d), 0644));
 				}
 
-				resp = gdm_errorgui_failsafe_yesno (d,
+				resp = mdm_errorgui_failsafe_yesno (d,
 					yesno_msg);
 
 				send_slave_ack_dialog_int (d,
-					GDM_SLAVE_NOTIFY_YESNO_RESPONSE,
+					MDM_SLAVE_NOTIFY_YESNO_RESPONSE,
 					resp);
 
-				if (GDM_AUTHFILE (d)) {
+				if (MDM_AUTHFILE (d)) {
 					VE_IGNORE_EINTR (
-						chmod (GDM_AUTHFILE (d), 0640));
+						chmod (MDM_AUTHFILE (d), 0640));
 				}
 			}
 			g_free (yesno_msg);
 		}
 
 		g_strfreev (list);
-	} else if (strncmp (msg, "opcode="GDM_SOP_SHOW_QUESTION_DIALOG,
-                            strlen ("opcode="GDM_SOP_SHOW_QUESTION_DIALOG)) == 0) {
+	} else if (strncmp (msg, "opcode="MDM_SOP_SHOW_QUESTION_DIALOG,
+                            strlen ("opcode="MDM_SOP_SHOW_QUESTION_DIALOG)) == 0) {
 		char **list;
 
 		list = g_strsplit (msg, "$$", -1);
 
-		if (gdm_vector_len (list) == 4) {
-			GdmDisplay *d;
+		if (mdm_vector_len (list) == 4) {
+			MdmDisplay *d;
 			char *ptr;
 			char *question_msg;
 			char *resp;
@@ -2736,36 +2736,36 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 			ptr = strchr (list [3], '=');
 			echo = atoi (ptr + 1);
 
-			d = gdm_display_lookup (slave_pid);
+			d = mdm_display_lookup (slave_pid);
 			if (d != NULL) {
-				if (GDM_AUTHFILE (d)) {
+				if (MDM_AUTHFILE (d)) {
 					VE_IGNORE_EINTR (
-						chmod (GDM_AUTHFILE (d), 0644));
+						chmod (MDM_AUTHFILE (d), 0644));
 				}
 
-				resp = gdm_errorgui_failsafe_question (d,
+				resp = mdm_errorgui_failsafe_question (d,
 					question_msg, echo);
 
 				send_slave_ack_dialog_char (d,
-					GDM_SLAVE_NOTIFY_QUESTION_RESPONSE,
+					MDM_SLAVE_NOTIFY_QUESTION_RESPONSE,
 					resp);
 
-				if (GDM_AUTHFILE (d)) {
+				if (MDM_AUTHFILE (d)) {
 					VE_IGNORE_EINTR (
-						chmod (GDM_AUTHFILE (d), 0640));
+						chmod (MDM_AUTHFILE (d), 0640));
 				}
 			}
 
 			g_free (question_msg);
 		}
 		g_strfreev (list);
-	} else if (strncmp (msg, "opcode="GDM_SOP_SHOW_ASKBUTTONS_DIALOG,
-                            strlen ("opcode="GDM_SOP_SHOW_ASKBUTTONS_DIALOG)) == 0) {
+	} else if (strncmp (msg, "opcode="MDM_SOP_SHOW_ASKBUTTONS_DIALOG,
+                            strlen ("opcode="MDM_SOP_SHOW_ASKBUTTONS_DIALOG)) == 0) {
 		char **list;
 		list = g_strsplit (msg, "$$", -1);
 
-		if (gdm_vector_len (list) == 7) {
-			GdmDisplay *d;
+		if (mdm_vector_len (list) == 7) {
+			MdmDisplay *d;
 			char *askbuttons_msg;
 			char *ptr;
 			char *options[4];
@@ -2796,23 +2796,23 @@ gdm_handle_message (GdmConnection *conn, const char *msg, gpointer data)
 			options[3] = g_malloc0 (strlen (ptr));
 			strcpy (options[3], ptr + 1);
 
-			d = gdm_display_lookup (slave_pid);
+			d = mdm_display_lookup (slave_pid);
 			if (d != NULL) {
-				if (GDM_AUTHFILE (d)) {
+				if (MDM_AUTHFILE (d)) {
 					VE_IGNORE_EINTR (
-						chmod (GDM_AUTHFILE (d), 0644));
+						chmod (MDM_AUTHFILE (d), 0644));
 				}
 
-				resp = gdm_errorgui_failsafe_ask_buttons (d,
+				resp = mdm_errorgui_failsafe_ask_buttons (d,
 					askbuttons_msg, options);
 
 				send_slave_ack_dialog_int (d,
-					GDM_SLAVE_NOTIFY_ASKBUTTONS_RESPONSE,
+					MDM_SLAVE_NOTIFY_ASKBUTTONS_RESPONSE,
 					resp);
 
-				if (GDM_AUTHFILE (d)) {
+				if (MDM_AUTHFILE (d)) {
 					VE_IGNORE_EINTR (
-						chmod (GDM_AUTHFILE (d), 0640));
+						chmod (MDM_AUTHFILE (d), 0640));
 				}
 			}
 
@@ -2906,25 +2906,25 @@ extract_dispname_uid_xauthfile_cookie (const char *msg,
 static void
 close_conn (gpointer data)
 {
-	GdmDisplay *disp = data;
+	MdmDisplay *disp = data;
 
 	/* We still weren't finished, so we want to whack this display */
 	if (disp->socket_conn != NULL) {
 		disp->socket_conn = NULL;
-		gdm_display_unmanage (disp);
+		mdm_display_unmanage (disp);
 	}
 }
 
-static GdmDisplay *
+static MdmDisplay *
 find_display (const char *name)
 {
 	GSList *li;
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *disp = li->data;
+		MdmDisplay *disp = li->data;
 		if (disp->name != NULL &&
 		    strcmp (disp->name, name) == 0)
 			return disp;
@@ -2938,7 +2938,7 @@ extract_dispnum (const char *addy)
 	int num;
 	char *p;
 
-	gdm_assert (addy != NULL);
+	mdm_assert (addy != NULL);
 
 	p = strchr (addy, ':');
 	if (p == NULL)
@@ -3031,7 +3031,7 @@ check_cookie (const gchar *file, const gchar *disp, const gchar *cookie)
 }
 
 static void
-handle_flexi_server (GdmConnection *conn,
+handle_flexi_server (MdmConnection *conn,
 		     int            type,
 		     const char    *server,
 		     gboolean       handled,
@@ -3042,15 +3042,15 @@ handle_flexi_server (GdmConnection *conn,
 		     const char    *xnest_cookie,
 		     const char    *username)
 {
-	GdmDisplay *display;
+	MdmDisplay *display;
 	gchar *bin;
 	uid_t server_uid = 0;
 
-	gdm_debug ("flexi server: '%s'", server);
+	mdm_debug ("flexi server: '%s'", server);
 
-	if (gdm_wait_for_go) {
+	if (mdm_wait_for_go) {
 		if (conn != NULL)
-			gdm_connection_write (conn,
+			mdm_connection_write (conn,
 					      "ERROR 1 No more flexi servers\n");
 		return;
 	}
@@ -3063,7 +3063,7 @@ handle_flexi_server (GdmConnection *conn,
 		pw = getpwuid (xnest_uid);
 		if (pw == NULL) {
 			if (conn != NULL)
-				gdm_connection_write (conn,
+				mdm_connection_write (conn,
 						      "ERROR 100 Not authenticated\n");
 			return;
 		}
@@ -3072,21 +3072,21 @@ handle_flexi_server (GdmConnection *conn,
 		NEVER_FAILS_seteuid (0);
 
 		if (setegid (pw->pw_gid) < 0)
-			NEVER_FAILS_setegid (gdm_daemon_config_get_gdmgid ());
+			NEVER_FAILS_setegid (mdm_daemon_config_get_mdmgid ());
 
 		if (seteuid (xnest_uid) < 0) {
 			if (conn != NULL)
-				gdm_connection_write (conn,
+				mdm_connection_write (conn,
 						      "ERROR 100 Not authenticated\n");
 			return;
 		}
 
-		gdm_assert (xnest_auth_file != NULL);
-		gdm_assert (xnest_disp != NULL);
-		gdm_assert (xnest_cookie != NULL);
+		mdm_assert (xnest_auth_file != NULL);
+		mdm_assert (xnest_disp != NULL);
+		mdm_assert (xnest_cookie != NULL);
 
 		if (authorized &&
-		    ! gdm_auth_file_check ("handle_flexi_server", xnest_uid, xnest_auth_file, FALSE /* absentok */, NULL))
+		    ! mdm_auth_file_check ("handle_flexi_server", xnest_uid, xnest_auth_file, FALSE /* absentok */, NULL))
 			authorized = FALSE;
 
 		if (authorized &&
@@ -3103,7 +3103,7 @@ handle_flexi_server (GdmConnection *conn,
 			/* Sorry dude, you're not doing something
 			 * right */
 			if (conn != NULL)
-				gdm_connection_write (conn,
+				mdm_connection_write (conn,
 						      "ERROR 100 Not authenticated\n");
 			return;
 		}
@@ -3111,9 +3111,9 @@ handle_flexi_server (GdmConnection *conn,
 		server_uid = xnest_uid;
 	}
 
-	if (flexi_servers >= gdm_daemon_config_get_value_int (GDM_KEY_FLEXIBLE_XSERVERS)) {
+	if (flexi_servers >= mdm_daemon_config_get_value_int (MDM_KEY_FLEXIBLE_XSERVERS)) {
 		if (conn != NULL)
-			gdm_connection_write (conn,
+			mdm_connection_write (conn,
 					      "ERROR 1 No more flexi servers\n");
 		return;
 	}
@@ -3123,16 +3123,16 @@ handle_flexi_server (GdmConnection *conn,
 	    g_access (bin, X_OK) != 0) {
 		g_free (bin);
 		if (conn != NULL)
-			gdm_connection_write (conn,
+			mdm_connection_write (conn,
 					      "ERROR 6 No server binary\n");
 		return;
 	}
 	g_free (bin);
 
-	display = gdm_display_alloc (-1, server, NULL);
+	display = mdm_display_alloc (-1, server, NULL);
 	if G_UNLIKELY (display == NULL) {
 		if (conn != NULL)
-			gdm_connection_write (conn,
+			mdm_connection_write (conn,
 					      "ERROR 2 Startup errors\n");
 		return;
 	}
@@ -3144,9 +3144,9 @@ handle_flexi_server (GdmConnection *conn,
 	display->use_chooser = chooser;
 
 	if (type == TYPE_FLEXI_XNEST) {
-		GdmDisplay *parent;
+		MdmDisplay *parent;
 		gchar *disp, *p;
-		gdm_assert (xnest_disp != NULL);
+		mdm_assert (xnest_disp != NULL);
 
 		disp = g_strdup (xnest_disp);
 		/* whack the screen info */
@@ -3178,13 +3178,13 @@ handle_flexi_server (GdmConnection *conn,
 	display->parent_disp = g_strdup (xnest_disp);
 	display->parent_auth_file = g_strdup (xnest_auth_file);
 	if (conn != NULL)
-		gdm_connection_set_close_notify (conn, display, close_conn);
-	gdm_daemon_config_display_list_append (display);
+		mdm_connection_set_close_notify (conn, display, close_conn);
+	mdm_daemon_config_display_list_append (display);
 
-	if ( ! gdm_display_manage (display)) {
-		gdm_display_unmanage (display);
+	if ( ! mdm_display_manage (display)) {
+		mdm_display_unmanage (display);
 		if (conn != NULL)
-			gdm_connection_write (conn,
+			mdm_connection_write (conn,
 					      "ERROR 2 Startup errors\n");
 		return;
 	}
@@ -3192,31 +3192,31 @@ handle_flexi_server (GdmConnection *conn,
 }
 
 static void
-handle_dynamic_server (GdmConnection *conn, int type, gchar *key)
+handle_dynamic_server (MdmConnection *conn, int type, gchar *key)
 {
-	GdmDisplay *disp;
+	MdmDisplay *disp;
 	int disp_num;
 	gchar *msg;
 	gchar *full;
 	gchar *val;
 
-	if (!(gdm_daemon_config_get_value_bool (GDM_KEY_DYNAMIC_XSERVERS))) {
-		gdm_connection_write (conn, "ERROR 200 Dynamic Displays not allowed\n");
+	if (!(mdm_daemon_config_get_value_bool (MDM_KEY_DYNAMIC_XSERVERS))) {
+		mdm_connection_write (conn, "ERROR 200 Dynamic Displays not allowed\n");
 		return;
 	}
 
-	if ( ! GDM_CONN_AUTH_GLOBAL(conn)) {
-		gdm_info (_("DYNAMIC request denied: " "Not authenticated"));
-		gdm_connection_write (conn, "ERROR 100 Not authenticated\n");
+	if ( ! MDM_CONN_AUTH_GLOBAL(conn)) {
+		mdm_info (_("DYNAMIC request denied: " "Not authenticated"));
+		mdm_connection_write (conn, "ERROR 100 Not authenticated\n");
 		return;
 	}
 
 	if (key == NULL) {
-		gdm_connection_write (conn, "ERROR 1 Bad display number <NULL>\n");
+		mdm_connection_write (conn, "ERROR 1 Bad display number <NULL>\n");
 		return;
 	} else if ( !(isdigit (*key))) {
 		msg = g_strdup_printf ("ERROR 1 Bad display number <%s>\n", key);
-		gdm_connection_write (conn, msg);
+		mdm_connection_write (conn, msg);
 		g_free (msg);
 		return;
 	}
@@ -3227,33 +3227,33 @@ handle_dynamic_server (GdmConnection *conn, int type, gchar *key)
 
 		if (mark_display_exists (disp_num)) {
 			/* need to skip starting this one again */
-			gdm_connection_write (conn, "ERROR 2 Existing display\n");
+			mdm_connection_write (conn, "ERROR 2 Existing display\n");
 			return;
 		}
 
 		full = strchr (key, '=');
 		if (full == NULL || *(full + 1) == 0) {
-			gdm_connection_write (conn, "ERROR 3 No server string\n");
+			mdm_connection_write (conn, "ERROR 3 No server string\n");
 			return;
 		}
 
 		val = full + 1;
-		disp = gdm_display_alloc (disp_num, val, NULL);
+		disp = mdm_display_alloc (disp_num, val, NULL);
 
 		if (disp == NULL) {
-			gdm_connection_write (conn, "ERROR 4 Display startup failure\n");
+			mdm_connection_write (conn, "ERROR 4 Display startup failure\n");
 			return;
 		}
 
-		gdm_daemon_config_display_list_insert (disp);
+		mdm_daemon_config_display_list_insert (disp);
 
 		disp->dispstat = DISPLAY_CONFIG;
 		disp->removeconf = FALSE;
 
-		if (disp_num > gdm_daemon_config_get_high_display_num ())
-			gdm_daemon_config_set_high_display_num (disp_num);
+		if (disp_num > mdm_daemon_config_get_high_display_num ())
+			mdm_daemon_config_set_high_display_num (disp_num);
 
-		gdm_connection_write (conn, "OK\n");
+		mdm_connection_write (conn, "OK\n");
 		return;
 	}
 
@@ -3262,7 +3262,7 @@ handle_dynamic_server (GdmConnection *conn, int type, gchar *key)
 		GSList *nli;
 		GSList *displays;
 
-		displays = gdm_daemon_config_get_display_list ();
+		displays = mdm_daemon_config_get_display_list ();
 
 		/* shutdown a dynamic X server */
 
@@ -3271,14 +3271,14 @@ handle_dynamic_server (GdmConnection *conn, int type, gchar *key)
 			nli = li->next;
 			if (disp->dispnum == disp_num) {
 				disp->removeconf = TRUE;
-				gdm_display_unmanage (disp);
-				gdm_connection_write (conn, "OK\n");
+				mdm_display_unmanage (disp);
+				mdm_connection_write (conn, "OK\n");
 				return;
 			}
 		}
 
 		msg = g_strdup_printf ("ERROR 1 Bad display number <%d>\n", disp_num);
-		gdm_connection_write (conn, msg);
+		mdm_connection_write (conn, msg);
 		return;
 	}
 
@@ -3289,27 +3289,27 @@ handle_dynamic_server (GdmConnection *conn, int type, gchar *key)
 		gboolean found = FALSE;
 		GSList *displays;
 
-		displays = gdm_daemon_config_get_display_list ();
+		displays = mdm_daemon_config_get_display_list ();
 
 		for (li = displays; li != NULL; li = nli) {
-			GdmDisplay *disp = li->data;
+			MdmDisplay *disp = li->data;
 			nli = li->next;
 			if ((disp->dispnum == disp_num) &&
 			    (disp->dispstat == DISPLAY_CONFIG)) {
 				disp->dispstat = DISPLAY_UNBORN;
 
-				if ( ! gdm_display_manage (disp)) {
-					gdm_display_unmanage (disp);
+				if ( ! mdm_display_manage (disp)) {
+					mdm_display_unmanage (disp);
 				}
 				found = TRUE;
 			}
 		}
 
 		if (found)
-			gdm_connection_write (conn, "OK\n");
+			mdm_connection_write (conn, "OK\n");
 		else {
 			msg = g_strdup_printf ("ERROR 1 Bad display number <%d>\n", disp_num);
-			gdm_connection_write (conn, msg);
+			mdm_connection_write (conn, msg);
 		}
 
 		/* Now we wait for the server to start up (or not) */
@@ -3318,7 +3318,7 @@ handle_dynamic_server (GdmConnection *conn, int type, gchar *key)
 }
 
 static void
-sup_handle_auth_local (GdmConnection *conn,
+sup_handle_auth_local (MdmConnection *conn,
 		       const char    *msg,
 		       gpointer       data)
 {
@@ -3326,55 +3326,55 @@ sup_handle_auth_local (GdmConnection *conn,
 	char *cookie;
 	GSList *displays;
 
-	cookie = g_strdup (&msg[strlen (GDM_SUP_AUTH_LOCAL " ")]);
+	cookie = g_strdup (&msg[strlen (MDM_SUP_AUTH_LOCAL " ")]);
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
 	g_strstrip (cookie);
 	if (strlen (cookie) != 16*2) /* 16 bytes in hex form */ {
 		/* evil, just whack the connection in this case */
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 100 Not authenticated\n");
-		gdm_connection_close (conn);
+		mdm_connection_close (conn);
 		g_free (cookie);
 		return;
 	}
 	/* check if cookie matches one of the attached displays */
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *disp = li->data;
+		MdmDisplay *disp = li->data;
 		if (disp->attached &&
 		    disp->cookie != NULL &&
 		    g_ascii_strcasecmp (disp->cookie, cookie) == 0) {
 			g_free (cookie);
-			GDM_CONNECTION_SET_USER_FLAG
-				(conn, GDM_SUP_FLAG_AUTHENTICATED);
-			gdm_connection_set_display (conn, disp);
-			gdm_connection_write (conn, "OK\n");
+			MDM_CONNECTION_SET_USER_FLAG
+				(conn, MDM_SUP_FLAG_AUTHENTICATED);
+			mdm_connection_set_display (conn, disp);
+			mdm_connection_write (conn, "OK\n");
 			return;
 		}
 	}
 
-	if (gdm_global_cookie != NULL &&
-	    g_ascii_strcasecmp ((gchar *) gdm_global_cookie, cookie) == 0) {
+	if (mdm_global_cookie != NULL &&
+	    g_ascii_strcasecmp ((gchar *) mdm_global_cookie, cookie) == 0) {
 		g_free (cookie);
-		GDM_CONNECTION_SET_USER_FLAG
-			(conn, GDM_SUP_FLAG_AUTH_GLOBAL);
-		gdm_connection_write (conn, "OK\n");
+		MDM_CONNECTION_SET_USER_FLAG
+			(conn, MDM_SUP_FLAG_AUTH_GLOBAL);
+		mdm_connection_write (conn, "OK\n");
 		return;
 	}
 
 	/* Hmmm, perhaps this is better defined behaviour */
-	GDM_CONNECTION_UNSET_USER_FLAG
-		(conn, GDM_SUP_FLAG_AUTHENTICATED);
-	GDM_CONNECTION_UNSET_USER_FLAG
-		(conn, GDM_SUP_FLAG_AUTH_GLOBAL);
-	gdm_connection_set_display (conn, NULL);
-	gdm_connection_write (conn, "ERROR 100 Not authenticated\n");
+	MDM_CONNECTION_UNSET_USER_FLAG
+		(conn, MDM_SUP_FLAG_AUTHENTICATED);
+	MDM_CONNECTION_UNSET_USER_FLAG
+		(conn, MDM_SUP_FLAG_AUTH_GLOBAL);
+	mdm_connection_set_display (conn, NULL);
+	mdm_connection_write (conn, "ERROR 100 Not authenticated\n");
 	g_free (cookie);
 }
 
 static void
-sup_handle_attached_servers (GdmConnection *conn,
+sup_handle_attached_servers (MdmConnection *conn,
 			     const char    *msg,
 			     gpointer       data)
 {
@@ -3385,21 +3385,21 @@ sup_handle_attached_servers (GdmConnection *conn,
 	int     msgLen=0;
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
-	if (strncmp (msg, GDM_SUP_ATTACHED_SERVERS,
-		     strlen (GDM_SUP_ATTACHED_SERVERS)) == 0)
-		msgLen = strlen (GDM_SUP_ATTACHED_SERVERS);
-	else if (strncmp (msg, GDM_SUP_CONSOLE_SERVERS,
-			  strlen (GDM_SUP_CONSOLE_SERVERS)) == 0)
-		msgLen = strlen (GDM_SUP_CONSOLE_SERVERS);
+	if (strncmp (msg, MDM_SUP_ATTACHED_SERVERS,
+		     strlen (MDM_SUP_ATTACHED_SERVERS)) == 0)
+		msgLen = strlen (MDM_SUP_ATTACHED_SERVERS);
+	else if (strncmp (msg, MDM_SUP_CONSOLE_SERVERS,
+			  strlen (MDM_SUP_CONSOLE_SERVERS)) == 0)
+		msgLen = strlen (MDM_SUP_CONSOLE_SERVERS);
 
 	key = g_strdup (&msg[msgLen]);
 	g_strstrip (key);
 
 	retMsg = g_string_new ("OK");
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *disp = li->data;
+		MdmDisplay *disp = li->data;
 
 		if ( ! disp->attached)
 			continue;
@@ -3417,97 +3417,97 @@ sup_handle_attached_servers (GdmConnection *conn,
 	}
 
 	g_string_append (retMsg, "\n");
-	gdm_connection_write (conn, retMsg->str);
+	mdm_connection_write (conn, retMsg->str);
 	g_free (key);
 	g_string_free (retMsg, TRUE);
 }
 
 static void
-sup_handle_get_server_details (GdmConnection *conn,
+sup_handle_get_server_details (MdmConnection *conn,
 			       const char    *msg,
 			       gpointer       data)
 {
-	const gchar  *server   = &msg[strlen (GDM_SUP_GET_SERVER_DETAILS " ")];
+	const gchar  *server   = &msg[strlen (MDM_SUP_GET_SERVER_DETAILS " ")];
 	gchar       **splitstr = g_strsplit (server, " ", 2);
-	GdmXserver   *svr      = NULL;
+	MdmXserver   *svr      = NULL;
 
-	if (gdm_vector_len (splitstr) == 2) {
-		svr = gdm_daemon_config_find_xserver ((gchar *)splitstr[0]);
+	if (mdm_vector_len (splitstr) == 2) {
+		svr = mdm_daemon_config_find_xserver ((gchar *)splitstr[0]);
 	}
 
 	if (svr != NULL) {
 		if (g_strcasecmp (splitstr[1], "ID") == 0)
-			gdm_connection_printf (conn, "OK %s\n",
+			mdm_connection_printf (conn, "OK %s\n",
 				svr->id ? svr->id : "(null)");
 		else if (g_strcasecmp (splitstr[1], "NAME") == 0)
-			gdm_connection_printf (conn, "OK %s\n",
+			mdm_connection_printf (conn, "OK %s\n",
 				svr->name ? svr->name : "(null)");
 		else if (g_strcasecmp (splitstr[1], "COMMAND") == 0)
-			gdm_connection_printf (conn, "OK %s\n",
+			mdm_connection_printf (conn, "OK %s\n",
 				svr->command ? svr->command : "(null)");
 		else if (g_strcasecmp (splitstr[1], "PRIORITY") == 0)
-			gdm_connection_printf (conn, "OK %d\n", svr->priority);
+			mdm_connection_printf (conn, "OK %d\n", svr->priority);
 		else if (g_strcasecmp (splitstr[1], "FLEXIBLE") == 0 &&
 			 svr->flexible)
-			gdm_connection_printf (conn, "OK true\n");
+			mdm_connection_printf (conn, "OK true\n");
 		else if (g_strcasecmp (splitstr[1], "FLEXIBLE") == 0 &&
 			 !svr->flexible)
-			gdm_connection_printf (conn, "OK false\n");
+			mdm_connection_printf (conn, "OK false\n");
 		else if (g_strcasecmp (splitstr[1], "CHOOSABLE") == 0 &&
 			 svr->choosable)
-			gdm_connection_printf (conn, "OK true\n");
+			mdm_connection_printf (conn, "OK true\n");
 		else if (g_strcasecmp (splitstr[1], "CHOOSABLE") == 0 &&
 			 !svr->choosable)
-			gdm_connection_printf (conn, "OK false\n");
+			mdm_connection_printf (conn, "OK false\n");
 		else if (g_strcasecmp (splitstr[1], "HANDLED") == 0 &&
 			 svr->handled)
-			gdm_connection_printf (conn, "OK true\n");
+			mdm_connection_printf (conn, "OK true\n");
 		else if (g_strcasecmp (splitstr[1], "HANDLED") == 0 &&
 			 !svr->handled)
-			gdm_connection_printf (conn, "OK false\n");
+			mdm_connection_printf (conn, "OK false\n");
 		else if (g_strcasecmp (splitstr[1], "CHOOSER") == 0 &&
 			 svr->chooser)
-			gdm_connection_printf (conn, "OK true\n");
+			mdm_connection_printf (conn, "OK true\n");
 		else if (g_strcasecmp (splitstr[1], "CHOOSER") == 0 &&
 			 !svr->chooser)
-			gdm_connection_printf (conn, "OK false\n");
+			mdm_connection_printf (conn, "OK false\n");
 		else
-			gdm_connection_printf (conn, "ERROR 2 Key not valid\n");
+			mdm_connection_printf (conn, "ERROR 2 Key not valid\n");
 
 	} else {
-		gdm_connection_printf (conn, "ERROR 1 Server not found\n");
+		mdm_connection_printf (conn, "ERROR 1 Server not found\n");
 	}
 	g_strfreev (splitstr);
 }
 
 static void
-sup_handle_flexi_xserver (GdmConnection *conn,
+sup_handle_flexi_xserver (MdmConnection *conn,
 			  const char    *msg,
 			  gpointer       data)
 {
 	char       *name;
 	const char *command = NULL;
-	GdmXserver *svr;
+	MdmXserver *svr;
 	const char *rest;
 	char       *username;
 	char       *end;
 	gboolean    has_user;
 
-	has_user = strncmp (msg, GDM_SUP_FLEXI_XSERVER_USER " ", strlen (GDM_SUP_FLEXI_XSERVER_USER " ")) == 0;
+	has_user = strncmp (msg, MDM_SUP_FLEXI_XSERVER_USER " ", strlen (MDM_SUP_FLEXI_XSERVER_USER " ")) == 0;
 
-	gdm_debug ("Handling flexi request has-user:%d", has_user);
+	mdm_debug ("Handling flexi request has-user:%d", has_user);
 
 	/* Only allow locally authenticated connections */
-	if ( ! GDM_CONN_AUTHENTICATED (conn)) {
-		gdm_info (_("%s request denied: "
+	if ( ! MDM_CONN_AUTHENTICATED (conn)) {
+		mdm_info (_("%s request denied: "
 			    "Not authenticated"), "FLEXI_XSERVER");
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 100 Not authenticated\n");
 		return;
 	}
 
 	if (has_user) {
-		rest = msg + strlen (GDM_SUP_FLEXI_XSERVER_USER " ");
+		rest = msg + strlen (MDM_SUP_FLEXI_XSERVER_USER " ");
 		end = strchr (rest, ' ');
 		if (end) {
 			username = g_strndup (rest, end - rest);
@@ -3517,7 +3517,7 @@ sup_handle_flexi_xserver (GdmConnection *conn,
 			rest = rest + strlen (rest);
 		}
 	} else {
-		rest = msg + strlen (GDM_SUP_FLEXI_XSERVER " ");
+		rest = msg + strlen (MDM_SUP_FLEXI_XSERVER " ");
 		username = NULL;
 	}
 
@@ -3525,22 +3525,22 @@ sup_handle_flexi_xserver (GdmConnection *conn,
 	g_strstrip (name);
 	if (ve_string_empty (name)) {
 		g_free (name);
-		name = g_strdup (GDM_STANDARD);
+		name = g_strdup (MDM_STANDARD);
 	}
 
-	svr = gdm_daemon_config_find_xserver (name);
+	svr = mdm_daemon_config_find_xserver (name);
 
 	if G_UNLIKELY (svr == NULL) {
 		/* Don't print the name to syslog as it might be
 		 * long and dangerous */
-		gdm_error (_("Unknown server type requested; using "
+		mdm_error (_("Unknown server type requested; using "
 			     "standard server."));
-		command = gdm_daemon_config_get_value_string (GDM_KEY_STANDARD_XSERVER);
+		command = mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER);
 	} else if G_UNLIKELY ( ! svr->flexible) {
-		gdm_error (_("Requested server %s not allowed to be "
+		mdm_error (_("Requested server %s not allowed to be "
 			     "used for flexible servers; using "
 			     "standard server."), name);
-		command = gdm_daemon_config_get_value_string (GDM_KEY_STANDARD_XSERVER);
+		command = mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER);
 	} else {
 		command = svr->command;
 	}
@@ -3563,7 +3563,7 @@ sup_handle_flexi_xserver (GdmConnection *conn,
 }
 
 static void
-sup_handle_flexi_xnest (GdmConnection *conn,
+sup_handle_flexi_xnest (MdmConnection *conn,
 			const char    *msg,
 			gpointer       data)
 {
@@ -3576,12 +3576,12 @@ sup_handle_flexi_xnest (GdmConnection *conn,
 	char       *end;
 	gboolean    has_user;
 
-	has_user = strncmp (msg, GDM_SUP_FLEXI_XNEST_USER " ", strlen (GDM_SUP_FLEXI_XNEST_USER " ")) == 0;
+	has_user = strncmp (msg, MDM_SUP_FLEXI_XNEST_USER " ", strlen (MDM_SUP_FLEXI_XNEST_USER " ")) == 0;
 
-	gdm_debug ("Handling flexi xnest request has-user:%d", has_user);
+	mdm_debug ("Handling flexi xnest request has-user:%d", has_user);
 
 	if (has_user) {
-		rest = msg + strlen (GDM_SUP_FLEXI_XNEST_USER " ");
+		rest = msg + strlen (MDM_SUP_FLEXI_XNEST_USER " ");
 		end = strchr (rest, ' ');
 		username = g_strndup (rest, end - rest);
 	} else {
@@ -3599,24 +3599,24 @@ sup_handle_flexi_xnest (GdmConnection *conn,
 		/* Something bogus is going on, so just whack the
 		 * connection */
 		g_free (xauthfile);
-		gdm_connection_close (conn);
-		gdm_debug ("Unable to get display name from request");
+		mdm_connection_close (conn);
+		mdm_debug ("Unable to get display name from request");
 		return;
 	}
 
 	/* This is probably a pre-2.2.4.2 client */
 	if (xauthfile == NULL || cookie == NULL) {
 		/* evil, just whack the connection in this case */
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 100 Not authenticated\n");
-		gdm_connection_close (conn);
+		mdm_connection_close (conn);
 		g_free (cookie);
 		return;
 	}
 
 	handle_flexi_server (conn,
 			     TYPE_FLEXI_XNEST,
-			     gdm_daemon_config_get_value_string (GDM_KEY_XNEST),
+			     mdm_daemon_config_get_value_string (MDM_KEY_XNEST),
 			     TRUE /* handled */,
 			     FALSE /* chooser */,
 			     dispname,
@@ -3631,7 +3631,7 @@ sup_handle_flexi_xnest (GdmConnection *conn,
 }
 
 static void
-sup_handle_get_config (GdmConnection *conn,
+sup_handle_get_config (MdmConnection *conn,
 		       const char    *msg,
 		       gpointer       data)
 {
@@ -3642,12 +3642,12 @@ sup_handle_get_config (GdmConnection *conn,
 
 	retval = NULL;
 
-	parms = &msg[strlen (GDM_SUP_GET_CONFIG " ")];
+	parms = &msg[strlen (MDM_SUP_GET_CONFIG " ")];
 
 	splitstr = g_strsplit (parms, " ", 2);
 
 	if (splitstr == NULL || splitstr[0] == NULL) {
-		gdm_connection_printf (conn, "ERROR 50 Unsupported key <null>\n");
+		mdm_connection_printf (conn, "ERROR 50 Unsupported key <null>\n");
 		goto out;
 	}
 
@@ -3658,11 +3658,11 @@ sup_handle_get_config (GdmConnection *conn,
 	 * this first and return "Unsupported key" for requests
 	 * after the first request.
 	 */
-	if (strcmp (splitstr[0], GDM_KEY_PRE_FETCH_PROGRAM) == 0) {
+	if (strcmp (splitstr[0], MDM_KEY_PRE_FETCH_PROGRAM) == 0) {
 		if (done_prefetch) {
-			gdm_connection_printf (conn, "OK \n");
+			mdm_connection_printf (conn, "OK \n");
 		} else {
-			gdm_connection_printf (conn, "ERROR 50 Unsupported key <%s>\n", splitstr[0]);
+			mdm_connection_printf (conn, "ERROR 50 Unsupported key <%s>\n", splitstr[0]);
 			done_prefetch = TRUE;
 		}
 		goto out;
@@ -3677,19 +3677,19 @@ sup_handle_get_config (GdmConnection *conn,
 		 * value at all.
 		 */
 
-		gdm_debug ("Handling GET_CONFIG: %s for display %s", splitstr[0],
+		mdm_debug ("Handling GET_CONFIG: %s for display %s", splitstr[0],
 			   splitstr[1] ? splitstr[1] : "(null)");
 
-		res = gdm_daemon_config_to_string (splitstr[0], splitstr[1], &retval);
+		res = mdm_daemon_config_to_string (splitstr[0], splitstr[1], &retval);
 
 		if (res) {
-			gdm_connection_printf (conn, "OK %s\n", retval);
+			mdm_connection_printf (conn, "OK %s\n", retval);
 			g_free (retval);
 		} else {
-			if (gdm_daemon_config_is_valid_key ((gchar *)splitstr[0]))
-				gdm_connection_printf (conn, "OK \n");
+			if (mdm_daemon_config_is_valid_key ((gchar *)splitstr[0]))
+				mdm_connection_printf (conn, "OK \n");
 			else
-				gdm_connection_printf (conn,
+				mdm_connection_printf (conn,
 						       "ERROR 50 Unsupported key <%s>\n",
 						       splitstr[0]);
 		}
@@ -3699,7 +3699,7 @@ sup_handle_get_config (GdmConnection *conn,
 }
 
 static gboolean
-is_action_available (GdmDisplay *disp, gchar *action)
+is_action_available (MdmDisplay *disp, gchar *action)
 {
 	const gchar **allowsyscmd;
 	const gchar **rbackeys;
@@ -3707,9 +3707,9 @@ is_action_available (GdmDisplay *disp, gchar *action)
 	gboolean ret = FALSE;
 	int i;
 
-	allowsyscmd = gdm_daemon_config_get_value_string_array (GDM_KEY_ALLOW_LOGOUT_ACTIONS);
-	rbackeys    = gdm_daemon_config_get_value_string_array (GDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
-	sysmenu     = gdm_daemon_config_get_value_bool_per_display (GDM_KEY_SYSTEM_MENU, disp->name);
+	allowsyscmd = mdm_daemon_config_get_value_string_array (MDM_KEY_ALLOW_LOGOUT_ACTIONS);
+	rbackeys    = mdm_daemon_config_get_value_string_array (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
+	sysmenu     = mdm_daemon_config_get_value_bool_per_display (MDM_KEY_SYSTEM_MENU, disp->name);
 
 	if (!disp->attached || !sysmenu) {
 		return FALSE;
@@ -3727,7 +3727,7 @@ is_action_available (GdmDisplay *disp, gchar *action)
 		for (i = 0; rbackeys[i] != NULL; i++) {
 			gchar **rbackey = g_strsplit (rbackeys[i], ":", 2);
 
-			if (gdm_vector_len (rbackey) == 2 &&
+			if (mdm_vector_len (rbackey) == 2 &&
 			    ! ve_string_empty (rbackey[0]) &&
 			    ! ve_string_empty (rbackey[1]) &&
 			    strcmp (rbackey[0], action) == 0) {
@@ -3748,24 +3748,24 @@ is_action_available (GdmDisplay *disp, gchar *action)
 }
 
 static void
-sup_handle_query_logout_action (GdmConnection *conn,
+sup_handle_query_logout_action (MdmConnection *conn,
 				const char    *msg,
 				gpointer       data)
 {
-	GdmLogoutAction logout_action;
-	GdmDisplay *disp;
+	MdmLogoutAction logout_action;
+	MdmDisplay *disp;
 	GString *reply;
 	const gchar *sep = " ";
 	int i;
 	gchar *key_string = NULL;
 
-	disp = gdm_connection_get_display (conn);
+	disp = mdm_connection_get_display (conn);
 
 	/* Only allow locally authenticated connections */
-        if (! GDM_CONN_AUTHENTICATED (conn) || disp == NULL) {
-		gdm_info (_("%s request denied: "
+        if (! MDM_CONN_AUTHENTICATED (conn) || disp == NULL) {
+		mdm_info (_("%s request denied: "
 			    "Not authenticated"), "QUERY_LOGOUT_ACTION");
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 100 Not authenticated\n");
 		return;
 	}
@@ -3773,48 +3773,48 @@ sup_handle_query_logout_action (GdmConnection *conn,
 	reply   = g_string_new ("OK");
 
 	logout_action = disp->logout_action;
-	if (logout_action == GDM_LOGOUT_ACTION_NONE)
+	if (logout_action == MDM_LOGOUT_ACTION_NONE)
 		logout_action = safe_logout_action;
 
-	if (gdm_daemon_config_get_value_string_array (GDM_KEY_HALT) &&
-	    is_action_available (disp, GDM_SUP_LOGOUT_ACTION_HALT)) {
+	if (mdm_daemon_config_get_value_string_array (MDM_KEY_HALT) &&
+	    is_action_available (disp, MDM_SUP_LOGOUT_ACTION_HALT)) {
 		g_string_append_printf (reply, "%s%s", sep,
-			GDM_SUP_LOGOUT_ACTION_HALT);
-		if (logout_action == GDM_LOGOUT_ACTION_HALT)
+			MDM_SUP_LOGOUT_ACTION_HALT);
+		if (logout_action == MDM_LOGOUT_ACTION_HALT)
 			g_string_append (reply, "!");
 		sep = ";";
 	}
-	if (gdm_daemon_config_get_value_string_array (GDM_KEY_REBOOT) &&
-	    is_action_available (disp, GDM_SUP_LOGOUT_ACTION_REBOOT)) {
+	if (mdm_daemon_config_get_value_string_array (MDM_KEY_REBOOT) &&
+	    is_action_available (disp, MDM_SUP_LOGOUT_ACTION_REBOOT)) {
 		g_string_append_printf (reply, "%s%s", sep,
-			GDM_SUP_LOGOUT_ACTION_REBOOT);
-		if (logout_action == GDM_LOGOUT_ACTION_REBOOT)
+			MDM_SUP_LOGOUT_ACTION_REBOOT);
+		if (logout_action == MDM_LOGOUT_ACTION_REBOOT)
 			g_string_append (reply, "!");
 		sep = ";";
 	}
-	if (gdm_daemon_config_get_value_string_array (GDM_KEY_SUSPEND) &&
-	    is_action_available (disp, GDM_SUP_LOGOUT_ACTION_SUSPEND)) {
+	if (mdm_daemon_config_get_value_string_array (MDM_KEY_SUSPEND) &&
+	    is_action_available (disp, MDM_SUP_LOGOUT_ACTION_SUSPEND)) {
 		g_string_append_printf (reply, "%s%s", sep,
-			GDM_SUP_LOGOUT_ACTION_SUSPEND);
-		if (logout_action == GDM_LOGOUT_ACTION_SUSPEND)
+			MDM_SUP_LOGOUT_ACTION_SUSPEND);
+		if (logout_action == MDM_LOGOUT_ACTION_SUSPEND)
 			g_string_append (reply, "!");
 		sep = ";";
 	}
 
-	if (is_action_available (disp, GDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) {
-		for (i = 0; i < GDM_CUSTOM_COMMAND_MAX; i++) {
-			key_string = g_strdup_printf ("%s%d=", GDM_KEY_CUSTOM_CMD_TEMPLATE, i);
+	if (is_action_available (disp, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) {
+		for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
+			key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
 
-			if (! ve_string_empty (gdm_daemon_config_get_value_string (key_string))) {
+			if (! ve_string_empty (mdm_daemon_config_get_value_string (key_string))) {
 
 				g_free (key_string);
 				key_string = g_strdup_printf("%s%d=",
-					GDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
+					MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
 
-				if (gdm_daemon_config_get_value_bool (key_string)) {
+				if (mdm_daemon_config_get_value_bool (key_string)) {
 					g_string_append_printf (reply, "%s%s%d", sep,
-						GDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE, i);
-					if (logout_action == (GDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + i))
+						MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE, i);
+					if (logout_action == (MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + i))
 						g_string_append (reply, "!");
 				sep = ";";
 				}
@@ -3824,48 +3824,48 @@ sup_handle_query_logout_action (GdmConnection *conn,
 	}
 
 	g_string_append (reply, "\n");
-	gdm_connection_write (conn, reply->str);
+	mdm_connection_write (conn, reply->str);
 	g_string_free (reply, TRUE);
 }
 
 static void
-sup_handle_query_custom_cmd_labels (GdmConnection *conn,
+sup_handle_query_custom_cmd_labels (MdmConnection *conn,
 				    const char    *msg,
 				    gpointer       data)
 {
 
-	GdmDisplay *disp;
+	MdmDisplay *disp;
 	GString *reply;
 	const gchar *sep = " ";
 	gboolean sysmenu;
 	int i;
 	gchar *key_string = NULL;
 
-	disp = gdm_connection_get_display (conn);
-	sysmenu = gdm_daemon_config_get_value_bool_per_display (GDM_KEY_SYSTEM_MENU, disp->name);
+	disp = mdm_connection_get_display (conn);
+	sysmenu = mdm_daemon_config_get_value_bool_per_display (MDM_KEY_SYSTEM_MENU, disp->name);
 
 	/* Only allow locally authenticated connections */
-	if ( ! GDM_CONN_AUTHENTICATED (conn) ||
+	if ( ! MDM_CONN_AUTHENTICATED (conn) ||
 	     disp == NULL) {
-		gdm_info (_("%s request denied: "
+		mdm_info (_("%s request denied: "
 			    "Not authenticated"), "QUERY_CUSTOM_CMD_LABELS");
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 100 Not authenticated\n");
 		return;
 	}
 
 	reply = g_string_new ("OK");
 
-	for (i = 0; i < GDM_CUSTOM_COMMAND_MAX; i++) {
-		key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_TEMPLATE, i);
+	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
+		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
 		if (sysmenu && disp->attached &&
-		    ! ve_string_empty (gdm_daemon_config_get_value_string (key_string))) {
+		    ! ve_string_empty (mdm_daemon_config_get_value_string (key_string))) {
 			g_free (key_string);
-			key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
-			if (gdm_daemon_config_get_value_bool (key_string)) {
+			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
+			if (mdm_daemon_config_get_value_bool (key_string)) {
 				g_free (key_string);
-				key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
-				g_string_append_printf (reply, "%s%s",  sep, gdm_daemon_config_get_value_string (key_string));
+				key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
+				g_string_append_printf (reply, "%s%s",  sep, mdm_daemon_config_get_value_string (key_string));
 				sep = ";";
 			}
 		}
@@ -3873,12 +3873,12 @@ sup_handle_query_custom_cmd_labels (GdmConnection *conn,
 	}
 
 	g_string_append (reply, "\n");
-	gdm_connection_write (conn, reply->str);
+	mdm_connection_write (conn, reply->str);
 	g_string_free (reply, TRUE);
 }
 
 static void
-sup_handle_all_servers (GdmConnection *conn,
+sup_handle_all_servers (MdmConnection *conn,
 			const char    *msg,
 			gpointer       data)
 {
@@ -3887,53 +3887,53 @@ sup_handle_all_servers (GdmConnection *conn,
 	const gchar *sep = " ";
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
 	reply = g_string_new ("OK");
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *disp = li->data;
+		MdmDisplay *disp = li->data;
 		g_string_append_printf (reply, "%s%s,%s", sep,
 					ve_sure_string (disp->name),
 					ve_sure_string (disp->login));
 		sep = ";";
 	}
 	g_string_append (reply, "\n");
-	gdm_connection_write (conn, reply->str);
+	mdm_connection_write (conn, reply->str);
 	g_string_free (reply, TRUE);
 }
 
 static void
-sup_handle_get_server_list (GdmConnection *conn,
+sup_handle_get_server_list (MdmConnection *conn,
 			    const char    *msg,
 			    gpointer       data)
 {
-	gchar *retval = gdm_daemon_config_get_xservers ();
+	gchar *retval = mdm_daemon_config_get_xservers ();
 
 	if (retval != NULL) {
-		gdm_connection_printf (conn, "OK %s\n", retval);
+		mdm_connection_printf (conn, "OK %s\n", retval);
 		g_free (retval);
 	} else {
-		gdm_connection_printf (conn, "ERROR 1 No servers found\n");
+		mdm_connection_printf (conn, "ERROR 1 No servers found\n");
 	}
 }
 
 static void
-sup_handle_get_custom_config_file (GdmConnection *conn,
+sup_handle_get_custom_config_file (MdmConnection *conn,
 				   const char    *msg,
 				   gpointer       data)
 {
 	gchar *ret;
 
-	ret = gdm_daemon_config_get_custom_config_file ();
+	ret = mdm_daemon_config_get_custom_config_file ();
 	if (ret)
-		gdm_connection_printf (conn, "OK %s\n", ret);
+		mdm_connection_printf (conn, "OK %s\n", ret);
 	else
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 1 File not found\n");
 }
 
 static void
-sup_handle_greeterpids (GdmConnection *conn,
+sup_handle_greeterpids (MdmConnection *conn,
 			const char    *msg,
 			gpointer       data)
 {
@@ -3942,11 +3942,11 @@ sup_handle_greeterpids (GdmConnection *conn,
 	const gchar *sep = " ";
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
 	reply = g_string_new ("OK");
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *disp = li->data;
+		MdmDisplay *disp = li->data;
 		if (disp->greetpid > 0) {
 			g_string_append_printf (reply, "%s%ld",
 						sep, (long)disp->greetpid);
@@ -3954,48 +3954,48 @@ sup_handle_greeterpids (GdmConnection *conn,
 		}
 	}
 	g_string_append (reply, "\n");
-	gdm_connection_write (conn, reply->str);
+	mdm_connection_write (conn, reply->str);
 	g_string_free (reply, TRUE);
 }
 
 static void
-sup_handle_query_custom_cmd_no_restart_status (GdmConnection *conn,
+sup_handle_query_custom_cmd_no_restart_status (MdmConnection *conn,
 					       const char    *msg,
 					       gpointer       data)
 {
 
-	GdmDisplay *disp;
+	MdmDisplay *disp;
 	GString *reply;
 	gboolean sysmenu;
 	unsigned long no_restart_status_flag = 0; /* we can store up-to 32 commands this way */
 	int i;
 	gchar *key_string = NULL;
 
-	disp = gdm_connection_get_display (conn);
-	sysmenu = gdm_daemon_config_get_value_bool_per_display (GDM_KEY_SYSTEM_MENU, disp->name);
+	disp = mdm_connection_get_display (conn);
+	sysmenu = mdm_daemon_config_get_value_bool_per_display (MDM_KEY_SYSTEM_MENU, disp->name);
 
 	/* Only allow locally authenticated connections */
-	if ( ! GDM_CONN_AUTHENTICATED (conn) ||
+	if ( ! MDM_CONN_AUTHENTICATED (conn) ||
 	     disp == NULL) {
-		gdm_info (_("%s request denied: "
+		mdm_info (_("%s request denied: "
 			    "Not authenticated"), "QUERY_CUSTOM_CMD_NO_RESTART_STATUS");
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 100 Not authenticated\n");
 		return;
 	}
 
 	reply = g_string_new ("OK ");
 
-	for (i = 0; i < GDM_CUSTOM_COMMAND_MAX; i++) {
-		key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_TEMPLATE, i);
+	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
+		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
 		if (sysmenu && disp->attached &&
-		    ! ve_string_empty (gdm_daemon_config_get_value_string (key_string))) {
+		    ! ve_string_empty (mdm_daemon_config_get_value_string (key_string))) {
 			g_free (key_string);
-			key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
-			if (gdm_daemon_config_get_value_bool (key_string)) {
+			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
+			if (mdm_daemon_config_get_value_bool (key_string)) {
 				g_free (key_string);
-				key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE, i);
-				if(gdm_daemon_config_get_value_bool (key_string))
+				key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE, i);
+				if(mdm_daemon_config_get_value_bool (key_string))
 					no_restart_status_flag |= (1 << i);
 			}
 		}
@@ -4003,64 +4003,64 @@ sup_handle_query_custom_cmd_no_restart_status (GdmConnection *conn,
 	}
 
 	g_string_append_printf (reply, "%ld\n", no_restart_status_flag);
-	gdm_connection_write (conn, reply->str);
+	mdm_connection_write (conn, reply->str);
 	g_string_free (reply, TRUE);
 }
 
 static void
-sup_handle_set_logout_action (GdmConnection *conn,
+sup_handle_set_logout_action (MdmConnection *conn,
 			      const char    *msg,
 			      gpointer       data)
 
 {
-	GdmDisplay *disp;
+	MdmDisplay *disp;
 	const gchar *action;
 	gboolean was_ok = FALSE;
 
-	action = &msg[strlen (GDM_SUP_SET_LOGOUT_ACTION " ")];
-	disp   = gdm_connection_get_display (conn);
+	action = &msg[strlen (MDM_SUP_SET_LOGOUT_ACTION " ")];
+	disp   = mdm_connection_get_display (conn);
 
 	/* Only allow locally authenticated connections */
-	if ( ! GDM_CONN_AUTHENTICATED (conn) ||
+	if ( ! MDM_CONN_AUTHENTICATED (conn) ||
 	     disp == NULL ||
 	     ! disp->logged_in) {
-		gdm_info (_("%s request denied: "
+		mdm_info (_("%s request denied: "
 			    "Not authenticated"), "SET_LOGOUT_ACTION");
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 100 Not authenticated\n");
 		return;
 	}
 
-	if (strcmp (action, GDM_SUP_LOGOUT_ACTION_NONE) == 0) {
-		disp->logout_action = GDM_LOGOUT_ACTION_NONE;
+	if (strcmp (action, MDM_SUP_LOGOUT_ACTION_NONE) == 0) {
+		disp->logout_action = MDM_LOGOUT_ACTION_NONE;
 		was_ok = TRUE;
-	} else if (strcmp (action, GDM_SUP_LOGOUT_ACTION_HALT) == 0 &&
-		   gdm_daemon_config_get_value_string_array (GDM_KEY_HALT) &&
-		   is_action_available (disp, GDM_SUP_LOGOUT_ACTION_HALT)) {
-		disp->logout_action = GDM_LOGOUT_ACTION_HALT;
+	} else if (strcmp (action, MDM_SUP_LOGOUT_ACTION_HALT) == 0 &&
+		   mdm_daemon_config_get_value_string_array (MDM_KEY_HALT) &&
+		   is_action_available (disp, MDM_SUP_LOGOUT_ACTION_HALT)) {
+		disp->logout_action = MDM_LOGOUT_ACTION_HALT;
 		was_ok = TRUE;
-	} else if (strcmp (action, GDM_SUP_LOGOUT_ACTION_REBOOT) == 0 &&
-		   gdm_daemon_config_get_value_string_array (GDM_KEY_REBOOT) &&
-		   is_action_available (disp, GDM_SUP_LOGOUT_ACTION_REBOOT)) {
-		disp->logout_action = GDM_LOGOUT_ACTION_REBOOT;
+	} else if (strcmp (action, MDM_SUP_LOGOUT_ACTION_REBOOT) == 0 &&
+		   mdm_daemon_config_get_value_string_array (MDM_KEY_REBOOT) &&
+		   is_action_available (disp, MDM_SUP_LOGOUT_ACTION_REBOOT)) {
+		disp->logout_action = MDM_LOGOUT_ACTION_REBOOT;
 		was_ok = TRUE;
-	} else if (strcmp (action, GDM_SUP_LOGOUT_ACTION_SUSPEND) == 0 &&
-		   gdm_daemon_config_get_value_string_array (GDM_KEY_SUSPEND) &&
-		   is_action_available (disp, GDM_SUP_LOGOUT_ACTION_SUSPEND)) {
-		disp->logout_action = GDM_LOGOUT_ACTION_SUSPEND;
+	} else if (strcmp (action, MDM_SUP_LOGOUT_ACTION_SUSPEND) == 0 &&
+		   mdm_daemon_config_get_value_string_array (MDM_KEY_SUSPEND) &&
+		   is_action_available (disp, MDM_SUP_LOGOUT_ACTION_SUSPEND)) {
+		disp->logout_action = MDM_LOGOUT_ACTION_SUSPEND;
 		was_ok = TRUE;
 	}
-	else if (strncmp (action, GDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE,
-			  strlen (GDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) == 0 &&
-		 is_action_available (disp, GDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) {
+	else if (strncmp (action, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE,
+			  strlen (MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) == 0 &&
+		 is_action_available (disp, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) {
 
 		int cmd_index;
-		if (sscanf (action, GDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE "%d", &cmd_index) == 1) {
+		if (sscanf (action, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE "%d", &cmd_index) == 1) {
 			gchar *key_string = NULL;
-			key_string = g_strdup_printf ("%s%d=", GDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_index);
-			if (! ve_string_empty (gdm_daemon_config_get_value_string (key_string))) {
+			key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_index);
+			if (! ve_string_empty (mdm_daemon_config_get_value_string (key_string))) {
 				disp->logout_action =
-					GDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + cmd_index;
+					MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + cmd_index;
 				was_ok = TRUE;
 			}
 			g_free(key_string);
@@ -4068,69 +4068,69 @@ sup_handle_set_logout_action (GdmConnection *conn,
 	}
 
 	if (was_ok) {
-		gdm_connection_write (conn, "OK\n");
-		gdm_try_logout_action (disp);
+		mdm_connection_write (conn, "OK\n");
+		mdm_try_logout_action (disp);
 	} else {
-		gdm_connection_write (conn, "ERROR 7 Unknown logout action, or not available\n");
+		mdm_connection_write (conn, "ERROR 7 Unknown logout action, or not available\n");
 	}
 }
 
 static void
-sup_handle_set_safe_logout_action (GdmConnection *conn,
+sup_handle_set_safe_logout_action (MdmConnection *conn,
 				   const char    *msg,
 				   gpointer       data)
 
 {
-	GdmDisplay *disp;
+	MdmDisplay *disp;
 	const gchar *action;
 	gboolean was_ok = FALSE;
 
-	action = &msg[strlen (GDM_SUP_SET_SAFE_LOGOUT_ACTION " ")];
-	disp   = gdm_connection_get_display (conn);
+	action = &msg[strlen (MDM_SUP_SET_SAFE_LOGOUT_ACTION " ")];
+	disp   = mdm_connection_get_display (conn);
 
 	/* Only allow locally authenticated connections */
-	if ( ! GDM_CONN_AUTHENTICATED (conn) ||
+	if ( ! MDM_CONN_AUTHENTICATED (conn) ||
 	     disp == NULL ||
 	     ! disp->logged_in) {
-		gdm_info (_("%s request denied: "
+		mdm_info (_("%s request denied: "
 			    "Not authenticated"), "SET_LOGOUT_ACTION");
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 100 Not authenticated\n");
 		return;
 	}
 
-	if (strcmp (action, GDM_SUP_LOGOUT_ACTION_NONE) == 0) {
-		safe_logout_action = GDM_LOGOUT_ACTION_NONE;
+	if (strcmp (action, MDM_SUP_LOGOUT_ACTION_NONE) == 0) {
+		safe_logout_action = MDM_LOGOUT_ACTION_NONE;
 		was_ok = TRUE;
-	} else if (strcmp (action, GDM_SUP_LOGOUT_ACTION_HALT) == 0 &&
-		   gdm_daemon_config_get_value_string_array (GDM_KEY_HALT) &&
-		   is_action_available (disp, GDM_SUP_LOGOUT_ACTION_HALT)) {
-		safe_logout_action = GDM_LOGOUT_ACTION_HALT;
+	} else if (strcmp (action, MDM_SUP_LOGOUT_ACTION_HALT) == 0 &&
+		   mdm_daemon_config_get_value_string_array (MDM_KEY_HALT) &&
+		   is_action_available (disp, MDM_SUP_LOGOUT_ACTION_HALT)) {
+		safe_logout_action = MDM_LOGOUT_ACTION_HALT;
 		was_ok = TRUE;
-	} else if (strcmp (action, GDM_SUP_LOGOUT_ACTION_REBOOT) == 0 &&
-		   gdm_daemon_config_get_value_string_array (GDM_KEY_REBOOT) &&
-		   is_action_available (disp, GDM_SUP_LOGOUT_ACTION_REBOOT)) {
-		safe_logout_action = GDM_LOGOUT_ACTION_REBOOT;
+	} else if (strcmp (action, MDM_SUP_LOGOUT_ACTION_REBOOT) == 0 &&
+		   mdm_daemon_config_get_value_string_array (MDM_KEY_REBOOT) &&
+		   is_action_available (disp, MDM_SUP_LOGOUT_ACTION_REBOOT)) {
+		safe_logout_action = MDM_LOGOUT_ACTION_REBOOT;
 		was_ok = TRUE;
-	} else if (strcmp (action, GDM_SUP_LOGOUT_ACTION_SUSPEND) == 0 &&
-		   gdm_daemon_config_get_value_string_array (GDM_KEY_SUSPEND) &&
-		   is_action_available (disp, GDM_SUP_LOGOUT_ACTION_SUSPEND)) {
-		safe_logout_action = GDM_LOGOUT_ACTION_SUSPEND;
+	} else if (strcmp (action, MDM_SUP_LOGOUT_ACTION_SUSPEND) == 0 &&
+		   mdm_daemon_config_get_value_string_array (MDM_KEY_SUSPEND) &&
+		   is_action_available (disp, MDM_SUP_LOGOUT_ACTION_SUSPEND)) {
+		safe_logout_action = MDM_LOGOUT_ACTION_SUSPEND;
 		was_ok = TRUE;
 	}
-	else if (strncmp (action, GDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE,
-			  strlen (GDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) == 0 &&
-		 is_action_available (disp, GDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) {
+	else if (strncmp (action, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE,
+			  strlen (MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) == 0 &&
+		 is_action_available (disp, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) {
 
 		int cmd_index;
-		if (sscanf (action, GDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE "%d", &cmd_index) == 1) {
+		if (sscanf (action, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE "%d", &cmd_index) == 1) {
 
 			gchar *key_string = NULL;
-			key_string = g_strdup_printf ("%s%d=", GDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_index);
+			key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_index);
 
-			if (! ve_string_empty (gdm_daemon_config_get_value_string (key_string))) {
+			if (! ve_string_empty (mdm_daemon_config_get_value_string (key_string))) {
 				safe_logout_action =
-					GDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + cmd_index;
+					MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + cmd_index;
 				was_ok = TRUE;
 			}
 			g_free(key_string);
@@ -4138,15 +4138,15 @@ sup_handle_set_safe_logout_action (GdmConnection *conn,
 	}
 
 	if (was_ok) {
-		gdm_connection_write (conn, "OK\n");
-		gdm_try_logout_action (disp);
+		mdm_connection_write (conn, "OK\n");
+		mdm_try_logout_action (disp);
 	} else {
-		gdm_connection_write (conn, "ERROR 7 Unknown logout action, or not available\n");
+		mdm_connection_write (conn, "ERROR 7 Unknown logout action, or not available\n");
 	}
 }
 
 static void
-sup_handle_query_vt (GdmConnection *conn,
+sup_handle_query_vt (MdmConnection *conn,
 		     const char    *msg,
 		     gpointer       data)
 
@@ -4154,29 +4154,29 @@ sup_handle_query_vt (GdmConnection *conn,
 	int current_vt;
 
 	/* Only allow locally authenticated connections */
-	if ( ! GDM_CONN_AUTHENTICATED (conn)) {
-		gdm_info (_("%s request denied: "
+	if ( ! MDM_CONN_AUTHENTICATED (conn)) {
+		mdm_info (_("%s request denied: "
 			    "Not authenticated"), "QUERY_VT");
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 100 Not authenticated\n");
 		return;
 	}
 
-#if defined (GDM_USE_SYS_VT) || defined (GDM_USE_CONSIO_VT)
-	current_vt = gdm_get_current_vt ();
+#if defined (MDM_USE_SYS_VT) || defined (MDM_USE_CONSIO_VT)
+	current_vt = mdm_get_current_vt ();
 
 	if (current_vt != -1) {
-		gdm_connection_printf (conn, "OK %d\n", current_vt);
+		mdm_connection_printf (conn, "OK %d\n", current_vt);
 	} else {
-		gdm_connection_write (conn, "ERROR 8 Virtual terminals not supported\n");
+		mdm_connection_write (conn, "ERROR 8 Virtual terminals not supported\n");
 	}
 #else
-	gdm_connection_write (conn, "ERROR 8 Virtual terminals not supported\n");
+	mdm_connection_write (conn, "ERROR 8 Virtual terminals not supported\n");
 #endif
 }
 
 static void
-sup_handle_set_vt (GdmConnection *conn,
+sup_handle_set_vt (MdmConnection *conn,
 		   const char    *msg,
 		   gpointer       data)
 {
@@ -4184,72 +4184,72 @@ sup_handle_set_vt (GdmConnection *conn,
 	GSList *li;
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
-	if (sscanf (msg, GDM_SUP_SET_VT " %d", &vt) != 1 ||
+	if (sscanf (msg, MDM_SUP_SET_VT " %d", &vt) != 1 ||
 	    vt < 0) {
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 9 Invalid virtual terminal number\n");
 		return;
 	}
 
 	/* Only allow locally authenticated connections */
-	if ( ! GDM_CONN_AUTHENTICATED (conn)) {
-		gdm_info (_("%s request denied: "
+	if ( ! MDM_CONN_AUTHENTICATED (conn)) {
+		mdm_info (_("%s request denied: "
 			    "Not authenticated"), "QUERY_VT");
-		gdm_connection_write (conn,
+		mdm_connection_write (conn,
 				      "ERROR 100 Not authenticated\n");
 		return;
 	}
 
-#if defined (GDM_USE_SYS_VT) || defined (GDM_USE_CONSIO_VT)
-	gdm_change_vt (vt);
+#if defined (MDM_USE_SYS_VT) || defined (MDM_USE_CONSIO_VT)
+	mdm_change_vt (vt);
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *disp = li->data;
+		MdmDisplay *disp = li->data;
 		if (disp->vt == vt) {
-			send_slave_command (disp, GDM_NOTIFY_TWIDDLE_POINTER);
+			send_slave_command (disp, MDM_NOTIFY_TWIDDLE_POINTER);
 			break;
 		}
 	}
-	gdm_connection_write (conn, "OK\n");
+	mdm_connection_write (conn, "OK\n");
 #else
-	gdm_connection_write (conn, "ERROR 8 Virtual terminals not supported\n");
+	mdm_connection_write (conn, "ERROR 8 Virtual terminals not supported\n");
 #endif
 }
 
 static void
-gdm_handle_user_message (GdmConnection *conn,
+mdm_handle_user_message (MdmConnection *conn,
 			 const char    *msg,
 			 gpointer       data)
 {
 
-	gdm_debug ("Handling user message: '%s'", msg);
+	mdm_debug ("Handling user message: '%s'", msg);
 
-	if (gdm_connection_get_message_count (conn) > GDM_SUP_MAX_MESSAGES) {
-		gdm_debug ("Closing connection, %d messages reached", GDM_SUP_MAX_MESSAGES);
-		gdm_connection_write (conn, "ERROR 200 Too many messages\n");
-		gdm_connection_close (conn);
+	if (mdm_connection_get_message_count (conn) > MDM_SUP_MAX_MESSAGES) {
+		mdm_debug ("Closing connection, %d messages reached", MDM_SUP_MAX_MESSAGES);
+		mdm_connection_write (conn, "ERROR 200 Too many messages\n");
+		mdm_connection_close (conn);
 		return;
 	}
 
-	if (strncmp (msg, GDM_SUP_AUTH_LOCAL " ",
-		     strlen (GDM_SUP_AUTH_LOCAL " ")) == 0) {
+	if (strncmp (msg, MDM_SUP_AUTH_LOCAL " ",
+		     strlen (MDM_SUP_AUTH_LOCAL " ")) == 0) {
 
 		sup_handle_auth_local (conn, msg, data);
 
-	} else if (strcmp (msg, GDM_SUP_FLEXI_XSERVER) == 0) {
+	} else if (strcmp (msg, MDM_SUP_FLEXI_XSERVER) == 0) {
 		/* Only allow locally authenticated connections */
-		if ( ! GDM_CONN_AUTHENTICATED (conn)) {
-			gdm_info (_("%s request denied: "
+		if ( ! MDM_CONN_AUTHENTICATED (conn)) {
+			mdm_info (_("%s request denied: "
 				    "Not authenticated"), "FLEXI_XSERVER");
-			gdm_connection_write (conn,
+			mdm_connection_write (conn,
 					      "ERROR 100 Not authenticated\n");
 			return;
 		}
 
 		handle_flexi_server (conn,
 				     TYPE_FLEXI,
-				     gdm_daemon_config_get_value_string (GDM_KEY_STANDARD_XSERVER),
+				     mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER),
 				     TRUE /* handled */,
 				     FALSE /* chooser */,
 				     NULL,
@@ -4257,144 +4257,144 @@ gdm_handle_user_message (GdmConnection *conn,
 				     NULL,
 				     NULL,
 				     NULL);
-	} else if ((strncmp (msg, GDM_SUP_FLEXI_XSERVER_USER " ",
-			     strlen (GDM_SUP_FLEXI_XSERVER_USER " ")) == 0) ||
-                   (strncmp (msg, GDM_SUP_FLEXI_XSERVER " ",
-			     strlen (GDM_SUP_FLEXI_XSERVER " ")) == 0)) {
+	} else if ((strncmp (msg, MDM_SUP_FLEXI_XSERVER_USER " ",
+			     strlen (MDM_SUP_FLEXI_XSERVER_USER " ")) == 0) ||
+                   (strncmp (msg, MDM_SUP_FLEXI_XSERVER " ",
+			     strlen (MDM_SUP_FLEXI_XSERVER " ")) == 0)) {
 
 		sup_handle_flexi_xserver (conn, msg, data);
 
-	} else if ((strncmp (msg, GDM_SUP_FLEXI_XNEST_USER " ",
-			     strlen (GDM_SUP_FLEXI_XNEST_USER " ")) == 0) ||
-		   (strncmp (msg, GDM_SUP_FLEXI_XNEST " ",
-			     strlen (GDM_SUP_FLEXI_XNEST " ")) == 0)) {
+	} else if ((strncmp (msg, MDM_SUP_FLEXI_XNEST_USER " ",
+			     strlen (MDM_SUP_FLEXI_XNEST_USER " ")) == 0) ||
+		   (strncmp (msg, MDM_SUP_FLEXI_XNEST " ",
+			     strlen (MDM_SUP_FLEXI_XNEST " ")) == 0)) {
 
 		sup_handle_flexi_xnest (conn, msg, data);
 
-	} else if ((strncmp (msg, GDM_SUP_ATTACHED_SERVERS,
-	                     strlen (GDM_SUP_ATTACHED_SERVERS)) == 0) ||
-	           (strncmp (msg, GDM_SUP_CONSOLE_SERVERS,
-	                     strlen (GDM_SUP_CONSOLE_SERVERS)) == 0)) {
+	} else if ((strncmp (msg, MDM_SUP_ATTACHED_SERVERS,
+	                     strlen (MDM_SUP_ATTACHED_SERVERS)) == 0) ||
+	           (strncmp (msg, MDM_SUP_CONSOLE_SERVERS,
+	                     strlen (MDM_SUP_CONSOLE_SERVERS)) == 0)) {
 
 		sup_handle_attached_servers (conn, msg, data);
 
-	} else if (strcmp (msg, GDM_SUP_ALL_SERVERS) == 0) {
+	} else if (strcmp (msg, MDM_SUP_ALL_SERVERS) == 0) {
 
 		sup_handle_all_servers (conn, msg, data);
 
-	} else if (strcmp (msg, GDM_SUP_GET_SERVER_LIST) == 0) {
+	} else if (strcmp (msg, MDM_SUP_GET_SERVER_LIST) == 0) {
 
 		sup_handle_get_server_list (conn, msg, data);
 
-	} else if (strncmp (msg, GDM_SUP_GET_SERVER_DETAILS " ",
-			    strlen (GDM_SUP_GET_SERVER_DETAILS " ")) == 0) {
+	} else if (strncmp (msg, MDM_SUP_GET_SERVER_DETAILS " ",
+			    strlen (MDM_SUP_GET_SERVER_DETAILS " ")) == 0) {
 
 		sup_handle_get_server_details (conn, msg, data);
 
-	} else if (strcmp (msg, GDM_SUP_GREETERPIDS) == 0) {
+	} else if (strcmp (msg, MDM_SUP_GREETERPIDS) == 0) {
 
 		sup_handle_greeterpids (conn, msg, data);
 
-	} else if (strncmp (msg, GDM_SUP_UPDATE_CONFIG " ",
-			    strlen (GDM_SUP_UPDATE_CONFIG " ")) == 0) {
+	} else if (strncmp (msg, MDM_SUP_UPDATE_CONFIG " ",
+			    strlen (MDM_SUP_UPDATE_CONFIG " ")) == 0) {
 		const char *key;
 
-		key = &msg[strlen (GDM_SUP_UPDATE_CONFIG " ")];
+		key = &msg[strlen (MDM_SUP_UPDATE_CONFIG " ")];
 
-		if (! gdm_daemon_config_update_key ((gchar *)key))
-			gdm_connection_printf (conn, "ERROR 50 Unsupported key <%s>\n", key);
+		if (! mdm_daemon_config_update_key ((gchar *)key))
+			mdm_connection_printf (conn, "ERROR 50 Unsupported key <%s>\n", key);
 		else
-			gdm_connection_write (conn, "OK\n");
-	} else if (strncmp (msg, GDM_SUP_GET_CONFIG " ",
-			    strlen (GDM_SUP_GET_CONFIG " ")) == 0) {
+			mdm_connection_write (conn, "OK\n");
+	} else if (strncmp (msg, MDM_SUP_GET_CONFIG " ",
+			    strlen (MDM_SUP_GET_CONFIG " ")) == 0) {
 
 		sup_handle_get_config (conn, msg, data);
 
-	} else if (strcmp (msg, GDM_SUP_GET_CONFIG_FILE) == 0) {
+	} else if (strcmp (msg, MDM_SUP_GET_CONFIG_FILE) == 0) {
 		/*
 		 * Value is only non-null if passed in on command line.
 		 * Otherwise print compiled-in default file location.
 		 */
 		if (config_file == NULL) {
-			gdm_connection_printf (conn, "OK %s\n",
-					       GDM_DEFAULTS_CONF);
+			mdm_connection_printf (conn, "OK %s\n",
+					       MDM_DEFAULTS_CONF);
 		} else {
-			gdm_connection_printf (conn, "OK %s\n", config_file);
+			mdm_connection_printf (conn, "OK %s\n", config_file);
 		}
-	} else if (strcmp (msg, GDM_SUP_GET_CUSTOM_CONFIG_FILE) == 0) {
+	} else if (strcmp (msg, MDM_SUP_GET_CUSTOM_CONFIG_FILE) == 0) {
 
 		sup_handle_get_custom_config_file (conn, msg, data);
 
-	} else if (strcmp (msg, GDM_SUP_QUERY_LOGOUT_ACTION) == 0) {
+	} else if (strcmp (msg, MDM_SUP_QUERY_LOGOUT_ACTION) == 0) {
 
 		sup_handle_query_logout_action (conn, msg, data);
 
-	} else if (strcmp (msg, GDM_SUP_QUERY_CUSTOM_CMD_LABELS) == 0) {
+	} else if (strcmp (msg, MDM_SUP_QUERY_CUSTOM_CMD_LABELS) == 0) {
 
 		sup_handle_query_custom_cmd_labels (conn, msg, data);
 
-	} else if (strcmp (msg, GDM_SUP_QUERY_CUSTOM_CMD_NO_RESTART_STATUS) == 0) {
+	} else if (strcmp (msg, MDM_SUP_QUERY_CUSTOM_CMD_NO_RESTART_STATUS) == 0) {
 
 		sup_handle_query_custom_cmd_no_restart_status (conn, msg, data);
 
-	} else if (strncmp (msg, GDM_SUP_SET_LOGOUT_ACTION " ",
-			    strlen (GDM_SUP_SET_LOGOUT_ACTION " ")) == 0) {
+	} else if (strncmp (msg, MDM_SUP_SET_LOGOUT_ACTION " ",
+			    strlen (MDM_SUP_SET_LOGOUT_ACTION " ")) == 0) {
 
 		sup_handle_set_logout_action (conn, msg, data);
 
-	} else if (strncmp (msg, GDM_SUP_SET_SAFE_LOGOUT_ACTION " ",
-			    strlen (GDM_SUP_SET_SAFE_LOGOUT_ACTION " ")) == 0) {
+	} else if (strncmp (msg, MDM_SUP_SET_SAFE_LOGOUT_ACTION " ",
+			    strlen (MDM_SUP_SET_SAFE_LOGOUT_ACTION " ")) == 0) {
 
 		sup_handle_set_safe_logout_action (conn, msg, data);
 
-	} else if (strcmp (msg, GDM_SUP_QUERY_VT) == 0) {
+	} else if (strcmp (msg, MDM_SUP_QUERY_VT) == 0) {
 
 		sup_handle_query_vt (conn, msg, data);
 
-	} else if (strncmp (msg, GDM_SUP_SET_VT " ",
-			    strlen (GDM_SUP_SET_VT " ")) == 0) {
+	} else if (strncmp (msg, MDM_SUP_SET_VT " ",
+			    strlen (MDM_SUP_SET_VT " ")) == 0) {
 
 		sup_handle_set_vt (conn, msg, data);
 
-	} else if (strncmp (msg, GDM_SUP_ADD_DYNAMIC_DISPLAY " ",
-			    strlen (GDM_SUP_ADD_DYNAMIC_DISPLAY " ")) == 0) {
+	} else if (strncmp (msg, MDM_SUP_ADD_DYNAMIC_DISPLAY " ",
+			    strlen (MDM_SUP_ADD_DYNAMIC_DISPLAY " ")) == 0) {
 		gchar *key;
 
-		key = g_strdup (&msg[strlen (GDM_SUP_ADD_DYNAMIC_DISPLAY " ")]);
+		key = g_strdup (&msg[strlen (MDM_SUP_ADD_DYNAMIC_DISPLAY " ")]);
 		g_strstrip (key);
 		handle_dynamic_server (conn, DYNAMIC_ADD, key);
 		g_free (key);
 
-	} else if (strncmp (msg, GDM_SUP_REMOVE_DYNAMIC_DISPLAY " ",
-			    strlen (GDM_SUP_REMOVE_DYNAMIC_DISPLAY " ")) == 0) {
+	} else if (strncmp (msg, MDM_SUP_REMOVE_DYNAMIC_DISPLAY " ",
+			    strlen (MDM_SUP_REMOVE_DYNAMIC_DISPLAY " ")) == 0) {
 		gchar *key;
 
-		key = g_strdup (&msg[strlen (GDM_SUP_REMOVE_DYNAMIC_DISPLAY " ")]);
+		key = g_strdup (&msg[strlen (MDM_SUP_REMOVE_DYNAMIC_DISPLAY " ")]);
 		g_strstrip (key);
 		handle_dynamic_server (conn, DYNAMIC_REMOVE, key);
 		g_free (key);
 
-	} else if (strncmp (msg, GDM_SUP_RELEASE_DYNAMIC_DISPLAYS " ",
-			    strlen (GDM_SUP_RELEASE_DYNAMIC_DISPLAYS " ")) == 0) {
+	} else if (strncmp (msg, MDM_SUP_RELEASE_DYNAMIC_DISPLAYS " ",
+			    strlen (MDM_SUP_RELEASE_DYNAMIC_DISPLAYS " ")) == 0) {
 
 		gchar *key;
 
-		key = g_strdup (&msg[strlen (GDM_SUP_RELEASE_DYNAMIC_DISPLAYS " ")]);
+		key = g_strdup (&msg[strlen (MDM_SUP_RELEASE_DYNAMIC_DISPLAYS " ")]);
 		g_strstrip (key);
 		handle_dynamic_server (conn, DYNAMIC_RELEASE, key);
 		g_free (key);
 
-	} else if (strcmp (msg, GDM_SUP_VERSION) == 0) {
-		gdm_connection_write (conn, "GDM " VERSION "\n");
-	} else if (strcmp (msg, GDM_SUP_SERVER_BUSY) == 0) {
-		if (gdm_connection_is_server_busy (unixconn))
-	        	gdm_connection_write (conn, "OK true\n");
+	} else if (strcmp (msg, MDM_SUP_VERSION) == 0) {
+		mdm_connection_write (conn, "MDM " VERSION "\n");
+	} else if (strcmp (msg, MDM_SUP_SERVER_BUSY) == 0) {
+		if (mdm_connection_is_server_busy (unixconn))
+	        	mdm_connection_write (conn, "OK true\n");
 		else
-	        	gdm_connection_write (conn, "OK false\n");
-	} else if (strcmp (msg, GDM_SUP_CLOSE) == 0) {
-		gdm_connection_close (conn);
+	        	mdm_connection_write (conn, "OK false\n");
+	} else if (strcmp (msg, MDM_SUP_CLOSE) == 0) {
+		mdm_connection_close (conn);
 	} else {
-		gdm_connection_write (conn, "ERROR 0 Not implemented\n");
-		gdm_connection_close (conn);
+		mdm_connection_write (conn, "ERROR 0 Not implemented\n");
+		mdm_connection_close (conn);
 	}
 }

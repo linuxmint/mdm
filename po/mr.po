@@ -1,5 +1,5 @@
 # translation of mr.po to Marathi
-# translation of gdm-2.4.po in Marathi
+# translation of mdm-2.4.po in Marathi
 # This file is distributed under GPL
 # Copyright (C) 2003 Jitendra Shah.
 # FIRST AUTHOR <indictrans@fastmail.fm>, 2003.
@@ -43,10 +43,10 @@ msgstr "हे मुलभूत प्रणाली सत्र आहे"
 msgid ""
 "I cannot start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly.  You will need to log in on a console and rerun "
-"the X configuration program.  Then restart GDM."
+"the X configuration program.  Then restart MDM."
 msgstr ""
 "मी X सेवा सुरू करू शकलो नाही.बहुदाX सेवा पध्दतीची योग्यरीतीने मांडणी झाली नसावी. "
-"तुम्हाला चित्रविरहित पडद्यावर यावे लागेल आणि X संकलन दर्शविणारा कार्यक्रम पाहून gdm  "
+"तुम्हाला चित्रविरहित पडद्यावर यावे लागेल आणि X संकलन दर्शविणारा कार्यक्रम पाहून mdm  "
 "सुरू करावा लागेल."
 
 #: config/gettextfoo.h:4
@@ -67,10 +67,10 @@ msgstr "मी आता X सर्वर पुन्हा चालू क�
 
 #: config/gettextfoo.h:7
 msgid ""
-"I will disable this X server for now.  Restart GDM when it is configured "
+"I will disable this X server for now.  Restart MDM when it is configured "
 "correctly."
 msgstr ""
-"मी हा X सर्वर आता रद्द करीन. जेंव्हा GDM संकलीत होतील. तेव्हा gdm  पुन्हा सूरू "
+"मी हा X सर्वर आता रद्द करीन. जेंव्हा MDM संकलीत होतील. तेव्हा mdm  पुन्हा सूरू "
 "करेलयोग्यरीत्या "
 
 #: config/gettextfoo.h:8
@@ -145,10 +145,10 @@ msgstr ""
 #: daemon/auth.c:66
 #, c-format
 msgid ""
-"GDM could not write a new authorization entry to disk.  Possibly out of "
+"MDM could not write a new authorization entry to disk.  Possibly out of "
 "diskspace.%s%s"
 msgstr ""
-"gdm  अधिकृतपणे नव्याने प्रवेश करण्यासाठी gdm  योग्य ती नोंद करू शकला नाही.डिस्कवरील "
+"mdm  अधिकृतपणे नव्याने प्रवेश करण्यासाठी mdm  योग्य ती नोंद करू शकला नाही.डिस्कवरील "
 "जागा कमी पडली असावी%1s%2s"
 
 #: daemon/auth.c:196
@@ -182,7 +182,7 @@ msgstr "कुकीमध्ये लिखाण करता आले न�
 msgid "%s: Ignoring suspiciously looking cookie file %s"
 msgstr "%s संशयास्पद कुकी फाइलकडे दुर्लक्ष करीत आहे %s"
 
-#: daemon/auth.c:890 daemon/gdm.c:2259
+#: daemon/auth.c:890 daemon/mdm.c:2259
 #, c-format
 msgid "Can't write to %s: %s"
 msgstr "%s वर लिहू शकत नाही: %s"
@@ -204,7 +204,7 @@ msgstr "%s: पाइप तयार करू शकत नाही."
 
 #: daemon/display.c:316
 #, c-format
-msgid "%s: Failed forking gdm slave process for %s"
+msgid "%s: Failed forking mdm slave process for %s"
 msgstr "%1s: जीडीऐम ची उपप्रक्रिया चालू करताना चुक झाली %2s"
 
 #: daemon/errorgui.c:356
@@ -273,134 +273,134 @@ msgstr ""
 "%1s: %2s कार्यप्रणालीमध्ये निश्चित केलेल्या कमाल आकाराच्या फाइल पेक्षा या फाइलचा आकार "
 "अधिक आहे."
 
-#: daemon/gdm-net.c:271
+#: daemon/mdm-net.c:271
 #, c-format
 msgid "%s: Could not make socket"
 msgstr "%sः सॉकेट बनविता आली नाहीत."
 
-#: daemon/gdm-net.c:302
+#: daemon/mdm-net.c:302
 #, c-format
 msgid "%s: Could not bind socket"
 msgstr "%sः सॉकेट  बांधता आली नाहीत."
 
-#: daemon/gdm-net.c:388
+#: daemon/mdm-net.c:388
 #, c-format
 msgid "%s: Could not make FIFO"
 msgstr "%s: फिफो बनविता आले  नाही."
 
-#: daemon/gdm-net.c:396
+#: daemon/mdm-net.c:396
 #, c-format
 msgid "%s: Could not open FIFO"
 msgstr "%s: फिफो उघडता आली नाही."
 
-#: daemon/gdm.c:246
+#: daemon/mdm.c:246
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this "
-"does not exist. Please correct gdm configuration %s and restart gdm."
+"does not exist. Please correct mdm configuration %s and restart mdm."
 msgstr ""
-"सर्वरची अधिकृत  मार्गदर्शिका तयार आहे %s पण तीअस्तित्वात नाही. कृपया gdm ची ठेवण %s "
-"सुधारून घ्या आणि gdm  पुन्हा चालू करा."
+"सर्वरची अधिकृत  मार्गदर्शिका तयार आहे %s पण तीअस्तित्वात नाही. कृपया mdm ची ठेवण %s "
+"सुधारून घ्या आणि mdm  पुन्हा चालू करा."
 
-#: daemon/gdm.c:255
+#: daemon/mdm.c:255
 #, c-format
 msgid "%s: Authdir %s does not exist. Aborting."
 msgstr "%1s: मार्गदर्शिका %2s अस्तित्वात नाही. खंडीत होत आहे."
 
-#: daemon/gdm.c:260
+#: daemon/mdm.c:260
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this is "
-"not a directory. Please correct gdm configuration %s and restart gdm."
+"not a directory. Please correct mdm configuration %s and restart mdm."
 msgstr ""
-"सर्वरची अधिकृत मार्गदर्शिका तयार आहे %s पण मार्गदर्शिकाअस्तित्वात नाही. कृपया gdm ची "
-"ठेवण %s सुधारून घ्या आणि gdm  पुन्हा चालू करा."
+"सर्वरची अधिकृत मार्गदर्शिका तयार आहे %s पण मार्गदर्शिकाअस्तित्वात नाही. कृपया mdm ची "
+"ठेवण %s सुधारून घ्या आणि mdm  पुन्हा चालू करा."
 
-#: daemon/gdm.c:269
+#: daemon/mdm.c:269
 #, c-format
 msgid "%s: Authdir %s is not a directory. Aborting."
 msgstr "%1s: मार्गदर्शिका %2s अस्तित्वात नाही. खंडीत होत आहे."
 
-#: daemon/gdm.c:282
+#: daemon/mdm.c:282
 #, c-format
 msgid "%s: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s."
 msgstr ""
 "%1sः  मार्गदर्शिका %2s अस्तित्वात नाही. किंवा  %3s ही मार्गदर्शिका नाही. सर्वरची "
 "अधिकृत मार्गदर्शिका वापरत आहे."
 
-#: daemon/gdm.c:311 gui/gdmlogin.c:650 gui/greeter/greeter.c:101
+#: daemon/mdm.c:311 gui/mdmlogin.c:650 gui/greeter/greeter.c:101
 #, c-format
 msgid "%s: No configuration file: %s. Using defaults."
 msgstr "%1sः ठेवणीची फाइल नाहीः%2s. म्हणून सामान्य ठेवणीचा वापर करीत आहे."
 
-#: daemon/gdm.c:356
+#: daemon/mdm.c:356
 #, c-format
-msgid "%s: BaseXsession empty, using %s/gdm/Xsession"
-msgstr "%1s: BaseXsession रिकामे आहे , %2s/gdm/Xsession वापर करीत आहे."
+msgid "%s: BaseXsession empty, using %s/mdm/Xsession"
+msgstr "%1s: BaseXsession रिकामे आहे , %2s/mdm/Xsession वापर करीत आहे."
 
-#: daemon/gdm.c:399
+#: daemon/mdm.c:399
 #, c-format
 msgid "%s: Standard X server not found, trying alternatives"
 msgstr "%sः सर्वसाधारण X सर्वर सापडला नाही, पर्याय शोधत आहोत. "
 
-#: daemon/gdm.c:431
+#: daemon/mdm.c:431
 #, c-format
 msgid "%s: XDMCP was enabled while there is no XDMCP support, turning it off"
 msgstr "%s: XDMCP चा आधार नसताना  XDMCP चालू केले होते , बंद करीत आहोत."
 
-#: daemon/gdm.c:444
+#: daemon/mdm.c:444
 #, c-format
 msgid "%s: Root cannot be autologged in, turing off automatic login"
 msgstr "%s: रूट आपोआप आत जाऊ शकत नाही, स्वयंचालित प्रवेश बंद करीत आहोत"
 
-#: daemon/gdm.c:457
+#: daemon/mdm.c:457
 #, c-format
 msgid "%s: Root cannot be autologged in, turing off timed login"
 msgstr "%s: रूट आपोआप आत जाऊ शकत नाही, स्वयंचालित समयबध्द प्रवेश वेळ बंद करीत आहोत"
 
-#: daemon/gdm.c:463
+#: daemon/mdm.c:463
 #, c-format
 msgid "%s: TimedLoginDelay less than 5, so I will just use 5."
 msgstr "%s: समयबध्द प्रवेश ५ पेक्षा कमी आहे, म्हणून मी केवळ ५ वापरीत आहे."
 
-#: daemon/gdm.c:473
+#: daemon/mdm.c:473
 #, c-format
 msgid "%s: No greeter specified."
 msgstr "%s: स्वागत संदेश ठरविलेला नाही"
 
-#: daemon/gdm.c:476
+#: daemon/mdm.c:476
 #, c-format
 msgid "%s: No remote greeter specified."
 msgstr "%s: दूरवरचा स्वागत संदेश ठरविलेला नाही"
 
-#: daemon/gdm.c:480
+#: daemon/mdm.c:480
 #, c-format
 msgid "%s: No sessions directory specified."
 msgstr "%s: सत्राची मार्गदर्शिका ठरविली नाही"
 
-#: daemon/gdm.c:505
+#: daemon/mdm.c:505
 #, c-format
 msgid "%s: Empty server command, using standard one."
 msgstr "%s: सर्वर आज्ञा विरहीत आहे, सर्वसाधारण आज्ञेचा वापर करीत आहोत"
 
-#: daemon/gdm.c:548
+#: daemon/mdm.c:548
 #, c-format
 msgid "%s: Display number %d in use!  I will use %d"
 msgstr "%s: दर्शक संख्या %1d वापरात आहे ! मी %2d चा वापर करीन"
 
-#: daemon/gdm.c:567
+#: daemon/mdm.c:567
 #, c-format
 msgid "%s: Invalid server line in config file. Ignoring!"
 msgstr "%s: ठेवण फाइल मध्ये सर्वरची अयोग्य ओळ. दुर्लक्ष करीत आहे !"
 
-#: daemon/gdm.c:578 daemon/gdm.c:619
+#: daemon/mdm.c:578 daemon/mdm.c:619
 #, c-format
 msgid "%s: XDMCP disabled and no local servers defined. Aborting!"
 msgstr "%s: XDMCP बंद केले आहे आणि स्थानिक सर्वर ठरविले नाहीत. म्हणून खंडीत करीत आहे !"
 
 #. start
 #. server uid
-#: daemon/gdm.c:596
+#: daemon/mdm.c:596
 #, c-format
 msgid ""
 "%s: XDMCP disabled and no local servers defined. Adding %s on :%d to allow "
@@ -409,163 +409,163 @@ msgstr ""
 "%1s: XDMCP बंद केले आहे आणि स्थानिक सर्वर ठरविले नाहीत. ठेवण करण्यासाठी %s ची भर%d "
 "मध्ये देत आहोत"
 
-#: daemon/gdm.c:611
+#: daemon/mdm.c:611
 #, c-format
 msgid ""
-"XDMCP is disabled and gdm cannot find any local server to start.  Aborting!  "
-"Please correct the configuration %s and restart gdm."
+"XDMCP is disabled and mdm cannot find any local server to start.  Aborting!  "
+"Please correct the configuration %s and restart mdm."
 msgstr "कृपया %s ठेवण सुधारून घ्या आणि जीडीऐम पुन्हा चालू करा."
 
-#: daemon/gdm.c:633
+#: daemon/mdm.c:633
 #, c-format
 msgid ""
-"The gdm user does not exist. Please correct gdm configuration %s and restart "
-"gdm."
+"The mdm user does not exist. Please correct mdm configuration %s and restart "
+"mdm."
 msgstr ""
-"gdm चा वापरकर्ता अस्तित्वात नाही. कृपया gdm ची व्यूहरचना %s सुधारा आणि gdm पुन्हा चालू "
+"mdm चा वापरकर्ता अस्तित्वात नाही. कृपया mdm ची व्यूहरचना %s सुधारा आणि mdm पुन्हा चालू "
 "करा."
 
-#: daemon/gdm.c:640
+#: daemon/mdm.c:640
 #, c-format
-msgid "%s: Can't find the gdm user (%s). Aborting!"
-msgstr "%1s: gdm चा वापरकर्ता मिळत नाही (%2s). खंडीत करीत आहोत!"
+msgid "%s: Can't find the mdm user (%s). Aborting!"
+msgstr "%1s: mdm चा वापरकर्ता मिळत नाही (%2s). खंडीत करीत आहोत!"
 
-#: daemon/gdm.c:647
+#: daemon/mdm.c:647
 #, c-format
 msgid ""
-"The gdm user is set to be root, but this is not allowed since it can pose a "
-"security risk.  Please correct gdm configuration %s and restart gdm."
+"The mdm user is set to be root, but this is not allowed since it can pose a "
+"security risk.  Please correct mdm configuration %s and restart mdm."
 msgstr ""
-"gdm  वापरकर्ता हा मूळ स्वरूपात आहे पण ते चालणारे नाही,  कारण त्यामुळे सुरक्षितता "
-"धोक्यात येऊ शकते.कृपया gdm ची ठेवण सुधारून घ्या %s आणि पुन्हा gdm  सुरू करा"
+"mdm  वापरकर्ता हा मूळ स्वरूपात आहे पण ते चालणारे नाही,  कारण त्यामुळे सुरक्षितता "
+"धोक्यात येऊ शकते.कृपया mdm ची ठेवण सुधारून घ्या %s आणि पुन्हा mdm  सुरू करा"
 
-#: daemon/gdm.c:655
+#: daemon/mdm.c:655
 #, c-format
-msgid "%s: The gdm user should not be root. Aborting!"
-msgstr "%s: gdm चा वापरकर्ता मूलभूत असू नये . खंडीत करीत आहोत !"
+msgid "%s: The mdm user should not be root. Aborting!"
+msgstr "%s: mdm चा वापरकर्ता मूलभूत असू नये . खंडीत करीत आहोत !"
 
-#: daemon/gdm.c:662
+#: daemon/mdm.c:662
 #, c-format
 msgid ""
-"The gdm group does not exist. Please correct gdm configuration %s and "
-"restart gdm."
-msgstr "gdm चा गट अस्तित्वात नाही. कृपया gdm ची ठेवण सुधारा %s आणिgdm  पुन्हा चालू करा."
+"The mdm group does not exist. Please correct mdm configuration %s and "
+"restart mdm."
+msgstr "mdm चा गट अस्तित्वात नाही. कृपया mdm ची ठेवण सुधारा %s आणिmdm  पुन्हा चालू करा."
 
-#: daemon/gdm.c:669
+#: daemon/mdm.c:669
 #, c-format
-msgid "%s: Can't find the gdm group (%s). Aborting!"
-msgstr "%1s: gdm चा गट मिळत नाही (%2s). खंडीत करीत आहोत !"
+msgid "%s: Can't find the mdm group (%s). Aborting!"
+msgstr "%1s: mdm चा गट मिळत नाही (%2s). खंडीत करीत आहोत !"
 
-#: daemon/gdm.c:676
+#: daemon/mdm.c:676
 #, c-format
 msgid ""
-"The gdm group is set to be root, but this is not allowed since it can pose a "
-"security risk. Please correct gdm configuration %s and restart gdm."
+"The mdm group is set to be root, but this is not allowed since it can pose a "
+"security risk. Please correct mdm configuration %s and restart mdm."
 msgstr ""
-"gdm  वापरकर्ता हा मूळ स्वरूपात आहे पण ते चालणारे नाही कारण त्यामुळे सुरक्षितता धोक्यात "
-"येऊ शकते.कृपया gdm व्यूहरचना %s सुधारा आणि gdm पुन्हा सुरू करा."
+"mdm  वापरकर्ता हा मूळ स्वरूपात आहे पण ते चालणारे नाही कारण त्यामुळे सुरक्षितता धोक्यात "
+"येऊ शकते.कृपया mdm व्यूहरचना %s सुधारा आणि mdm पुन्हा सुरू करा."
 
-#: daemon/gdm.c:684
+#: daemon/mdm.c:684
 #, c-format
-msgid "%s: The gdm group should not be root. Aborting!"
-msgstr "%s: gdm चा वापरकर्ता मूलभूत असू नये . खंडीत करीत आहोत !"
+msgid "%s: The mdm group should not be root. Aborting!"
+msgstr "%s: mdm चा वापरकर्ता मूलभूत असू नये . खंडीत करीत आहोत !"
 
-#: daemon/gdm.c:699
+#: daemon/mdm.c:699
 #, c-format
-msgid "%s: Greeter not found or can't be executed by the gdm user"
-msgstr "%s: स्वागतकर्ता मिळत नाही किंवा gdm  वापरकर्ता त्याची अंमलबजावणी करू शकत नाही"
+msgid "%s: Greeter not found or can't be executed by the mdm user"
+msgstr "%s: स्वागतकर्ता मिळत नाही किंवा mdm  वापरकर्ता त्याची अंमलबजावणी करू शकत नाही"
 
-#: daemon/gdm.c:706
+#: daemon/mdm.c:706
 #, c-format
-msgid "%s: Remote greeter not found or can't be executed by the gdm user"
+msgid "%s: Remote greeter not found or can't be executed by the mdm user"
 msgstr ""
-"%s:  दूरस्थ स्वागतकर्ता मिळत नाही किंवा gdm  वापरकर्ता त्याची अंमलबजावणी करू शकत "
+"%s:  दूरस्थ स्वागतकर्ता मिळत नाही किंवा mdm  वापरकर्ता त्याची अंमलबजावणी करू शकत "
 "नाही"
 
-#: daemon/gdm.c:717
+#: daemon/mdm.c:717
 #, c-format
-msgid "%s: Chooser not found or it can't be executed by the gdm user"
-msgstr "%s: निवडकर्ता मिळत नाही किंवा gdm  वापरकर्ता त्याची अंमलबजावणी करू शकत नाही"
+msgid "%s: Chooser not found or it can't be executed by the mdm user"
+msgstr "%s: निवडकर्ता मिळत नाही किंवा mdm  वापरकर्ता त्याची अंमलबजावणी करू शकत नाही"
 
-#: daemon/gdm.c:726
+#: daemon/mdm.c:726
 msgid "No daemon/ServAuthDir specified in the configuration file"
 msgstr "व्यवस्थापक/अधि.सर्वर.मार्गदर्शिका संयोजन फाइल मध्ये ठरविलेली नाही"
 
-#: daemon/gdm.c:728
+#: daemon/mdm.c:728
 #, c-format
 msgid "%s: No daemon/ServAuthDir specified."
 msgstr "%s: व्यवस्थापक/अधि.सर्वर.मार्गदर्शिका ठरविलेली नाही."
 
-#: daemon/gdm.c:752
+#: daemon/mdm.c:752
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but is not "
-"owned by user %s and group %s. Please correct the ownership or gdm "
-"configuration %s and restart gdm."
+"owned by user %s and group %s. Please correct the ownership or mdm "
+"configuration %s and restart mdm."
 msgstr ""
 "सर्वरची अधिकृत मार्गदर्शिका (daemon/ServAuthDir) तयार आहे %1s. परंतु ती "
 "वापरकर्त्याच्या %2s आणि गटाच्या %3s मालकीची नाही. कृपया मालकी निश्चित करा किंवा "
-"gdm ची ठेवण नीट %4s करा आणि gdm  पुन्हा सुरू करा"
+"mdm ची ठेवण नीट %4s करा आणि mdm  पुन्हा सुरू करा"
 
-#: daemon/gdm.c:763
+#: daemon/mdm.c:763
 #, c-format
 msgid "%s: Authdir %s is not owned by user %s, group %s. Aborting."
 msgstr ""
 "%1s: अधिकृत मार्गदर्शिका %2s वापरकर्त्याच्या/गटाच्या %3s, मालकीची नाही %4s. खंडीत "
 "करीत आहे."
 
-#: daemon/gdm.c:769
+#: daemon/mdm.c:769
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but has the "
 "wrong permissions, it should have permissions of %o. Please correct the "
-"permissions or the gdm configuration %s and restart gdm."
+"permissions or the mdm configuration %s and restart mdm."
 msgstr ""
 "सर्वरची अधिकृत मार्गदर्शिका तयार आहे %1s पण यास चुकीची संमती आहे, त्यास %o ची संमती "
-"असायला हवी.  कृपया ही संमती मिळवा किंवा gdm संयोजन करा %2s आणि gdm पुन्हा सुरु करा."
+"असायला हवी.  कृपया ही संमती मिळवा किंवा mdm संयोजन करा %2s आणि mdm पुन्हा सुरु करा."
 
-#: daemon/gdm.c:780
+#: daemon/mdm.c:780
 #, c-format
 msgid "%s: Authdir %s has wrong permissions %o. Should be %o. Aborting."
 msgstr "%1s: Authdir %2s ला चुकीची संमती आहे %1o.%2o. खंडीत करावे लागेल."
 
 #. FIXME: how to handle this?
-#: daemon/gdm.c:836 daemon/gdm.c:844 daemon/gdm.c:2043 daemon/gdm.c:2051
+#: daemon/mdm.c:836 daemon/mdm.c:844 daemon/mdm.c:2043 daemon/mdm.c:2051
 #, c-format
 msgid "Cannot write PID file %s, possibly out of diskspace.  Error: %s\n"
 msgstr "PID फाइल %s लिहीता आली नाही, डिस्कवरील जागा कमी पडल्याची शक्यता आहे. चूक: %s\n"
 
-#: daemon/gdm.c:838 daemon/gdm.c:846 daemon/gdm.c:2045 daemon/gdm.c:2053
+#: daemon/mdm.c:838 daemon/mdm.c:846 daemon/mdm.c:2045 daemon/mdm.c:2053
 #, c-format
 msgid "Cannot write PID file %s, possibly out of diskspace.  Error: %s"
 msgstr "PID फाइल %s लिहीता आली नाही, डिस्कवरील जागा कमी पडल्याची शक्यता आहे. चूक: %s"
 
-#: daemon/gdm.c:856
+#: daemon/mdm.c:856
 #, c-format
 msgid "%s: fork() failed!"
 msgstr "%s: चालू () होऊ शकले नाही!"
 
 #. should never happen
-#: daemon/gdm.c:859 daemon/slave.c:3437
+#: daemon/mdm.c:859 daemon/slave.c:3437
 #, c-format
 msgid "%s: setsid() failed: %s!"
 msgstr "%s: setsid() %s अयशस्वी झाले !"
 
-#: daemon/gdm.c:1029
+#: daemon/mdm.c:1029
 #, c-format
 msgid "%s: Trying failsafe X server %s"
 msgstr "%1s: फेल्सेफ X सर्वरचा वापर करीत आहे %2s"
 
-#: daemon/gdm.c:1047
+#: daemon/mdm.c:1047
 #, c-format
 msgid "%s: Running the XKeepsCrashing script"
 msgstr "%s: XKeepsCrashing script चालवित आहे"
 
-#: daemon/gdm.c:1159
+#: daemon/mdm.c:1159
 msgid ""
 "I cannot start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly. You will need to log in on a console and rerun "
-"the X configuration program.  Then restart GDM."
+"the X configuration program.  Then restart MDM."
 msgstr ""
 "X सर्वर चालू होऊ शकला नाही. कदाचित तो योग्यरीत्या ठेवलेला नाही. तुम्हाला कंसोलवर काम "
 "करावे लागेल आणिX configuration program पुन्हा चालू करावा लागेल. नंतर जिडीएम पुन्हा "
@@ -576,95 +576,95 @@ msgstr ""
 #. * talk to him.  He's on some 'l33t system anyway, so syslog
 #. * reading will do him good
 #. * }
-#: daemon/gdm.c:1171
+#: daemon/mdm.c:1171
 #, c-format
 msgid ""
 "Failed to start X server several times in a short time period; disabling "
 "display %s"
 msgstr "X सर्वर अनेकदा चालू होऊ शकला नाही; दर्शक बंद करीत आहे.%s दर्शक बंद करीत आहे"
 
-#: daemon/gdm.c:1179 daemon/gdm.c:2762
+#: daemon/mdm.c:1179 daemon/mdm.c:2762
 msgid "Master suspending..."
 msgstr "संगणक बंद होण्याच्या स्थितीत आहे..."
 
-#: daemon/gdm.c:1233
+#: daemon/mdm.c:1233
 #, c-format
 msgid "System is rebooting, please wait ..."
 msgstr "संगणक पुन्हा चालू होत आहे, कृपया थांबा...."
 
-#: daemon/gdm.c:1235
+#: daemon/mdm.c:1235
 #, c-format
 msgid "System is shutting down, please wait ..."
 msgstr "संगणक बंद होत आहे,  कृपया थांबा...."
 
-#: daemon/gdm.c:1246
+#: daemon/mdm.c:1246
 msgid "Master halting..."
 msgstr "संगणक बंद होतो आहे..."
 
-#: daemon/gdm.c:1259
+#: daemon/mdm.c:1259
 #, c-format
 msgid "%s: Halt failed: %s"
 msgstr "%1s: संगणक बंद होऊ शकला नाही: %2s"
 
-#: daemon/gdm.c:1268
+#: daemon/mdm.c:1268
 msgid "Master rebooting..."
 msgstr "मुख्य reboot सुरु होत आहे..."
 
-#: daemon/gdm.c:1281
+#: daemon/mdm.c:1281
 #, c-format
 msgid "%s: Reboot failed: %s"
 msgstr "%1s: संगणक पून्हा चालू होऊ शकला नाही: %2s"
 
-#: daemon/gdm.c:1379
+#: daemon/mdm.c:1379
 #, c-format
 msgid "Reboot or Halt request when there is no system menu from display %s"
 msgstr "पुन्हा चालू करा किंवा थांबा जेव्हा पहाण्यासाठी मेनु मिळत नाहीत %s"
 
-#: daemon/gdm.c:1388
+#: daemon/mdm.c:1388
 #, c-format
 msgid "Restart, Reboot or Halt request from a non-local display %s"
 msgstr "पुन्हा चालू करा किंवा थांबा जेव्हा पहाण्यासाठी स्थानिक मेनु मिळत नाहीत %s"
 
 #. Bury this display for good
-#: daemon/gdm.c:1454
+#: daemon/mdm.c:1454
 #, c-format
 msgid "%s: Aborting display %s"
 msgstr "%1s: पडद्यावरील चित्र खंडीत होत आहे %2s"
 
-#: daemon/gdm.c:1592
-msgid "GDM restarting ..."
+#: daemon/mdm.c:1592
+msgid "MDM restarting ..."
 msgstr "जिडीएम पुन्हा चालू होत आहे..."
 
-#: daemon/gdm.c:1596
+#: daemon/mdm.c:1596
 msgid "Failed to restart self"
 msgstr "स्वत: पुन्हा चालू होऊ शकला नाही"
 
 #. FIXME: note that this could mean out of memory
-#: daemon/gdm.c:1670
+#: daemon/mdm.c:1670
 msgid "main daemon: Got SIGABRT, something went very wrong. Going down!"
 msgstr "मुख्य डीमन: SIGABRT मिळाला, काहीतरी भयंकर गडबड झाली आहे. बंद होत आहे!"
 
-#: daemon/gdm.c:1829
+#: daemon/mdm.c:1829
 msgid "Do not fork into the background"
 msgstr "पार्श्वभागात ढवळाढवळ करु नका"
 
-#: daemon/gdm.c:1831
+#: daemon/mdm.c:1831
 msgid "No console (local) servers to be run"
 msgstr "चालु करण्यासाठी (स्थानिक) सर्वर उपलब्ध नाहीत"
 
-#: daemon/gdm.c:1833
+#: daemon/mdm.c:1833
 msgid "Preserve LD_* variables"
 msgstr "LD_* variables चे जतन करा"
 
-#: daemon/gdm.c:1835
-msgid "Print GDM version"
-msgstr "GDM आवृत्ती छापा"
+#: daemon/mdm.c:1835
+msgid "Print MDM version"
+msgstr "MDM आवृत्ती छापा"
 
-#: daemon/gdm.c:1837
+#: daemon/mdm.c:1837
 msgid "Start the first X server but then halt until we get a GO in the fifo"
 msgstr "पहिला X सेवक सुरू करा पण त्यानंतर फिफोमध्ये GO येईपर्यंत थांबा"
 
-#: daemon/gdm.c:1958 gui/gdmchooser.c:2045
+#: daemon/mdm.c:1958 gui/mdmchooser.c:2045
 #, c-format
 msgid ""
 "Error on option %s: %s.\n"
@@ -674,47 +674,47 @@ msgstr ""
 "उपलब्ध आज्ञांचे पर्याय (यादी) पहाण्यास मदत करणारा  '%s --help'(Help) हा कार्यक्रम सूरु "
 "करा.\n"
 
-#: daemon/gdm.c:1981
-msgid "Only root wants to run gdm\n"
+#: daemon/mdm.c:1981
+msgid "Only root wants to run mdm\n"
 msgstr "फक्त रूटला जिडीएम चालवायचे आहे \n"
 
-#: daemon/gdm.c:1997 daemon/gdm.c:2001 daemon/gdm.c:2076 daemon/gdm.c:2080
-#: daemon/gdm.c:2084 daemon/gdm.c:2088 daemon/gdm.c:2098 daemon/gdm.c:2104
-#: daemon/gdm.c:2115 daemon/misc.c:1603 daemon/misc.c:1607 daemon/misc.c:1611
+#: daemon/mdm.c:1997 daemon/mdm.c:2001 daemon/mdm.c:2076 daemon/mdm.c:2080
+#: daemon/mdm.c:2084 daemon/mdm.c:2088 daemon/mdm.c:2098 daemon/mdm.c:2104
+#: daemon/mdm.c:2115 daemon/misc.c:1603 daemon/misc.c:1607 daemon/misc.c:1611
 #: daemon/misc.c:1618 daemon/misc.c:1622 daemon/misc.c:1626
 #: daemon/server.c:521 daemon/server.c:534 daemon/slave.c:811
 #: daemon/slave.c:825 daemon/slave.c:835 daemon/slave.c:845 daemon/slave.c:857
-#: gui/gdmchooser.c:1924 gui/gdmchooser.c:1927 gui/gdmchooser.c:1930
-#: gui/gdmlogin.c:3928 gui/gdmlogin.c:3936 gui/gdmlogin.c:3939
+#: gui/mdmchooser.c:1924 gui/mdmchooser.c:1927 gui/mdmchooser.c:1930
+#: gui/mdmlogin.c:3928 gui/mdmlogin.c:3936 gui/mdmlogin.c:3939
 #: gui/greeter/greeter.c:1083 gui/greeter/greeter.c:1091
 #: gui/greeter/greeter.c:1094
 #, c-format
 msgid "%s: Error setting up %s signal handler: %s"
 msgstr "%s: %s सिग्नल हँडलर रचताना चूक : %s"
 
-#: daemon/gdm.c:2025
-msgid "gdm already running. Aborting!"
-msgstr "gdm  आधीच चालू आहे. बंद करीत आहोत !"
+#: daemon/mdm.c:2025
+msgid "mdm already running. Aborting!"
+msgstr "mdm  आधीच चालू आहे. बंद करीत आहोत !"
 
-#: daemon/gdm.c:2124
+#: daemon/mdm.c:2124
 #, c-format
 msgid "%s: Error setting up CHLD signal handler"
 msgstr "%s: CHLD सिग्नल हँडलर रचताना चूक"
 
-#: daemon/gdm.c:2228
+#: daemon/mdm.c:2228
 #, c-format
 msgid "Can't open %s for writing"
 msgstr "लिहिण्यासाठी %s चालू करता आले नाही."
 
-#: daemon/gdm.c:3495 daemon/gdm.c:3514
+#: daemon/mdm.c:3495 daemon/mdm.c:3514
 msgid "Flexible server request denied: Not authenticated"
 msgstr "अन्य सर्वरची विनंती नाकारली आहे: सत्यता पडताळून पाहिलेली नाही"
 
-#: daemon/gdm.c:3532
+#: daemon/mdm.c:3532
 msgid "Unknown server type requested, using standard server."
 msgstr "अपरिचित सर्वरची विनंती आहे, नेहमीचा सर्वर वापरत आहे."
 
-#: daemon/gdm.c:3536
+#: daemon/mdm.c:3536
 #, c-format
 msgid ""
 "Requested server %s not allowed to be used for flexible servers, using "
@@ -723,15 +723,15 @@ msgstr ""
 "विनंती केलेला सेवक %s हा लवचिक सेवकासाठी अनुमत नाही, सामान्य सेवक "
 "वापरत आहे."
 
-#: daemon/gdm.c:3658
+#: daemon/mdm.c:3658
 msgid "Query logout action request denied: Not authenticated"
 msgstr "लॉगआउट क्रिया प्रश्न विनंती नाकारली आहे: अधिप्रमाणता नाही"
 
-#: daemon/gdm.c:3716 daemon/gdm.c:3771
+#: daemon/mdm.c:3716 daemon/mdm.c:3771
 msgid "Set logout action request denied: Not authenticated"
 msgstr "लॉगआउट क्रिया निर्धारण विनंती नाकारली आहे: अधिप्रमाणता नाही"
 
-#: daemon/gdm.c:3816 daemon/gdm.c:3843
+#: daemon/mdm.c:3816 daemon/mdm.c:3843
 #, fuzzy
 msgid "Query vt request denied: Not authenticated"
 msgstr "अन्य सर्वरची विनंती नाकारली आहे: सत्यता पडताळून पाहिलेली नाही"
@@ -918,7 +918,7 @@ msgid ""
 "Please contact your system administrator\n"
 "or check your syslog to diagnose.\n"
 "In the meantime this display will be\n"
-"disabled.  Please restart gdm when\n"
+"disabled.  Please restart mdm when\n"
 "the problem is corrected."
 msgstr ""
 "काही अंतर्गत चुकींमुळे मी X \n"
@@ -928,7 +928,7 @@ msgstr ""
 "किंवा तुमचे संगणकीय व्यवस्थापन (syslog)तपासून पहा. \n"
 "दरम्यान हा प्रदर्शक खंडीत होईल \n"
 " समस्या सुटल्यावर \n"
-"कृपया, gdm  पुन्हा सुरू करा."
+"कृपया, mdm  पुन्हा सुरू करा."
 
 #: daemon/slave.c:1470
 #, c-format
@@ -965,8 +965,8 @@ msgstr "संकलन चालू  करण्यासाठी रुट�
 
 #: daemon/slave.c:2454 daemon/slave.c:2459
 #, c-format
-msgid "%s: Can't init pipe to gdmgreeter"
-msgstr "%s: gdm  स्वागतकर्त्याला पाईप \t(|) चालू करुन देता आला नाही."
+msgid "%s: Can't init pipe to mdmgreeter"
+msgstr "%s: mdm  स्वागतकर्त्याला पाईप \t(|) चालू करुन देता आला नाही."
 
 #: daemon/slave.c:2582
 msgid ""
@@ -1035,8 +1035,8 @@ msgstr "%s:  %s या प्रदर्शकावर शुभेच्छ�
 
 #: daemon/slave.c:2676
 #, c-format
-msgid "%s: Can't fork gdmgreeter process"
-msgstr "%s: gdmgreeter ची प्रक्रिया चालु करु शकत नाही."
+msgid "%s: Can't fork mdmgreeter process"
+msgstr "%s: mdmgreeter ची प्रक्रिया चालु करु शकत नाही."
 
 #: daemon/slave.c:2761
 #, c-format
@@ -1045,8 +1045,8 @@ msgstr "%s: fifo उघडु शकत नाही."
 
 #: daemon/slave.c:2937
 #, c-format
-msgid "%s: Can't init pipe to gdmchooser"
-msgstr "%s: gdmchooser साठी पाईप (।) सुरु करु शकत नाही."
+msgid "%s: Can't init pipe to mdmchooser"
+msgstr "%s: mdmchooser साठी पाईप (।) सुरु करु शकत नाही."
 
 #: daemon/slave.c:3035
 msgid ""
@@ -1063,8 +1063,8 @@ msgstr "%s: प्रदर्शकावर निवडकर्ता का
 
 #: daemon/slave.c:3042
 #, c-format
-msgid "%s: Can't fork gdmchooser process"
-msgstr "%s: gdm निवडकर्ता प्रक्रिया चालू होऊ शकत नाही."
+msgid "%s: Can't fork mdmchooser process"
+msgstr "%s: mdm निवडकर्ता प्रक्रिया चालू होऊ शकत नाही."
 
 #: daemon/slave.c:3338
 #, c-format
@@ -1217,12 +1217,12 @@ msgstr "%s: व्यक्तीगत मार्गदर्शिका %s:
 
 #: daemon/slave.c:4037
 msgid ""
-"GDM could not write to your authorization file.  This could mean that you "
+"MDM could not write to your authorization file.  This could mean that you "
 "are out of disk space or that your home directory could not be opened for "
 "writing.  In any case, it is not possible to log in.  Please contact your "
 "system administrator"
 msgstr ""
-"GDM द्वारा तुमची अधिकृत फाईल सुरु झाली नाही, याचा अर्थ असा की तुमच्या डिस्कवर मोकळी "
+"MDM द्वारा तुमची अधिकृत फाईल सुरु झाली नाही, याचा अर्थ असा की तुमच्या डिस्कवर मोकळी "
 "जागा नसावी किंवा लेखनासाठी तुमची व्यक्तीगत मार्गदर्शिका सुरु झाली नाही. अशा स्थितीत "
 "प्रवेश करणे कठीण आहे. कृपया तुमच्या संगणक व्यवस्थापकाकडे जा."
 
@@ -1247,8 +1247,8 @@ msgid "View details (~/.xsession-errors file)"
 msgstr "(~/.xsession-errors file) सत्रातील चुकांची फाईल तपशीलात जाऊन पहा."
 
 #: daemon/slave.c:4346
-msgid "GDM detected a shutdown or reboot in progress."
-msgstr "GDM ने संगणक बंद होण्याची किंवा सुरु होण्याची क्रिया शोधली."
+msgid "MDM detected a shutdown or reboot in progress."
+msgstr "MDM ने संगणक बंद होण्याची किंवा सुरु होण्याची क्रिया शोधली."
 
 #: daemon/slave.c:4440
 #, c-format
@@ -1302,21 +1302,21 @@ msgstr "कृपया Caps Lock बटण दाबलेले नाही �
 
 #. I think I'll add the buttons next to this
 #: daemon/verify-crypt.c:127 daemon/verify-pam.c:176
-#: daemon/verify-shadow.c:126 gui/gdmlogin.c:3052
+#: daemon/verify-shadow.c:126 gui/mdmlogin.c:3052
 msgid "Please enter your username"
 msgstr "कृपया तुमचे username द्या."
 
 #. login: is whacked always translate to Username:
 #: daemon/verify-crypt.c:128 daemon/verify-pam.c:92 daemon/verify-pam.c:93
 #: daemon/verify-pam.c:94 daemon/verify-pam.c:170 daemon/verify-pam.c:512
-#: daemon/verify-shadow.c:127 gui/gdmlogin.c:1073 gui/gdmlogin.c:1087
-#: gui/gdmlogin.c:1873 gui/gdmlogin.c:2342 gui/greeter/greeter.c:272
+#: daemon/verify-shadow.c:127 gui/mdmlogin.c:1073 gui/mdmlogin.c:1087
+#: gui/mdmlogin.c:1873 gui/mdmlogin.c:2342 gui/greeter/greeter.c:272
 #: gui/greeter/greeter_parser.c:1061
 msgid "Username:"
 msgstr "वापरकर्त्याचे नाव"
 
 #: daemon/verify-crypt.c:166 daemon/verify-pam.c:95 daemon/verify-pam.c:96
-#: daemon/verify-pam.c:223 daemon/verify-shadow.c:184 gui/gdmlogin.c:1905
+#: daemon/verify-pam.c:223 daemon/verify-shadow.c:184 gui/mdmlogin.c:1905
 msgid "Password:"
 msgstr "पासवर्ड"
 
@@ -1595,8 +1595,8 @@ msgstr ""
 "संगणक व्यवस्थापकाने संगणक वापरण्याचा तुमचा अधिकार काही काळापुरता स्थगित केला आहे."
 
 #: daemon/verify-pam.c:1069 daemon/verify-pam.c:1071
-msgid "Can't find PAM configuration for gdm."
-msgstr "gdm साठी PAM संकलन मिळत नाही."
+msgid "Can't find PAM configuration for mdm."
+msgstr "mdm साठी PAM संकलन मिळत नाही."
 
 #: daemon/xdmcp.c:369
 #, c-format
@@ -1739,77 +1739,77 @@ msgstr "%1s: प्रतिबंधित यजमानाकडून 'स�
 msgid "%s: No XDMCP support"
 msgstr "%s: XDMCP चा आधार नाही."
 
-#: gui/gdmXnestchooser.c:166 gui/gdmXnestchooser.c:173
+#: gui/mdmXnestchooser.c:166 gui/mdmXnestchooser.c:173
 msgid "Xnest command line"
 msgstr "Xnest ची आज्ञाधारक ओळ"
 
-#: gui/gdmXnestchooser.c:166 gui/gdmXnestchooser.c:173
+#: gui/mdmXnestchooser.c:166 gui/mdmXnestchooser.c:173
 msgid "STRING"
 msgstr "शब्दसंच"
 
-#: gui/gdmXnestchooser.c:167 gui/gdmXnestchooser.c:174
+#: gui/mdmXnestchooser.c:167 gui/mdmXnestchooser.c:174
 msgid "Extra options for Xnest"
 msgstr "Xnest साठी अतिरीक्त पर्याय"
 
-#: gui/gdmXnestchooser.c:167 gui/gdmXnestchooser.c:174
+#: gui/mdmXnestchooser.c:167 gui/mdmXnestchooser.c:174
 msgid "OPTIONS"
 msgstr "पर्याय"
 
-#: gui/gdmXnestchooser.c:168 gui/gdmXnestchooser.c:178
+#: gui/mdmXnestchooser.c:168 gui/mdmXnestchooser.c:178
 msgid "Run in background"
 msgstr "पार्श्वभूमीवर चालू करा."
 
-#: gui/gdmXnestchooser.c:175
+#: gui/mdmXnestchooser.c:175
 msgid "Just run Xnest, no query (no chooser)"
 msgstr "Xnest चालू करा, विचारणा नाही (निवडकर्ता नाही)"
 
-#: gui/gdmXnestchooser.c:176
+#: gui/mdmXnestchooser.c:176
 msgid "Do direct query instead of indirect (chooser)"
 msgstr "अप्रत्यक्ष विचारण्याऐवजी प्रत्यक्ष विचारणा करा (निवडकर्ता)"
 
-#: gui/gdmXnestchooser.c:177
+#: gui/mdmXnestchooser.c:177
 msgid "Run broadcast instead of indirect (chooser)"
 msgstr "अप्रत्यक्ष (निवडकर्ता)ऐवजी प्रसार माध्यम सुरू करा"
 
-#: gui/gdmXnestchooser.c:179
-msgid "Don't check for running gdm"
-msgstr "चालू gdm  साठी तपासणी करू नका"
+#: gui/mdmXnestchooser.c:179
+msgid "Don't check for running mdm"
+msgstr "चालू mdm  साठी तपासणी करू नका"
 
 #. markup
-#: gui/gdmXnestchooser.c:521
+#: gui/mdmXnestchooser.c:521
 msgid "Xnest doesn't exist."
 msgstr "Xnest अस्तित्वात नाही."
 
-#: gui/gdmXnestchooser.c:523
+#: gui/mdmXnestchooser.c:523
 msgid "Please ask your system administrator to install it."
 msgstr "कृपया तुमच्य संगणक व्यवस्थापकाला  Xnest सुरू करण्यास सांगा"
 
 #. markup
-#: gui/gdmXnestchooser.c:549
+#: gui/mdmXnestchooser.c:549
 msgid "Indirect XDMCP is not enabled"
 msgstr "अप्रत्यक्ष XDMCP सुरू झाला नाही"
 
-#: gui/gdmXnestchooser.c:551 gui/gdmXnestchooser.c:572
+#: gui/mdmXnestchooser.c:551 gui/mdmXnestchooser.c:572
 msgid ""
-"Please ask your system administrator to enable it in the GDM configurator "
+"Please ask your system administrator to enable it in the MDM configurator "
 "program."
-msgstr "कृपया तुमच्या संगणक व्यवस्थापकाला gdm  संकलनामध्ये Xnest सुरू करण्यास सांगाकार्यक्रम."
+msgstr "कृपया तुमच्या संगणक व्यवस्थापकाला mdm  संकलनामध्ये Xnest सुरू करण्यास सांगाकार्यक्रम."
 
 #. markup
-#: gui/gdmXnestchooser.c:570
+#: gui/mdmXnestchooser.c:570
 msgid "XDMCP is not enabled"
 msgstr "XDMCP चा कार्यक्रम सुरू झाला नाही"
 
 #. markup
-#: gui/gdmXnestchooser.c:604
-msgid "GDM is not running"
-msgstr "GDM चालू नाही"
+#: gui/mdmXnestchooser.c:604
+msgid "MDM is not running"
+msgstr "MDM चालू नाही"
 
-#: gui/gdmXnestchooser.c:606
+#: gui/mdmXnestchooser.c:606
 msgid "Please ask your system administrator to start it."
-msgstr "कृपया तुमच्या संगणक व्यवस्थापकाला gdm  संकलनामध्ये Xnest सुरू करण्यास सांगा"
+msgstr "कृपया तुमच्या संगणक व्यवस्थापकाला mdm  संकलनामध्ये Xnest सुरू करण्यास सांगा"
 
-#: gui/gdmXnestchooser.c:623
+#: gui/mdmXnestchooser.c:623
 msgid "Could not find a free display number"
 msgstr "मुक्त प्रदर्शक क्रमांक मिळाला नाही"
 
@@ -1818,73 +1818,73 @@ msgstr "मुक्त प्रदर्शक क्रमांक मिळ
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gui/gdmchooser-strings.c:7 gui/gdmchooser.glade.h:5
-msgid "GDM Host Chooser"
-msgstr "gdm चा यजमान निवडकर्ता"
+#: gui/mdmchooser-strings.c:7 gui/mdmchooser.glade.h:5
+msgid "MDM Host Chooser"
+msgstr "mdm चा यजमान निवडकर्ता"
 
-#: gui/gdmchooser-strings.c:8 gui/gdmchooser.glade.h:6
+#: gui/mdmchooser-strings.c:8 gui/mdmchooser.glade.h:6
 msgid "How to use this application"
 msgstr "हा कार्यक्रम कसा वापरावा"
 
-#: gui/gdmchooser-strings.c:9 gui/gdmchooser.glade.h:8
+#: gui/mdmchooser-strings.c:9 gui/mdmchooser.glade.h:8
 msgid "Probe the network"
 msgstr "महाजालात निरीक्षण करा"
 
-#: gui/gdmchooser-strings.c:10 gui/gdmchooser.glade.h:4
+#: gui/mdmchooser-strings.c:10 gui/mdmchooser.glade.h:4
 msgid "Exit the application"
 msgstr "कार्यक्रम बंद(बाहेर पडा) करा"
 
-#: gui/gdmchooser-strings.c:11 gui/gdmchooser.glade.h:7
+#: gui/mdmchooser-strings.c:11 gui/mdmchooser.glade.h:7
 msgid "Open a session to the selected host"
 msgstr "निवडलेल्या यजमानासाठी एक सत्र सुरु करा."
 
-#: gui/gdmchooser-strings.c:12 gui/gdmchooser.glade.h:3
+#: gui/mdmchooser-strings.c:12 gui/mdmchooser.glade.h:3
 msgid "C_onnect"
 msgstr "जोडून द्या(C_)"
 
-#: gui/gdmchooser-strings.c:13 gui/gdmchooser.glade.h:10
+#: gui/mdmchooser-strings.c:13 gui/mdmchooser.glade.h:10
 msgid "Status"
 msgstr "सद्य स्थिती"
 
-#: gui/gdmchooser-strings.c:14 gui/gdmchooser.glade.h:2
+#: gui/mdmchooser-strings.c:14 gui/mdmchooser.glade.h:2
 msgid "A_dd host: "
 msgstr "यजमान जोडून द्या(A_)"
 
 #. EOF
-#: gui/gdmchooser-strings.c:15 gui/gdmchooser.glade.h:1
-#: gui/gdmsetup-strings.c:19 gui/gdmsetup-strings.c:21
-#: gui/gdmsetup-strings.c:26 gui/gdmsetup-strings.c:32
-#: gui/gdmsetup-strings.c:37 gui/gdmsetup-strings.c:47
-#: gui/gdmsetup-strings.c:85 gui/gdmsetup.glade.h:2
+#: gui/mdmchooser-strings.c:15 gui/mdmchooser.glade.h:1
+#: gui/mdmsetup-strings.c:19 gui/mdmsetup-strings.c:21
+#: gui/mdmsetup-strings.c:26 gui/mdmsetup-strings.c:32
+#: gui/mdmsetup-strings.c:37 gui/mdmsetup-strings.c:47
+#: gui/mdmsetup-strings.c:85 gui/mdmsetup.glade.h:2
 msgid "*"
 msgstr "*"
 
-#: gui/gdmchooser-strings.c:16 gui/gdmchooser.glade.h:9
+#: gui/mdmchooser-strings.c:16 gui/mdmchooser.glade.h:9
 msgid "Query and add this host to the above list"
 msgstr "विचारणा करा आणि या यजमानाचे नाव वरच्या यादीत टाका"
 
-#: gui/gdmchooser-strings.c:17 gui/gdmchooser.glade.h:11
+#: gui/mdmchooser-strings.c:17 gui/mdmchooser.glade.h:11
 msgid "_Add"
 msgstr "सामील करा(A_)"
 
-#: gui/gdmchooser.c:79
+#: gui/mdmchooser.c:79
 msgid "Please wait: scanning local network..."
 msgstr "कृपया थांबाः स्थानिक महाजालाचे शोधन सुरू आहे..."
 
-#: gui/gdmchooser.c:80
+#: gui/mdmchooser.c:80
 msgid "No serving hosts were found."
 msgstr "यजमान मिळाले नाहीत."
 
-#: gui/gdmchooser.c:81
+#: gui/mdmchooser.c:81
 msgid "Choose a ho_st to connect to:"
 msgstr "जोडण्यासाठी एक यजमान निवडाः"
 
 #. markup
-#: gui/gdmchooser.c:645
+#: gui/mdmchooser.c:645
 msgid "Cannot connect to remote server"
 msgstr "दूरस्थ सर्वरशी जोडून घेता येत नाही"
 
-#: gui/gdmchooser.c:646
+#: gui/mdmchooser.c:646
 #, c-format
 msgid ""
 "The host \"%s\" is not willing to support a login session right now.  Please "
@@ -1894,11 +1894,11 @@ msgstr ""
 "करा."
 
 #. markup
-#: gui/gdmchooser.c:1270
+#: gui/mdmchooser.c:1270
 msgid "Did not receive response from server"
 msgstr "सर्वरकडून प्रतिसाद मिळाला नाही"
 
-#: gui/gdmchooser.c:1271
+#: gui/mdmchooser.c:1271
 #, c-format
 msgid ""
 "Did not receive any response from host \"%s\" in %d seconds.  Perhaps the "
@@ -1909,16 +1909,16 @@ msgstr ""
 "किंवा या क्षणी हा कार्यक्रम, सत्र सुरू करण्यास पाठींबा देत नसावा.कृपया नंतर पुन्हा प्रयत्न "
 "करा."
 
-#: gui/gdmchooser.c:1377
+#: gui/mdmchooser.c:1377
 msgid "Cannot find host"
 msgstr "यजमान मिळत नाही"
 
-#: gui/gdmchooser.c:1378
+#: gui/mdmchooser.c:1378
 #, c-format
 msgid "I cannot find the host \"%s\", perhaps you have mistyped it."
 msgstr "मला यजमान मिळत नाही \"%s\", बहुदा तुम्ही चुकीची अक्षरे टाईप केली असावीत."
 
-#: gui/gdmchooser.c:1664
+#: gui/mdmchooser.c:1664
 msgid ""
 "The main area of this application shows the hosts on the local network that "
 "have \"XDMCP\" enabled. This allows users to login remotely to other "
@@ -1935,60 +1935,60 @@ msgstr ""
 "तुम्ही एखादा यजमान निवडला असेल, तेंव्हा \"Connect\" बटन क्लिक एखादे सत्र त्या संगणकावर "
 "सुरू कराल."
 
-#: gui/gdmchooser.c:1718
+#: gui/mdmchooser.c:1718
 #, c-format
 msgid "Can't open default host icon: %s"
 msgstr "साधारण स्वागतकर्तादर्शक चिन्ह सुरू होत नाहीः %s"
 
-#: gui/gdmchooser.c:1938 gui/gdmlogin.c:3947 gui/gdmlogin.c:3954
+#: gui/mdmchooser.c:1938 gui/mdmlogin.c:3947 gui/mdmlogin.c:3954
 #: gui/greeter/greeter.c:1102 gui/greeter/greeter.c:1109
 msgid "Could not set signal mask!"
 msgstr "कार्यक्रम रक्षक संयोजित झाला नाही!"
 
-#: gui/gdmchooser.c:1944
+#: gui/mdmchooser.c:1944
 msgid "Socket for xdm communication"
 msgstr "xdm संवादासाठी वापरण्याचे सॉकेट"
 
-#: gui/gdmchooser.c:1944
+#: gui/mdmchooser.c:1944
 msgid "SOCKET"
 msgstr "सॉकेट"
 
-#: gui/gdmchooser.c:1947
+#: gui/mdmchooser.c:1947
 msgid "Client address to return in response to xdm"
 msgstr "xdm ला प्रतिसाद म्हणून ग्राहकाचा पत्ता परत केला "
 
-#: gui/gdmchooser.c:1947
+#: gui/mdmchooser.c:1947
 msgid "ADDRESS"
 msgstr "पत्ता"
 
-#: gui/gdmchooser.c:1950
+#: gui/mdmchooser.c:1950
 msgid "Connection type to return in response to xdm"
 msgstr "xdm  ला प्रतिसाद म्हणून जोडणीचा प्रकार परत केला"
 
-#: gui/gdmchooser.c:1950
+#: gui/mdmchooser.c:1950
 msgid "TYPE"
 msgstr "प्रकार"
 
 #. markup
-#: gui/gdmchooser.c:2079
+#: gui/mdmchooser.c:2079
 msgid "Cannot run chooser"
 msgstr "निवडकर्ता सुरू होत नाही "
 
-#: gui/gdmchooser.c:2080
+#: gui/mdmchooser.c:2080
 #, c-format
 msgid ""
 "The chooser version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr ""
-"निवडक आवृत्ती (%s) ही डीमन आवृत्ती (%s) शी जुळत नाही. तुम्ही कदाचित gdm "
-"सुधारणा केली आहे. कृपया gdm डीमन पुन्हा सुरू करा किंवा संगणक रीबूट करा."
+"निवडक आवृत्ती (%s) ही डीमन आवृत्ती (%s) शी जुळत नाही. तुम्ही कदाचित mdm "
+"सुधारणा केली आहे. कृपया mdm डीमन पुन्हा सुरू करा किंवा संगणक रीबूट करा."
 
-#: gui/gdmcomm.c:405 gui/gdmphotosetup.c:70
-msgid "GDM (The GNOME Display Manager) is not running."
-msgstr "gdm  (जीनोमचे प्रदर्शन करणारा व्यवस्थापक) चालू होत नाही."
+#: gui/mdmcomm.c:405 gui/mdmphotosetup.c:70
+msgid "MDM (The GNOME Display Manager) is not running."
+msgstr "mdm  (जीनोमचे प्रदर्शन करणारा व्यवस्थापक) चालू होत नाही."
 
-#: gui/gdmcomm.c:408 gui/gdmphotosetup.c:73
+#: gui/mdmcomm.c:408 gui/mdmphotosetup.c:73
 msgid ""
 "You might in fact be using a different display manager, such as KDM (KDE "
 "Display Manager) or xdm."
@@ -1996,43 +1996,43 @@ msgstr ""
 "बहुदा तुम्ही एक वेगळा व्यवस्थापक घेत असाल,जसा केडीएम (केडीईप्रदर्शन करणारा व्यवस्थापक) "
 "किंवा एक्सडीएम."
 
-#: gui/gdmcomm.c:411 gui/gdmphotosetup.c:76
+#: gui/mdmcomm.c:411 gui/mdmphotosetup.c:76
 msgid ""
-"If you still wish to use this feature, either start GDM yourself or ask your "
-"system administrator to start GDM."
+"If you still wish to use this feature, either start MDM yourself or ask your "
+"system administrator to start MDM."
 msgstr ""
-"तथापि, तुम्हाला हाच कार्यक्रम हवा असेल तर तुम्ही स्वतःहून gdm  सुरू करा किंवा "
-"संगणकव्यवस्थापकाला gdm  सुरू करण्यास सांगा."
+"तथापि, तुम्हाला हाच कार्यक्रम हवा असेल तर तुम्ही स्वतःहून mdm  सुरू करा किंवा "
+"संगणकव्यवस्थापकाला mdm  सुरू करण्यास सांगा."
 
-#: gui/gdmcomm.c:433 gui/gdmflexiserver.c:697
-msgid "Cannot communicate with GDM (The GNOME Display Manager)"
-msgstr "gdm  (जीनोमचे प्रदर्शन करणारा व्यवस्थापक) बरोबर संवाद साधता आला नाही."
+#: gui/mdmcomm.c:433 gui/mdmflexiserver.c:697
+msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgstr "mdm  (जीनोमचे प्रदर्शन करणारा व्यवस्थापक) बरोबर संवाद साधता आला नाही."
 
-#: gui/gdmcomm.c:436 gui/gdmflexiserver.c:700
-msgid "Perhaps you have an old version of GDM running."
-msgstr "कदाचित तुमच्याकडे GDM ची जुनी आवृत्ती आहे."
+#: gui/mdmcomm.c:436 gui/mdmflexiserver.c:700
+msgid "Perhaps you have an old version of MDM running."
+msgstr "कदाचित तुमच्याकडे MDM ची जुनी आवृत्ती आहे."
 
-#: gui/gdmcomm.c:453 gui/gdmcomm.c:456
-msgid "Cannot communicate with gdm, perhaps you have an old version running."
-msgstr "gdm बरोबर संवाद साधता आला नाही. कदाचित तुमच्याकडे gdm ची जुनी आवृत्ती आहे."
+#: gui/mdmcomm.c:453 gui/mdmcomm.c:456
+msgid "Cannot communicate with mdm, perhaps you have an old version running."
+msgstr "mdm बरोबर संवाद साधता आला नाही. कदाचित तुमच्याकडे mdm ची जुनी आवृत्ती आहे."
 
-#: gui/gdmcomm.c:459
+#: gui/mdmcomm.c:459
 msgid "The allowed limit of flexible X servers reached."
 msgstr "X सर्वर चालवण्याची महत्तम मर्यादा प्राप्त झाली आहे."
 
-#: gui/gdmcomm.c:461
+#: gui/mdmcomm.c:461
 msgid "There were errors trying to start the X server."
 msgstr "X सर्वर चालू करताना चुका झाल्या होत्या."
 
-#: gui/gdmcomm.c:463
+#: gui/mdmcomm.c:463
 msgid "The X server failed.  Perhaps it is not configured well."
 msgstr "X सर्वर बंद पडला आहे. त्याचे संकलण नीटपणे झाले नसावे."
 
-#: gui/gdmcomm.c:466
+#: gui/mdmcomm.c:466
 msgid "Too many X sessions running."
 msgstr "बरीच X सत्रे सुरू आहेत."
 
-#: gui/gdmcomm.c:468
+#: gui/mdmcomm.c:468
 msgid ""
 "The nested X server (Xnest) cannot connect to your current X server.  You "
 "may be missing an X authorization file."
@@ -2040,19 +2040,19 @@ msgstr ""
 "(Xnest) हा सर्वर तुमच्या चालू X सर्वर बरोबर जोडता येत नाही. तुमचीX मान्यताप्राप्त फाईल "
 "हरवली असावी."
 
-#: gui/gdmcomm.c:473
+#: gui/mdmcomm.c:473
 msgid ""
-"The nested X server (Xnest) is not available, or gdm is badly configured.\n"
+"The nested X server (Xnest) is not available, or mdm is badly configured.\n"
 "Please install the Xnest package in order to use the nested login."
 msgstr ""
 "(Xnest) साठी सुरक्षित X सर्वर उपलब्ध नाही, किंवा चे संकलन योग्य प्रकारे झाले नाही.\n"
 "रक्षित प्रवेश करण्यासाठी कृपया संकलीत Xnest चा कार्यक्रम स्थापन करा."
 
-#: gui/gdmcomm.c:478
-msgid "The X server is not available, it is likely that gdm is badly configured."
-msgstr "X सर्वर उपलब्ध नाही, gdm चे संकलन योग्य प्रकारे झाले नसावे."
+#: gui/mdmcomm.c:478
+msgid "The X server is not available, it is likely that mdm is badly configured."
+msgstr "X सर्वर उपलब्ध नाही, mdm चे संकलन योग्य प्रकारे झाले नसावे."
 
-#: gui/gdmcomm.c:482
+#: gui/mdmcomm.c:482
 msgid ""
 "Trying to set an unknown logout action, or trying to set a logout action "
 "which is not available."
@@ -2060,19 +2060,19 @@ msgstr ""
 "अज्ञात लॉगआउट क्रिया निर्धारित करण्याचा प्रयत्न करत आहे, किंवा उपलब्ध नसलेली "
 "लॉगआउट क्रिया निर्धारित करण्याचा प्रयत्न करत आहे."
 
-#: gui/gdmcomm.c:485
+#: gui/mdmcomm.c:485
 msgid "Virtual terminals not supported."
 msgstr "आभासी टर्मीनल समर्थनीय नाहीत."
 
-#: gui/gdmcomm.c:487
+#: gui/mdmcomm.c:487
 msgid "Trying to change to an invalid virtual terminal number."
 msgstr "अवैध आभासी टर्मीनल क्रमांकास जोडण्याचा प्रयत्न."
 
-#: gui/gdmcomm.c:489
+#: gui/mdmcomm.c:489
 msgid "Trying to update an unsupported configuration key."
 msgstr "आधार नसणाऱ्या सुनियोजन मूल्याची किंमत बदलण्याचा प्रयत्न करीत आहात."
 
-#: gui/gdmcomm.c:491
+#: gui/mdmcomm.c:491
 msgid ""
 "You do not seem to have authentication needed be for this operation.  "
 "Perhaps your .Xauthority file is not set up correctly."
@@ -2080,65 +2080,65 @@ msgstr ""
 "या क्रियेसाठी लागणारी मान्यता तुमच्या जवळ नाही असे दिसते .बहुदा तुमची X अधिकाराची "
 "फाईल नीटपणे बनविली नसावी."
 
-#: gui/gdmcomm.c:495
-msgid "Too many messages were sent to gdm and it hung upon us."
-msgstr "gdm ला खूप संदेश पाठवले गेले आणि तो आता आपल्यावर येऊन अडकलाय."
+#: gui/mdmcomm.c:495
+msgid "Too many messages were sent to mdm and it hung upon us."
+msgstr "mdm ला खूप संदेश पाठवले गेले आणि तो आता आपल्यावर येऊन अडकलाय."
 
-#: gui/gdmcomm.c:498
+#: gui/mdmcomm.c:498
 msgid "Unknown error occured."
 msgstr "अपरिचित चुक घडली आहे."
 
-#: gui/gdmflexiserver-xnest.desktop.in.h:1
+#: gui/mdmflexiserver-xnest.desktop.in.h:1
 msgid "Log in as another user inside a nested window"
 msgstr "एका सुरक्षित विंडोमध्ये अन्य उपयोगकर्त्याप्रमाने प्रवेश करा"
 
-#: gui/gdmflexiserver-xnest.desktop.in.h:2
+#: gui/mdmflexiserver-xnest.desktop.in.h:2
 msgid "New Login in a Nested Window"
 msgstr "सुरक्षित विंडोमध्ये नव्याने प्रवेश करा"
 
 #. markup
-#: gui/gdmflexiserver.c:100
+#: gui/mdmflexiserver.c:100
 msgid "Cannot change display"
 msgstr "नवा प्रदर्शक सुरू करता येत नाही"
 
-#: gui/gdmflexiserver.c:177
+#: gui/mdmflexiserver.c:177
 msgid "Nobody"
 msgstr "कोणीही नाही"
 
-#: gui/gdmflexiserver.c:212
+#: gui/mdmflexiserver.c:212
 #, c-format
 msgid "Display %s on virtual terminal %d"
 msgstr "%s प्रदर्शन आभासी टर्मीनल %d वर"
 
-#: gui/gdmflexiserver.c:217
+#: gui/mdmflexiserver.c:217
 #, c-format
 msgid "Nested display %s on virtual terminal %d"
 msgstr "%s नेस्टेड प्रदर्शन आभासी टर्मीनल %d वर"
 
-#: gui/gdmflexiserver.c:247 gui/gdmlogin.c:2904
+#: gui/mdmflexiserver.c:247 gui/mdmlogin.c:2904
 #: gui/greeter/greeter_item_ulist.c:436
 msgid "Username"
 msgstr "वापरकर्त्याचे नाव"
 
-#: gui/gdmflexiserver.c:256
+#: gui/mdmflexiserver.c:256
 msgid "Display"
 msgstr "प्रदर्शन"
 
-#: gui/gdmflexiserver.c:310
+#: gui/mdmflexiserver.c:310
 msgid "Open Displays"
 msgstr "प्रदर्शने उघडा"
 
 #. parent
 #. flags
-#: gui/gdmflexiserver.c:313
+#: gui/mdmflexiserver.c:313
 msgid "_Open New Display"
 msgstr "नविन प्रदर्शने उघडा(_O)"
 
-#: gui/gdmflexiserver.c:315
+#: gui/mdmflexiserver.c:315
 msgid "Change to _Existing Display"
 msgstr "उपलब्ध प्रदर्शनावर बदला(_E)"
 
-#: gui/gdmflexiserver.c:323
+#: gui/mdmflexiserver.c:323
 msgid ""
 "There are some displays already open.  You can select one from the list "
 "below or open a new one."
@@ -2146,551 +2146,551 @@ msgstr ""
 "काही प्रदर्शने आधीच उघडे आहेत. तुम्ही खालील यादीमधून एक निवडू शकता "
 "किंवा नविन उघडू शकता."
 
-#: gui/gdmflexiserver.c:390 gui/gdmflexiserver.c:785
+#: gui/mdmflexiserver.c:390 gui/mdmflexiserver.c:785
 msgid "Can't lock screen"
 msgstr "पडदा बंद करु शकत नाही."
 
-#: gui/gdmflexiserver.c:393 gui/gdmflexiserver.c:788
+#: gui/mdmflexiserver.c:393 gui/mdmflexiserver.c:788
 msgid "Can't disable xscreensaver display hacks"
 msgstr ""
 
-#: gui/gdmflexiserver.c:548
+#: gui/mdmflexiserver.c:548
 msgid "Choose server"
 msgstr "सर्वर निवडा"
 
-#: gui/gdmflexiserver.c:559
+#: gui/mdmflexiserver.c:559
 msgid "Choose the X server to start"
 msgstr "चालू करण्यासाठी X सर्वर निवडा"
 
-#: gui/gdmflexiserver.c:565
+#: gui/mdmflexiserver.c:565
 msgid "Standard server"
 msgstr "सामान्य सर्वर"
 
-#: gui/gdmflexiserver.c:632
-msgid "Send the specified protocol command to gdm"
-msgstr "पूर्व निश्चित संचातील आज्ञा gdm ला द्या"
+#: gui/mdmflexiserver.c:632
+msgid "Send the specified protocol command to mdm"
+msgstr "पूर्व निश्चित संचातील आज्ञा mdm ला द्या"
 
-#: gui/gdmflexiserver.c:632
+#: gui/mdmflexiserver.c:632
 msgid "COMMAND"
 msgstr "आज्ञा"
 
-#: gui/gdmflexiserver.c:633
+#: gui/mdmflexiserver.c:633
 msgid "Xnest mode"
 msgstr "Xनेस्ट पध्दत"
 
-#: gui/gdmflexiserver.c:634
+#: gui/mdmflexiserver.c:634
 msgid "Do not lock current screen"
 msgstr "चालू पडदा बंद करू नका"
 
-#: gui/gdmflexiserver.c:635
+#: gui/mdmflexiserver.c:635
 msgid "Debugging output"
 msgstr ""
 
-#: gui/gdmflexiserver.c:636
+#: gui/mdmflexiserver.c:636
 msgid "Authenticate before running --command"
 msgstr " आज्ञा सुरू करण्यापूर्वी (server) ओळख पटवून घ्या"
 
-#: gui/gdmflexiserver.c:725
+#: gui/mdmflexiserver.c:725
 msgid "You do not seem to have the authentication needed for this operation"
 msgstr "तुमच्या जवळ ही कृती करण्यासाठी आवश्यक ते अधिकार नसावेत"
 
-#: gui/gdmflexiserver.c:729
+#: gui/mdmflexiserver.c:729
 msgid "Perhaps your .Xauthority file is not set up correctly."
 msgstr "बहुदा तुमची x अधिकार फाईल नीटपणे संयोजित झालेली नाही."
 
-#: gui/gdmflexiserver.c:753
+#: gui/mdmflexiserver.c:753
 msgid "You do not seem to be logged in on the console"
 msgstr "तुम्ही कंन्सोलवर प्रवेश घेतला नसावा."
 
-#: gui/gdmflexiserver.c:756
+#: gui/mdmflexiserver.c:756
 msgid "Starting a new login only works correctly on the console."
 msgstr "एक नवा प्रवेश सुरू झाला तरच कंन्सोलवर नीटपणे काम करता येईल."
 
 #. markup
-#: gui/gdmflexiserver.c:803
+#: gui/mdmflexiserver.c:803
 msgid "Cannot start new display"
 msgstr "नवा प्रदर्शक सुरू करता येत नाही"
 
-#: gui/gdmflexiserver.desktop.in.h:1
+#: gui/mdmflexiserver.desktop.in.h:1
 msgid "Log in as another user without logging out"
 msgstr "बाहेर न पडता अन्य एक उपयोग कर्ता म्हणून प्रवेश करा"
 
-#: gui/gdmflexiserver.desktop.in.h:2
+#: gui/mdmflexiserver.desktop.in.h:2
 msgid "New Login"
 msgstr "नविन प्रवेश"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:53
+#: gui/mdmlanguages.c:53
 msgid "A-M|Albanian"
 msgstr "अल्बेनिअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:55
+#: gui/mdmlanguages.c:55
 msgid "A-M|Amharic"
 msgstr "अॅम्हरिक"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:57
+#: gui/mdmlanguages.c:57
 msgid "A-M|Arabic (Egypt)"
 msgstr "अरेबिक (इजिप्त)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:59
+#: gui/mdmlanguages.c:59
 msgid "A-M|Arabic (Lebanon)"
 msgstr "अरेबिक (लेबेनाॅन)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:61
+#: gui/mdmlanguages.c:61
 msgid "A-M|Azerbaijani"
 msgstr "अझंर्बाइजानी"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:63
+#: gui/mdmlanguages.c:63
 msgid "A-M|Basque"
 msgstr "बास्क"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:65
+#: gui/mdmlanguages.c:65
 msgid "A-M|Belarusian"
 msgstr "बेलारसियन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:67
+#: gui/mdmlanguages.c:67
 msgid "A-M|Bengali"
 msgstr "बेगांली"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:69
+#: gui/mdmlanguages.c:69
 msgid "A-M|Bengali (India)"
 msgstr "बेंगाली(इंडियन)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:71
+#: gui/mdmlanguages.c:71
 msgid "A-M|Bulgarian"
 msgstr "बल्गेरिअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:73
+#: gui/mdmlanguages.c:73
 msgid "A-M|Bosnian"
 msgstr "बोस्निआन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:75
+#: gui/mdmlanguages.c:75
 msgid "A-M|Catalan"
 msgstr "कॅटलन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:77
+#: gui/mdmlanguages.c:77
 msgid "A-M|Chinese (simplified)"
 msgstr "चायनिज(साधे)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:79
+#: gui/mdmlanguages.c:79
 msgid "A-M|Chinese (traditional)"
 msgstr "चायनिज(पारंपारिक)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:81
+#: gui/mdmlanguages.c:81
 msgid "A-M|Croatian"
 msgstr " क्रोशन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:83
+#: gui/mdmlanguages.c:83
 msgid "A-M|Czech"
 msgstr "झेक"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:85
+#: gui/mdmlanguages.c:85
 msgid "A-M|Danish"
 msgstr "डॅनिश"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:87
+#: gui/mdmlanguages.c:87
 msgid "A-M|Dutch"
 msgstr "डच"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:89
+#: gui/mdmlanguages.c:89
 msgid "A-M|English"
 msgstr "इग्लिश"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:91
+#: gui/mdmlanguages.c:91
 msgid "A-M|English (American)"
 msgstr "इग्लिश(अमेरिकन)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:93
+#: gui/mdmlanguages.c:93
 msgid "A-M|English (Australian)"
 msgstr "इग्लिश (आॅस्ट्रेलिअन)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:95
+#: gui/mdmlanguages.c:95
 msgid "A-M|English (British)"
 msgstr "इग्लिश (ब्रिटीश)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:97
+#: gui/mdmlanguages.c:97
 msgid "A-M|English (Canadian)"
 msgstr "A-M|इग्लिश (कॅनडियन)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:99
+#: gui/mdmlanguages.c:99
 msgid "A-M|English (Ireland)"
 msgstr "इग्लिश (आयर्लंड)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:101
+#: gui/mdmlanguages.c:101
 msgid "A-M|Estonian"
 msgstr "इस्टोनिअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:103
+#: gui/mdmlanguages.c:103
 msgid "A-M|Finnish"
 msgstr "फिनीश"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:105
+#: gui/mdmlanguages.c:105
 msgid "A-M|French"
 msgstr "फ्रेंच"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:107
+#: gui/mdmlanguages.c:107
 msgid "A-M|Galician"
 msgstr "गॅलिशिअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:109
+#: gui/mdmlanguages.c:109
 msgid "A-M|German"
 msgstr "जर्मन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:111
+#: gui/mdmlanguages.c:111
 msgid "A-M|Greek"
 msgstr "ग्रीक"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:113
+#: gui/mdmlanguages.c:113
 msgid "A-M|Gujarati"
 msgstr "गुजराती"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:115 gui/gdmlanguages.c:117
+#: gui/mdmlanguages.c:115 gui/mdmlanguages.c:117
 msgid "A-M|Hebrew"
 msgstr "हिब्रु"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:119
+#: gui/mdmlanguages.c:119
 msgid "A-M|Hindi"
 msgstr "हिंदी"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:121
+#: gui/mdmlanguages.c:121
 msgid "A-M|Hungarian"
 msgstr "हंगेरिअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:123
+#: gui/mdmlanguages.c:123
 msgid "A-M|Icelandic"
 msgstr "आईसलॅडिक"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:125
+#: gui/mdmlanguages.c:125
 msgid "A-M|Indonesian"
 msgstr "इनडोनेशिअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:127
+#: gui/mdmlanguages.c:127
 msgid "A-M|Interlingua"
 msgstr "इंटरलिंग्वा"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:129
+#: gui/mdmlanguages.c:129
 msgid "A-M|Irish"
 msgstr "आयरिश"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:131
+#: gui/mdmlanguages.c:131
 msgid "A-M|Italian"
 msgstr "इटालिअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:133
+#: gui/mdmlanguages.c:133
 msgid "A-M|Japanese"
 msgstr "जॅपनिज"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:135
+#: gui/mdmlanguages.c:135
 msgid "A-M|Kannada"
 msgstr "कन्नड"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:137
+#: gui/mdmlanguages.c:137
 msgid "A-M|Korean"
 msgstr "कोरिअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:139
+#: gui/mdmlanguages.c:139
 msgid "A-M|Latvian"
 msgstr "लॅटीविअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:141
+#: gui/mdmlanguages.c:141
 msgid "A-M|Lithuanian"
 msgstr "लिथुनिअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:143
+#: gui/mdmlanguages.c:143
 msgid "A-M|Macedonian"
 msgstr "मॅकोडोनिअन"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:145
+#: gui/mdmlanguages.c:145
 msgid "A-M|Malay"
 msgstr "मलाय"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:147
+#: gui/mdmlanguages.c:147
 msgid "A-M|Malayalam"
 msgstr "मल्याळम"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:149
+#: gui/mdmlanguages.c:149
 msgid "A-M|Marathi"
 msgstr "मराठी"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:151
+#: gui/mdmlanguages.c:151
 msgid "A-M|Mongolian"
 msgstr "मंगोलिअन"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:153
+#: gui/mdmlanguages.c:153
 msgid "N-Z|Norwegian (bokmal)"
 msgstr "नाॅर्वेजिअन(बाॅकमल)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:155
+#: gui/mdmlanguages.c:155
 msgid "N-Z|Norwegian (nynorsk)"
 msgstr "नाॅर्वेजिअन(नायनोर्स्क)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:157
+#: gui/mdmlanguages.c:157
 msgid "N-Z|Oriya"
 msgstr "ओरिया"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:159
+#: gui/mdmlanguages.c:159
 msgid "N-Z|Panjabi"
 msgstr "पंजाबी"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:161
+#: gui/mdmlanguages.c:161
 msgid "N-Z|Persian"
 msgstr "पर्शिअन"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:163
+#: gui/mdmlanguages.c:163
 msgid "N-Z|Polish"
 msgstr "पोलिश"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:165
+#: gui/mdmlanguages.c:165
 msgid "N-Z|Portuguese"
 msgstr "पोर्तुगीज"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:167
+#: gui/mdmlanguages.c:167
 msgid "N-Z|Portuguese (Brazilian)"
 msgstr "पोर्तुगीज (ब्राझिलिअन)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:169
+#: gui/mdmlanguages.c:169
 msgid "N-Z|Romanian"
 msgstr "रोमानिअन"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:171
+#: gui/mdmlanguages.c:171
 msgid "N-Z|Russian"
 msgstr "रशिअन"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:173 gui/gdmlanguages.c:175
+#: gui/mdmlanguages.c:173 gui/mdmlanguages.c:175
 msgid "N-Z|Serbian"
 msgstr "सर्बिअन"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:177
+#: gui/mdmlanguages.c:177
 msgid "N-Z|Serbian (Latin)"
 msgstr "N-Z|सर्बिअन (लॅटिन)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:179
+#: gui/mdmlanguages.c:179
 msgid "N-Z|Serbian (Jekavian)"
 msgstr "N-Z|सर्बिअन (जेकावियन)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:181
+#: gui/mdmlanguages.c:181
 msgid "N-Z|Slovak"
 msgstr "स्लोवाक"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:183
+#: gui/mdmlanguages.c:183
 msgid "N-Z|Slovenian"
 msgstr "स्लोवेनिअन"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:185
+#: gui/mdmlanguages.c:185
 msgid "N-Z|Spanish"
 msgstr "स्पॅनिश"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:187
+#: gui/mdmlanguages.c:187
 msgid "N-Z|Spanish (Mexico)"
 msgstr "स्पॅनिश(मॅक्सिको)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:189
+#: gui/mdmlanguages.c:189
 msgid "N-Z|Swedish"
 msgstr "स्विडीश"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:191
+#: gui/mdmlanguages.c:191
 msgid "N-Z|Swedish (Finland)"
 msgstr "स्विडीश(फिनलन्ड)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:193
+#: gui/mdmlanguages.c:193
 msgid "N-Z|Tamil"
 msgstr "तामिळ"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:195
+#: gui/mdmlanguages.c:195
 msgid "N-Z|Telugu"
 msgstr "तेलगु"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:197
+#: gui/mdmlanguages.c:197
 msgid "N-Z|Thai"
 msgstr " थायी"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:199
+#: gui/mdmlanguages.c:199
 msgid "N-Z|Turkish"
 msgstr "टर्किश"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:201
+#: gui/mdmlanguages.c:201
 msgid "N-Z|Ukrainian"
 msgstr "युक्रेनिअन"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:203
+#: gui/mdmlanguages.c:203
 msgid "N-Z|Vietnamese"
 msgstr "व्हिएटनामीज"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:205
+#: gui/mdmlanguages.c:205
 msgid "N-Z|Walloon"
 msgstr "वालून"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:207
+#: gui/mdmlanguages.c:207
 msgid "N-Z|Welsh"
 msgstr "वेल्श"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:209
+#: gui/mdmlanguages.c:209
 msgid "N-Z|Yiddish"
 msgstr "यिडिश"
 
 #. This is the POSIX/C locale for english, should really be in Other
-#: gui/gdmlanguages.c:211
+#: gui/mdmlanguages.c:211
 msgid "Other|POSIX/C English"
 msgstr "अन्य POSIX/C इंग्लिश "
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: gui/gdmlanguages.c:407
+#: gui/mdmlanguages.c:407
 msgid "A-M"
 msgstr "ए ते एम"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: gui/gdmlanguages.c:415
+#: gui/mdmlanguages.c:415
 msgid "N-Z"
 msgstr "एन ते झेड"
 
-#: gui/gdmlogin.c:222 gui/greeter/greeter_parser.c:1047
+#: gui/mdmlogin.c:222 gui/greeter/greeter_parser.c:1047
 #, c-format
 msgid "User %s will login in %d seconds"
 msgstr "वापरकर्ता %s आत %d सेकंदात प्रवेश करील."
 
-#: gui/gdmlogin.c:447
+#: gui/mdmlogin.c:447
 #, c-format
 msgid "%s: String too long!"
 msgstr "%s: अक्षरमालिका खूप मोठी आहे"
 
-#: gui/gdmlogin.c:449
+#: gui/mdmlogin.c:449
 #, c-format
 msgid "%sWelcome to %s%s"
 msgstr "%1s तुमचे स्वागत आहे to %2s%3s"
 
 #. markup
-#: gui/gdmlogin.c:537
+#: gui/mdmlogin.c:537
 msgid "Could not fork a new process!"
 msgstr "नविन प्रक्रिया चालू करू शकत नाही."
 
-#: gui/gdmlogin.c:539
+#: gui/mdmlogin.c:539
 msgid "You likely won't be able to log in either."
 msgstr "तुम्हाला प्रवेश मिळू शकत नाही"
 
-#: gui/gdmlogin.c:583 gui/greeter/greeter_system.c:56
+#: gui/mdmlogin.c:583 gui/greeter/greeter_system.c:56
 msgid "Are you sure you want to reboot the machine?"
 msgstr "तुम्हाला संगणक पुन्हा चालु करावयाचा आहे का ?"
 
 #. markup
-#: gui/gdmlogin.c:585 gui/gdmlogin.c:2768 gui/greeter/greeter_parser.c:1027
+#: gui/mdmlogin.c:585 gui/mdmlogin.c:2768 gui/greeter/greeter_parser.c:1027
 #: gui/greeter/greeter_system.c:58 gui/greeter/greeter_system.c:184
 msgid "_Reboot"
 msgstr "पुन्हा सुरू करा"
 
-#: gui/gdmlogin.c:597 gui/greeter/greeter_system.c:69
+#: gui/mdmlogin.c:597 gui/greeter/greeter_system.c:69
 msgid "Are you sure you want to shut down the machine?"
 msgstr "तुम्हाला संगणक बंद करायचा आहे का ?"
 
 #. markup
-#: gui/gdmlogin.c:599
+#: gui/mdmlogin.c:599
 msgid "Shut _Down"
 msgstr "बंद करा"
 
-#: gui/gdmlogin.c:619 gui/greeter/greeter_system.c:81
+#: gui/mdmlogin.c:619 gui/greeter/greeter_system.c:81
 msgid "Are you sure you want to suspend the machine?"
 msgstr "तुम्हाला संगणक स्थगित करायचा आहे का ?"
 
 #. markup
-#: gui/gdmlogin.c:621 gui/gdmlogin.c:2795 gui/greeter/greeter_system.c:83
+#: gui/mdmlogin.c:621 gui/mdmlogin.c:2795 gui/greeter/greeter_system.c:83
 msgid "_Suspend"
 msgstr "स्थगित करा"
 
-#: gui/gdmlogin.c:685 gui/gdmlogin.c:3722 gui/greeter/greeter.c:155
+#: gui/mdmlogin.c:685 gui/mdmlogin.c:3722 gui/greeter/greeter.c:155
 #: gui/greeter/greeter.c:849
 msgid "Welcome"
 msgstr "सुस्वागतम"
 
-#: gui/gdmlogin.c:688 gui/gdmlogin.c:3725 gui/greeter/greeter.c:158
+#: gui/mdmlogin.c:688 gui/mdmlogin.c:3725 gui/greeter/greeter.c:158
 #: gui/greeter/greeter.c:852
 #, c-format
 msgid "Welcome to %n"
 msgstr "%n मध्ये स्वागत आहे."
 
-#: gui/gdmlogin.c:736 gui/greeter/greeter.c:183
+#: gui/mdmlogin.c:736 gui/greeter/greeter.c:183
 msgid "TimedLoginDelay was less than 5.  I'll just use 5."
 msgstr ""
 "स्वत:हून प्रवेश करण्यापूर्वी संगणक जितका वेळ थांबतो तो  अवधी ५ सेकंदा पेक्षा कमी होता जो "
 "संगणकाला मान्य नाही  म्हणून मी ५ हे मूल्य वापरेन. "
 
-#: gui/gdmlogin.c:854 gui/greeter/greeter_session.c:119
+#: gui/mdmlogin.c:854 gui/greeter/greeter_session.c:119
 #, c-format
 msgid ""
 "Your preferred session type %s is not installed on this machine.\n"
@@ -2700,17 +2700,17 @@ msgstr ""
 "%s हे तुमच्या भावी सत्रासाठी साधारण रूपात करायचे आहे काय?"
 
 #. markup
-#: gui/gdmlogin.c:860 gui/gdmlogin.c:887 gui/gdmlogin.c:965
+#: gui/mdmlogin.c:860 gui/mdmlogin.c:887 gui/mdmlogin.c:965
 #: gui/greeter/greeter_action_language.c:143 gui/greeter/greeter_session.c:125
 #: gui/greeter/greeter_session.c:155
 msgid "Make _Default"
 msgstr " साधारण  करा"
 
-#: gui/gdmlogin.c:860 gui/greeter/greeter_session.c:125
+#: gui/mdmlogin.c:860 gui/greeter/greeter_session.c:125
 msgid "Just _Log In"
 msgstr "केवळ प्रवेश करा"
 
-#: gui/gdmlogin.c:879 gui/gdmlogin.c:959
+#: gui/mdmlogin.c:879 gui/mdmlogin.c:959
 #: gui/greeter/greeter_action_language.c:137 gui/greeter/greeter_session.c:147
 #, c-format
 msgid ""
@@ -2720,12 +2720,12 @@ msgstr ""
 "तुम्ही या सत्रासाठी %s ची निवड केली आहे पण तुमचे साधारण संयोजन %s आहे.\n"
 "%s हे तुमच्या भावी सत्रासाठी साधारण रूपात करायचे आहे काय?"
 
-#: gui/gdmlogin.c:887 gui/gdmlogin.c:965
+#: gui/mdmlogin.c:887 gui/mdmlogin.c:965
 #: gui/greeter/greeter_action_language.c:143 gui/greeter/greeter_session.c:155
 msgid "Just For _This Session"
 msgstr "केवळ या सत्रासाठी"
 
-#: gui/gdmlogin.c:897 gui/greeter/greeter_session.c:168
+#: gui/mdmlogin.c:897 gui/greeter/greeter_session.c:168
 #, c-format
 msgid ""
 "You have chosen %s for this session.\n"
@@ -2737,53 +2737,53 @@ msgstr ""
 "जर %s हे तुमच्या भावी सत्रासाठी साधारण रूपात करायचे असेल तर\n"
 "'switchdesk' सुरू करा"
 
-#: gui/gdmlogin.c:941 gui/gdmlogin.c:950
+#: gui/mdmlogin.c:941 gui/mdmlogin.c:950
 #: gui/greeter/greeter_action_language.c:53
 #: gui/greeter/greeter_action_language.c:121
 #: gui/greeter/greeter_action_language.c:129
 msgid "System Default"
 msgstr " साधारण पध्दती"
 
-#: gui/gdmlogin.c:1074 gui/gdmlogin.c:1088 gui/gdmlogin.c:1875
-#: gui/gdmlogin.c:2343 gui/gdmlogin.c:3010
+#: gui/mdmlogin.c:1074 gui/mdmlogin.c:1088 gui/mdmlogin.c:1875
+#: gui/mdmlogin.c:2343 gui/mdmlogin.c:3010
 msgid "_Username:"
 msgstr "वापरकर्त्याचे नाव"
 
-#: gui/gdmlogin.c:1146
+#: gui/mdmlogin.c:1146
 #, c-format
 msgid "%s session selected"
 msgstr "% s हे सत्र निवडले."
 
-#: gui/gdmlogin.c:1172 gui/gdmlogin.c:1482 gui/greeter/greeter_session.c:271
+#: gui/mdmlogin.c:1172 gui/mdmlogin.c:1482 gui/greeter/greeter_session.c:271
 msgid "_Last"
 msgstr "शेवटचे"
 
-#: gui/gdmlogin.c:1183 gui/greeter/greeter_session.c:277
+#: gui/mdmlogin.c:1183 gui/greeter/greeter_session.c:277
 msgid "Log in using the session that you have used last time you logged in"
 msgstr "तुम्ही मागील वेळी प्रवेश करण्यासाठी वापरलेले सत्र वापरून प्रवेश करा"
 
-#: gui/gdmlogin.c:1194 gui/greeter/greeter_session.c:264
+#: gui/mdmlogin.c:1194 gui/greeter/greeter_session.c:264
 msgid "Failsafe Gnome"
 msgstr "अनपयशी जिनोम"
 
-#: gui/gdmlogin.c:1195 gui/greeter/greeter_session.c:265
+#: gui/mdmlogin.c:1195 gui/greeter/greeter_session.c:265
 msgid "Failsafe xterm"
 msgstr "अनपयशी एक्सटर्म"
 
-#: gui/gdmlogin.c:1344 gui/greeter/greeter_session.c:429
+#: gui/mdmlogin.c:1344 gui/greeter/greeter_session.c:429
 #, c-format
 msgid "%s: Session directory %s not found!"
 msgstr "%s:सत्र मार्गदर्शिका मिळाली नाही%s"
 
-#: gui/gdmlogin.c:1350 gui/greeter/greeter_session.c:437
+#: gui/mdmlogin.c:1350 gui/greeter/greeter_session.c:437
 msgid "Yaikes, nothing found in the session directory."
 msgstr "अरेरे, या सत्र मार्गदर्शिकेत काहीच आढळले नाही."
 
-#: gui/gdmlogin.c:1361 gui/greeter/greeter_session.c:449
+#: gui/mdmlogin.c:1361 gui/greeter/greeter_session.c:449
 msgid "Failsafe _Gnome"
 msgstr "अनपयशी जिनोम"
 
-#: gui/gdmlogin.c:1363 gui/greeter/greeter_session.c:451
+#: gui/mdmlogin.c:1363 gui/greeter/greeter_session.c:451
 msgid ""
 "This is a failsafe session that will log you into GNOME.  No startup scripts "
 "will be read and it is only to be used when you can't log in otherwise.  "
@@ -2793,11 +2793,11 @@ msgstr ""
 "जाणार नाहीत आणि याचा वापर तेव्हाच करता येईल जेव्हा तुम्हाला अन्य प्रकारे प्रवेश करता "
 "येणार नाही.जिनोम 'साधारण' सत्राचा उपयोग करील."
 
-#: gui/gdmlogin.c:1386 gui/greeter/greeter_session.c:473
+#: gui/mdmlogin.c:1386 gui/greeter/greeter_session.c:473
 msgid "Failsafe _Terminal"
 msgstr " अनपयशी आज्ञांचे अमल करणारे केंद्र"
 
-#: gui/gdmlogin.c:1388 gui/greeter/greeter_session.c:475
+#: gui/mdmlogin.c:1388 gui/greeter/greeter_session.c:475
 msgid ""
 "This is a failsafe session that will log you into a terminal.  No startup "
 "scripts will be read and it is only to be used when you can't log in "
@@ -2807,7 +2807,7 @@ msgstr ""
 "वाचली जाणार नाहीत आणि याचा वापर तेव्हाच करता येईल जेव्हा तुम्हाला अन्य प्रकारे प्रवेश "
 "करता येणार नाही.या केंद्रातून बाहेर जायचे असेल तर 'बाहेर' .(exit) असे टाइप करा"
 
-#: gui/gdmlogin.c:1409 gui/greeter/greeter_session.c:495
+#: gui/mdmlogin.c:1409 gui/greeter/greeter_session.c:495
 msgid "No default session link found. Using Failsafe GNOME.\n"
 msgstr "साधारण सत्रासाठी लागणारी जोडणी मिळाली नाही. अनपयशी जिनोम वापरीत आहे.\n"
 
@@ -2815,194 +2815,194 @@ msgstr "साधारण सत्रासाठी लागणारी ज
 #. no_group
 #. untranslated
 #. makrup
-#: gui/gdmlogin.c:1453
+#: gui/mdmlogin.c:1453
 #, c-format
 msgid "%s language selected"
 msgstr "%s भाषा निवडली."
 
-#: gui/gdmlogin.c:1493
+#: gui/mdmlogin.c:1493
 msgid "Log in using the language that you have used last time you logged in"
 msgstr "तुम्ही मागील वेळी प्रवेश करण्यासाठी वापरलेली भाषा वापरून प्रवेश करा"
 
-#: gui/gdmlogin.c:1497
+#: gui/mdmlogin.c:1497
 msgid "_System Default"
 msgstr "साधारण पध्दती"
 
-#: gui/gdmlogin.c:1508
+#: gui/mdmlogin.c:1508
 msgid "Log in using the default system language"
 msgstr "साधारण पध्दतीची भाषा वापरून प्रवेश करा"
 
-#: gui/gdmlogin.c:1528
+#: gui/mdmlogin.c:1528
 msgid "_Other"
 msgstr "अन्य"
 
-#: gui/gdmlogin.c:1906
+#: gui/mdmlogin.c:1906
 msgid "_Password:"
 msgstr "पासवर्ड"
 
-#: gui/gdmlogin.c:2128 gui/greeter/greeter.c:425
+#: gui/mdmlogin.c:2128 gui/greeter/greeter.c:425
 msgid "Please insert 25 cents to log in."
 msgstr "कृपया २५ पैशाचे नाणे टाकून प्रवेश करा. "
 
-#: gui/gdmlogin.c:2351
+#: gui/mdmlogin.c:2351
 msgid "Doubleclick on the user to log in"
 msgstr "वापरकर्ता वर दोनदा क्लिक करून प्रवेश करा"
 
-#: gui/gdmlogin.c:2475
+#: gui/mdmlogin.c:2475
 msgid "GNOME Desktop Manager"
 msgstr "जिनोमचा डेस्कटाॅप व्यवस्थापक"
 
-#: gui/gdmlogin.c:2501 gui/greeter/greeter_item.c:139
+#: gui/mdmlogin.c:2501 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"
 msgstr "%a %b %d, %H:%M"
 
-#: gui/gdmlogin.c:2503 gui/greeter/greeter_item.c:143
+#: gui/mdmlogin.c:2503 gui/greeter/greeter_item.c:143
 msgid "%a %b %d, %l:%M %p"
 msgstr "%a %b %d, %I:%M %p"
 
-#: gui/gdmlogin.c:2563
+#: gui/mdmlogin.c:2563
 msgid "Finger"
 msgstr "बोट"
 
-#: gui/gdmlogin.c:2676
-msgid "GDM Login"
-msgstr "GDM प्रवेश"
+#: gui/mdmlogin.c:2676
+msgid "MDM Login"
+msgstr "MDM प्रवेश"
 
-#: gui/gdmlogin.c:2719 gui/greeter/greeter_parser.c:997
+#: gui/mdmlogin.c:2719 gui/greeter/greeter_parser.c:997
 msgid "_Session"
 msgstr "सत्र"
 
-#: gui/gdmlogin.c:2726 gui/greeter/greeter_parser.c:992
+#: gui/mdmlogin.c:2726 gui/greeter/greeter_parser.c:992
 msgid "_Language"
 msgstr "भाषा"
 
-#: gui/gdmlogin.c:2738 gui/greeter/greeter_system.c:146
+#: gui/mdmlogin.c:2738 gui/greeter/greeter_system.c:146
 msgid "_XDMCP Chooser..."
 msgstr "XDMCP निवडकर्ता"
 
-#: gui/gdmlogin.c:2745 gui/greeter/greeter_system.c:153
+#: gui/mdmlogin.c:2745 gui/greeter/greeter_system.c:153
 #: gui/greeter/greeter_system.c:345
 msgid ""
 "Run an XDMCP chooser which will allow you to log into available remote "
 "machines, if there are any."
 msgstr "एक XDMCP निवडकर्ता सुरू करून उपलब्ध दूरस्थ यंत्रामध्ये प्रवेश करा जर असे यत्र असेल तर"
 
-#: gui/gdmlogin.c:2754 gui/greeter/greeter_system.c:161
+#: gui/mdmlogin.c:2754 gui/greeter/greeter_system.c:161
 msgid "_Configure Login Manager..."
 msgstr "प्रवेश व्यवस्थापक संकलित करा."
 
-#: gui/gdmlogin.c:2761 gui/greeter/greeter_system.c:168
+#: gui/mdmlogin.c:2761 gui/greeter/greeter_system.c:168
 #: gui/greeter/greeter_system.c:365
-msgid "Configure GDM (this login manager). This will require the root password."
-msgstr "GDM संकलित करा(प्रवेश व्यवस्थापक).  यासाठी मुख्य पासवर्ड लागेल."
+msgid "Configure MDM (this login manager). This will require the root password."
+msgstr "MDM संकलित करा(प्रवेश व्यवस्थापक).  यासाठी मुख्य पासवर्ड लागेल."
 
-#: gui/gdmlogin.c:2775 gui/greeter/greeter_system.c:191
+#: gui/mdmlogin.c:2775 gui/greeter/greeter_system.c:191
 msgid "Reboot your computer"
 msgstr "तुमचा संगणक पुन्हा सुरू करा."
 
 #. markup
-#: gui/gdmlogin.c:2781 gui/greeter/greeter_parser.c:1017
+#: gui/mdmlogin.c:2781 gui/greeter/greeter_parser.c:1017
 #: gui/greeter/greeter_system.c:71 gui/greeter/greeter_system.c:196
 msgid "Shut_down"
 msgstr "बंद करा"
 
-#: gui/gdmlogin.c:2788 gui/greeter/greeter_system.c:203
+#: gui/mdmlogin.c:2788 gui/greeter/greeter_system.c:203
 msgid "Shut down the system so that you may safely turn off the computer."
 msgstr "यंत्रणा बंद करा म्हणजे तुम्हाला सुरक्षितपणे संगणक बंद करता येईल."
 
-#: gui/gdmlogin.c:2802 gui/greeter/greeter_system.c:216
+#: gui/mdmlogin.c:2802 gui/greeter/greeter_system.c:216
 msgid "Suspend your computer"
 msgstr " तुमचा संगणक स्थगित करा"
 
-#: gui/gdmlogin.c:2808 gui/greeter/greeter_parser.c:1002
+#: gui/mdmlogin.c:2808 gui/greeter/greeter_parser.c:1002
 msgid "_Actions"
 msgstr "कृती"
 
-#: gui/gdmlogin.c:2817
+#: gui/mdmlogin.c:2817
 msgid "_Theme"
 msgstr "थीम(_T)"
 
-#: gui/gdmlogin.c:2828 gui/greeter/greeter_canvas_item.c:145
+#: gui/mdmlogin.c:2828 gui/greeter/greeter_canvas_item.c:145
 #: gui/greeter/greeter_parser.c:1012
 msgid "_Quit"
 msgstr "बाहेर जा"
 
-#: gui/gdmlogin.c:2830 gui/greeter/greeter_canvas_item.c:147
+#: gui/mdmlogin.c:2830 gui/greeter/greeter_canvas_item.c:147
 #: gui/greeter/greeter_parser.c:1007
 msgid "D_isconnect"
 msgstr "खंडीत करा"
 
-#: gui/gdmlogin.c:2897 gui/greeter/greeter_item_ulist.c:429
+#: gui/mdmlogin.c:2897 gui/greeter/greeter_item_ulist.c:429
 msgid "Icon"
 msgstr "चिन्ह"
 
-#: gui/gdmlogin.c:3361
+#: gui/mdmlogin.c:3361
 #, c-format
 msgid "Can't open DefaultImage: %s. Suspending face browser!"
 msgstr "साधारण प्रतिमा सुरू होत नाही%s. समोरील ब्राउझर स्थगित होत आहे"
 
-#: gui/gdmlogin.c:3383 gui/gdmsetup.c:516 gui/greeter/greeter_item_ulist.c:284
+#: gui/mdmlogin.c:3383 gui/mdmsetup.c:516 gui/greeter/greeter_item_ulist.c:284
 msgid "Too many users to list here..."
 msgstr "येथे यादीसाठी खूपच वापरकर्ते आहेत"
 
 #. markup
-#: gui/gdmlogin.c:3801 gui/gdmlogin.c:3832 gui/gdmlogin.c:3876
+#: gui/mdmlogin.c:3801 gui/mdmlogin.c:3832 gui/mdmlogin.c:3876
 #: gui/greeter/greeter.c:628 gui/greeter/greeter.c:659
 #: gui/greeter/greeter.c:704
 msgid "Cannot start the greeter"
 msgstr "स्वागतकर्ता सुरू होत नाही"
 
-#: gui/gdmlogin.c:3802 gui/gdmlogin.c:3833
+#: gui/mdmlogin.c:3802 gui/mdmlogin.c:3833
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version.  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr ""
 "स्वागतकर्त्याच्या आवृत्तीशी (%s)पार्श्वभूमीतील प्रक्रियेची*  आवृत्ती जुळत नाही.बहुदा तुम्ही "
-"gdm  आत्ताच सुधारला असेल. कृपया gdm  डेमन * पुन्हा सुरू करा किंवा संगणक पुन्हा चालू "
+"mdm  आत्ताच सुधारला असेल. कृपया mdm  डेमन * पुन्हा सुरू करा किंवा संगणक पुन्हा चालू "
 "करा."
 
-#: gui/gdmlogin.c:3839 gui/gdmlogin.c:3885 gui/greeter/greeter.c:666
+#: gui/mdmlogin.c:3839 gui/mdmlogin.c:3885 gui/greeter/greeter.c:666
 #: gui/greeter/greeter.c:713
 msgid "Reboot"
 msgstr "पुन्हा चालू करा"
 
-#: gui/gdmlogin.c:3877
+#: gui/mdmlogin.c:3877
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr ""
 "स्वागतकर्त्याच्या आवृत्तीशी(%1s) पार्श्वभूमीतील प्रक्रियेची आवृत्ती(%2s) जुळत नाही.बहुदा "
-"तुम्ही gdm  आत्ताच सुधारला असेल. कृपया gdm  डेमन पुन्हा सुरू करा किंवा संगणक पुन्हा चालू "
+"तुम्ही mdm  आत्ताच सुधारला असेल. कृपया mdm  डेमन पुन्हा सुरू करा किंवा संगणक पुन्हा चालू "
 "करा."
 
-#: gui/gdmlogin.c:3883 gui/greeter/greeter.c:711
+#: gui/mdmlogin.c:3883 gui/greeter/greeter.c:711
 msgid "Restart"
 msgstr "पुन्हा सुरू करा"
 
 #. markup
-#: gui/gdmlogin.c:4069 gui/greeter/greeter.c:1331
+#: gui/mdmlogin.c:4069 gui/greeter/greeter.c:1331
 msgid "Session directory is missing"
 msgstr "सत्र मार्गदर्शिका हरवली आहे"
 
-#: gui/gdmlogin.c:4071 gui/greeter/greeter.c:1333
+#: gui/mdmlogin.c:4071 gui/greeter/greeter.c:1333
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the gdm "
+"sessions you can use, but you should log in and correct the mdm "
 "configuration."
 msgstr ""
 "सत्र मार्गदर्शिका हरवली आहे किंवा रिकामी आहे! येथे तुमच्यासाठी २ सत्र उपलब्ध आहे पण "
-"तुम्हाला प्रवेश करावा लागेल आणि gdm चे संकलन नीटपणे करावे लागेल"
+"तुम्हाला प्रवेश करावा लागेल आणि mdm चे संकलन नीटपणे करावे लागेल"
 
 #. markup
-#: gui/gdmlogin.c:4095 gui/greeter/greeter.c:1358
+#: gui/mdmlogin.c:4095 gui/greeter/greeter.c:1358
 msgid "Configuration is not correct"
 msgstr "संकलन बरोबर झाले नाही"
 
-#: gui/gdmlogin.c:4097 gui/greeter/greeter.c:1360
+#: gui/mdmlogin.c:4097 gui/greeter/greeter.c:1360
 msgid ""
 "The configuration file contains an invalid command line for the login "
 "dialog, and thus I ran the default command.  Please fix your configuration."
@@ -3011,54 +3011,54 @@ msgstr ""
 "आज्ञा सुरू केली आहे. कृपया तुमचे संकलन ठीक करून घ्या."
 
 #. markup
-#: gui/gdmlogin.c:4122 gui/greeter/greeter.c:1387
+#: gui/mdmlogin.c:4122 gui/greeter/greeter.c:1387
 msgid "No configuration was found"
 msgstr "संकलन मिळाले नाही"
 
-#: gui/gdmlogin.c:4124 gui/greeter/greeter.c:1389
+#: gui/mdmlogin.c:4124 gui/greeter/greeter.c:1389
 msgid ""
-"The configuration was not found.  GDM is using defaults to run this "
-"session.  You should log in and create a configuration file with the GDM "
+"The configuration was not found.  MDM is using defaults to run this "
+"session.  You should log in and create a configuration file with the MDM "
 "configuration program."
 msgstr ""
-" संकलन मिळाले नाही. हे सत्र सुरू करण्यासाठी gdm  साधारण संकलन वापरीत आहे. तुम्हाला "
-"प्रवेश करून gdm  बरोबर एक संकलन फाईल बनवावी लागेल"
+" संकलन मिळाले नाही. हे सत्र सुरू करण्यासाठी mdm  साधारण संकलन वापरीत आहे. तुम्हाला "
+"प्रवेश करून mdm  बरोबर एक संकलन फाईल बनवावी लागेल"
 
-#: gui/gdmphotosetup.c:144
+#: gui/mdmphotosetup.c:144
 msgid "The face browser is not configured"
 msgstr "समोरील ब्राउझर संकलित झालेला नाही"
 
-#: gui/gdmphotosetup.c:147
+#: gui/mdmphotosetup.c:147
 msgid ""
-"The face browser is not configured in the GDM configuration.  Please ask "
-"your system administrator to enable it in the GDM configurator program."
+"The face browser is not configured in the MDM configuration.  Please ask "
+"your system administrator to enable it in the MDM configurator program."
 msgstr ""
-"gdm  संकलनामध्ये समोरील ब्राउझर संकलित झालेला नाही. कृपया तुमच्या संगणक व्यवस्थापकाला "
-"gdm  संकलक कार्यक्रमामध्ये तो ब्राउझर सुरू करण्यासाठी विचारा "
+"mdm  संकलनामध्ये समोरील ब्राउझर संकलित झालेला नाही. कृपया तुमच्या संगणक व्यवस्थापकाला "
+"mdm  संकलक कार्यक्रमामध्ये तो ब्राउझर सुरू करण्यासाठी विचारा "
 
-#: gui/gdmphotosetup.c:157 gui/gdmphotosetup.desktop.in.h:2
+#: gui/mdmphotosetup.c:157 gui/mdmphotosetup.desktop.in.h:2
 msgid "Login Photo"
 msgstr " प्रवेश करण्याचे छायाचित्र"
 
-#: gui/gdmphotosetup.c:167
+#: gui/mdmphotosetup.c:167
 msgid "Select a photograph to show in the facebrowser:"
 msgstr "समोरील ब्राउझरमध्ये दाखविण्यासाठी एक छायाचित्र निवडा."
 
-#: gui/gdmphotosetup.c:172
+#: gui/mdmphotosetup.c:172
 msgid "Browse"
 msgstr "संचार करा"
 
 #. markup
-#: gui/gdmphotosetup.c:206
+#: gui/mdmphotosetup.c:206
 msgid "No picture selected."
 msgstr "एकही चित्र निवडलेले नाही."
 
 #. markup
-#: gui/gdmphotosetup.c:217
+#: gui/mdmphotosetup.c:217
 msgid "Picture is too large"
 msgstr "चित्र अतिशय मोठे आहे."
 
-#: gui/gdmphotosetup.c:218
+#: gui/mdmphotosetup.c:218
 #, c-format
 msgid ""
 "The system administrator disallowed pictures larger than %d bytes to show in "
@@ -3068,11 +3068,11 @@ msgstr ""
 "केला आहे"
 
 #. markup
-#: gui/gdmphotosetup.c:245 gui/gdmphotosetup.c:267
+#: gui/mdmphotosetup.c:245 gui/mdmphotosetup.c:267
 msgid "Cannot open file"
 msgstr "फाईल उघडू शकत नाही."
 
-#: gui/gdmphotosetup.c:246
+#: gui/mdmphotosetup.c:246
 #, c-format
 msgid ""
 "File %s cannot be open for reading\n"
@@ -3081,7 +3081,7 @@ msgstr ""
 "फाईल %s वाचनासाठी उघडू शकत नाही\n"
 "त्रुट: %s"
 
-#: gui/gdmphotosetup.c:268
+#: gui/mdmphotosetup.c:268
 #, c-format
 msgid ""
 "File %s cannot be open for writing\n"
@@ -3090,60 +3090,60 @@ msgstr ""
 "फाईल %s लिखाणासाठी उघडू शकत नाही\n"
 "त्रुट: %s"
 
-#: gui/gdmphotosetup.desktop.in.h:1
-msgid "Change the picture that will show in the GDM (login manager) face browser"
-msgstr " gdm (प्रवेश व्यवस्थापक)मधील संचारकात दाखविले जाणारे चित्र बदला "
+#: gui/mdmphotosetup.desktop.in.h:1
+msgid "Change the picture that will show in the MDM (login manager) face browser"
+msgstr " mdm (प्रवेश व्यवस्थापक)मधील संचारकात दाखविले जाणारे चित्र बदला "
 
 #.
 #. * Translatable strings file generated by Glade.
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gui/gdmsetup-strings.c:7 gui/gdmsetup.desktop.in.h:2
-#: gui/gdmsetup.glade.h:26
+#: gui/mdmsetup-strings.c:7 gui/mdmsetup.desktop.in.h:2
+#: gui/mdmsetup.glade.h:26
 msgid "Login Screen Setup"
 msgstr "पडद्यामध्ये प्रवेश करा  "
 
-#: gui/gdmsetup-strings.c:8 gui/gdmsetup.glade.h:22
+#: gui/mdmsetup-strings.c:8 gui/mdmsetup.glade.h:22
 msgid "Greeter"
 msgstr "स्वागत करा "
 
-#: gui/gdmsetup-strings.c:9 gui/gdmsetup-strings.c:24
-#: gui/gdmsetup-strings.c:29 gui/gdmsetup-strings.c:36
-#: gui/gdmsetup-strings.c:39 gui/gdmsetup-strings.c:42
-#: gui/gdmsetup-strings.c:65 gui/gdmsetup-strings.c:71
-#: gui/gdmsetup-strings.c:73 gui/gdmsetup-strings.c:79
-#: gui/gdmsetup-strings.c:82 gui/gdmsetup-strings.c:90 gui/gdmsetup.glade.h:1
+#: gui/mdmsetup-strings.c:9 gui/mdmsetup-strings.c:24
+#: gui/mdmsetup-strings.c:29 gui/mdmsetup-strings.c:36
+#: gui/mdmsetup-strings.c:39 gui/mdmsetup-strings.c:42
+#: gui/mdmsetup-strings.c:65 gui/mdmsetup-strings.c:71
+#: gui/mdmsetup-strings.c:73 gui/mdmsetup-strings.c:79
+#: gui/mdmsetup-strings.c:82 gui/mdmsetup-strings.c:90 gui/mdmsetup.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: gui/gdmsetup-strings.c:10 gui/gdmsetup.glade.h:24
+#: gui/mdmsetup-strings.c:10 gui/mdmsetup.glade.h:24
 msgid "L_ocal: "
 msgstr "स्थानिक"
 
-#: gui/gdmsetup-strings.c:11 gui/gdmsetup.glade.h:66
+#: gui/mdmsetup-strings.c:11 gui/mdmsetup.glade.h:66
 msgid "_Remote: "
 msgstr "दूरस्थ"
 
-#: gui/gdmsetup-strings.c:12 gui/gdmsetup.glade.h:70
+#: gui/mdmsetup-strings.c:12 gui/mdmsetup.glade.h:70
 msgid "_Welcome string: "
 msgstr "स्वागतकर्ती अक्षरमाला "
 
-#: gui/gdmsetup-strings.c:13 gui/gdmsetup.glade.h:43
+#: gui/mdmsetup-strings.c:13 gui/mdmsetup.glade.h:43
 msgid "Re_mote welcome string: "
 msgstr "दूरस्थ स्वागतकर्ती अक्षरमाला "
 
-#: gui/gdmsetup-strings.c:14 gui/gdmsetup-strings.c:16
-#: gui/gdmsetup-strings.c:51 gui/gdmsetup.c:911 gui/gdmsetup.glade.h:50
+#: gui/mdmsetup-strings.c:14 gui/mdmsetup-strings.c:16
+#: gui/mdmsetup-strings.c:51 gui/mdmsetup.c:911 gui/mdmsetup.glade.h:50
 msgid "Standard greeter"
 msgstr "प्रमाणित स्वागतकर्ता"
 
-#: gui/gdmsetup-strings.c:15 gui/gdmsetup-strings.c:17
-#: gui/gdmsetup-strings.c:63 gui/gdmsetup.c:913 gui/gdmsetup.glade.h:21
+#: gui/mdmsetup-strings.c:15 gui/mdmsetup-strings.c:17
+#: gui/mdmsetup-strings.c:63 gui/mdmsetup.c:913 gui/mdmsetup.glade.h:21
 msgid "Graphical greeter"
 msgstr " आरेखन स्वागतकर्ता"
 
-#: gui/gdmsetup-strings.c:18 gui/gdmsetup.glade.h:52
+#: gui/mdmsetup-strings.c:18 gui/mdmsetup.glade.h:52
 #, no-c-format
 msgid ""
 "String to be shown in the greeter as welcome.  You can insert %n in here and "
@@ -3152,7 +3152,7 @@ msgstr ""
 "स्वागत कर्त्याच्या रूपात अक्षरमाला दिसायला हवी तुम्ही %n येथे घ्या आणि  त्याऐवजी तुमच्या "
 "संगणकाचे नाव तिथे येईल"
 
-#: gui/gdmsetup-strings.c:20 gui/gdmsetup.glade.h:54
+#: gui/mdmsetup-strings.c:20 gui/mdmsetup.glade.h:54
 #, no-c-format
 msgid ""
 "String to be shown in the greeter for people logging in remotely with "
@@ -3160,145 +3160,145 @@ msgid ""
 "your computer."
 msgstr ""
 
-#: gui/gdmsetup-strings.c:22 gui/gdmsetup.glade.h:10
+#: gui/mdmsetup-strings.c:22 gui/mdmsetup.glade.h:10
 msgid "Always use 24 hour cloc_k format"
 msgstr " नेहमी २४ तासांच्या घड्याळाचा नमुना वापरा "
 
-#: gui/gdmsetup-strings.c:23 gui/gdmsetup.glade.h:12
+#: gui/mdmsetup-strings.c:23 gui/mdmsetup.glade.h:12
 msgid "Automatic Login"
 msgstr "आपोआप प्रवेश"
 
-#: gui/gdmsetup-strings.c:25 gui/gdmsetup.glade.h:58
+#: gui/mdmsetup-strings.c:25 gui/mdmsetup.glade.h:58
 msgid "_Automatic login username:"
 msgstr "आपोआप वापर कर्त्याचा प्रवेश"
 
-#: gui/gdmsetup-strings.c:27 gui/gdmsetup.glade.h:63
+#: gui/mdmsetup-strings.c:27 gui/mdmsetup.glade.h:63
 msgid "_Login a user automatically on first bootup"
 msgstr "प्रथमत: सुरू करण्यासाठी  वापर कर्त्याचा आपोआप प्रवेश करा"
 
-#: gui/gdmsetup-strings.c:28 gui/gdmsetup.glade.h:55
+#: gui/mdmsetup-strings.c:28 gui/mdmsetup.glade.h:55
 msgid "Timed Login"
 msgstr " प्रवेशाची वेळ पूर्व नियोजित"
 
-#: gui/gdmsetup-strings.c:30 gui/gdmsetup.glade.h:56
+#: gui/mdmsetup-strings.c:30 gui/mdmsetup.glade.h:56
 msgid "Timed login us_ername:"
 msgstr " वापरकर्त्याच्या प्रवेशाची वेळ पूर्व नियोजित"
 
-#: gui/gdmsetup-strings.c:31 gui/gdmsetup.glade.h:68
+#: gui/mdmsetup-strings.c:31 gui/mdmsetup.glade.h:68
 msgid "_Seconds before login:"
 msgstr "प्रवेश करण्यापूर्वीचे सेकंद"
 
-#: gui/gdmsetup-strings.c:33 gui/gdmsetup.glade.h:27
+#: gui/mdmsetup-strings.c:33 gui/mdmsetup.glade.h:27
 msgid "Login a user automa_tically after a specified number of seconds"
 msgstr "निश्चित सेकंदानंतर आपोआप सुरू होणारा प्रवेश"
 
-#: gui/gdmsetup-strings.c:34 gui/gdmsetup.glade.h:20
+#: gui/mdmsetup-strings.c:34 gui/mdmsetup.glade.h:20
 msgid "General"
 msgstr "सर्वसाधारण"
 
-#: gui/gdmsetup-strings.c:35 gui/gdmsetup.glade.h:28
+#: gui/mdmsetup-strings.c:35 gui/mdmsetup.glade.h:28
 msgid "Logo"
 msgstr "चिन्ह"
 
-#: gui/gdmsetup-strings.c:38 gui/gdmsetup.glade.h:35
+#: gui/mdmsetup-strings.c:38 gui/mdmsetup.glade.h:35
 msgid "Miscellaneous"
 msgstr "विविध"
 
-#: gui/gdmsetup-strings.c:40 gui/gdmsetup.glade.h:47
+#: gui/mdmsetup-strings.c:40 gui/mdmsetup.glade.h:47
 msgid "Show choosable user images (_face browser)"
 msgstr "निवड योग्य वापरकर्त्या प्रतिमा दाखवा (संचारक)"
 
-#: gui/gdmsetup-strings.c:41 gui/gdmsetup.glade.h:13
+#: gui/mdmsetup-strings.c:41 gui/mdmsetup.glade.h:13
 msgid "Background"
 msgstr "पार्श्वभूमी"
 
-#: gui/gdmsetup-strings.c:43 gui/gdmsetup.glade.h:64
+#: gui/mdmsetup-strings.c:43 gui/mdmsetup.glade.h:64
 msgid "_No background"
 msgstr "पार्श्वभूमी"
 
-#: gui/gdmsetup-strings.c:44 gui/gdmsetup.glade.h:61
+#: gui/mdmsetup-strings.c:44 gui/mdmsetup.glade.h:61
 msgid "_Image"
 msgstr "प्रतिमा"
 
-#: gui/gdmsetup-strings.c:45 gui/gdmsetup.glade.h:14
+#: gui/mdmsetup-strings.c:45 gui/mdmsetup.glade.h:14
 msgid "Co_lor"
 msgstr "रंग"
 
-#: gui/gdmsetup-strings.c:46 gui/gdmsetup.glade.h:67
+#: gui/mdmsetup-strings.c:46 gui/mdmsetup.glade.h:67
 msgid "_Scale background image to fit"
 msgstr " नीटपणे दिसण्यासाठी पार्श्वभूमीतील प्रतिमेचा आकार निश्चित करा"
 
-#: gui/gdmsetup-strings.c:48 gui/gdmsetup.glade.h:65
+#: gui/mdmsetup-strings.c:48 gui/mdmsetup.glade.h:65
 msgid "_Only color on remote displays"
 msgstr " केवळ दूरस्थ प्रर्दशकच रंगीत करा"
 
-#: gui/gdmsetup-strings.c:49 gui/gdmsetup.glade.h:59
+#: gui/mdmsetup-strings.c:49 gui/mdmsetup.glade.h:59
 msgid "_Background color: "
 msgstr "पार्श्वरंग"
 
-#: gui/gdmsetup-strings.c:50 gui/gdmsetup.glade.h:39
+#: gui/mdmsetup-strings.c:50 gui/mdmsetup.glade.h:39
 msgid "Pick a color"
 msgstr "एक रंग निवडा."
 
-#: gui/gdmsetup-strings.c:52 gui/gdmsetup.glade.h:42
+#: gui/mdmsetup-strings.c:52 gui/mdmsetup.glade.h:42
 msgid "Preview:"
 msgstr "पूर्वावलोकन करा"
 
-#: gui/gdmsetup-strings.c:53 gui/gdmsetup.glade.h:37
+#: gui/mdmsetup-strings.c:53 gui/mdmsetup.glade.h:37
 msgid "No screenshot available"
 msgstr "पडदा उपलब्ध नाही"
 
-#: gui/gdmsetup-strings.c:54 gui/gdmsetup.glade.h:16
+#: gui/mdmsetup-strings.c:54 gui/mdmsetup.glade.h:16
 msgid "Description:"
 msgstr "वर्णन"
 
-#: gui/gdmsetup-strings.c:55 gui/gdmsetup.glade.h:15
+#: gui/mdmsetup-strings.c:55 gui/mdmsetup.glade.h:15
 msgid "Copyright:"
 msgstr "काॅपीराइट "
 
-#: gui/gdmsetup-strings.c:56 gui/gdmsetup.glade.h:11
+#: gui/mdmsetup-strings.c:56 gui/mdmsetup.glade.h:11
 msgid "Author:"
 msgstr "लेखक"
 
-#: gui/gdmsetup-strings.c:57 gui/gdmsetup.glade.h:74
+#: gui/mdmsetup-strings.c:57 gui/mdmsetup.glade.h:74
 msgid ""
 "description\n"
 "widget"
 msgstr "विजेट"
 
-#: gui/gdmsetup-strings.c:59 gui/gdmsetup.glade.h:72
+#: gui/mdmsetup-strings.c:59 gui/mdmsetup.glade.h:72
 msgid "author"
 msgstr "लेखक"
 
-#: gui/gdmsetup-strings.c:60 gui/gdmsetup.glade.h:73
+#: gui/mdmsetup-strings.c:60 gui/mdmsetup.glade.h:73
 msgid "copyright"
 msgstr "काॅपी राइट"
 
-#: gui/gdmsetup-strings.c:61 gui/gdmsetup.glade.h:62
+#: gui/mdmsetup-strings.c:61 gui/mdmsetup.glade.h:62
 msgid "_Install new theme"
 msgstr "नविन धारा(कार्यक्रम) बनवा "
 
-#: gui/gdmsetup-strings.c:62 gui/gdmsetup.glade.h:60
+#: gui/mdmsetup-strings.c:62 gui/mdmsetup.glade.h:60
 msgid "_Delete theme"
 msgstr "धारा काढून टाका"
 
-#: gui/gdmsetup-strings.c:64 gui/gdmsetup-strings.c:78 gui/gdmsetup.glade.h:38
+#: gui/mdmsetup-strings.c:64 gui/mdmsetup-strings.c:78 gui/mdmsetup.glade.h:38
 msgid "Options"
 msgstr "पर्याय"
 
-#: gui/gdmsetup-strings.c:66 gui/gdmsetup.glade.h:5
-msgid "Allow _root to login with GDM"
-msgstr "gdm  द्वारा मुख्य उपयोग कर्त्याला प्रवेश द्या "
+#: gui/mdmsetup-strings.c:66 gui/mdmsetup.glade.h:5
+msgid "Allow _root to login with MDM"
+msgstr "mdm  द्वारा मुख्य उपयोग कर्त्याला प्रवेश द्या "
 
-#: gui/gdmsetup-strings.c:67 gui/gdmsetup.glade.h:8
-msgid "Allow root to login r_emotely with GDM"
-msgstr " gdm  द्वारा दूरस्थ  मुख्य उपयोग कर्त्याला प्रवेश द्या "
+#: gui/mdmsetup-strings.c:67 gui/mdmsetup.glade.h:8
+msgid "Allow root to login r_emotely with MDM"
+msgstr " mdm  द्वारा दूरस्थ  मुख्य उपयोग कर्त्याला प्रवेश द्या "
 
-#: gui/gdmsetup-strings.c:68 gui/gdmsetup.glade.h:7
+#: gui/mdmsetup-strings.c:68 gui/mdmsetup.glade.h:7
 msgid "Allow remote _timed logins"
 msgstr "समयाकिंत दूरस्थ प्रवेशाना प्रवेश करू द्या"
 
-#: gui/gdmsetup-strings.c:69 gui/gdmsetup.glade.h:48
+#: gui/mdmsetup-strings.c:69 gui/mdmsetup.glade.h:48
 msgid ""
 "Show the \"Actions\" menu (formerly known as the \"System\" menu).  If not "
 "set, none of the system commands will be available (this includes reboot, "
@@ -3308,19 +3308,19 @@ msgstr ""
 "संगणकावरिल एकही आज्ञा उपलब्ध होणार नाही (यात पुन्हा सुरू करा, बंद करा,संकलन करा, "
 "निवडकर्ता अशा आज्ञा आहेत."
 
-#: gui/gdmsetup-strings.c:70 gui/gdmsetup.glade.h:46
+#: gui/mdmsetup-strings.c:70 gui/mdmsetup.glade.h:46
 msgid "Show _actions menu"
 msgstr "कृती मेनू दाखवा"
 
-#: gui/gdmsetup-strings.c:72 gui/gdmsetup.glade.h:6
+#: gui/mdmsetup-strings.c:72 gui/mdmsetup.glade.h:6
 msgid "Allow c_onfiguration from the login screen"
 msgstr "पडद्यावरील प्रवेशाद्वारे संकलन करू द्या"
 
-#: gui/gdmsetup-strings.c:74 gui/gdmsetup.glade.h:4
+#: gui/mdmsetup-strings.c:74 gui/mdmsetup.glade.h:4
 msgid "Allo_w running XDMCP chooser from the login screen"
 msgstr "पडद्यावरील प्रवेशाद्वारे चालू XDMCP निवडकर्त्याला प्रवेश करू द्या"
 
-#: gui/gdmsetup-strings.c:75 gui/gdmsetup.glade.h:9
+#: gui/mdmsetup-strings.c:75 gui/mdmsetup.glade.h:9
 msgid ""
 "Always disallow TCP connections to _X server (disables all remote "
 "connections)"
@@ -3328,166 +3328,166 @@ msgstr ""
 "एक्स सर्व्हरसाठी टीसीपीची जोडणी कधीही करू नका(त्यामुळे सर्व दूरस्थ संपर्क  जोडण्या बंद "
 "होतात)."
 
-#: gui/gdmsetup-strings.c:76 gui/gdmsetup.glade.h:44
+#: gui/mdmsetup-strings.c:76 gui/mdmsetup.glade.h:44
 msgid "Retry _delay (seconds) :"
 msgstr "(सेकंदामध्ये) उशीर झाला. पुन्हा प्रयत्न करा"
 
-#: gui/gdmsetup-strings.c:77 gui/gdmsetup.glade.h:45
+#: gui/mdmsetup-strings.c:77 gui/mdmsetup.glade.h:45
 msgid "Security"
 msgstr "सुरक्षा"
 
-#: gui/gdmsetup-strings.c:80 gui/gdmsetup.glade.h:19
+#: gui/mdmsetup-strings.c:80 gui/mdmsetup.glade.h:19
 msgid "Enable _accessibility modules"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:81 gui/gdmsetup.glade.h:29
+#: gui/mdmsetup-strings.c:81 gui/mdmsetup.glade.h:29
 msgid "Make a _sound when login window is ready"
 msgstr ""
 
-#: gui/gdmsetup-strings.c:83 gui/gdmsetup.glade.h:71
+#: gui/mdmsetup-strings.c:83 gui/mdmsetup.glade.h:71
 msgid "acc_sound_file_box"
 msgstr "acc_sound_file_box"
 
-#: gui/gdmsetup-strings.c:84 gui/gdmsetup.glade.h:49
+#: gui/mdmsetup-strings.c:84 gui/mdmsetup.glade.h:49
 msgid "Sound _file:"
 msgstr "ध्वनी फाइल(_f):"
 
-#: gui/gdmsetup-strings.c:86 gui/gdmsetup.glade.h:69
+#: gui/mdmsetup-strings.c:86 gui/mdmsetup.glade.h:69
 msgid "_Test sound"
 msgstr "चाचणी ध्वनी(_T)"
 
-#: gui/gdmsetup-strings.c:87 gui/gdmsetup.glade.h:3
+#: gui/mdmsetup-strings.c:87 gui/mdmsetup.glade.h:3
 msgid "Accessibility"
 msgstr "उपलब्धता"
 
-#: gui/gdmsetup-strings.c:88 gui/gdmsetup.glade.h:36
+#: gui/mdmsetup-strings.c:88 gui/mdmsetup.glade.h:36
 msgid ""
 "No XDMCP support in the binary.  To enable XDMCP support you must recompile "
-"GDM with the XDMCP libraries."
+"MDM with the XDMCP libraries."
 msgstr ""
 " बायनरी मध्ये XDMCP चा पाठींबा नाही.  XDMCP पाठींब्यासाठी तुम्हाला XDMCP च्या "
-"संदर्भालयाशी gdm  पुन्हा जुळवावा लागेल. "
+"संदर्भालयाशी mdm  पुन्हा जुळवावा लागेल. "
 
-#: gui/gdmsetup-strings.c:89 gui/gdmsetup.glade.h:18
+#: gui/mdmsetup-strings.c:89 gui/mdmsetup.glade.h:18
 msgid "Enable _XDMCP"
 msgstr " XDMCP सुरू करा"
 
-#: gui/gdmsetup-strings.c:91 gui/gdmsetup.glade.h:23
+#: gui/mdmsetup-strings.c:91 gui/mdmsetup.glade.h:23
 msgid "Honour _indirect requests"
 msgstr "अप्रत्यक्षपणे येणाऱ्या विनंत्यांचा मान राखा "
 
-#: gui/gdmsetup-strings.c:92 gui/gdmsetup.glade.h:25
+#: gui/mdmsetup-strings.c:92 gui/mdmsetup.glade.h:25
 msgid "Listen on _UDP port: "
 msgstr "यूडीपी पोर्टवर काळजीपूर्वक ऐेंका"
 
-#: gui/gdmsetup-strings.c:93 gui/gdmsetup.glade.h:31
+#: gui/mdmsetup-strings.c:93 gui/mdmsetup.glade.h:31
 msgid "Maximum _pending requests:"
 msgstr "अर्निणित असणाऱ्या अधिकतम विनंत्या"
 
-#: gui/gdmsetup-strings.c:94 gui/gdmsetup.glade.h:30
+#: gui/mdmsetup-strings.c:94 gui/mdmsetup.glade.h:30
 msgid "Max p_ending indirect requests:"
 msgstr "अर्निणित असणाऱ्या अधिकतम अप्रत्यक्ष विनंत्या"
 
-#: gui/gdmsetup-strings.c:95 gui/gdmsetup.glade.h:32
+#: gui/mdmsetup-strings.c:95 gui/mdmsetup.glade.h:32
 msgid "Maximum _remote sessions:"
 msgstr " कमाल प्रमाणातील दूरस्थ सत्र "
 
-#: gui/gdmsetup-strings.c:96 gui/gdmsetup.glade.h:33
+#: gui/mdmsetup-strings.c:96 gui/mdmsetup.glade.h:33
 msgid "Maximum _wait time:"
 msgstr " वाट पाहण्याची कमाल वेळ"
 
-#: gui/gdmsetup-strings.c:97 gui/gdmsetup.glade.h:34
+#: gui/mdmsetup-strings.c:97 gui/mdmsetup.glade.h:34
 msgid "Maximum indirect w_ait time:"
 msgstr "वाट पाहण्याची अप्रत्यक्ष कमाल वेळ"
 
-#: gui/gdmsetup-strings.c:98 gui/gdmsetup.glade.h:17
+#: gui/mdmsetup-strings.c:98 gui/mdmsetup.glade.h:17
 msgid "Displays per _host:"
 msgstr "दर स्वागतकर्त्याच्या प्रमाणात असणारे प्रदर्शके"
 
-#: gui/gdmsetup-strings.c:99 gui/gdmsetup.glade.h:40
+#: gui/mdmsetup-strings.c:99 gui/mdmsetup.glade.h:40
 msgid "Pin_g interval (seconds):"
 msgstr "(सेकंदामध्ये ) मध्यांतर"
 
-#: gui/gdmsetup-strings.c:100 gui/gdmsetup.glade.h:41
+#: gui/mdmsetup-strings.c:100 gui/mdmsetup.glade.h:41
 msgid "Ping interval (seconds):"
 msgstr "(सेकंदामध्ये ) मध्यांतर"
 
-#: gui/gdmsetup-strings.c:101 gui/gdmsetup.glade.h:57
+#: gui/mdmsetup-strings.c:101 gui/mdmsetup.glade.h:57
 msgid "XDMCP"
 msgstr "XDMCP"
 
-#: gui/gdmsetup.c:147
+#: gui/mdmsetup.c:147
 msgid ""
 "An error occured while trying to contact the login screens.  Not all updates "
 "may have taken effect."
 msgstr "पडदा प्रवेशाशी संपर्क साधताना चूक झाली.  सर्व सुधारीत कृती कार्यक्रम अमलात आले नसावेत"
 
 #. markup
-#: gui/gdmsetup.c:470
+#: gui/mdmsetup.c:470
 msgid "Autologin or timed login to the superuser (root) account is not allowed."
 msgstr ""
 
-#: gui/gdmsetup.c:1698
+#: gui/mdmsetup.c:1698
 msgid "Archive is not of a subdirectory"
 msgstr "ही संग्रहिका उप मार्गदर्शिके पैकी नाही"
 
-#: gui/gdmsetup.c:1706
+#: gui/mdmsetup.c:1706
 msgid "Archive is not of a single subdirectory"
 msgstr "ही संग्रहिका एका उप मार्गदर्शिके पैकी नाही"
 
-#: gui/gdmsetup.c:1730 gui/gdmsetup.c:1809
+#: gui/mdmsetup.c:1730 gui/mdmsetup.c:1809
 msgid "File not a tar.gz or tar archive"
 msgstr ""
 
-#: gui/gdmsetup.c:1732
-msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr "या संग्रहिकेत gdm  ग्रीटर थीमची फाईल नाही "
+#: gui/mdmsetup.c:1732
+msgid "Archive does not include a MdmGreeterTheme.info file"
+msgstr "या संग्रहिकेत mdm  ग्रीटर थीमची फाईल नाही "
 
-#: gui/gdmsetup.c:1754
+#: gui/mdmsetup.c:1754
 msgid "File does not exist"
 msgstr "फाईल अस्तित्वात नाही."
 
 #. markup
-#: gui/gdmsetup.c:1867
+#: gui/mdmsetup.c:1867
 msgid "No file selected"
 msgstr "कोणतीही फाईल निवडलेली नाही."
 
 #. markup
-#: gui/gdmsetup.c:1895
+#: gui/mdmsetup.c:1895
 msgid "Not a theme archive"
 msgstr "ही सुसूत्र अशी संग्रहिका नाही "
 
-#: gui/gdmsetup.c:1896
+#: gui/mdmsetup.c:1896
 #, c-format
 msgid "Details: %s"
 msgstr "तपशील%s"
 
-#: gui/gdmsetup.c:1914
+#: gui/mdmsetup.c:1914
 #, c-format
 msgid "Theme directory '%s' seems to be already installed, install again anyway?"
 msgstr "मार्गदर्शिका %s अगोदरच बसवलेली आहे, तरी पण पुन्हा बसवा"
 
-#: gui/gdmsetup.c:1992
+#: gui/mdmsetup.c:1992
 msgid "Some error occured when installing the theme"
 msgstr "मार्गदर्शिका बसविताना काहीतरी चुक झाली आहे."
 
-#: gui/gdmsetup.c:2038
+#: gui/mdmsetup.c:2038
 msgid "Select new theme archive to install"
 msgstr "बसविण्यासाठी नविन सुसूत्र संग्रहिका निवडा"
 
-#: gui/gdmsetup.c:2042
+#: gui/mdmsetup.c:2042
 msgid "_Install"
 msgstr "प्रतिष्ठापित करा(_I)"
 
-#: gui/gdmsetup.c:2106
+#: gui/mdmsetup.c:2106
 #, c-format
 msgid "Do you really wish to remove theme '%s' from the system?"
 msgstr "तुम्हाला '%s' संगणका मधून ही सुसूत्र संग्रहिका खरंच काढायची आहे का?"
 
-#: gui/gdmsetup.c:2317
+#: gui/mdmsetup.c:2317
 #, c-format
 msgid ""
-"This configuration window changes settings for the GDM daemon, which is the "
+"This configuration window changes settings for the MDM daemon, which is the "
 "graphical login screen for GNOME.  Changes that you make will take effect "
 "immediately.\n"
 "\n"
@@ -3499,35 +3499,35 @@ msgid ""
 msgstr ""
 
 #. markup
-#: gui/gdmsetup.c:2733
-msgid "You must be the superuser (root) to configure GDM."
-msgstr "gdm  संकलीत करण्यासाठी तुम्ही मुख्य वापरकर्ता असायला हवेत "
+#: gui/mdmsetup.c:2733
+msgid "You must be the superuser (root) to configure MDM."
+msgstr "mdm  संकलीत करण्यासाठी तुम्ही मुख्य वापरकर्ता असायला हवेत "
 
 #. EOF
-#: gui/gdmsetup.desktop.in.h:1
-msgid "A graphical application for configuring the GNOME Display Manager (GDM)"
+#: gui/mdmsetup.desktop.in.h:1
+msgid "A graphical application for configuring the GNOME Display Manager (MDM)"
 msgstr "हा एक आरेखित कार्यक्रम असून, जिनोम प्रदर्शक, व्यवस्थापक संकलित करण्यासाठी उपयोगी होतो"
 
 #: gui/greeter/greeter.c:629 gui/greeter/greeter.c:660
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version.\n"
-"You have probably just upgraded gdm.\n"
-"Please restart the gdm daemon or reboot the computer."
+"You have probably just upgraded mdm.\n"
+"Please restart the mdm daemon or reboot the computer."
 msgstr ""
 "स्वागतकर्त्याच्या आवृत्तीशी (%s)पार्श्वभूमीतील प्रक्रियेची*  आवृत्ती जुळत नाही.बहुदा तुम्ही "
-"gdm  आत्ताच सुधारला असेल. कृपया gdm  डेमन * पुन्हा सुरू करा किंवा संगणक पुन्हा चालू "
+"mdm  आत्ताच सुधारला असेल. कृपया mdm  डेमन * पुन्हा सुरू करा किंवा संगणक पुन्हा चालू "
 "करा."
 
 #: gui/greeter/greeter.c:705
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).\n"
-"You have probably just upgraded gdm.\n"
-"Please restart the gdm daemon or reboot the computer."
+"You have probably just upgraded mdm.\n"
+"Please restart the mdm daemon or reboot the computer."
 msgstr ""
 "स्वागतकर्त्याच्या आवृत्तीशी(%1s) पार्श्वभूमीतील प्रक्रियेची आवृत्ती(%2s) जुळत नाही.\n"
-"बहुदा तुम्ही gdm  आत्ताच सुधारला असेल. कृपया gdm  डेमन * पुन्हा सुरू करा किंवा संगणक "
+"बहुदा तुम्ही mdm  आत्ताच सुधारला असेल. कृपया mdm  डेमन * पुन्हा सुरू करा किंवा संगणक "
 "पुन्हा चालू करा."
 
 #: gui/greeter/greeter.c:1171
@@ -3556,10 +3556,10 @@ msgstr ""
 #: gui/greeter/greeter.c:1282
 msgid ""
 "I could not start the standard greeter.  This display will abort and you may "
-"have to login another way and fix the installation of gdm"
+"have to login another way and fix the installation of mdm"
 msgstr ""
 "मी प्रमाणित स्वागत कर्ता सुरू करू शकलो नाही.  हा प्रदर्शक खंडीत आहे तुम्हाला अन्य एकामार्गे "
-"प्रवेश करून gdm  नीटपणे सुरू करावा लागेल "
+"प्रवेश करून mdm  नीटपणे सुरू करावा लागेल "
 
 #: gui/greeter/greeter_action_language.c:46
 msgid "Last"
@@ -3646,45 +3646,45 @@ msgstr "XDMCP निवडकर्ता सुरू करा"
 msgid "_Configure the login manager"
 msgstr "प्रवेश देणारा व्यवस्थापक संकलित करा"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 Bond, James Bond"
 msgstr "         बांॅड, जेम्स बांॅड"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:2
 msgid "Bond, James Bond"
 msgstr "बांॅड, जेम्स बांॅड"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:3
 msgid "Circles"
 msgstr "वर्तुळे"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:4
 msgid "Theme with blue circles"
 msgstr " निळी वर्तुळे असणारी थीम "
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:1
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 GNOME"
 msgstr "२००२ जिनोम"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles with a Face Browser"
 msgstr "जिनोम"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:3
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:3
 msgid "GNOME Artists"
 msgstr "जिनोमचे कलाकार"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME with Browser"
 msgstr "संचारक"
 
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles"
 msgstr ""
 
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME"
 msgstr "आनंदी GNOME"
 
@@ -3698,12 +3698,12 @@ msgstr ""
 " शी जोडलेले (%s)\n"
 " सुरू करताना चूक झाली"
 
-#: utils/gdmaskpass.c:26
+#: utils/mdmaskpass.c:26
 #, c-format
-msgid "gdmaskpass only runs as root\n"
-msgstr "gdmaskpass केवळ मुख्य वापरकर्त्या द्वारा(रूट) चालू होते\n"
+msgid "mdmaskpass only runs as root\n"
+msgstr "mdmaskpass केवळ मुख्य वापरकर्त्या द्वारा(रूट) चालू होते\n"
 
-#: utils/gdmaskpass.c:42 utils/gdmaskpass.c:48
+#: utils/mdmaskpass.c:42 utils/mdmaskpass.c:48
 #, c-format
 msgid "Authentication failure!\n"
 msgstr "मान्यता मिळाली नाही \n"

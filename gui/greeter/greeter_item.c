@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,24 +25,24 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "gdm.h"
-#include "gdmwm.h"
-#include "gdmconfig.h"
-#include "gdmcommon.h"
+#include "mdm.h"
+#include "mdmwm.h"
+#include "mdmconfig.h"
+#include "mdmcommon.h"
 #include "misc.h"
 
-#include "gdm-common.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config-keys.h"
 
 #include "greeter_item.h"
 #include "greeter_configuration.h"
 
-extern gboolean GdmHaltFound;
-extern gboolean GdmRebootFound;
-extern gboolean GdmCustomCmdFound;
-extern gboolean *GdmCustomCmdsFound;
-extern gboolean GdmSuspendFound;
-extern gboolean GdmConfiguratorFound;
+extern gboolean MdmHaltFound;
+extern gboolean MdmRebootFound;
+extern gboolean MdmCustomCmdFound;
+extern gboolean *MdmCustomCmdsFound;
+extern gboolean MdmSuspendFound;
+extern gboolean MdmConfiguratorFound;
 
 GreeterItemInfo *
 greeter_item_info_new (GreeterItemInfo *parent,
@@ -146,7 +146,7 @@ greeter_item_update_text (GreeterItemInfo *info)
       GNOME_IS_CANVAS_TEXT (info->item) &&
       GREETER_ITEM_TYPE_IS_TEXT (info))
     {
-      text = gdm_common_expand_text (info->data.text.orig_text);
+      text = mdm_common_expand_text (info->data.text.orig_text);
 
       g_object_set (G_OBJECT (info->item),
 		    "markup", text,
@@ -161,51 +161,51 @@ gboolean
 greeter_item_is_visible (GreeterItemInfo *info)
 {
   static gboolean checked = FALSE;
-  static gboolean GDM_IS_LOCAL = FALSE;
-  static gboolean GDM_FLEXI_SERVER = FALSE;
+  static gboolean MDM_IS_LOCAL = FALSE;
+  static gboolean MDM_FLEXI_SERVER = FALSE;
   gboolean sysmenu = FALSE;	
   gint i = 0;
 
   if ( ! checked)
     {
-      if (g_getenv ("GDM_IS_LOCAL") != NULL)
-	GDM_IS_LOCAL = TRUE;
-      if (g_getenv ("GDM_FLEXI_SERVER") != NULL)
-	GDM_FLEXI_SERVER = TRUE;
+      if (g_getenv ("MDM_IS_LOCAL") != NULL)
+	MDM_IS_LOCAL = TRUE;
+      if (g_getenv ("MDM_FLEXI_SERVER") != NULL)
+	MDM_FLEXI_SERVER = TRUE;
     }
 
-  if (GDM_IS_LOCAL && ! GDM_FLEXI_SERVER &&
+  if (MDM_IS_LOCAL && ! MDM_FLEXI_SERVER &&
       ! (info->show_modes & GREETER_ITEM_SHOW_CONSOLE_FIXED))
     return FALSE;
-  if (GDM_IS_LOCAL && GDM_FLEXI_SERVER &&
+  if (MDM_IS_LOCAL && MDM_FLEXI_SERVER &&
       ! (info->show_modes & GREETER_ITEM_SHOW_CONSOLE_FLEXI))
     return FALSE;
-  if ( ! GDM_IS_LOCAL && GDM_FLEXI_SERVER &&
+  if ( ! MDM_IS_LOCAL && MDM_FLEXI_SERVER &&
        ! (info->show_modes & GREETER_ITEM_SHOW_REMOTE_FLEXI))
     return FALSE;
-  if ( ! GDM_IS_LOCAL && ! GDM_FLEXI_SERVER &&
+  if ( ! MDM_IS_LOCAL && ! MDM_FLEXI_SERVER &&
        ! (info->show_modes & GREETER_ITEM_SHOW_REMOTE))
     return FALSE;
 
-  if ((gdm_wm_screen.width < info->minimum_required_screen_width) ||
-      (gdm_wm_screen.height < info->minimum_required_screen_height))
+  if ((mdm_wm_screen.width < info->minimum_required_screen_width) ||
+      (mdm_wm_screen.height < info->minimum_required_screen_height))
     return FALSE;
 
-  sysmenu = gdm_config_get_bool (GDM_KEY_SYSTEM_MENU);
+  sysmenu = mdm_config_get_bool (MDM_KEY_SYSTEM_MENU);
 
  /*
   * Disable Configuration if using accessibility (AddGtkModules) since
   * using it with accessibility causes a hang.
   */
-  if (( ! gdm_config_get_bool (GDM_KEY_CONFIG_AVAILABLE) ||
-	gdm_config_get_bool (GDM_KEY_ADD_GTK_MODULES) ||
+  if (( ! mdm_config_get_bool (MDM_KEY_CONFIG_AVAILABLE) ||
+	mdm_config_get_bool (MDM_KEY_ADD_GTK_MODULES) ||
         ! sysmenu ||
-        ! GdmConfiguratorFound) &&
+        ! MdmConfiguratorFound) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "config") == 0))
 	  return FALSE;
 
-  if (( ! gdm_config_get_bool (GDM_KEY_CHOOSER_BUTTON) || ! sysmenu) &&
+  if (( ! mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON) || ! sysmenu) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "chooser") == 0))
 	  return FALSE;
@@ -214,29 +214,29 @@ greeter_item_is_visible (GreeterItemInfo *info)
       strcmp (info->show_type, "system") == 0)
 	  return FALSE;
 
-  if (( ! sysmenu || ! GdmHaltFound) &&
+  if (( ! sysmenu || ! MdmHaltFound) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "halt") == 0))
 	  return FALSE;
-  if (( ! sysmenu || ! GdmRebootFound) &&
+  if (( ! sysmenu || ! MdmRebootFound) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "reboot") == 0))
 	  return FALSE;
-  if (( ! sysmenu || ! GdmSuspendFound) &&
+  if (( ! sysmenu || ! MdmSuspendFound) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "suspend") == 0))
 	  return FALSE;
 
   if (info->show_type != NULL && 
       sscanf (info->show_type, "custom_cmd%d", &i) == 1 &&
-      i >= 0 && i < GDM_CUSTOM_COMMAND_MAX &&
-      (! sysmenu || ! GdmCustomCmdsFound[i])) {	  
+      i >= 0 && i < MDM_CUSTOM_COMMAND_MAX &&
+      (! sysmenu || ! MdmCustomCmdsFound[i])) {	  
 	  return FALSE;
   }
 
-  if (( ! gdm_config_get_bool (GDM_KEY_TIMED_LOGIN_ENABLE) ||
-          ve_string_empty (gdm_config_get_string (GDM_KEY_TIMED_LOGIN)) ||
-          NULL == g_getenv("GDM_TIMED_LOGIN_OK")) &&
+  if (( ! mdm_config_get_bool (MDM_KEY_TIMED_LOGIN_ENABLE) ||
+          ve_string_empty (mdm_config_get_string (MDM_KEY_TIMED_LOGIN)) ||
+          NULL == g_getenv("MDM_TIMED_LOGIN_OK")) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "timed") == 0))
 	  return FALSE;

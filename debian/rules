@@ -16,9 +16,9 @@ configure_flags += --disable-dependency-tracking \
 		--mandir=\$${prefix}/share/man \
 		--infodir=\$${prefix}/share/info \
 		--sysconfdir=/etc \
-		--libexecdir=/usr/lib/gdm \
+		--libexecdir=/usr/lib/mdm \
 		--localstatedir=/var/lib \
-		--with-custom-conf=/etc/gdm/gdm.conf \
+		--with-custom-conf=/etc/mdm/mdm.conf \
 		--disable-scrollkeeper \
 		--enable-ipv6=yes \
 		--with-prefetch=yes \
@@ -73,11 +73,11 @@ binary-arch: build install
 	dh_testroot
 	dh_installdirs -a
 	dh_install -a
-	chmod 755 debian/gdm/usr/share/gdm/gdmXnestWrapper
-	# special environment settings should be done in /etc/default/gdm
-	mv debian/gdm/usr/sbin/gdm-binary debian/gdm/usr/sbin/gdm
-	cd debian/gdm/usr/sbin && rm -f gdm-restart gdm-safe-restart gdm-stop
-	chmod 755 debian/gdm/etc/gdm/Xsession
+	chmod 755 debian/mdm/usr/share/mdm/mdmXnestWrapper
+	# special environment settings should be done in /etc/default/mdm
+	mv debian/mdm/usr/sbin/mdm-binary debian/mdm/usr/sbin/mdm
+	cd debian/mdm/usr/sbin && rm -f mdm-restart mdm-safe-restart mdm-stop
+	chmod 755 debian/mdm/etc/mdm/Xsession
 	dh_installdebconf -a
 	dh_installdocs -a
 	dh_installmenu -a
@@ -86,7 +86,7 @@ binary-arch: build install
 	dh_desktop -a
 	dh_installpam -a
 	# additional PAM file to install
-	dh_installpam -pgdm --name=gdm-autologin
+	dh_installpam -pmdm --name=mdm-autologin
 	dh_installinit -a --noscripts
 	dh_installman -a
 	dh_installchangelogs -a ChangeLog

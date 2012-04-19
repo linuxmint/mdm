@@ -1,31 +1,31 @@
 pixmapdir = $(datadir)/pixmaps
-confdir = $(gdmconfdir)
-gdmlocaledir = $(gdmconfdir)
-bisessdir = $(datadir)/gdm/BuiltInSessions
+confdir = $(mdmconfdir)
+mdmlocaledir = $(mdmconfdir)
+bisessdir = $(datadir)/mdm/BuiltInSessions
 instsessdir = $(datadir)/xsessions
-initdir = $(gdmconfdir)/Init
-authdir = $(localstatedir)/gdm
-gnomercdir = $(gdmconfdir)
-postdir = $(gdmconfdir)/PostSession
-predir = $(gdmconfdir)/PreSession
-postlogindir = $(gdmconfdir)/PostLogin
+initdir = $(mdmconfdir)/Init
+authdir = $(localstatedir)/mdm
+gnomercdir = $(mdmconfdir)
+postdir = $(mdmconfdir)/PostSession
+predir = $(mdmconfdir)/PreSession
+postlogindir = $(mdmconfdir)/PostLogin
 # logdir is set by configure.ac
 
-noinst_DATA = gdm.conf
+noinst_DATA = mdm.conf
 
 DESKTOP_FILES = default.desktop CDE.desktop gnome.desktop @SSHDESKTOP@
 
 EXTRA_DIST = \
-	gdm.conf.in \
-	gdm.conf-custom.in \
+	mdm.conf.in \
+	mdm.conf-custom.in \
 	$(DESKTOP_FILES) \
 	default.desktop.in.in \
 	gnome.desktop.in.in \
 	CDE.desktop.in \
 	ssh.desktop.in.in \
 	Xsession.in \
-	gdm \
-	gdm-autologin \
+	mdm \
+	mdm-autologin \
 	locale.alias \
 	Init.in \
 	PreSession.in \
@@ -33,20 +33,20 @@ EXTRA_DIST = \
 	PostLogin \
 	XKeepsCrashing \
 	gettextfoo.h \
-	gdmprefetchlist.in \
+	mdmprefetchlist.in \
 	extract-shell.sh
 
-CLEANFILES = Xsession gdm.conf gdm.conf-custom default.desktop gnome.desktop CDE.desktop ssh.desktop Init PreSession PostSession gdmprefetchlist
+CLEANFILES = Xsession mdm.conf mdm.conf-custom default.desktop gnome.desktop CDE.desktop ssh.desktop Init PreSession PostSession mdmprefetchlist
 
 Xsession: $(srcdir)/Xsession.in
 	sed	-e 's,[@]XSESSION_SHELL[@],$(XSESSION_SHELL),g' \
 		-e 's,[@]libexecdir[@],$(libexecdir),g' \
 		<$(srcdir)/Xsession.in >Xsession
 
-gdm.conf: $(srcdir)/gdm.conf.in
-	sed	-e 's,[@]GDMPREFETCHCMD[@],$(GDMPREFETCHCMD),g' \
-		-e 's,[@]GDM_CUSTOM_CONF[@],$(GDM_CUSTOM_CONF),g' \
-		-e 's,[@]GDM_USER_PATH[@],$(GDM_USER_PATH),g' \
+mdm.conf: $(srcdir)/mdm.conf.in
+	sed	-e 's,[@]MDMPREFETCHCMD[@],$(MDMPREFETCHCMD),g' \
+		-e 's,[@]MDM_CUSTOM_CONF[@],$(MDM_CUSTOM_CONF),g' \
+		-e 's,[@]MDM_USER_PATH[@],$(MDM_USER_PATH),g' \
 		-e 's,[@]HALT_COMMAND[@],$(HALT_COMMAND),g' \
 		-e 's,[@]REBOOT_COMMAND[@],$(REBOOT_COMMAND),g' \
 		-e 's,[@]SOUND_PROGRAM[@],$(SOUND_PROGRAM),g' \
@@ -61,22 +61,22 @@ gdm.conf: $(srcdir)/gdm.conf.in
 		-e 's,[@]X_XNEST_CMD[@],$(X_XNEST_CMD),g' \
 		-e 's,[@]X_XNEST_CONFIG_OPTIONS[@],$(X_XNEST_CONFIG_OPTIONS),g' \
 		-e 's,[@]X_XNEST_UNSCALED_FONTPATH[@],$(X_XNEST_UNSCALED_FONTPATH),g' \
-		-e 's,[@]GDM_RBAC_SYSCMD_KEYS[@],$(GDM_RBAC_SYSCMD_KEYS),g' \
+		-e 's,[@]MDM_RBAC_SYSCMD_KEYS[@],$(MDM_RBAC_SYSCMD_KEYS),g' \
 		-e 's,[@]authdir[@],$(authdir),g' \
 		-e 's,[@]datadir[@],$(datadir),g' \
 		-e 's,[@]dmconfdir[@],$(dmconfdir),g' \
-		-e 's,[@]gdmconfdir[@],$(gdmconfdir),g' \
+		-e 's,[@]mdmconfdir[@],$(mdmconfdir),g' \
 		-e 's,[@]libdir[@],$(libdir),g' \
 		-e 's,[@]libexecdir[@],$(libexecdir),g' \
-		-e 's,[@]gdmlocaledir[@],$(gdmlocaledir),g' \
+		-e 's,[@]mdmlocaledir[@],$(mdmlocaledir),g' \
 		-e 's,[@]logdir[@],$(logdir),g' \
 		-e 's,[@]pixmapdir[@],$(pixmapdir),g' \
 		-e 's,[@]sbindir[@],$(sbindir),g' \
-		<$(srcdir)/gdm.conf.in >gdm.conf
+		<$(srcdir)/mdm.conf.in >mdm.conf
 
-gdm.conf-custom: $(srcdir)/gdm.conf-custom.in
-	sed	-e 's,[@]GDM_DEFAULTS_CONF[@],$(GDM_DEFAULTS_CONF),g' \
-		<$(srcdir)/gdm.conf-custom.in >gdm.conf-custom
+mdm.conf-custom: $(srcdir)/mdm.conf-custom.in
+	sed	-e 's,[@]MDM_DEFAULTS_CONF[@],$(MDM_DEFAULTS_CONF),g' \
+		<$(srcdir)/mdm.conf-custom.in >mdm.conf-custom
 
 gettextfoo.h: XKeepsCrashing Xsession.in
 	cat $^ | $(srcdir)/extract-shell.sh > gettextfoo.h
@@ -94,19 +94,19 @@ uninstall-hook:
 	$(DESTDIR)$(instsessdir)/default.desktop \
 	$(DESTDIR)$(instsessdir)/ssh.desktop \
 	$(DESTDIR)$(instsessdir)/CDE.desktop \
-	$(DESTDIR)$(GDM_DEFAULTS_CONF) \
-	$(DESTDIR)$(GDM_CUSTOM_CONF) \
-	`dirname $(DESTDIR)$(GDM_DEFAULTS_CONF)`/factory-`basename $(DESTDIR)$(GDM_DEFAULTS_CONF)` \
+	$(DESTDIR)$(MDM_DEFAULTS_CONF) \
+	$(DESTDIR)$(MDM_CUSTOM_CONF) \
+	`dirname $(DESTDIR)$(MDM_DEFAULTS_CONF)`/factory-`basename $(DESTDIR)$(MDM_DEFAULTS_CONF)` \
 	$(DESTDIR)$(confdir)/XKeepsCrashing \
 	$(DESTDIR)$(confdir)/Xsession \
-	$(DESTDIR)$(confdir)/gdmprefetchlist \
-	$(DESTDIR)$(gdmlocaledir)/locale.alias \
+	$(DESTDIR)$(confdir)/mdmprefetchlist \
+	$(DESTDIR)$(mdmlocaledir)/locale.alias \
 	$(DESTDIR)$(initdir)/Default \
 	$(DESTDIR)$(postlogindir)/Default.sample \
 	$(DESTDIR)$(predir)/Default \
 	$(DESTDIR)$(postdir)/Default
 
-install-data-hook: gdm.conf gdm.conf-custom Xsession Init PostSession PreSession $(DESKTOP_FILES) $(GDMPREFETCHLIST)
+install-data-hook: mdm.conf mdm.conf-custom Xsession Init PostSession PreSession $(DESKTOP_FILES) $(MDMPREFETCHLIST)
 	if test '!' -d $(DESTDIR)$(confdir); then \
 		$(mkinstalldirs) $(DESTDIR)$(confdir); \
 		chmod 755 $(DESTDIR)$(confdir); \
@@ -115,38 +115,38 @@ install-data-hook: gdm.conf gdm.conf-custom Xsession Init PostSession PreSession
 		$(mkinstalldirs) $(DESTDIR)$(dmconfdir); \
 		chmod 755 $(DESTDIR)$(dmconfdir); \
 	fi
-	if test '!' -d `dirname $(DESTDIR)$(GDM_DEFAULTS_CONF)`; then \
-		$(mkinstalldirs) `dirname $(DESTDIR)$(GDM_DEFAULTS_CONF)`; \
-		chmod 755 `dirname $(DESTDIR)$(GDM_DEFAULTS_CONF)`; \
+	if test '!' -d `dirname $(DESTDIR)$(MDM_DEFAULTS_CONF)`; then \
+		$(mkinstalldirs) `dirname $(DESTDIR)$(MDM_DEFAULTS_CONF)`; \
+		chmod 755 `dirname $(DESTDIR)$(MDM_DEFAULTS_CONF)`; \
 	fi
-	if test '!' -d `dirname $(DESTDIR)$(GDM_CUSTOM_CONF)`; then \
-		$(mkinstalldirs) `dirname $(DESTDIR)$(GDM_CUSTOM_CONF)`; \
-		chmod 755 `dirname $(DESTDIR)$(GDM_CUSTOM_CONF)`; \
+	if test '!' -d `dirname $(DESTDIR)$(MDM_CUSTOM_CONF)`; then \
+		$(mkinstalldirs) `dirname $(DESTDIR)$(MDM_CUSTOM_CONF)`; \
+		chmod 755 `dirname $(DESTDIR)$(MDM_CUSTOM_CONF)`; \
 	fi
-	if test -f $(DESTDIR)$(confdir)/gdm.conf; then \
-	   if ! cmp -s $(DESTDIR)$(confdir)/gdm.conf $(DESTDIR)$(confdir)/factory-gdm.conf > /dev/null 2>&1 ; then \
-		if test '!' -f $(DESTDIR)$(GDM_CUSTOM_CONF); then \
-			mv -f $(DESTDIR)$(confdir)/gdm.conf $(DESTDIR)$(GDM_CUSTOM_CONF); \
+	if test -f $(DESTDIR)$(confdir)/mdm.conf; then \
+	   if ! cmp -s $(DESTDIR)$(confdir)/mdm.conf $(DESTDIR)$(confdir)/factory-mdm.conf > /dev/null 2>&1 ; then \
+		if test '!' -f $(DESTDIR)$(MDM_CUSTOM_CONF); then \
+			mv -f $(DESTDIR)$(confdir)/mdm.conf $(DESTDIR)$(MDM_CUSTOM_CONF); \
 		else \
-			mv -f $(DESTDIR)$(confdir)/gdm.conf $(DESTDIR)$(GDM_DEFAULTS_CONF).org; \
+			mv -f $(DESTDIR)$(confdir)/mdm.conf $(DESTDIR)$(MDM_DEFAULTS_CONF).org; \
 		fi; \
 	   fi; \
 	fi
-	$(INSTALL_DATA) gdm.conf $(DESTDIR)$(GDM_DEFAULTS_CONF)
-	chmod 444 $(DESTDIR)$(GDM_DEFAULTS_CONF)
-	if test '!' -f $(DESTDIR)$(GDM_CUSTOM_CONF); then \
-		$(INSTALL_DATA) gdm.conf-custom $(DESTDIR)$(GDM_CUSTOM_CONF); \
-		chmod 644 $(DESTDIR)$(GDM_CUSTOM_CONF); \
+	$(INSTALL_DATA) mdm.conf $(DESTDIR)$(MDM_DEFAULTS_CONF)
+	chmod 444 $(DESTDIR)$(MDM_DEFAULTS_CONF)
+	if test '!' -f $(DESTDIR)$(MDM_CUSTOM_CONF); then \
+		$(INSTALL_DATA) mdm.conf-custom $(DESTDIR)$(MDM_CUSTOM_CONF); \
+		chmod 644 $(DESTDIR)$(MDM_CUSTOM_CONF); \
 	fi
-	$(INSTALL_DATA) gdm.conf `dirname $(DESTDIR)$(GDM_DEFAULTS_CONF)`/factory-`basename $(DESTDIR)$(GDM_DEFAULTS_CONF)`
+	$(INSTALL_DATA) mdm.conf `dirname $(DESTDIR)$(MDM_DEFAULTS_CONF)`/factory-`basename $(DESTDIR)$(MDM_DEFAULTS_CONF)`
 
 	$(INSTALL_SCRIPT) $(srcdir)/XKeepsCrashing $(DESTDIR)$(confdir)/XKeepsCrashing
 	$(INSTALL_SCRIPT) Xsession $(DESTDIR)$(confdir)/Xsession
 
-	-if test -f $(DESTDIR)$(gdmlocaledir)/locale.alias; then \
-		cp -f $(DESTDIR)$(gdmlocaledir)/locale.alias $(DESTDIR)$(gdmlocaledir)/locale.alias.orig; \
+	-if test -f $(DESTDIR)$(mdmlocaledir)/locale.alias; then \
+		cp -f $(DESTDIR)$(mdmlocaledir)/locale.alias $(DESTDIR)$(mdmlocaledir)/locale.alias.orig; \
 	fi
-	$(INSTALL_DATA) $(srcdir)/locale.alias $(DESTDIR)$(gdmlocaledir)/locale.alias
+	$(INSTALL_DATA) $(srcdir)/locale.alias $(DESTDIR)$(mdmlocaledir)/locale.alias
 
 	if test '!' -d $(DESTDIR)$(bisessdir); then \
 		$(mkinstalldirs) $(DESTDIR)$(bisessdir); \
@@ -233,7 +233,7 @@ install-data-hook: gdm.conf gdm.conf-custom Xsession Init PostSession PreSession
 	if test '!' -d $(DESTDIR)$(authdir); then \
 		$(mkinstalldirs) $(DESTDIR)$(authdir); \
 		chmod 1770 $(DESTDIR)$(authdir); \
-		chown root:gdm $(DESTDIR)$(authdir) || : ; \
+		chown root:mdm $(DESTDIR)$(authdir) || : ; \
 	fi
 
 	system=`uname`; \
@@ -242,19 +242,19 @@ install-data-hook: gdm.conf gdm.conf-custom Xsession Init PostSession PreSession
 		$(mkinstalldirs) $(DESTDIR)$(PAM_PREFIX)/pam.d; \
 		chmod 755 $(DESTDIR)$(PAM_PREFIX)/pam.d; \
 	   fi; \
-	   if test $$system = Linux && test '!' -f $(DESTDIR)$(PAM_PREFIX)/pam.d/gdm; then \
-		$(INSTALL_DATA) gdm $(DESTDIR)$(PAM_PREFIX)/pam.d/gdm; \
+	   if test $$system = Linux && test '!' -f $(DESTDIR)$(PAM_PREFIX)/pam.d/mdm; then \
+		$(INSTALL_DATA) mdm $(DESTDIR)$(PAM_PREFIX)/pam.d/mdm; \
 	   fi; \
-	   if test $$system = Linux && test '!' -f $(DESTDIR)$(PAM_PREFIX)/pam.d/gdm-autologin; then \
-		$(INSTALL_DATA) gdm-autologin $(DESTDIR)$(PAM_PREFIX)/pam.d/gdm-autologin; \
+	   if test $$system = Linux && test '!' -f $(DESTDIR)$(PAM_PREFIX)/pam.d/mdm-autologin; then \
+		$(INSTALL_DATA) mdm-autologin $(DESTDIR)$(PAM_PREFIX)/pam.d/mdm-autologin; \
 	   fi; \
 	   if test $$system = SunOS; then \
-		echo "Please add PAM authentication for gdm and gdm-autologin in $(PAM_PREFIX)/pam.conf!"; \
+		echo "Please add PAM authentication for mdm and mdm-autologin in $(PAM_PREFIX)/pam.conf!"; \
 	   fi; \
 	fi
 
-	if test "x$(GDMPREFETCHLIST)" != "x"; then \
-	   $(INSTALL_DATA) gdmprefetchlist $(DESTDIR)$(confdir)/gdmprefetchlist; \
+	if test "x$(MDMPREFETCHLIST)" != "x"; then \
+	   $(INSTALL_DATA) mdmprefetchlist $(DESTDIR)$(confdir)/mdmprefetchlist; \
 	fi
 
 	if test "x$(SSHDESKTOP)" != "x"; then \

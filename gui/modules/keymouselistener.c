@@ -1,4 +1,4 @@
-/* GDM - The Gnome Display Manager
+/* MDM - The Gnome Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003-2007 Sun Microsystems, Inc.
@@ -43,9 +43,9 @@
 
 /*
  * Note that CONFIGFILE will have to be moved to somewhere more generic
- * if this module is ever moved outside of gdm.
+ * if this module is ever moved outside of mdm.
  */
-#define CONFIGFILE GDMCONFDIR "/modules/AccessKeyMouseEvents"
+#define CONFIGFILE MDMCONFDIR "/modules/AccessKeyMouseEvents"
 #define	iseol(ch)	((ch) == '\r' || (ch) == '\f' || (ch) == '\0' || \
 			(ch) == '\n')
 
@@ -586,7 +586,7 @@ key_gesture_compare_func (gconstpointer a, gconstpointer b)
 	{
 	    /*
 	     * Using some Xservers, the parse_line function fails to get the
-	     * keycode because XKB is not initialized when gdmlogin starts.
+	     * keycode because XKB is not initialized when mdmlogin starts.
 	     * If the keycode value is 0, try to set it again.
 	     */
 	    if (gesture->input.key.keycode == 0) {
@@ -1022,12 +1022,12 @@ G_MODULE_EXPORT void gtk_module_init(int *argc, char* argv[]);
 
 void gtk_module_init(int *argc, char* argv[])
 {
-    if (g_getenv ("GDM_DEBUG_GESTURES") != NULL)
+    if (g_getenv ("MDM_DEBUG_GESTURES") != NULL)
 	debug_gestures = TRUE;
 
     if (debug_gestures) {
-	/* If not running under GDM, then need to openlog ourselves */
-	if (g_getenv ("RUNNING_UNDER_GDM") == NULL)
+	/* If not running under MDM, then need to openlog ourselves */
+	if (g_getenv ("RUNNING_UNDER_MDM") == NULL)
 		openlog ("gesturelistener", LOG_PID, LOG_DAEMON);
 
 	syslog (LOG_WARNING, "keymouselistener loaded.");

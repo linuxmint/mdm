@@ -1,7 +1,7 @@
-Index: gdm-2.20.0/docs/C/gdm.xml
+Index: mdm-2.20.0/docs/C/mdm.xml
 ===================================================================
---- gdm-2.20.0.orig/docs/C/gdm.xml	2007-09-17 17:01:55.000000000 +0200
-+++ gdm-2.20.0/docs/C/gdm.xml	2007-10-06 16:31:18.692540606 +0200
+--- mdm-2.20.0.orig/docs/C/mdm.xml	2007-09-17 17:01:55.000000000 +0200
++++ mdm-2.20.0/docs/C/mdm.xml	2007-10-06 16:31:18.692540606 +0200
 @@ -1,6 +1,6 @@
  <?xml version="1.0"?>
  <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 

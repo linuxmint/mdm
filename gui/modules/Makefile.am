@@ -3,7 +3,7 @@
 INCLUDES = \
 	-I.						\
 	-I..						\
-	-DGDMCONFDIR=\"${gdmconfdir}\"			\
+	-DMDMCONFDIR=\"${mdmconfdir}\"			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" 	\
 	$(GUI_CFLAGS)
 
@@ -39,7 +39,7 @@ module_LTLIBRARIES = 		\
 	libkeymouselistener.la  \
 	libdwellmouselistener.la
 
-moduleconfdir = $(gdmconfdir)/modules
+moduleconfdir = $(mdmconfdir)/modules
 
 noinst_DATA = \
 	AccessKeyMouseEvents \

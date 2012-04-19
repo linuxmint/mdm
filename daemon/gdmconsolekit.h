@@ -19,17 +19,17 @@
  */
 
 
-#ifndef __GDM_CONSOLE_KIT_H
-#define __GDM_CONSOLE_KIT_H
+#ifndef __MDM_CONSOLE_KIT_H
+#define __MDM_CONSOLE_KIT_H
 
 #include <pwd.h>
 
-#include "display.h" /* for GdmDisplay */
+#include "display.h" /* for MdmDisplay */
 
 G_BEGIN_DECLS
 
 char *      open_ck_session       (struct passwd *pwent,
-                                   GdmDisplay    *display,
+                                   MdmDisplay    *display,
                                    const char    *session);
 void        close_ck_session      (const char    *cookie);
 void        unlock_ck_session     (const char    *user,
@@ -37,4 +37,4 @@ void        unlock_ck_session     (const char    *user,
 
 G_END_DECLS
 
-#endif /* __GDM_CONSOLE_KIT_H */
+#endif /* __MDM_CONSOLE_KIT_H */

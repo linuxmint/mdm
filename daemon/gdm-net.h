@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -16,81 +16,81 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GDM_NET_H
-#define GDM_NET_H
+#ifndef MDM_NET_H
+#define MDM_NET_H
 
 #include <glib.h>
 
-typedef struct _GdmConnection GdmConnection;
+typedef struct _MdmConnection MdmConnection;
 
 #include "display.h"
 
 /* Macros to check authentication level */
-#define GDM_CONN_AUTHENTICATED(conn) \
-	((gdm_connection_get_user_flags (conn) & GDM_SUP_FLAG_AUTHENTICATED) || \
-	 (gdm_connection_get_user_flags (conn) & GDM_SUP_FLAG_AUTH_GLOBAL))
+#define MDM_CONN_AUTHENTICATED(conn) \
+	((mdm_connection_get_user_flags (conn) & MDM_SUP_FLAG_AUTHENTICATED) || \
+	 (mdm_connection_get_user_flags (conn) & MDM_SUP_FLAG_AUTH_GLOBAL))
 
-#define GDM_CONN_AUTH_GLOBAL(conn) \
-	 (gdm_connection_get_user_flags (conn) & GDM_SUP_FLAG_AUTH_GLOBAL)
+#define MDM_CONN_AUTH_GLOBAL(conn) \
+	 (mdm_connection_get_user_flags (conn) & MDM_SUP_FLAG_AUTH_GLOBAL)
 
 
 /* Something that will get stuff line by line */
-typedef void (* GdmConnectionHandler) (GdmConnection *conn,
+typedef void (* MdmConnectionHandler) (MdmConnection *conn,
 				       const char *str,
 				       gpointer data);
 
-gboolean	gdm_connection_is_writable (GdmConnection *conn);
-gboolean	gdm_connection_write (GdmConnection *conn,
+gboolean	mdm_connection_is_writable (MdmConnection *conn);
+gboolean	mdm_connection_write (MdmConnection *conn,
 		                      const char *str);
-gboolean	gdm_connection_printf (GdmConnection *conn,
+gboolean	mdm_connection_printf (MdmConnection *conn,
 				       const gchar *format, ...)
 				       G_GNUC_PRINTF (2, 3);
 
-GdmConnection *	gdm_connection_open_unix (const char *sockname,
+MdmConnection *	mdm_connection_open_unix (const char *sockname,
 					  mode_t mode);
-GdmConnection * gdm_connection_open_fd (int fd);
-GdmConnection *	gdm_connection_open_fifo (const char *fifo,
+MdmConnection * mdm_connection_open_fd (int fd);
+MdmConnection *	mdm_connection_open_fifo (const char *fifo,
 					  mode_t mode);
 
-void		gdm_connection_set_close_notify (GdmConnection *conn,
+void		mdm_connection_set_close_notify (MdmConnection *conn,
 						 gpointer close_data,
 						 GDestroyNotify close_notify);
 
-void		gdm_connection_set_handler (GdmConnection *conn,
-					    GdmConnectionHandler handler,
+void		mdm_connection_set_handler (MdmConnection *conn,
+					    MdmConnectionHandler handler,
 					    gpointer data,
 					    GDestroyNotify destroy_notify);
 
-gboolean	gdm_connection_get_nonblock   (GdmConnection *conn);
-void		gdm_connection_set_nonblock   (GdmConnection *conn,
+gboolean	mdm_connection_get_nonblock   (MdmConnection *conn);
+void		mdm_connection_set_nonblock   (MdmConnection *conn,
 					       gboolean nonblock);
 
-guint32		gdm_connection_get_user_flags (GdmConnection *conn);
-void		gdm_connection_set_user_flags (GdmConnection *conn,
+guint32		mdm_connection_get_user_flags (MdmConnection *conn);
+void		mdm_connection_set_user_flags (MdmConnection *conn,
 					       guint32 flags);
-#define		GDM_CONNECTION_SET_USER_FLAG(conn,flag) {			\
-			guint32 _flags = gdm_connection_get_user_flags (conn);	\
+#define		MDM_CONNECTION_SET_USER_FLAG(conn,flag) {			\
+			guint32 _flags = mdm_connection_get_user_flags (conn);	\
 			_flags |= flag;						\
-			gdm_connection_set_user_flags (conn, _flags);		\
+			mdm_connection_set_user_flags (conn, _flags);		\
 		}
-#define		GDM_CONNECTION_UNSET_USER_FLAG(conn,flag) {			\
-			guint32 _flags = gdm_connection_get_user_flags (conn);	\
+#define		MDM_CONNECTION_UNSET_USER_FLAG(conn,flag) {			\
+			guint32 _flags = mdm_connection_get_user_flags (conn);	\
 			_flags &= ~flag;					\
-			gdm_connection_set_user_flags (conn, _flags);		\
+			mdm_connection_set_user_flags (conn, _flags);		\
 		}
 
-GdmDisplay *	gdm_connection_get_display            (GdmConnection *conn);
-void		gdm_connection_set_display            (GdmConnection *conn,
-					               GdmDisplay *disp);
-int		gdm_connection_is_server_busy         (GdmConnection *conn);
-void		gdm_kill_subconnections_with_display  (GdmConnection *conn,
-						       GdmDisplay *disp);
+MdmDisplay *	mdm_connection_get_display            (MdmConnection *conn);
+void		mdm_connection_set_display            (MdmConnection *conn,
+					               MdmDisplay *disp);
+int		mdm_connection_is_server_busy         (MdmConnection *conn);
+void		mdm_kill_subconnections_with_display  (MdmConnection *conn,
+						       MdmDisplay *disp);
 
-int		gdm_connection_get_message_count      (GdmConnection *conn);
+int		mdm_connection_get_message_count      (MdmConnection *conn);
 
 
-void		gdm_connection_close                  (GdmConnection *conn);
+void		mdm_connection_close                  (MdmConnection *conn);
 
-#endif /* GDM_NET_H */
+#endif /* MDM_NET_H */
 
 /* EOF */

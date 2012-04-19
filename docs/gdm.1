@@ -1,38 +1,38 @@
-.\" gdm.1 - GNOME Display Manager
+.\" mdm.1 - GNOME Display Manager
 .\" Copyright 2003  Red Hat, Inc.
-.TH GDM 1 "Aug 21 2003" "GDM 2.4.2.102"
+.TH MDM 1 "Aug 21 2003" "MDM 2.4.2.102"
 .SH NAME
-GDM \- The GNOME Display Manager
+MDM \- The GNOME Display Manager
 .SH SYNOPSIS
-.B gdm [options]
+.B mdm [options]
 .br
-.B gdm-binary [options]
+.B mdm-binary [options]
 .br
-.B gdmsetup [options]
+.B mdmsetup [options]
 .br
-.B gdm-stop
+.B mdm-stop
 .br
-.B gdm-restart
+.B mdm-restart
 .br
-.B gdm-safe-restart
+.B mdm-safe-restart
 .SH DESCRIPTION
-GDM is a replacement for XDM, the X Display Manager. Unlike its
-competitors (X3DM, KDM, WDM) GDM was written from scratch and
-does not contain any original XDM / X Consortium code.  GDM runs and
+MDM is a replacement for XDM, the X Display Manager. Unlike its
+competitors (X3DM, KDM, WDM) MDM was written from scratch and
+does not contain any original XDM / X Consortium code.  MDM runs and
 manages the X servers for both local and remote logins (using XDMCP).
-See http://www.gnome.org/projects/gdm/ for more details.
+See http://www.gnome.org/projects/mdm/ for more details.
 .P
-.B gdm
+.B mdm
 is just a script that runs the actual
-.B gdm-binary
+.B mdm-binary
 executable.
-.B gdm-stop
+.B mdm-stop
 is a script that stops the current running daemon immediately,
-.B gdm-restart
+.B mdm-restart
 restarts the current daemon immediately and
-.B gdm-safe-restart
+.B mdm-safe-restart
 restarts the current daemon after everyone has logged out.
-.B gdmsetup
+.B mdmsetup
 is a graphical tool for easily changing the most commonly
 used options.
 .P
@@ -41,9 +41,9 @@ under the
 .B Applications / System Tools
 section.
 .SH OPTIONS
-.B gdm
+.B mdm
 and thus also
-.B gdm-binary
+.B mdm-binary
 accept the following options:
 .TP
 .BI \-nodaemon
@@ -56,22 +56,22 @@ No console (local) servers to be run
 Preserve LD_* variables
 .TP
 .BI \-\-version
-Print the GDM version
+Print the MDM version
 .TP
 .BI \-\-help
 Print simple description of accepted options
 .P
-.B gdmsetup
+.B mdmsetup
 accepts all standard GNOME options.
 .SH CONFIGURATION
 Configuration is done either by running
-.B gdmsetup
-or by editting the /etc/X11/gdm/gdm.conf (usually,
-could also be /etc/gdm/gdm.conf) file.  The graphical
+.B mdmsetup
+or by editting the /etc/X11/mdm/mdm.conf (usually,
+could also be /etc/mdm/mdm.conf) file.  The graphical
 tool does not support all the options possible so
 editting the configuration file is sometimes necessary.
 .SH AUTHOR
-.B GDM
+.B MDM
 is being written and maintained by George (Jiri) Lebl <jirka@5z.com>
 based on the original codebase by Martin K. Peterson <mkp@mkp.net>.
 .SH SEE ALSO

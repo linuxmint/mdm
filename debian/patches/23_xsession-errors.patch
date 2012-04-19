@@ -1,7 +1,7 @@
-Index: gdm-2.20.11/daemon/slave.c
+Index: mdm-2.20.11/daemon/slave.c
 ===================================================================
---- gdm-2.20.11.orig/daemon/slave.c	2010-07-04 15:16:55.919565088 +0200
-+++ gdm-2.20.11/daemon/slave.c	2010-07-04 15:17:11.559565073 +0200
+--- mdm-2.20.11.orig/daemon/slave.c	2010-07-04 15:16:55.919565088 +0200
++++ mdm-2.20.11/daemon/slave.c	2010-07-04 15:17:11.559565073 +0200
 @@ -373,10 +373,6 @@ run_session_output (gboolean read_until_
  			break;
  		}

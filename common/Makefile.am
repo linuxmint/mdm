@@ -10,32 +10,32 @@ INCLUDES = \
 	-DBINDIR=\"$(bindir)\"				\
 	-DDATADIR=\"$(datadir)\"			\
 	-DDMCONFDIR=\"$(dmconfdir)\"			\
-	-DGDMCONFDIR=\"$(gdmconfdir)\"			\
-	-DGDMLOCALEDIR=\"$(gdmlocaledir)\"		\
+	-DMDMCONFDIR=\"$(mdmconfdir)\"			\
+	-DMDMLOCALEDIR=\"$(mdmlocaledir)\"		\
 	-DLIBDIR=\"$(libdir)\"				\
 	-DLIBEXECDIR=\"$(libexecdir)\"			\
 	-DLOGDIR=\"$(logdir)\"				\
 	-DPIXMAPDIR=\"$(pixmapdir)\"			\
 	-DSBINDIR=\"$(sbindir)\"			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGDM_DEFAULTS_CONF=\"$(GDM_DEFAULTS_CONF)\"	\
-	-DGDM_CUSTOM_CONF=\"$(GDM_CUSTOM_CONF)\"	\
-	-DGDM_OLD_CONF=\"$(GDM_OLD_CONF)\"		\
+	-DMDM_DEFAULTS_CONF=\"$(MDM_DEFAULTS_CONF)\"	\
+	-DMDM_CUSTOM_CONF=\"$(MDM_CUSTOM_CONF)\"	\
+	-DMDM_OLD_CONF=\"$(MDM_OLD_CONF)\"		\
 	$(GLIB_CFLAGS)
 
 noinst_LIBRARIES = 		\
-	libgdmcommon.a		\
+	libmdmcommon.a		\
 	$(null)
 
-libgdmcommon_a_SOURCES =	\
-	gdm-common.h		\
-	gdm-common.c		\
-	gdm-common-config.h	\
-	gdm-common-config.c	\
-	gdm-config.h		\
-	gdm-config.c		\
-	gdm-log.h		\
-	gdm-log.c		\
+libmdmcommon_a_SOURCES =	\
+	mdm-common.h		\
+	mdm-common.c		\
+	mdm-common-config.h	\
+	mdm-common-config.c	\
+	mdm-config.h		\
+	mdm-config.c		\
+	mdm-log.h		\
+	mdm-log.c		\
 	ve-signal.h		\
 	ve-signal.c		\
 	$(NULL)
@@ -46,12 +46,12 @@ noinst_PROGRAMS = 		\
 	$(NULL)
 
 test_config_SOURCES = 		\
-	$(top_builddir)/daemon/gdm-daemon-config-entries.h	\
+	$(top_builddir)/daemon/mdm-daemon-config-entries.h	\
 	test-config.c	 	\
 	$(NULL)
 
 test_config_LDADD =		\
-	libgdmcommon.a	\
+	libmdmcommon.a	\
 	$(GLIB_LIBS)		\
 	$(NULL)
 
@@ -60,6 +60,6 @@ test_log_SOURCES = 		\
 	$(NULL)
 
 test_log_LDADD =		\
-	libgdmcommon.a	\
+	libmdmcommon.a	\
 	$(GLIB_LIBS)		\
 	$(NULL)

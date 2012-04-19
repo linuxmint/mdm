@@ -1,32 +1,32 @@
 debian/*.xpm                            usr/share/pixmaps/
-debian/locale.conf                      etc/gdm
-debian/Xsession                         etc/gdm
-debian/debian-moreblue-orbit            usr/share/gdm/themes
-debian/debian-spacefun                  usr/share/gdm/themes
-debian/gdmXnestWrapper                  usr/share/gdm/
+debian/locale.conf                      etc/mdm
+debian/Xsession                         etc/mdm
+debian/debian-moreblue-orbit            usr/share/mdm/themes
+debian/debian-spacefun                  usr/share/mdm/themes
+debian/mdmXnestWrapper                  usr/share/mdm/
 debian/insserv.conf.d			etc
 debian/tmp/etc/dm
-debian/tmp/etc/gdm/Init
-debian/tmp/etc/gdm/PreSession
-debian/tmp/etc/gdm/PostSession
-debian/tmp/etc/gdm/gdm.conf
-debian/tmp/etc/gdm/XKeepsCrashing
-debian/tmp/etc/gdm/PostLogin
-debian/tmp/etc/gdm/modules
+debian/tmp/etc/mdm/Init
+debian/tmp/etc/mdm/PreSession
+debian/tmp/etc/mdm/PostSession
+debian/tmp/etc/mdm/mdm.conf
+debian/tmp/etc/mdm/XKeepsCrashing
+debian/tmp/etc/mdm/PostLogin
+debian/tmp/etc/mdm/modules
 debian/tmp/usr/bin
-debian/tmp/usr/lib/gdm
+debian/tmp/usr/lib/mdm
 debian/tmp/usr/lib/gtk-2.0/modules/*.so
-debian/tmp/usr/sbin/gdmsetup
-debian/tmp/usr/sbin/gdm-binary
-debian/tmp/usr/share/gdm/applications
-debian/tmp/usr/share/gdm/themes
-debian/tmp/usr/share/gdm/defaults.conf
-debian/tmp/usr/share/gdm/BuiltInSessions
-debian/tmp/usr/share/gdm/*.glade
-debian/tmp/usr/share/gnome/help/gdm
+debian/tmp/usr/sbin/mdmsetup
+debian/tmp/usr/sbin/mdm-binary
+debian/tmp/usr/share/mdm/applications
+debian/tmp/usr/share/mdm/themes
+debian/tmp/usr/share/mdm/defaults.conf
+debian/tmp/usr/share/mdm/BuiltInSessions
+debian/tmp/usr/share/mdm/*.glade
+debian/tmp/usr/share/gnome/help/mdm
 debian/tmp/usr/share/icons/hicolor
 debian/tmp/usr/share/locale
 debian/tmp/usr/share/man
-debian/tmp/usr/share/omf/gdm
+debian/tmp/usr/share/omf/mdm
 debian/tmp/usr/share/pixmaps
 debian/tmp/usr/share/xsessions/ssh.desktop

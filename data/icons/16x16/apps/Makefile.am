@@ -5,13 +5,13 @@ context = apps
 iconsdir = $(themedir)/$(size)/$(context)
 
 icons_DATA = \
-	gdmflexiserver.png	\
-	gdmsetup.png
+	mdmflexiserver.png	\
+	mdmsetup.png
 
 
 noinst_DATA = \
-	gdmflexiserver.xcf.bz2	\
-	gdmsetup.svg
+	mdmflexiserver.xcf.bz2	\
+	mdmsetup.svg
 
 EXTRA_DIST = \
         $(icons_DATA)		\

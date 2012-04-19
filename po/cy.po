@@ -1,4 +1,4 @@
-# gdm2 yn Gymraeg.
+# mdm2 yn Gymraeg.
 # www.kyfieithu.co.uk <kyfieithu@dotmon.com>, 2003.
 # KGyfieithu <kyfieithu@dotmon.com>, 2003.
 # Bryn Salisbury <bryn.salisbury@operamail.com>, 2003.
@@ -11,7 +11,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gdm2\n"
+"Project-Id-Version: mdm2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-02 21:47+0100\n"
 "PO-Revision-Date: 2006-05-02 21:24-0000\n"
@@ -47,11 +47,11 @@ msgstr "Dyma sesiwn rhagosodedig y system"
 msgid ""
 "Failed to start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly.  You will need to log in on a console and "
-"reconfigure the X server.  Then restart GDM."
+"reconfigure the X server.  Then restart MDM."
 msgstr ""
 "Methu cychwyn y gweinydd X (eich rhyngwyneb graffigol). Mae'n debygol nad yw "
 "wedi ei gyflunio'n gywir. Fe fydd yn rhaid i chi fewngofnodi ar gonsol ac "
-"ail-gyflunio'r gweinydd X. Yna ailgychwynnwch GDM."
+"ail-gyflunio'r gweinydd X. Yna ailgychwynnwch MDM."
 
 #: ../config/gettextfoo.h:6
 msgid ""
@@ -72,9 +72,9 @@ msgstr "Ceisio ailgychwyn y gweinydd X."
 
 #: ../config/gettextfoo.h:9
 msgid ""
-"The X server is now disabled.  Restart GDM when it is configured correctly."
+"The X server is now disabled.  Restart MDM when it is configured correctly."
 msgstr ""
-"Mae'r gweinydd X wedi ei analluogi erbyn hyn.  Ailgychwynnwch GDM wedi iddo "
+"Mae'r gweinydd X wedi ei analluogi erbyn hyn.  Ailgychwynnwch MDM wedi iddo "
 "gael ei gyflunio'n gywir."
 
 #: ../config/gettextfoo.h:10
@@ -152,10 +152,10 @@ msgstr ""
 #: ../daemon/auth.c:65
 #, c-format
 msgid ""
-"GDM could not write a new authorization entry to disk.  Possibly out of "
+"MDM could not write a new authorization entry to disk.  Possibly out of "
 "diskspace.%s%s"
 msgstr ""
-"Methu GDM ysgrifennu cofnod awdurdodaeth newydd i'r disg. Efallai nad oes "
+"Methu MDM ysgrifennu cofnod awdurdodaeth newydd i'r disg. Efallai nad oes "
 "lle ar y disg.%s%s"
 
 #: ../daemon/auth.c:195
@@ -189,7 +189,7 @@ msgstr "%s: Methu ysgrifennu cwci"
 msgid "%s: Ignoring suspiciously looking cookie file %s"
 msgstr "%s: Anwybyddu ffeil cwci amheus %s"
 
-#: ../daemon/auth.c:895 ../daemon/gdm.c:1364 ../daemon/gdm.c:1728
+#: ../daemon/auth.c:895 ../daemon/mdm.c:1364 ../daemon/mdm.c:1728
 #, c-format
 msgid "Can't write to %s: %s"
 msgstr "Ni ellir ysgrifennu at %s: %s"
@@ -199,9 +199,9 @@ msgstr "Ni ellir ysgrifennu at %s: %s"
 #. * cought that elsewhere.  Things are just
 #. * not working out, so tell the user.
 #. * However this may have been caused by a malicious local user
-#. * zapping the display repeatedly, that shouldn't cause gdm
+#. * zapping the display repeatedly, that shouldn't cause mdm
 #. * to stop working completely so just wait for 2 minutes,
-#. * that should give people ample time to stop gdm if needed,
+#. * that should give people ample time to stop mdm if needed,
 #. * or just wait for the stupid malicious user to get bored
 #. * and go away
 #: ../daemon/display.c:111
@@ -222,8 +222,8 @@ msgstr "%s: Ni ellir creu piben"
 
 #: ../daemon/display.c:331
 #, c-format
-msgid "%s: Failed forking GDM slave process for %s"
-msgstr "%s: Methwyd fforio proses gwas GDM ar gyfer %s"
+msgid "%s: Failed forking MDM slave process for %s"
+msgstr "%s: Methwyd fforio proses gwas MDM ar gyfer %s"
 
 #: ../daemon/errorgui.c:348
 #, c-format
@@ -292,79 +292,79 @@ msgid "%s: %s is bigger than sysadmin specified maximum file size."
 msgstr ""
 "%s: mae %s yn fwy na'r maint ffeil mwyaf a benodwyd gan y gweinyddwr system"
 
-#: ../daemon/gdm-net.c:332
+#: ../daemon/mdm-net.c:332
 #, c-format
 msgid "%s: Could not make socket"
 msgstr "%s: Methwyd creu soced"
 
-#: ../daemon/gdm-net.c:363
+#: ../daemon/mdm-net.c:363
 #, c-format
 msgid "%s: Could not bind socket"
 msgstr "%s: Methwyd rhwymo soced"
 
-#: ../daemon/gdm-net.c:449
+#: ../daemon/mdm-net.c:449
 #, c-format
 msgid "%s: Could not make FIFO"
 msgstr "%s: Methwyd creu FIFO"
 
-#: ../daemon/gdm-net.c:457
+#: ../daemon/mdm-net.c:457
 #, c-format
 msgid "%s: Could not open FIFO"
 msgstr "%s: Methwyd agor FIFO"
 
 #. FIXME: how to handle this?
-#: ../daemon/gdm.c:198 ../daemon/gdm.c:206 ../daemon/gdm.c:1498
-#: ../daemon/gdm.c:1506
+#: ../daemon/mdm.c:198 ../daemon/mdm.c:206 ../daemon/mdm.c:1498
+#: ../daemon/mdm.c:1506
 #, c-format
 msgid "Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"
 msgstr ""
 "Ni ellir ysgrifennu'r ffeil PID %s: efallai nad oes lle ar y ddisg. Gwall: %"
 "s\n"
 
-#: ../daemon/gdm.c:200 ../daemon/gdm.c:208 ../daemon/gdm.c:1500
-#: ../daemon/gdm.c:1508
+#: ../daemon/mdm.c:200 ../daemon/mdm.c:208 ../daemon/mdm.c:1500
+#: ../daemon/mdm.c:1508
 #, c-format
 msgid "Cannot write PID file %s: possibly out of diskspace.  Error: %s"
 msgstr ""
 "Ni ellir ysgrifennu'r ffeil PID %s: efallai nad oes lle ar y ddisg. Gwall: %s"
 
-#: ../daemon/gdm.c:218
+#: ../daemon/mdm.c:218
 #, c-format
 msgid "%s: fork () failed!"
 msgstr "%s: fork() wedi methu!"
 
 #. should never happen
-#: ../daemon/gdm.c:221 ../daemon/slave.c:3372
+#: ../daemon/mdm.c:221 ../daemon/slave.c:3372
 #, c-format
 msgid "%s: setsid () failed: %s!"
 msgstr "%s: setsid() wedi methu: %s!"
 
-#: ../daemon/gdm.c:412
+#: ../daemon/mdm.c:412
 #, c-format
 msgid "%s: Trying failsafe X server %s"
 msgstr "%s: Ceisio'r gweinydd X difethiant %s"
 
-#: ../daemon/gdm.c:430
+#: ../daemon/mdm.c:430
 #, c-format
 msgid "%s: Running the XKeepsCrashing script"
 msgstr "%s: Gweithredu'r sgript XKeepsCrashing"
 
-#: ../daemon/gdm.c:547
+#: ../daemon/mdm.c:547
 msgid ""
 "The X server (your graphical interface) cannot be started.  It is likely "
 "that it is not set up correctly.  You will need to log in on a console and "
-"rerun the X configuration application, then restart GDM."
+"rerun the X configuration application, then restart MDM."
 msgstr ""
 "Methu cychwyn y gweinydd X (eich rhyngwyneb graffigol). Mae'n debyg nad yw "
 "wedi ei osod yn gywir. Bydd yn rhaid i chi fewngofnodi ar gonsol ac ail-"
-"redeg y rhaglen cyflunio X, yna ailgychwyn GDM."
+"redeg y rhaglen cyflunio X, yna ailgychwyn MDM."
 
 #. else {
 #. * At this point .... screw the user, we don't know how to
 #. * talk to him.  He's on some 'l33t system anyway, so syslog
 #. * reading will do him good
 #. * }
-#: ../daemon/gdm.c:559
+#: ../daemon/mdm.c:559
 #, c-format
 msgid ""
 "Failed to start X server several times in a short time period; disabling "
@@ -373,112 +373,112 @@ msgstr ""
 "Wedi methu cychwyn y gweinydd X aml dro mewn amser bach; yn analluogi'r "
 "dangosydd %s"
 
-#: ../daemon/gdm.c:569 ../daemon/gdm.c:2298
+#: ../daemon/mdm.c:569 ../daemon/mdm.c:2298
 msgid "Master suspending..."
 msgstr "Meistr yn gorffwys..."
 
-#: ../daemon/gdm.c:622
+#: ../daemon/mdm.c:622
 #, c-format
 msgid "System is restarting, please wait ..."
 msgstr "Mae'r system yn ailgychwyn, arhoswch os gwelwch yn dda..."
 
-#: ../daemon/gdm.c:624
+#: ../daemon/mdm.c:624
 #, c-format
 msgid "System is shutting down, please wait ..."
 msgstr "Mae'r system yn troi bant, arhoswch os gwelwch yn dda..."
 
-#: ../daemon/gdm.c:635
+#: ../daemon/mdm.c:635
 msgid "Master halting..."
 msgstr "Meistr yn  atal..."
 
-#: ../daemon/gdm.c:648
+#: ../daemon/mdm.c:648
 #, c-format
 msgid "%s: Halt failed: %s"
 msgstr "%s: Arhosiad wedi methu: %s"
 
-#: ../daemon/gdm.c:657
+#: ../daemon/mdm.c:657
 msgid "Restarting computer..."
 msgstr "Ailddechrau'r cyfrifiadur..."
 
-#: ../daemon/gdm.c:670
+#: ../daemon/mdm.c:670
 #, c-format
 msgid "%s: Restart failed: %s"
 msgstr "%s: Ailgychwyn wedi methu: %s"
 
-#: ../daemon/gdm.c:774
+#: ../daemon/mdm.c:774
 #, c-format
 msgid ""
-"Restart GDM, Restart machine, Suspend, or Halt request when there is no "
+"Restart MDM, Restart machine, Suspend, or Halt request when there is no "
 "system menu from display %s"
 msgstr ""
-"Ailgychwyn GDM, Ailgychwyn y peiriant, Crogi neu Atal cais pan nad oes "
+"Ailgychwyn MDM, Ailgychwyn y peiriant, Crogi neu Atal cais pan nad oes "
 "dewislen system o'r dangosydd %s"
 
-#: ../daemon/gdm.c:783
+#: ../daemon/mdm.c:783
 #, c-format
 msgid ""
-"Restart GDM, Restart machine, Suspend or Halt request from a non-static "
+"Restart MDM, Restart machine, Suspend or Halt request from a non-static "
 "display %s"
 msgstr ""
-"Ailgychwyn GDM, Ailgychwyn y peiriant, Crogi neu Atal cais o ddangosydd %s "
+"Ailgychwyn MDM, Ailgychwyn y peiriant, Crogi neu Atal cais o ddangosydd %s "
 "nad yw'n statig"
 
 #. Bury this display for good
-#: ../daemon/gdm.c:849
+#: ../daemon/mdm.c:849
 #, c-format
 msgid "%s: Aborting display %s"
 msgstr "%s: Yn terfynu'r dangosydd %s"
 
-#: ../daemon/gdm.c:1000
-msgid "GDM restarting ..."
-msgstr "GDM yn ailgychwyn..."
+#: ../daemon/mdm.c:1000
+msgid "MDM restarting ..."
+msgstr "MDM yn ailgychwyn..."
 
-#: ../daemon/gdm.c:1004
+#: ../daemon/mdm.c:1004
 msgid "Failed to restart self"
 msgstr "Wedi methu ailgychwyn fy hunan"
 
 #. FIXME: note that this could mean out of memory
-#: ../daemon/gdm.c:1078
+#: ../daemon/mdm.c:1078
 msgid "main daemon: Got SIGABRT. Something went very wrong. Going down!"
 msgstr ""
 "prif ellyll: Derbyniwyd SIGABRT. Aeth rhywbeth o'i le yn fawr. Yn mynd i "
 "lawr!"
 
-#: ../daemon/gdm.c:1236
+#: ../daemon/mdm.c:1236
 msgid "Do not fork into the background"
 msgstr "Peidio fforchio i'r cefndir"
 
-#: ../daemon/gdm.c:1238
+#: ../daemon/mdm.c:1238
 msgid "No console (static) servers to be run"
 msgstr "Dim gweinyddion consol (statig) i'w rhedeg"
 
-#: ../daemon/gdm.c:1240
+#: ../daemon/mdm.c:1240
 msgid "Alternative defaults configuration file"
 msgstr "Ffeil amgen i gyflunio dewisiadau rhagosodedig"
 
-#: ../daemon/gdm.c:1240
+#: ../daemon/mdm.c:1240
 msgid "CONFIGFILE"
 msgstr "FFEIL_GYFLUNIAD"
 
-#: ../daemon/gdm.c:1242
+#: ../daemon/mdm.c:1242
 msgid "Preserve LD_* variables"
 msgstr "Cadw newidynnau LD_*"
 
-#: ../daemon/gdm.c:1244
-msgid "Print GDM version"
-msgstr "Argraffu fersiwn GDM"
+#: ../daemon/mdm.c:1244
+msgid "Print MDM version"
+msgstr "Argraffu fersiwn MDM"
 
-#: ../daemon/gdm.c:1246
+#: ../daemon/mdm.c:1246
 msgid "Start the first X server but then halt until we get a GO in the fifo"
 msgstr ""
 "Cychwyn y gweinydd X cyntaf ond yna aros nes ein bod ni'n derbyn GO yn y fifo"
 
-#: ../daemon/gdm.c:1353 ../daemon/gdm.c:1697
+#: ../daemon/mdm.c:1353 ../daemon/mdm.c:1697
 #, c-format
 msgid "Can't open %s for writing"
 msgstr "Ni ellir agor %s er mwyn ysgrifennu"
 
-#: ../daemon/gdm.c:1411 ../gui/gdmchooser.c:1978
+#: ../daemon/mdm.c:1411 ../gui/mdmchooser.c:1978
 #, c-format
 msgid ""
 "Error on option %s: %s.\n"
@@ -489,50 +489,50 @@ msgstr ""
 "sydd ar gael.\n"
 
 #. make sure the pid file doesn't get wiped
-#: ../daemon/gdm.c:1433
-msgid "Only root wants to run GDM\n"
-msgstr "Dim ond root sydd eisiau rhedeg GDM\n"
+#: ../daemon/mdm.c:1433
+msgid "Only root wants to run MDM\n"
+msgstr "Dim ond root sydd eisiau rhedeg MDM\n"
 
-#: ../daemon/gdm.c:1449 ../daemon/gdm.c:1453 ../daemon/gdm.c:1536
-#: ../daemon/gdm.c:1540 ../daemon/gdm.c:1544 ../daemon/gdm.c:1548
-#: ../daemon/gdm.c:1558 ../daemon/gdm.c:1564 ../daemon/gdm.c:1575
+#: ../daemon/mdm.c:1449 ../daemon/mdm.c:1453 ../daemon/mdm.c:1536
+#: ../daemon/mdm.c:1540 ../daemon/mdm.c:1544 ../daemon/mdm.c:1548
+#: ../daemon/mdm.c:1558 ../daemon/mdm.c:1564 ../daemon/mdm.c:1575
 #: ../daemon/misc.c:1771 ../daemon/misc.c:1775 ../daemon/misc.c:1779
 #: ../daemon/misc.c:1786 ../daemon/misc.c:1790 ../daemon/misc.c:1794
 #: ../daemon/server.c:521 ../daemon/server.c:534 ../daemon/slave.c:792
 #: ../daemon/slave.c:806 ../daemon/slave.c:816 ../daemon/slave.c:826
-#: ../daemon/slave.c:838 ../gui/gdmlogin.c:3532 ../gui/gdmlogin.c:3543
-#: ../gui/gdmlogin.c:3549
+#: ../daemon/slave.c:838 ../gui/mdmlogin.c:3532 ../gui/mdmlogin.c:3543
+#: ../gui/mdmlogin.c:3549
 #, c-format
 msgid "%s: Error setting up %s signal handler: %s"
 msgstr "%s: Gwall wrth osod i fyny trinydd arwydd %s: %s"
 
-#: ../daemon/gdm.c:1480
-msgid "GDM already running. Aborting!"
-msgstr "Mae GDM yn rhedeg yn barod. Wrthi'n atal!"
+#: ../daemon/mdm.c:1480
+msgid "MDM already running. Aborting!"
+msgstr "Mae MDM yn rhedeg yn barod. Wrthi'n atal!"
 
-#: ../daemon/gdm.c:1584
+#: ../daemon/mdm.c:1584
 #, c-format
 msgid "%s: Error setting up CHLD signal handler"
 msgstr "%s: Gwall wrth osod i fyny trinydd arwydd CHLD"
 
-#: ../daemon/gdm.c:2713
+#: ../daemon/mdm.c:2713
 msgid "DYNAMIC request denied: Not authenticated"
 msgstr "Gwrthodwyd cais DYNAMIC: Heb ddilysu"
 
-#: ../daemon/gdm.c:2879 ../daemon/gdm.c:2897 ../daemon/gdm.c:3187
-#: ../daemon/gdm.c:3238 ../daemon/gdm.c:3290 ../daemon/gdm.c:3331
-#: ../daemon/gdm.c:3357
+#: ../daemon/mdm.c:2879 ../daemon/mdm.c:2897 ../daemon/mdm.c:3187
+#: ../daemon/mdm.c:3238 ../daemon/mdm.c:3290 ../daemon/mdm.c:3331
+#: ../daemon/mdm.c:3357
 #, c-format
 msgid "%s request denied: Not authenticated"
 msgstr "Gwrthodwyd cais %s: Heb ddilysu"
 
 #. Don't print the name to syslog as it might be
 #. * long and dangerous
-#: ../daemon/gdm.c:2915
+#: ../daemon/mdm.c:2915
 msgid "Unknown server type requested; using standard server."
 msgstr "Gofynnwyd am fath gweinydd anhysbys; yn defnyddio'r gweinydd safonol."
 
-#: ../daemon/gdm.c:2919
+#: ../daemon/mdm.c:2919
 #, c-format
 msgid ""
 "Requested server %s not allowed to be used for flexible servers; using "
@@ -541,60 +541,60 @@ msgstr ""
 "Ni chaniateir y math gweinydd %s, ofynnwyd amdano, ar gyfer gweinyddion "
 "hyblyg; yn defnyddio'r gweinydd safonol."
 
-#: ../daemon/gdmconfig.c:557 ../daemon/gdmconfig.c:564
+#: ../daemon/mdmconfig.c:557 ../daemon/mdmconfig.c:564
 #, c-format
-msgid "%s: No GDM configuration file: %s. Using defaults."
-msgstr "%s: Dim ffeil cyfluniad GDM: %s. Defnyddio'r rhagosodiadau."
+msgid "%s: No MDM configuration file: %s. Using defaults."
+msgstr "%s: Dim ffeil cyfluniad MDM: %s. Defnyddio'r rhagosodiadau."
 
-#: ../daemon/gdmconfig.c:995
+#: ../daemon/mdmconfig.c:995
 #, c-format
-msgid "%s: BaseXsession empty; using %s/gdm/Xsession"
-msgstr "%s: BaseXsession yn wag; yn defnyddio %s/gdm/Xsession"
+msgid "%s: BaseXsession empty; using %s/mdm/Xsession"
+msgstr "%s: BaseXsession yn wag; yn defnyddio %s/mdm/Xsession"
 
-#: ../daemon/gdmconfig.c:1028
+#: ../daemon/mdmconfig.c:1028
 #, c-format
 msgid "%s: Standard X server not found; trying alternatives"
 msgstr "%s: Heb ganfod y gweinydd X safonol; wrthi'n ceisio rhai eraill"
 
-#: ../daemon/gdmconfig.c:1087
+#: ../daemon/mdmconfig.c:1087
 #, c-format
 msgid "%s: No greeter specified."
 msgstr "%s: Dim cyfarchwr wedi ei benodi."
 
-#: ../daemon/gdmconfig.c:1089
+#: ../daemon/mdmconfig.c:1089
 #, c-format
 msgid "%s: No remote greeter specified."
 msgstr "%s: Dim cyfarchwr pell wedi ei benodi."
 
-#: ../daemon/gdmconfig.c:1091
+#: ../daemon/mdmconfig.c:1091
 #, c-format
 msgid "%s: No sessions directory specified."
 msgstr "%s: Dim cyfeiriadur sesiynau wedi ei benodi."
 
-#: ../daemon/gdmconfig.c:1175
+#: ../daemon/mdmconfig.c:1175
 #, c-format
 msgid "%s: XDMCP was enabled while there is no XDMCP support; turning it off"
 msgstr ""
 "%s: Mi alluogwyd XDMCP pan nad oedd XDMCP yn cael ei gynnal; wrthi'n ei "
 "analluogi."
 
-#: ../daemon/gdmconfig.c:1236
+#: ../daemon/mdmconfig.c:1236
 #, c-format
 msgid "%s: TimedLoginDelay is less than 5, defaulting to 5."
 msgstr ""
 "%s: Mae TimedLoginDelay yn llai na 5, felly'n defnyddio 5 fel rhagosodiad."
 
-#: ../daemon/gdmconfig.c:1474
+#: ../daemon/mdmconfig.c:1474
 #, c-format
 msgid "%s: Priority out of bounds; changed to %d"
 msgstr "%s: Blaenoriaeth y tu allan i'r terfyn; newidiwyd i %d"
 
-#: ../daemon/gdmconfig.c:1480
+#: ../daemon/mdmconfig.c:1480
 #, c-format
 msgid "%s: Empty server command; using standard command."
 msgstr "%s: Gorchymyn gweinydd gwag; yn defnyddio'r gorchymyn safonol."
 
-#: ../daemon/gdmconfig.c:1679
+#: ../daemon/mdmconfig.c:1679
 #, c-format
 msgid ""
 "%s: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s."
@@ -602,41 +602,41 @@ msgstr ""
 "%s: Nid yw'r cyfeiriadur cofnod %s yn bodoli neu nid cyfeiriadur ydyw. Yn "
 "defnyddio ServAuthDir %s."
 
-#: ../daemon/gdmconfig.c:1696
+#: ../daemon/mdmconfig.c:1696
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this "
-"does not exist. Please correct GDM configuration and restart GDM."
+"does not exist. Please correct MDM configuration and restart MDM."
 msgstr ""
 "Mae'r cyfeiriadur awdurdodaeth gweinydd (daemon/ServAuthDir) wedi ei osod i %"
-"s ond nid yw hyn yn bodoli. Cywirwch gyfluniad GDM ac ailgychwynnwch GDM."
+"s ond nid yw hyn yn bodoli. Cywirwch gyfluniad MDM ac ailgychwynnwch MDM."
 
-#: ../daemon/gdmconfig.c:1707
+#: ../daemon/mdmconfig.c:1707
 #, c-format
 msgid "%s: Authdir %s does not exist. Aborting."
 msgstr "%s: Nid yw'r cyfeiriadur awdurdodaeth %s yn bodoli. Terfynu."
 
-#: ../daemon/gdmconfig.c:1713
+#: ../daemon/mdmconfig.c:1713
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this is "
-"not a directory. Please correct GDM configuration and restart GDM."
+"not a directory. Please correct MDM configuration and restart MDM."
 msgstr ""
 "Mae'r cyfeiriadur awdurdodaeth gweinydd (daemon/ServAuthDir) wedi ei osod i %"
-"s ond nid yw hyn yn gyfeiriadur. Cywirwch gyfluniad GDM ac ailgychwynnwch "
-"GDM."
+"s ond nid yw hyn yn gyfeiriadur. Cywirwch gyfluniad MDM ac ailgychwynnwch "
+"MDM."
 
-#: ../daemon/gdmconfig.c:1724
+#: ../daemon/mdmconfig.c:1724
 #, c-format
 msgid "%s: Authdir %s is not a directory. Aborting."
 msgstr "%s: Nid yw'r cyfeiriadur awdurdodaeth %s yn gyfeiriadur. Terfynu."
 
-#: ../daemon/gdmconfig.c:1797
+#: ../daemon/mdmconfig.c:1797
 #, c-format
 msgid "%s: Invalid server line in config file. Ignoring!"
 msgstr "%s: Llinell gweinydd annilys yn y ffeil cyfluniad. Yn anwybyddu!"
 
-#: ../daemon/gdmconfig.c:1919 ../daemon/gdmconfig.c:1960
+#: ../daemon/mdmconfig.c:1919 ../daemon/mdmconfig.c:1960
 #, c-format
 msgid "%s: XDMCP disabled and no static servers defined. Aborting!"
 msgstr ""
@@ -645,7 +645,7 @@ msgstr ""
 
 #. start
 #. server uid
-#: ../daemon/gdmconfig.c:1937
+#: ../daemon/mdmconfig.c:1937
 #, c-format
 msgid ""
 "%s: XDMCP disabled and no static servers defined. Adding %s on :%d to allow "
@@ -654,129 +654,129 @@ msgstr ""
 "%s: Mae XDMCP wedi'i analluogi ac nid oes gweinyddion statig wedi'u "
 "diffinio. Yn ychwanegu %s i :%d er mwyn caniatáu cyflunio!"
 
-#: ../daemon/gdmconfig.c:1950
+#: ../daemon/mdmconfig.c:1950
 msgid ""
-"XDMCP is disabled and GDM cannot find any static server to start.  "
-"Aborting!  Please correct the configuration and restart GDM."
+"XDMCP is disabled and MDM cannot find any static server to start.  "
+"Aborting!  Please correct the configuration and restart MDM."
 msgstr ""
-"Mae XDMCP wedi analluogi ac ni all GDM ganfod unrhyw weinydd statig i'w "
-"gychwyn. Wrthi'n atal! Cywirwch y cyfluniad ac ailgychwynnwch GDM."
+"Mae XDMCP wedi analluogi ac ni all MDM ganfod unrhyw weinydd statig i'w "
+"gychwyn. Wrthi'n atal! Cywirwch y cyfluniad ac ailgychwynnwch MDM."
 
-#: ../daemon/gdmconfig.c:1979
-#, c-format
-msgid ""
-"The GDM user '%s' does not exist. Please correct GDM configuration and "
-"restart GDM."
-msgstr ""
-"Nid yw'r defnyddiwr GDM '%s' yn bodoli. Cywirwch gyfluniad GDM ac "
-"ailgychwynnwch GDM."
-
-#: ../daemon/gdmconfig.c:1987
-#, c-format
-msgid "%s: Can't find the GDM user '%s'. Aborting!"
-msgstr "%s: Methu canfod y defnyddiwr GDM '%s'. Wrthi'n atal!"
-
-#: ../daemon/gdmconfig.c:1994
-msgid ""
-"The GDM user is set to be root, but this is not allowed since it can pose a "
-"security risk.  Please correct GDM configuration and restart GDM."
-msgstr ""
-"Y mae'r defnyddiwr GDM wedi ei osod i root (yr uwch-ddefnyddiwr) ond ni "
-"chaniateir hyn gan ei fod yn berygl i ddiogelwch. Cywirwch y cyfluniad GDM "
-"ac ailgychwynnwch GDM."
-
-#: ../daemon/gdmconfig.c:2005
-#, c-format
-msgid "%s: The GDM user should not be root. Aborting!"
-msgstr ""
-"%s: Ni ddylai'r defnyddiwr GDM fod yn uwchddefnyddiwr (root). Wrthi'n atal!"
-
-#: ../daemon/gdmconfig.c:2012
+#: ../daemon/mdmconfig.c:1979
 #, c-format
 msgid ""
-"The GDM group '%s' does not exist. Please correct GDM configuration and "
-"restart GDM."
+"The MDM user '%s' does not exist. Please correct MDM configuration and "
+"restart MDM."
 msgstr ""
-"Nid yw'r grŵp GDM '%s' yn bodoli. Cywirwch gyfluniad GDM ac ailgychwynnwch "
-"GDM."
+"Nid yw'r defnyddiwr MDM '%s' yn bodoli. Cywirwch gyfluniad MDM ac "
+"ailgychwynnwch MDM."
 
-#: ../daemon/gdmconfig.c:2020
+#: ../daemon/mdmconfig.c:1987
 #, c-format
-msgid "%s: Can't find the GDM group '%s'. Aborting!"
-msgstr "%s: Methu canfod y grŵp GDM '%s'. Wrthi'n atal!"
+msgid "%s: Can't find the MDM user '%s'. Aborting!"
+msgstr "%s: Methu canfod y defnyddiwr MDM '%s'. Wrthi'n atal!"
 
-#: ../daemon/gdmconfig.c:2027
+#: ../daemon/mdmconfig.c:1994
 msgid ""
-"The GDM group is set to be root, but this is not allowed since it can pose a "
-"security risk. Please correct GDM configuration and restart GDM."
+"The MDM user is set to be root, but this is not allowed since it can pose a "
+"security risk.  Please correct MDM configuration and restart MDM."
 msgstr ""
-"Mae'r grŵp GDM wedi ei osod i root (yr uwch-ddefnyddiwr) ond ni chaniateir "
-"hyn gan ei fod yn berygl i ddiogelwch. Cywirwch gyfluniad GDM ac "
-"ailgychwynnwch GDM."
+"Y mae'r defnyddiwr MDM wedi ei osod i root (yr uwch-ddefnyddiwr) ond ni "
+"chaniateir hyn gan ei fod yn berygl i ddiogelwch. Cywirwch y cyfluniad MDM "
+"ac ailgychwynnwch MDM."
 
-#: ../daemon/gdmconfig.c:2037
+#: ../daemon/mdmconfig.c:2005
 #, c-format
-msgid "%s: The GDM group should not be root. Aborting!"
-msgstr "%s: Ni ddylai'r grŵp GDM fod yn uwchddefnyddiwr (root). Wrthi'n atal!"
-
-#: ../daemon/gdmconfig.c:2046
-#, c-format
-msgid "%s: Greeter not found or can't be executed by the GDM user"
+msgid "%s: The MDM user should not be root. Aborting!"
 msgstr ""
-"%s: Cyfarchwr heb ei ganfod neu ni ellir ei weithredu gan y defnyddiwr GDM"
+"%s: Ni ddylai'r defnyddiwr MDM fod yn uwchddefnyddiwr (root). Wrthi'n atal!"
 
-#: ../daemon/gdmconfig.c:2052
+#: ../daemon/mdmconfig.c:2012
 #, c-format
-msgid "%s: Remote greeter not found or can't be executed by the GDM user"
+msgid ""
+"The MDM group '%s' does not exist. Please correct MDM configuration and "
+"restart MDM."
+msgstr ""
+"Nid yw'r grŵp MDM '%s' yn bodoli. Cywirwch gyfluniad MDM ac ailgychwynnwch "
+"MDM."
+
+#: ../daemon/mdmconfig.c:2020
+#, c-format
+msgid "%s: Can't find the MDM group '%s'. Aborting!"
+msgstr "%s: Methu canfod y grŵp MDM '%s'. Wrthi'n atal!"
+
+#: ../daemon/mdmconfig.c:2027
+msgid ""
+"The MDM group is set to be root, but this is not allowed since it can pose a "
+"security risk. Please correct MDM configuration and restart MDM."
+msgstr ""
+"Mae'r grŵp MDM wedi ei osod i root (yr uwch-ddefnyddiwr) ond ni chaniateir "
+"hyn gan ei fod yn berygl i ddiogelwch. Cywirwch gyfluniad MDM ac "
+"ailgychwynnwch MDM."
+
+#: ../daemon/mdmconfig.c:2037
+#, c-format
+msgid "%s: The MDM group should not be root. Aborting!"
+msgstr "%s: Ni ddylai'r grŵp MDM fod yn uwchddefnyddiwr (root). Wrthi'n atal!"
+
+#: ../daemon/mdmconfig.c:2046
+#, c-format
+msgid "%s: Greeter not found or can't be executed by the MDM user"
+msgstr ""
+"%s: Cyfarchwr heb ei ganfod neu ni ellir ei weithredu gan y defnyddiwr MDM"
+
+#: ../daemon/mdmconfig.c:2052
+#, c-format
+msgid "%s: Remote greeter not found or can't be executed by the MDM user"
 msgstr ""
 "%s: Cyfarchwr pell heb ei ganfod neu ni ellir ei weithredu gan y defnyddiwr "
-"GDM"
+"MDM"
 
-#: ../daemon/gdmconfig.c:2060
+#: ../daemon/mdmconfig.c:2060
 #, c-format
-msgid "%s: Chooser not found or it can't be executed by the GDM user"
+msgid "%s: Chooser not found or it can't be executed by the MDM user"
 msgstr ""
-"%s: Dewisydd heb ei ganfod neu ni ellir ei weithredu gan y defnyddiwr GDM"
+"%s: Dewisydd heb ei ganfod neu ni ellir ei weithredu gan y defnyddiwr MDM"
 
-#: ../daemon/gdmconfig.c:2069
-msgid "No daemon/ServAuthDir specified in the GDM configuration file"
-msgstr "Dim ellyll/ServAuthDir wedi ei benodi yn y ffeil cyfluniad GDM"
+#: ../daemon/mdmconfig.c:2069
+msgid "No daemon/ServAuthDir specified in the MDM configuration file"
+msgstr "Dim ellyll/ServAuthDir wedi ei benodi yn y ffeil cyfluniad MDM"
 
-#: ../daemon/gdmconfig.c:2072
+#: ../daemon/mdmconfig.c:2072
 #, c-format
 msgid "%s: No daemon/ServAuthDir specified."
 msgstr "%s: Dim ellyll/ServAuthDir wedi ei benodi."
 
-#: ../daemon/gdmconfig.c:2096
+#: ../daemon/mdmconfig.c:2096
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but is not "
-"owned by user %s and group %s. Please correct the ownership or GDM "
-"configuration and restart GDM."
+"owned by user %s and group %s. Please correct the ownership or MDM "
+"configuration and restart MDM."
 msgstr ""
 "Mae'r cyfeiriadur awdurdodaeth gweinydd (gweinydd/ServAuthDir) wedi ei osod "
 "i %s ond nid yw'r defnyddiwr %s a'r grŵp %s yn ei berchen ef. Cywirwch y "
-"berchnogaeth neu'r cyfluniad GDM ac ailgychwynnwch GDM."
+"berchnogaeth neu'r cyfluniad MDM ac ailgychwynnwch MDM."
 
-#: ../daemon/gdmconfig.c:2108
+#: ../daemon/mdmconfig.c:2108
 #, c-format
 msgid "%s: Authdir %s is not owned by user %s, group %s. Aborting."
 msgstr ""
 "%s: Nid yw'r cyfeiriadur awdurdodaeth (Authdir) %s wedi ei berchen gan y "
 "defnyddiwr %s a'r grŵp %s. Yn terfynu."
 
-#: ../daemon/gdmconfig.c:2114
+#: ../daemon/mdmconfig.c:2114
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but has the "
 "wrong permissions: it should have permissions of %o. Please correct the "
-"permissions or the GDM configuration and restart GDM."
+"permissions or the MDM configuration and restart MDM."
 msgstr ""
 "Mae'r cyfeiriadur awdurdodaeth gweinydd (gweinydd/ServAuthDir) wedi ei osod "
 "i %s  ond mae ganddo'r caniatadau anghywir: dylai fod â chaniatadau o %o. "
-"Cywirwch y berchnogaeth neu'r cyfluniad GDM ac ailgychwynnwch GDM."
+"Cywirwch y berchnogaeth neu'r cyfluniad MDM ac ailgychwynnwch MDM."
 
-#: ../daemon/gdmconfig.c:2127
+#: ../daemon/mdmconfig.c:2127
 #, c-format
 msgid "%s: Authdir %s has wrong permissions %o. Should be %o. Aborting."
 msgstr ""
@@ -826,11 +826,11 @@ msgstr "Ni ellir cychwyn consol wrth gefn"
 #, c-format
 msgid ""
 "There already appears to be an X server running on display %s.  Should "
-"another display number by tried?  Answering no will cause GDM to attempt "
+"another display number by tried?  Answering no will cause MDM to attempt "
 "starting the server on %s again.%s"
 msgstr ""
 "Ymddengys fod yna weinydd X yn rhedeg eisoes ar y dangosydd %s. A ddylid "
-"ceisio rhif dangosydd arall?  Os atebwch chi 'na', mi fydd GDM yn ceisio "
+"ceisio rhif dangosydd arall?  Os atebwch chi 'na', mi fydd MDM yn ceisio "
 "cychwyn y gweinydd ar %s eto.%s"
 
 #: ../daemon/server.c:348
@@ -984,7 +984,7 @@ msgid ""
 "Please contact your system administrator\n"
 "or check your syslog to diagnose.\n"
 "In the meantime this display will be\n"
-"disabled.  Please restart GDM when\n"
+"disabled.  Please restart MDM when\n"
 "the problem is corrected."
 msgstr ""
 "Methu cychwyn y gweinydd X\n"
@@ -996,7 +996,7 @@ msgstr ""
 "broblem. Yn y cyfamser fe gaiff\n"
 " y dangosydd hwn ei analluogi.\n"
 "Os gwelwch yn dda, ailgychwynnwch\n"
-"GDM wedi i'r broblem gael ei thrwsio."
+"MDM wedi i'r broblem gael ei thrwsio."
 
 #: ../daemon/slave.c:1580
 #, c-format
@@ -1042,18 +1042,18 @@ msgstr ""
 
 #: ../daemon/slave.c:2439 ../daemon/slave.c:2444
 #, c-format
-msgid "%s: Can't init pipe to gdmgreeter"
-msgstr "%s: Wedi methu ymgychwyn pibell i gdmgreeter"
+msgid "%s: Can't init pipe to mdmgreeter"
+msgstr "%s: Wedi methu ymgychwyn pibell i mdmgreeter"
 
 #: ../daemon/slave.c:2576
 msgid ""
 "No servers were defined in the configuration file and XDMCP was disabled.  "
-"This can only be a configuration error.  GDM has started a single server for "
+"This can only be a configuration error.  MDM has started a single server for "
 "you.  You should log in and fix the configuration.  Note that automatic and "
 "timed logins are disabled now."
 msgstr ""
 "Does dim gweinydd wedi ei ddiffinio yn y ffeil cyfluniad, ac mae XDMCP wedi "
-"ei analluogi. Mae'n rhaid bod hyn yn wall cyfluniad. Mae GDM wedi cychwyn "
+"ei analluogi. Mae'n rhaid bod hyn yn wall cyfluniad. Mae MDM wedi cychwyn "
 "gweinydd unigol ar eich cyfer. Fe ddylech chi fewngofnodi a thrwsio'r "
 "cyfluniad. Nodwch fod mewngofnodi awtomatig ac amserol wedi ei analluogi."
 
@@ -1115,8 +1115,8 @@ msgstr "%s: Gwall wrth gychwyn cyfarchwr ar y dangosydd %s"
 
 #: ../daemon/slave.c:2672
 #, c-format
-msgid "%s: Can't fork gdmgreeter process"
-msgstr "%s: Wedi methu fforchio'r broses gdmgreeter"
+msgid "%s: Can't fork mdmgreeter process"
+msgstr "%s: Wedi methu fforchio'r broses mdmgreeter"
 
 #: ../daemon/slave.c:2744
 #, c-format
@@ -1125,8 +1125,8 @@ msgstr "%s: Ni ellir agor FIFO!"
 
 #: ../daemon/slave.c:2916
 #, c-format
-msgid "%s: Can't init pipe to gdmchooser"
-msgstr "%s: Wedi methu ymgychwyn pibell i gdmchooser"
+msgid "%s: Can't init pipe to mdmchooser"
+msgstr "%s: Wedi methu ymgychwyn pibell i mdmchooser"
 
 #: ../daemon/slave.c:3021
 msgid ""
@@ -1143,8 +1143,8 @@ msgstr "%s: Gwall wrth gychwyn dewisydd ar y dangosydd %s"
 
 #: ../daemon/slave.c:3028
 #, c-format
-msgid "%s: Can't fork gdmchooser process"
-msgstr "%s: Wedi methu fforchio'r broses gdmchooser"
+msgid "%s: Can't fork mdmchooser process"
+msgstr "%s: Wedi methu fforchio'r broses mdmchooser"
 
 #: ../daemon/slave.c:3261
 #, c-format
@@ -1367,12 +1367,12 @@ msgstr ""
 
 #: ../daemon/slave.c:4180
 msgid ""
-"GDM could not write to your authorization file.  This could mean that you "
+"MDM could not write to your authorization file.  This could mean that you "
 "are out of disk space or that your home directory could not be opened for "
 "writing.  In any case, it is not possible to log in.  Please contact your "
 "system administrator"
 msgstr ""
-"Nid oedd GDM yn gallu ysgrifennu i'ch ffeil awdurdodaeth. Fe all hyn olygu "
+"Nid oedd MDM yn gallu ysgrifennu i'ch ffeil awdurdodaeth. Fe all hyn olygu "
 "bod dim lle ar ôl ar eich disg, neu ni allwyd agor eich cyfeiriadur cartref "
 "er mwyn ysgrifennu. Fodd bynnag, nid yw'n bosib mewngofnodi. Os gwelwch yn "
 "dda, cysylltwch â gweinyddwr eich system."
@@ -1399,8 +1399,8 @@ msgid "View details (~/.xsession-errors file)"
 msgstr "Gweld manylion (ffeil ~/.xsession-errors)"
 
 #: ../daemon/slave.c:4509
-msgid "GDM detected a halt or restart in progress."
-msgstr "Synhwyrodd GDM fod ataliad neu ailgychwyn yn digwydd."
+msgid "MDM detected a halt or restart in progress."
+msgstr "Synhwyrodd MDM fod ataliad neu ailgychwyn yn digwydd."
 
 #: ../daemon/slave.c:4603
 #, c-format
@@ -1456,7 +1456,7 @@ msgid "Caps Lock is on."
 msgstr "Mae Caps Lock ymlaen."
 
 #: ../daemon/verify-crypt.c:118 ../daemon/verify-pam.c:525
-#: ../daemon/verify-shadow.c:117 ../gui/gdmlogin.c:2785
+#: ../daemon/verify-shadow.c:117 ../gui/mdmlogin.c:2785
 msgid "Please enter your username"
 msgstr "Rhowch enw eich cyfrif os gwelwch yn dda"
 
@@ -1464,15 +1464,15 @@ msgstr "Rhowch enw eich cyfrif os gwelwch yn dda"
 #: ../daemon/verify-crypt.c:119 ../daemon/verify-pam.c:425
 #: ../daemon/verify-pam.c:426 ../daemon/verify-pam.c:427
 #: ../daemon/verify-pam.c:512 ../daemon/verify-pam.c:864
-#: ../daemon/verify-shadow.c:118 ../gui/gdmlogin.c:1008 ../gui/gdmlogin.c:1022
-#: ../gui/gdmlogin.c:1636 ../gui/gdmlogin.c:2116 ../gui/greeter/greeter.c:173
+#: ../daemon/verify-shadow.c:118 ../gui/mdmlogin.c:1008 ../gui/mdmlogin.c:1022
+#: ../gui/mdmlogin.c:1636 ../gui/mdmlogin.c:2116 ../gui/greeter/greeter.c:173
 #: ../gui/greeter/greeter_parser.c:395
 msgid "Username:"
 msgstr "Enw Defnyddiwr:"
 
 #: ../daemon/verify-crypt.c:157 ../daemon/verify-pam.c:428
 #: ../daemon/verify-pam.c:429 ../daemon/verify-pam.c:573
-#: ../daemon/verify-shadow.c:175 ../gui/gdmlogin.c:1671
+#: ../daemon/verify-shadow.c:175 ../gui/mdmlogin.c:1671
 #: ../gui/greeter/greeter.c:192
 msgid "Password:"
 msgstr "Cyfrinair:"
@@ -1760,8 +1760,8 @@ msgstr ""
 "Mae gweinyddwr y system wedi analluogi eich mynediad i'r system dros dro."
 
 #: ../daemon/verify-pam.c:1543 ../daemon/verify-pam.c:1545
-msgid "Can't find PAM configuration for GDM."
-msgstr "Ni ellir canfod cyfluniad PAM ar gyfer GDM."
+msgid "Can't find PAM configuration for MDM."
+msgstr "Ni ellir canfod cyfluniad PAM ar gyfer MDM."
 
 #: ../daemon/xdmcp.c:350
 #, c-format
@@ -1914,88 +1914,88 @@ msgstr ""
 msgid "%s: No XDMCP support"
 msgstr "%s: Dim cynhaliaeth XDMCP"
 
-#: ../gui/gdmXnestchooser.c:168 ../gui/gdmXnestchooser.c:175
+#: ../gui/mdmXnestchooser.c:168 ../gui/mdmXnestchooser.c:175
 msgid "Xnest command line"
 msgstr "Llinell orchymyn Xnest"
 
-#: ../gui/gdmXnestchooser.c:168 ../gui/gdmXnestchooser.c:175
+#: ../gui/mdmXnestchooser.c:168 ../gui/mdmXnestchooser.c:175
 msgid "STRING"
 msgstr "LLINYN"
 
-#: ../gui/gdmXnestchooser.c:169 ../gui/gdmXnestchooser.c:176
+#: ../gui/mdmXnestchooser.c:169 ../gui/mdmXnestchooser.c:176
 msgid "Extra options for Xnest"
 msgstr "Opsiynau ychwanegol ar gyfer Xnest"
 
-#: ../gui/gdmXnestchooser.c:169 ../gui/gdmXnestchooser.c:176
+#: ../gui/mdmXnestchooser.c:169 ../gui/mdmXnestchooser.c:176
 msgid "OPTIONS"
 msgstr "OPSIYNAU"
 
-#: ../gui/gdmXnestchooser.c:170 ../gui/gdmXnestchooser.c:180
+#: ../gui/mdmXnestchooser.c:170 ../gui/mdmXnestchooser.c:180
 msgid "Run in background"
 msgstr "Rhedeg yn y cefndir"
 
-#: ../gui/gdmXnestchooser.c:177
+#: ../gui/mdmXnestchooser.c:177
 msgid "Just run Xnest, no query (no chooser)"
 msgstr "Rhedeg Xnest yn unig, dim ymholiad (dim dewisydd)"
 
-#: ../gui/gdmXnestchooser.c:178
+#: ../gui/mdmXnestchooser.c:178
 msgid "Do direct query instead of indirect (chooser)"
 msgstr "Gwneud ymholiad uniongyrchol yn hytrach nac anuniongyrchol (dewisydd)"
 
-#: ../gui/gdmXnestchooser.c:179
+#: ../gui/mdmXnestchooser.c:179
 msgid "Run broadcast instead of indirect (chooser)"
 msgstr "Rhedeg darlledu yn hytrach nac anuniongyrchol (dewisydd)"
 
-#: ../gui/gdmXnestchooser.c:181
-msgid "Don't check for running GDM"
-msgstr "Peidio gwirio am GDM yn rhedeg"
+#: ../gui/mdmXnestchooser.c:181
+msgid "Don't check for running MDM"
+msgstr "Peidio gwirio am MDM yn rhedeg"
 
-#: ../gui/gdmXnestchooser.c:516
+#: ../gui/mdmXnestchooser.c:516
 msgid "Xnest doesn't exist."
 msgstr "Nid yw Xnest yn bodoli."
 
-#: ../gui/gdmXnestchooser.c:517
+#: ../gui/mdmXnestchooser.c:517
 msgid "Please ask your system administrator to install it."
 msgstr "Os gwelwch yn dda, gofynnwch i weinyddwr y system i'w ymsefydlu."
 
-#: ../gui/gdmXnestchooser.c:542
+#: ../gui/mdmXnestchooser.c:542
 msgid "Indirect XDMCP is not enabled"
 msgstr "Nid yw XDMCP anuniongyrchol wedi ei alluogi"
 
-#: ../gui/gdmXnestchooser.c:543 ../gui/gdmXnestchooser.c:561
+#: ../gui/mdmXnestchooser.c:543 ../gui/mdmXnestchooser.c:561
 msgid "Please ask your system administrator to enable this feature."
 msgstr ""
 "Os gwelwch yn dda, gofynnwch i weinyddwr y system alluogi'r nodwedd hon."
 
-#: ../gui/gdmXnestchooser.c:560
+#: ../gui/mdmXnestchooser.c:560
 msgid "XDMCP is not enabled"
 msgstr "Nid yw XDMCP wedi ei alluogi"
 
-#: ../gui/gdmXnestchooser.c:592
-msgid "GDM is not running"
-msgstr "Nid yw GDM yn rhedeg"
+#: ../gui/mdmXnestchooser.c:592
+msgid "MDM is not running"
+msgstr "Nid yw MDM yn rhedeg"
 
-#: ../gui/gdmXnestchooser.c:593
+#: ../gui/mdmXnestchooser.c:593
 msgid "Please ask your system administrator to start it."
 msgstr "Os gwelwch yn dda, gofynnwch i weinyddwr y system i'w gychwyn."
 
-#: ../gui/gdmXnestchooser.c:609
+#: ../gui/mdmXnestchooser.c:609
 msgid "Could not find a free display number"
 msgstr "Methwyd canfod rhif dangosydd rhydd"
 
-#: ../gui/gdmchooser.c:85
+#: ../gui/mdmchooser.c:85
 msgid "Please wait: scanning local network..."
 msgstr "Arhoswch os gwelwch yn dda: yn archwilio’r rhwydwaith lleol..."
 
-#: ../gui/gdmchooser.c:86
+#: ../gui/mdmchooser.c:86
 msgid "No serving hosts were found."
 msgstr "Ni chanfuwyd unrhyw westeiwyr sy'n gweinyddu."
 
-#: ../gui/gdmchooser.c:87
+#: ../gui/mdmchooser.c:87
 msgid "Choose a ho_st to connect to:"
 msgstr "_Dewiswch westeiwr i gysylltu ag ef:"
 
-#: ../gui/gdmchooser.c:618
+#: ../gui/mdmchooser.c:618
 #, c-format
 msgid ""
 "The host \"%s\" is not willing to support a login session right now.  Please "
@@ -2004,11 +2004,11 @@ msgstr ""
 "Nid yw'r gweinydd \"%s\" yn fodlon cynnal sesiwn mewngofnodi ar hyn o bryd. "
 "Os gwelwch yn dda, ceisiwch eto yn wedyn."
 
-#: ../gui/gdmchooser.c:628
+#: ../gui/mdmchooser.c:628
 msgid "Cannot connect to remote server"
 msgstr "Ni ellir cysylltu ar weinydd pell"
 
-#: ../gui/gdmchooser.c:1280
+#: ../gui/mdmchooser.c:1280
 #, c-format
 msgid ""
 "Did not receive any response from host \"%s\" in %d seconds.  Perhaps the "
@@ -2019,21 +2019,21 @@ msgstr ""
 "nid yw'r gwesteiwr wedi ei droi ymlaen, neu nid yw'n fodlon cynnal sesiwn "
 "mewngofnodi ar hyn o bryd. Os gwelwch yn dda, ceisiwch eto wedyn."
 
-#: ../gui/gdmchooser.c:1293
+#: ../gui/mdmchooser.c:1293
 msgid "Did not receive response from server"
 msgstr "Ni dderbyniwyd ateb o'r gweinydd"
 
-#: ../gui/gdmchooser.c:1395
+#: ../gui/mdmchooser.c:1395
 #, c-format
 msgid "Cannot find the host \"%s\". Perhaps you have mistyped it."
 msgstr "Methu canfod y gwesteiwr \"%s\". Efallai i chi gamdeipio'r enw."
 
-#: ../gui/gdmchooser.c:1404
+#: ../gui/mdmchooser.c:1404
 msgid "Cannot find host"
 msgstr "Ni ellir canfod y gwesteiwr"
 
 # TRWSIO (Adnewyddu - ife hwn sydd ar y botwm?)
-#: ../gui/gdmchooser.c:1609
+#: ../gui/mdmchooser.c:1609
 msgid ""
 "The main area of this application shows the hosts on the local network that "
 "have \"XDMCP\" enabled. This allows users to login remotely to other "
@@ -2051,132 +2051,132 @@ msgstr ""
 "\"Adnewyddu\". Wedi i chi ddewis gwesteiwr, cliciwch \"Cysylltu\" er mwyn "
 "agor sesiwn i'r peiriant hwnnw."
 
-#: ../gui/gdmchooser.c:1906
+#: ../gui/mdmchooser.c:1906
 msgid "Socket for xdm communication"
 msgstr "Soced ar gyfer cyfathrebiad XDM"
 
-#: ../gui/gdmchooser.c:1906
+#: ../gui/mdmchooser.c:1906
 msgid "SOCKET"
 msgstr "SOCED"
 
 # TRWSIO (XDM)
-#: ../gui/gdmchooser.c:1909
+#: ../gui/mdmchooser.c:1909
 msgid "Client address to return in response to xdm"
 msgstr "Cyfeiriad cleient i'w ddychwelyd yn ymateb i XDM"
 
-#: ../gui/gdmchooser.c:1909
+#: ../gui/mdmchooser.c:1909
 msgid "ADDRESS"
 msgstr "CYFEIRIAD"
 
 # TRWSIO (XDM)
-#: ../gui/gdmchooser.c:1912
+#: ../gui/mdmchooser.c:1912
 msgid "Connection type to return in response to xdm"
 msgstr "Y math cysylltiad i'w ddychwelyd yn ymateb i XDM"
 
-#: ../gui/gdmchooser.c:1912
+#: ../gui/mdmchooser.c:1912
 msgid "TYPE"
 msgstr "MATH"
 
-#: ../gui/gdmchooser.c:2042
+#: ../gui/mdmchooser.c:2042
 #, c-format
 msgid ""
 "The chooser version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded GDM.  Please restart the GDM daemon or the computer."
+"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
 msgstr ""
 "Nid yw fersiwn y dewisydd (%s) yn cydweddu â fersiwn yr ellyll (%s). Mae'n "
-"debyg eich bod chi newydd uwchraddio gdm. Os gwelwch yn dda, ailgychwynnwch "
-"yr ellyll gdm neu'r cyfrifiadur."
+"debyg eich bod chi newydd uwchraddio mdm. Os gwelwch yn dda, ailgychwynnwch "
+"yr ellyll mdm neu'r cyfrifiadur."
 
-#: ../gui/gdmchooser.c:2052
+#: ../gui/mdmchooser.c:2052
 msgid "Cannot run chooser"
 msgstr "Ni ellir rhedeg dewisydd"
 
 #. EOF
-#: ../gui/gdmchooser.glade.h:1
+#: ../gui/mdmchooser.glade.h:1
 msgid "A_dd host: "
 msgstr "_Ychwanegu gwesteiwr: "
 
-#: ../gui/gdmchooser.glade.h:2
+#: ../gui/mdmchooser.glade.h:2
 msgid "C_onnect"
 msgstr "Cy_sylltu"
 
-#: ../gui/gdmchooser.glade.h:3
+#: ../gui/mdmchooser.glade.h:3
 msgid "Exit the application"
 msgstr "Gadael y rhaglen"
 
-#: ../gui/gdmchooser.glade.h:4
+#: ../gui/mdmchooser.glade.h:4
 msgid "How to use this application"
 msgstr "Sut i ddefnyddio'r rhaglen hon"
 
-#: ../gui/gdmchooser.glade.h:5
+#: ../gui/mdmchooser.glade.h:5
 msgid "Login Host Chooser"
 msgstr "Dewisydd Gwesteiwr Mewngofnodi"
 
-#: ../gui/gdmchooser.glade.h:6
+#: ../gui/mdmchooser.glade.h:6
 msgid "Open a session to the selected host"
 msgstr "Agor sesiwn i'r gwesteiwr dewisol"
 
-#: ../gui/gdmchooser.glade.h:7
+#: ../gui/mdmchooser.glade.h:7
 msgid "Probe the network"
 msgstr "Chwilio'r rhwydwaith"
 
-#: ../gui/gdmchooser.glade.h:8
+#: ../gui/mdmchooser.glade.h:8
 msgid "Query and add this host to the above list"
 msgstr "Ymholi ac ychwanegu'r gwesteiwr hwn i'r rhestr uchod"
 
-#: ../gui/gdmchooser.glade.h:9
+#: ../gui/mdmchooser.glade.h:9
 msgid "Status"
 msgstr "Cyflwr"
 
-#: ../gui/gdmchooser.glade.h:10
+#: ../gui/mdmchooser.glade.h:10
 msgid "_Add"
 msgstr "_Ychwanegu"
 
-#: ../gui/gdmcomm.c:619
-msgid "GDM (The GNOME Display Manager) is not running."
-msgstr "Nid yw GDM (Rheolydd Dangosydd GNOME) yn rhedeg."
+#: ../gui/mdmcomm.c:619
+msgid "MDM (The GNOME Display Manager) is not running."
+msgstr "Nid yw MDM (Rheolydd Dangosydd GNOME) yn rhedeg."
 
-#: ../gui/gdmcomm.c:621
+#: ../gui/mdmcomm.c:621
 msgid ""
 "You might in fact be using a different display manager, such as KDM (KDE "
 "Display Manager) or xdm. If you still wish to use this feature, either start "
-"GDM yourself or ask your system administrator to start GDM."
+"MDM yourself or ask your system administrator to start MDM."
 msgstr ""
 "Mae'n bosib eich bod chi mewn gwirionedd yn defnyddio rheolwr dangosydd "
 "gwahanol, fel KDM (KDE Display Manager) neu xdm. Os ydych o hyd eisiau "
-"defnyddio'r nodwedd hon, un ai cychwynnwch GDM eich hunan neu gofynnwch i "
-"weinyddwr eich system gychwyn GDM."
+"defnyddio'r nodwedd hon, un ai cychwynnwch MDM eich hunan neu gofynnwch i "
+"weinyddwr eich system gychwyn MDM."
 
-#: ../gui/gdmcomm.c:645 ../gui/gdmflexiserver.c:787
-msgid "Cannot communicate with GDM (The GNOME Display Manager)"
-msgstr "Ni ellir cyfathrebu efo GDM (Rheolydd Dangosydd GNOME)"
+#: ../gui/mdmcomm.c:645 ../gui/mdmflexiserver.c:787
+msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgstr "Ni ellir cyfathrebu efo MDM (Rheolydd Dangosydd GNOME)"
 
-#: ../gui/gdmcomm.c:647 ../gui/gdmflexiserver.c:789
-msgid "Perhaps you have an old version of GDM running."
-msgstr "Efallai bod gennych hen fersiwn o GDM yn rhedeg."
+#: ../gui/mdmcomm.c:647 ../gui/mdmflexiserver.c:789
+msgid "Perhaps you have an old version of MDM running."
+msgstr "Efallai bod gennych hen fersiwn o MDM yn rhedeg."
 
-# TRWSIO (GDM)
-#: ../gui/gdmcomm.c:664 ../gui/gdmcomm.c:667
-msgid "Cannot communicate with GDM. Perhaps you have an old version running."
-msgstr "Methu cyfathrebu â GDM. Hwyrach fod gennych hen fersiwn yn rhedeg."
+# TRWSIO (MDM)
+#: ../gui/mdmcomm.c:664 ../gui/mdmcomm.c:667
+msgid "Cannot communicate with MDM. Perhaps you have an old version running."
+msgstr "Methu cyfathrebu â MDM. Hwyrach fod gennych hen fersiwn yn rhedeg."
 
-#: ../gui/gdmcomm.c:670
+#: ../gui/mdmcomm.c:670
 msgid "The allowed limit of flexible X servers reached."
 msgstr "Cyrhaeddwyd cyfwng y gweinyddion X hyblyg a ganiateir."
 
-#: ../gui/gdmcomm.c:672
+#: ../gui/mdmcomm.c:672
 msgid "There were errors trying to start the X server."
 msgstr "Roedd gwallau wrth geisio cychwyn y gweinydd X."
 
-#: ../gui/gdmcomm.c:674
+#: ../gui/mdmcomm.c:674
 msgid "The X server failed.  Perhaps it is not configured well."
 msgstr "Methodd y gweinydd X. Efallai nid yw e wedi ei gyflunio'n dda."
 
-#: ../gui/gdmcomm.c:677
+#: ../gui/mdmcomm.c:677
 msgid "Too many X sessions running."
 msgstr "Gormod o sesiynau X yn rhedeg."
 
-#: ../gui/gdmcomm.c:679
+#: ../gui/mdmcomm.c:679
 msgid ""
 "The nested X server (Xnest) cannot connect to your current X server.  You "
 "may be missing an X authorization file."
@@ -2184,23 +2184,23 @@ msgstr ""
 "Nid yw'r gweinydd X nythol (Xnest) yn gallu cysylltu â'ch gweinydd X "
 "cyfredol. Efallai nad oes ffeil awdurdodaeth X gennych."
 
-# TRWSIO (GDM)
-#: ../gui/gdmcomm.c:684
+# TRWSIO (MDM)
+#: ../gui/mdmcomm.c:684
 msgid ""
-"The nested X server (Xnest) is not available, or GDM is badly configured.\n"
+"The nested X server (Xnest) is not available, or MDM is badly configured.\n"
 "Please install the Xnest package in order to use the nested login."
 msgstr ""
-"Nid yw'r gweinydd X nythol (Xnest) ar gael, neu mae GDM wedi ei gyflunio'n\n"
+"Nid yw'r gweinydd X nythol (Xnest) ar gael, neu mae MDM wedi ei gyflunio'n\n"
 "wael. Os gwelwch yn dda, ymsefydlwch y pecyn Xnest er mwyn defnyddio\n"
 "mewngofnodiad nythol."
 
-# TRWSIO s/gdm/GDM/; s/, /. /;
-#: ../gui/gdmcomm.c:689
-msgid "The X server is not available. GDM may be misconfigured."
+# TRWSIO s/mdm/MDM/; s/, /. /;
+#: ../gui/mdmcomm.c:689
+msgid "The X server is not available. MDM may be misconfigured."
 msgstr ""
-"Nid yw'r gweinydd X ar gael. Mae'n bosib fod GDM wedi ei gyflunio'n wael."
+"Nid yw'r gweinydd X ar gael. Mae'n bosib fod MDM wedi ei gyflunio'n wael."
 
-#: ../gui/gdmcomm.c:692
+#: ../gui/mdmcomm.c:692
 msgid ""
 "Trying to set an unknown logout action, or trying to set a logout action "
 "which is not available."
@@ -2208,19 +2208,19 @@ msgstr ""
 "Yn ceisio gosod gweithred allgofnodi anhysbys, neu'n ceisio gosod gweithred "
 "allgofnodi nid yw ar gael."
 
-#: ../gui/gdmcomm.c:695
+#: ../gui/mdmcomm.c:695
 msgid "Virtual terminals not supported."
 msgstr "Ni chefnogir terfynellau rhithwir."
 
-#: ../gui/gdmcomm.c:697
+#: ../gui/mdmcomm.c:697
 msgid "Trying to change to an invalid virtual terminal number."
 msgstr "Yn ceisio newid at rif terfynell rhithwir annilys."
 
-#: ../gui/gdmcomm.c:699
+#: ../gui/mdmcomm.c:699
 msgid "Trying to update an unsupported configuration key."
 msgstr "Yn ceisio diweddaru allwedd cyfluniad ni chynhelir."
 
-#: ../gui/gdmcomm.c:701
+#: ../gui/mdmcomm.c:701
 msgid ""
 "You do not seem to have the authentication needed for this operation.  "
 "Perhaps your .Xauthority file is not set up correctly."
@@ -2228,15 +2228,15 @@ msgstr ""
 "Ymddengys nad oes gennych y dilysiad sy'n angenrheidiol ar gyfer y weithred "
 "hon. Efallai nad yw eich ffeil .Xauthority wedi ei gosod yn gywir."
 
-#: ../gui/gdmcomm.c:705
-msgid "Too many messages were sent to GDM and it hung up on us."
-msgstr "Danfonwyd gormod o negeseuon i gdm ac fe grogodd."
+#: ../gui/mdmcomm.c:705
+msgid "Too many messages were sent to MDM and it hung up on us."
+msgstr "Danfonwyd gormod o negeseuon i mdm ac fe grogodd."
 
-#: ../gui/gdmcomm.c:708
+#: ../gui/mdmcomm.c:708
 msgid "Unknown error occurred."
 msgstr "Digwyddodd gwall anhysbys."
 
-#: ../gui/gdmcommon.c:592
+#: ../gui/mdmcommon.c:592
 msgid "%a %b %d, %H:%M"
 msgstr "%a %b %d, %H:%M"
 
@@ -2244,119 +2244,119 @@ msgstr "%a %b %d, %H:%M"
 #. %H:%M if your language does not have AM and PM
 #. equivalent.  Note: %l is a strftime option for
 #. 12-hour clock format
-#: ../gui/gdmcommon.c:598
+#: ../gui/mdmcommon.c:598
 msgid "%a %b %d, %l:%M %p"
 msgstr "%a %b %d, %l:%M %p"
 
-#: ../gui/gdmcommon.c:706
+#: ../gui/mdmcommon.c:706
 msgid " seconds"
 msgstr " eiliad"
 
-#: ../gui/gdmcommon.c:708
+#: ../gui/mdmcommon.c:708
 msgid " second"
 msgstr " eiliad"
 
-#: ../gui/gdmdynamic.c:48
+#: ../gui/mdmdynamic.c:48
 #, c-format
 msgid "Usage: %s [-b][-v] and one of the following:\n"
 msgstr "Defnydd: %s [-b][-v] ac un o'r canlynol:\n"
 
-#: ../gui/gdmdynamic.c:49
+#: ../gui/mdmdynamic.c:49
 #, c-format
 msgid "\t-a display\n"
 msgstr "\t-a dangosydd\n"
 
-#: ../gui/gdmdynamic.c:50
+#: ../gui/mdmdynamic.c:50
 #, c-format
 msgid "\t-r display\n"
 msgstr "\t-r dangosydd\n"
 
-#: ../gui/gdmdynamic.c:51
+#: ../gui/mdmdynamic.c:51
 #, c-format
 msgid "\t-d display\n"
 msgstr "\t-d dangosydd\n"
 
-#: ../gui/gdmdynamic.c:52
+#: ../gui/mdmdynamic.c:52
 #, c-format
 msgid "\t-l [server_name]\n"
 msgstr "\t-l [enw_gweinydd]\n"
 
-#: ../gui/gdmdynamic.c:53
+#: ../gui/mdmdynamic.c:53
 #, c-format
 msgid "\t-t maximum tries to connect (default 15)\n"
 msgstr "\tt nifer uchaf o weithiau i geisio cysylltu (15 yw'r rhagosodiad)\n"
 
-#: ../gui/gdmdynamic.c:54
+#: ../gui/mdmdynamic.c:54
 #, c-format
 msgid "\t-s sleep value (default 8)\n"
 msgstr "\t-s gwerth cwsg (8 yw'r rhagosodiad)\n"
 
-#: ../gui/gdmdynamic.c:230
+#: ../gui/mdmdynamic.c:230
 msgid "Server busy, will sleep.\n"
 msgstr "Gweinydd yn brysur; yn cysgu.\n"
 
-#: ../gui/gdmdynamic.c:320
+#: ../gui/mdmdynamic.c:320
 #, c-format
 msgid "Connection to daemon failed, sleeping for %d seconds.  Retry %d of %d\n"
 msgstr ""
 "Methodd y cysylltiad â'r ellyll, yn cysgu am %d eiliad.  Ail-gynnig %d o %d\n"
 
 #. This is a serious error, so print a message even if verbose is off
-#: ../gui/gdmdynamic.c:343
+#: ../gui/mdmdynamic.c:343
 #, c-format
 msgid "Failed to connect to server after %d retries\n"
 msgstr "Methu cysylltu â'r gweinydd ar ôl %d o ail-geisiadau\n"
 
-#: ../gui/gdmflexiserver-xnest.desktop.in.h:1
+#: ../gui/mdmflexiserver-xnest.desktop.in.h:1
 msgid "Log in as another user inside a nested window"
 msgstr "Mewngofnodi fel defnyddiwr arall o fewn ffenest nythol"
 
-#: ../gui/gdmflexiserver-xnest.desktop.in.h:2
+#: ../gui/mdmflexiserver-xnest.desktop.in.h:2
 msgid "New Login in a Nested Window"
 msgstr "Mewngofnodiad Newydd Mewn Ffenest Nythol"
 
-#: ../gui/gdmflexiserver.c:103
+#: ../gui/mdmflexiserver.c:103
 msgid "Cannot change display"
 msgstr "Ni ellir newid dangosydd"
 
-#: ../gui/gdmflexiserver.c:180
+#: ../gui/mdmflexiserver.c:180
 msgid "Nobody"
 msgstr "Neb"
 
-#: ../gui/gdmflexiserver.c:215
+#: ../gui/mdmflexiserver.c:215
 #, c-format
 msgid "Display %s on virtual terminal %d"
 msgstr "Dangosydd %s ar derfynell rithwir %d"
 
-#: ../gui/gdmflexiserver.c:220
+#: ../gui/mdmflexiserver.c:220
 #, c-format
 msgid "Nested display %s on virtual terminal %d"
 msgstr "Dangosydd nythol %s ar derfynell rithwir %d"
 
-#: ../gui/gdmflexiserver.c:250 ../gui/gdmlogin.c:2633
+#: ../gui/mdmflexiserver.c:250 ../gui/mdmlogin.c:2633
 #: ../gui/greeter/greeter_item_ulist.c:245
 msgid "Username"
 msgstr "Enw Cyfrif"
 
-#: ../gui/gdmflexiserver.c:259
+#: ../gui/mdmflexiserver.c:259
 msgid "Display"
 msgstr "Dangosydd"
 
-#: ../gui/gdmflexiserver.c:373
+#: ../gui/mdmflexiserver.c:373
 msgid "Open Displays"
 msgstr "Dangosyddion Agored"
 
 #. parent
 #. flags
-#: ../gui/gdmflexiserver.c:376
+#: ../gui/mdmflexiserver.c:376
 msgid "_Open New Display"
 msgstr "_Agor Dangosydd Newydd"
 
-#: ../gui/gdmflexiserver.c:378
+#: ../gui/mdmflexiserver.c:378
 msgid "Change to _Existing Display"
 msgstr "Newid ar Ddangosydd _Presennol"
 
-#: ../gui/gdmflexiserver.c:386
+#: ../gui/mdmflexiserver.c:386
 msgid ""
 "There are some displays already open.  You can select one from the list "
 "below or open a new one."
@@ -2364,577 +2364,577 @@ msgstr ""
 "Mae rhai dangosyddion ar gael eisoes. Gallwch ddewis un o'r rhestr isod Neu "
 "agor un newydd."
 
-#: ../gui/gdmflexiserver.c:569
+#: ../gui/mdmflexiserver.c:569
 msgid "Choose server"
 msgstr "Dewiswch weinydd"
 
-#: ../gui/gdmflexiserver.c:580
+#: ../gui/mdmflexiserver.c:580
 msgid "Choose the X server to start"
 msgstr "Dewiswch y gweinydd X i'w gychwyn"
 
-#: ../gui/gdmflexiserver.c:586
+#: ../gui/mdmflexiserver.c:586
 msgid "Standard server"
 msgstr "Gweinydd safonol"
 
 # TRWSIO
-#: ../gui/gdmflexiserver.c:688
-msgid "Send the specified protocol command to GDM"
-msgstr "Danfon y gorchymyn protocol penodedig i GDM"
+#: ../gui/mdmflexiserver.c:688
+msgid "Send the specified protocol command to MDM"
+msgstr "Danfon y gorchymyn protocol penodedig i MDM"
 
-#: ../gui/gdmflexiserver.c:688
+#: ../gui/mdmflexiserver.c:688
 msgid "COMMAND"
 msgstr "GORCHYMYN"
 
-#: ../gui/gdmflexiserver.c:689
+#: ../gui/mdmflexiserver.c:689
 msgid "Xnest mode"
 msgstr "Modd Xnest"
 
-#: ../gui/gdmflexiserver.c:690
+#: ../gui/mdmflexiserver.c:690
 msgid "Do not lock current screen"
 msgstr "Peidio â chloi'r sgrin gyfredol"
 
-#: ../gui/gdmflexiserver.c:691
+#: ../gui/mdmflexiserver.c:691
 msgid "Debugging output"
 msgstr "Allbwn datnamu"
 
-#: ../gui/gdmflexiserver.c:692
+#: ../gui/mdmflexiserver.c:692
 msgid "Authenticate before running --command"
 msgstr "Dilysu cyn rhedeg --command"
 
-#: ../gui/gdmflexiserver.c:693
+#: ../gui/mdmflexiserver.c:693
 msgid "Start new flexible session; do not show popup"
 msgstr "Dechrau sesiwn hyblyg newydd; peidio â dangos ffenestr naid"
 
-#: ../gui/gdmflexiserver.c:836
+#: ../gui/mdmflexiserver.c:836
 msgid "You do not seem to have the authentication needed for this operation"
 msgstr ""
 "Ymddengys nad oes gennych y dilysiad sy'n angenrheidiol ar gyfer y weithred "
 "hon"
 
-#: ../gui/gdmflexiserver.c:839
+#: ../gui/mdmflexiserver.c:839
 msgid "Perhaps your .Xauthority file is not set up correctly."
 msgstr "Efallai nid yw eich ffeil .Xauthority wedi ei osod i fyny yn gywir."
 
-#: ../gui/gdmflexiserver.c:866
+#: ../gui/mdmflexiserver.c:866
 msgid "You do not seem to be logged in on the console"
 msgstr "Ymddengys nad ydych wedi mewngofnodi ar y consol"
 
-#: ../gui/gdmflexiserver.c:868
+#: ../gui/mdmflexiserver.c:868
 msgid "Starting a new login only works correctly on the console."
 msgstr "Mae cychwyn mewngofnodiad newydd ond yn gweithio'n gywir ar y consol."
 
-#: ../gui/gdmflexiserver.c:914
+#: ../gui/mdmflexiserver.c:914
 msgid "Cannot start new display"
 msgstr "Ni ellir cychwyn dangosydd newydd"
 
-#: ../gui/gdmflexiserver.desktop.in.h:1
+#: ../gui/mdmflexiserver.desktop.in.h:1
 msgid "Log in as another user without logging out"
 msgstr "Mewngofnodi fel defnyddiwr arall heb allgofnodi"
 
-#: ../gui/gdmflexiserver.desktop.in.h:2
+#: ../gui/mdmflexiserver.desktop.in.h:2
 msgid "New Login"
 msgstr "Mewngofnodiad Newydd"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:53
+#: ../gui/mdmlanguages.c:53
 msgid "A-M|Afrikaans"
 msgstr "A-M|Afrikaans"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:55
+#: ../gui/mdmlanguages.c:55
 msgid "A-M|Albanian"
 msgstr "A-M|Alabaneg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:57
+#: ../gui/mdmlanguages.c:57
 msgid "A-M|Amharic"
 msgstr "A-M|Amhareg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:59
+#: ../gui/mdmlanguages.c:59
 msgid "A-M|Arabic (Egypt)"
 msgstr "A-M|Arabeg (Yr Aifft)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:61
+#: ../gui/mdmlanguages.c:61
 msgid "A-M|Arabic (Lebanon)"
 msgstr "A-M|Arabeg (Lebanon)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:63
+#: ../gui/mdmlanguages.c:63
 msgid "A-M|Armenian"
 msgstr "A-M|Armeneg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:65
+#: ../gui/mdmlanguages.c:65
 msgid "A-M|Azerbaijani"
 msgstr "A-M|Azerbaijani"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:67
+#: ../gui/mdmlanguages.c:67
 msgid "A-M|Basque"
 msgstr "A-M|Basgeg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:69
+#: ../gui/mdmlanguages.c:69
 msgid "A-M|Belarusian"
 msgstr "A-M|Belarwsieg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:71
+#: ../gui/mdmlanguages.c:71
 msgid "A-M|Bengali"
 msgstr "A-M|Bengaleg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:73
+#: ../gui/mdmlanguages.c:73
 msgid "A-M|Bengali (India)"
 msgstr "A-M|Bengaleg (India)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:75
+#: ../gui/mdmlanguages.c:75
 msgid "A-M|Bulgarian"
 msgstr "A-M|Bwlgareg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:77
+#: ../gui/mdmlanguages.c:77
 msgid "A-M|Bosnian"
 msgstr "A-M|Bosnieg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:79
+#: ../gui/mdmlanguages.c:79
 msgid "A-M|Catalan"
 msgstr "A-M|Catalaneg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:81
+#: ../gui/mdmlanguages.c:81
 msgid "A-M|Chinese (China Mainland)"
 msgstr "N-Z|Tsieinëeg (Tseina - Tir Mawr)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:83
+#: ../gui/mdmlanguages.c:83
 msgid "A-M|Chinese (Hong Kong)"
 msgstr "N-Z|Tsieinëeg (Hong Kong)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:85
+#: ../gui/mdmlanguages.c:85
 msgid "A-M|Chinese (Singapore)"
 msgstr "N-Z|Tsieinëeg (Singapore)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:87
+#: ../gui/mdmlanguages.c:87
 msgid "A-M|Chinese (Taiwan)"
 msgstr "N-Z|Tsieinëeg (Taiwan)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:89
+#: ../gui/mdmlanguages.c:89
 msgid "A-M|Croatian"
 msgstr "A-M|Croateg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:91
+#: ../gui/mdmlanguages.c:91
 msgid "A-M|Czech"
 msgstr "N-Z|Tsieceg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:93
+#: ../gui/mdmlanguages.c:93
 msgid "A-M|Danish"
 msgstr "A-M|Daneg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:95
+#: ../gui/mdmlanguages.c:95
 msgid "A-M|Dutch"
 msgstr "A-M|Iseldireg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:97
+#: ../gui/mdmlanguages.c:97
 msgid "A-M|English (USA)"
 msgstr "N-Z|Saesneg (UDA)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:99
+#: ../gui/mdmlanguages.c:99
 msgid "A-M|English (Australia)"
 msgstr "N-Z|Saesneg (Awstralia)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:101
+#: ../gui/mdmlanguages.c:101
 msgid "A-M|English (UK)"
 msgstr "N-Z|Saesneg (Prydain)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:103
+#: ../gui/mdmlanguages.c:103
 msgid "A-M|English (Canada)"
 msgstr "N-Z|Saesneg (Canada)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:105
+#: ../gui/mdmlanguages.c:105
 msgid "A-M|English (Ireland)"
 msgstr "N-Z|Saesneg (Gwyddelig)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:107
+#: ../gui/mdmlanguages.c:107
 msgid "A-M|English (Denmark)"
 msgstr "N-Z|Saesneg (Denmarc)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:109
+#: ../gui/mdmlanguages.c:109
 msgid "A-M|English (South Africa)"
 msgstr "N-Z|Saesneg (De Affrica)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:111
+#: ../gui/mdmlanguages.c:111
 msgid "A-M|Estonian"
 msgstr "A-M|Estoneg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:113
+#: ../gui/mdmlanguages.c:113
 msgid "A-M|Finnish"
 msgstr "A-M|Ffinneg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:115
+#: ../gui/mdmlanguages.c:115
 msgid "A-M|French"
 msgstr "A-M|Ffrangeg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:117
+#: ../gui/mdmlanguages.c:117
 msgid "A-M|French (Belgium)"
 msgstr "A-M|Ffrangeg (Gwlad Belg)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:119
+#: ../gui/mdmlanguages.c:119
 msgid "A-M|French (Switzerland)"
 msgstr "A-M|Ffrangeg (Y Swistir)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:121
+#: ../gui/mdmlanguages.c:121
 msgid "A-M|Galician"
 msgstr "A-M|Galiseg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:123
+#: ../gui/mdmlanguages.c:123
 msgid "A-M|German"
 msgstr "A-M|Almaeneg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:125
+#: ../gui/mdmlanguages.c:125
 msgid "A-M|German (Austria)"
 msgstr "A-M|Almaeneg (Awstria)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:127
+#: ../gui/mdmlanguages.c:127
 msgid "A-M|German (Switzerland)"
 msgstr "A-M|Almaeneg (Y Swistir)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:129
+#: ../gui/mdmlanguages.c:129
 msgid "A-M|Greek"
 msgstr "A-M|Groeg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:131
+#: ../gui/mdmlanguages.c:131
 msgid "A-M|Gujarati"
 msgstr "A-M|Gwjarati"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:133 ../gui/gdmlanguages.c:135
+#: ../gui/mdmlanguages.c:133 ../gui/mdmlanguages.c:135
 msgid "A-M|Hebrew"
 msgstr "A-M|Hebraeg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:137
+#: ../gui/mdmlanguages.c:137
 msgid "A-M|Hindi"
 msgstr "A-M|Hindi"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:139
+#: ../gui/mdmlanguages.c:139
 msgid "A-M|Hungarian"
 msgstr "A-M|Hwngareg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:141
+#: ../gui/mdmlanguages.c:141
 msgid "A-M|Icelandic"
 msgstr "A-M|Islandeg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:143
+#: ../gui/mdmlanguages.c:143
 msgid "A-M|Indonesian"
 msgstr "A-M|Indoneseg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:145
+#: ../gui/mdmlanguages.c:145
 msgid "A-M|Interlingua"
 msgstr "A-M|Interlingua"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:147
+#: ../gui/mdmlanguages.c:147
 msgid "A-M|Irish"
 msgstr "A-M|Gwyddeleg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:149
+#: ../gui/mdmlanguages.c:149
 msgid "A-M|Italian"
 msgstr "A-M|Eidaleg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:151
+#: ../gui/mdmlanguages.c:151
 msgid "A-M|Japanese"
 msgstr "A-M|Japanëeg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:153
+#: ../gui/mdmlanguages.c:153
 msgid "A-M|Kannada"
 msgstr "A-M|Canareg"
 
 #. Note translate the A-M to the A-M you used in the group label
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:156
+#: ../gui/mdmlanguages.c:156
 msgid "A-M|Kinyarwanda"
 msgstr "A-M|Kinyarwanda"
 
-#: ../gui/gdmlanguages.c:157
+#: ../gui/mdmlanguages.c:157
 msgid "A-M|Korean"
 msgstr "A-M|Corëeg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:159
+#: ../gui/mdmlanguages.c:159
 msgid "A-M|Latvian"
 msgstr "A-M|Latfieg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:161
+#: ../gui/mdmlanguages.c:161
 msgid "A-M|Lithuanian"
 msgstr "A-M|Lithwaneg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:163
+#: ../gui/mdmlanguages.c:163
 msgid "A-M|Macedonian"
 msgstr "A-M|Macedoneg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:165
+#: ../gui/mdmlanguages.c:165
 msgid "A-M|Malay"
 msgstr "A-M|Malay"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:167
+#: ../gui/mdmlanguages.c:167
 msgid "A-M|Malayalam"
 msgstr "A-M|Malaiameg"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:169
+#: ../gui/mdmlanguages.c:169
 msgid "A-M|Marathi"
 msgstr "A-M|Marati"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:171
+#: ../gui/mdmlanguages.c:171
 msgid "A-M|Mongolian"
 msgstr "A-M|Mongoleg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:173
+#: ../gui/mdmlanguages.c:173
 msgid "N-Z|Northern Sotho"
 msgstr "A-M|Gogledd Sotho"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:175
+#: ../gui/mdmlanguages.c:175
 msgid "N-Z|Norwegian (bokmal)"
 msgstr "N-Z|Norwyeg (bokmal)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:177
+#: ../gui/mdmlanguages.c:177
 msgid "N-Z|Norwegian (nynorsk)"
 msgstr "N-Z|Norwyeg (nynorsk)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:179
+#: ../gui/mdmlanguages.c:179
 msgid "N-Z|Oriya"
 msgstr "N-Z|Oriya"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:181
+#: ../gui/mdmlanguages.c:181
 msgid "N-Z|Panjabi"
 msgstr "N-Z|Panjabi"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:183
+#: ../gui/mdmlanguages.c:183
 msgid "N-Z|Persian"
 msgstr "N-Z|Perseg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:185
+#: ../gui/mdmlanguages.c:185
 msgid "N-Z|Polish"
 msgstr "N-Z|Pwyleg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:187
+#: ../gui/mdmlanguages.c:187
 msgid "N-Z|Portuguese"
 msgstr "N-Z|Portiwgaleg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:189
+#: ../gui/mdmlanguages.c:189
 msgid "N-Z|Portuguese (Brazilian)"
 msgstr "N-Z|Portiwgaleg (Brasilaidd)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:191
+#: ../gui/mdmlanguages.c:191
 msgid "N-Z|Romanian"
 msgstr "N-Z|Rwmaneg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:193
+#: ../gui/mdmlanguages.c:193
 msgid "N-Z|Russian"
 msgstr "N-Z|Rwseg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:195 ../gui/gdmlanguages.c:197
+#: ../gui/mdmlanguages.c:195 ../gui/mdmlanguages.c:197
 msgid "N-Z|Serbian"
 msgstr "N-Z|Serbeg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:199
+#: ../gui/mdmlanguages.c:199
 msgid "N-Z|Serbian (Latin)"
 msgstr "N-Z|Serbeg (Lladin)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:201
+#: ../gui/mdmlanguages.c:201
 msgid "N-Z|Serbian (Jekavian)"
 msgstr "N-Z|Serbeg (Jekavian)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:203
+#: ../gui/mdmlanguages.c:203
 msgid "N-Z|Slovak"
 msgstr "N-Z|Slofaceg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:205
+#: ../gui/mdmlanguages.c:205
 msgid "N-Z|Slovenian"
 msgstr "N-Z|Slofeneg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:207
+#: ../gui/mdmlanguages.c:207
 msgid "N-Z|Spanish"
 msgstr "N-Z|Sbaeneg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:209
+#: ../gui/mdmlanguages.c:209
 msgid "N-Z|Spanish (Mexico)"
 msgstr "N-Z|Sbaeneg (Mecsico)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:211
+#: ../gui/mdmlanguages.c:211
 msgid "N-Z|Swedish"
 msgstr "N-Z|Swedeg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:213
+#: ../gui/mdmlanguages.c:213
 msgid "N-Z|Swedish (Finland)"
 msgstr "N-Z|Swedeg (Ffindir)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:215
+#: ../gui/mdmlanguages.c:215
 msgid "N-Z|Tamil"
 msgstr "N-Z|Tamileg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:217
+#: ../gui/mdmlanguages.c:217
 msgid "N-Z|Telugu"
 msgstr "N-Z|Telwgw"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:219
+#: ../gui/mdmlanguages.c:219
 msgid "N-Z|Thai"
 msgstr "N-Z|Siameg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:221
+#: ../gui/mdmlanguages.c:221
 msgid "N-Z|Turkish"
 msgstr "N-Z|Tyrceg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:223
+#: ../gui/mdmlanguages.c:223
 msgid "N-Z|Ukrainian"
 msgstr "N-Z|Wcreineg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:225
+#: ../gui/mdmlanguages.c:225
 msgid "N-Z|Vietnamese"
 msgstr "A-M|Fietnameg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:227
+#: ../gui/mdmlanguages.c:227
 msgid "N-Z|Walloon"
 msgstr "N-Z|Walwneg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:229
+#: ../gui/mdmlanguages.c:229
 msgid "N-Z|Welsh"
 msgstr "A-M|Cymraeg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:231
+#: ../gui/mdmlanguages.c:231
 msgid "N-Z|Yiddish"
 msgstr "A-M|Iddew-Almaeneg"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:233
+#: ../gui/mdmlanguages.c:233
 msgid "N-Z|Zulu"
 msgstr "N-Z|Swlw"
 
 #. This is the POSIX/C locale for english, should really be in Other
-#: ../gui/gdmlanguages.c:235
+#: ../gui/mdmlanguages.c:235
 msgid "Other|POSIX/C English"
 msgstr "Eraill|POSIX/Saesneg C"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: ../gui/gdmlanguages.c:419
+#: ../gui/mdmlanguages.c:419
 msgid "A-M"
 msgstr "A-M"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: ../gui/gdmlanguages.c:427
+#: ../gui/mdmlanguages.c:427
 msgid "N-Z"
 msgstr "N-Z"
 
-#: ../gui/gdmlogin.c:355
+#: ../gui/mdmlogin.c:355
 #, c-format
 msgid "Cannot run command '%s': %s."
 msgstr "Methu rhedeg y gorchymyn '%s': %s."
 
-#: ../gui/gdmlogin.c:363
+#: ../gui/mdmlogin.c:363
 msgid "Cannot start background application"
 msgstr "Methu cychwyn rhaglen gefndir"
 
-#: ../gui/gdmlogin.c:437 ../gui/greeter/greeter_parser.c:381
+#: ../gui/mdmlogin.c:437 ../gui/greeter/greeter_parser.c:381
 msgid "User %u will login in %t"
 msgstr "Bydd y defnyddiwr %u yn mewngofnodi mewn %t"
 
-#: ../gui/gdmlogin.c:655 ../gui/greeter/greeter_system.c:71
+#: ../gui/mdmlogin.c:655 ../gui/greeter/greeter_system.c:71
 msgid "Are you sure you want to restart the computer?"
 msgstr "Ydych chi'n sicr eich bod am ailgychwyn y cyfrifiadur?"
 
-#: ../gui/gdmlogin.c:656 ../gui/gdmlogin.c:2506
+#: ../gui/mdmlogin.c:656 ../gui/mdmlogin.c:2506
 #: ../gui/greeter/greeter_parser.c:356 ../gui/greeter/greeter_system.c:72
 #: ../gui/greeter/greeter_system.c:178
 msgid "_Restart"
 msgstr "_Ailgychwyn"
 
-#: ../gui/gdmlogin.c:670 ../gui/greeter/greeter_system.c:83
+#: ../gui/mdmlogin.c:670 ../gui/greeter/greeter_system.c:83
 msgid "Are you sure you want to Shut Down the computer?"
 msgstr "Ydych chi'n sicr eich bod am droi'r cyfrifiadur i ffwrdd?"
 
-#: ../gui/gdmlogin.c:671 ../gui/gdmlogin.c:2516
+#: ../gui/mdmlogin.c:671 ../gui/mdmlogin.c:2516
 #: ../gui/greeter/greeter_parser.c:346 ../gui/greeter/greeter_system.c:84
 #: ../gui/greeter/greeter_system.c:187
 msgid "Shut _Down"
 msgstr "Troi _Bant..."
 
-#: ../gui/gdmlogin.c:693 ../gui/greeter/greeter_system.c:94
+#: ../gui/mdmlogin.c:693 ../gui/greeter/greeter_system.c:94
 msgid "Are you sure you want to suspend the computer?"
 msgstr "Ydych chi'n siŵr eich bod am orffwys y cyfrifiadur?"
 
-#: ../gui/gdmlogin.c:694 ../gui/gdmlogin.c:2526
+#: ../gui/mdmlogin.c:694 ../gui/mdmlogin.c:2526
 #: ../gui/greeter/greeter_system.c:95
 msgid "_Suspend"
 msgstr "_Gorffwys"
@@ -2943,47 +2943,47 @@ msgstr "_Gorffwys"
 #. no_group
 #. untranslated
 #. markup
-#: ../gui/gdmlogin.c:778 ../gui/gdmlogin.c:807 ../gui/gdmlogin.c:890
+#: ../gui/mdmlogin.c:778 ../gui/mdmlogin.c:807 ../gui/mdmlogin.c:890
 #: ../gui/greeter/greeter_action_language.c:158
 #: ../gui/greeter/greeter_session.c:119 ../gui/greeter/greeter_session.c:150
 #, c-format
 msgid "Do you wish to make %s the default for future sessions?"
 msgstr "Ydych chi am wneud %s yn rhagosodiad ar gyfer sesiynau'r dyfodol?"
 
-#: ../gui/gdmlogin.c:781 ../gui/greeter/greeter_session.c:122
+#: ../gui/mdmlogin.c:781 ../gui/greeter/greeter_session.c:122
 #, c-format
 msgid "Your preferred session type %s is not installed on this computer."
 msgstr "Nid yw eich math sesiwn dymunol %s wedi ei osod ar y peiriant hwn."
 
-#: ../gui/gdmlogin.c:786 ../gui/gdmlogin.c:817 ../gui/gdmlogin.c:898
+#: ../gui/mdmlogin.c:786 ../gui/mdmlogin.c:817 ../gui/mdmlogin.c:898
 #: ../gui/greeter/greeter_action_language.c:166
 #: ../gui/greeter/greeter_session.c:126 ../gui/greeter/greeter_session.c:159
 msgid "Make _Default"
 msgstr "Gwneud yn Rhagosodiad"
 
-#: ../gui/gdmlogin.c:786 ../gui/greeter/greeter_session.c:126
+#: ../gui/mdmlogin.c:786 ../gui/greeter/greeter_session.c:126
 msgid "Just _Log In"
 msgstr "_Mewngofnodi'n Unig"
 
-#: ../gui/gdmlogin.c:811 ../gui/gdmlogin.c:892
+#: ../gui/mdmlogin.c:811 ../gui/mdmlogin.c:892
 #: ../gui/greeter/greeter_action_language.c:160
 #: ../gui/greeter/greeter_session.c:153
 #, c-format
 msgid "You have chosen %s for this session, but your default setting is %s."
 msgstr "Rydych wedi dewis %s ar gyfer y sesiwn yma, ond %s yw'ch rhagosodiad."
 
-#: ../gui/gdmlogin.c:817 ../gui/gdmlogin.c:898
+#: ../gui/mdmlogin.c:817 ../gui/mdmlogin.c:898
 #: ../gui/greeter/greeter_action_language.c:166
 #: ../gui/greeter/greeter_session.c:159
 msgid "Just For _This Session"
 msgstr "Dim ond ar Gyfer y _Sesiwn Yma"
 
-#: ../gui/gdmlogin.c:828
+#: ../gui/mdmlogin.c:828
 #, c-format
 msgid "You have chosen %s for this session."
 msgstr "Rydych wedi dewis %s ar gyfer y sesiwn hwn."
 
-#: ../gui/gdmlogin.c:831
+#: ../gui/mdmlogin.c:831
 #, c-format
 msgid ""
 "If you wish to make %s the default for future sessions, run the 'switchdesk' "
@@ -2992,24 +2992,24 @@ msgstr ""
 "Os ydych am wneud %s yn rhagosodiad ar gyfer sesiynau'r dyfodol, rhedwch y "
 "cyfleuster 'switchdesk' (System->Erfyn Newid Penbwrdd o ddewislen y panel)."
 
-#: ../gui/gdmlogin.c:872 ../gui/gdmlogin.c:881
+#: ../gui/mdmlogin.c:872 ../gui/mdmlogin.c:881
 #: ../gui/greeter/greeter_action_language.c:73
 #: ../gui/greeter/greeter_action_language.c:142
 #: ../gui/greeter/greeter_action_language.c:150
 msgid "System Default"
 msgstr "Rhagosodiad y System"
 
-#: ../gui/gdmlogin.c:1009 ../gui/gdmlogin.c:1023 ../gui/gdmlogin.c:1640
-#: ../gui/gdmlogin.c:2117 ../gui/gdmlogin.c:2738
+#: ../gui/mdmlogin.c:1009 ../gui/mdmlogin.c:1023 ../gui/mdmlogin.c:1640
+#: ../gui/mdmlogin.c:2117 ../gui/mdmlogin.c:2738
 msgid "_Username:"
 msgstr "_Enw Defnyddiwr:"
 
-#: ../gui/gdmlogin.c:1097
+#: ../gui/mdmlogin.c:1097
 #, c-format
 msgid "%s session selected"
 msgstr "Dewiswyd y sesiwn %s"
 
-#: ../gui/gdmlogin.c:1118 ../gui/gdmlogin.c:1236
+#: ../gui/mdmlogin.c:1118 ../gui/mdmlogin.c:1236
 msgid "_Last"
 msgstr "_Diwethaf"
 
@@ -3017,145 +3017,145 @@ msgstr "_Diwethaf"
 #. no_group
 #. untranslated
 #. makrup
-#: ../gui/gdmlogin.c:1201
+#: ../gui/mdmlogin.c:1201
 #, c-format
 msgid "%s language selected"
 msgstr "Dewiswyd yr iaith %s"
 
-#: ../gui/gdmlogin.c:1247
+#: ../gui/mdmlogin.c:1247
 msgid "_System Default"
 msgstr "Rhagosodiad y _System"
 
-#: ../gui/gdmlogin.c:1279
+#: ../gui/mdmlogin.c:1279
 msgid "_Other"
 msgstr "_Eraill"
 
-#: ../gui/gdmlogin.c:1672
+#: ../gui/mdmlogin.c:1672
 msgid "_Password:"
 msgstr "_Cyfrinair:"
 
 #. translators:  This is a nice and evil eggie text, translate
 #. * to your favourite currency
-#: ../gui/gdmlogin.c:1903 ../gui/greeter/greeter.c:340
+#: ../gui/mdmlogin.c:1903 ../gui/greeter/greeter.c:340
 msgid "Please insert 25 cents to log in."
 msgstr "Rhowch 20 ceiniog i mewn er mwyn mewngofnodi os gwelwch yn dda."
 
 # TRWSIO
-#: ../gui/gdmlogin.c:2237
+#: ../gui/mdmlogin.c:2237
 msgid "GNOME Desktop Manager"
 msgstr "Rheolydd Penbwrdd GNOME"
 
-#: ../gui/gdmlogin.c:2303
+#: ../gui/mdmlogin.c:2303
 msgid "Finger"
 msgstr "Fysedd"
 
-#: ../gui/gdmlogin.c:2421
-msgid "GDM Login"
-msgstr "Mewngofnodi GDM"
+#: ../gui/mdmlogin.c:2421
+msgid "MDM Login"
+msgstr "Mewngofnodi MDM"
 
-#: ../gui/gdmlogin.c:2464 ../gui/greeter/greeter_parser.c:326
+#: ../gui/mdmlogin.c:2464 ../gui/greeter/greeter_parser.c:326
 msgid "_Session"
 msgstr "_Sesiwn"
 
-#: ../gui/gdmlogin.c:2471 ../gui/greeter/greeter_parser.c:321
+#: ../gui/mdmlogin.c:2471 ../gui/greeter/greeter_parser.c:321
 msgid "_Language"
 msgstr "_Iaith"
 
-#: ../gui/gdmlogin.c:2485 ../gui/greeter/greeter_system.c:153
+#: ../gui/mdmlogin.c:2485 ../gui/greeter/greeter_system.c:153
 msgid "Remote Login via _XDMCP..."
 msgstr "Mewngofnodi Pell drwy _XDMCP..."
 
-#: ../gui/gdmlogin.c:2496
+#: ../gui/mdmlogin.c:2496
 msgid "_Configure Login Manager..."
 msgstr "_Cyflunio'r Rheolydd Mewngofnodi..."
 
-#: ../gui/gdmlogin.c:2536 ../gui/greeter/greeter_parser.c:331
+#: ../gui/mdmlogin.c:2536 ../gui/greeter/greeter_parser.c:331
 msgid "_Actions"
 msgstr "_Gweithrediadau"
 
-#: ../gui/gdmlogin.c:2545
+#: ../gui/mdmlogin.c:2545
 msgid "_Theme"
 msgstr "_Thema"
 
-#: ../gui/gdmlogin.c:2556 ../gui/greeter/greeter_canvas_item.c:165
+#: ../gui/mdmlogin.c:2556 ../gui/greeter/greeter_canvas_item.c:165
 #: ../gui/greeter/greeter_parser.c:341
 msgid "_Quit"
 msgstr "_Gadael"
 
-#: ../gui/gdmlogin.c:2558 ../gui/greeter/greeter_canvas_item.c:167
+#: ../gui/mdmlogin.c:2558 ../gui/greeter/greeter_canvas_item.c:167
 #: ../gui/greeter/greeter_parser.c:336
 msgid "D_isconnect"
 msgstr "D_adgysylltu"
 
-#: ../gui/gdmlogin.c:2626 ../gui/greeter/greeter_item_ulist.c:239
+#: ../gui/mdmlogin.c:2626 ../gui/greeter/greeter_item_ulist.c:239
 msgid "Icon"
 msgstr "Eicon"
 
-#: ../gui/gdmlogin.c:2707
+#: ../gui/mdmlogin.c:2707
 msgid "Welcome"
 msgstr "Croeso"
 
-#: ../gui/gdmlogin.c:3376 ../gui/gdmlogin.c:3410 ../gui/greeter/greeter.c:581
+#: ../gui/mdmlogin.c:3376 ../gui/mdmlogin.c:3410 ../gui/greeter/greeter.c:581
 #: ../gui/greeter/greeter.c:616
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version. You have "
-"probably just upgraded GDM. Please restart the GDM daemon or the computer."
+"probably just upgraded MDM. Please restart the MDM daemon or the computer."
 msgstr ""
 "Nid yw fersiwn y cyfarchwr (%s) yn cyfateb â fersiwn yr ellyll. Mae'n debyg "
-"eich bod chi newydd uwchraddio GDM. Ailgychwynnwch yr ellyll GDM neu'r "
+"eich bod chi newydd uwchraddio MDM. Ailgychwynnwch yr ellyll MDM neu'r "
 "cyfrifiadur os gwelwch yn dda."
 
-#: ../gui/gdmlogin.c:3386 ../gui/gdmlogin.c:3420 ../gui/gdmlogin.c:3468
+#: ../gui/mdmlogin.c:3386 ../gui/mdmlogin.c:3420 ../gui/mdmlogin.c:3468
 #: ../gui/greeter/greeter.c:591 ../gui/greeter/greeter.c:626
 #: ../gui/greeter/greeter.c:675
 msgid "Cannot start the greeter"
 msgstr "Methu cychwyn y cyfarchwr"
 
-#: ../gui/gdmlogin.c:3425
+#: ../gui/mdmlogin.c:3425
 msgid "Restart"
 msgstr "Ailgychwyn"
 
-#: ../gui/gdmlogin.c:3458 ../gui/greeter/greeter.c:665
+#: ../gui/mdmlogin.c:3458 ../gui/greeter/greeter.c:665
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded GDM.  Please restart the GDM daemon or the computer."
+"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
 msgstr ""
 "Nid yw fersiwn y cyfarchwr (%s) yn cyfateb â fersiwn yr ellyll (%s).  Mae'n "
-"debyg eich bod chi newydd uwchraddio GDM. Ailgychwynnwch yr ellyll GDM neu'r "
+"debyg eich bod chi newydd uwchraddio MDM. Ailgychwynnwch yr ellyll MDM neu'r "
 "cyfrifiadur os gwelwch yn dda."
 
-#: ../gui/gdmlogin.c:3473 ../gui/greeter/greeter.c:680
-msgid "Restart GDM"
-msgstr "Ailgychwyn GDM"
+#: ../gui/mdmlogin.c:3473 ../gui/greeter/greeter.c:680
+msgid "Restart MDM"
+msgstr "Ailgychwyn MDM"
 
-#: ../gui/gdmlogin.c:3475
+#: ../gui/mdmlogin.c:3475
 msgid "Restart computer"
 msgstr "Ailddechrau'r cyfrifiadur"
 
-#: ../gui/gdmlogin.c:3560
+#: ../gui/mdmlogin.c:3560
 msgid "Could not set signal mask!"
 msgstr "Methwyd gosod masg arwydd!"
 
-#: ../gui/gdmlogin.c:3675 ../gui/greeter/greeter.c:1366
+#: ../gui/mdmlogin.c:3675 ../gui/greeter/greeter.c:1366
 msgid "Session directory is missing"
 msgstr "Cyfeiriadur sesiwn ar goll"
 
-#: ../gui/gdmlogin.c:3676
+#: ../gui/mdmlogin.c:3676
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the GDM "
+"sessions you can use, but you should log in and correct the MDM "
 "configuration."
 msgstr ""
 "Mae eich cyfeiriadur sesiwn ar goll neu yn wag! Mae dwy sesiwn ar gael i "
-"chi'u defnyddio, ond dylech fewngofnodi a chywiro cyfluniad GDM."
+"chi'u defnyddio, ond dylech fewngofnodi a chywiro cyfluniad MDM."
 
-#: ../gui/gdmlogin.c:3699 ../gui/greeter/greeter.c:1391
+#: ../gui/mdmlogin.c:3699 ../gui/greeter/greeter.c:1391
 msgid "Configuration is not correct"
 msgstr "Nid yw'r cyfluniad yn gywir"
 
-#: ../gui/gdmlogin.c:3700 ../gui/greeter/greeter.c:1392
+#: ../gui/mdmlogin.c:3700 ../gui/greeter/greeter.c:1392
 msgid ""
 "The configuration file contains an invalid command line for the login "
 "dialog, so running the default command.  Please fix your configuration."
@@ -3164,52 +3164,52 @@ msgstr ""
 "mewngofnodi, felly'n rhedeg y gorchymyn rhagosodedig. Gwiriwch y cyfluniad "
 "os gwelwch yn dda."
 
-#: ../gui/gdmphotosetup.c:188
+#: ../gui/mdmphotosetup.c:188
 #, c-format
 msgid "File %s cannot be opened for writing."
 msgstr "Ni ellir agor ffeil %s i'w darllen."
 
-#: ../gui/gdmphotosetup.c:195
+#: ../gui/mdmphotosetup.c:195
 msgid "Cannot open file"
 msgstr "Methu agor ffeil"
 
-#: ../gui/gdmphotosetup.c:249
+#: ../gui/mdmphotosetup.c:249
 msgid "Select User Image"
 msgstr "Dewis Delwedd Defnyddiwr"
 
-#: ../gui/gdmphotosetup.c:273 ../gui/gdmsetup.c:5592 ../gui/gdmsetup.c:5714
-#: ../gui/gdmsetup.c:5867 ../gui/gdmsetup.c:5989
+#: ../gui/mdmphotosetup.c:273 ../gui/mdmsetup.c:5592 ../gui/mdmsetup.c:5714
+#: ../gui/mdmsetup.c:5867 ../gui/mdmsetup.c:5989
 msgid "Images"
 msgstr "Delweddau"
 
-#: ../gui/gdmphotosetup.c:278 ../gui/gdmsetup.c:3048 ../gui/gdmsetup.c:5597
-#: ../gui/gdmsetup.c:5719 ../gui/gdmsetup.c:5872 ../gui/gdmsetup.c:5994
+#: ../gui/mdmphotosetup.c:278 ../gui/mdmsetup.c:3048 ../gui/mdmsetup.c:5597
+#: ../gui/mdmsetup.c:5719 ../gui/mdmsetup.c:5872 ../gui/mdmsetup.c:5994
 msgid "All Files"
 msgstr "Pob Ffeil"
 
-#: ../gui/gdmphotosetup.desktop.in.h:1
+#: ../gui/mdmphotosetup.desktop.in.h:1
 msgid ""
-"Change the picture that will show in the GDM (login manager) face browser"
+"Change the picture that will show in the MDM (login manager) face browser"
 msgstr ""
-"Newid y llun a wnaiff ymddangos ym mhorwr wyneb GDM (rheolydd mewngofnodi)"
+"Newid y llun a wnaiff ymddangos ym mhorwr wyneb MDM (rheolydd mewngofnodi)"
 
-#: ../gui/gdmphotosetup.desktop.in.h:2
+#: ../gui/mdmphotosetup.desktop.in.h:2
 msgid "Login Photo"
 msgstr "Ffoto Mewngofnodi"
 
-#: ../gui/gdmphotosetup.glade.h:1
+#: ../gui/mdmphotosetup.glade.h:1
 msgid "<b>User Image</b>"
 msgstr "<b>Delwedd Defnyddiwr</b>"
 
-#: ../gui/gdmphotosetup.glade.h:2
+#: ../gui/mdmphotosetup.glade.h:2
 msgid "Login Photo Preferences"
 msgstr "Dewisiadau Ffoto Mewngofnodi"
 
-#: ../gui/gdmsession.c:125 ../gui/gdmsession.c:296
+#: ../gui/mdmsession.c:125 ../gui/mdmsession.c:296
 msgid "Failsafe _GNOME"
 msgstr "_GNOME Difethiant"
 
-#: ../gui/gdmsession.c:126 ../gui/gdmsession.c:297
+#: ../gui/mdmsession.c:126 ../gui/mdmsession.c:297
 msgid ""
 "This is a failsafe session that will log you into GNOME. No startup scripts "
 "will be read and it is only to be used when you can't log in otherwise.  "
@@ -3220,11 +3220,11 @@ msgstr ""
 "ond os na ellwch chi fewngofnodi fel arall. Mi fydd GNOME yn defnyddio'r "
 "sesiwn 'Default'."
 
-#: ../gui/gdmsession.c:136 ../gui/gdmsession.c:308
+#: ../gui/mdmsession.c:136 ../gui/mdmsession.c:308
 msgid "Failsafe _Terminal"
 msgstr "_Terfynell Difethiant"
 
-#: ../gui/gdmsession.c:137 ../gui/gdmsession.c:309
+#: ../gui/mdmsession.c:137 ../gui/mdmsession.c:309
 msgid ""
 "This is a failsafe session that will log you into a terminal.  No startup "
 "scripts will be read and it is only to be used when you can't log in "
@@ -3234,7 +3234,7 @@ msgstr ""
 "Fydd ddim sgriptiau cychwyn yn cael eu darllen; defnyddiwch hwn ddim ond pam "
 "na allwch fewngofnodi fel arall. I adael y derfynell, teipiwch 'exit'."
 
-#: ../gui/gdmsetup.c:260
+#: ../gui/mdmsetup.c:260
 msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
@@ -3242,84 +3242,84 @@ msgstr ""
 "Gwall wrth gysylltu â'r sgriniau mewngofnodi. Mae'n bosib na fydd rhai o'r "
 "diweddariadau wedi dod i rym."
 
-#: ../gui/gdmsetup.c:801 ../gui/gdmsetup.c:819 ../gui/gdmsetup.c:974
-#: ../gui/gdmsetup.c:1220
+#: ../gui/mdmsetup.c:801 ../gui/mdmsetup.c:819 ../gui/mdmsetup.c:974
+#: ../gui/mdmsetup.c:1220
 msgid "Themed"
 msgstr "Â Thema"
 
-#: ../gui/gdmsetup.c:804 ../gui/gdmsetup.c:835
+#: ../gui/mdmsetup.c:804 ../gui/mdmsetup.c:835
 msgid "Plain"
 msgstr "Plaen"
 
-#: ../gui/gdmsetup.c:805 ../gui/gdmsetup.c:836
+#: ../gui/mdmsetup.c:805 ../gui/mdmsetup.c:836
 msgid "Plain with face browser"
 msgstr "Plaen gyda phorwr wyneb"
 
-#: ../gui/gdmsetup.c:1571
+#: ../gui/mdmsetup.c:1571
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr ""
 "Ni chaniateir mewngofnodi awtomatig neu fewngofnodi amseredig i'r cyfrif "
 "uwchddefnyddiwr (root)."
 
-#: ../gui/gdmsetup.c:1794
+#: ../gui/mdmsetup.c:1794
 #, c-format
 msgid "The \"%s\" user already exists in the include list."
 msgstr "Mae'r defnyddiwr \"%s\" eisoes yn bodoli yn y rhestr gynnwys."
 
-#: ../gui/gdmsetup.c:1804 ../gui/gdmsetup.c:1834 ../gui/gdmsetup.c:1871
+#: ../gui/mdmsetup.c:1804 ../gui/mdmsetup.c:1834 ../gui/mdmsetup.c:1871
 msgid "Cannot add user"
 msgstr "Methu ychwanegu defnyddiwr"
 
-#: ../gui/gdmsetup.c:1824
+#: ../gui/mdmsetup.c:1824
 #, c-format
 msgid "The \"%s\" user already exists in the exclude list."
 msgstr "Mae'r defnyddiwr \"%s\" eisoes yn bodoli yn y rhestr eithrio."
 
-#: ../gui/gdmsetup.c:1861
+#: ../gui/mdmsetup.c:1861
 #, c-format
 msgid "The \"%s\" user does not exist."
 msgstr "Nid yw'r defnyddiwr \"%s\" yn bodoli"
 
-#: ../gui/gdmsetup.c:3043 ../gui/gdmsetup.glade.h:76
+#: ../gui/mdmsetup.c:3043 ../gui/mdmsetup.glade.h:76
 msgid "Sounds"
 msgstr "Synau"
 
-#: ../gui/gdmsetup.c:3252 ../gui/gdmsetup.c:3310
+#: ../gui/mdmsetup.c:3252 ../gui/mdmsetup.c:3310
 msgid "None"
 msgstr "Dim"
 
-#: ../gui/gdmsetup.c:3743
+#: ../gui/mdmsetup.c:3743
 msgid "Archive is not of a subdirectory"
 msgstr "Archif ddim o is-gyfeiriadur"
 
-#: ../gui/gdmsetup.c:3751
+#: ../gui/mdmsetup.c:3751
 msgid "Archive is not of a single subdirectory"
 msgstr "Archif ddim o is-gyfeiriadur unigol"
 
-#: ../gui/gdmsetup.c:3775 ../gui/gdmsetup.c:3853
+#: ../gui/mdmsetup.c:3775 ../gui/mdmsetup.c:3853
 msgid "File not a tar.gz or tar archive"
 msgstr "Ffeil ddim yn tar.gz neu archif tar"
 
-#: ../gui/gdmsetup.c:3777
-msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr "Archif ddim yn cynnwys ffeil GdmGreeterTheme.info"
+#: ../gui/mdmsetup.c:3777
+msgid "Archive does not include a MdmGreeterTheme.info file"
+msgstr "Archif ddim yn cynnwys ffeil MdmGreeterTheme.info"
 
-#: ../gui/gdmsetup.c:3799
+#: ../gui/mdmsetup.c:3799
 msgid "File does not exist"
 msgstr "Ffeil ddim yn bodoli"
 
-#: ../gui/gdmsetup.c:3919
+#: ../gui/mdmsetup.c:3919
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../gui/gdmsetup.c:3926
+#: ../gui/mdmsetup.c:3926
 msgid "Not a theme archive"
 msgstr "Dim yn archif thema"
 
 #. FIXME: if exists already perhaps we could also have an
 #. * option to change the dir name
-#: ../gui/gdmsetup.c:3948
+#: ../gui/mdmsetup.c:3948
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
@@ -3327,50 +3327,50 @@ msgstr ""
 "Mae'r ymddangos fod y cyfeiriadur thema '%s' wedi'i osod yn barod. Gosod eto "
 "beth bynnag?"
 
-#: ../gui/gdmsetup.c:4040
+#: ../gui/mdmsetup.c:4040
 msgid "Some error occurred when installing the theme"
 msgstr "Bu gwall wrth osod y thema"
 
-#: ../gui/gdmsetup.c:4096
+#: ../gui/mdmsetup.c:4096
 msgid "No file selected"
 msgstr "Dim ffeil dewisedig"
 
-#: ../gui/gdmsetup.c:4117
+#: ../gui/mdmsetup.c:4117
 msgid "Select Theme Archive"
 msgstr "Dewis Archif Themâu"
 
-#: ../gui/gdmsetup.c:4121 ../gui/gdmsetup.c:5112
+#: ../gui/mdmsetup.c:4121 ../gui/mdmsetup.c:5112
 msgid "_Install"
 msgstr "_Sefydlu"
 
-#: ../gui/gdmsetup.c:4212
+#: ../gui/mdmsetup.c:4212
 #, c-format
 msgid "Remove the \"%s\" theme?"
 msgstr "Tynnu'r thema \"%s\"?"
 
-#: ../gui/gdmsetup.c:4221
+#: ../gui/mdmsetup.c:4221
 msgid "If you choose to remove the theme, it will be permanently lost."
 msgstr "Os dewiswch chi dynnu'r thema, fe'i collir am byth."
 
-#: ../gui/gdmsetup.c:4229
+#: ../gui/mdmsetup.c:4229
 msgid "_Remove Theme"
 msgstr "_Tynnu Thema"
 
-#: ../gui/gdmsetup.c:5101
+#: ../gui/mdmsetup.c:5101
 #, c-format
 msgid "Install the theme from '%s'?"
 msgstr "Gosod y thema o '%s'?"
 
-#: ../gui/gdmsetup.c:5102
+#: ../gui/mdmsetup.c:5102
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
 msgstr "Dewiswch 'gosod' i ychwanegu'r thema o'r ffeil '%s'."
 
 #. This is the temporary help dialog
-#: ../gui/gdmsetup.c:5364
+#: ../gui/mdmsetup.c:5364
 #, c-format
 msgid ""
-"This configuration window changes settings for the GDM daemon, which is the "
+"This configuration window changes settings for the MDM daemon, which is the "
 "graphical login screen for GNOME.  Changes that you make will take effect "
 "immediately.\n"
 "\n"
@@ -3380,7 +3380,7 @@ msgid ""
 "For complete documentation see the GNOME help browser under the \"Desktop\" "
 "category."
 msgstr ""
-"Mae'r ffenestr cyfluniad yma yn newid gosodiadau ar gyfer yr ellyll GDM, sef "
+"Mae'r ffenestr cyfluniad yma yn newid gosodiadau ar gyfer yr ellyll MDM, sef "
 "y sgrin mewngofnodi raffigol ar gyfer GNOME. Bydd y newidiadau wnewch chi'n "
 "dod i rym yn syth.\n"
 "\n"
@@ -3390,52 +3390,52 @@ msgstr ""
 "Am y ddogfennaeth gyfan gweler y porwr cymorth GNOME dan y categori \"Desktop"
 "\"."
 
-#: ../gui/gdmsetup.c:6410
+#: ../gui/mdmsetup.c:6410
 msgid "Apply the changes to users before closing?"
 msgstr "Gosod y newidiadau i'r defnyddwyr cyn cau?"
 
-#: ../gui/gdmsetup.c:6411
+#: ../gui/mdmsetup.c:6411
 msgid ""
 "If you don't apply, the changes made on the Users tab will be disregarded."
 msgstr ""
 "Os na wnewch chi eu rhoi ar waith, anwybyddir y newidiadau ar y tab "
 "Defnyddwyr."
 
-#: ../gui/gdmsetup.c:6414
+#: ../gui/mdmsetup.c:6414
 msgid "Close _without Applying"
 msgstr "Cau _heb roi ar waith"
 
-#: ../gui/gdmsetup.c:6465 ../gui/gdmsetup.c:6472
-msgid "Could not access GDM configuration file.\n"
-msgstr "Methu cyrchu ffeil gyfluniad GDM.\n"
+#: ../gui/mdmsetup.c:6465 ../gui/mdmsetup.c:6472
+msgid "Could not access MDM configuration file.\n"
+msgstr "Methu cyrchu ffeil gyfluniad MDM.\n"
 
-#: ../gui/gdmsetup.c:6521
-msgid "You must be the root user to configure GDM."
-msgstr "Rhaid i chi fod yn uwch ddefnyddiwr (root) i gyflunio GDM."
+#: ../gui/mdmsetup.c:6521
+msgid "You must be the root user to configure MDM."
+msgstr "Rhaid i chi fod yn uwch ddefnyddiwr (root) i gyflunio MDM."
 
 #. EOF
-#: ../gui/gdmsetup.desktop.in.in.h:1
+#: ../gui/mdmsetup.desktop.in.in.h:1
 msgid "Configure the login window (GNOME Display Manager)"
 msgstr "Cyflunio'r ffenestr mewngofnodi (Rheolwr Dangoswyr GNOME)"
 
-#: ../gui/gdmsetup.desktop.in.in.h:2
+#: ../gui/mdmsetup.desktop.in.in.h:2
 msgid "Login Window"
 msgstr "Ffenestr Mewngofnodi"
 
-#: ../gui/gdmsetup.desktop.in.in.h:3 ../gui/gdmsetup.glade.h:41
+#: ../gui/mdmsetup.desktop.in.in.h:3 ../gui/mdmsetup.glade.h:41
 msgid "Login Window Preferences"
 msgstr "Dewisiadau Ffenestr Mewngofnodi"
 
-#: ../gui/gdmsetup.glade.h:1
+#: ../gui/mdmsetup.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: ../gui/gdmsetup.glade.h:3
+#: ../gui/mdmsetup.glade.h:3
 #, no-c-format
 msgid "%n will be replaced by hostname"
 msgstr "Fe roddir yr enw gwesteiwr yn lle %n"
 
-#: ../gui/gdmsetup.glade.h:4
+#: ../gui/mdmsetup.glade.h:4
 msgid ""
 "<b>Note:</b>  Users in the Include list will appear in the face browser if "
 "enabled and will appear in the user drop-down lists for automatic and timed "
@@ -3446,113 +3446,113 @@ msgstr ""
 "tab Diogelwch ar gyfer mewngofnodi awtomatig a rhai wedi'u hamseru.  Fydd "
 "defnyddwyr yn y rhestr Eithrio ddim yn ymddangos."
 
-#: ../gui/gdmsetup.glade.h:5
+#: ../gui/mdmsetup.glade.h:5
 msgid ""
 "<b>Warning:</b>  Incorrect settings could prevent the X server from "
-"restarting.  Changes to these settings will not take effect until GDM is "
+"restarting.  Changes to these settings will not take effect until MDM is "
 "restarted."
 msgstr ""
 "<b>Rhybudd:</b>  Fe allai gosodiadau anghywir rwystro'r gweinydd X rhag ail-"
-"gychwyn.  Fydd newidiadau i'r gosodiadau yma ddim yn dod i rym nes i GDM "
+"gychwyn.  Fydd newidiadau i'r gosodiadau yma ddim yn dod i rym nes i MDM "
 "gael ei ail-gychwyn."
 
-#: ../gui/gdmsetup.glade.h:6
+#: ../gui/mdmsetup.glade.h:6
 msgid "A_dd..."
 msgstr "_Ychwanegu..."
 
-#: ../gui/gdmsetup.glade.h:7
+#: ../gui/mdmsetup.glade.h:7
 msgid "A_llow remote system administrator login"
 msgstr "Cyflunio mewngofnodi pell gweinyddwr y system"
 
-#: ../gui/gdmsetup.glade.h:8
+#: ../gui/mdmsetup.glade.h:8
 msgid "A_pply User Changes"
 msgstr "_Gweithredu Newidiadau'r Defnyddiwr"
 
-#: ../gui/gdmsetup.glade.h:9
+#: ../gui/mdmsetup.glade.h:9
 msgid "Accessibility"
 msgstr "Hygyrchedd"
 
-#: ../gui/gdmsetup.glade.h:10
+#: ../gui/mdmsetup.glade.h:10
 msgid "Add / Modify Servers To Start"
 msgstr "Ychwanegu / Newid y Gweinyddion i'w Cychwyn"
 
-#: ../gui/gdmsetup.glade.h:11
+#: ../gui/mdmsetup.glade.h:11
 msgid "Add S_erver..."
 msgstr "Ychwanegu _Gweinydd..."
 
-#: ../gui/gdmsetup.glade.h:12
+#: ../gui/mdmsetup.glade.h:12
 msgid "Add User"
 msgstr "Ychwanegu Defnyddiwr"
 
-#: ../gui/gdmsetup.glade.h:13
+#: ../gui/mdmsetup.glade.h:13
 msgid "Allo_w remote timed logins"
 msgstr "_Caniatáu mewngofnodi pell wedi amseru"
 
-#: ../gui/gdmsetup.glade.h:14
+#: ../gui/mdmsetup.glade.h:14
 msgid "Author:"
 msgstr "Awdur:"
 
-#: ../gui/gdmsetup.glade.h:15
+#: ../gui/mdmsetup.glade.h:15
 msgid "Background"
 msgstr "Cefndir"
 
-#: ../gui/gdmsetup.glade.h:16
+#: ../gui/mdmsetup.glade.h:16
 msgid "C_ommand:"
 msgstr "_Gorchymyn:"
 
-#: ../gui/gdmsetup.glade.h:17
+#: ../gui/mdmsetup.glade.h:17
 msgid "C_ustom:"
 msgstr "_Addasedig:"
 
-#: ../gui/gdmsetup.glade.h:18
+#: ../gui/mdmsetup.glade.h:18
 msgid "Co_lor:"
 msgstr "_Lliw:"
 
-#: ../gui/gdmsetup.glade.h:19
+#: ../gui/mdmsetup.glade.h:19
 msgid "Color depth:"
 msgstr "Dyfnder lliw:"
 
-#: ../gui/gdmsetup.glade.h:20
+#: ../gui/mdmsetup.glade.h:20
 msgid "Configure _X Server..."
 msgstr "Cyflunio _Gweinydd X..."
 
-#: ../gui/gdmsetup.glade.h:21
+#: ../gui/mdmsetup.glade.h:21
 msgid "Configure _XDMCP..."
 msgstr "Cyflunio _XDMCP..."
 
-#: ../gui/gdmsetup.glade.h:22
+#: ../gui/mdmsetup.glade.h:22
 msgid "Copyright:"
 msgstr "Hawlfraint:"
 
-#: ../gui/gdmsetup.glade.h:23
+#: ../gui/mdmsetup.glade.h:23
 msgid "Disables X forwarding, but does not affect XDMCP."
 msgstr "Analluogi blaenyrru X, ond heb effeithio ar XDMCP."
 
-#: ../gui/gdmsetup.glade.h:24
+#: ../gui/mdmsetup.glade.h:24
 msgid "Displays per _host:"
 msgstr "Ddangosyddion fesul gwesteiwr:"
 
-#: ../gui/gdmsetup.glade.h:25
+#: ../gui/mdmsetup.glade.h:25
 msgid "Do not show image for _remote logins"
 msgstr "Peidio dangos delwedd ar gyfer mewngofnodi _pell"
 
-#: ../gui/gdmsetup.glade.h:26
+#: ../gui/mdmsetup.glade.h:26
 msgid "E_nable debug messages to system log"
 msgstr "Galluogi i negeseuon _datnamu fynd at log y system"
 
-#: ../gui/gdmsetup.glade.h:27
+#: ../gui/mdmsetup.glade.h:27
 msgid "E_xclude:"
 msgstr "E_ithrio:"
 
-#: ../gui/gdmsetup.glade.h:28
+#: ../gui/mdmsetup.glade.h:28
 msgid "Enable _Timed Login"
 msgstr "Galluogi _Mewngofnodi wedi'i Amseru"
 
-#: ../gui/gdmsetup.glade.h:29
+#: ../gui/mdmsetup.glade.h:29
 msgid "Example: /usr/X11R6/bin/X"
 msgstr "Esiampl: /usr/X11R6/bin/X"
 
-#: ../gui/gdmsetup.glade.h:30
+#: ../gui/mdmsetup.glade.h:30
 msgid ""
 "Greeter\n"
 "Chooser"
@@ -3560,91 +3560,91 @@ msgstr ""
 "Cyfarchwr\n"
 "Dewisydd"
 
-#: ../gui/gdmsetup.glade.h:32
+#: ../gui/mdmsetup.glade.h:32
 msgid "Honor _indirect requests"
 msgstr "Parchu _ceisiadau anuniongyrchol"
 
-#: ../gui/gdmsetup.glade.h:33
+#: ../gui/mdmsetup.glade.h:33
 msgid "I_mage:"
 msgstr "_Delwedd:"
 
-#: ../gui/gdmsetup.glade.h:34
+#: ../gui/mdmsetup.glade.h:34
 msgid "I_nclude:"
 msgstr "_Cynnwys:"
 
-#: ../gui/gdmsetup.glade.h:35
+#: ../gui/mdmsetup.glade.h:35
 msgid "Includ_e Hostname Chooser (XDMCP) menu item"
 msgstr "_Cynnwys eitem dewislen Dewisydd Enw Gwesteiwr (XDMCP)"
 
-#: ../gui/gdmsetup.glade.h:36
+#: ../gui/mdmsetup.glade.h:36
 msgid "Include Con_figure menu item"
 msgstr "Cynnwys _eitem dewislen Cyflunio"
 
-#: ../gui/gdmsetup.glade.h:37
+#: ../gui/mdmsetup.glade.h:37
 msgid "L_ogin retry delay:"
 msgstr "Saib cyn ail-geisio _mewngofnodi:"
 
-#: ../gui/gdmsetup.glade.h:38
+#: ../gui/mdmsetup.glade.h:38
 msgid "La_unch:"
 msgstr "_Lansio:"
 
-#: ../gui/gdmsetup.glade.h:39
+#: ../gui/mdmsetup.glade.h:39
 msgid "Listen on _UDP port: "
 msgstr "Gwrando ar borth _UDP:"
 
-#: ../gui/gdmsetup.glade.h:40
+#: ../gui/mdmsetup.glade.h:40
 msgid "Local"
 msgstr "Lleol"
 
-#: ../gui/gdmsetup.glade.h:42
+#: ../gui/mdmsetup.glade.h:42
 msgid "Login _failed:"
 msgstr "Mewngofnodi wedi _methu:"
 
-#: ../gui/gdmsetup.glade.h:43
+#: ../gui/mdmsetup.glade.h:43
 msgid "Login _successful:"
 msgstr "Mewngofnodiad yn _llwyddiannus:"
 
-#: ../gui/gdmsetup.glade.h:44
+#: ../gui/mdmsetup.glade.h:44
 msgid "Logo"
 msgstr "Logo"
 
-#: ../gui/gdmsetup.glade.h:45
+#: ../gui/mdmsetup.glade.h:45
 msgid "Maximum _pending requests:"
 msgstr "Uchafrif ceisiadau fydd yn _disgwyl:"
 
-#: ../gui/gdmsetup.glade.h:46
+#: ../gui/mdmsetup.glade.h:46
 msgid "Maximum _remote sessions:"
 msgstr "Uchafrif _sesiynau pell:"
 
-#: ../gui/gdmsetup.glade.h:47
+#: ../gui/mdmsetup.glade.h:47
 msgid "Maximum _wait time:"
 msgstr "Uchafrif _amser disgwyl:"
 
-#: ../gui/gdmsetup.glade.h:48
+#: ../gui/mdmsetup.glade.h:48
 msgid "Maximum indirect w_ait time:"
 msgstr "Uchafrif amser disgwyl a_nuniongyrchol:"
 
-#: ../gui/gdmsetup.glade.h:49
+#: ../gui/mdmsetup.glade.h:49
 msgid "Maximum p_ending indirect requests:"
 msgstr "Uchafrif _ceisiadau anuniongyrchol fydd yn disgwyl:"
 
-#: ../gui/gdmsetup.glade.h:50
+#: ../gui/mdmsetup.glade.h:50
 msgid "Menu Bar"
 msgstr "Bar Dewislen"
 
-#: ../gui/gdmsetup.glade.h:51
+#: ../gui/mdmsetup.glade.h:51
 msgid "Op_tions:\t"
 msgstr "Op_siynau:\t"
 
-#: ../gui/gdmsetup.glade.h:52
+#: ../gui/mdmsetup.glade.h:52
 msgid "Pick Background Color"
 msgstr "Dewis Lliw Cefndir"
 
-#: ../gui/gdmsetup.glade.h:53
+#: ../gui/mdmsetup.glade.h:53
 msgid "Pin_g interval:"
 msgstr "Cyfnod _Pingio:"
 
-#: ../gui/gdmsetup.glade.h:54
+#: ../gui/mdmsetup.glade.h:54
 msgid ""
 "Plain\n"
 "Plain with face browser\n"
@@ -3654,23 +3654,23 @@ msgstr ""
 "Plaen gyda phorwr wynebau\n"
 "Themâu"
 
-#: ../gui/gdmsetup.glade.h:57
+#: ../gui/mdmsetup.glade.h:57
 msgid "R_emove"
 msgstr "_Tynnu"
 
-#: ../gui/gdmsetup.glade.h:58
+#: ../gui/mdmsetup.glade.h:58
 msgid "Re_move Server"
 msgstr "_Tynnu Gweinydd"
 
-#: ../gui/gdmsetup.glade.h:59
+#: ../gui/mdmsetup.glade.h:59
 msgid "Refresh rate:"
 msgstr "Cyfradd adnewyddu:"
 
-#: ../gui/gdmsetup.glade.h:60
+#: ../gui/mdmsetup.glade.h:60
 msgid "Remote"
 msgstr "Pell"
 
-#: ../gui/gdmsetup.glade.h:61
+#: ../gui/mdmsetup.glade.h:61
 msgid ""
 "Remote login disabled\n"
 "Same as Local"
@@ -3678,31 +3678,31 @@ msgstr ""
 "Mewngofnodi pell wedi'u analluogi\n"
 "Yr un peth â'r lleol"
 
-#: ../gui/gdmsetup.glade.h:63
+#: ../gui/mdmsetup.glade.h:63
 msgid "Resolution:"
 msgstr "Cydraniad:"
 
-#: ../gui/gdmsetup.glade.h:64
+#: ../gui/mdmsetup.glade.h:64
 msgid "Sc_ale to fit screen"
 msgstr "_Graddio i lenwi'r sgrin"
 
-#: ../gui/gdmsetup.glade.h:65
+#: ../gui/mdmsetup.glade.h:65
 msgid "Security"
 msgstr "Diogelwch"
 
-#: ../gui/gdmsetup.glade.h:66
+#: ../gui/mdmsetup.glade.h:66
 msgid "Select Background Image"
 msgstr "Dewis Delwedd Cefndir"
 
-#: ../gui/gdmsetup.glade.h:67
+#: ../gui/mdmsetup.glade.h:67
 msgid "Select Logo Image"
 msgstr "Dewis Delwedd Logo"
 
-#: ../gui/gdmsetup.glade.h:68
+#: ../gui/mdmsetup.glade.h:68
 msgid "Select Sound File"
 msgstr "Dewis Ffeil Sain"
 
-#: ../gui/gdmsetup.glade.h:69
+#: ../gui/mdmsetup.glade.h:69
 msgid ""
 "Selected only\n"
 "Random from selected\n"
@@ -3710,152 +3710,152 @@ msgstr ""
 "Dewisedig yn unig\n"
 "Ar hap o'r rhai wedi'u dewis\n"
 
-#: ../gui/gdmsetup.glade.h:72
+#: ../gui/mdmsetup.glade.h:72
 msgid "Server Settings"
 msgstr "Gosodiadau Gweinydd"
 
-#: ../gui/gdmsetup.glade.h:73
+#: ../gui/mdmsetup.glade.h:73
 msgid "Server _name:"
 msgstr "Enw _gweinydd:"
 
-#: ../gui/gdmsetup.glade.h:74
+#: ../gui/mdmsetup.glade.h:74
 msgid "Servers To Start"
 msgstr "Gweinyddion i'w Cychwyn"
 
-#: ../gui/gdmsetup.glade.h:75
+#: ../gui/mdmsetup.glade.h:75
 msgid "Sho_w Actions menu"
 msgstr "Dangos dewislen _Gweithredoedd"
 
-#: ../gui/gdmsetup.glade.h:77
+#: ../gui/mdmsetup.glade.h:77
 msgid "Themes"
 msgstr "Themau"
 
-#: ../gui/gdmsetup.glade.h:78
+#: ../gui/mdmsetup.glade.h:78
 msgid "U_ser:"
 msgstr "_Defnyddiwr:"
 
-#: ../gui/gdmsetup.glade.h:79
+#: ../gui/mdmsetup.glade.h:79
 msgid "Users"
 msgstr "Defnyddwyr"
 
-#: ../gui/gdmsetup.glade.h:80
+#: ../gui/mdmsetup.glade.h:80
 msgid "Welcome Message"
 msgstr "Neges Groeso"
 
-#: ../gui/gdmsetup.glade.h:81
+#: ../gui/mdmsetup.glade.h:81
 msgid "X Server Login Window Preferences"
 msgstr "Dewisiadau Ffenestr Mewngofnodi Gweinydd X"
 
-#: ../gui/gdmsetup.glade.h:82
+#: ../gui/mdmsetup.glade.h:82
 msgid "XDMCP Login Window Preferences"
 msgstr "Dewisiadau Ffenestr Mewngofnodi XDMCP"
 
-#: ../gui/gdmsetup.glade.h:83
+#: ../gui/mdmsetup.glade.h:83
 msgid "_Add..."
 msgstr "_Ychwanegu..."
 
-#: ../gui/gdmsetup.glade.h:84
+#: ../gui/mdmsetup.glade.h:84
 msgid "_Add/Modify..."
 msgstr "_Ychwanegu/Newid..."
 
-#: ../gui/gdmsetup.glade.h:85
+#: ../gui/mdmsetup.glade.h:85
 msgid "_Allow local system administrator login"
 msgstr "_Caniatáu i weinyddwr y system fewngofnodi yn lleol"
 
-#: ../gui/gdmsetup.glade.h:86
+#: ../gui/mdmsetup.glade.h:86
 msgid "_Allow users to change fonts and colors of plain greeter"
 msgstr "_Caniatáu i ddefnyddwyr newid ffontiau a lliwiau'r cyfarchwr sylfaenol"
 
-#: ../gui/gdmsetup.glade.h:87
+#: ../gui/mdmsetup.glade.h:87
 msgid "_Background color:"
 msgstr "_Lliw Cefndir: "
 
-#: ../gui/gdmsetup.glade.h:89
+#: ../gui/mdmsetup.glade.h:89
 #, no-c-format
 msgid "_Default: \"Welcome to %n\""
 msgstr "_Rhagosodiad: \"Croeso i %n\""
 
-#: ../gui/gdmsetup.glade.h:90
+#: ../gui/mdmsetup.glade.h:90
 msgid "_Default: \"Welcome\""
 msgstr "_Rhagosodiad: \"Croeso\""
 
-#: ../gui/gdmsetup.glade.h:91
+#: ../gui/mdmsetup.glade.h:91
 msgid "_Deny TCP connections to Xserver"
 msgstr "_Gwrthod cysylltiadau TCP â'r gweinydd X"
 
-#: ../gui/gdmsetup.glade.h:92
+#: ../gui/mdmsetup.glade.h:92
 msgid "_Enable Automatic Login"
 msgstr "_Galluogi Mewngofnodi Awtomatig"
 
-#: ../gui/gdmsetup.glade.h:93
+#: ../gui/mdmsetup.glade.h:93
 msgid "_Enable accessible login"
 msgstr "Galluogi mewngofnodi _hygyrchol"
 
-#: ../gui/gdmsetup.glade.h:94
+#: ../gui/mdmsetup.glade.h:94
 msgid "_Flexible (on demand)"
 msgstr "_Hyblyg (ar ofyn)"
 
-#: ../gui/gdmsetup.glade.h:95
+#: ../gui/mdmsetup.glade.h:95
 msgid "_Image:"
 msgstr "_Delwedd:"
 
-#: ../gui/gdmsetup.glade.h:96
+#: ../gui/mdmsetup.glade.h:96
 msgid "_Include all users from /etc/passwd (not for NIS)"
 msgstr "_Cynnwys bob defnyddiwr o /etc/passwd (ddim ar gyfer NIS)"
 
-#: ../gui/gdmsetup.glade.h:97
+#: ../gui/mdmsetup.glade.h:97
 msgid "_Login screen ready:"
 msgstr "_Sgrin mewngofnodi yn barod:"
 
-#: ../gui/gdmsetup.glade.h:98
+#: ../gui/mdmsetup.glade.h:98
 msgid "_Logins are handled by this computer"
 msgstr "_Mae'r cyfrifiadur hwn yn delio â cheisiadau i fewngofnodi"
 
-#: ../gui/gdmsetup.glade.h:99
+#: ../gui/mdmsetup.glade.h:99
 msgid "_Pause before login:"
 msgstr "_Saib cyn mewngofnodi:"
 
-#: ../gui/gdmsetup.glade.h:100
+#: ../gui/mdmsetup.glade.h:100
 msgid "_Remove"
 msgstr "_Tynnu"
 
-#: ../gui/gdmsetup.glade.h:101
+#: ../gui/mdmsetup.glade.h:101
 msgid "_Remove..."
 msgstr "_Tynnu..."
 
-#: ../gui/gdmsetup.glade.h:102
+#: ../gui/mdmsetup.glade.h:102
 msgid "_Server:"
 msgstr "_Gweinydd:"
 
-#: ../gui/gdmsetup.glade.h:103
+#: ../gui/mdmsetup.glade.h:103
 msgid "_Servers:"
 msgstr "_Gweinyddion:"
 
-#: ../gui/gdmsetup.glade.h:104
+#: ../gui/mdmsetup.glade.h:104
 msgid "_Style:"
 msgstr "_Arddull:"
 
-#: ../gui/gdmsetup.glade.h:105
+#: ../gui/mdmsetup.glade.h:105
 msgid "_Theme:"
 msgstr "_Thema:"
 
-#: ../gui/gdmsetup.glade.h:106
+#: ../gui/mdmsetup.glade.h:106
 msgid "_User:"
 msgstr "_Defnyddiwr:"
 
-#: ../gui/gdmsetup.glade.h:107
+#: ../gui/mdmsetup.glade.h:107
 msgid "_VT:"
 msgstr "_VT:"
 
-#: ../gui/gdmsetup.glade.h:108
+#: ../gui/mdmsetup.glade.h:108
 msgid "dummy"
 msgstr "dymi"
 
-#: ../gui/gdmsetup.glade.h:109
+#: ../gui/mdmsetup.glade.h:109
 msgid "seconds"
 msgstr "eiliad"
 
-#: ../gui/gdmuser.c:276 ../gui/gdmuser.c:278
+#: ../gui/mdmuser.c:276 ../gui/mdmuser.c:278
 msgid "Too many users to list here..."
 msgstr "Gormod o ddefnyddwyr i'w rhestru yma..."
 
@@ -3890,19 +3890,19 @@ msgstr ""
 #: ../gui/greeter/greeter.c:1318
 msgid ""
 "The GTK+ greeter could not be started.  This display will abort and you may "
-"have to login another way and fix the installation of GDM"
+"have to login another way and fix the installation of MDM"
 msgstr ""
 "Methwyd cychwyn y cyfarchwr GTK+ safonol.  Bydd y dangosydd yn atal, a bydd "
-"rhaid i chi fewngofnodi mewn ffordd wahanol i drwsio'r gosodiad o GDM"
+"rhaid i chi fewngofnodi mewn ffordd wahanol i drwsio'r gosodiad o MDM"
 
 #: ../gui/greeter/greeter.c:1367
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the gdm "
+"sessions you can use, but you should log in and correct the mdm "
 "configuration."
 msgstr ""
 "Mae eich cyfeiriadur sesiwn ar goll neu yn wag! Mae dwy sesiwn ar gael i "
-"chi'u defnyddio, ond dylech fewngofnodi a chywiro cyfluniad gdm."
+"chi'u defnyddio, ond dylech fewngofnodi a chywiro cyfluniad mdm."
 
 #: ../gui/greeter/greeter_action_language.c:66
 msgid "Last Language"
@@ -4048,49 +4048,49 @@ msgstr "_Cyflunio'r rheolydd mewngofnodi"
 
 #: ../gui/greeter/greeter_system.c:357
 msgid ""
-"Configure GDM (this login manager). This will require the root password."
+"Configure MDM (this login manager). This will require the root password."
 msgstr ""
-"Cyflunio GDM (y rheolydd mewngofnodi yma). Bydd hyn angen cyfrinair root"
+"Cyflunio MDM (y rheolydd mewngofnodi yma). Bydd hyn angen cyfrinair root"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 Bond, James Bond"
 msgstr "© 2002 Bond, James Bond"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:2
 msgid "Bond, James Bond"
 msgstr "Bond, James Bond"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:3
 msgid "Circles"
 msgstr "Cylchoedd"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:4
 msgid "Theme with blue circles"
 msgstr "Thema gyda chylchoedd glas"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:1
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 GNOME"
 msgstr "(c) 2002 GNOME"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles with a Face Browser"
 msgstr "Amrywiad Celf GNOME o'r Cylchoedd gyda Phorwr Wyneb"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:3
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:3
 msgid "GNOME Artists"
 msgstr "Artistiaid GNOME"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME with Browser"
 msgstr "GNOME Hapus gyda Phorwr"
 
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles"
 msgstr "Amrywiad Celf GNOME o Gylchoedd"
 
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME"
 msgstr "GNOME Hapus"
 
@@ -4109,65 +4109,65 @@ msgstr ""
 msgid "Cannot open gestures file: %s"
 msgstr "Methu agor ffeil ystum: %s"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:38
+#: ../utils/mdm-dmx-reconnect-proxy.c:38
 msgid "DMX display to migrate to"
 msgstr "Dangosydd DMX i fudo iddo"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:39 ../utils/gdm-dmx-reconnect-proxy.c:44
+#: ../utils/mdm-dmx-reconnect-proxy.c:39 ../utils/mdm-dmx-reconnect-proxy.c:44
 msgid "DISPLAY"
 msgstr "DANGOSYDD"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:43
+#: ../utils/mdm-dmx-reconnect-proxy.c:43
 msgid "Backend display name"
 msgstr "Enw dangosydd ochr gefn"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:48
+#: ../utils/mdm-dmx-reconnect-proxy.c:48
 msgid "Xauthority file for destination display"
 msgstr "Ffeil Xauthority ar gyfer y dangosydd cyrchfan"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:49 ../utils/gdm-dmx-reconnect-proxy.c:54
+#: ../utils/mdm-dmx-reconnect-proxy.c:49 ../utils/mdm-dmx-reconnect-proxy.c:54
 msgid "AUTHFILE"
 msgstr "FFEIL_AUTH"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:53
+#: ../utils/mdm-dmx-reconnect-proxy.c:53
 msgid "Xauthority file for backend display"
 msgstr "Ffeil Xauthority ar gyfer y dangosydd ochr gefn"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:71
+#: ../utils/mdm-dmx-reconnect-proxy.c:71
 #, c-format
 msgid "Failed to open display \"%s\"\n"
 msgstr "Methu agor y dangosydd \"%s\"\n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:75
+#: ../utils/mdm-dmx-reconnect-proxy.c:75
 #, c-format
 msgid "DMX extension not present on \"%s\"\n"
 msgstr "Estyniad DMX ddim yn bresennol ar \"%s\"\n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:98
+#: ../utils/mdm-dmx-reconnect-proxy.c:98
 msgid "- migrate a backend display from one DMX display to another"
 msgstr "-mudo dangosydd ochr gefn o un dangosydd DMX i'r llall"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:104
+#: ../utils/mdm-dmx-reconnect-proxy.c:104
 #, c-format
 msgid "You must specify a destination DMX display using %s\n"
 msgstr "Rhaid i chi benodi dangosydd cyrchfan DMX gan ddefnyddio %s\n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:109
+#: ../utils/mdm-dmx-reconnect-proxy.c:109
 #, c-format
 msgid "You must specify a backend display by using %s\n"
 msgstr "Rhaid i chi benodi dangosydd ochr gefn gan ddefnyddio %s\n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:124
+#: ../utils/mdm-dmx-reconnect-proxy.c:124
 #, c-format
 msgid "DMXAddScreen \"%s\" failed on \"%s\"\n"
 msgstr "DMXAddScreen \"%s\" wedi methu ar \"%s\"\n"
 
-#: ../utils/gdmaskpass.c:26
+#: ../utils/mdmaskpass.c:26
 #, c-format
-msgid "gdmaskpass only runs as root\n"
-msgstr "gdmaskpass ond yn rhedeg fel root\n"
+msgid "mdmaskpass only runs as root\n"
+msgstr "mdmaskpass ond yn rhedeg fel root\n"
 
-#: ../utils/gdmaskpass.c:42 ../utils/gdmaskpass.c:48
+#: ../utils/mdmaskpass.c:42 ../utils/mdmaskpass.c:48
 #, c-format
 msgid "Authentication failure!\n"
 msgstr "Nam dilysiant!\n"
@@ -4280,11 +4280,11 @@ msgstr "Gormod o lefelau ffugenw ar gyfer y locale; gall fod dolen"
 
 #~ msgid ""
 #~ "The greeter version (%s) does not match the daemon version.  You have "
-#~ "probably just upgraded GDM.  Please restart the GDM daemon or the "
+#~ "probably just upgraded MDM.  Please restart the MDM daemon or the "
 #~ "computer."
 #~ msgstr ""
 #~ "Nid yw fersiwn y cyfarchwr (%s) yn cyfateb â fersiwn yr ellyll.  Mae'n "
-#~ "debyg eich bod chi newydd uwchraddio GDM. Ailgychwynnwch yr ellyll GDM "
+#~ "debyg eich bod chi newydd uwchraddio MDM. Ailgychwynnwch yr ellyll MDM "
 #~ "neu'r cyfrifiadur os gwelwch yn dda."
 
 #~ msgid ""

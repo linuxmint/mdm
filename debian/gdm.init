@@ -1,6 +1,6 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          gdm
+# Provides:          mdm
 # Should-Start:      console-screen kbd acpid dbus hal network-manager
 # Required-Start:    $local_fs $remote_fs x11-common
 # Required-Stop:     $local_fs $remote_fs
@@ -15,7 +15,7 @@
 set -e
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/sbin/gdm
+DAEMON=/usr/sbin/mdm
 
 test -x $DAEMON || exit 0
 
@@ -26,7 +26,7 @@ fi
 
 . /lib/lsb/init-functions
 
-# To start gdm even if it is not the default display manager, change
+# To start mdm even if it is not the default display manager, change
 # HEED_DEFAULT_DISPLAY_MANAGER to "false."
 HEED_DEFAULT_DISPLAY_MANAGER=true
 DEFAULT_DISPLAY_MANAGER_FILE=/etc/X11/default-display-manager
@@ -35,42 +35,42 @@ case "$1" in
   start)
         CONFIGURED_DAEMON=$(basename "$(cat $DEFAULT_DISPLAY_MANAGER_FILE 2> /dev/null)")
         if grep -wqs text /proc/cmdline; then
-            log_warning_msg "Not starting GNOME Display Manager (gdm); found 'text' in kernel commandline."
+            log_warning_msg "Not starting GNOME Display Manager (mdm); found 'text' in kernel commandline."
         elif [ -e "$DEFAULT_DISPLAY_MANAGER_FILE" ] && \
            [ "$HEED_DEFAULT_DISPLAY_MANAGER" = "true" ] && \
-           [ "$CONFIGURED_DAEMON" != gdm ] ; then
+           [ "$CONFIGURED_DAEMON" != mdm ] ; then
                 log_action_msg "Not starting GNOME Display Manager; it is not the default display manager"
         else
-                log_daemon_msg "Starting GNOME Display Manager" "gdm"
+                log_daemon_msg "Starting GNOME Display Manager" "mdm"
                 start_daemon $DAEMON
                 log_end_msg $?
         fi
   ;;
   stop)
-        log_daemon_msg "Stopping GNOME Display Manager" "gdm"
+        log_daemon_msg "Stopping GNOME Display Manager" "mdm"
         set +e
-        start-stop-daemon --stop --quiet --pidfile /var/run/gdm.pid \
-                --name gdm --retry 5
+        start-stop-daemon --stop --quiet --pidfile /var/run/mdm.pid \
+                --name mdm --retry 5
         set -e
         log_end_msg $?
   ;;
   reload)
-        log_daemon_msg "Scheduling reload of GNOME Display Manager configuration" "gdm"
+        log_daemon_msg "Scheduling reload of GNOME Display Manager configuration" "mdm"
         set +e
         start-stop-daemon --stop --signal USR1 --quiet --pidfile \
-                /var/run/gdm.pid --name gdm
+                /var/run/mdm.pid --name mdm
         set -e
         log_end_msg $?
   ;;
   status)
-        status_of_proc -p "$PIDFILE" "$DAEMON" gdm && exit 0 || exit $?
+        status_of_proc -p "$PIDFILE" "$DAEMON" mdm && exit 0 || exit $?
   ;;
   restart|force-reload)
         $0 stop
         $0 start
   ;;
   *)
-        echo "Usage: /etc/init.d/gdm {start|stop|restart|reload|force-reload|status}"
+        echo "Usage: /etc/init.d/mdm {start|stop|restart|reload|force-reload|status}"
         exit 1
   ;;
 esac

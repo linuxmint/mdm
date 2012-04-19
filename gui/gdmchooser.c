@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K, Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* gdmchooser discovers hosts running XDMCP on the local network (s),
+/* mdmchooser discovers hosts running XDMCP on the local network (s),
  * presents a list of them and allows the user to choose one. The
  * selected hostname will be printed on stdout. */
 
@@ -51,17 +51,17 @@
 #include <glib/gi18n.h>
 #include <glade/glade.h>
 
-#include "gdm.h"
+#include "mdm.h"
 #include "misc.h"
-#include "gdmwm.h"
-#include "gdmcomm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
+#include "mdmwm.h"
+#include "mdmcomm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config-keys.h"
 
-static gboolean RUNNING_UNDER_GDM = FALSE;
+static gboolean RUNNING_UNDER_MDM = FALSE;
 
 enum {
 	CHOOSER_LIST_ICON_COLUMN = 0,
@@ -69,8 +69,8 @@ enum {
 	CHOOSER_LIST_HOST_COLUMN
 };
 
-typedef struct _GdmChooserHost GdmChooserHost;
-struct _GdmChooserHost {
+typedef struct _MdmChooserHost MdmChooserHost;
+struct _MdmChooserHost {
 	gchar *name;
 	gchar *desc;
 #ifdef ENABLE_IPV6
@@ -93,17 +93,17 @@ static gchar *client_address = NULL;
 static gint connection_type = 0;
 
 /* Exported for glade */
-void gdm_chooser_add_host (void);
-void gdm_chooser_add_entry_changed (void);
-void gdm_chooser_cancel (int sig);
-void gdm_chooser_manage (GtkButton *button, gpointer data);
-void gdm_chooser_browser_select (GtkWidget *widget,
+void mdm_chooser_add_host (void);
+void mdm_chooser_add_entry_changed (void);
+void mdm_chooser_cancel (int sig);
+void mdm_chooser_manage (GtkButton *button, gpointer data);
+void mdm_chooser_browser_select (GtkWidget *widget,
 				 gint selected,
 				 GdkEvent *event);
-void gdm_chooser_browser_unselect (GtkWidget *widget,
+void mdm_chooser_browser_unselect (GtkWidget *widget,
 				   gint selected,
 				   GdkEvent *event);
-void gdm_chooser_xdmcp_discover (void);
+void mdm_chooser_xdmcp_discover (void);
 void display_chooser_information (void);
 
 #define ADD_TIMEOUT 3000
@@ -149,9 +149,9 @@ static GSList *bcaddr;
 static GSList *queryaddr;
 
 enum {
-	GDM_BACKGROUND_NONE = 0,
-	GDM_BACKGROUND_IMAGE = 1,
-	GDM_BACKGROUND_COLOR = 2
+	MDM_BACKGROUND_NONE = 0,
+	MDM_BACKGROUND_IMAGE = 1,
+	MDM_BACKGROUND_COLOR = 2
 };
 
 static GladeXML *chooser_app;
@@ -163,16 +163,16 @@ static GList *chooser_hosts = NULL;
 static GdkPixbuf *defhostimg;
 static GtkWidget *browser;
 static GtkTreeModel *browser_model;
-static GdmChooserHost *curhost;
+static MdmChooserHost *curhost;
 
 static gboolean have_ipv6;      /* Socket is IPv4 or IPv6 */
 
 static gboolean
-find_host_in_list (GdmChooserHost *host, GtkTreeIter *iter)
+find_host_in_list (MdmChooserHost *host, GtkTreeIter *iter)
 {
 	if (gtk_tree_model_get_iter_first (browser_model, iter)) {
 		do {
-			GdmChooserHost *lhost;
+			MdmChooserHost *lhost;
 			gtk_tree_model_get (browser_model, iter,
 					    CHOOSER_LIST_HOST_COLUMN, &lhost,
 					    -1);
@@ -184,7 +184,7 @@ find_host_in_list (GdmChooserHost *host, GtkTreeIter *iter)
 }
 
 static void
-gdm_chooser_host_dispose (GdmChooserHost *host)
+mdm_chooser_host_dispose (MdmChooserHost *host)
 {
 	if (!host)
 		return;
@@ -200,19 +200,19 @@ gdm_chooser_host_dispose (GdmChooserHost *host)
 	g_free (host);
 }
 
-static GdmChooserHost *
-gdm_chooser_host_alloc (const char *hostname,
+static MdmChooserHost *
+mdm_chooser_host_alloc (const char *hostname,
 			const char *description,
 			char *ia,
 			int family,
 			gboolean willing)
 {
-	GdmChooserHost *host;
+	MdmChooserHost *host;
 	GdkPixbuf *img;
 	gchar *hostimg;
 	gchar *hostimgdir;
 
-	host = g_new0 (GdmChooserHost, 1);
+	host = g_new0 (MdmChooserHost, 1);
 	host->name = g_strdup (hostname);
 	host->desc = g_strdup (description);
 	host->willing = willing;
@@ -230,7 +230,7 @@ gdm_chooser_host_alloc (const char *hostname,
 	if ( ! willing)
 		return host;
 
-	hostimgdir = gdm_config_get_string (GDM_KEY_HOST_IMAGE_DIR); 
+	hostimgdir = mdm_config_get_string (MDM_KEY_HOST_IMAGE_DIR); 
 	hostimg    = g_strconcat (hostimgdir, "/", hostname, NULL);
 	if (g_access (hostimg, R_OK) != 0) {
 		g_free (hostimg);
@@ -244,8 +244,8 @@ gdm_chooser_host_alloc (const char *hostname,
 		w = gdk_pixbuf_get_width (img);
 		h = gdk_pixbuf_get_height (img);
 
-		maxw = gdm_config_get_int (GDM_KEY_MAX_ICON_WIDTH);
-		maxh = gdm_config_get_int (GDM_KEY_MAX_ICON_HEIGHT);
+		maxw = mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH);
+		maxh = mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT);
 
 		if (w > h && w > maxw) {
 			h = h * ((gfloat) maxw / w);
@@ -274,7 +274,7 @@ gdm_chooser_host_alloc (const char *hostname,
 }
 
 static void
-gdm_chooser_browser_add_host (GdmChooserHost *host)
+mdm_chooser_browser_add_host (MdmChooserHost *host)
 {
 	gboolean add_this_host = FALSE;
 
@@ -354,13 +354,13 @@ gdm_chooser_browser_add_host (GdmChooserHost *host)
 	gtk_widget_set_sensitive (GTK_WIDGET (browser), TRUE);
 }
 
-static GdmChooserHost *
-gdm_host_known (char *ia, gint family)
+static MdmChooserHost *
+mdm_host_known (char *ia, gint family)
 {
 	GList *li;
 
 	for (li = chooser_hosts; li != NULL; li = li->next) {
-		GdmChooserHost *host = li->data;
+		MdmChooserHost *host = li->data;
 #ifdef ENABLE_IPV6
 		if (family == AF_INET6) {
 			if (host->addrtype != AF_INET6)
@@ -399,7 +399,7 @@ is_loopback_addr (char *ia, gint family)
 }
 
 static gboolean
-gdm_addr_known (char *ia, gint family)
+mdm_addr_known (char *ia, gint family)
 {
 	GSList *li;
 
@@ -457,7 +457,7 @@ hig_dialog_new (GtkWindow      *parent,
 }
 
 static gboolean
-gdm_chooser_decode_packet (GIOChannel   *source,
+mdm_chooser_decode_packet (GIOChannel   *source,
 			   GIOCondition  condition,
 			   gpointer      data)
 {
@@ -473,7 +473,7 @@ gdm_chooser_decode_packet (GIOChannel   *source,
 	gchar *hostname = NULL;
 	gchar *status = NULL;
 	ARRAY8 auth = {0}, host = {0}, stat = {0};
-	GdmChooserHost *gh;
+	MdmChooserHost *gh;
 	int pipe_buf;
 	gboolean host_not_willing = FALSE;
 
@@ -557,7 +557,7 @@ gdm_chooser_decode_packet (GIOChannel   *source,
 				goto done;
 			}
 			added6_addr = NULL;
-			gh = gdm_host_known ((char *)&clnt6_sa.sin6_addr, AF_INET6);
+			gh = mdm_host_known ((char *)&clnt6_sa.sin6_addr, AF_INET6);
 		}
 	} else
 #endif
@@ -589,18 +589,18 @@ gdm_chooser_decode_packet (GIOChannel   *source,
 
 #ifdef ENABLE_IPV6
 	if (have_ipv6 && ((struct sockaddr *) &clnt6_sa)->sa_family == AF_INET6) {
-		gh = gdm_host_known ((char *)&clnt6_sa.sin6_addr, AF_INET6);
+		gh = mdm_host_known ((char *)&clnt6_sa.sin6_addr, AF_INET6);
 		if (gh == NULL) {
-			gh = gdm_chooser_host_alloc (hostname, status, (char *)&clnt6_sa.sin6_addr, AF_INET6, header.opcode == WILLING);
-			gdm_chooser_browser_add_host (gh);
+			gh = mdm_chooser_host_alloc (hostname, status, (char *)&clnt6_sa.sin6_addr, AF_INET6, header.opcode == WILLING);
+			mdm_chooser_browser_add_host (gh);
 		}
 	} else
 #endif
 		{
-			gh = gdm_host_known ((char *)&clnt_sa.sin_addr, AF_INET);
+			gh = mdm_host_known ((char *)&clnt_sa.sin_addr, AF_INET);
 			if (gh == NULL) {
-				gh = gdm_chooser_host_alloc (hostname, status, (char *)&clnt_sa.sin_addr, AF_INET, header.opcode == WILLING);
-				gdm_chooser_browser_add_host (gh);
+				gh = mdm_chooser_host_alloc (hostname, status, (char *)&clnt_sa.sin_addr, AF_INET, header.opcode == WILLING);
+				mdm_chooser_browser_add_host (gh);
 			}
 		}
 	if (gh != NULL) {
@@ -608,7 +608,7 @@ gdm_chooser_decode_packet (GIOChannel   *source,
 		if (header.opcode == WILLING &&
 		    ! gh->willing) {
 			gh->willing = TRUE;
-			gdm_chooser_browser_add_host (gh);
+			mdm_chooser_browser_add_host (gh);
 		}
 		/* hmmm what about the other change, just ignore
 		   for now, it's kind of confusing to just remove
@@ -657,13 +657,13 @@ gdm_chooser_decode_packet (GIOChannel   *source,
 
 		g_free (msg);
 
-		if (RUNNING_UNDER_GDM)
-			gdm_wm_center_window (GTK_WINDOW (dialog));
+		if (RUNNING_UNDER_MDM)
+			mdm_wm_center_window (GTK_WINDOW (dialog));
 
-		gdm_wm_no_login_focus_push ();
+		mdm_wm_no_login_focus_push ();
 		gtk_dialog_run (GTK_DIALOG (dialog));
 		gtk_widget_destroy (dialog);
-		gdm_wm_no_login_focus_pop ();
+		mdm_wm_no_login_focus_pop ();
 
 		g_free (added_host);
 		added_host = NULL;
@@ -686,7 +686,7 @@ gdm_chooser_decode_packet (GIOChannel   *source,
 
 /* Find broadcast address for all active, non pointopoint interfaces */
 static void
-gdm_chooser_find_bcaddr (void)
+mdm_chooser_find_bcaddr (void)
 {
 	int i = 0, num;
 	int sock;
@@ -707,7 +707,7 @@ gdm_chooser_find_bcaddr (void)
 	ifc.ifc_buf = buf = g_malloc0 (ifc.ifc_len);
 	if (ioctl (sock, SIOCGIFCONF, &ifc) < 0) {
 		g_free (buf);
-		gdm_common_error ("Could not get local addresses!");
+		mdm_common_error ("Could not get local addresses!");
 		close (sock);
 		return;
 	}
@@ -733,7 +733,7 @@ gdm_chooser_find_bcaddr (void)
 			 *  Fixes bug #544790.
 			 */
 			if ((ioctl (sock, SIOCGIFFLAGS, &ifreq) < 0) && (errno != ENXIO))
-				gdm_common_error ("Could not get SIOCGIFFLAGS for %s", ifr[i].ifr_name);
+				mdm_common_error ("Could not get SIOCGIFFLAGS for %s", ifr[i].ifr_name);
 
 			if ((ifreq.ifr_flags & IFF_UP) == 0 ||
 			    (ifreq.ifr_flags & IFF_BROADCAST) == 0 ||
@@ -756,7 +756,7 @@ gdm_chooser_find_bcaddr (void)
 /* Append multicast address into the list */
 #ifdef ENABLE_IPV6
 static void
-gdm_chooser_find_mcaddr (void)
+mdm_chooser_find_mcaddr (void)
 {
 	struct sockaddr_in6 *sin6;
 	int sock;       /* Temporary socket for getting information about available interfaces */
@@ -779,7 +779,7 @@ gdm_chooser_find_mcaddr (void)
 	ifc.ifc_buf = buf = malloc (ifc.ifc_len);
 
 	if (setsockopt (sock, IPPROTO_IPV6, IPV6_MULTICAST_LOOP, &loop, sizeof (loop)) < 0)
-		gdm_common_error ("setsockopt: Could not disable loopback interface for multicasting\n");
+		mdm_common_error ("setsockopt: Could not disable loopback interface for multicasting\n");
 
 	if (ioctl (sock, SIOCGIFCONF, &ifc) >= 0)
 		ifr = ifc.ifc_req;
@@ -793,7 +793,7 @@ gdm_chooser_find_mcaddr (void)
 		ifreq.ifr_name[sizeof (ifreq.ifr_name) - 1] = '\0';
 
 		if (ioctl (sock, SIOCGIFFLAGS, &ifreq) < 0)
-			gdm_common_error ("Could not get interface flags for %s\n", ifr[i].ifr_name); 
+			mdm_common_error ("Could not get interface flags for %s\n", ifr[i].ifr_name); 
 		ifindex = if_nametoindex (ifr[i].ifr_name);
                                                             
 		if ((!(ifreq.ifr_flags & IFF_UP) || (!(ifreq.ifr_flags & IFF_MULTICAST))) || (ifindex == 0 )) {
@@ -805,7 +805,7 @@ gdm_chooser_find_mcaddr (void)
 		sin6->sin6_family = AF_INET6;
 		sin6->sin6_port = htons (XDM_UDP_PORT);
 		sin6->sin6_scope_id = ifindex;
-		inet_pton (AF_INET6, gdm_config_get_string (GDM_KEY_MULTICAST_ADDR),
+		inet_pton (AF_INET6, mdm_config_get_string (MDM_KEY_MULTICAST_ADDR),
 			   &sin6->sin6_addr);
 
 		/* bcaddr is also serving for multicast address for IPv6 */
@@ -820,7 +820,7 @@ chooser_scan_time_update (gpointer data)
 	GList *li;
 	scan_time_handler = 0;
 	for (li = chooser_hosts; li != NULL; li = li->next) {
-		GdmChooserHost *host = (GdmChooserHost *) li->data;
+		MdmChooserHost *host = (MdmChooserHost *) li->data;
 		if (host->willing)
 			break;
 	}
@@ -893,14 +893,14 @@ do_ping (gboolean full)
 				sprintf (tmpaddr, "::ffff:%s", inet_ntoa (((struct sockaddr_in *)(ia))->sin_addr));
 				inet_pton (AF_INET6, tmpaddr, &in6);
 
-				if (full || ! gdm_host_known ((char *)&((struct sockaddr_in6 *)ia)->sin6_addr, AF_INET6)) {
+				if (full || ! mdm_host_known ((char *)&((struct sockaddr_in6 *)ia)->sin6_addr, AF_INET6)) {
 					memcpy (sock6.sin6_addr.s6_addr, in6.s6_addr, sizeof (struct in6_addr));
 					XdmcpFlush (sockfd, &bcbuf, (XdmcpNetaddr) &sock6, (int) sizeof (struct sockaddr_in6));
 				}
 			}
 
 			if (ia->sa_family == AF_INET6) {
-				if (full || ! gdm_host_known ((char *)&((struct sockaddr_in6 *)ia)->sin6_addr, AF_INET6)) {
+				if (full || ! mdm_host_known ((char *)&((struct sockaddr_in6 *)ia)->sin6_addr, AF_INET6)) {
 					memcpy (&sock6.sin6_addr, &((struct sockaddr_in6 *)ia)->sin6_addr, sizeof (struct in6_addr));
 					XdmcpFlush (sockfd, &querybuf, (XdmcpNetaddr) &sock6, (int) sizeof (struct sockaddr_in6));
 				}
@@ -909,7 +909,7 @@ do_ping (gboolean full)
 		else
 #endif
 			{
-				if (full || ! gdm_host_known ((char *)&((struct sockaddr_in *)ia)->sin_addr, AF_INET)) {
+				if (full || ! mdm_host_known ((char *)&((struct sockaddr_in *)ia)->sin_addr, AF_INET)) {
 					sock.sin_addr.s_addr = ((struct sockaddr_in *)ia)->sin_addr.s_addr;
 					XdmcpFlush (sockfd, &querybuf, (XdmcpNetaddr) &sock, (int)sizeof (struct sockaddr_in));
 				}
@@ -931,7 +931,7 @@ ping_try (gpointer data)
 }
 
 void
-gdm_chooser_xdmcp_discover (void)
+mdm_chooser_xdmcp_discover (void)
 {
 	GList *hl = chooser_hosts;
 
@@ -953,7 +953,7 @@ gdm_chooser_xdmcp_discover (void)
 			     _(scanning_message));
 
 	while (hl) {
-		gdm_chooser_host_dispose ((GdmChooserHost *) hl->data);
+		mdm_chooser_host_dispose ((MdmChooserHost *) hl->data);
 		hl = hl->next;
 	}
 
@@ -964,7 +964,7 @@ gdm_chooser_xdmcp_discover (void)
 
 	if (scan_time_handler > 0)
 		g_source_remove (scan_time_handler);
-	scan_time_handler = g_timeout_add (gdm_config_get_int (GDM_KEY_SCAN_TIME) * 1000, 
+	scan_time_handler = g_timeout_add (mdm_config_get_int (MDM_KEY_SCAN_TIME) * 1000, 
 					   chooser_scan_time_update, NULL);
 
 	/* Note we already used up one try */
@@ -1000,7 +1000,7 @@ from_hex (const char *s, char *d, int len)
 }
 
 static void
-gdm_chooser_add_hosts (char **hosts)
+mdm_chooser_add_hosts (char **hosts)
 {
 	struct hostent *hostent;
 #ifdef ENABLE_IPV6
@@ -1015,12 +1015,12 @@ gdm_chooser_add_hosts (char **hosts)
 		const char *name = hosts[i];
 
 		if (strcmp (name, "BROADCAST") == 0) {
-			gdm_chooser_find_bcaddr ();
+			mdm_chooser_find_bcaddr ();
 			continue;
 		}
 #ifdef ENABLE_IPV6
 		if (strcmp (name, "MULTICAST") == 0) {
-			gdm_chooser_find_mcaddr ();
+			mdm_chooser_find_mcaddr ();
 			continue;
 		}
 #endif
@@ -1113,11 +1113,11 @@ gdm_chooser_add_hosts (char **hosts)
 
 	if (bcaddr == NULL &&
 	    queryaddr == NULL)
-		gdm_chooser_find_bcaddr ();
+		mdm_chooser_find_bcaddr ();
 }
 
 static void
-gdm_chooser_xdmcp_init (char **hosts)
+mdm_chooser_xdmcp_init (char **hosts)
 {
 	static XdmcpHeader header;
 	gint sockopts = 1;
@@ -1131,13 +1131,13 @@ gdm_chooser_xdmcp_init (char **hosts)
 #endif
 	if ( ! have_ipv6) {
 		if ((sockfd = socket (AF_INET, SOCK_DGRAM, 0)) == -1) {
-			gdm_common_fail_exit ("Could not create socket!");
+			mdm_common_fail_exit ("Could not create socket!");
 		}
 	}
 
 	if (setsockopt (sockfd, SOL_SOCKET, SO_BROADCAST,
 			(char *) &sockopts, sizeof (sockopts)) < 0) {
-		gdm_common_fail_exit ("Could not set socket options!");
+		mdm_common_fail_exit ("Could not set socket options!");
 	}
 
 	/* Assemble XDMCP BROADCAST_QUERY packet in static buffer */
@@ -1154,22 +1154,22 @@ gdm_chooser_xdmcp_init (char **hosts)
 	XdmcpWriteHeader (&querybuf, &header);
 	XdmcpWriteARRAY8 (&querybuf, &authlist.authentication);
 
-	gdm_chooser_add_hosts (hosts);
+	mdm_chooser_add_hosts (hosts);
 
 	channel = g_io_channel_unix_new (sockfd);
 	g_io_channel_set_encoding (channel, NULL, NULL);
 	g_io_channel_set_buffered (channel, FALSE);
 	g_io_add_watch_full (channel, G_PRIORITY_DEFAULT,
 			     G_IO_IN|G_IO_PRI|G_IO_ERR|G_IO_HUP|G_IO_NVAL,
-			     gdm_chooser_decode_packet,
+			     mdm_chooser_decode_packet,
 			     GINT_TO_POINTER (sockfd), NULL);
 	g_io_channel_unref (channel);
 
-	gdm_chooser_xdmcp_discover ();
+	mdm_chooser_xdmcp_discover ();
 }
 
 static void
-gdm_chooser_choose_host (const char *hostname)
+mdm_chooser_choose_host (const char *hostname)
 {
 	ARRAY8 tmparr;
 #ifndef ENABLE_IPV6
@@ -1194,7 +1194,7 @@ gdm_chooser_choose_host (const char *hostname)
 
 		if (strlen (xdm_address) > 64 ||
 		    from_hex (xdm_address, xdm_addr, strlen (xdm_address)) != 0) {
-			gdm_common_fail_exit ("gdm_chooser_chooser_host: Invalid xdm address.");
+			mdm_common_fail_exit ("mdm_chooser_chooser_host: Invalid xdm address.");
 		}
 
 		family = (xdm_addr[0] << 8) | xdm_addr[1];
@@ -1210,13 +1210,13 @@ gdm_chooser_choose_host (const char *hostname)
 			memcpy (&in6_addr.sin6_addr, &xdm_address[4], 16);
 
 			if ((fd = socket (PF_INET6, SOCK_STREAM, 0)) == -1) {
-				gdm_common_fail_exit ("gdm_chooser_choose_host: Could not create response socket.");
+				mdm_common_fail_exit ("mdm_chooser_choose_host: Could not create response socket.");
 			}
 
 			if (connect (fd, (struct sockaddr *) &in6_addr,
 				     sizeof (in6_addr)) == -1) {
 
-				gdm_common_fail_exit ("gdm_chooser_chooser_host: Could not connect to xdm.");
+				mdm_common_fail_exit ("mdm_chooser_chooser_host: Could not connect to xdm.");
 			}
 		} else
 #endif
@@ -1229,13 +1229,13 @@ gdm_chooser_choose_host (const char *hostname)
 				in_addr.sin_addr.s_addr = htonl (addr);
 
 				if ((fd = socket (PF_INET, SOCK_STREAM, 0)) == -1) {
-					gdm_common_fail_exit ("gdm_chooser_chooser_host: Could not create response socket.");
+					mdm_common_fail_exit ("mdm_chooser_chooser_host: Could not create response socket.");
 				}
 
 				if (connect (fd, (struct sockaddr *) &in_addr,
 					     sizeof (in_addr)) == -1) {
 
-					gdm_common_fail_exit ("gdm_chooser_chooser_host: Could not connect to xdm.");
+					mdm_common_fail_exit ("mdm_chooser_chooser_host: Could not connect to xdm.");
 				}
 			}
 
@@ -1247,7 +1247,7 @@ gdm_chooser_choose_host (const char *hostname)
 		if (strlen (client_address) > 64 || from_hex (client_address,
 							      client_addr, strlen (client_address)) != 0) {
 
-			gdm_common_fail_exit ("gdm_chooser_chooser_host: Invalid client address.");
+			mdm_common_fail_exit ("mdm_chooser_chooser_host: Invalid client address.");
 		}
 
 		tmparr.data   = (BYTE *) client_addr;
@@ -1264,7 +1264,7 @@ gdm_chooser_choose_host (const char *hostname)
 		status = getaddrinfo (hostname, NULL, &hints, &result);
 
 		if (status != 0) {
-			gdm_common_fail_exit ("gdm_chooser_chooser_host: Could not get host entry for %s",
+			mdm_common_fail_exit ("mdm_chooser_chooser_host: Could not get host entry for %s",
 					      hostname);
 		}
 
@@ -1277,7 +1277,7 @@ gdm_chooser_choose_host (const char *hostname)
 		hentry = gethostbyname (hostname);
 
 		if (!hentry) {
-			gdm_common_fail_exit ("gdm_chooser_chooser_host: Could not get host entry for %s",
+			mdm_common_fail_exit ("mdm_chooser_chooser_host: Could not get host entry for %s",
 					      hostname);
 		}
 
@@ -1325,24 +1325,24 @@ add_check (gpointer data)
 
 		g_free (msg);
 
-		if (RUNNING_UNDER_GDM)
-			gdm_wm_center_window (GTK_WINDOW (dialog));
+		if (RUNNING_UNDER_MDM)
+			mdm_wm_center_window (GTK_WINDOW (dialog));
 
-		gdm_wm_no_login_focus_push ();
+		mdm_wm_no_login_focus_push ();
 		gtk_dialog_run (GTK_DIALOG (dialog));
 		gtk_widget_destroy (dialog);
-		gdm_wm_no_login_focus_pop ();
+		mdm_wm_no_login_focus_pop ();
 	}
 	add_check_handler = 0;
 	return FALSE;
 }
 
 void
-gdm_chooser_add_host (void)
+mdm_chooser_add_host (void)
 {
 	struct hostent *hostent;
 	struct sockaddr_in *qa;
-	GdmChooserHost *host = NULL;
+	MdmChooserHost *host = NULL;
 	struct sockaddr_in sock;
 	gboolean status  = FALSE;
 	const char *name;
@@ -1434,13 +1434,13 @@ gdm_chooser_add_host (void)
 										 msg);
 							g_free (msg);
 
-							if (RUNNING_UNDER_GDM)
-								gdm_wm_center_window (GTK_WINDOW (dialog));
+							if (RUNNING_UNDER_MDM)
+								mdm_wm_center_window (GTK_WINDOW (dialog));
 
-							gdm_wm_no_login_focus_push ();
+							mdm_wm_no_login_focus_push ();
 							gtk_dialog_run (GTK_DIALOG (dialog));
 							gtk_widget_destroy (dialog);
-							gdm_wm_no_login_focus_pop ();
+							mdm_wm_no_login_focus_pop ();
 							g_free (qa);
 #ifdef ENABLE_IPV6
 							g_free (qa6);
@@ -1453,27 +1453,27 @@ gdm_chooser_add_host (void)
 		memset (&sock6, 0, sizeof (struct sockaddr_in6));
 		sock6.sin6_family = AF_INET6;
 		sock6.sin6_port = htons (XDM_UDP_PORT);
-		status = gdm_addr_known ((char *)&qa6->sin6_addr, AF_INET6);
+		status = mdm_addr_known ((char *)&qa6->sin6_addr, AF_INET6);
 		if ( ! status) {
 			queryaddr = g_slist_append (queryaddr, qa6);
 		}
 		if (IN6_IS_ADDR_V4MAPPED (&qa6->sin6_addr)) {
 			memcpy (&qa->sin_addr, &(qa6->sin6_addr.s6_addr[12]), 4);
-			host = gdm_host_known ((char *) &qa->sin_addr, AF_INET);
+			host = mdm_host_known ((char *) &qa->sin_addr, AF_INET);
 		}
 		else
-			host = gdm_host_known ((char *) &qa6->sin6_addr, AF_INET6);
+			host = mdm_host_known ((char *) &qa6->sin6_addr, AF_INET6);
 	} else
 #endif
 		{
 			memset (&sock, 0, sizeof (struct sockaddr_in));
 			sock.sin_family = AF_INET;
 			sock.sin_port = htons (XDM_UDP_PORT);
-			status = gdm_addr_known ((char *)&qa->sin_addr, AF_INET);
+			status = mdm_addr_known ((char *)&qa->sin_addr, AF_INET);
 			if ( ! status) {
 				queryaddr = g_slist_append (queryaddr, qa);
 			}
-			host = gdm_host_known ((char *) &qa->sin_addr, AF_INET);
+			host = mdm_host_known ((char *) &qa->sin_addr, AF_INET);
 		}
 
 	if (host != NULL) {
@@ -1557,7 +1557,7 @@ gdm_chooser_add_host (void)
 }
 
 void
-gdm_chooser_add_entry_changed (void)
+mdm_chooser_add_entry_changed (void)
 {
 	const char *name;
 
@@ -1566,7 +1566,7 @@ gdm_chooser_add_entry_changed (void)
 }
 
 void
-gdm_chooser_cancel (int sig)
+mdm_chooser_cancel (int sig)
 {
 	if (scan_time_handler > 0) {
 		g_source_remove (scan_time_handler);
@@ -1580,7 +1580,7 @@ gdm_chooser_cancel (int sig)
 
 
 void
-gdm_chooser_manage (GtkButton *button, gpointer data)
+mdm_chooser_manage (GtkButton *button, gpointer data)
 {
 	if (scan_time_handler > 0) {
 		g_source_remove (scan_time_handler);
@@ -1588,7 +1588,7 @@ gdm_chooser_manage (GtkButton *button, gpointer data)
 	}
 
 	if (curhost)
-		gdm_chooser_choose_host (curhost->name);
+		mdm_chooser_choose_host (curhost->name);
 
 	/* exit rather gtk_main_quit, it's just safer this way we don't
 	   have to worry about random whackiness happening */
@@ -1617,7 +1617,7 @@ row_activated (GtkTreeView *tree_view,
 	       GtkTreeViewColumn *column)
 {
 	if (curhost != NULL)
-		gdm_chooser_manage (NULL, NULL);
+		mdm_chooser_manage (NULL, NULL);
 }
 
 void
@@ -1640,17 +1640,17 @@ display_chooser_information (void)
 		   "\"Connect\" to open a session to that computer."));
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
-	if (RUNNING_UNDER_GDM)
-		gdm_wm_center_window (GTK_WINDOW (dialog));
+	if (RUNNING_UNDER_MDM)
+		mdm_wm_center_window (GTK_WINDOW (dialog));
 
-	gdm_wm_no_login_focus_push ();
+	mdm_wm_no_login_focus_push ();
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
-	gdm_wm_no_login_focus_pop ();
+	mdm_wm_no_login_focus_pop ();
 }
 
 static void
-gdm_chooser_gui_init (void)
+mdm_chooser_gui_init (void)
 {
 	GtkTreeSelection *selection;
 	GtkTreeViewColumn *column;
@@ -1659,26 +1659,26 @@ gdm_chooser_gui_init (void)
 	int height;
 
 	/* Enable theme */
-	if (RUNNING_UNDER_GDM) {
+	if (RUNNING_UNDER_MDM) {
 		const char *theme_name;
 
-		if ( ! ve_string_empty (gdm_config_get_string (GDM_KEY_GTKRC)))
-			gtk_rc_parse (gdm_config_get_string (GDM_KEY_GTKRC));
+		if ( ! ve_string_empty (mdm_config_get_string (MDM_KEY_GTKRC)))
+			gtk_rc_parse (mdm_config_get_string (MDM_KEY_GTKRC));
 
-		theme_name = g_getenv ("GDM_GTK_THEME");
+		theme_name = g_getenv ("MDM_GTK_THEME");
 		if (ve_string_empty (theme_name))
-			theme_name = gdm_config_get_string (GDM_KEY_GTK_THEME);
+			theme_name = mdm_config_get_string (MDM_KEY_GTK_THEME);
 
 		if ( ! ve_string_empty (theme_name)) {
-			gdm_set_theme (theme_name);
+			mdm_set_theme (theme_name);
 		}
 	}
 
-	defaulthosticon = gdm_config_get_string (GDM_KEY_DEFAULT_HOST_IMG);
+	defaulthosticon = mdm_config_get_string (MDM_KEY_DEFAULT_HOST_IMG);
 
 	/* Load default host image */
 	if (g_access (defaulthosticon, R_OK) != 0) {
-		gdm_common_error ("Could not open default host icon: %s", defaulthosticon);
+		mdm_common_error ("Could not open default host icon: %s", defaulthosticon);
 		/* bogus image */
 		defhostimg = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
 					     FALSE /* has_alpha */,
@@ -1690,11 +1690,11 @@ gdm_chooser_gui_init (void)
 	}
 
 	/* Main window */
-	chooser_app = glade_xml_new (GDM_GLADE_DIR "/gdmchooser.glade",
-				     "gdmchooser_main",
+	chooser_app = glade_xml_new (MDM_GLADE_DIR "/mdmchooser.glade",
+				     "mdmchooser_main",
 				     NULL);
 	glade_xml_signal_autoconnect (chooser_app);
-	chooser = glade_xml_get_widget (chooser_app, "gdmchooser_main");
+	chooser = glade_xml_get_widget (chooser_app, "mdmchooser_main");
 	manage = glade_xml_get_widget (chooser_app, "connect_button");
 	rescan = glade_xml_get_widget (chooser_app, "rescan_button");
 	cancel = glade_xml_get_widget (chooser_app, "quit_button");
@@ -1739,18 +1739,18 @@ gdm_chooser_gui_init (void)
 					      GTK_SORT_ASCENDING);
 
 
-	if ( ! gdm_config_get_bool (GDM_KEY_ALLOW_ADD)) {
+	if ( ! mdm_config_get_bool (MDM_KEY_ALLOW_ADD)) {
 		GtkWidget *w = glade_xml_get_widget (chooser_app, "add_hbox");
 		gtk_widget_hide (w);
 	}
 
 	gtk_window_get_size (GTK_WINDOW (chooser),
 			     &width, &height);
-	if (RUNNING_UNDER_GDM) {
-		if (width > gdm_wm_screen.width)
-			width = gdm_wm_screen.width;
-		if (height > gdm_wm_screen.height)
-			height = gdm_wm_screen.height;
+	if (RUNNING_UNDER_MDM) {
+		if (width > mdm_wm_screen.width)
+			width = mdm_wm_screen.width;
+		if (height > mdm_wm_screen.height)
+			height = mdm_wm_screen.height;
 	} else {
 		if (width > gdk_screen_width ())
 			width = gdk_screen_width ();
@@ -1766,79 +1766,79 @@ gdm_chooser_gui_init (void)
 
 
 	/* cursor blinking is evil on remote displays, don't do it forever */
-	gdm_common_setup_blinking ();
-	gdm_common_setup_blinking_entry (add_entry);
+	mdm_common_setup_blinking ();
+	mdm_common_setup_blinking_entry (add_entry);
 
-	if (RUNNING_UNDER_GDM) {
+	if (RUNNING_UNDER_MDM) {
 		gtk_widget_show_now (chooser);
-		gdm_wm_center_window (GTK_WINDOW (chooser));
+		mdm_wm_center_window (GTK_WINDOW (chooser));
 	}
 }
 
 /* 
  * If new configuration keys are added to this program, make sure to add the
- * key to the gdm_read_config and gdm_reread_config functions.
+ * key to the mdm_read_config and mdm_reread_config functions.
  */
 static gboolean
-gdm_read_config (void)
+mdm_read_config (void)
 {
 	/* Read config data in bulk */
-	gdmcomm_comm_bulk_start ();
+	mdmcomm_comm_bulk_start ();
 
 	/*
 	 * Read all the keys at once and close sockets connection so we do
 	 * not have to keep the socket open.  
 	 */
-	gdm_config_get_string (GDM_KEY_HOSTS);
-	gdm_config_get_string (GDM_KEY_GTKRC);
-	gdm_config_get_string (GDM_KEY_GTK_THEME);
-	gdm_config_get_string (GDM_KEY_DEFAULT_HOST_IMG);
-	gdm_config_get_string (GDM_KEY_HOST_IMAGE_DIR);
-	gdm_config_get_string (GDM_KEY_MULTICAST_ADDR);
-	gdm_config_get_string (GDM_KEY_BACKGROUND_COLOR);
-	gdm_config_get_int    (GDM_KEY_XINERAMA_SCREEN);
-	gdm_config_get_int    (GDM_KEY_MAX_ICON_WIDTH);
-	gdm_config_get_int    (GDM_KEY_MAX_ICON_HEIGHT);
-	gdm_config_get_int    (GDM_KEY_SCAN_TIME);
-	gdm_config_get_int    (GDM_KEY_BACKGROUND_TYPE);
-	gdm_config_get_bool   (GDM_KEY_ALLOW_ADD);
-	gdm_config_get_bool   (GDM_KEY_BROADCAST);
-	gdm_config_get_bool   (GDM_KEY_MULTICAST);
+	mdm_config_get_string (MDM_KEY_HOSTS);
+	mdm_config_get_string (MDM_KEY_GTKRC);
+	mdm_config_get_string (MDM_KEY_GTK_THEME);
+	mdm_config_get_string (MDM_KEY_DEFAULT_HOST_IMG);
+	mdm_config_get_string (MDM_KEY_HOST_IMAGE_DIR);
+	mdm_config_get_string (MDM_KEY_MULTICAST_ADDR);
+	mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
+	mdm_config_get_int    (MDM_KEY_XINERAMA_SCREEN);
+	mdm_config_get_int    (MDM_KEY_MAX_ICON_WIDTH);
+	mdm_config_get_int    (MDM_KEY_MAX_ICON_HEIGHT);
+	mdm_config_get_int    (MDM_KEY_SCAN_TIME);
+	mdm_config_get_int    (MDM_KEY_BACKGROUND_TYPE);
+	mdm_config_get_bool   (MDM_KEY_ALLOW_ADD);
+	mdm_config_get_bool   (MDM_KEY_BROADCAST);
+	mdm_config_get_bool   (MDM_KEY_MULTICAST);
 
-	gdmcomm_comm_bulk_stop ();
+	mdmcomm_comm_bulk_stop ();
 
 	return FALSE;
 }
 
 static gboolean
-gdm_reread_config (int sig, gpointer data)
+mdm_reread_config (int sig, gpointer data)
 {
 	/* reparse config stuff here.  At least ones we care about */
 
 	/* Read config data in bulk */
-	gdmcomm_comm_bulk_start ();
+	mdmcomm_comm_bulk_start ();
 
 	/* FIXME: The following is evil, we should update on the fly rather
 	 * then just restarting */
 	/* Also we may not need to check ALL those keys but just a few */
-	if (gdm_config_reload_string (GDM_KEY_HOSTS) ||
-	    gdm_config_reload_string (GDM_KEY_GTKRC) ||
-	    gdm_config_reload_string (GDM_KEY_GTK_THEME) ||
-	    gdm_config_reload_string (GDM_KEY_DEFAULT_HOST_IMG) ||
-	    gdm_config_reload_string (GDM_KEY_HOST_IMAGE_DIR) ||
-	    gdm_config_reload_string (GDM_KEY_MULTICAST_ADDR) ||
-	    gdm_config_reload_int    (GDM_KEY_XINERAMA_SCREEN) ||
-	    gdm_config_reload_int    (GDM_KEY_MAX_ICON_WIDTH) ||
-	    gdm_config_reload_int    (GDM_KEY_MAX_ICON_HEIGHT) ||
-	    gdm_config_reload_int    (GDM_KEY_SCAN_TIME) ||
-	    gdm_config_reload_bool   (GDM_KEY_ALLOW_ADD) ||
-	    gdm_config_reload_bool   (GDM_KEY_BROADCAST) ||
-	    gdm_config_reload_bool   (GDM_KEY_MULTICAST)) {
+	if (mdm_config_reload_string (MDM_KEY_HOSTS) ||
+	    mdm_config_reload_string (MDM_KEY_GTKRC) ||
+	    mdm_config_reload_string (MDM_KEY_GTK_THEME) ||
+	    mdm_config_reload_string (MDM_KEY_DEFAULT_HOST_IMG) ||
+	    mdm_config_reload_string (MDM_KEY_HOST_IMAGE_DIR) ||
+	    mdm_config_reload_string (MDM_KEY_MULTICAST_ADDR) ||
+	    mdm_config_reload_int    (MDM_KEY_XINERAMA_SCREEN) ||
+	    mdm_config_reload_int    (MDM_KEY_MAX_ICON_WIDTH) ||
+	    mdm_config_reload_int    (MDM_KEY_MAX_ICON_HEIGHT) ||
+	    mdm_config_reload_int    (MDM_KEY_SCAN_TIME) ||
+	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ADD) ||
+	    mdm_config_reload_bool   (MDM_KEY_BROADCAST) ||
+	    mdm_config_reload_bool   (MDM_KEY_MULTICAST)) {
 
-		if (RUNNING_UNDER_GDM) {
+		if (RUNNING_UNDER_MDM) {
 			/* Set busy cursor */
-			gdm_common_setup_cursor (GDK_WATCH);
-			gdm_wm_save_wm_order ();
+			mdm_common_setup_cursor (GDK_WATCH);
+			mdm_wm_save_wm_order ();
 		}
 
 		/* we don't need to tell the slave that we're restarting
@@ -1848,52 +1848,52 @@ gdm_reread_config (int sig, gpointer data)
 	}
 
 	/* we only use the color and do it for all types except NONE */
-	if (gdm_config_reload_string (GDM_KEY_BACKGROUND_COLOR) ||
-	    gdm_config_reload_int    (GDM_KEY_BACKGROUND_TYPE)) {
+	if (mdm_config_reload_string (MDM_KEY_BACKGROUND_COLOR) ||
+	    mdm_config_reload_int    (MDM_KEY_BACKGROUND_TYPE)) {
 
-		if (gdm_config_get_int (GDM_KEY_BACKGROUND_TYPE) != GDM_BACKGROUND_NONE) {
-			gdm_common_setup_background_color (gdm_config_get_string
-							   (GDM_KEY_BACKGROUND_COLOR));
+		if (mdm_config_get_int (MDM_KEY_BACKGROUND_TYPE) != MDM_BACKGROUND_NONE) {
+			mdm_common_setup_background_color (mdm_config_get_string
+							   (MDM_KEY_BACKGROUND_COLOR));
 		}
 	}
 
-	gdmcomm_comm_bulk_stop ();
+	mdmcomm_comm_bulk_stop ();
 
 	return TRUE;
 }
 
 
 static void
-gdm_chooser_signals_init (void)
+mdm_chooser_signals_init (void)
 {
 	struct sigaction hup;
 	struct sigaction term;
 	sigset_t mask;
 
-	ve_signal_add (SIGHUP, gdm_reread_config, NULL);
+	ve_signal_add (SIGHUP, mdm_reread_config, NULL);
 
 	hup.sa_handler = ve_signal_notify;
 	hup.sa_flags = 0;
 	sigemptyset (&hup.sa_mask);
 	sigaddset (&hup.sa_mask, SIGCHLD);
 
-	term.sa_handler = gdm_chooser_cancel;
+	term.sa_handler = mdm_chooser_cancel;
 	term.sa_flags = 0;
 	sigemptyset (&term.sa_mask);
 
 	if (sigaction (SIGHUP, &hup, NULL) < 0) {
-		gdm_common_fail_exit ("%s: Error setting up %s signal handler: %s",
-				      "gdm_signals_init", "HUP", strerror (errno));
+		mdm_common_fail_exit ("%s: Error setting up %s signal handler: %s",
+				      "mdm_signals_init", "HUP", strerror (errno));
 	}
 
 	if (sigaction (SIGINT, &term, NULL) < 0) {
-		gdm_common_fail_exit ("%s: Error setting up %s signal handler: %s",
-				      "gdm_signals_init", "INT", strerror (errno));
+		mdm_common_fail_exit ("%s: Error setting up %s signal handler: %s",
+				      "mdm_signals_init", "INT", strerror (errno));
 	}
 
 	if (sigaction (SIGTERM, &term, NULL) < 0) {
-		gdm_common_fail_exit ("%s: Error setting up %s signal handler: %s",
-				      "gdm_signals_init", "TERM", strerror (errno));
+		mdm_common_fail_exit ("%s: Error setting up %s signal handler: %s",
+				      "mdm_signals_init", "TERM", strerror (errno));
 	}
 
 	sigfillset (&mask);
@@ -1902,7 +1902,7 @@ gdm_chooser_signals_init (void)
 	sigdelset (&mask, SIGINT);
     
 	if (sigprocmask (SIG_SETMASK, &mask, NULL) == -1) 
-		gdm_common_fail_exit ("Could not set signal mask!");
+		mdm_common_fail_exit ("Could not set signal mask!");
 }
 
 GOptionEntry chooser_options [] = {
@@ -1918,7 +1918,7 @@ GOptionEntry chooser_options [] = {
 };
 
 static gboolean
-gdm_event (GSignalInvocationHint *ihint,
+mdm_event (GSignalInvocationHint *ihint,
 	   guint		n_param_values,
 	   const GValue	       *param_values,
 	   gpointer		data)
@@ -1947,10 +1947,10 @@ gdm_event (GSignalInvocationHint *ihint,
 int 
 main (int argc, char *argv[])
 {
-	gchar *GdmHosts;
+	gchar *MdmHosts;
 	gchar **hosts_opt = NULL;
 	GOptionContext *ctx;
-	const char *gdm_version;
+	const char *mdm_version;
 	int i;
 	guint sid;
 
@@ -1960,95 +1960,95 @@ main (int argc, char *argv[])
 	stored_argv[i] = NULL;
 	stored_argc = argc;
 
-	if (g_getenv ("RUNNING_UNDER_GDM") != NULL)
-		RUNNING_UNDER_GDM = TRUE;
+	if (g_getenv ("RUNNING_UNDER_MDM") != NULL)
+		RUNNING_UNDER_MDM = TRUE;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
 	/*
-	 * gdm_common_atspi_launch () needs gdk initialized.
+	 * mdm_common_atspi_launch () needs gdk initialized.
 	 * We cannot start gtk before the registry is running
 	 * because the atk-bridge will crash.
 	 */
 	gdk_init (&argc, &argv);
-	gdm_common_atspi_launch ();
+	mdm_common_atspi_launch ();
 
 	gtk_init (&argc, &argv);
 
-	ctx = g_option_context_new (_("- gdm login chooser")); 
+	ctx = g_option_context_new (_("- mdm login chooser")); 
 	g_option_context_add_main_entries(ctx, chooser_options, _("main options"));
 	g_option_context_parse(ctx, &argc, &argv, NULL);
 	g_option_context_free(ctx);
 
 	glade_init ();
 
-	gdm_common_log_init ();
-	gdm_common_log_set_debug (gdm_config_get_bool (GDM_KEY_DEBUG));
+	mdm_common_log_init ();
+	mdm_common_log_set_debug (mdm_config_get_bool (MDM_KEY_DEBUG));
 
-	gdm_common_setup_builtin_icons ();
+	mdm_common_setup_builtin_icons ();
 
 	/* Read all configuration at once, so the values get cached */
-	gdm_read_config ();
+	mdm_read_config ();
 
-	GdmHosts = g_strdup (gdm_config_get_string (GDM_KEY_HOSTS));
+	MdmHosts = g_strdup (mdm_config_get_string (MDM_KEY_HOSTS));
 
 	/* if broadcasting, then append BROADCAST to hosts */
-	if (gdm_config_get_bool (GDM_KEY_BROADCAST)) {
+	if (mdm_config_get_bool (MDM_KEY_BROADCAST)) {
 		gchar *tmp;
-		if (ve_string_empty (GdmHosts)) {
+		if (ve_string_empty (MdmHosts)) {
 			tmp = g_strdup ("BROADCAST");
 		} else {
-			tmp = g_strconcat (GdmHosts, ",BROADCAST", NULL);
+			tmp = g_strconcat (MdmHosts, ",BROADCAST", NULL);
 		}
-		g_free (GdmHosts);
-		GdmHosts = tmp;
+		g_free (MdmHosts);
+		MdmHosts = tmp;
 	}
 
 #ifdef ENABLE_IPV6
-	if (gdm_config_get_bool (GDM_KEY_MULTICAST)) {
+	if (mdm_config_get_bool (MDM_KEY_MULTICAST)) {
 		gchar *tmp;
-		if (ve_string_empty (GdmHosts)) {
+		if (ve_string_empty (MdmHosts)) {
 			tmp = g_strdup ("MULTICAST");
 		} else {
-			tmp = g_strconcat (GdmHosts, ",MULTICAST", NULL);
+			tmp = g_strconcat (MdmHosts, ",MULTICAST", NULL);
 		}
-		g_free (GdmHosts);
-		GdmHosts = tmp;
+		g_free (MdmHosts);
+		MdmHosts = tmp;
 	}
 #endif
 
-	if (RUNNING_UNDER_GDM)
-		gdm_wm_screen_init (gdm_config_get_int (GDM_KEY_XINERAMA_SCREEN));
+	if (RUNNING_UNDER_MDM)
+		mdm_wm_screen_init (mdm_config_get_int (MDM_KEY_XINERAMA_SCREEN));
 
-	gdm_version = g_getenv ("GDM_VERSION");
+	mdm_version = g_getenv ("MDM_VERSION");
 
-	/* Load the background as early as possible so GDM does not leave  */
+	/* Load the background as early as possible so MDM does not leave  */
 	/* the background unfilled.   The cursor should be a watch already */
 	/* but just in case */
-	if (RUNNING_UNDER_GDM) {
-		if (gdm_config_get_int (GDM_KEY_BACKGROUND_TYPE) != GDM_BACKGROUND_NONE)
-			gdm_common_setup_background_color (gdm_config_get_string (GDM_KEY_BACKGROUND_COLOR));
+	if (RUNNING_UNDER_MDM) {
+		if (mdm_config_get_int (MDM_KEY_BACKGROUND_TYPE) != MDM_BACKGROUND_NONE)
+			mdm_common_setup_background_color (mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR));
 
-		gdm_common_setup_cursor (GDK_WATCH);
+		mdm_common_setup_cursor (GDK_WATCH);
 	}
 
-	if (RUNNING_UNDER_GDM &&
-	    gdm_version != NULL &&
-	    strcmp (gdm_version, VERSION) != 0) {
+	if (RUNNING_UNDER_MDM &&
+	    mdm_version != NULL &&
+	    strcmp (mdm_version, VERSION) != 0) {
 		GtkWidget *dialog;
 		gchar *msg;
 
-		gdm_wm_init (0);
+		mdm_wm_init (0);
 
-		gdm_wm_focus_new_windows (TRUE);
+		mdm_wm_focus_new_windows (TRUE);
 
 		msg = g_strdup_printf (_("The chooser version (%s) does not match the daemon "
 					 "version (%s).  "
-					 "You have probably just upgraded GDM.  "
-					 "Please restart the GDM daemon or the computer."),
-				       VERSION, gdm_version);
+					 "You have probably just upgraded MDM.  "
+					 "Please restart the MDM daemon or the computer."),
+				       VERSION, mdm_version);
 
 		dialog = hig_dialog_new (NULL /* parent */,
 					 GTK_DIALOG_MODAL /* flags */,
@@ -2059,65 +2059,65 @@ main (int argc, char *argv[])
 		g_free (msg);
 
 		gtk_widget_show_all (dialog);
-		gdm_wm_center_window (GTK_WINDOW (dialog));
+		mdm_wm_center_window (GTK_WINDOW (dialog));
 
-		gdm_common_setup_cursor (GDK_LEFT_PTR);
+		mdm_common_setup_cursor (GDK_LEFT_PTR);
 
 		gtk_dialog_run (GTK_DIALOG (dialog));
 
 		return EXIT_SUCCESS;
 	}
     
-	gtk_window_set_default_icon_name ("gdm-xnest");
+	gtk_window_set_default_icon_name ("mdm-xnest");
 
-	gdm_chooser_gui_init ();
-	gdm_chooser_signals_init ();
+	mdm_chooser_gui_init ();
+	mdm_chooser_signals_init ();
 
 	/* when no hosts on the command line, take them from the config */
 	if (hosts_opt == NULL ||
 	    hosts_opt[0] == NULL) {
 		int i;
-		hosts_opt = g_strsplit (GdmHosts, ",", -1);
+		hosts_opt = g_strsplit (MdmHosts, ",", -1);
 		for (i = 0; hosts_opt != NULL && hosts_opt[i] != NULL; i++) {
 			g_strstrip (hosts_opt[i]);
 		}
 	}
-	gdm_chooser_xdmcp_init (hosts_opt);
+	mdm_chooser_xdmcp_init (hosts_opt);
 	g_strfreev (hosts_opt);
 
 	sid = g_signal_lookup ("event",
 			       GTK_TYPE_WIDGET);
 	g_signal_add_emission_hook (sid,
 				    0 /* detail */,
-				    gdm_event,
+				    mdm_event,
 				    NULL /* data */,
 				    NULL /* destroy_notify */);
 
 	gtk_widget_queue_resize (chooser);
 	gtk_widget_show_now (chooser);
 
-	if (RUNNING_UNDER_GDM)
-		gdm_wm_center_window (GTK_WINDOW (chooser));
+	if (RUNNING_UNDER_MDM)
+		mdm_wm_center_window (GTK_WINDOW (chooser));
 
-	if (RUNNING_UNDER_GDM &&
+	if (RUNNING_UNDER_MDM &&
 	    /* can it ever happen that it'd be NULL here ??? */
 	    chooser->window != NULL) {
-		gdm_wm_init (GDK_WINDOW_XWINDOW (chooser->window));
+		mdm_wm_init (GDK_WINDOW_XWINDOW (chooser->window));
 
 		/* Run the focus, note that this will work no matter what
-		 * since gdm_wm_init will set the display to the gdk one
+		 * since mdm_wm_init will set the display to the gdk one
 		 * if it fails */
-		gdm_wm_focus_window (GDK_WINDOW_XWINDOW (chooser->window));
+		mdm_wm_focus_window (GDK_WINDOW_XWINDOW (chooser->window));
 	}
 
-	if (gdm_config_get_bool (GDM_KEY_ALLOW_ADD))
+	if (mdm_config_get_bool (MDM_KEY_ALLOW_ADD))
 		gtk_widget_grab_focus (add_entry);
 
-	gdm_chooser_add_entry_changed ();
+	mdm_chooser_add_entry_changed ();
 
-	if (RUNNING_UNDER_GDM) {
-		gdm_wm_restore_wm_order ();
-		gdm_common_setup_cursor (GDK_LEFT_PTR);
+	if (RUNNING_UNDER_MDM) {
+		mdm_wm_restore_wm_order ();
+		mdm_common_setup_cursor (GDK_LEFT_PTR);
 	}
 
 	gtk_main ();

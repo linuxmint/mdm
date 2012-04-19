@@ -9,7 +9,7 @@
 config/default.desktop.in
 config/gnome.desktop.in
 config/ssh.desktop.in
-gui/gdmsetup.desktop.in
-gui/gdmflexiserver-xnest.desktop.in
+gui/mdmsetup.desktop.in
+gui/mdmflexiserver-xnest.desktop.in
 vicious-extensions/glade-helper.c
 vicious-extensions/ve-nongnome.c

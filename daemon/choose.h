@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,26 +21,26 @@
 #ifndef CHOOSE_H
 #define CHOOSE_H
 
-#include "gdm.h"
+#include "mdm.h"
 
-typedef struct _GdmIndirectDisplay GdmIndirectDisplay;
-struct _GdmIndirectDisplay {
+typedef struct _MdmIndirectDisplay MdmIndirectDisplay;
+struct _MdmIndirectDisplay {
 	int id;
 	struct sockaddr_storage* dsp_sa;
 	struct sockaddr_storage* chosen_host;
 	time_t acctime;
 };
 
-GdmIndirectDisplay *    gdm_choose_indirect_alloc            (struct sockaddr_storage *clnt_sa);
-GdmIndirectDisplay *    gdm_choose_indirect_lookup           (struct sockaddr_storage *clnt_sa);
-GdmIndirectDisplay *	gdm_choose_indirect_lookup_by_chosen (struct sockaddr_storage *chosen,
+MdmIndirectDisplay *    mdm_choose_indirect_alloc            (struct sockaddr_storage *clnt_sa);
+MdmIndirectDisplay *    mdm_choose_indirect_lookup           (struct sockaddr_storage *clnt_sa);
+MdmIndirectDisplay *	mdm_choose_indirect_lookup_by_chosen (struct sockaddr_storage *chosen,
 							      struct sockaddr_storage *origin);
-void			gdm_choose_indirect_dispose          (GdmIndirectDisplay *id);
+void			mdm_choose_indirect_dispose          (MdmIndirectDisplay *id);
 
 /* dispose of indirect display of id, if no host is set */
-void			gdm_choose_indirect_dispose_empty_id (guint id);
+void			mdm_choose_indirect_dispose_empty_id (guint id);
 
-gboolean		gdm_choose_data (const char *data);
+gboolean		mdm_choose_data (const char *data);
 
 #endif /* CHOOSE_H */
 

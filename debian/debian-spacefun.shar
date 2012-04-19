@@ -5,7 +5,7 @@
 #
 lock_dir=_sh03765
 # Made on 2010-11-13 21:43 CET by <joss@tomoyo>.
-# Source directory was `/home/joss/deb/gnome/pkg-gnome/desktop/unstable/gdm'.
+# Source directory was `/home/joss/deb/gnome/pkg-gnome/desktop/unstable/mdm'.
 #
 # Existing files will *not* be overwritten, unless `-c' is specified.
 #
@@ -20,7 +20,7 @@ lock_dir=_sh03765
 #   1112 -rw-r--r-- debian/debian-spacefun/userentry.png
 #    727 -rw-r--r-- debian/debian-spacefun/icon-shutdown.png
 #   1236 -rw-r--r-- debian/debian-spacefun/icon-session.png
-#    203 -rw-r--r-- debian/debian-spacefun/GdmGreeterTheme.desktop
+#    203 -rw-r--r-- debian/debian-spacefun/MdmGreeterTheme.desktop
 #    909 -rw-r--r-- debian/debian-spacefun/icon-language.png
 #
 MD5SUM=${MD5SUM-md5sum}
@@ -1106,7 +1106,7 @@ M%-?S&US?+#`9C_#\Z1D>/SK!<#BXOQD'<8R3PT,\>WJ*R7B$^<T"U_,%-I[4
 M#/V'`?UM=S`@H)^=9F'(VKM-',XF>'<QQ\LW%UAO4NFYW__Q"U!$.#J8=K(/
 MO1MB-N4VK6;H$F1P^5P)"3)HN$K8S1E'!KF&,6<4?Z%+<"%DD-"YZ[.##FY4
 M#OK`07ZOU01T<Q,``"``241!5%`WZ+A2E.(V^(0-1NN-FL$A.03AH:4D&A.2
-M@@E98$A1>URH&AZ*=JAJ4#[>_;M/5/O>Y(L@<4P-U%4GDMM,;2%MO0(-`+!*
+M@@E98$A1>URH&AZ*=JAJ4#[>_;M/5/O>Y(L@<4P-U%4MDMM,;2%MO0(-`+!*
 M$KR[N,+-8HFC@RD^>O\ISAX=8SB($4<1#@^G>/_98SPZ/L(J27!Q>8U5DNR-
 MWM;+;AIBM*]ZZ'I\!CL(T.YV?;/$?+'2"OYZ?G6#]3I%'%&P8^&L'FLU0],!
 M($-*GTGNFNC292(TR%!W-)M2,1@`!B,[,U2XT#!0(,?_=0M`:+A8V*@<'`"'
@@ -2736,7 +2736,7 @@ M5'LV1'HW>&THAM[+(44\SW5O1:BQW"8L@PS>%1Y7#6A!!-*JNZ%'!`P]`].8
 M]1G[7#)L12.859W.&SE"7/O$&.YNW8$1A4.)*8S;Q-5I.$BA2$.KGEY"D$!_
 M4U;X^C:_VQG>O9R\.GYT5(O$$(EU@0&*V:&=0(C$Z'"74^S5,$\%]J/`?JRH
 MP'2K>!%?FMV(5>CA\H7#N+58B\>*E>"L?3:V+9OWJJFOK="\5\-TA+O4?Y/&
-M?'D2!!&KPHLH:2XP;(,/Y?L'OY/#@BASU(GDMG!1(,8O45B&%W&9A%TZ)O+^
+M?'D2!!&KPHLH:2XP;(,/Y?L'OY/#@BASU(MDMG!1(,8O45B&%W&9A%TZ)O+^
 M31T'MNU.JII-!9F"F(:F!*-BB%IU)`A64F'<:QGD)1.(AN]=^I@.".?E-AAI
 M4C@T!JIBBX2B*(GYE2XOA#8H#(.NW-;#A1]14=4&,*;D8;_KUUW5>*P"+>7^
 M81N4/"C/2%O".%<6=&26^]6XS%390'?!*F,-"5.XU!83+.,!PWY2I73;(I]C
@@ -2833,7 +2833,7 @@ M3CY$8BO@11?NLI6V#/>_20`#VI5,+10G;F[@)LHDIQ*EW;^NEHXHO`2(@".'
 M#V+MBJ.XZGFG8^O6K5BW;AU6KER)HB@ZH*%+7>I2HT!#K]?#12=.X,B1H]BW
 M;Q^^]OV;L;CJ#&S8M+TTC;$%-J@#S:I\Z6M^`VN##26#.@?8`-A4"A_-P27!
 MX(M*X?K&**))>#4<0DA$#.B0`B1X[V/WKPXO!C7(H/(8,("%``[B^MTNM&W\
-MYJ=-1(:U-&\52Y5/GR&FOVCT&23TCB,$'/TA*KGDM9&SL[<&-$@CO7W>>6WP
+MYJ=-1(:U-&\52Y5/GR&FOVCT&23TCB,$'/TA*KMDM9&SL[<&-$@CO7W>>6WP
 MHIFOXA2$NVP:&&B^+;MPETJP82+A+G,+0TZ!Q]-2%H8D,_Z"O8CFBD*[(-HF
 MO/[PV,$#3^#Y9Z[%,\]]'G;LV(&-&S=B]>K5F)V=15%2BZN*+DX_![!+7>K2
 M="77'-+K];"PL(!CQX[AT*$=V+9M&^[>O1O?>6(.6W><D?G;PM'9J,)>U@8;
@@ -5438,7 +5438,7 @@ M-1V&%15@T^O/X;9O_1?&5(U"5I85#KL=TR:/QXRIDU2_Q(H*7=CTGW_BKEN_
 MCIJQ59&]8+-A8LT8K+[K6UC_TM^2'&4"0$YV-MY<\Q<L7SP/=IL-!2XG;OGZ
 ME_'?-]\0G;.GG_PIKK_V,I25%D?W:%5E!2Z_:!5&CQJAR:&/[:NKO.2W;<<>
 M;-S\<=RU!;.G85+-&+R_]9,(;.@K:K%8,'KD"(P87A+Q"],]H,4T8%J@0J.A
-MKWRL_Y!_KGDMJ8[G7WHC#HS(_N3D'GU47:/)%,ESZS>^A#5_^PU6+IT/ES,?
+MKWRL_Y!_KMDMJ8[G7WHC#HS(_N3D'GU47:/)%,ESZS>^A#5_^PU6+IT/ES,?
 M%HL9%2.&X^:O7(,-+_\5187.I/JR'7:L_=_?8O;T23&:CT3C/XUYA`J81)>?
 M=>LS0`6-P`*UUH("N$"C94D#%Y1H+Z0*,!`0B8]D2-9B8`$,:K08A(1Y`=,$
 M.7\,)&G<\7UE<OH8<V_RY,E8]\;K\+0V(^#WH:GQ#-Y]]QTL6K0PVMZD21.Q
@@ -11161,7 +11161,7 @@ ${echo} "x - extracting debian/debian-spacefun/debian-spacefun.xml (text)"
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE greeter SYSTEM "greeter.dtd">
 <!-- 
-X    Debian SpaceFun GDM Theme
+X    Debian SpaceFun MDM Theme
 X    ====================
 X    version 1.0
 X
@@ -11571,35 +11571,35 @@ test `LC_ALL=C wc -c < 'debian/debian-spacefun/icon-session.png'` -ne 1236 && \
   ${echo} "restoration warning:  size of 'debian/debian-spacefun/icon-session.png' is not 1236"
   fi
 fi
-# ============= debian/debian-spacefun/GdmGreeterTheme.desktop ==============
-if test -f 'debian/debian-spacefun/GdmGreeterTheme.desktop' && test "$first_param" != -c; then
-${echo} "x - SKIPPING debian/debian-spacefun/GdmGreeterTheme.desktop (file already exists)"
+# ============= debian/debian-spacefun/MdmGreeterTheme.desktop ==============
+if test -f 'debian/debian-spacefun/MdmGreeterTheme.desktop' && test "$first_param" != -c; then
+${echo} "x - SKIPPING debian/debian-spacefun/MdmGreeterTheme.desktop (file already exists)"
 else
-${echo} "x - extracting debian/debian-spacefun/GdmGreeterTheme.desktop (text)"
-  sed 's/^X//' << 'SHAR_EOF' > 'debian/debian-spacefun/GdmGreeterTheme.desktop' &&
-[GdmGreeterTheme]
+${echo} "x - extracting debian/debian-spacefun/MdmGreeterTheme.desktop (text)"
+  sed 's/^X//' << 'SHAR_EOF' > 'debian/debian-spacefun/MdmGreeterTheme.desktop' &&
+[MdmGreeterTheme]
 Greeter=debian-spacefun.xml
 Name=Debian SpaceFun
-Description=Debian SpaceFun GDM Theme
+Description=Debian SpaceFun MDM Theme
 Author=Yves-Alexis Perez <corsac@debian.org>
 Copyright=(c) 2010 (GPLv2)
 Screenshot=screenshot.png
 SHAR_EOF
-  (set 20 10 11 13 19 39 30 'debian/debian-spacefun/GdmGreeterTheme.desktop'
+  (set 20 10 11 13 19 39 30 'debian/debian-spacefun/MdmGreeterTheme.desktop'
    eval "${shar_touch}") && \
-  chmod 0644 'debian/debian-spacefun/GdmGreeterTheme.desktop'
+  chmod 0644 'debian/debian-spacefun/MdmGreeterTheme.desktop'
 if test $? -ne 0
-then ${echo} "restore of debian/debian-spacefun/GdmGreeterTheme.desktop failed"
+then ${echo} "restore of debian/debian-spacefun/MdmGreeterTheme.desktop failed"
 fi
   if ${md5check}
   then (
-       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'debian/debian-spacefun/GdmGreeterTheme.desktop': 'MD5 check failed'
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'debian/debian-spacefun/MdmGreeterTheme.desktop': 'MD5 check failed'
        ) << \SHAR_EOF
-782482dd3a1706381a62643407922b22  debian/debian-spacefun/GdmGreeterTheme.desktop
+782482dd3a1706381a62643407922b22  debian/debian-spacefun/MdmGreeterTheme.desktop
 SHAR_EOF
   else
-test `LC_ALL=C wc -c < 'debian/debian-spacefun/GdmGreeterTheme.desktop'` -ne 203 && \
-  ${echo} "restoration warning:  size of 'debian/debian-spacefun/GdmGreeterTheme.desktop' is not 203"
+test `LC_ALL=C wc -c < 'debian/debian-spacefun/MdmGreeterTheme.desktop'` -ne 203 && \
+  ${echo} "restoration warning:  size of 'debian/debian-spacefun/MdmGreeterTheme.desktop' is not 203"
   fi
 fi
 # ============= debian/debian-spacefun/icon-language.png ==============

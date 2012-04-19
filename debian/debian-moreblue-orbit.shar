@@ -5,7 +5,7 @@
 #
 lock_dir=_sh06676
 # Made on 2008-09-02 10:33 CEST by <joss@shizuru>.
-# Source directory was `/home/joss/deb/gdm'.
+# Source directory was `/home/joss/deb/mdm'.
 #
 # Existing files will *not* be overwritten, unless `-c' is specified.
 #
@@ -20,7 +20,7 @@ lock_dir=_sh06676
 #   1236 -rw-r--r-- debian/debian-moreblue-orbit/icon-session.png
 #  17856 -rw-r--r-- debian/debian-moreblue-orbit/boundingbox.png
 #    909 -rw-r--r-- debian/debian-moreblue-orbit/icon-language.png
-#    232 -rw-r--r-- debian/debian-moreblue-orbit/GdmGreeterTheme.desktop
+#    232 -rw-r--r-- debian/debian-moreblue-orbit/MdmGreeterTheme.desktop
 #   1112 -rw-r--r-- debian/debian-moreblue-orbit/userentry.png
 #
 MD5SUM=${MD5SUM-md5sum}
@@ -5614,7 +5614,7 @@ ${echo} 'x - extracting debian/debian-moreblue-orbit/debian-moreblue-orbit.xml (
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE greeter SYSTEM "greeter.dtd">
 <!-- 
-X    Debian MoreBlue Orbit GDM Theme
+X    Debian MoreBlue Orbit MDM Theme
 X    ====================
 X    version 1.0 Ago 2008
 X
@@ -6841,34 +6841,34 @@ test `LC_ALL=C wc -c < 'debian/debian-moreblue-orbit/icon-language.png'` -ne 909
   ${echo} 'restoration warning:  size of debian/debian-moreblue-orbit/icon-language.png is not 909'
   fi
 fi
-# ============= debian/debian-moreblue-orbit/GdmGreeterTheme.desktop ==============
-if test -f 'debian/debian-moreblue-orbit/GdmGreeterTheme.desktop' && test "$first_param" != -c; then
-  ${echo} 'x -SKIPPING debian/debian-moreblue-orbit/GdmGreeterTheme.desktop (file already exists)'
+# ============= debian/debian-moreblue-orbit/MdmGreeterTheme.desktop ==============
+if test -f 'debian/debian-moreblue-orbit/MdmGreeterTheme.desktop' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING debian/debian-moreblue-orbit/MdmGreeterTheme.desktop (file already exists)'
 else
-${echo} 'x - extracting debian/debian-moreblue-orbit/GdmGreeterTheme.desktop (text)'
-  sed 's/^X//' << 'SHAR_EOF' > 'debian/debian-moreblue-orbit/GdmGreeterTheme.desktop' &&
-[GdmGreeterTheme]
+${echo} 'x - extracting debian/debian-moreblue-orbit/MdmGreeterTheme.desktop (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'debian/debian-moreblue-orbit/MdmGreeterTheme.desktop' &&
+[MdmGreeterTheme]
 Greeter=debian-moreblue-orbit.xml
 Name=Debian MoreBlue Orbit
-Description=Debian MoreBlue Orbit GDM Theme
+Description=Debian MoreBlue Orbit MDM Theme
 Author=Andre Luiz Rodrigues Ferreira <andrelrf@gmail.com>
 Copyright=(c) 2008 (GPL)
 Screenshot=screenshot.png
 SHAR_EOF
-  (set 20 08 08 25 04 04 38 'debian/debian-moreblue-orbit/GdmGreeterTheme.desktop'; eval "$shar_touch") &&
-  chmod 0644 'debian/debian-moreblue-orbit/GdmGreeterTheme.desktop'
+  (set 20 08 08 25 04 04 38 'debian/debian-moreblue-orbit/MdmGreeterTheme.desktop'; eval "$shar_touch") &&
+  chmod 0644 'debian/debian-moreblue-orbit/MdmGreeterTheme.desktop'
 if test $? -ne 0
-then ${echo} 'restore of debian/debian-moreblue-orbit/GdmGreeterTheme.desktop failed'
+then ${echo} 'restore of debian/debian-moreblue-orbit/MdmGreeterTheme.desktop failed'
 fi
   if ${md5check}
   then (
-       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'debian/debian-moreblue-orbit/GdmGreeterTheme.desktop: MD5 check failed'
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'debian/debian-moreblue-orbit/MdmGreeterTheme.desktop: MD5 check failed'
        ) << SHAR_EOF
-ff1e213709008cc42af03fe4f05a9eb8  debian/debian-moreblue-orbit/GdmGreeterTheme.desktop
+ff1e213709008cc42af03fe4f05a9eb8  debian/debian-moreblue-orbit/MdmGreeterTheme.desktop
 SHAR_EOF
   else
-test `LC_ALL=C wc -c < 'debian/debian-moreblue-orbit/GdmGreeterTheme.desktop'` -ne 232 && \
-  ${echo} 'restoration warning:  size of debian/debian-moreblue-orbit/GdmGreeterTheme.desktop is not 232'
+test `LC_ALL=C wc -c < 'debian/debian-moreblue-orbit/MdmGreeterTheme.desktop'` -ne 232 && \
+  ${echo} 'restoration warning:  size of debian/debian-moreblue-orbit/MdmGreeterTheme.desktop is not 232'
   fi
 fi
 # ============= debian/debian-moreblue-orbit/userentry.png ==============

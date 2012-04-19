@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -36,15 +36,15 @@
 #include <X11/Xauth.h>
 #include <glib/gi18n.h>
 
-#include "gdm.h"
+#include "mdm.h"
 #include "cookie.h"
 #include "misc.h"
 #include "filecheck.h"
 #include "auth.h"
 
-#include "gdm-common.h"
-#include "gdm-log.h"
-#include "gdm-daemon-config.h"
+#include "mdm-common.h"
+#include "mdm-log.h"
+#include "mdm-daemon-config.h"
 
 /* Ensure we know about FamilyInternetV6 even if what we're compiling
    against doesn't */
@@ -55,31 +55,31 @@
 #endif /* ENABLE_IPV6 */
 
 /* Local prototypes */
-static FILE *gdm_auth_purge (GdmDisplay *d, FILE *af, gboolean remove_when_empty);
+static FILE *mdm_auth_purge (MdmDisplay *d, FILE *af, gboolean remove_when_empty);
 
 static void
-display_add_error (GdmDisplay *d)
+display_add_error (MdmDisplay *d)
 {
 	if (errno != 0)
-		gdm_error (_("%s: Could not write new authorization entry: %s"),
+		mdm_error (_("%s: Could not write new authorization entry: %s"),
 			   "add_auth_entry", strerror (errno));
 	else
-		gdm_error (_("%s: Could not write new authorization entry.  "
+		mdm_error (_("%s: Could not write new authorization entry.  "
 			     "Possibly out of diskspace"),
 			   "add_auth_entry");
 	if (d->attached) {
 		char *s = g_strdup_printf
-			(C_(N_("GDM could not write a new authorization "
+			(C_(N_("MDM could not write a new authorization "
 			       "entry to disk.  Possibly out of diskspace.%s%s")),
 			 errno != 0 ? "  Error: " : "",
 			 errno != 0 ? strerror (errno) : "");
-		gdm_text_message_dialog (s);
+		mdm_text_message_dialog (s);
 		g_free (s);
 	}
 }
 
 static gboolean
-add_auth_entry (GdmDisplay *d,
+add_auth_entry (MdmDisplay *d,
 		GSList **authlist,
 		FILE *af,
 		FILE *af2,
@@ -163,8 +163,8 @@ add_auth_entry (GdmDisplay *d,
 }
 
 /**
- * gdm_auth_secure_display:
- * @d: Pointer to a GdmDisplay struct
+ * mdm_auth_secure_display:
+ * @d: Pointer to a MdmDisplay struct
  * 
  * Create authentication cookies for local and remote displays.
  *
@@ -172,9 +172,9 @@ add_auth_entry (GdmDisplay *d,
  */
 
 gboolean
-gdm_auth_secure_display (GdmDisplay *d)
+mdm_auth_secure_display (MdmDisplay *d)
 {
-	FILE *af, *af_gdm;
+	FILE *af, *af_mdm;
 	int closeret;
 
 	if G_UNLIKELY (!d)
@@ -182,28 +182,28 @@ gdm_auth_secure_display (GdmDisplay *d)
 
 	umask (022);
 
-	gdm_debug ("gdm_auth_secure_display: Setting up access for %s", d->name);
+	mdm_debug ("mdm_auth_secure_display: Setting up access for %s", d->name);
 
 	g_free (d->authfile);
 	d->authfile = NULL;
-	g_free (d->authfile_gdm);
-	d->authfile_gdm = NULL;
+	g_free (d->authfile_mdm);
+	d->authfile_mdm = NULL;
 
 	if (d->server_uid != 0) {
 		int authfd;
 
-		/* Note, nested display can't use the GDM_KEY_SERV_AUTHDIR unless 
+		/* Note, nested display can't use the MDM_KEY_SERV_AUTHDIR unless 
 		 * running as root, which is rare anyway. */
 
-		d->authfile = g_build_filename (gdm_daemon_config_get_value_string (GDM_KEY_USER_AUTHDIR_FALLBACK), ".gdmXXXXXX", NULL);
+		d->authfile = g_build_filename (mdm_daemon_config_get_value_string (MDM_KEY_USER_AUTHDIR_FALLBACK), ".mdmXXXXXX", NULL);
 
 		umask (077);
 		authfd = g_mkstemp (d->authfile);
 		umask (022);
 
 		if G_UNLIKELY (authfd == -1) {
-			gdm_error (_("%s: Could not make new cookie file in %s"),
-				   "gdm_auth_secure_display", gdm_daemon_config_get_value_string (GDM_KEY_USER_AUTHDIR_FALLBACK));
+			mdm_error (_("%s: Could not make new cookie file in %s"),
+				   "mdm_auth_secure_display", mdm_daemon_config_get_value_string (MDM_KEY_USER_AUTHDIR_FALLBACK));
 			g_free (d->authfile);
 			d->authfile = NULL;
 			return FALSE;
@@ -222,29 +222,29 @@ gdm_auth_secure_display (GdmDisplay *d)
 
 		/* Make another authfile since the greeter can't read the server/user
 		 * readable file */
-		d->authfile_gdm = gdm_make_filename (gdm_daemon_config_get_value_string (GDM_KEY_SERV_AUTHDIR), d->name, ".Xauth");
-		af_gdm = gdm_safe_fopen_w (d->authfile_gdm, 0644);
+		d->authfile_mdm = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR), d->name, ".Xauth");
+		af_mdm = mdm_safe_fopen_w (d->authfile_mdm, 0644);
 
-		if G_UNLIKELY (af_gdm == NULL) {
-			gdm_error (_("%s: Cannot safely open %s"),
-				   "gdm_auth_secure_display",
-				   d->authfile_gdm);
+		if G_UNLIKELY (af_mdm == NULL) {
+			mdm_error (_("%s: Cannot safely open %s"),
+				   "mdm_auth_secure_display",
+				   d->authfile_mdm);
 
-			g_free (d->authfile_gdm);
-			d->authfile_gdm = NULL;
+			g_free (d->authfile_mdm);
+			d->authfile_mdm = NULL;
 			g_free (d->authfile);
 			d->authfile = NULL;
 			VE_IGNORE_EINTR (fclose (af));
 			return FALSE;
 		}
 	} else {
-		/* gdm and xserver authfile can be the same, server will run as root */
-		d->authfile = gdm_make_filename (gdm_daemon_config_get_value_string (GDM_KEY_SERV_AUTHDIR), d->name, ".Xauth");
-		af = gdm_safe_fopen_w (d->authfile, 0644);
+		/* mdm and xserver authfile can be the same, server will run as root */
+		d->authfile = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR), d->name, ".Xauth");
+		af = mdm_safe_fopen_w (d->authfile, 0644);
 
 		if G_UNLIKELY (af == NULL) {
-			gdm_error (_("%s: Cannot safely open %s"),
-				   "gdm_auth_secure_display",
+			mdm_error (_("%s: Cannot safely open %s"),
+				   "mdm_auth_secure_display",
 				   d->authfile);
 
 			g_free (d->authfile);
@@ -252,14 +252,14 @@ gdm_auth_secure_display (GdmDisplay *d)
 			return FALSE;
 		}
 
-		af_gdm = NULL;
+		af_mdm = NULL;
 	}
 
 	/* If this is a local display the struct hasn't changed and we
 	 * have to eat up old authentication cookies before baking new
 	 * ones... */
 	if (SERVER_IS_LOCAL (d) && d->auths) {
-		gdm_auth_free_auth_list (d->auths);
+		mdm_auth_free_auth_list (d->auths);
 		d->auths = NULL;
 
 		g_free (d->cookie);
@@ -269,7 +269,7 @@ gdm_auth_secure_display (GdmDisplay *d)
 	}
 
 	/* Create new random cookie */
-	gdm_cookie_generate (&d->cookie, &d->bcookie);
+	mdm_cookie_generate (&d->cookie, &d->bcookie);
 
 	/* reget local host if local as it may have changed */
 	if (SERVER_IS_LOCAL (d)) {
@@ -282,27 +282,27 @@ gdm_auth_secure_display (GdmDisplay *d)
 		}
 	}
 
-	if ( ! add_auth_entry (d, &(d->auths), af, af_gdm, FamilyWild, NULL, 0))
+	if ( ! add_auth_entry (d, &(d->auths), af, af_mdm, FamilyWild, NULL, 0))
 		return FALSE;
 
-	gdm_debug ("gdm_auth_secure_display: Setting up access");
+	mdm_debug ("mdm_auth_secure_display: Setting up access");
 
 	VE_IGNORE_EINTR (closeret = fclose (af));
 	if G_UNLIKELY (closeret < 0) {
 		display_add_error (d);
 		return FALSE;
 	}
-	if (af_gdm != NULL) {
-		VE_IGNORE_EINTR (closeret = fclose (af_gdm));
+	if (af_mdm != NULL) {
+		VE_IGNORE_EINTR (closeret = fclose (af_mdm));
 		if G_UNLIKELY (closeret < 0) {
 			display_add_error (d);
 			return FALSE;
 		}
 	}
-	g_setenv ("XAUTHORITY", GDM_AUTHFILE (d), TRUE);
+	g_setenv ("XAUTHORITY", MDM_AUTHFILE (d), TRUE);
 
-	if G_UNLIKELY (gdm_daemon_config_get_value_bool (GDM_KEY_DEBUG))
-		gdm_debug ("gdm_auth_secure_display: Setting up access for %s - %d entries", 
+	if G_UNLIKELY (mdm_daemon_config_get_value_bool (MDM_KEY_DEBUG))
+		mdm_debug ("mdm_auth_secure_display: Setting up access for %s - %d entries", 
 			   d->name, g_slist_length (d->auths));
 
 	return TRUE;
@@ -313,7 +313,7 @@ gdm_auth_secure_display (GdmDisplay *d)
 #define SIN6(__s)  ((struct sockaddr_in6 *) __s)
 
 static gboolean
-add_auth_entry_for_addr (GdmDisplay              *d,
+add_auth_entry_for_addr (MdmDisplay              *d,
 			 GSList                 **authlist,
 			 struct sockaddr_storage *ss)
 {
@@ -341,7 +341,7 @@ add_auth_entry_for_addr (GdmDisplay              *d,
 }
 
 static GSList *
-get_local_auths (GdmDisplay *d)
+get_local_auths (MdmDisplay *d)
 {
 	gboolean is_local = FALSE;
 	const char lo[] = {127,0,0,1};
@@ -363,18 +363,18 @@ get_local_auths (GdmDisplay *d)
 			d->hostname = g_strdup (hostname);
 		}
 		if ( ! d->tcp_disallowed)
-			local_addys = gdm_address_peek_local_list ();
+			local_addys = mdm_address_peek_local_list ();
 
 		is_local = TRUE;
 	} else  {
 		is_local = FALSE;
 
-		if (gdm_address_is_local (&(d->addr))) {
+		if (mdm_address_is_local (&(d->addr))) {
 			is_local = TRUE;
 		}
 
 		for (i = 0; ! is_local && i < d->addr_count; i++) {
-			if (gdm_address_is_local (&d->addrs[i])) {
+			if (mdm_address_is_local (&d->addrs[i])) {
 				is_local = TRUE;
 				break;
 			}
@@ -383,7 +383,7 @@ get_local_auths (GdmDisplay *d)
 
 	/* Local access also in case the host is very local */
 	if (is_local) {
-		gdm_debug ("get_local_auths: Setting up socket access");
+		mdm_debug ("get_local_auths: Setting up socket access");
 
 		if ( ! add_auth_entry (d, &auths, NULL, NULL, FamilyLocal,
 				       d->hostname, strlen (d->hostname)))
@@ -417,7 +417,7 @@ get_local_auths (GdmDisplay *d)
 		}
 	}
 
-	gdm_debug ("get_local_auths: Setting up network access");
+	mdm_debug ("get_local_auths: Setting up network access");
 
 	if ( ! SERVER_IS_LOCAL (d)) {
 		/* we should write out an entry for d->addr since
@@ -427,7 +427,7 @@ get_local_auths (GdmDisplay *d)
 			goto get_local_auth_error;
 		}
 
-		if (gdm_address_is_loopback (&(d->addr))) {
+		if (mdm_address_is_loopback (&(d->addr))) {
 			added_lo = TRUE;
 		}
 	}
@@ -438,7 +438,7 @@ get_local_auths (GdmDisplay *d)
 		struct sockaddr_storage *sa;
 
 		sa = &d->addrs[i];
-		if (gdm_address_equal (sa, &d->addr)) {
+		if (mdm_address_equal (sa, &d->addr)) {
 			continue;
 		}
 
@@ -446,7 +446,7 @@ get_local_auths (GdmDisplay *d)
 			goto get_local_auth_error;
 		}
 
-		if (gdm_address_is_loopback (sa)) {
+		if (mdm_address_is_loopback (sa)) {
 			added_lo = TRUE;
 		}
 	}
@@ -463,7 +463,7 @@ get_local_auths (GdmDisplay *d)
 			goto get_local_auth_error;
 		}
 
-		if (gdm_address_is_loopback (ia)) {
+		if (mdm_address_is_loopback (ia)) {
 			added_lo = TRUE;
 		}
 	}
@@ -476,15 +476,15 @@ get_local_auths (GdmDisplay *d)
 		}
 	}
 
-	if G_UNLIKELY (gdm_daemon_config_get_value_bool (GDM_KEY_DEBUG))
-		gdm_debug ("get_local_auths: Setting up access for %s - %d entries",
+	if G_UNLIKELY (mdm_daemon_config_get_value_bool (MDM_KEY_DEBUG))
+		mdm_debug ("get_local_auths: Setting up access for %s - %d entries",
 			   d->name, g_slist_length (auths));
 
 	return auths;
 
  get_local_auth_error:
 
-	gdm_auth_free_auth_list (auths);
+	mdm_auth_free_auth_list (auths);
 
 	return NULL;
 }
@@ -523,8 +523,8 @@ try_open_read_as_root (const char *file)
 }
 
 /**
- * gdm_auth_user_add:
- * @d: Pointer to a GdmDisplay struct
+ * mdm_auth_user_add:
+ * @d: Pointer to a MdmDisplay struct
  * @user: Userid of the user whose cookie file to add entries to
  * @homedir: The user's home directory
  *
@@ -535,7 +535,7 @@ try_open_read_as_root (const char *file)
  */
 
 gboolean
-gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
+mdm_auth_user_add (MdmDisplay *d, uid_t user, const char *homedir)
 {
 	char *authdir;
 	gint authfd;
@@ -554,21 +554,21 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 		return FALSE;
 
 	if (d->local_auths != NULL) {
-		gdm_auth_free_auth_list (d->local_auths);
+		mdm_auth_free_auth_list (d->local_auths);
 		d->local_auths = NULL;
 	}
 
 	d->local_auths = get_local_auths (d);
 
 	if (d->local_auths == NULL) {
-		gdm_error ("Can't make cookies");
+		mdm_error ("Can't make cookies");
 		return FALSE;
 	}
 
-	gdm_debug ("gdm_auth_user_add: Adding cookie for %d", user);
+	mdm_debug ("mdm_auth_user_add: Adding cookie for %d", user);
 
-	userauthdir  = gdm_daemon_config_get_value_string (GDM_KEY_USER_AUTHDIR);
-	userauthfile = gdm_daemon_config_get_value_string (GDM_KEY_USER_AUTHFILE);
+	userauthdir  = mdm_daemon_config_get_value_string (MDM_KEY_USER_AUTHDIR);
+	userauthfile = mdm_daemon_config_get_value_string (MDM_KEY_USER_AUTHFILE);
 
 	/* Determine whether UserAuthDir is specified. Otherwise ~user is used */
 	if ( ! ve_string_empty (userauthdir) &&
@@ -606,12 +606,12 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 
 	    /* first the standard paranoia check (this checks the home dir
 	     * too which is useful here) */
-	    ! gdm_file_check ("gdm_auth_user_add", user, authdir, userauthfile, 
-			      TRUE, FALSE, gdm_daemon_config_get_value_int (GDM_KEY_USER_MAX_FILE),
-			      gdm_daemon_config_get_value_int (GDM_KEY_RELAX_PERM)) ||
+	    ! mdm_file_check ("mdm_auth_user_add", user, authdir, userauthfile, 
+			      TRUE, FALSE, mdm_daemon_config_get_value_int (MDM_KEY_USER_MAX_FILE),
+			      mdm_daemon_config_get_value_int (MDM_KEY_RELAX_PERM)) ||
 
 	    /* now the auth file checking routine */
-	    ! gdm_auth_file_check ("gdm_auth_user_add", user, d->userauth, TRUE /* absentok */, NULL) ||
+	    ! mdm_auth_file_check ("mdm_auth_user_add", user, d->userauth, TRUE /* absentok */, NULL) ||
 
 	    /* now see if we can actually append this file */
 	    ! try_open_append (d->userauth) ||
@@ -619,7 +619,7 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 	    /* try opening as root, if we can't open as root,
 	       then this is a NFS mounted directory with root squashing,
 	       and we don't want to write cookies over NFS */
-	    (gdm_daemon_config_get_value_bool (GDM_KEY_NEVER_PLACE_COOKIES_ON_NFS) &&
+	    (mdm_daemon_config_get_value_bool (MDM_KEY_NEVER_PLACE_COOKIES_ON_NFS) &&
 	     ! try_open_read_as_root (d->userauth))) {
 
 		/* if the userauth file didn't exist and we were looking at it,
@@ -630,14 +630,14 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 		if ( ! user_auth_exists && d->userauth != NULL)
 			g_remove (d->userauth);
 
-		/* No go. Let's create a fallback file in GDM_KEY_USER_AUTHDIR_FALLBACK (/tmp)
+		/* No go. Let's create a fallback file in MDM_KEY_USER_AUTHDIR_FALLBACK (/tmp)
 		 * or perhaps userauthfile directory (usually would be /tmp) */
 		d->authfb = TRUE;
 		g_free (d->userauth);
 		if (authdir_is_tmp_dir && authdir != NULL)
-			d->userauth = g_build_filename (authdir, ".gdmXXXXXX", NULL);
+			d->userauth = g_build_filename (authdir, ".mdmXXXXXX", NULL);
 		else
-			d->userauth = g_build_filename (gdm_daemon_config_get_value_string (GDM_KEY_USER_AUTHDIR_FALLBACK), ".gdmXXXXXX", NULL);
+			d->userauth = g_build_filename (mdm_daemon_config_get_value_string (MDM_KEY_USER_AUTHDIR_FALLBACK), ".mdmXXXXXX", NULL);
 		authfd = g_mkstemp (d->userauth);
 
 		if G_UNLIKELY (authfd < 0 && authdir_is_tmp_dir) {
@@ -649,8 +649,8 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 		}
 
 		if G_UNLIKELY (authfd < 0) {
-			gdm_error (_("%s: Could not open cookie file %s"),
-				   "gdm_auth_user_add",
+			mdm_error (_("%s: Could not open cookie file %s"),
+				   "mdm_auth_user_add",
 				   d->userauth);
 			g_free (d->userauth);
 			d->userauth = NULL;
@@ -669,8 +669,8 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 
 		/* FIXME: Better implement my own locking. The libXau one is not kosher */
 		if G_UNLIKELY (XauLockAuth (d->userauth, 3, 3, 0) != LOCK_SUCCESS) {
-			gdm_error (_("%s: Could not lock cookie file %s"),
-				   "gdm_auth_user_add",
+			mdm_error (_("%s: Could not lock cookie file %s"),
+				   "mdm_auth_user_add",
 				   d->userauth);
 			g_free (d->userauth);
 			d->userauth = NULL;
@@ -681,7 +681,7 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 
 		locked = TRUE;
 
-		af = gdm_safe_fopen_ap (d->userauth, 0600);
+		af = mdm_safe_fopen_ap (d->userauth, 0600);
 	}
 
 	/* Set to NULL, because can goto try_user_add_again. */
@@ -690,8 +690,8 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 
 	if G_UNLIKELY (af == NULL) {
 		/* Really no need to clean up here - this process is a goner anyway */
-		gdm_error (_("%s: Could not open cookie file %s"),
-			   "gdm_auth_user_add",
+		mdm_error (_("%s: Could not open cookie file %s"),
+			   "mdm_auth_user_add",
 			   d->userauth);
 		if (locked)
 			XauUnlockAuth (d->userauth);
@@ -707,19 +707,19 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 		return FALSE; 
 	}
 
-	gdm_debug ("gdm_auth_user_add: Using %s for cookies", d->userauth);
+	mdm_debug ("mdm_auth_user_add: Using %s for cookies", d->userauth);
 
 	/* If not a fallback file, nuke any existing cookies for this display */
 	if (! d->authfb)
-		af = gdm_auth_purge (d, af, FALSE /* remove when empty */);
+		af = mdm_auth_purge (d, af, FALSE /* remove when empty */);
 
 	/* Append the authlist for this display to the cookie file */
 	auths = d->local_auths;
 
 	while (auths) {
 		if G_UNLIKELY ( ! XauWriteAuth (af, auths->data)) {
-			gdm_error (_("%s: Could not write cookie"),
-				   "gdm_auth_user_add");
+			mdm_error (_("%s: Could not write cookie"),
+				   "mdm_auth_user_add");
 
 			if ( ! d->authfb) {
 				VE_IGNORE_EINTR (fclose (af));
@@ -740,8 +740,8 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 
 	VE_IGNORE_EINTR (closeret = fclose (af));
 	if G_UNLIKELY (closeret < 0) {
-		gdm_error (_("%s: Could not write cookie"),
-			   "gdm_auth_user_add");
+		mdm_error (_("%s: Could not write cookie"),
+			   "mdm_auth_user_add");
 
 		if ( ! d->authfb) {
 			if (locked)
@@ -758,7 +758,7 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 	if (locked)
 		XauUnlockAuth (d->userauth);
 
-	gdm_debug ("gdm_auth_user_add: Done");
+	mdm_debug ("mdm_auth_user_add: Done");
 
 	umask (022);
 	return ret;
@@ -766,8 +766,8 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
 
 
 /**
- * gdm_auth_user_remove:
- * @d: Pointer to a GdmDisplay struct
+ * mdm_auth_user_remove:
+ * @d: Pointer to a MdmDisplay struct
  * @user: Userid of the user whose cookie file to remove entries from
  * 
  * Remove all cookies referring to this display from user's cookie
@@ -775,7 +775,7 @@ gdm_auth_user_add (GdmDisplay *d, uid_t user, const char *homedir)
  */
 
 void 
-gdm_auth_user_remove (GdmDisplay *d, uid_t user)
+mdm_auth_user_remove (MdmDisplay *d, uid_t user)
 {
 	FILE *af;
 	gchar *authfile;
@@ -784,7 +784,7 @@ gdm_auth_user_remove (GdmDisplay *d, uid_t user)
 	if G_UNLIKELY (!d || !d->userauth)
 		return;
 
-	gdm_debug ("gdm_auth_user_remove: Removing cookie from %s (%d)", d->userauth, d->authfb);
+	mdm_debug ("mdm_auth_user_remove: Removing cookie from %s (%d)", d->userauth, d->authfb);
 
 	/* If we are using the fallback cookie location, simply nuke the
 	 * cookie file */
@@ -816,15 +816,15 @@ gdm_auth_user_remove (GdmDisplay *d, uid_t user)
 	 * decided to concatenate something like his entire MP3 collection
 	 * to it. So we better play it safe... */
 
-	if G_UNLIKELY ( ! gdm_file_check ("gdm_auth_user_remove", user, authdir, authfile, 
-					  TRUE, FALSE, gdm_daemon_config_get_value_int (GDM_KEY_USER_MAX_FILE),
-					  gdm_daemon_config_get_value_int (GDM_KEY_RELAX_PERM)) ||
+	if G_UNLIKELY ( ! mdm_file_check ("mdm_auth_user_remove", user, authdir, authfile, 
+					  TRUE, FALSE, mdm_daemon_config_get_value_int (MDM_KEY_USER_MAX_FILE),
+					  mdm_daemon_config_get_value_int (MDM_KEY_RELAX_PERM)) ||
 			/* be even paranoider with permissions */
-			! gdm_auth_file_check ("gdm_auth_user_remove", user, d->userauth, FALSE /* absentok */, NULL)) {
+			! mdm_auth_file_check ("mdm_auth_user_remove", user, d->userauth, FALSE /* absentok */, NULL)) {
 		g_free (authdir);
 		g_free (authfile);
-		gdm_error (_("%s: Ignoring suspiciously looking cookie file %s"),
-			   "gdm_auth_user_remove",
+		mdm_error (_("%s: Ignoring suspiciously looking cookie file %s"),
+			   "mdm_auth_user_remove",
 			   d->userauth);
 
 		return; 
@@ -840,13 +840,13 @@ gdm_auth_user_remove (GdmDisplay *d, uid_t user)
 		return;
 	}
 
-	af = gdm_safe_fopen_ap (d->userauth, 0600);
+	af = mdm_safe_fopen_ap (d->userauth, 0600);
 
 	if G_UNLIKELY (af == NULL) {
 		XauUnlockAuth (d->userauth);
 
-		gdm_error (_("%s: Cannot safely open %s"),
-			   "gdm_auth_user_remove",
+		mdm_error (_("%s: Cannot safely open %s"),
+			   "mdm_auth_user_remove",
 			   d->userauth);
 
 		g_free (d->userauth);
@@ -856,7 +856,7 @@ gdm_auth_user_remove (GdmDisplay *d, uid_t user)
 	}
 
 	/* Purge entries for this display from the cookie jar */
-	af = gdm_auth_purge (d, af, TRUE /* remove when empty */);
+	af = mdm_auth_purge (d, af, TRUE /* remove when empty */);
 
 	/* Close the file and unlock it */
 	if (af != NULL) {
@@ -864,7 +864,7 @@ gdm_auth_user_remove (GdmDisplay *d, uid_t user)
 		errno = 0;
 		VE_IGNORE_EINTR (fclose (af));
 		if G_UNLIKELY (errno != 0) {
-			gdm_error (_("Can't write to %s: %s"), d->userauth,
+			mdm_error (_("Can't write to %s: %s"), d->userauth,
 				   strerror (errno));
 		}
 	}
@@ -907,8 +907,8 @@ auth_same_except_data (Xauth *xa, Xauth *xb)
 
 
 /**
- * gdm_auth_purge:
- * @d: Pointer to a GdmDisplay struct
+ * mdm_auth_purge:
+ * @d: Pointer to a MdmDisplay struct
  * @af: File handle to a cookie file
  * @remove_when_empty: remove the file when empty
  *
@@ -916,7 +916,7 @@ auth_same_except_data (Xauth *xa, Xauth *xb)
  */
 
 static FILE *
-gdm_auth_purge (GdmDisplay *d, FILE *af, gboolean remove_when_empty)
+mdm_auth_purge (MdmDisplay *d, FILE *af, gboolean remove_when_empty)
 {
 	Xauth *xa;
 	GSList *keep = NULL, *li;
@@ -925,7 +925,7 @@ gdm_auth_purge (GdmDisplay *d, FILE *af, gboolean remove_when_empty)
 	if G_UNLIKELY (!d || !af)
 		return af;
 
-	gdm_debug ("gdm_auth_purge: %s", d->name);
+	mdm_debug ("mdm_auth_purge: %s", d->name);
 
 	fseek (af, 0L, SEEK_SET);
 
@@ -966,7 +966,7 @@ gdm_auth_purge (GdmDisplay *d, FILE *af, gboolean remove_when_empty)
 		return NULL;
 	}
 
-	af = gdm_safe_fopen_w (d->userauth, 0600);
+	af = mdm_safe_fopen_w (d->userauth, 0600);
 
 	/* Write out remaining entries */
 	for (li = keep; li != NULL; li = li->next) {
@@ -985,7 +985,7 @@ gdm_auth_purge (GdmDisplay *d, FILE *af, gboolean remove_when_empty)
 }
 
 void
-gdm_auth_set_local_auth (GdmDisplay *d)
+mdm_auth_set_local_auth (MdmDisplay *d)
 {
 	XSetAuthorization ((char *)"MIT-MAGIC-COOKIE-1",
 			   (int) strlen ("MIT-MAGIC-COOKIE-1"),
@@ -994,7 +994,7 @@ gdm_auth_set_local_auth (GdmDisplay *d)
 }
 
 void
-gdm_auth_free_auth_list (GSList *list)
+mdm_auth_free_auth_list (GSList *list)
 {
 	GSList *li;
 

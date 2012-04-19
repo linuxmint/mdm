@@ -31,7 +31,7 @@
 #include <crt_externs.h>
 #endif
 
-#include "gdm-common.h"
+#include "mdm-common.h"
 
 static gboolean
 v4_v4_equal (const struct sockaddr_in *a,
@@ -54,7 +54,7 @@ v6_v6_equal (struct sockaddr_in6 *a,
 #define SIN6(__s)  ((struct sockaddr_in6 *) __s)
 
 gboolean
-gdm_address_equal (struct sockaddr_storage *sa,
+mdm_address_equal (struct sockaddr_storage *sa,
 		   struct sockaddr_storage *sb)
 {
 	guint8 fam_a;
@@ -78,7 +78,7 @@ gdm_address_equal (struct sockaddr_storage *sa,
 }
 
 gboolean
-gdm_address_is_loopback (struct sockaddr_storage *sa)
+mdm_address_is_loopback (struct sockaddr_storage *sa)
 {
 	switch(sa->ss_family){
 #ifdef	AF_INET6
@@ -97,7 +97,7 @@ gdm_address_is_loopback (struct sockaddr_storage *sa)
 }
 
 void
-gdm_address_get_info (struct sockaddr_storage *ss,
+mdm_address_get_info (struct sockaddr_storage *ss,
 		      char                   **hostp,
 		      char                   **servp)
 {
@@ -107,7 +107,7 @@ gdm_address_get_info (struct sockaddr_storage *ss,
 	host [0] = '\0';
 	serv [0] = '\0';
 	getnameinfo ((const struct sockaddr *)ss,
-		     gdm_sockaddr_len(ss),
+		     mdm_sockaddr_len(ss),
 		     host, sizeof (host),
 		     serv, sizeof (serv),
 		     NI_NUMERICHOST | NI_NUMERICSERV);
@@ -290,7 +290,7 @@ ve_locale_exists (const char *loc)
 }
 
 int
-gdm_vector_len (char * const *v)
+mdm_vector_len (char * const *v)
 {
 	int i;
 

@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <librsvg/rsvg.h>
-#include "gdmcommon.h"
-#include "gdmwm.h"
+#include "mdmcommon.h"
+#include "mdmwm.h"
 #include "greeter_geometry.h"
 #include "greeter_canvas_item.h"
 
@@ -522,7 +522,7 @@ greeter_item_size_request (GreeterItemInfo *item,
        * You can go about your business.
        * Move Along
        */
-      text = gdm_common_expand_text (item->data.text.orig_text);
+      text = mdm_common_expand_text (item->data.text.orig_text);
 
       if (set_width > 0)
 	      max_width = set_width;
@@ -530,8 +530,8 @@ greeter_item_size_request (GreeterItemInfo *item,
       if (item->data.text.max_width < max_width)
 	      max_width = item->data.text.max_width;
 
-      if (item->data.text.max_screen_percent_width/100.0 * gdm_wm_screen.width < max_width)
-	      max_width = item->data.text.max_screen_percent_width/100.0 * gdm_wm_screen.width;
+      if (item->data.text.max_screen_percent_width/100.0 * mdm_wm_screen.width < max_width)
+	      max_width = item->data.text.max_screen_percent_width/100.0 * mdm_wm_screen.width;
 
       greeter_canvas_item_break_set_string (item,
 					    text,

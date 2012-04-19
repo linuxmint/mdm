@@ -1,5 +1,5 @@
 /* XPM */
-static char * gdm_xpm[] = {
+static char * mdm_xpm[] = {
 "32 32 380 2",
 "  	c None",
 ". 	c #D4D3CA",

@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager - misc functions
+/* MDM - The GNOME Display Manager - misc functions
  * Copyright (C) 1998, 1999, 2000 Martin K, Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,15 +24,15 @@
 #include <stdio.h>
 
 #include "misc.h"
-#include "gdmconfig.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
+#include "mdm-common.h"
 
 #define INDEX_FILE1 "index.theme"
 #define INDEX_FILE2 "index.theme.disabled"
 
 static char *
-gdm_get_font (const char *theme_name)
+mdm_get_font (const char *theme_name)
 {
 	char *font_name;
 	char *theme_dir;
@@ -85,26 +85,26 @@ gdm_get_font (const char *theme_name)
 
 /* perhaps needs to do something like:
     login_window_resize (FALSE);
-    gdm_wm_center_window (GTK_WINDOW (login));
+    mdm_wm_center_window (GTK_WINDOW (login));
    after calling if doing during runtime
   */
 void
-gdm_set_theme (const char *theme_name)
+mdm_set_theme (const char *theme_name)
 {
 	char *font_name;
 	GtkSettings *settings = gtk_settings_get_default ();
 
-	font_name = gdm_get_font (theme_name);
+	font_name = mdm_get_font (theme_name);
 
 	gtk_settings_set_string_property (settings,
-					  "gtk-theme-name", theme_name, "gdm");
+					  "gtk-theme-name", theme_name, "mdm");
 	gtk_settings_set_string_property (settings,
-					  "gtk-font-name", font_name, "gdm");
+					  "gtk-font-name", font_name, "mdm");
 	g_free (font_name);
 }
 
 gboolean
-gdm_working_command_exists (const char *commands)
+mdm_working_command_exists (const char *commands)
 {
 	char *command = ve_get_first_working_command (commands, TRUE /* only_existance */);
 	if (command == NULL)

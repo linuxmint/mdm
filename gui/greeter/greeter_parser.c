@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -29,17 +29,17 @@
 #include <gdk/gdkx.h>
 #include <syslog.h>
 
-#include "gdmwm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
+#include "mdmwm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config-keys.h"
 
 #include "greeter_configuration.h"
 #include "greeter_parser.h"
 #include "greeter_events.h"
-#include "gdm.h"
+#include "mdm.h"
 
 /* FIXME: hack */
 extern GreeterItemInfo *welcome_string_info;
@@ -394,7 +394,7 @@ parse_stock (xmlNodePtr node,
 	  welcome_string_info = info;
 
 	  g_free (*translated_text);
-	  *translated_text = gdm_common_get_welcomemsg ();
+	  *translated_text = mdm_common_get_welcomemsg ();
 	}
       /* FIXME: is this actually needed? */
       else if (g_ascii_strcasecmp ((char *) prop, "username-label") == 0)
@@ -418,11 +418,11 @@ parse_stock (xmlNodePtr node,
           *translated_text = g_strdup (_("_Start Again"));
         }
       else if (sscanf ((char *) prop, "custom_cmd%d", &i) == 1 && 
-	       i >= 0 && i < GDM_CUSTOM_COMMAND_MAX) 
+	       i >= 0 && i < MDM_CUSTOM_COMMAND_MAX) 
         {
-	      key_string = g_strdup_printf ("%s%d=", GDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
+	      key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
 	      g_free (*translated_text);
-	      *translated_text = g_strdup(gdm_config_get_string (key_string));
+	      *translated_text = g_strdup(mdm_config_get_string (key_string));
 	      g_free (key_string);
 	}
       else
@@ -458,10 +458,10 @@ do_font_size_reduction (GreeterItemInfo *info)
   double size_reduction = 1.0;
   int i;
 
-  if (gdm_wm_screen.width <= 800 &&
-      gdm_wm_screen.width > 640)
+  if (mdm_wm_screen.width <= 800 &&
+      mdm_wm_screen.width > 640)
     size_reduction = PANGO_SCALE_SMALL;
-  else if (gdm_wm_screen.width <= 640)
+  else if (mdm_wm_screen.width <= 640)
     size_reduction = PANGO_SCALE_X_SMALL;
 
   if (size_reduction < 0.99)
@@ -1874,7 +1874,7 @@ greeter_parse (const char *file, const char *datadir,
        */
       theme_dir = g_strdup_printf ("%s/%s", gtk_rc_get_theme_dir (), (char *) prop);
       if (g_file_test (theme_dir, G_FILE_TEST_IS_DIR))
-         gdm_set_theme ((char *) prop);
+         mdm_set_theme ((char *) prop);
 
       xmlFree (prop);
     }

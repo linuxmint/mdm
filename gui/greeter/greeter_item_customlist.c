@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,14 +23,14 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-#include "gdm.h"
-#include "gdmconfig.h"
-#include "gdmsession.h"
-#include "gdmlanguages.h"
+#include "mdm.h"
+#include "mdmconfig.h"
+#include "mdmsession.h"
+#include "mdmlanguages.h"
 
-#include "gdm-common.h"
-#include "gdm-daemon-config-keys.h"
-#include "gdm-socket-protocol.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config-keys.h"
+#include "mdm-socket-protocol.h"
 
 #include "greeter_item.h"
 #include "greeter_configuration.h"
@@ -168,7 +168,7 @@ greeter_custom_set_session (gchar *session)
 void
 lang_set_custom_callback (gchar *language)
 {
-  GtkListStore *lang_model = gdm_lang_get_model ();
+  GtkListStore *lang_model = mdm_lang_get_model ();
   GtkTreeIter iter;
   gboolean valid;
   char *locale_name;
@@ -274,7 +274,7 @@ populate_session (GObject * object)
   /* Loop through the sessions and set the custom list values. */
   for (tmp = sessions; tmp != NULL; tmp = tmp->next)
     {
-      GdmSession *session;
+      MdmSession *session;
       char *file;
 
       file = (char *) tmp->data;
@@ -318,7 +318,7 @@ populate_session (GObject * object)
 static void
 populate_language (GObject *object)
 {
-  GtkListStore *lang_model = gdm_lang_get_model ();
+  GtkListStore *lang_model = mdm_lang_get_model ();
   GtkTreeIter iter;
   char *name, *untranslated, *lang_display_name, *locale_name;
   gboolean valid;
@@ -372,7 +372,7 @@ combo_session_selected (char *session_val)
        */
       for (tmp = sessions; tmp != NULL; tmp = tmp->next)
         {
-          GdmSession *session;
+          MdmSession *session;
           char *name;
 
           file    = tmp->data;
@@ -415,7 +415,7 @@ combo_selected (GtkComboBox *combo, GreeterItemInfo *item)
        * Since combo boxes can't store the ID value, have to do some
        * extra work to figure out which row is selected.
        */
-      GtkListStore *lang_model = gdm_lang_get_model ();
+      GtkListStore *lang_model = mdm_lang_get_model ();
       GtkTreeIter iter;
       char *name, *untranslated, *lang_display_name, *locale_name;
       gboolean valid;
@@ -436,7 +436,7 @@ combo_selected (GtkComboBox *combo, GreeterItemInfo *item)
 
           if (strcmp (lang_display_name, active) == 0)
             {
-              gdm_lang_set_restart_dialog (locale_name);
+              mdm_lang_set_restart_dialog (locale_name);
               break;
             }
           g_free (lang_display_name);
@@ -445,15 +445,15 @@ combo_selected (GtkComboBox *combo, GreeterItemInfo *item)
     }
   else
     {
-      if (DOING_GDM_DEVELOPMENT)
+      if (DOING_MDM_DEVELOPMENT)
         return;
 
       id   = gtk_combo_box_get_active_text (combo);
       file = g_strdup_printf ("%s/%s.GreeterInfo",
-             ve_sure_string (gdm_config_get_string (GDM_KEY_SERV_AUTHDIR)),
+             ve_sure_string (mdm_config_get_string (MDM_KEY_SERV_AUTHDIR)),
              ve_sure_string (g_getenv ("DISPLAY")));
 
-      gdm_save_customlist_data (file, item->id, id);
+      mdm_save_customlist_data (file, item->id, id);
    }
 }
 
@@ -526,18 +526,18 @@ list_selected (GtkTreeSelection *selection, GreeterItemInfo *item)
   else if (strcmp (item->id, "language") == 0)
     {
       if (id != NULL)
-        gdm_lang_set_restart_dialog (id);
+        mdm_lang_set_restart_dialog (id);
     }
   else
     {
-      if (DOING_GDM_DEVELOPMENT)
+      if (DOING_MDM_DEVELOPMENT)
         return;
 
       file = g_strdup_printf ("%s/%s.GreeterInfo",
-        ve_sure_string (gdm_config_get_string (GDM_KEY_SERV_AUTHDIR)),
+        ve_sure_string (mdm_config_get_string (MDM_KEY_SERV_AUTHDIR)),
         ve_sure_string (g_getenv ("DISPLAY")));
 
-      gdm_save_customlist_data (file, item->id, id);
+      mdm_save_customlist_data (file, item->id, id);
    }
 }
 

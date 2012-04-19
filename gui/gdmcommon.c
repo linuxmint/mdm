@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003 George Lebl
@@ -38,48 +38,48 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
-#include "gdm.h"
-#include "gdmcommon.h"
-#include "gdmcomm.h"
-#include "gdmconfig.h"
+#include "mdm.h"
+#include "mdmcommon.h"
+#include "mdmcomm.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-log.h"
-#include "gdm-socket-protocol.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-log.h"
+#include "mdm-socket-protocol.h"
+#include "mdm-daemon-config-keys.h"
 
 #include "pixmaps/24x24/inlines.h"
 
-gint gdm_timed_delay = 0;
+gint mdm_timed_delay = 0;
 static Atom AT_SPI_IOR;
 
 /*
  * Some slaves want to send output to syslog and others (such as
- * gdmflexiserver and gdmdynamic send error messages to stdout.
- * Calling gdm_common_openlog to open the syslog sets the
- * using_syslog flag so that calls to gdm_common_fail,
- * gdm_common_info, gdm_common_error, and gdm_common_debug sends
+ * mdmflexiserver and mdmdynamic send error messages to stdout.
+ * Calling mdm_common_openlog to open the syslog sets the
+ * using_syslog flag so that calls to mdm_common_fail,
+ * mdm_common_info, mdm_common_error, and mdm_common_debug sends
  * output to the syslog if the syslog has been opened, otherwise
  * send to stdout.
  */
 static gboolean using_syslog = FALSE;
 
 void
-gdm_common_log_init (void)
+mdm_common_log_init (void)
 {
-	gdm_log_init ();
+	mdm_log_init ();
 
 	using_syslog = TRUE;
 }
 
 void
-gdm_common_log_set_debug (gboolean enable)
+mdm_common_log_set_debug (gboolean enable)
 {
-	gdm_log_set_debug (enable);
+	mdm_log_set_debug (enable);
 }
 
 void
-gdm_common_fail_exit (const gchar *format, ...)
+mdm_common_fail_exit (const gchar *format, ...)
 {
 	va_list args;
 	gchar *s;
@@ -104,7 +104,7 @@ gdm_common_fail_exit (const gchar *format, ...)
 }
 
 void
-gdm_common_fail_greeter (const gchar *format, ...)
+mdm_common_fail_greeter (const gchar *format, ...)
 {
 	va_list args;
 	gchar *s;
@@ -128,7 +128,7 @@ gdm_common_fail_greeter (const gchar *format, ...)
 }
 
 void
-gdm_common_info (const gchar *format, ...)
+mdm_common_info (const gchar *format, ...)
 {
 	va_list args;
 	gchar *s;
@@ -147,7 +147,7 @@ gdm_common_info (const gchar *format, ...)
 }
 
 void
-gdm_common_error (const gchar *format, ...)
+mdm_common_error (const gchar *format, ...)
 {
 	va_list args;
 	gchar *s;
@@ -166,7 +166,7 @@ gdm_common_error (const gchar *format, ...)
 }
 
 void
-gdm_common_warning (const gchar *format, ...)
+mdm_common_warning (const gchar *format, ...)
 {
 	va_list args;
 	gchar *s;
@@ -185,7 +185,7 @@ gdm_common_warning (const gchar *format, ...)
 }
 
 void
-gdm_common_debug (const gchar *format, ...)
+mdm_common_debug (const gchar *format, ...)
 {
 	va_list args;
 	gchar *s;
@@ -200,7 +200,7 @@ gdm_common_debug (const gchar *format, ...)
 }
 
 void
-gdm_common_setup_cursor (GdkCursorType type)
+mdm_common_setup_cursor (GdkCursorType type)
 {
 	GdkCursor *cursor = gdk_cursor_new (type);
 	gdk_window_set_cursor (gdk_get_default_root_window (), cursor);
@@ -208,16 +208,16 @@ gdm_common_setup_cursor (GdkCursorType type)
 }
 
 void
-gdm_common_setup_builtin_icons (void)
+mdm_common_setup_builtin_icons (void)
 {
         typedef struct 
         {
                 const char *id;
                 gint size;
                 const guint8 *data;
-        } GdmThemeIcon;
+        } MdmThemeIcon;
 
-	static const GdmThemeIcon builtins[] =
+	static const MdmThemeIcon builtins[] =
 	{
 		{"preferences-desktop-locale", 24, preferences_desktop_locale_24},
 		{"preferences-desktop-remote-desktop", 24, preferences_desktop_remote_desktop_24},
@@ -251,22 +251,22 @@ gdm_common_setup_builtin_icons (void)
 }
 
 void
-gdm_common_login_sound (const gchar *GdmSoundProgram,
-			const gchar *GdmSoundOnLoginReadyFile,
-			gboolean     GdmSoundOnLoginReady)
+mdm_common_login_sound (const gchar *MdmSoundProgram,
+			const gchar *MdmSoundOnLoginReadyFile,
+			gboolean     MdmSoundOnLoginReady)
 {
-	if ( ! GdmSoundOnLoginReady)
+	if ( ! MdmSoundOnLoginReady)
 		return;
 
-	if (ve_string_empty (g_getenv ("GDM_IS_LOCAL")) ||
-	    ve_string_empty (GdmSoundProgram) ||
-	    ve_string_empty (GdmSoundOnLoginReadyFile) ||
-	    g_access (GdmSoundProgram, F_OK) != 0 ||
-	    g_access (GdmSoundOnLoginReadyFile, F_OK) != 0) {
+	if (ve_string_empty (g_getenv ("MDM_IS_LOCAL")) ||
+	    ve_string_empty (MdmSoundProgram) ||
+	    ve_string_empty (MdmSoundOnLoginReadyFile) ||
+	    g_access (MdmSoundProgram, F_OK) != 0 ||
+	    g_access (MdmSoundOnLoginReadyFile, F_OK) != 0) {
 		gdk_beep ();
 	} else {
 		/* login sound interruption */
-		printf ("%c%c%c\n", STX, BEL, GDM_INTERRUPT_LOGIN_SOUND);
+		printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_LOGIN_SOUND);
 		fflush (stdout);
 	}
 }
@@ -320,11 +320,11 @@ delay_noblink (GSignalInvocationHint *ihint,
 }
 
 void
-gdm_common_setup_blinking (void)
+mdm_common_setup_blinking (void)
 {
 	guint sid;
 
-	if ( ! ve_string_empty (g_getenv ("GDM_IS_LOCAL")) &&
+	if ( ! ve_string_empty (g_getenv ("MDM_IS_LOCAL")) &&
 	     strncmp (ve_sure_string (g_getenv ("DISPLAY")), ":0", 2) == 0)
 		return;
 
@@ -362,12 +362,12 @@ gdm_common_setup_blinking (void)
 }
 
 void
-gdm_common_setup_blinking_entry (GtkWidget *entry)
+mdm_common_setup_blinking_entry (GtkWidget *entry)
 {
 	EntryBlink *eb;
 	GtkSettings *settings;
 
-	if ( ! ve_string_empty (g_getenv ("GDM_IS_LOCAL")) &&
+	if ( ! ve_string_empty (g_getenv ("MDM_IS_LOCAL")) &&
 	     strncmp (ve_sure_string (g_getenv ("DISPLAY")), ":0", 2) == 0)
 		return;
 
@@ -381,7 +381,7 @@ gdm_common_setup_blinking_entry (GtkWidget *entry)
 }
 
 GdkPixbuf *
-gdm_common_get_face (const char *filename,
+mdm_common_get_face (const char *filename,
 		     const char *fallback_filename,
 		     guint       max_width,
 		     guint       max_height)
@@ -434,7 +434,7 @@ gdm_common_get_face (const char *filename,
 }
 
 gchar *
-gdm_common_text_to_escaped_utf8 (const char *text)
+mdm_common_text_to_escaped_utf8 (const char *text)
 {
 	gchar *utf8_string, *escaped_string, *p;
 	const gchar *q;
@@ -457,13 +457,13 @@ gdm_common_text_to_escaped_utf8 (const char *text)
 }
 
 gchar *
-gdm_common_get_config_file (void)
+mdm_common_get_config_file (void)
 {
 	gchar *result;
 	gchar *config_file;
 
 	/* Get config file */
-	result = gdmcomm_call_gdm ("GET_CONFIG_FILE", NULL /* auth cookie */, "2.8.0.2", 5);
+	result = mdmcomm_call_mdm ("GET_CONFIG_FILE", NULL /* auth cookie */, "2.8.0.2", 5);
 	if (! result)
 		return NULL;
 
@@ -482,13 +482,13 @@ gdm_common_get_config_file (void)
 }
 
 gchar *
-gdm_common_get_custom_config_file (void)
+mdm_common_get_custom_config_file (void)
 {
 	gchar *result;
 	gchar *config_file;
 
 	/* Get config file */
-	result = gdmcomm_call_gdm ("GET_CUSTOM_CONFIG_FILE", NULL /* auth cookie */, "2.8.0.2", 5);
+	result = mdmcomm_call_mdm ("GET_CUSTOM_CONFIG_FILE", NULL /* auth cookie */, "2.8.0.2", 5);
 	if (! result)
 		return NULL;
 
@@ -507,9 +507,9 @@ gdm_common_get_custom_config_file (void)
 }
 
 gboolean
-gdm_common_select_time_format (void)
+mdm_common_select_time_format (void)
 {
-	gchar *val = gdm_config_get_string (GDM_KEY_USE_24_CLOCK);
+	gchar *val = mdm_config_get_string (MDM_KEY_USE_24_CLOCK);
 
 	if (val != NULL &&
 	    (val[0] == 'T' ||
@@ -543,7 +543,7 @@ gdm_common_select_time_format (void)
 
 /* Not to look too shaby on Xinerama setups */
 void
-gdm_common_setup_background_color (gchar *bg_color)
+mdm_common_setup_background_color (gchar *bg_color)
 {
 	GdkColormap *colormap;
 	GdkColor color;
@@ -576,7 +576,7 @@ gdm_common_setup_background_color (gchar *bg_color)
 }
 
 void
-gdm_common_set_root_background (GdkPixbuf *pb)
+mdm_common_set_root_background (GdkPixbuf *pb)
 {
 	GdkPixmap *pm;
 	gint width, height;
@@ -612,7 +612,7 @@ gdm_common_set_root_background (GdkPixbuf *pb)
 
 
 gchar *
-gdm_common_get_welcomemsg (void)
+mdm_common_get_welcomemsg (void)
 {
         gchar *welcomemsg;
 	gchar *tempstr;
@@ -623,31 +623,31 @@ gdm_common_get_welcomemsg (void)
 	 * set.  If the user wants to use the default remote welcome msg as the
          * local welcome msg (or vice versa), then also translate.
 	 */
-        if (ve_string_empty (g_getenv ("GDM_IS_LOCAL"))) {
-                if (gdm_config_get_bool (GDM_KEY_DEFAULT_REMOTE_WELCOME))
-                        welcomemsg = g_strdup (_(GDM_DEFAULT_REMOTE_WELCOME_MSG));
+        if (ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
+                if (mdm_config_get_bool (MDM_KEY_DEFAULT_REMOTE_WELCOME))
+                        welcomemsg = g_strdup (_(MDM_DEFAULT_REMOTE_WELCOME_MSG));
                 else {
-			tempstr = gdm_config_get_translated_string (GDM_KEY_REMOTE_WELCOME);
+			tempstr = mdm_config_get_translated_string (MDM_KEY_REMOTE_WELCOME);
 
 			if (tempstr == NULL ||
-			    strcmp (ve_sure_string (tempstr), GDM_DEFAULT_REMOTE_WELCOME_MSG) == 0)
-				welcomemsg = g_strdup (_(GDM_DEFAULT_REMOTE_WELCOME_MSG));
-			else if (strcmp (ve_sure_string (tempstr), GDM_DEFAULT_WELCOME_MSG) == 0)
-		        	welcomemsg = g_strdup (_(GDM_DEFAULT_WELCOME_MSG));
+			    strcmp (ve_sure_string (tempstr), MDM_DEFAULT_REMOTE_WELCOME_MSG) == 0)
+				welcomemsg = g_strdup (_(MDM_DEFAULT_REMOTE_WELCOME_MSG));
+			else if (strcmp (ve_sure_string (tempstr), MDM_DEFAULT_WELCOME_MSG) == 0)
+		        	welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
 			else
 				welcomemsg = g_strdup (tempstr);
 		}
         } else {
-                if (gdm_config_get_bool (GDM_KEY_DEFAULT_WELCOME))
-                        welcomemsg = g_strdup (_(GDM_DEFAULT_WELCOME_MSG));
+                if (mdm_config_get_bool (MDM_KEY_DEFAULT_WELCOME))
+                        welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
                 else {
-                        tempstr = gdm_config_get_translated_string (GDM_KEY_WELCOME);
+                        tempstr = mdm_config_get_translated_string (MDM_KEY_WELCOME);
 
 			if (tempstr == NULL ||
-			    strcmp (ve_sure_string (tempstr), GDM_DEFAULT_WELCOME_MSG) == 0)
-				welcomemsg = g_strdup (_(GDM_DEFAULT_WELCOME_MSG));
-			else if (strcmp (ve_sure_string (tempstr), GDM_DEFAULT_REMOTE_WELCOME_MSG) == 0)
-	        		welcomemsg = g_strdup (_(GDM_DEFAULT_REMOTE_WELCOME_MSG));
+			    strcmp (ve_sure_string (tempstr), MDM_DEFAULT_WELCOME_MSG) == 0)
+				welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
+			else if (strcmp (ve_sure_string (tempstr), MDM_DEFAULT_REMOTE_WELCOME_MSG) == 0)
+	        		welcomemsg = g_strdup (_(MDM_DEFAULT_REMOTE_WELCOME_MSG));
 			else
        				welcomemsg = g_strdup (tempstr);
 		}
@@ -661,7 +661,7 @@ pre_fetch_prog_get_path (void)
 {
 	gchar *prefetchprog;
 
-	prefetchprog = gdm_config_get_string (GDM_KEY_PRE_FETCH_PROGRAM);
+	prefetchprog = mdm_config_get_string (MDM_KEY_PRE_FETCH_PROGRAM);
 	if  (! ve_string_empty (prefetchprog)) {
 		return prefetchprog;
 	} else
@@ -701,7 +701,7 @@ pre_fetch_run (gpointer data)
 
 static gboolean
 pre_atspi_launch (void){
-	gboolean a11y = gdm_config_get_bool (GDM_KEY_ADD_GTK_MODULES);
+	gboolean a11y = mdm_config_get_bool (MDM_KEY_ADD_GTK_MODULES);
 	GPid pid = -1;
 	GError *error = NULL;
 	char *command = NULL;
@@ -759,7 +759,7 @@ filter_watch (GdkXEvent *xevent, GdkEvent *event, gpointer data){
 static gboolean
 filter_timeout (gpointer data)
 {
-	gdm_common_info (_("The accessibility registry was not found."));
+	mdm_common_info (_("The accessibility registry was not found."));
 
 	gtk_main_quit ();
 
@@ -767,10 +767,10 @@ filter_timeout (gpointer data)
 }
 
 void
-gdm_common_atspi_launch (void)
+mdm_common_atspi_launch (void)
 {
 	GdkWindow *w = gdk_get_default_root_window ();
-	gboolean a11y = gdm_config_get_bool (GDM_KEY_ADD_GTK_MODULES);
+	gboolean a11y = mdm_config_get_bool (MDM_KEY_ADD_GTK_MODULES);
 	guint tid;
 
 	if (! a11y)
@@ -782,7 +782,7 @@ gdm_common_atspi_launch (void)
 	gdk_window_set_events (w,  GDK_PROPERTY_CHANGE_MASK);
 
 	if ( ! pre_atspi_launch ()) {
-		gdm_common_info (_("The accessibility registry could not be started."));
+		mdm_common_info (_("The accessibility registry could not be started."));
 
 		return;
 	}
@@ -796,7 +796,7 @@ gdm_common_atspi_launch (void)
 }
 
 void
-gdm_common_pre_fetch_launch (void)
+mdm_common_pre_fetch_launch (void)
 {
 	if (! pre_fetch_prog_get_path ())
 		return;
@@ -835,7 +835,7 @@ ve_strftime (struct tm *the_tm, const char *format)
  * has access to the time data as well.
  */
 gchar *
-gdm_common_get_clock (struct tm **the_tm)
+mdm_common_get_clock (struct tm **the_tm)
 {
         char *str;
         time_t the_time;
@@ -843,7 +843,7 @@ gdm_common_get_clock (struct tm **the_tm)
         time (&the_time);
         *the_tm = localtime (&the_time);
 
-        if (gdm_common_select_time_format ()) {
+        if (mdm_common_select_time_format ()) {
                 str = ve_strftime (*the_tm, _("%a %b %d, %H:%M"));
         } else {
                 /* Translators: You should translate time part as
@@ -857,7 +857,7 @@ gdm_common_get_clock (struct tm **the_tm)
 }
 
 char *
-gdm_common_expand_text (const gchar *text)
+mdm_common_expand_text (const gchar *text)
 {
 	GString *str;
 	const char *p;
@@ -909,7 +909,7 @@ gdm_common_expand_text (const gchar *text)
 				g_string_append (str, "%");
 				break;
 			case 'c':
-				clock = gdm_common_get_clock (&the_tm);
+				clock = mdm_common_get_clock (&the_tm);
 				g_string_append (str, clock);
 				g_free (clock);
 				break;
@@ -950,11 +950,11 @@ gdm_common_expand_text (const gchar *text)
 				g_string_append (str, name.sysname);
 				break;
 			case 't':
-				g_string_append_printf (str, ngettext("%d second", "%d seconds", gdm_timed_delay),
-							gdm_timed_delay);
+				g_string_append_printf (str, ngettext("%d second", "%d seconds", mdm_timed_delay),
+							mdm_timed_delay);
 				break;
 			case 'u':
-				g_string_append (str, ve_sure_string (g_getenv("GDM_TIMED_LOGIN_OK")));
+				g_string_append (str, ve_sure_string (g_getenv("MDM_TIMED_LOGIN_OK")));
 				break;
 			default:
 				if (ch < 127)
@@ -1035,7 +1035,7 @@ get_less_specific_locale (const char *locale,
 }
 
 gboolean
-gdm_common_locale_is_displayable (const gchar *locale)
+mdm_common_locale_is_displayable (const gchar *locale)
 {
   char *language_code;
   gboolean is_displayable;

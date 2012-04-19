@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 2003 Red Hat, Inc.
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  * Copyright (C) Rik Faith <faith@precisioninsight.com>
@@ -39,12 +39,12 @@
 #include <unistd.h>
 #include <errno.h>
 
-#include "gdm.h"
+#include "mdm.h"
 #include "md5.h"
 #include "cookie.h"
 
-#include "gdm-common.h"
-#include "gdm-daemon-config.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config.h"
 
 #define MAXBUFFERSIZE 1024
 
@@ -111,7 +111,7 @@ next_rand_32 (guint32 num)
    really since that normally adds enough bytes of nice
    randomness already */
 void
-gdm_random_tick (void)
+mdm_random_tick (void)
 {
 	struct timeval tv;
 	struct timezone tz;
@@ -165,11 +165,11 @@ data_seems_random (const char buf[], int size)
 static unsigned char old_cookie[16];
 
 void
-gdm_cookie_generate (char **cookiep,
+mdm_cookie_generate (char **cookiep,
 		     char **bcookiep)
 {
 	int i;
-	struct GdmMD5Context ctx;
+	struct MdmMD5Context ctx;
 	unsigned char digest[16];
 	unsigned char buf[MAXBUFFERSIZE];
 	int fd;
@@ -179,23 +179,23 @@ gdm_cookie_generate (char **cookiep,
 
 	cookie[0] = '\0';
 
-	gdm_md5_init (&ctx);
+	mdm_md5_init (&ctx);
 
 	/* spin the spinners according to current time */
-	gdm_random_tick ();
+	mdm_random_tick ();
 
-	gdm_md5_update (&ctx, (unsigned char *) randnums, sizeof (int) * RANDNUMS);
+	mdm_md5_update (&ctx, (unsigned char *) randnums, sizeof (int) * RANDNUMS);
 
 	/* use the last cookie */
-	gdm_md5_update (&ctx, old_cookie, 16);
+	mdm_md5_update (&ctx, old_cookie, 16);
 
 	/* use some uninitialized stack space */
-	gdm_md5_update (&ctx, (unsigned char *) cookie, sizeof (cookie));
+	mdm_md5_update (&ctx, (unsigned char *) cookie, sizeof (cookie));
 
 	pid = getppid ();
-	gdm_md5_update (&ctx, (unsigned char *) &pid, sizeof (pid));
+	mdm_md5_update (&ctx, (unsigned char *) &pid, sizeof (pid));
 	pid = getpid ();
-	gdm_md5_update (&ctx, (unsigned char *) &pid, sizeof (pid));
+	mdm_md5_update (&ctx, (unsigned char *) &pid, sizeof (pid));
 
 	for (i = 0; i < G_N_ELEMENTS (rngs); i++) {
 		const char *file = rngs[i].path;
@@ -239,7 +239,7 @@ gdm_cookie_generate (char **cookiep,
 			}
 
 			if G_LIKELY (r > 0)
-				gdm_md5_update (&ctx, buf, r);
+				mdm_md5_update (&ctx, buf, r);
 			else
 				r = 0;
 
@@ -251,7 +251,7 @@ gdm_cookie_generate (char **cookiep,
 		}
 	}
 
-	gdm_md5_final (digest, &ctx);
+	mdm_md5_final (digest, &ctx);
 
 	for (i = 0; i < 16; i++) {
 		char sub[3];

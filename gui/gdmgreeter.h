@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The Gnome Display Manager
+ * MDM - The Gnome Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003 George Lebl
@@ -21,10 +21,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GDM_GREETER_H
-#define GDM_GREETER_H
+#ifndef MDM_GREETER_H
+#define MDM_GREETER_H
 
 #include <gtk/gtk.h>
 
-gboolean  gdm_common_is_action_available    (gchar *action);
-#endif /* GDM_GREETER_H */
+gboolean  mdm_common_is_action_available    (gchar *action);
+#endif /* MDM_GREETER_H */

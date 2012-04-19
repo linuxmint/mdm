@@ -111,7 +111,7 @@
 		  <child>
 		    <widget class="GtkCheckButton" id="a_login_curr_session_checkbutton">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">When the user logs in and already has an existing session, they are connected to that session rather than starting a new session.  This only works for sessions running on Virtual Terminals started with gdmflexiserver, and not with XDMCP.</property>
+		      <property name="tooltip" translatable="yes">When the user logs in and already has an existing session, they are connected to that session rather than starting a new session.  This only works for sessions running on Virtual Terminals started with mdmflexiserver, and not with XDMCP.</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">Disa_ble multiple logins for a single user</property>
 		      <property name="use_underline">True</property>
@@ -1125,7 +1125,7 @@ Themed with face browser</property>
 					  <child>
 					    <widget class="GtkCheckButton" id="local_logo_image_checkbutton">
 					      <property name="visible">True</property>
-					      <property name="tooltip" translatable="yes">Image file to display in the logo box. The file must be in an gdk-pixbuf supported format and it must be readable by the GDM user. If no file is specified the logo feature is disabled.</property>
+					      <property name="tooltip" translatable="yes">Image file to display in the logo box. The file must be in an gdk-pixbuf supported format and it must be readable by the MDM user. If no file is specified the logo feature is disabled.</property>
 					      <property name="can_focus">True</property>
 					      <property name="label" translatable="yes">I_mage:</property>
 					      <property name="use_underline">True</property>
@@ -3024,7 +3024,7 @@ Same as Local</property>
 					  <child>
 					    <widget class="GtkCheckButton" id="remote_logo_image_checkbutton">
 					      <property name="visible">True</property>
-					      <property name="tooltip" translatable="yes">Image file to display in the logo box. The file must be in an gdk-pixbuf supported format and it must be readable by the GDM user. If no file is specified the logo feature is disabled.</property>
+					      <property name="tooltip" translatable="yes">Image file to display in the logo box. The file must be in an gdk-pixbuf supported format and it must be readable by the MDM user. If no file is specified the logo feature is disabled.</property>
 					      <property name="can_focus">True</property>
 					      <property name="label" translatable="yes">I_mage:</property>
 					      <property name="use_underline">True</property>
@@ -4008,7 +4008,7 @@ Random from selected
 			  <child>
 			    <widget class="GtkCheckButton" id="acc_theme">
 			      <property name="visible">True</property>
-			      <property name="tooltip" translatable="yes">Allow changing the GTK+ (widget) theme from the greeter. Currently this only affects the standard greeter. The theme will stay in effect on this display until changed and will affect all the other windows that are put up by GDM.</property>
+			      <property name="tooltip" translatable="yes">Allow changing the GTK+ (widget) theme from the greeter. Currently this only affects the standard greeter. The theme will stay in effect on this display until changed and will affect all the other windows that are put up by MDM.</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">_Allow users to change fonts and colors of plain greeter</property>
 			      <property name="use_underline">True</property>
@@ -5043,7 +5043,7 @@ Random from selected
 				      <child>
 					<widget class="GtkCheckButton" id="enable_debug">
 					  <property name="visible">True</property>
-					  <property name="tooltip" translatable="yes">Sends debug output to the syslog.  This can be useful for tracking down problems with GDM.  This output tends to be verbose so should not be turned on for general use.</property>
+					  <property name="tooltip" translatable="yes">Sends debug output to the syslog.  This can be useful for tracking down problems with MDM.  This output tends to be verbose so should not be turned on for general use.</property>
 					  <property name="can_focus">True</property>
 					  <property name="label" translatable="yes">Ena_ble debug messages to system log</property>
 					  <property name="use_underline">True</property>
@@ -6046,7 +6046,7 @@ Random from selected
 			  <child>
 			    <widget class="GtkCheckButton" id="global_face_dir_checkbutton">
 			      <property name="visible">True</property>
-			      <property name="tooltip" translatable="yes">Systemwide directory for face files. The sysadmin can place icons for users here without touching their homedirs. Faces are named after their users' logins. The face images must be stored in gdk-pixbuf supported formats and they must be readable for the GDM user.</property>
+			      <property name="tooltip" translatable="yes">Systemwide directory for face files. The sysadmin can place icons for users here without touching their homedirs. Faces are named after their users' logins. The face images must be stored in gdk-pixbuf supported formats and they must be readable for the MDM user.</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">_Global face dir:</property>
 			      <property name="use_underline">True</property>
@@ -6069,7 +6069,7 @@ Random from selected
 			  <child>
 			    <widget class="GtkCheckButton" id="default_face_checkbutton">
 			      <property name="visible">True</property>
-			      <property name="tooltip" translatable="yes">If a user has no defined face image, GDM will use the &quot;stock_person&quot; icon defined in the current GTK+ theme.  If no such image is defined, the image specified by DefaultFace will be used.  The image must be in an gdk-pixbuf supported format and the file must be readable to the GDM user.</property>
+			      <property name="tooltip" translatable="yes">If a user has no defined face image, MDM will use the &quot;stock_person&quot; icon defined in the current GTK+ theme.  If no such image is defined, the image specified by DefaultFace will be used.  The image must be in an gdk-pixbuf supported format and the file must be readable to the MDM user.</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">De_fault face:</property>
 			      <property name="use_underline">True</property>
@@ -6304,7 +6304,7 @@ Random from selected
 	  <child>
 	    <widget class="GtkCheckButton" id="honour_indirect">
 	      <property name="visible">True</property>
-	      <property name="tooltip" translatable="yes">Enables XDMCP INDIRECT choosing (i.e. remote execution of gdmchooser) for X-terminals which don't supply their own display browser.</property>
+	      <property name="tooltip" translatable="yes">Enables XDMCP INDIRECT choosing (i.e. remote execution of mdmchooser) for X-terminals which don't supply their own display browser.</property>
 	      <property name="can_focus">True</property>
 	      <property name="label" translatable="yes">Honor _indirect requests</property>
 	      <property name="use_underline">True</property>
@@ -6559,7 +6559,7 @@ Random from selected
 	  <child>
 	    <widget class="GtkSpinButton" id="udpport">
 	      <property name="visible">True</property>
-	      <property name="tooltip" translatable="yes">The UDP port number gdm should listen to for XDMCP requests. Don't change this unless you know what you are doing.</property>
+	      <property name="tooltip" translatable="yes">The UDP port number mdm should listen to for XDMCP requests. Don't change this unless you know what you are doing.</property>
 	      <property name="can_focus">True</property>
 	      <property name="climb_rate">1</property>
 	      <property name="digits">0</property>
@@ -6582,7 +6582,7 @@ Random from selected
 	  <child>
 	    <widget class="GtkSpinButton" id="maxpending">
 	      <property name="visible">True</property>
-	      <property name="tooltip" translatable="yes">To avoid denial of service attacks, GDM has fixed size queue of pending connections. Please note that this parameter does *not* limit the number of remote displays which can be managed. It only limits the number of displays initiating a connection simultaneously.</property>
+	      <property name="tooltip" translatable="yes">To avoid denial of service attacks, MDM has fixed size queue of pending connections. Please note that this parameter does *not* limit the number of remote displays which can be managed. It only limits the number of displays initiating a connection simultaneously.</property>
 	      <property name="can_focus">True</property>
 	      <property name="climb_rate">1</property>
 	      <property name="digits">0</property>
@@ -6651,7 +6651,7 @@ Random from selected
 	  <child>
 	    <widget class="GtkSpinButton" id="maxwait">
 	      <property name="visible">True</property>
-	      <property name="tooltip" translatable="yes">When GDM is ready to manage a remote display, an ACCEPT packet is sent to it containing a unique session id which will be used in future XDMCP conversations. GDM will then place the session id in the pending queue waiting for the display to respond with a MANAGE request. If no response is received within maximum wait time, GDM will declare the display dead and erase it from the pending queue freeing up the slot for other displays.</property>
+	      <property name="tooltip" translatable="yes">When MDM is ready to manage a remote display, an ACCEPT packet is sent to it containing a unique session id which will be used in future XDMCP conversations. MDM will then place the session id in the pending queue waiting for the display to respond with a MANAGE request. If no response is received within maximum wait time, MDM will declare the display dead and erase it from the pending queue freeing up the slot for other displays.</property>
 	      <property name="can_focus">True</property>
 	      <property name="climb_rate">1</property>
 	      <property name="digits">0</property>
@@ -6697,7 +6697,7 @@ Random from selected
 	  <child>
 	    <widget class="GtkSpinButton" id="displaysperhost">
 	      <property name="visible">True</property>
-	      <property name="tooltip" translatable="yes">To prevent attackers from filling up the pending queue, GDM will only allow one connection for each remote computer.  If you want to provide display services to computers with more than one screen, you should increase the this value accordingly.</property>
+	      <property name="tooltip" translatable="yes">To prevent attackers from filling up the pending queue, MDM will only allow one connection for each remote computer.  If you want to provide display services to computers with more than one screen, you should increase the this value accordingly.</property>
 	      <property name="can_focus">True</property>
 	      <property name="climb_rate">1</property>
 	      <property name="digits">0</property>
@@ -6861,7 +6861,7 @@ Random from selected
 	  <child>
 	    <widget class="GtkLabel" id="xserver_informationlabel">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">&lt;b&gt;Warning:&lt;/b&gt;  Incorrect settings could prevent the X server from restarting.  Changes to these settings will not take effect until GDM is restarted.</property>
+	      <property name="label" translatable="yes">&lt;b&gt;Warning:&lt;/b&gt;  Incorrect settings could prevent the X server from restarting.  Changes to these settings will not take effect until MDM is restarted.</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">True</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -7580,7 +7580,7 @@ Chooser</property>
 				      <child>
 					<widget class="GtkCheckButton" id="xserver_handled_checkbutton">
 					  <property name="visible">True</property>
-					  <property name="tooltip" translatable="yes">GDM should run the login window on this server and allow a user to log in.  If not selected, then GDM will just run this server and wait for it to terminate.</property>
+					  <property name="tooltip" translatable="yes">MDM should run the login window on this server and allow a user to log in.  If not selected, then MDM will just run this server and wait for it to terminate.</property>
 					  <property name="can_focus">True</property>
 					  <property name="label" translatable="yes">_Logins are handled by this computer</property>
 					  <property name="use_underline">True</property>
@@ -9771,7 +9771,7 @@ Chooser</property>
 		      <child>
 			<widget class="GtkCheckButton" id="custom_cmd_norestart_checkbutton">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Specifies if gdm will be stopped/restarted once Custom Command has been executed.</property>
+			  <property name="tooltip" translatable="yes">Specifies if mdm will be stopped/restarted once Custom Command has been executed.</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">No _restart required</property>
 			  <property name="use_underline">True</property>

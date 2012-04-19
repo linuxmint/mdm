@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003 George Lebl
@@ -29,33 +29,33 @@
 
 #include <pwd.h>
 
-#include "gdm.h"
-#include "gdm-common.h"
-#include "gdmcommon.h"
-#include "gdmuser.h"
-#include "gdmconfig.h"
+#include "mdm.h"
+#include "mdm-common.h"
+#include "mdmcommon.h"
+#include "mdmuser.h"
+#include "mdmconfig.h"
 
-#include "gdm-socket-protocol.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-socket-protocol.h"
+#include "mdm-daemon-config-keys.h"
 
 static time_t time_started;
 
-static GdmUser * 
-gdm_user_alloc (const gchar *logname,
+static MdmUser * 
+mdm_user_alloc (const gchar *logname,
 		uid_t uid,
 		const gchar *homedir,
 		const char *gecos,
 		GdkPixbuf *defface,
 		gboolean read_faces)
 {
-	GdmUser *user;
+	MdmUser *user;
 	GdkPixbuf *img = NULL;
 	gchar buf[PIPE_SIZE];
 	size_t size;
 	int bufsize;
 	char *p;
 
-	user = g_new0 (GdmUser, 1);
+	user = g_new0 (MdmUser, 1);
 
 	user->uid = uid;
 	user->login = g_strdup (logname);
@@ -94,7 +94,7 @@ gdm_user_alloc (const gchar *logname,
 		size = read (STDIN_FILENO, buf, sizeof (buf));
 		if (size <= 0)
 			return user;
-	} while (buf[0] != GDM_NEEDPIC);
+	} while (buf[0] != MDM_NEEDPIC);
 
 	printf ("%c%s\n", STX, logname);
 	fflush (stdout);
@@ -106,7 +106,7 @@ gdm_user_alloc (const gchar *logname,
 		size = read (STDIN_FILENO, buf, sizeof (buf));
 		if (size <= 0)
 			return user;
-	} while (buf[0] != GDM_READPIC);
+	} while (buf[0] != MDM_READPIC);
 
 	/* both nul terminate and wipe the trailing \n */
 	buf[size-1] = '\0';
@@ -149,10 +149,10 @@ gdm_user_alloc (const gchar *logname,
 		/* read the "done" bit, but don't check */
 		read (STDIN_FILENO, buf, sizeof (buf));
 	} else if (g_access (&buf[1], R_OK) == 0) {
-		img = gdm_common_get_face (&buf[1],
+		img = mdm_common_get_face (&buf[1],
 					   NULL,
-					   gdm_config_get_int (GDM_KEY_MAX_ICON_WIDTH),
-					   gdm_config_get_int (GDM_KEY_MAX_ICON_HEIGHT));
+					   mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH),
+					   mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
 	} else {
 		img = NULL;
 	}
@@ -172,18 +172,18 @@ gdm_user_alloc (const gchar *logname,
 }
 
 static gboolean
-gdm_check_exclude (struct passwd *pwent, char **excludes, gboolean is_local)
+mdm_check_exclude (struct passwd *pwent, char **excludes, gboolean is_local)
 {
 	const char * const lockout_passes[] = { "!!", NULL };
 	gint i;
 
-        if ( ! gdm_config_get_bool (GDM_KEY_ALLOW_ROOT) && pwent->pw_uid == 0)
+        if ( ! mdm_config_get_bool (MDM_KEY_ALLOW_ROOT) && pwent->pw_uid == 0)
                 return TRUE;
 
-        if ( ! gdm_config_get_bool (GDM_KEY_ALLOW_REMOTE_ROOT) && ! is_local && pwent->pw_uid == 0)
+        if ( ! mdm_config_get_bool (MDM_KEY_ALLOW_REMOTE_ROOT) && ! is_local && pwent->pw_uid == 0)
                 return TRUE;
 
-	if (pwent->pw_uid < gdm_config_get_int (GDM_KEY_MINIMAL_UID))
+	if (pwent->pw_uid < mdm_config_get_int (MDM_KEY_MINIMAL_UID))
 		return TRUE;
 
 	for (i=0 ; lockout_passes[i] != NULL ; i++)  {
@@ -205,7 +205,7 @@ gdm_check_exclude (struct passwd *pwent, char **excludes, gboolean is_local)
 }
 
 static gboolean
-gdm_check_shell (const gchar *usersh)
+mdm_check_shell (const gchar *usersh)
 {
     gint found = 0;
     gchar *csh;
@@ -228,10 +228,10 @@ gdm_check_shell (const gchar *usersh)
 }
 
 static gint
-gdm_sort_func (gpointer d1, gpointer d2)
+mdm_sort_func (gpointer d1, gpointer d2)
 {
-    GdmUser *a = d1;
-    GdmUser *b = d2;
+    MdmUser *a = d1;
+    MdmUser *b = d2;
 
     if (!d1 || !d2)
         return (0);
@@ -251,33 +251,33 @@ setup_user (struct passwd *pwent,
 	    gboolean is_local,
 	    gboolean read_faces)
 {
-    GdmUser *user;
+    MdmUser *user;
     int cnt = 0;
 
     if (pwent->pw_shell && 
-	gdm_check_shell (pwent->pw_shell) &&
-	!gdm_check_exclude (pwent, excludes, is_local) &&
+	mdm_check_shell (pwent->pw_shell) &&
+	!mdm_check_exclude (pwent, excludes, is_local) &&
 	(exclude_user == NULL ||
 	strcmp (ve_sure_string (exclude_user), pwent->pw_name)) != 0) {
 
-	    user = gdm_user_alloc (pwent->pw_name,
+	    user = mdm_user_alloc (pwent->pw_name,
 				   pwent->pw_uid,
 				   pwent->pw_dir,
 				   ve_sure_string (pwent->pw_gecos),
 				   defface, read_faces);
 
 	    if ((user) &&
-		(! g_list_find_custom (*users, user, (GCompareFunc) gdm_sort_func))) {
+		(! g_list_find_custom (*users, user, (GCompareFunc) mdm_sort_func))) {
 		cnt++;
 		*users = g_list_insert_sorted (*users, user,
-		     (GCompareFunc) gdm_sort_func);
+		     (GCompareFunc) mdm_sort_func);
 		*users_string = g_list_prepend (*users_string, g_strdup (pwent->pw_name));
 
 		if (user->picture != NULL) {
 			*size_of_users +=
 				gdk_pixbuf_get_height (user->picture) + 2;
 		} else {
-			*size_of_users += gdm_config_get_int (GDM_KEY_MAX_ICON_HEIGHT);
+			*size_of_users += mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT);
 		}
 	    }
 
@@ -294,13 +294,13 @@ setup_user (struct passwd *pwent,
 }
 
 gboolean
-gdm_is_user_valid (const char *username)
+mdm_is_user_valid (const char *username)
 {
     return (NULL != getpwnam (username));
 }
 
 gint
-gdm_user_uid (const char *username)
+mdm_user_uid (const char *username)
 {
     struct passwd *pwent;
     pwent = getpwnam (username);
@@ -328,7 +328,7 @@ get_root_user (void)
 }
 
 void 
-gdm_users_init (GList **users,
+mdm_users_init (GList **users,
 		GList **users_string,
 		char *exclude_user,
 		GdkPixbuf *defface,
@@ -344,18 +344,18 @@ gdm_users_init (GList **users,
 
     time_started = time (NULL);
 	
-    includes = g_strsplit (gdm_config_get_string (GDM_KEY_INCLUDE), ",", 0);
+    includes = g_strsplit (mdm_config_get_string (MDM_KEY_INCLUDE), ",", 0);
     for (i=0 ; includes != NULL && includes[i] != NULL ; i++) {
 	g_strstrip (includes[i]);
         if (includes[i] != NULL)
            found_include = TRUE;
     }
 
-    excludes = g_strsplit (gdm_config_get_string (GDM_KEY_EXCLUDE), ",", 0);
+    excludes = g_strsplit (mdm_config_get_string (MDM_KEY_EXCLUDE), ",", 0);
     for (i=0 ; excludes != NULL && excludes[i] != NULL ; i++)
 	g_strstrip (excludes[i]);
 
-    if (gdm_config_get_bool (GDM_KEY_INCLUDE_ALL) == TRUE) {
+    if (mdm_config_get_bool (MDM_KEY_INCLUDE_ALL) == TRUE) {
 	    setpwent ();
 	    pwent = getpwent ();
 	    while (pwent != NULL) {

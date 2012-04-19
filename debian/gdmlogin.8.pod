@@ -1,20 +1,20 @@
 =head1 NAME
 
-gdmlogin - GNOME Display Manager greeting window
+mdmlogin - GNOME Display Manager greeting window
 
 =head1 SYNOPSIS
 
-gdmlogin
+mdmlogin
 
 =head1 DESCRIPTION
 
-B<gdmlogin> is invoked by gdm(8). It displays a GNOME login window
+B<mdmlogin> is invoked by mdm(8). It displays a GNOME login window
 and obtains a login/password combination from the user. This is then
-sent to the controlling B<gdm> process for verification.
+sent to the controlling B<mdm> process for verification.
 
 =head1 SEE ALSO
 
-gdm(8)
+mdm(8)
 
 =head1 AUTHOR
 

@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003 George Lebl
@@ -34,13 +34,13 @@
 #include <tsol/label.h>
 #endif
 
-#include "gdm.h"
-#include "gdmsession.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
+#include "mdm.h"
+#include "mdmsession.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config-keys.h"
 
 GHashTable *sessnames        = NULL;
 gchar *default_session       = NULL;
@@ -54,13 +54,13 @@ static gint dont_save_session     = GTK_RESPONSE_YES;
 gboolean session_dir_whacked_out = FALSE;
 
 gint
-gdm_session_sort_func (const char *a, const char *b)
+mdm_session_sort_func (const char *a, const char *b)
 {
         /* Put default and GNOME sessions at the top */
-        if (strcmp (a, ve_sure_string (gdm_config_get_string (GDM_KEY_DEFAULT_SESSION))) == 0)
+        if (strcmp (a, ve_sure_string (mdm_config_get_string (MDM_KEY_DEFAULT_SESSION))) == 0)
                 return -1;
 
-        if (strcmp (b, ve_sure_string (gdm_config_get_string (GDM_KEY_DEFAULT_SESSION))) == 0)
+        if (strcmp (b, ve_sure_string (mdm_config_get_string (MDM_KEY_DEFAULT_SESSION))) == 0)
                 return 1;
 
         if (strcmp (a, "default.desktop") == 0)
@@ -76,16 +76,16 @@ gdm_session_sort_func (const char *a, const char *b)
                 return 1;
 
         /* put failsafe sessions on the bottom */
-        if (strcmp (b, GDM_SESSION_FAILSAFE_XTERM) == 0)
+        if (strcmp (b, MDM_SESSION_FAILSAFE_XTERM) == 0)
                 return -1;
 
-        if (strcmp (a, GDM_SESSION_FAILSAFE_XTERM) == 0)
+        if (strcmp (a, MDM_SESSION_FAILSAFE_XTERM) == 0)
                 return 1;
 
-        if (strcmp (b, GDM_SESSION_FAILSAFE_GNOME) == 0)
+        if (strcmp (b, MDM_SESSION_FAILSAFE_GNOME) == 0)
                 return -1;
 
-        if (strcmp (a, GDM_SESSION_FAILSAFE_GNOME) == 0)
+        if (strcmp (a, MDM_SESSION_FAILSAFE_GNOME) == 0)
                 return 1;
 
         /* put everything else in the middle in alphabetical order */
@@ -93,9 +93,9 @@ gdm_session_sort_func (const char *a, const char *b)
 }
 
 const char *
-gdm_session_name (const char *name)
+mdm_session_name (const char *name)
 {
-        GdmSession *session;
+        MdmSession *session;
 
         /* eek */
         if G_UNLIKELY (name == NULL)
@@ -109,7 +109,7 @@ gdm_session_name (const char *name)
 }           
 
 void
-gdm_session_list_from_hash_table_func (const char *key, const char *value,
+mdm_session_list_from_hash_table_func (const char *key, const char *value,
          GList **sessions)
 {
         *sessions = g_list_prepend (*sessions, g_strdup (key));
@@ -118,19 +118,19 @@ gdm_session_list_from_hash_table_func (const char *key, const char *value,
 /* Just a wrapper to ensure compatibility with the
    existing code */
 void
-gdm_session_list_init ()
+mdm_session_list_init ()
 {
-	_gdm_session_list_init (&sessnames, &sessions, 
+	_mdm_session_list_init (&sessnames, &sessions, 
 				&default_session, &current_session);	
 }
 
-/* The real gdm_session_list_init */
+/* The real mdm_session_list_init */
 void
-_gdm_session_list_init (GHashTable **sessnames, GList **sessions, 
+_mdm_session_list_init (GHashTable **sessnames, GList **sessions, 
 			gchar **default_session, const gchar **current_session)
 {
 
-    GdmSession *session = NULL;
+    MdmSession *session = NULL;
     gboolean some_dir_exists = FALSE;
     gboolean searching_for_default = TRUE;
     struct dirent *dent;
@@ -141,8 +141,8 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 
     *sessnames = g_hash_table_new (g_str_hash, g_str_equal);
 
-    if (gdm_config_get_bool (GDM_KEY_SHOW_GNOME_FAILSAFE)) {
-	session = g_new0 (GdmSession, 1);
+    if (mdm_config_get_bool (MDM_KEY_SHOW_GNOME_FAILSAFE)) {
+	session = g_new0 (MdmSession, 1);
 	session->name = g_strdup (_("Failsafe _GNOME"));
 	session->clearname = g_strdup (_("Failsafe GNOME"));
 	session->comment = g_strdup (_("This is a failsafe session that will log you "
@@ -150,12 +150,12 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 		"and it is only to be used when you can't log "
 		"in otherwise.  GNOME will use the 'Default' "
 		"session."));
-	g_hash_table_insert (*sessnames, g_strdup (GDM_SESSION_FAILSAFE_GNOME), session);
+	g_hash_table_insert (*sessnames, g_strdup (MDM_SESSION_FAILSAFE_GNOME), session);
     }
 
-    if (gdm_config_get_bool (GDM_KEY_SHOW_XTERM_FAILSAFE)) {
+    if (mdm_config_get_bool (MDM_KEY_SHOW_XTERM_FAILSAFE)) {
 	/* Valgrind complains that the below is leaked */
-	session = g_new0 (GdmSession, 1);
+	session = g_new0 (MdmSession, 1);
 	session->name = g_strdup (_("Failsafe _Terminal"));
 	session->clearname = g_strdup (_("Failsafe Terminal"));
 	session->comment = g_strdup (_("This is a failsafe session that will log you "
@@ -163,11 +163,11 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 		"and it is only to be used when you can't log "
 		"in otherwise.  To exit the terminal, "
 		"type 'exit'."));
-	g_hash_table_insert (*sessnames, g_strdup (GDM_SESSION_FAILSAFE_XTERM),
+	g_hash_table_insert (*sessnames, g_strdup (MDM_SESSION_FAILSAFE_XTERM),
 		session);
     }
 
-    vec = g_strsplit (gdm_config_get_string (GDM_KEY_SESSION_DESKTOP_DIR),
+    vec = g_strsplit (mdm_config_get_string (MDM_KEY_SESSION_DESKTOP_DIR),
 	 ":", -1);
     for (i = 0; vec != NULL && vec[i] != NULL; i++) {
 	    const char *dir = vec[i];
@@ -216,11 +216,11 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 		    }
 
 		    s = g_strconcat (dir, "/", dent->d_name, NULL);
-		    cfg = gdm_common_config_load (s, NULL);
+		    cfg = mdm_common_config_load (s, NULL);
 		    g_free (s);
 
 		    hidden = FALSE;
-		    gdm_common_config_get_boolean (cfg, "Desktop Entry/Hidden=false", &hidden, NULL);
+		    mdm_common_config_get_boolean (cfg, "Desktop Entry/Hidden=false", &hidden, NULL);
 		    if (hidden) {
 			    g_key_file_free (cfg);
 			    dent = readdir (sessdir);
@@ -228,7 +228,7 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 		    }
 
 		    tryexec = NULL;
-		    gdm_common_config_get_string (cfg, "Desktop Entry/TryExec", &tryexec, NULL);
+		    mdm_common_config_get_string (cfg, "Desktop Entry/TryExec", &tryexec, NULL);
 		    if ( ! ve_string_empty (tryexec)) {
 			    char **tryexecvec = g_strsplit (tryexec, " ", -1);
 			    char *full = NULL;
@@ -238,7 +238,7 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 				full = g_find_program_in_path (tryexecvec[0]);
 
 			    if (full == NULL) {
-				    session = g_new0 (GdmSession, 1);
+				    session = g_new0 (MdmSession, 1);
 				    session->name      = g_strdup (dent->d_name);
 				    session->clearname = NULL;
 				    g_hash_table_insert (*sessnames, g_strdup (dent->d_name),
@@ -256,13 +256,13 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 		    exec = NULL;
 		    name = NULL;
 		    comment = NULL;
-		    gdm_common_config_get_string (cfg, "Desktop Entry/Exec", &exec, NULL);
-		    gdm_common_config_get_translated_string (cfg, "Desktop Entry/Name", &name, NULL);
-		    gdm_common_config_get_translated_string (cfg, "Desktop Entry/Comment", &comment, NULL);
+		    mdm_common_config_get_string (cfg, "Desktop Entry/Exec", &exec, NULL);
+		    mdm_common_config_get_translated_string (cfg, "Desktop Entry/Name", &name, NULL);
+		    mdm_common_config_get_translated_string (cfg, "Desktop Entry/Comment", &comment, NULL);
 		    g_key_file_free (cfg);
 
 		    if G_UNLIKELY (ve_string_empty (exec) || ve_string_empty (name)) {
-			    session = g_new0 (GdmSession, 1);
+			    session = g_new0 (MdmSession, 1);
 			    session->name      = g_strdup (dent->d_name);
 			    session->clearname = NULL;
 			    g_hash_table_insert (*sessnames, g_strdup (dent->d_name), session);
@@ -275,8 +275,8 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 
 		    /* if we found the default session */
 		    if (default_session != NULL) {
-			    if ( ! ve_string_empty (gdm_config_get_string (GDM_KEY_DEFAULT_SESSION)) &&
-				 strcmp (dent->d_name, gdm_config_get_string (GDM_KEY_DEFAULT_SESSION)) == 0) {
+			    if ( ! ve_string_empty (mdm_config_get_string (MDM_KEY_DEFAULT_SESSION)) &&
+				 strcmp (dent->d_name, mdm_config_get_string (MDM_KEY_DEFAULT_SESSION)) == 0) {
 				    g_free (*default_session);
 				    *default_session = g_strdup (dent->d_name);
 				    searching_for_default = FALSE;
@@ -299,7 +299,7 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 			    }
 		    }
 
-		    session = g_new0 (GdmSession, 1);
+		    session = g_new0 (MdmSession, 1);
 		    session->name      = g_strdup (name);
 		    session->clearname = NULL;
 		    session->comment   = g_strdup (comment);
@@ -317,24 +317,24 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 
     /* Check that session dir is readable */
     if G_UNLIKELY ( ! some_dir_exists) {
-	gdm_common_error ("%s: Session directory <%s> not found!",
-		"gdm_session_list_init", ve_sure_string
-		 (gdm_config_get_string (GDM_KEY_SESSION_DESKTOP_DIR)));
+	mdm_common_error ("%s: Session directory <%s> not found!",
+		"mdm_session_list_init", ve_sure_string
+		 (mdm_config_get_string (MDM_KEY_SESSION_DESKTOP_DIR)));
 	session_dir_whacked_out = TRUE;
     }
 
     if G_UNLIKELY (g_hash_table_size (*sessnames) == 0) {
-	    gdm_common_warning ("Error, no sessions found in the session directory <%s>.",
-		ve_sure_string (gdm_config_get_string (GDM_KEY_SESSION_DESKTOP_DIR)));
+	    mdm_common_warning ("Error, no sessions found in the session directory <%s>.",
+		ve_sure_string (mdm_config_get_string (MDM_KEY_SESSION_DESKTOP_DIR)));
 
 	    session_dir_whacked_out = TRUE;
 	    if (default_session != NULL)
-		    *default_session = g_strdup (GDM_SESSION_FAILSAFE_GNOME);
+		    *default_session = g_strdup (MDM_SESSION_FAILSAFE_GNOME);
     }
 
 
-    if (gdm_config_get_bool (GDM_KEY_SHOW_GNOME_FAILSAFE)) {
-	    session            = g_new0 (GdmSession, 1);
+    if (mdm_config_get_bool (MDM_KEY_SHOW_GNOME_FAILSAFE)) {
+	    session            = g_new0 (MdmSession, 1);
 	    session->name      = g_strdup (_("Failsafe _GNOME"));
 	    session->clearname = g_strdup (_("Failsafe GNOME"));
 	    session->comment   = g_strdup (_("This is a failsafe session that will log you "
@@ -343,11 +343,11 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
                                     "in otherwise.  GNOME will use the 'Default' "
 				    "session."));
 	    g_hash_table_insert (*sessnames,
-		g_strdup (GDM_SESSION_FAILSAFE_GNOME), session);
+		g_strdup (MDM_SESSION_FAILSAFE_GNOME), session);
     }
 
-    if (gdm_config_get_bool (GDM_KEY_SHOW_XTERM_FAILSAFE)) {
-	    session            = g_new0 (GdmSession, 1);
+    if (mdm_config_get_bool (MDM_KEY_SHOW_XTERM_FAILSAFE)) {
+	    session            = g_new0 (MdmSession, 1);
 	    session->name      = g_strdup (_("Failsafe _Terminal"));
 	    session->clearname = g_strdup (_("Failsafe Terminal"));
 	    session->comment   = g_strdup (_("This is a failsafe session that will log you "
@@ -356,20 +356,20 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 				    "in otherwise.  To exit the terminal, "
 				    "type 'exit'."));
 	    g_hash_table_insert (*sessnames,
-		g_strdup (GDM_SESSION_FAILSAFE_XTERM), session);
+		g_strdup (MDM_SESSION_FAILSAFE_XTERM), session);
     }
 
     /* Convert to list (which is unsorted) */
     g_hash_table_foreach (*sessnames,
-	(GHFunc) gdm_session_list_from_hash_table_func, sessions);
+	(GHFunc) mdm_session_list_from_hash_table_func, sessions);
 
     /* Prioritize and sort the list */
-    *sessions = g_list_sort (*sessions, (GCompareFunc) gdm_session_sort_func);
+    *sessions = g_list_sort (*sessions, (GCompareFunc) mdm_session_sort_func);
 
     if (default_session != NULL)
 	    if G_UNLIKELY (*default_session == NULL) {
-		    *default_session = g_strdup (GDM_SESSION_FAILSAFE_GNOME);
-		    gdm_common_warning ("No default session link found. Using Failsafe GNOME.");
+		    *default_session = g_strdup (MDM_SESSION_FAILSAFE_GNOME);
+		    mdm_common_warning ("No default session link found. Using Failsafe GNOME.");
 	    }
     
     if (current_session != NULL &&
@@ -380,7 +380,7 @@ _gdm_session_list_init (GHashTable **sessnames, GList **sessions,
 }
 
 static gboolean
-gdm_login_list_lookup (GList *l, const gchar *data)
+mdm_login_list_lookup (GList *l, const gchar *data)
 {
     GList *list = l;
 
@@ -388,9 +388,9 @@ gdm_login_list_lookup (GList *l, const gchar *data)
         return FALSE;
 
     /* FIXME: Hack, will support these builtin types later */
-    if (strcmp (data, GDM_SESSION_DEFAULT ".desktop") == 0 ||
-        strcmp (data, GDM_SESSION_CUSTOM ".desktop") == 0 ||
-        strcmp (data, GDM_SESSION_FAILSAFE ".desktop") == 0) {
+    if (strcmp (data, MDM_SESSION_DEFAULT ".desktop") == 0 ||
+        strcmp (data, MDM_SESSION_CUSTOM ".desktop") == 0 ||
+        strcmp (data, MDM_SESSION_FAILSAFE ".desktop") == 0) {
             return TRUE;
     }
 
@@ -406,7 +406,7 @@ gdm_login_list_lookup (GList *l, const gchar *data)
 }
 
 char *
-gdm_session_lookup (const char *saved_session, gint *lookup_status)
+mdm_session_lookup (const char *saved_session, gint *lookup_status)
 {
   gchar *session = NULL;
   
@@ -438,7 +438,7 @@ gdm_session_lookup (const char *saved_session, gint *lookup_status)
       session = g_strdup (saved_session);
       
       /* Check if user's saved session exists on this box */
-      if (!gdm_login_list_lookup (sessions, session))
+      if (!mdm_login_list_lookup (sessions, session))
 	{
 		
           g_free (session);
@@ -451,10 +451,10 @@ gdm_session_lookup (const char *saved_session, gint *lookup_status)
       session = g_strdup (current_session);
     
       /* User's saved session is not the chosen one */
-      if (strcmp (session, GDM_SESSION_FAILSAFE_GNOME) == 0 ||
-	  strcmp (session, GDM_SESSION_FAILSAFE_XTERM) == 0 ||
-	  g_ascii_strcasecmp (session, GDM_SESSION_FAILSAFE ".desktop") == 0 ||
-	  g_ascii_strcasecmp (session, GDM_SESSION_FAILSAFE) == 0)
+      if (strcmp (session, MDM_SESSION_FAILSAFE_GNOME) == 0 ||
+	  strcmp (session, MDM_SESSION_FAILSAFE_XTERM) == 0 ||
+	  g_ascii_strcasecmp (session, MDM_SESSION_FAILSAFE ".desktop") == 0 ||
+	  g_ascii_strcasecmp (session, MDM_SESSION_FAILSAFE) == 0)
 	{
           /*
            * Never save failsafe sessions as the default session.
@@ -465,7 +465,7 @@ gdm_session_lookup (const char *saved_session, gint *lookup_status)
 	}
       else if (strcmp (saved_session, session) != 0)
 	{	 	  
-	  if (gdm_config_get_bool (GDM_KEY_SHOW_LAST_SESSION))
+	  if (mdm_config_get_bool (MDM_KEY_SHOW_LAST_SESSION))
 	    {
 		    *lookup_status = SESSION_LOOKUP_DEFAULT_MISMATCH;
 	    }
@@ -474,7 +474,7 @@ gdm_session_lookup (const char *saved_session, gint *lookup_status)
 		   strcmp (session, LAST_SESSION) != 0)
 	    {
 	      /*
-	       * If (! GDM_KEY_SHOW_LAST_SESSION) then our saved session is
+	       * If (! MDM_KEY_SHOW_LAST_SESSION) then our saved session is
 	       * irrelevant, we are in "switchdesk mode" and the relevant
 	       * thing is the saved session in .Xclients
 	       */
@@ -491,19 +491,19 @@ gdm_session_lookup (const char *saved_session, gint *lookup_status)
 }
 
 gint
-gdm_get_save_session (void)
+mdm_get_save_session (void)
 {
   return dont_save_session;
 }
 
 void
-gdm_set_save_session (const gint session)
+mdm_set_save_session (const gint session)
 {
 	dont_save_session = session;
 }
 
 const char*
-gdm_get_default_session (void)
+mdm_get_default_session (void)
 {
 	return default_session;
 }

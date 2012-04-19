@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,18 +21,18 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#include "gdm.h"
-#include "gdmconfig.h"
+#include "mdm.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-socket-protocol.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-socket-protocol.h"
+#include "mdm-daemon-config-keys.h"
 
 #include "greeter_parser.h"
 #include "greeter_configuration.h"
 #include "greeter_item_timed.h"
 
-extern gint gdm_timed_delay;
+extern gint mdm_timed_delay;
 
 static guint timed_handler_id = 0;
 
@@ -53,14 +53,14 @@ greeter_item_timed_update (void)
  */
 
 static gboolean
-gdm_timer (gpointer data)
+mdm_timer (gpointer data)
 {
   greeter_item_timed_update ();
-  gdm_timed_delay--;
-  if (gdm_timed_delay <= 0)
+  mdm_timed_delay--;
+  if (mdm_timed_delay <= 0)
     {
       /* timed interruption */
-      printf ("%c%c%c\n", STX, BEL, GDM_INTERRUPT_TIMED_LOGIN);
+      printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_TIMED_LOGIN);
       fflush (stdout);
     }
   return TRUE;
@@ -68,21 +68,21 @@ gdm_timer (gpointer data)
 
 /*
  * Timed Login: On GTK events, increase delay to at least 30
- * seconds. Or the GDM_KEY_TIMED_LOGIN_DELAY, whichever is higher
+ * seconds. Or the MDM_KEY_TIMED_LOGIN_DELAY, whichever is higher
  */
 
 static gboolean
-gdm_timer_up_delay (GSignalInvocationHint *ihint,
+mdm_timer_up_delay (GSignalInvocationHint *ihint,
 		    guint	           n_param_values,
 		    const GValue	  *param_values,
 		    gpointer		   data)
 {
-  int timeddelay = gdm_config_get_int (GDM_KEY_TIMED_LOGIN_DELAY);
+  int timeddelay = mdm_config_get_int (MDM_KEY_TIMED_LOGIN_DELAY);
 
-  if (gdm_timed_delay < 30)
-    gdm_timed_delay = 30;
-  if (gdm_timed_delay < timeddelay)
-    gdm_timed_delay = timeddelay;
+  if (mdm_timed_delay < 30)
+    mdm_timed_delay = 30;
+  if (mdm_timed_delay < timeddelay)
+    mdm_timed_delay = timeddelay;
   return TRUE;
 }      
 
@@ -91,7 +91,7 @@ greeter_item_timed_setup (void)
 {
 
   /* if in timed mode, delay timeout on keyboard or menu activity */
-  if ( ! ve_string_empty (gdm_config_get_string (GDM_KEY_TIMED_LOGIN)))
+  if ( ! ve_string_empty (mdm_config_get_string (MDM_KEY_TIMED_LOGIN)))
     {
       guint sid;
 
@@ -101,7 +101,7 @@ greeter_item_timed_setup (void)
 			     GTK_TYPE_MENU_ITEM);
       g_signal_add_emission_hook (sid,
 				  0 /* detail */,
-				  gdm_timer_up_delay,
+				  mdm_timer_up_delay,
 				  NULL /* data */,
 				  NULL /* destroy_notify */);
 
@@ -109,14 +109,14 @@ greeter_item_timed_setup (void)
 			     GTK_TYPE_WIDGET);
       g_signal_add_emission_hook (sid,
 				  0 /* detail */,
-				  gdm_timer_up_delay,
+				  mdm_timer_up_delay,
 				  NULL /* data */,
 				  NULL /* destroy_notify */);
       sid = g_signal_lookup ("button_press_event",
 			     GTK_TYPE_WIDGET);
       g_signal_add_emission_hook (sid,
 				  0 /* detail */,
-				  gdm_timer_up_delay,
+				  mdm_timer_up_delay,
 				  NULL /* data */,
 				  NULL /* destroy_notify */);
     }
@@ -127,15 +127,15 @@ greeter_item_timed_setup (void)
 void
 greeter_item_timed_start (void)
 {
-  int timeddelay = gdm_config_get_int (GDM_KEY_TIMED_LOGIN_DELAY);
+  int timeddelay = mdm_config_get_int (MDM_KEY_TIMED_LOGIN_DELAY);
 
   if (timed_handler_id == 0 &&
-      gdm_config_get_bool (GDM_KEY_TIMED_LOGIN_ENABLE) &&
-      ! ve_string_empty (gdm_config_get_string (GDM_KEY_TIMED_LOGIN)) &&
+      mdm_config_get_bool (MDM_KEY_TIMED_LOGIN_ENABLE) &&
+      ! ve_string_empty (mdm_config_get_string (MDM_KEY_TIMED_LOGIN)) &&
       timeddelay > 0)
     {
-      gdm_timed_delay  = timeddelay;
-      timed_handler_id = g_timeout_add (1000, gdm_timer, NULL);
+      mdm_timed_delay  = timeddelay;
+      timed_handler_id = g_timeout_add (1000, mdm_timer, NULL);
     }
 }
 

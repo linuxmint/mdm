@@ -1,8 +1,8 @@
 AC_PREREQ(2.52)
-AC_INIT(daemon/gdm.h)
+AC_INIT(daemon/mdm.h)
 
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE(gdm,2.20.11)
+AM_INIT_AUTOMAKE(mdm,2.20.11)
 AC_CONFIG_MACRO_DIR([m4])
 AM_MAINTAINER_MODE
 AC_GNU_SOURCE
@@ -27,16 +27,16 @@ dnl Let the user configure where to look for the configuration files.
 dnl
 
 AC_ARG_WITH(sysconfsubdir, AC_HELP_STRING([--with-sysconfsubdir],
-            [directory name used under sysconfdir, default=gdm]),
-            sysconfsubdir=${withval}, sysconfsubdir=gdm)
+            [directory name used under sysconfdir, default=mdm]),
+            sysconfsubdir=${withval}, sysconfsubdir=mdm)
 AC_SUBST(sysconfsubdir)
 
 if test x"${sysconfsubdir}" != xno -a x"${sysconfsubdir}" != x; then
-    gdmconfdir='${sysconfdir}/${sysconfsubdir}'
+    mdmconfdir='${sysconfdir}/${sysconfsubdir}'
 else
-    gdmconfdir='${sysconfdir}'
+    mdmconfdir='${sysconfdir}'
 fi
-AC_SUBST(gdmconfdir)
+AC_SUBST(mdmconfdir)
 
 AC_ARG_WITH(dmconfdir, AC_HELP_STRING([--with-dmconfdir],
             [directory where Sessions are stored, default=SYSCONFDIR/dm]),
@@ -219,7 +219,7 @@ PKG_CHECK_MODULES(GDKPIXBUF, gdk-pixbuf-2.0 >= $GTK_REQUIRED)
 AC_SUBST(GDKPIXBUF_CFLAGS)
 AC_SUBST(GDKPIXBUF_LIBS)
 
-dnl Allow users to run gdmsetup using the console helper PAM stuff.
+dnl Allow users to run mdmsetup using the console helper PAM stuff.
 if test "x$enable_console_helper" = "xyes"; then
   AM_CONDITIONAL(CONSOLE_HELPER, true)
 else
@@ -227,7 +227,7 @@ else
 fi
 
 dnl ## Language Support
-GETTEXT_PACKAGE=gdm
+GETTEXT_PACKAGE=mdm
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE")
 AC_SUBST(GETTEXT_PACKAGE)
 
@@ -274,7 +274,7 @@ if test x$have_ut_syslen = xyes; then
 fi
 AC_MSG_RESULT($have_ut_syslen)
 
-COMMON_GNOME_LIBS="libgdmcommon-ui.a"
+COMMON_GNOME_LIBS="libmdmcommon-ui.a"
 AC_SUBST(COMMON_GNOME_LIBS)
 
 dnl *****************************
@@ -328,13 +328,13 @@ dnl borrowed from gnu findutils
 dnl and relicensed as LGPL by the FSF
 
 AC_ARG_WITH(prefetch,
-  [  --with-prefetch=[yes/no]  Install GDM library prefetch utility [default=no]],,
+  [  --with-prefetch=[yes/no]  Install MDM library prefetch utility [default=no]],,
   with_prefetch=no)
 
 if test x$with_prefetch != xno ; then
-	GDMPREFETCH="gdmprefetch"
-	GDMPREFETCHLIST="gdmprefetchlist"
-	GDMPREFETCHCMD='${libdir}/gdmprefetch \@${gdmconfdir}/gdmprefetchlist'
+	MDMPREFETCH="mdmprefetch"
+	MDMPREFETCHLIST="mdmprefetchlist"
+	MDMPREFETCHCMD='${libdir}/mdmprefetch \@${mdmconfdir}/mdmprefetchlist'
 fi
 
 AC_ARG_WITH(afs,
@@ -378,14 +378,14 @@ dnl ****************************
 dnl    IPv6 checks end here
 dnl ****************************
 
-dnl ## gdmopen building
+dnl ## mdmopen building
 dnl There are perhaps others where this works
-GDMOPEN=
+MDMOPEN=
 AC_CHECK_HEADERS(sys/vt.h, [
 		 AC_DEFINE(HAVE_SYS_VT_H)])
 AC_CHECK_HEADERS(sys/vt.h, [
-		 GDMOPEN=gdmopen])
-AC_SUBST(GDMOPEN)
+		 MDMOPEN=mdmopen])
+AC_SUBST(MDMOPEN)
 
 dnl ## Authentication scheme
 have_pam=no
@@ -399,20 +399,20 @@ if test x$enable_authentication_scheme != xcrypt -a \
         	AC_DEFINE(HAVE_PAM)])
 fi
 
-GDMASKPASS=
-EXTRA_GDMASKPASS_LIBS=
+MDMASKPASS=
+EXTRA_MDMASKPASS_LIBS=
 if test x$have_pam = xyes ; then
 	AC_CHECK_HEADERS(security/pam_misc.h, [
-			 GDMASKPASS=gdmaskpass])
-	if test x$GDMASKPASS != x ; then
+			 MDMASKPASS=mdmaskpass])
+	if test x$MDMASKPASS != x ; then
 		AC_CHECK_LIB(pam,misc_conv,,[AC_CHECK_LIB(pam_misc,misc_conv, [
-		     EXTRA_GDMASKPASS_LIBS="$EXTRA_GDMASKPASS_LIBS -lpam_misc"], [
-		     GDMASKPASS=], [
+		     EXTRA_MDMASKPASS_LIBS="$EXTRA_MDMASKPASS_LIBS -lpam_misc"], [
+		     MDMASKPASS=], [
 		     -lpam])])
 	fi
 fi
-AC_SUBST(GDMASKPASS)
-AC_SUBST(EXTRA_GDMASKPASS_LIBS)
+AC_SUBST(MDMASKPASS)
+AC_SUBST(EXTRA_MDMASKPASS_LIBS)
 
 if test x$enable_authentication_scheme = xpam -a x$have_pam = xno ; then
 	AC_MSG_ERROR(PAM support requested but not available)
@@ -524,7 +524,7 @@ AC_CHECK_HEADERS(utmp.h utmpx.h libutil.h sys/param.h)
 AC_CHECK_FUNC(getutmpx updwtmpx)
 AC_CHECK_LIB(util,login)
 AC_CHECK_LIB(util,logout)
-GDM_CHECK_UTMP
+MDM_CHECK_UTMP
 
 
 #
@@ -550,8 +550,8 @@ AC_SUBST(XDMCP_LIBS)
 
 if test x$XDMCP_SUPPORT = xyes ; then
 	AM_CONDITIONAL(XDMCP_SUPPORT, true)
-	GDMCHOOSER=gdmchooser
-	GDMXNESTCHOOSER=gdmXnestchooser
+	MDMCHOOSER=mdmchooser
+	MDMXNESTCHOOSER=mdmXnestchooser
 else
         # No need for TCP Wrappers in case XDMCP is disabled
         if test x$with_tcp_wrappers != xno ; then
@@ -559,11 +559,11 @@ else
         fi
 	with_tcp_wrappers=no
 	AM_CONDITIONAL(XDMCP_SUPPORT, false)
-	GDMCHOOSER=
-	GDMXNESTCHOOSER=
+	MDMCHOOSER=
+	MDMXNESTCHOOSER=
 fi
-AC_SUBST(GDMCHOOSER)
-AC_SUBST(GDMXNESTCHOOSER)
+AC_SUBST(MDMCHOOSER)
+AC_SUBST(MDMXNESTCHOOSER)
 
 #
 # TCP Wrappers for XDMCP access control
@@ -829,18 +829,18 @@ AC_SUBST(DBUS_LIBS)
 #
 # Define some variables to represent the directories we use.
 #
-AC_SUBST(authdir, ${localstatedir}/gdm)
-AC_SUBST(gdmlocaledir, ${gdmconfdir})
+AC_SUBST(authdir, ${localstatedir}/mdm)
+AC_SUBST(mdmlocaledir, ${mdmconfdir})
 AC_SUBST(pixmapdir, ${datadir}/pixmaps)
 
 AC_ARG_WITH(log-dir,    [  --with-log-dir=<file>     log dir])
 
 if ! test -z "$with_log_dir"; then
-   GDM_LOG_DIR=$with_log_dir
+   MDM_LOG_DIR=$with_log_dir
 else
-   GDM_LOG_DIR=/var/log/gdm
+   MDM_LOG_DIR=/var/log/mdm
 fi
-AC_SUBST(logdir, $GDM_LOG_DIR)
+AC_SUBST(logdir, $MDM_LOG_DIR)
 
 AC_ARG_WITH(libaudit,
   [  --with-libaudit=[auto/yes/no]  Add Linux audit support [default=auto]],,
@@ -860,41 +860,41 @@ AC_SUBST(AT_BINDIR)
 
 withval=""
 AC_ARG_WITH(defaults_conf,
-[  --with-defaults-conf=<FILENAME>   FILENAME to give to defaults file [default=DATADIR/gdm/defaults.conf]],)
+[  --with-defaults-conf=<FILENAME>   FILENAME to give to defaults file [default=DATADIR/mdm/defaults.conf]],)
 
 if test x$withval != x; then
-	GDM_DEFAULTS_CONF="$withval"
+	MDM_DEFAULTS_CONF="$withval"
 else
-	GDM_DEFAULTS_CONF='${datadir}/gdm/defaults.conf'
+	MDM_DEFAULTS_CONF='${datadir}/mdm/defaults.conf'
 fi
 
-AC_SUBST(GDM_DEFAULTS_CONF)
+AC_SUBST(MDM_DEFAULTS_CONF)
 
 withval=""
 AC_ARG_WITH(custom_conf,
-[  --with-custom-conf=<FILENAME>   FILENAME to give to custom configuration file [default=GDMCONFDIR/custom.conf]],)
+[  --with-custom-conf=<FILENAME>   FILENAME to give to custom configuration file [default=MDMCONFDIR/custom.conf]],)
 
 if test x$withval != x; then
-	GDM_CUSTOM_CONF="$withval"
+	MDM_CUSTOM_CONF="$withval"
 else
-	GDM_CUSTOM_CONF='${gdmconfdir}/custom.conf'
+	MDM_CUSTOM_CONF='${mdmconfdir}/custom.conf'
 fi
 
-AC_SUBST(GDM_CUSTOM_CONF)
-AC_SUBST(GDM_OLD_CONF, '${gdmconfdir}/gdm.conf')
+AC_SUBST(MDM_CUSTOM_CONF)
+AC_SUBST(MDM_OLD_CONF, '${mdmconfdir}/mdm.conf')
 
 AC_ARG_WITH(prefetch,
-  [  --with-prefetch=[yes/no]  Install GDM library prefetch utility [default=no]],,
+  [  --with-prefetch=[yes/no]  Install MDM library prefetch utility [default=no]],,
   with_prefetch=no)
 
 if test x$with_prefetch != xno ; then
-	GDMPREFETCH="gdmprefetch"
-        GDMPREFETCHLIST="gdmprefetchlist"
-        GDMPREFETCHCMD='${libdir}/gdmprefetch \@${gdmconfdir}/gdmprefetchlist'
+	MDMPREFETCH="mdmprefetch"
+        MDMPREFETCHLIST="mdmprefetchlist"
+        MDMPREFETCHCMD='${libdir}/mdmprefetch \@${mdmconfdir}/mdmprefetchlist'
 fi
-AC_SUBST(GDMPREFETCH)
-AC_SUBST(GDMPREFETCHLIST)
-AC_SUBST(GDMPREFETCHCMD)
+AC_SUBST(MDMPREFETCH)
+AC_SUBST(MDMPREFETCHLIST)
+AC_SUBST(MDMPREFETCHCMD)
 
 AC_ARG_ENABLE(secureremote,
   [  --enable-secureremote=[yes/no]  Enable to offer a secure X connection through ssh  [default=no]],,
@@ -914,17 +914,17 @@ else
 fi
 
 if test ${exec_prefix} != "NONE"; then
-   real_gdm_prefix=$exec_prefix
+   real_mdm_prefix=$exec_prefix
 elif test ${prefix} != "NONE"; then
-   real_gdm_prefix=$prefix
+   real_mdm_prefix=$prefix
 else
-   real_gdm_prefix=$ac_default_prefix
+   real_mdm_prefix=$ac_default_prefix
 fi
 
 if test ${libexecdir} = "\${exec_prefix}/libexec"; then
-   gdm_libexec="$real_gdm_prefix/libexec"
+   mdm_libexec="$real_mdm_prefix/libexec"
 else
-   gdm_libexec="${libexecdir}"
+   mdm_libexec="${libexecdir}"
 fi
 
 AC_ARG_WITH(atspi-dir,
@@ -933,18 +933,18 @@ AC_ARG_WITH(atspi-dir,
 if ! test -z "$with_atspi_dir"; then
   ATSPI_DIR="$with_atspi_dir"
 else
-  ATSPI_DIR="$gdm_libexec"
+  ATSPI_DIR="$mdm_libexec"
 fi
 AC_SUBST(atspidir, $ATSPI_DIR)
 
 if test x$enable_secureremote != xno ; then
        SSHDESKTOP="ssh.desktop"
-        GDMSSHSESSION="gdm-ssh-session"
-        GDMSSHSESSIONCMD="${gdm_libexec}/gdm-ssh-session"
+        MDMSSHSESSION="mdm-ssh-session"
+        MDMSSHSESSIONCMD="${mdm_libexec}/mdm-ssh-session"
 fi
 AC_SUBST(SSHDESKTOP)
-AC_SUBST(GDMSSHSESSION)
-AC_SUBST(GDMSSHSESSIONCMD)
+AC_SUBST(MDMSSHSESSION)
+AC_SUBST(MDMSSHSESSIONCMD)
 
 AC_ARG_WITH(xevie,
   [  --with-xevie=[yes/no]  Add XEvIE Xserver extension support [default=no]],,
@@ -1044,58 +1044,58 @@ AC_SUBST(EXTRA_NSL_LIB)
 # Define different Halt, and Reboot commands differently for Solaris.
 #
 # On Solaris/bin is a symlink to /usr/bin, so don't include it in
-# GDM_USER_PATH.
+# MDM_USER_PATH.
 #
-GDM_USER_PATH=""
-GDM_RBAC_SYSCMD_KEYS=""
+MDM_USER_PATH=""
+MDM_RBAC_SYSCMD_KEYS=""
 
 case "$host" in
 *solaris*)
-	HOST_GDM_USER_PATH="/usr/bin"
+	HOST_MDM_USER_PATH="/usr/bin"
 	HOST_HALT_COMMAND="/sbin/init 5"
 	HOST_REBOOT_COMMAND="/sbin/init 6"
 	HOST_SUSPEND_COMMAND="/usr/openwin/bin/sys-suspend -n"
 	HOST_XSESSION_SHELL=/bin/ksh
 	HOST_SOUND_PROGRAM=/usr/bin/audioplay
-	HOST_GDMGNOMESESSIONCMD=/usr/dt/config/Xsession.jds
-	HOST_GDM_RBAC_SYSCMD_KEYS="HALT:solaris.system.shutdown;REBOOT:solaris.system.shutdown;SUSPEND:solaris.system.power.suspend.ram"
+	HOST_MDMGNOMESESSIONCMD=/usr/dt/config/Xsession.jds
+	HOST_MDM_RBAC_SYSCMD_KEYS="HALT:solaris.system.shutdown;REBOOT:solaris.system.shutdown;SUSPEND:solaris.system.power.suspend.ram"
 	HOST_UTMP_LINE_ATTACHED="/dev/dtlocal"
 	HOST_UTMP_LINE_REMOTE="/dev/dtremote"
 	HOST_UTMP_PSEUDO_DEVICE="true"
 	os_solaris=yes
 	;;
 *freebsd*)
-	HOST_GDM_USER_PATH="/bin:/usr/bin"
+	HOST_MDM_USER_PATH="/bin:/usr/bin"
 	HOST_HALT_COMMAND="/sbin/shutdown -p now;/usr/sbin/shutdown -p now"
 	HOST_REBOOT_COMMAND="/sbin/shutdown -r now;/usr/sbin/shutdown -r now"
 	HOST_SUSPEND_COMMAND="/usr/sbin/zzz"
 	HOST_XSESSION_SHELL=/bin/sh
 	HOST_SOUND_PROGRAM=
-	HOST_GDMGNOMESESSIONCMD=gnome-session
+	HOST_MDMGNOMESESSIONCMD=gnome-session
 	HOST_UTMP_LINE_ATTACHED="/dev/console"
 	HOST_UTMP_LINE_REMOTE=""
 	HOST_UTMP_PSEUDO_DEVICE="false"
 	;;
 *openbsd*)
-	HOST_GDM_USER_PATH="/bin:/usr/bin"
+	HOST_MDM_USER_PATH="/bin:/usr/bin"
 	HOST_HALT_COMMAND="/sbin/halt -p;/usr/bin/poweroff;/sbin/poweroff;/sbin/shutdown -h now;/usr/sbin/shutdown -h now"
 	HOST_REBOOT_COMMAND="/usr/bin/reboot;/sbin/reboot;/sbin/shutdown -r now;/usr/sbin/shutdown -r now"
 	HOST_SUSPEND_COMMAND="/usr/bin/zzz"
 	HOST_XSESSION_SHELL=/bin/sh
-	HOST_SOUND_PROGRAM="$real_gdm_prefix/bin/play"
-	HOST_GDMGNOMESESSIONCMD=gnome-session
+	HOST_SOUND_PROGRAM="$real_mdm_prefix/bin/play"
+	HOST_MDMGNOMESESSIONCMD=gnome-session
 	HOST_UTMP_LINE_ATTACHED="/dev/console"
 	HOST_UTMP_LINE_REMOTE=""
 	HOST_UTMP_PSEUDO_DEVICE="false"
 	;;
 *)
-	HOST_GDM_USER_PATH="/bin:/usr/bin"
+	HOST_MDM_USER_PATH="/bin:/usr/bin"
 	HOST_HALT_COMMAND="/usr/bin/poweroff;/sbin/poweroff;/sbin/shutdown -h now;/usr/sbin/shutdown -h now"
 	HOST_REBOOT_COMMAND="/usr/bin/reboot;/sbin/reboot;/sbin/shutdown -r now;/usr/sbin/shutdown -r now"
 	HOST_SUSPEND_COMMAND=""
 	HOST_XSESSION_SHELL=/bin/sh
 	HOST_SOUND_PROGRAM=/usr/bin/play
-	HOST_GDMGNOMESESSIONCMD=gnome-session
+	HOST_MDMGNOMESESSIONCMD=gnome-session
 	HOST_UTMP_LINE_ATTACHED="/dev/console"
 	HOST_UTMP_LINE_REMOTE=""
 	HOST_UTMP_PSEUDO_DEVICE="false"
@@ -1104,18 +1104,18 @@ esac
 
 # allow user to override the host-specific default
 
-test "x$GDM_USER_PATH" == x && GDM_USER_PATH=${HOST_GDM_USER_PATH}
-test "x$GDM_HALT_COMMAND" == x && GDM_HALT_COMMAND=${HOST_GDM_HALT_COMMAND}
+test "x$MDM_USER_PATH" == x && MDM_USER_PATH=${HOST_MDM_USER_PATH}
+test "x$MDM_HALT_COMMAND" == x && MDM_HALT_COMMAND=${HOST_MDM_HALT_COMMAND}
 test "x$HALT_COMMAND" == x && HALT_COMMAND=${HOST_HALT_COMMAND}
 test "x$REBOOT_COMMAND" == x && REBOOT_COMMAND=${HOST_REBOOT_COMMAND}
 test "x$SUSPEND_COMMAND" == x && SUSPEND_COMMAND=${HOST_SUSPEND_COMMAND}
 test "x$XSESSION_SHELL" == x && XSESSION_SHELL=${HOST_XSESSION_SHELL}
 test "x$SOUND_PROGRAM" == x && SOUND_PROGRAM=${HOST_SOUND_PROGRAM}
-test "x$GDMGNOMESESSIONCMD" == x && GDMGNOMESESSIONCMD=${HOST_GDMGNOMESESSIONCMD}
+test "x$MDMGNOMESESSIONCMD" == x && MDMGNOMESESSIONCMD=${HOST_MDMGNOMESESSIONCMD}
 test "x$UTMP_LINE_ATTACHED" == x && UTMP_LINE_ATTACHED=${HOST_UTMP_LINE_ATTACHED}
 test "x$UTMP_LINE_REMOTE" == x && UTMP_LINE_REMOTE=${HOST_UTMP_LINE_REMOTE}
 test "x$UTMP_PSEUDO_DEVICE" == x && UTMP_PSEUDO_DEVICE=${HOST_UTMP_PSEUDO_DEVICE}
-test "x$GDM_RBAC_SYSCMD_KEYS" == x && GDM_RBAC_SYSCMD_KEYS=${HOST_GDM_RBAC_SYSCMD_KEYS}
+test "x$MDM_RBAC_SYSCMD_KEYS" == x && MDM_RBAC_SYSCMD_KEYS=${HOST_MDM_RBAC_SYSCMD_KEYS}
 
 # On Solaris, the /usr/bin/Xserver script is used to decide whether to
 # use Xsun or Xorg, so this is used on Solaris.
@@ -1128,19 +1128,19 @@ if test -x /usr/X11/bin/Xserver; then
    X_PATH="/usr/X11/bin"
    X_SERVER_PATH="/usr/X11/bin"
    X_SERVER="/usr/X11/bin/Xserver"
-   GDM_USER_PATH="$GDM_USER_PATH:/usr/X11/bin"
+   MDM_USER_PATH="$MDM_USER_PATH:/usr/X11/bin"
    X_CONFIG_OPTIONS="-audit 0"
 elif test ! -h /usr/X11R6 -a ! -h /usr/X11R6/bin -a -x /usr/X11R6/bin/X; then
    X_PATH="/usr/X11R6/bin"
    X_SERVER_PATH="/usr/X11R6/bin"
    X_SERVER="/usr/X11R6/bin/X"
-   GDM_USER_PATH="$GDM_USER_PATH:/usr/X11R6/bin"
+   MDM_USER_PATH="$MDM_USER_PATH:/usr/X11R6/bin"
    X_CONFIG_OPTIONS="-audit 0"
 elif test ! -h /usr/X11 -a ! -h /usr/X11/bin -a -x /usr/X11/bin/X; then
    X_PATH="/usr/X11/bin"
    X_SERVER_PATH="/usr/X11/bin"
    X_SERVER="/usr/X11/bin/X"
-   GDM_USER_PATH="$GDM_USER_PATH:/usr/X11/bin"
+   MDM_USER_PATH="$MDM_USER_PATH:/usr/X11/bin"
    X_CONFIG_OPTIONS="-audit 0"
 elif test -x /usr/bin/X; then
    X_PATH="/usr/bin"
@@ -1161,13 +1161,13 @@ elif test -x /usr/X11R6/bin/X; then
    X_PATH="/usr/X11R6/bin"
    X_SERVER_PATH="/usr/X11R6/bin"
    X_SERVER="/usr/X11R6/bin/X"
-   GDM_USER_PATH="$GDM_USER_PATH:/usr/X11R6/bin"
+   MDM_USER_PATH="$MDM_USER_PATH:/usr/X11R6/bin"
    X_CONFIG_OPTIONS="-audit 0"
 elif test -x /usr/X11/bin/X; then
    X_PATH="/usr/X11/bin"
    X_SERVER_PATH="/usr/X11/bin"
    X_SERVER="/usr/X11/bin/X"
-   GDM_USER_PATH="$GDM_USER_PATH:/usr/X11/bin"
+   MDM_USER_PATH="$MDM_USER_PATH:/usr/X11/bin"
    X_CONFIG_OPTIONS="-audit 0"
 elif test -x /usr/openwin/bin/Xsun; then
    # Do not add /usr/openwin/bin here because on Solaris you need 
@@ -1181,7 +1181,7 @@ elif test -x /opt/X11R6/bin/X; then
    X_PATH="/opt/X11R6/bin"
    X_SERVER_PATH="/opt/X11R6/bin"
    X_SERVER="/opt/X11R6/bin/X"
-   GDM_USER_PATH="$GDM_USER_PATH:/opt/X11R6/bin"
+   MDM_USER_PATH="$MDM_USER_PATH:/opt/X11R6/bin"
    X_CONFIG_OPTIONS="-audit 0"   
 elif test -x /usr/bin/X; then
    X_PATH="/usr/bin"
@@ -1194,7 +1194,7 @@ else
    X_PATH="/usr/bin/X11:/usr/X11R6/bin:/opt/X11R6/bin"
    X_SERVER_PATH="/usr/X11R6/bin"
    X_SERVER="/usr/X11R6/bin/X"
-   GDM_USER_PATH="$GDM_USER_PATH:/usr/bin/X11:/usr/X11R6/bin:/usr/local/bin:/opt/X11R6/bin"
+   MDM_USER_PATH="$MDM_USER_PATH:/usr/bin/X11:/usr/X11R6/bin:/usr/local/bin:/opt/X11R6/bin"
    X_CONFIG_OPTIONS="-audit 0"
 fi
 
@@ -1226,7 +1226,7 @@ fi
 # None currently, but might be useful.
 #
 if test "x$USER_POST_PATH" != "x"; then
-   GDM_USER_PATH="$GDM_USER_PATH:$USER_POST_PATH"
+   MDM_USER_PATH="$MDM_USER_PATH:$USER_POST_PATH"
 fi
 
 dnl ---------------------------------------------------------------------------
@@ -1248,13 +1248,13 @@ dnl ---------------------------------------------------------------------------
 AC_ARG_WITH(pid-file,    [  --with-pid-file=<file>     pid file])
 
 if ! test -z "$with_pid_file"; then
-   GDM_PID_FILE=$with_pid_file
+   MDM_PID_FILE=$with_pid_file
 else
-   GDM_PID_FILE=/var/run/gdm.pid
+   MDM_PID_FILE=/var/run/mdm.pid
 fi
 
-AC_SUBST(GDM_PID_FILE)
-AC_DEFINE_UNQUOTED(GDM_PID_FILE, "$GDM_PID_FILE", [pid file])
+AC_SUBST(MDM_PID_FILE)
+AC_DEFINE_UNQUOTED(MDM_PID_FILE, "$MDM_PID_FILE", [pid file])
 
 dnl ---------------------------------------------------------------------------
 dnl - Additional warnings
@@ -1303,7 +1303,7 @@ fi
 AC_ARG_WITH(rbac-system-command-keys,    [  --with-rbac-system-command-keys=<keys>     RBAC system command keys])
 
 if ! test -z "$with_system_command_keys"; then
-   GDM_RBAC_SYSCMD_KEYS=$with_system_command_keys
+   MDM_RBAC_SYSCMD_KEYS=$with_system_command_keys
 fi
 
 # Set configuration choices.
@@ -1318,8 +1318,8 @@ AC_SUBST(SUSPEND_COMMAND)
 AC_DEFINE_UNQUOTED(SUSPEND_COMMAND,"$SUSPEND_COMMAND")
 AC_SUBST(XSESSION_SHELL)
 AC_DEFINE_UNQUOTED(XSESSION_SHELL,"$XSESSION_SHELL")
-AC_SUBST(GDM_USER_PATH)
-AC_DEFINE_UNQUOTED(GDM_USER_PATH,"$GDM_USER_PATH")
+AC_SUBST(MDM_USER_PATH)
+AC_DEFINE_UNQUOTED(MDM_USER_PATH,"$MDM_USER_PATH")
 AC_SUBST(SOUND_PROGRAM)
 AC_DEFINE_UNQUOTED(SOUND_PROGRAM,"$SOUND_PROGRAM")
 AC_SUBST(UTMP_LINE_ATTACHED)
@@ -1328,9 +1328,9 @@ AC_SUBST(UTMP_LINE_REMOTE)
 AC_DEFINE_UNQUOTED(UTMP_LINE_REMOTE,"$UTMP_LINE_REMOTE")
 AC_SUBST(UTMP_PSEUDO_DEVICE)
 AC_DEFINE_UNQUOTED(UTMP_PSEUDO_DEVICE,"$UTMP_PSEUDO_DEVICE")
-AC_SUBST(GDMGNOMESESSIONCMD)
-AC_SUBST(GDM_RBAC_SYSCMD_KEYS)
-AC_DEFINE_UNQUOTED(GDM_RBAC_SYSCMD_KEYS,"$GDM_RBAC_SYSCMD_KEYS")
+AC_SUBST(MDMGNOMESESSIONCMD)
+AC_SUBST(MDM_RBAC_SYSCMD_KEYS)
+AC_DEFINE_UNQUOTED(MDM_RBAC_SYSCMD_KEYS,"$MDM_RBAC_SYSCMD_KEYS")
 
 AC_SUBST(X_PATH)
 AC_SUBST(X_SERVER)
@@ -1377,7 +1377,7 @@ data/icons/48x48/apps/Makefile
 data/icons/scalable/Makefile
 data/icons/scalable/apps/Makefile
 gui/Makefile
-gui/gdmflexiserver-xnest.desktop.in
+gui/mdmflexiserver-xnest.desktop.in
 gui/faces/Makefile
 gui/greeter/Makefile
 gui/greeter/themes/Makefile
@@ -1398,7 +1398,7 @@ docs/Makefile
 config/Init
 config/PreSession
 config/PostSession
-config/gdmprefetchlist
+config/mdmprefetchlist
 config/default.desktop.in
 config/gnome.desktop.in
 config/ssh.desktop.in
@@ -1411,7 +1411,7 @@ dnl omf-install/Makefile
 dnl <= Configuration summary =>
 
 echo ""
-echo "GDM2 configuration summary:"
+echo "MDM2 configuration summary:"
 echo "==========================="
 echo ""
 
@@ -1424,7 +1424,7 @@ dnl <= Prefixes =>
 echo "prefix : $prefix"
 echo "sysconf : $sysconfdir"
 echo "sysconfsubdir : $sysconfsubdir"
-echo "gdmconf dir : $gdmconfdir"
+echo "mdmconf dir : $mdmconfdir"
 echo "dmconf dir : $dmconfdir"
 echo "bin dir : $bindir"
 echo "sbin dir : $sbindir"
@@ -1501,7 +1501,7 @@ dnl <= Authentication scheme =>
 echo "Authentication scheme                 : $VRFY"
 
 dnl <= Utils built =>
-echo "Extra utilities built                 : "`echo $GDMOPEN $GDMASKPASS $GDMPREFETCH $GDMSSHSESSION`
+echo "Extra utilities built                 : "`echo $MDMOPEN $MDMASKPASS $MDMPREFETCH $MDMSSHSESSION`
 
 echo ""
 dnl <= End of configuration summary =>

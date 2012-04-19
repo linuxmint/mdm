@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -27,14 +27,14 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#include "gdm.h"
-#include "gdmwm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
-#include "gdmsession.h"
+#include "mdm.h"
+#include "mdmwm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
+#include "mdmsession.h"
 
-#include "gdm-common.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-daemon-config-keys.h"
 
 #include "greeter.h"
 #include "greeter_session.h"
@@ -126,7 +126,7 @@ greeter_session_init (void)
   vbox = gtk_vbox_new (FALSE, 6);
   /* we will pack this later depending on size */
 
-  if (gdm_config_get_bool (GDM_KEY_SHOW_LAST_SESSION))
+  if (mdm_config_get_bool (MDM_KEY_SHOW_LAST_SESSION))
     {
       greeter_set_session (LAST_SESSION);
 
@@ -143,19 +143,19 @@ greeter_session_init (void)
       gtk_widget_show (radio);
     }
 
-    gdm_session_list_init ();
+    mdm_session_list_init ();
 
     for (tmp = sessions; tmp != NULL; tmp = tmp->next)
       {
-	GdmSession *session;
+	MdmSession *session;
 	char *file;
  
 	file = (char *) tmp->data;
 	session = g_hash_table_lookup (sessnames, file);
  
 	if (num < 10 &&
-	   (strcmp (file, GDM_SESSION_FAILSAFE_GNOME) != 0) &&
-	   (strcmp (file, GDM_SESSION_FAILSAFE_XTERM) != 0))
+	   (strcmp (file, MDM_SESSION_FAILSAFE_GNOME) != 0) &&
+	   (strcmp (file, MDM_SESSION_FAILSAFE_XTERM) != 0))
 		label = g_strdup_printf ("_%d. %s", num, session->name);
 	else
 		label = g_strdup (session->name);
@@ -178,11 +178,11 @@ greeter_session_init (void)
    gtk_widget_size_request (vbox, &req);
 
    /* if too large */
-   if (req.height > 0.7 * gdm_wm_screen.height) {
+   if (req.height > 0.7 * mdm_wm_screen.height) {
 	    GtkWidget *sw = gtk_scrolled_window_new (NULL, NULL);
 	    gtk_widget_set_size_request (sw,
 					 req.width, 
-					 0.7 * gdm_wm_screen.height);
+					 0.7 * mdm_wm_screen.height);
 	    gtk_scrolled_window_set_shadow_type
 		    (GTK_SCROLLED_WINDOW (sw),
 		     GTK_SHADOW_NONE);
@@ -235,11 +235,11 @@ greeter_session_handler (GreeterItemInfo *info,
 
   gtk_widget_show_all (session_dialog);
 
-  gdm_wm_center_window (GTK_WINDOW (session_dialog));
+  mdm_wm_center_window (GTK_WINDOW (session_dialog));
   
-  gdm_wm_no_login_focus_push ();
+  mdm_wm_no_login_focus_push ();
   ret = gtk_dialog_run (GTK_DIALOG (session_dialog));
-  gdm_wm_no_login_focus_pop ();
+  mdm_wm_no_login_focus_pop ();
   gtk_widget_hide (session_dialog);
 
   if (ret == GTK_RESPONSE_OK)

@@ -1,18 +1,18 @@
 =head1 NAME
 
-gdmflexiserver - start a GDM session using the GDM I<flexible server> mechanism,
+mdmflexiserver - start a MDM session using the MDM I<flexible server> mechanism,
 or in B<Xnest>
 
 =head1 SYNOPSIS
 
-B<gdmflexiserver>       GNOME options   gdmflexiserver options
+B<mdmflexiserver>       GNOME options   mdmflexiserver options
 
 =head1 DESCRIPTION
 
-The I<flexi server> mechanism allows to run GDM sessions on demand, in a new
+The I<flexi server> mechanism allows to run MDM sessions on demand, in a new
 virtual console. The administrator can define multiple server configurations,
-using alternate X servers, or different options, in the B<gdm.conf> file, and
-B<gdmflexiserver> will present you with a menu, where you will be asked to
+using alternate X servers, or different options, in the B<mdm.conf> file, and
+B<mdmflexiserver> will present you with a menu, where you will be asked to
 choose between those server configurations marked with B<flexible=true>.
 
 Alternatively, the B<--xnest> option allows you to run a new session in an
@@ -20,14 +20,14 @@ Xnest(1) window.
 
 =head1 OPTIONS
 
-In addition to the common Gtk and GNOME options, B<gdmflexiserver> accepts the
+In addition to the common Gtk and GNOME options, B<mdmflexiserver> accepts the
 following options:
 
 =over 4
 
 =item B<-c> I<command>, B<--command>=I<command>
 
-Send the specified protocol command to gdm
+Send the specified protocol command to mdm
 
 =item B<-n>, B<--xnest>
 
@@ -49,10 +49,10 @@ Authenticate before running B<--command>
 
 =head1 SEE ALSO
 
-gdm(8), Xnest(1).
+mdm(8), Xnest(1).
 
 =head1 AUTHORS
 
-B<gdmflexiserver> is part of the B<GDM> software package, which is part of the
+B<mdmflexiserver> is part of the B<MDM> software package, which is part of the
 GNOME project. This manpage was written by Yann Dirson <dirson@debian.org> for
 the Debian system, but may be used by others.

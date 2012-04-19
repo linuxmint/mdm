@@ -1,8 +1,8 @@
 /*
- *  GDM - THe GNOME Display Manager
+ *  MDM - THe GNOME Display Manager
  *  Copyright (C) 2001 Queen of England, (c)2002 George Lebl
  *
- *  GDMcommunication routines
+ *  MDMcommunication routines
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,26 +20,26 @@
  *
  */
 
-#ifndef _GDMCONFIG_H
-#define _GDMCONFIG_H
+#ifndef _MDMCONFIG_H
+#define _MDMCONFIG_H
 
 #include "glib.h"
 
-void		gdm_config_never_cache			(gboolean never_cache);
-void		gdm_config_set_comm_retries		(int tries);
-gchar *		gdm_config_get_string			(const gchar *key);
-gchar *		gdm_config_get_translated_string	(const gchar *key);
-gint		gdm_config_get_int     			(const gchar *key);
-gboolean	gdm_config_get_bool			(const gchar *key);
-gboolean	gdm_config_reload_string		(const gchar *key);
-gboolean	gdm_config_reload_int			(const gchar *key);
-gboolean	gdm_config_reload_bool			(const gchar *key);
-GSList *	gdm_config_get_xservers			(gboolean flexible);
+void		mdm_config_never_cache			(gboolean never_cache);
+void		mdm_config_set_comm_retries		(int tries);
+gchar *		mdm_config_get_string			(const gchar *key);
+gchar *		mdm_config_get_translated_string	(const gchar *key);
+gint		mdm_config_get_int     			(const gchar *key);
+gboolean	mdm_config_get_bool			(const gchar *key);
+gboolean	mdm_config_reload_string		(const gchar *key);
+gboolean	mdm_config_reload_int			(const gchar *key);
+gboolean	mdm_config_reload_bool			(const gchar *key);
+GSList *	mdm_config_get_xservers			(gboolean flexible);
 
-void		gdm_save_customlist_data		(const gchar *file,
+void		mdm_save_customlist_data		(const gchar *file,
 							 const gchar *key,
 							 const gchar *id);
-char *		gdm_get_theme_greeter			(const gchar *file,
+char *		mdm_get_theme_greeter			(const gchar *file,
 							 const char *fallback);
 
-#endif /* _GDMCONFIG_H */
+#endif /* _MDMCONFIG_H */

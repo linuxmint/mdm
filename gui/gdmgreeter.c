@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003 George Lebl
@@ -30,32 +30,32 @@
 #include <secdb.h>
 #endif
 
-#include "gdmgreeter.h"
+#include "mdmgreeter.h"
 #include <fontconfig/fontconfig.h>
 
 #include <glib/gi18n.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
-#include "gdm.h"
-#include "gdm-common.h"
-#include "gdmconfig.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm.h"
+#include "mdm-common.h"
+#include "mdmconfig.h"
+#include "mdm-daemon-config-keys.h"
 
 /*
- * This file is for functions that are only used by gdmlogin,
- * gdmgreeter, and gdmsetup
+ * This file is for functions that are only used by mdmlogin,
+ * mdmgreeter, and mdmsetup
  */
 
 gboolean
-gdm_common_is_action_available (gchar *action)
+mdm_common_is_action_available (gchar *action)
 {
 	gchar **allowsyscmd = NULL;
 	const gchar *allowsyscmdval;
 	gboolean ret = FALSE;
 	int i;
 
-	allowsyscmdval = gdm_config_get_string (GDM_KEY_SYSTEM_COMMANDS_IN_MENU);
+	allowsyscmdval = mdm_config_get_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU);
 	if (allowsyscmdval)
 		allowsyscmd = g_strsplit (allowsyscmdval, ";", 0);
 
@@ -72,10 +72,10 @@ gdm_common_is_action_available (gchar *action)
 	if (ret == TRUE) {
 		gchar **rbackeys = NULL;
 		const gchar *rbackeysval;
-		const char *gdmuser;
+		const char *mdmuser;
 
-		gdmuser     = gdm_config_get_string (GDM_KEY_USER);
-		rbackeysval = gdm_config_get_string (GDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
+		mdmuser     = mdm_config_get_string (MDM_KEY_USER);
+		rbackeysval = mdm_config_get_string (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
 		if (rbackeysval)
 			rbackeys = g_strsplit (rbackeysval, ";", 0);
 
@@ -83,12 +83,12 @@ gdm_common_is_action_available (gchar *action)
 			for (i = 0; rbackeys[i] != NULL; i++) {
 				gchar **rbackey = g_strsplit (rbackeys[i], ":", 2);
 
-				if (gdm_vector_len (rbackey) == 2 &&
+				if (mdm_vector_len (rbackey) == 2 &&
 				    ! ve_string_empty (rbackey[0]) &&
 				    ! ve_string_empty (rbackey[1]) &&
 				    strcmp (rbackey[0], action) == 0) {
 
-					if (!chkauthattr (rbackey[1], gdmuser)) {
+					if (!chkauthattr (rbackey[1], mdmuser)) {
 						g_strfreev (rbackey);
 						ret = FALSE;
 						break;

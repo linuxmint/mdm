@@ -7,7 +7,7 @@
 test -f /etc/profile && . /etc/profile
 
 # Try to set LC_MESSAGES to LANG if neither LC_MESSAGES or LC_ALL is set.
-# This ensures that gdm can display in a system's default language if only
+# This ensures that mdm can display in a system's default language if only
 # LANG is set.
 
 # Make sure LANG is set
@@ -30,5 +30,5 @@ then
   fi
 fi
 
-exec @sbindir@/gdm-binary "$@"
+exec @sbindir@/mdm-binary "$@"
 

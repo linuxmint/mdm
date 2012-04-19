@@ -1,13 +1,13 @@
-Index: gdm-2.20.10/daemon/getvt.c
+Index: mdm-2.20.10/daemon/getvt.c
 ===================================================================
---- gdm-2.20.10.orig/daemon/getvt.c	2010-02-27 17:27:46.956530497 +0100
-+++ gdm-2.20.10/daemon/getvt.c	2010-02-27 17:27:58.617031143 +0100
-@@ -149,7 +149,7 @@ gdm_get_vt_device (int vtno)
+--- mdm-2.20.10.orig/daemon/getvt.c	2010-02-27 17:27:46.956530497 +0100
++++ mdm-2.20.10/daemon/getvt.c	2010-02-27 17:27:58.617031143 +0100
+@@ -149,7 +149,7 @@ mdm_get_vt_device (int vtno)
  #ifdef __sun
- #define GDMCONSOLEDEVICE "/dev/vt/0"
+ #define MDMCONSOLEDEVICE "/dev/vt/0"
  #else
--#define GDMCONSOLEDEVICE "/dev/console"
-+#define GDMCONSOLEDEVICE "/dev/tty0"
+-#define MDMCONSOLEDEVICE "/dev/console"
++#define MDMCONSOLEDEVICE "/dev/tty0"
  #endif
  
  

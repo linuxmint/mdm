@@ -1,45 +1,45 @@
-# GDM System Defaults Configuration file.
+# MDM System Defaults Configuration file.
 #
-# This file should not be updated by hand.  Since GDM 2.13.0.4, configuration
-# choices in the GDM Custom Configuration file will override the default
-# values specified in this file.  This GDM System Defaults Configuration file
+# This file should not be updated by hand.  Since MDM 2.13.0.4, configuration
+# choices in the MDM Custom Configuration file will override the default
+# values specified in this file.  This MDM System Defaults Configuration file
 # may be overwritten on upgrade, so to ensure that your configuration choices
-# are not lost, please make sure that your changes are made only the GDM Custom 
-# Configuration file.  The GDM Custom Configuration file is found at the
+# are not lost, please make sure that your changes are made only the MDM Custom 
+# Configuration file.  The MDM Custom Configuration file is found at the
 # following location:
 #
-# @GDM_CUSTOM_CONF@
+# @MDM_CUSTOM_CONF@
 #
-# If you were using an older version of GDM, your system may have the the older
-# gdm.conf configuration file on the system.  If so, then this file is used
-# instead of the GDM Custom Configuration file for backwards support.  If you
-# make changes to the GDM Custom Configuration file and they seem to not be
+# If you were using an older version of MDM, your system may have the the older
+# mdm.conf configuration file on the system.  If so, then this file is used
+# instead of the MDM Custom Configuration file for backwards support.  If you
+# make changes to the MDM Custom Configuration file and they seem to not be
 # taking effect, this is likely the problem.  Consider migrating your
-# configuration to the new configuration file and removing the gdm.conf file.
+# configuration to the new configuration file and removing the mdm.conf file.
 #
-# You can use the gdmsetup program to graphically edit the gdm.conf-custom
-# file.  Note that gdmsetup does not support every option in this file, just
-# the most common ones that users want to change.  If you feel that gdmsetup
+# You can use the mdmsetup program to graphically edit the mdm.conf-custom
+# file.  Note that mdmsetup does not support every option in this file, just
+# the most common ones that users want to change.  If you feel that mdmsetup
 # should support additional configuration options, please file a bug report at
 # http://bugzilla.gnome.org/.
 #
-# If you hand-edit the GDM configuration, you should run the following command
-# to get the GDM daemon to recognize the change.  Any running GDM GUI programs
+# If you hand-edit the MDM configuration, you should run the following command
+# to get the MDM daemon to recognize the change.  Any running MDM GUI programs
 # will also be notified to update with the new configuration.
 #
-# gdmflexiserver --command="UPDATE_CONFIG <configuration key>"
+# mdmflexiserver --command="UPDATE_CONFIG <configuration key>"
 #
 # e.g, the "Enable" key in the "[debug]" section would be "debug/Enable".
 #
-# You can also run gdm-restart or gdm-safe-restart to cause GDM to restart and
-# re-read the new configuration settings.  You can also restart GDM by sending
-# a HUP or USR1 signal to the daemon.  HUP behaves like gdm-restart and causes
-# any user session started by GDM to exit immediately while USR1 behaves like
-# gdm-safe-restart and will wait until all users log out before restarting GDM.
+# You can also run mdm-restart or mdm-safe-restart to cause MDM to restart and
+# re-read the new configuration settings.  You can also restart MDM by sending
+# a HUP or USR1 signal to the daemon.  HUP behaves like mdm-restart and causes
+# any user session started by MDM to exit immediately while USR1 behaves like
+# mdm-safe-restart and will wait until all users log out before restarting MDM.
 #
 # For full reference documentation see the GNOME help browser under
 # GNOME|System category.  You can also find the docs in HTML form on
-# http://www.gnome.org/projects/gdm/
+# http://www.gnome.org/projects/mdm/
 #
 # NOTE: Some values are commented out, but show their default values.  Lines
 # that begin with "#" are considered comments.
@@ -58,21 +58,21 @@ TimedLoginEnable=false
 TimedLogin=
 TimedLoginDelay=30
 
-# The GDM configuration program that is run from the login screen, you should
+# The MDM configuration program that is run from the login screen, you should
 # probably leave this alone.
-#Configurator=@sbindir@/gdmsetup --disable-sound --disable-crash-dialog
+#Configurator=@sbindir@/mdmsetup --disable-sound --disable-crash-dialog
 
 # The chooser program.  Must output the chosen host on stdout, probably you
 # should leave this alone.
-#Chooser=@libexecdir@/gdmchooser
+#Chooser=@libexecdir@/mdmchooser
 
-# The greeter for attached (non-xdmcp) logins.  Change gdmlogin to gdmgreeter
+# The greeter for attached (non-xdmcp) logins.  Change mdmlogin to mdmgreeter
 # to get the new graphical greeter.
-#Greeter=@libexecdir@/gdmlogin
+#Greeter=@libexecdir@/mdmlogin
 
 # The greeter for xdmcp logins, usually you want a less graphically intensive
-# greeter here so it's better to leave this with gdmlogin
-#RemoteGreeter=@libexecdir@/gdmlogin
+# greeter here so it's better to leave this with mdmlogin
+#RemoteGreeter=@libexecdir@/mdmlogin
 
 # Launch the greeter with an additional list of colon separated GTK+ modules.
 # This is useful for enabling additional feature support e.g. GNOME
@@ -85,22 +85,22 @@ TimedLoginDelay=30
 # Default path to set.  The profile scripts will likely override this value.
 # This value will be overridden with the value from /etc/default/login if it
 # contains "ROOT=<pathvalue>".
-#DefaultPath=@GDM_USER_PATH@
+#DefaultPath=@MDM_USER_PATH@
 # Default path for root.  The profile scripts will likely override this value.
 # This value will be overridden with the value from /etc/default/login if it
 # contains "SUROOT=<pathvalue>".
-#RootPath=/sbin:/usr/sbin:@GDM_USER_PATH@
+#RootPath=/sbin:/usr/sbin:@MDM_USER_PATH@
 
 # If you are having trouble with using a single server for a long time and want
-# GDM to kill/restart the server, turn this on.  On Solaris, this value is
+# MDM to kill/restart the server, turn this on.  On Solaris, this value is
 # always true and this configuration setting is ignored.
 #AlwaysRestartServer=@ALWAYS_RESTART_SERVER@
 
-# User and group used for running GDM GUI applications.  By default this is set
-# to user "gdm" and group "gdm".  This user/group should have very limited
-# permissions and access to only the gdm directories and files.
-User=gdm
-Group=gdm
+# User and group used for running MDM GUI applications.  By default this is set
+# to user "mdm" and group "mdm".  This user/group should have very limited
+# permissions and access to only the mdm directories and files.
+User=mdm
+Group=mdm
 
 # To try to kill all clients started at greeter time or in the Init script.
 # does not always work, only if those clients have a window of their own.
@@ -110,27 +110,27 @@ LogDir=@logdir@
 # Note that a post login script is run before a PreSession script.  It is run
 # after the login is successful and before any setup is run on behalf of the
 # user.
-PostLoginScriptDir=@gdmconfdir@/PostLogin/
-PreSessionScriptDir=@gdmconfdir@/PreSession/
-PostSessionScriptDir=@gdmconfdir@/PostSession/
-DisplayInitDir=@gdmconfdir@/Init
+PostLoginScriptDir=@mdmconfdir@/PostLogin/
+PreSessionScriptDir=@mdmconfdir@/PreSession/
+PostSessionScriptDir=@mdmconfdir@/PostSession/
+DisplayInitDir=@mdmconfdir@/Init
 # Distributions:  If you have some script that runs an X server in say VGA
 # mode, allowing a login, could you please send it to me?
 #FailsafeXServer=
 # if X keeps crashing on us we run this script.  The default one does a bunch
 # of cool stuff to figure out what to tell the user and such and can run an X
 # configuration program.
-XKeepsCrashing=@gdmconfdir@/XKeepsCrashing
+XKeepsCrashing=@mdmconfdir@/XKeepsCrashing
 
 # System command support.
 #
 # Reboot, Halt and suspend commands, you can add different commands separated
-# by a semicolon.  GDM will use the first one it can find.
+# by a semicolon.  MDM will use the first one it can find.
 RebootCommand=@REBOOT_COMMAND@
 HaltCommand=@HALT_COMMAND@
 SuspendCommand=@SUSPEND_COMMAND@
 
-# The following options specify how GDM system commands are supported.
+# The following options specify how MDM system commands are supported.
 #
 # Specify which actions are displayed in the greeter.  Valid values are HALT,
 # REBOOT, SUSPEND, and CUSTOM_CMD separated by semicolons.
@@ -141,29 +141,29 @@ SystemCommandsInMenu=HALT;REBOOT;SUSPEND;CUSTOM_CMD
 # CUSTOM_CMD separated by semicolons.
 AllowLogoutActions=HALT;REBOOT;SUSPEND;CUSTOM_CMD
 
-# This feature is only functional if GDM is compiled with RBAC (Role Based
+# This feature is only functional if MDM is compiled with RBAC (Role Based
 # Access Control) support.
 # Specify the RBAC key used to determine if the user has permission to use
 # the action via QUERY_LOGOUT_ACTION, SET_LOGOUT_ACTION and
-# SET_SAFE_LOGOUT_ACTION.  The GDM GUI will only display the action if the
-# "gdm" user has RBAC permissions to use the action.  RBAC keys for multiple
+# SET_SAFE_LOGOUT_ACTION.  The MDM GUI will only display the action if the
+# "mdm" user has RBAC permissions to use the action.  RBAC keys for multiple
 # actions can be specified by separating them by semicolons.  The format for
 # each is "Action:RBAC key".  If an action is not specified, it is assumed
 # all users have permission for this action.  For example:
 # HALT:key.for.halt,REBOOT:key.for.reboot,[...]  
-RBACSystemCommandKeys=@GDM_RBAC_SYSCMD_KEYS@
+RBACSystemCommandKeys=@MDM_RBAC_SYSCMD_KEYS@
 
 # Probably should not touch the below this is the standard setup.
 ServAuthDir=@authdir@
 # This is our standard startup script.  A bit different from a normal X
 # session, but it shares a lot of stuff with that.  See the provided default
 # for more information.
-BaseXsession=@gdmconfdir@/Xsession
+BaseXsession=@mdmconfdir@/Xsession
 # This is a directory where .desktop files describing the sessions live.  It is
 # really a PATH style variable since 2.4.4.2 to allow actual interoperability
 # with KDM.  Note that <dmconfdir>/Sessions is there for backwards
 # compatibility reasons with 2.4.4.x.
-#SessionDesktopDir=/etc/X11/sessions/:@dmconfdir@/Sessions/:@datadir@/gdm/BuiltInSessions/:@datadir@/xsessions/
+#SessionDesktopDir=/etc/X11/sessions/:@dmconfdir@/Sessions/:@datadir@/mdm/BuiltInSessions/:@datadir@/xsessions/
 # This is the default .desktop session.  One of the ones in SessionDesktopDir
 #DefaultSession=gnome.desktop
 # Better leave this blank and HOME will be used.  You can use syntax ~/ below
@@ -228,16 +228,16 @@ XnestUnscaledFontPath=@X_XNEST_UNSCALED_FONTPATH@
 # This is the default:
 #ConsoleCannotHandle=am,ar,az,bn,el,fa,gu,hi,ja,ko,ml,mr,pa,ta,zh
 
-# This determines whether GDM will honor requests DYNAMIC requests from the
-# gdmdynamic command.
+# This determines whether MDM will honor requests DYNAMIC requests from the
+# mdmdynamic command.
 #DynamicXServers=false
 
-# This determines whether GDM will send notifications to the console.
+# This determines whether MDM will send notifications to the console.
 #ConsoleNotify=true
 
-# How long gdm should wait before it assumes a started Xserver is defunct and
+# How long mdm should wait before it assumes a started Xserver is defunct and
 # kills it.  10 seconds should be long enough for X, but Xgl may need 20 or 25. 
-GdmXserverTimeout=10
+MdmXserverTimeout=10
 
 [security]
 # Allow root to login.  It makes sense to turn this off for kiosk use, when
@@ -280,13 +280,13 @@ SupportAutomount=false
 #NeverPlaceCookiesOnNFS=true
 # Will cause PAM_DISALLOW_NULL_AUTHTOK to be passed as a flag to
 # pam_authenticate and pam_acct_mgmt, disallowing NULL password.  This setting
-# will only take effect if PAM is being used by GDM.  This value will be
+# will only take effect if PAM is being used by MDM.  This value will be
 # overridden with the value from /etc/default/login if it contains
 # "PASSREQ=[YES|NO]"
 #PasswordRequired=false
-# Specifies the PAM Stack to use, "gdm" by default.
-PamStack=gdm
-# GDM allows configuration of how ut_line is set when it does utmp/wtmp and
+# Specifies the PAM Stack to use, "mdm" by default.
+PamStack=mdm
+# MDM allows configuration of how ut_line is set when it does utmp/wtmp and
 # audit processing.  If VT is being used, then ut_line will be set to the
 # device associated with the VT.  If the console is attached and has a device
 # name specified in the [servers] section, then this value will be used.
@@ -306,7 +306,7 @@ UtmpLineRemote=@UTMP_LINE_REMOTE@
 # etc. work in a reasonable way.  
 UtmpPseudoDevice=@UTMP_PSEUDO_DEVICE@
 
-# XDMCP is the protocol that allows remote login.  If you want to log into GDM
+# XDMCP is the protocol that allows remote login.  If you want to log into MDM
 # remotely (I'd never turn this on on open network, use ssh for such remote
 # usage).  You can then run X with -query <thishost> to log in, or
 # -indirect <thishost> to run a chooser.  Look for the 'Terminal' server type
@@ -331,7 +331,7 @@ Enable=false
 #MaxWaitIndirect=15
 # How many times can a person log in from a single host.  Usually better to
 # keep low to fend off DoS attacks by running many logins from a single host.
-# This is now set at 2 since if the server crashes then GDM doesn't know for
+# This is now set at 2 since if the server crashes then MDM doesn't know for
 # some time and wouldn't allow another session.
 #DisplaysPerHost=2
 # The number of seconds after which a non-responsive session is logged off.
@@ -343,7 +343,7 @@ Enable=false
 # But if you supply something here, the output of this script will be sent as
 # status of this host so that the chooser can display it.  You could for
 # example send load, or mail details for some user, or some such.
-#Willing=@gdmconfdir@/Xwilling
+#Willing=@mdmconfdir@/Xwilling
 
 [gui]
 # The specific gtkrc file we use.  It should be the full path to the gtkrc that
@@ -369,8 +369,8 @@ Enable=false
 
 [greeter]
 # The following options for setting titlebar and setting window position are
-# only useful for the standard login (gdmlogin) and are not used by the
-# themed login (gdmgreeter).
+# only useful for the standard login (mdmlogin) and are not used by the
+# themed login (mdmgreeter).
 #
 # The standard login has a title bar that the user can move.
 #TitleBar=true
@@ -385,7 +385,7 @@ Enable=false
 #PositionY=0
 
 # Enable the Face browser.  Note that the Browser key is only used by the
-# standard login (gdmlogin) program.  The Face Browser is enabled in
+# standard login (mdmlogin) program.  The Face Browser is enabled in
 # the Graphical greeter by selecting a theme that includes the Face
 # Browser, such as happygnome-list.  The other configuration values that
 # affect the Face Browser (MinimalUID, DefaultFace, Include, Exclude,
@@ -395,18 +395,18 @@ Browser=false
 # The default picture in the browser.
 #DefaultFace=@pixmapdir@/nobody.png
 # User ID's less than the MinimalUID value will not be included in the face
-# browser or in the gdmselection list for Automatic/Timed login.  They will not
+# browser or in the mdmselection list for Automatic/Timed login.  They will not
 # be displayed regardless of the settings for Include and Exclude.
 #MinimalUID=100
 # Users listed in Include will be included in the face browser and in the
-# gdmsetup selection list for Automatic/Timed login.  Users should be separated
+# mdmsetup selection list for Automatic/Timed login.  Users should be separated
 # by commas.
 #Include=
 # Users listed in Exclude are excluded from the face browser and from the
-# gdmsetup selection list for Automatic/Timed login.  Excluded users will still
+# mdmsetup selection list for Automatic/Timed login.  Excluded users will still
 # be able to log in, but will have to type their username.  Users should be
 # separated by commas.  
-#Exclude=bin,daemon,adm,lp,sync,shutdown,halt,mail,news,uucp,operator,nobody,gdm,postgres,pvm,rpm,nfsnobody,pcap
+#Exclude=bin,daemon,adm,lp,sync,shutdown,halt,mail,news,uucp,operator,nobody,mdm,postgres,pvm,rpm,nfsnobody,pcap
 # By default, an empty include list means display no users.  By setting
 # IncludeAll to true, the password file will be scanned and all users will be
 # displayed except users excluded via the Exclude setting and user ID's less
@@ -419,13 +419,13 @@ Browser=false
 #GlobalFaceDir=@datadir@/pixmaps/faces/
 
 # File which contains the locale we show to the user.  Likely you want to use
-# the one shipped with GDM and edit it.  It is not a standard locale.alias
-# file, although GDM will be able to read a standard locale.alias file as well.
-#LocaleFile=@gdmlocaledir@/locale.alias
+# the one shipped with MDM and edit it.  It is not a standard locale.alias
+# file, although MDM will be able to read a standard locale.alias file as well.
+#LocaleFile=@mdmlocaledir@/locale.alias
 # Logo shown in the standard greeter.
-#Logo=@pixmapdir@/gdm-foot-logo.png
-# Logo shown on file chooser button in gdmsetup (do not modify this value).
-#ChooserButtonLogo=@pixmapdir@/gdm-foot-logo.png
+#Logo=@pixmapdir@/mdm-foot-logo.png
+# Logo shown on file chooser button in mdmsetup (do not modify this value).
+#ChooserButtonLogo=@pixmapdir@/mdm-foot-logo.png
 # The standard greeter should shake if a user entered the wrong username or
 # password.  Kind of cool looking
 #Quiver=true
@@ -437,7 +437,7 @@ Browser=false
 #SystemMenu=true
 # Configuration is available from the system menu of the greeter.
 #ConfigAvailable=true
-# Should the chooser button be shown.  If this is shown, GDM can drop into
+# Should the chooser button be shown.  If this is shown, MDM can drop into
 # chooser mode which will run the xdmcp chooser locally and allow the user to
 # connect to some remote host.  Local XDMCP does not need to be enabled,
 # however.
@@ -467,8 +467,8 @@ DefaultRemoteWelcome=true
 #BackgroundType=2
 #BackgroundImage=
 #BackgroundScaleToFit=true
-# The Standard greeter (gdmlogin) uses BackgroundColor as the background
-# color, while the themed greeter (gdmgreeter) uses GraphicalThemedColor
+# The Standard greeter (mdmlogin) uses BackgroundColor as the background
+# color, while the themed greeter (mdmgreeter) uses GraphicalThemedColor
 # as the background color.
 BackgroundColor=#76848F
 GraphicalThemedColor=#76848F
@@ -496,7 +496,7 @@ GraphicalThemedColor=#76848F
 #ShowXtermFailsafeSession=true
 # Normally there is a session type called 'Last' that is shown which refers to
 # the last session the user used.  If off, we will be in 'switchdesk' mode
-# where the session saving stuff is disabled in GDM
+# where the session saving stuff is disabled in MDM
 #ShowLastSession=true
 # Always use 24 hour clock no matter what the locale.
 #Use24Clock=auto
@@ -504,14 +504,14 @@ GraphicalThemedColor=#76848F
 # instance in console, xdm and ssh.
 #UseInvisibleInEntry=false
 
-# These two keys are for the themed greeter (gdmgreeter).  Circles is the
-# standard shipped theme.  If you want GDM to select a random theme from a
+# These two keys are for the themed greeter (mdmgreeter).  Circles is the
+# standard shipped theme.  If you want MDM to select a random theme from a
 # list then provide a list that is delimited by /: to the GraphicalThemes
 # key and set GraphicalThemeRand to true.  Otherwise use GraphicalTheme
 # and specify just one theme.
 #GraphicalTheme=circles
 #GraphicalThemes=circles/:happygnome
-GraphicalThemeDir=@datadir@/gdm/themes/
+GraphicalThemeDir=@datadir@/mdm/themes/
 GraphicalThemeRand=false
 
 # If InfoMsgFile points to a file, the greeter will display the contents of the
@@ -540,11 +540,11 @@ GraphicalThemeRand=false
 # initial screen is displayed.  The purpose is to provide a hook where files
 # used after login can be preloaded to speed performance for the user. The
 # program will only be called once only, the first time a greeter is displayed.
-# The gdmprefetch command may be used.  This utility will load any libraries
+# The mdmprefetch command may be used.  This utility will load any libraries
 # passed in on the command line, or if the argument starts with a "@"
 # character, it will process the file assuming it is an ASCII file containing a
 # list of libraries, one per line, and load each library in the file.
-PreFetchProgram=@GDMPREFETCHCMD@
+PreFetchProgram=@MDMPREFETCHCMD@
 
 # The chooser is what's displayed when a user wants an indirect XDMCP session,
 # or selects Run XDMCP chooser from the system menu
@@ -571,9 +571,9 @@ Multicast=false
 #AllowAdd=true
 
 [debug]
-# This will cause GDM to send debugging information to the system log, which 
+# This will cause MDM to send debugging information to the system log, which 
 # will create a LOT of output.  It is not recommended to turn this on for
-# normal use, but it can be useful to determine the cause when GDM is not
+# normal use, but it can be useful to determine the cause when MDM is not
 # working properly.
 Enable=false
 # This will enable debug messages for accessibilty gesture listeners into the
@@ -585,7 +585,7 @@ Gestures=false
 # Attached DISPLAY Configuration
 #
 [servers]
-# This section defines which attached DISPLAYS should be started by GDM by
+# This section defines which attached DISPLAYS should be started by MDM by
 # default.  You can add as many DISPLAYS as desired and they will always be
 # started.  The key for each entry must be a unique number that cooresponds to
 # the DISPLAY number to start the X server.  For a typical single-display
@@ -600,9 +600,9 @@ Gestures=false
 #
 # The optional device argument is used to specify the device that is associated
 # with the DISPLAY.  When using Virtual Terminals (VT), this value is ignored
-# and GDM will use the correct device name associated with the VT.  If not
-# using VT, then GDM will use the value specified by this optional argument.
-# If the device argument is not defined, then GDM will use the default setting
+# and MDM will use the correct device name associated with the VT.  If not
+# using VT, then MDM will use the value specified by this optional argument.
+# If the device argument is not defined, then MDM will use the default setting
 # for attached displays defined in the UtmpLineAttached configuration option.
 # For the main display (typically DISPLAY ":0"), "/dev/console" is a reasonable
 # value.  For other displays it is probably best to not include this argument
@@ -680,7 +680,7 @@ chooser=true
 # assigned except CustomCommandN for which no default exists).
 
 # Custom command to run.  Multiple commands may be specified separated by 
-# semicolons.  GDM will use the first valid command.  Examples:
+# semicolons.  MDM will use the first valid command.  Examples:
 # /sbin/bootwindoze;/usr/bin/bootwindoze, or
 # /sbin/runupdate;/usr/local/sbin/runupdate
 #
@@ -715,8 +715,8 @@ chooser=true
 # Log Out/Shut Down dialogs. The default value is false.
 #CustomCommandIsPersistentN=
 
-# Custom command gdm/system restart option. Setting it to true will not
-# restart gdm after command execution.  The default commands (reboot, shut
+# Custom command mdm/system restart option. Setting it to true will not
+# restart mdm after command execution.  The default commands (reboot, shut
 # down) all reboot the system by default which is why the default setting
 # is true.
 # In addition when corresponding CustomCommandIsPersistentN option is set to

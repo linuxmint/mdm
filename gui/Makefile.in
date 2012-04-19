@@ -34,14 +34,14 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-libexec_PROGRAMS = @GDMCHOOSER@ gdmlogin$(EXEEXT)
-sbin_PROGRAMS = gdmsetup$(EXEEXT)
-bin_PROGRAMS = gdmphotosetup$(EXEEXT) @GDMXNESTCHOOSER@ \
-	gdmflexiserver$(EXEEXT) gdmdynamic$(EXEEXT)
-EXTRA_PROGRAMS = gdmchooser$(EXEEXT) gdmXnestchooser$(EXEEXT)
+libexec_PROGRAMS = @MDMCHOOSER@ mdmlogin$(EXEEXT)
+sbin_PROGRAMS = mdmsetup$(EXEEXT)
+bin_PROGRAMS = mdmphotosetup$(EXEEXT) @MDMXNESTCHOOSER@ \
+	mdmflexiserver$(EXEEXT) mdmdynamic$(EXEEXT)
+EXTRA_PROGRAMS = mdmchooser$(EXEEXT) mdmXnestchooser$(EXEEXT)
 subdir = gui
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
-	$(srcdir)/gdmflexiserver-xnest.desktop.in.in
+	$(srcdir)/mdmflexiserver-xnest.desktop.in.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gnome-doc-utils.m4 \
 	$(top_srcdir)/m4/intltool.m4 $(top_srcdir)/acinclude.m4 \
@@ -50,25 +50,25 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES = gdmflexiserver-xnest.desktop.in
+CONFIG_CLEAN_FILES = mdmflexiserver-xnest.desktop.in
 LIBRARIES = $(noinst_LIBRARIES)
 ARFLAGS = cru
-libgdmcommon_a_AR = $(AR) $(ARFLAGS)
-libgdmcommon_a_LIBADD =
+libmdmcommon_a_AR = $(AR) $(ARFLAGS)
+libmdmcommon_a_LIBADD =
 am__objects_1 =
-am_libgdmcommon_a_OBJECTS = misc.$(OBJEXT) gdmcomm.$(OBJEXT) \
-	gdmconfig.$(OBJEXT) gdmcommon.$(OBJEXT) $(am__objects_1)
-libgdmcommon_a_OBJECTS = $(am_libgdmcommon_a_OBJECTS)
-libgdmgreeter_a_AR = $(AR) $(ARFLAGS)
-libgdmgreeter_a_LIBADD =
-am_libgdmgreeter_a_OBJECTS = gdmgreeter.$(OBJEXT) \
-	gdmlanguages.$(OBJEXT) gdmsession.$(OBJEXT) gdmuser.$(OBJEXT) \
+am_libmdmcommon_a_OBJECTS = misc.$(OBJEXT) mdmcomm.$(OBJEXT) \
+	mdmconfig.$(OBJEXT) mdmcommon.$(OBJEXT) $(am__objects_1)
+libmdmcommon_a_OBJECTS = $(am_libmdmcommon_a_OBJECTS)
+libmdmgreeter_a_AR = $(AR) $(ARFLAGS)
+libmdmgreeter_a_LIBADD =
+am_libmdmgreeter_a_OBJECTS = mdmgreeter.$(OBJEXT) \
+	mdmlanguages.$(OBJEXT) mdmsession.$(OBJEXT) mdmuser.$(OBJEXT) \
 	$(am__objects_1)
-libgdmgreeter_a_OBJECTS = $(am_libgdmgreeter_a_OBJECTS)
-libgdmwm_a_AR = $(AR) $(ARFLAGS)
-libgdmwm_a_LIBADD =
-am_libgdmwm_a_OBJECTS = gdmwm.$(OBJEXT)
-libgdmwm_a_OBJECTS = $(am_libgdmwm_a_OBJECTS)
+libmdmgreeter_a_OBJECTS = $(am_libmdmgreeter_a_OBJECTS)
+libmdmwm_a_AR = $(AR) $(ARFLAGS)
+libmdmwm_a_LIBADD =
+am_libmdmwm_a_OBJECTS = mdmwm.$(OBJEXT)
+libmdmwm_a_OBJECTS = $(am_libmdmwm_a_OBJECTS)
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" \
 	"$(DESTDIR)$(sbindir)" "$(DESTDIR)$(Gladedir)" \
 	"$(DESTDIR)$(Settingsdir)" "$(DESTDIR)$(Systemdir)"
@@ -76,76 +76,76 @@ binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 libexecPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 sbinPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS) $(libexec_PROGRAMS) $(sbin_PROGRAMS)
-am_gdmXnestchooser_OBJECTS = gdmXnestchooser.$(OBJEXT)
-gdmXnestchooser_OBJECTS = $(am_gdmXnestchooser_OBJECTS)
+am_mdmXnestchooser_OBJECTS = mdmXnestchooser.$(OBJEXT)
+mdmXnestchooser_OBJECTS = $(am_mdmXnestchooser_OBJECTS)
 am__DEPENDENCIES_1 =
-gdmXnestchooser_DEPENDENCIES = libgdmcommon.a $(am__DEPENDENCIES_1) \
+mdmXnestchooser_DEPENDENCIES = libmdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(top_builddir)/common/libgdmcommon.a \
+	$(am__DEPENDENCIES_1) $(top_builddir)/common/libmdmcommon.a \
 	$(am__DEPENDENCIES_1)
-am_gdmchooser_OBJECTS = gdmchooser.$(OBJEXT) misc.$(OBJEXT) \
+am_mdmchooser_OBJECTS = mdmchooser.$(OBJEXT) misc.$(OBJEXT) \
 	$(am__objects_1)
-gdmchooser_OBJECTS = $(am_gdmchooser_OBJECTS)
-gdmchooser_DEPENDENCIES = $(am__DEPENDENCIES_1) libgdmwm.a \
-	libgdmcommon.a $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+mdmchooser_OBJECTS = $(am_mdmchooser_OBJECTS)
+mdmchooser_DEPENDENCIES = $(am__DEPENDENCIES_1) libmdmwm.a \
+	libmdmcommon.a $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(top_builddir)/common/libgdmcommon.a \
+	$(am__DEPENDENCIES_1) $(top_builddir)/common/libmdmcommon.a \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-gdmchooser_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+mdmchooser_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(gdmchooser_LDFLAGS) $(LDFLAGS) -o $@
-am_gdmdynamic_OBJECTS = gdmdynamic.$(OBJEXT)
-gdmdynamic_OBJECTS = $(am_gdmdynamic_OBJECTS)
-gdmdynamic_DEPENDENCIES = libgdmcommon.a $(am__DEPENDENCIES_1) \
+	$(mdmchooser_LDFLAGS) $(LDFLAGS) -o $@
+am_mdmdynamic_OBJECTS = mdmdynamic.$(OBJEXT)
+mdmdynamic_OBJECTS = $(am_mdmdynamic_OBJECTS)
+mdmdynamic_DEPENDENCIES = libmdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(top_builddir)/common/libgdmcommon.a $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
-am_gdmflexiserver_OBJECTS = gdmflexiserver.$(OBJEXT)
-gdmflexiserver_OBJECTS = $(am_gdmflexiserver_OBJECTS)
-gdmflexiserver_DEPENDENCIES = libgdmcommon.a $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(top_builddir)/common/libgdmcommon.a $(am__DEPENDENCIES_1) \
+	$(top_builddir)/common/libmdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-am_gdmlogin_OBJECTS = gdmlogin.$(OBJEXT)
-gdmlogin_OBJECTS = $(am_gdmlogin_OBJECTS)
-gdmlogin_DEPENDENCIES = $(am__DEPENDENCIES_1) libgdmwm.a \
-	libgdmcommon.a libgdmgreeter.a $(am__DEPENDENCIES_1) \
+am_mdmflexiserver_OBJECTS = mdmflexiserver.$(OBJEXT)
+mdmflexiserver_OBJECTS = $(am_mdmflexiserver_OBJECTS)
+mdmflexiserver_DEPENDENCIES = libmdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(top_builddir)/common/libgdmcommon.a $(am__DEPENDENCIES_1) \
+	$(top_builddir)/common/libmdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-am_gdmphotosetup_OBJECTS = gdmphotosetup.$(OBJEXT)
-gdmphotosetup_OBJECTS = $(am_gdmphotosetup_OBJECTS)
-gdmphotosetup_DEPENDENCIES = libgdmcommon.a $(am__DEPENDENCIES_1) \
+am_mdmlogin_OBJECTS = mdmlogin.$(OBJEXT)
+mdmlogin_OBJECTS = $(am_mdmlogin_OBJECTS)
+mdmlogin_DEPENDENCIES = $(am__DEPENDENCIES_1) libmdmwm.a \
+	libmdmcommon.a libmdmgreeter.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(top_builddir)/common/libmdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(top_builddir)/common/libgdmcommon.a $(am__DEPENDENCIES_1)
-am_gdmsetup_OBJECTS = gdmsetup-gdmsession.$(OBJEXT) \
-	gdmsetup-gdmuser.$(OBJEXT) gdmsetup-gdmsetup.$(OBJEXT)
-gdmsetup_OBJECTS = $(am_gdmsetup_OBJECTS)
-gdmsetup_DEPENDENCIES = libgdmcommon.a $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(top_builddir)/common/libgdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-gdmsetup_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(gdmsetup_CFLAGS) $(CFLAGS) \
-	$(gdmsetup_LDFLAGS) $(LDFLAGS) -o $@
+am_mdmphotosetup_OBJECTS = mdmphotosetup.$(OBJEXT)
+mdmphotosetup_OBJECTS = $(am_mdmphotosetup_OBJECTS)
+mdmphotosetup_DEPENDENCIES = libmdmcommon.a $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(top_builddir)/common/libmdmcommon.a $(am__DEPENDENCIES_1)
+am_mdmsetup_OBJECTS = mdmsetup-mdmsession.$(OBJEXT) \
+	mdmsetup-mdmuser.$(OBJEXT) mdmsetup-mdmsetup.$(OBJEXT)
+mdmsetup_OBJECTS = $(am_mdmsetup_OBJECTS)
+mdmsetup_DEPENDENCIES = libmdmcommon.a $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(top_builddir)/common/libmdmcommon.a $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
+mdmsetup_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) $(mdmsetup_CFLAGS) $(CFLAGS) \
+	$(mdmsetup_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -158,16 +158,16 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libgdmcommon_a_SOURCES) $(libgdmgreeter_a_SOURCES) \
-	$(libgdmwm_a_SOURCES) $(gdmXnestchooser_SOURCES) \
-	$(gdmchooser_SOURCES) $(gdmdynamic_SOURCES) \
-	$(gdmflexiserver_SOURCES) $(gdmlogin_SOURCES) \
-	$(gdmphotosetup_SOURCES) $(gdmsetup_SOURCES)
-DIST_SOURCES = $(libgdmcommon_a_SOURCES) $(libgdmgreeter_a_SOURCES) \
-	$(libgdmwm_a_SOURCES) $(gdmXnestchooser_SOURCES) \
-	$(gdmchooser_SOURCES) $(gdmdynamic_SOURCES) \
-	$(gdmflexiserver_SOURCES) $(gdmlogin_SOURCES) \
-	$(gdmphotosetup_SOURCES) $(gdmsetup_SOURCES)
+SOURCES = $(libmdmcommon_a_SOURCES) $(libmdmgreeter_a_SOURCES) \
+	$(libmdmwm_a_SOURCES) $(mdmXnestchooser_SOURCES) \
+	$(mdmchooser_SOURCES) $(mdmdynamic_SOURCES) \
+	$(mdmflexiserver_SOURCES) $(mdmlogin_SOURCES) \
+	$(mdmphotosetup_SOURCES) $(mdmsetup_SOURCES)
+DIST_SOURCES = $(libmdmcommon_a_SOURCES) $(libmdmgreeter_a_SOURCES) \
+	$(libmdmwm_a_SOURCES) $(mdmXnestchooser_SOURCES) \
+	$(mdmchooser_SOURCES) $(mdmdynamic_SOURCES) \
+	$(mdmflexiserver_SOURCES) $(mdmlogin_SOURCES) \
+	$(mdmphotosetup_SOURCES) $(mdmsetup_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -229,9 +229,9 @@ DEFS = @DEFS@ \
 	-DBINDIR=\"@bindir@\" 				\
 	-DDATADIR=\"@datadir@\" 			\
 	-DDMCONFDIR=\"@dmconfdir@\" 			\
-	-DGDMCONFDIR=\"@gdmconfdir@\"			\
-	-DGDMLOCALEDIR=\"@gdmlocaledir@\" 		\
-	-DGDM_GLADE_DIR=\"@datadir@/gdm\" 		\
+	-DMDMCONFDIR=\"@mdmconfdir@\"			\
+	-DMDMLOCALEDIR=\"@mdmlocaledir@\" 		\
+	-DMDM_GLADE_DIR=\"@datadir@/mdm\" 		\
 	-DLIBDIR=\"@libdir@\" 				\
 	-DLIBEXECDIR=\"@libexecdir@\" 			\
 	-DLOGDIR=\"@logdir@\"				\
@@ -252,7 +252,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 EXTRA_CHOOSER_LIBS = @EXTRA_CHOOSER_LIBS@
 EXTRA_DAEMON_LIBS = @EXTRA_DAEMON_LIBS@
-EXTRA_GDMASKPASS_LIBS = @EXTRA_GDMASKPASS_LIBS@
+EXTRA_MDMASKPASS_LIBS = @EXTRA_MDMASKPASS_LIBS@
 EXTRA_GREETER_LIBS = @EXTRA_GREETER_LIBS@
 EXTRA_NSL_LIB = @EXTRA_NSL_LIB@
 EXTRA_SOCKET_LIB = @EXTRA_SOCKET_LIB@
@@ -262,22 +262,22 @@ GDKPIXBUF_CFLAGS = @GDKPIXBUF_CFLAGS@
 GDKPIXBUF_LIBS = @GDKPIXBUF_LIBS@
 GDK_CFLAGS = @GDK_CFLAGS@
 GDK_LIBS = @GDK_LIBS@
-GDMASKPASS = @GDMASKPASS@
-GDMCHOOSER = @GDMCHOOSER@
-GDMGNOMESESSIONCMD = @GDMGNOMESESSIONCMD@
-GDMOPEN = @GDMOPEN@
-GDMPREFETCH = @GDMPREFETCH@
-GDMPREFETCHCMD = @GDMPREFETCHCMD@
-GDMPREFETCHLIST = @GDMPREFETCHLIST@
-GDMSSHSESSION = @GDMSSHSESSION@
-GDMSSHSESSIONCMD = @GDMSSHSESSIONCMD@
-GDMXNESTCHOOSER = @GDMXNESTCHOOSER@
-GDM_CUSTOM_CONF = @GDM_CUSTOM_CONF@
-GDM_DEFAULTS_CONF = @GDM_DEFAULTS_CONF@
-GDM_OLD_CONF = @GDM_OLD_CONF@
-GDM_PID_FILE = @GDM_PID_FILE@
-GDM_RBAC_SYSCMD_KEYS = @GDM_RBAC_SYSCMD_KEYS@
-GDM_USER_PATH = @GDM_USER_PATH@
+MDMASKPASS = @MDMASKPASS@
+MDMCHOOSER = @MDMCHOOSER@
+MDMGNOMESESSIONCMD = @MDMGNOMESESSIONCMD@
+MDMOPEN = @MDMOPEN@
+MDMPREFETCH = @MDMPREFETCH@
+MDMPREFETCHCMD = @MDMPREFETCHCMD@
+MDMPREFETCHLIST = @MDMPREFETCHLIST@
+MDMSSHSESSION = @MDMSSHSESSION@
+MDMSSHSESSIONCMD = @MDMSSHSESSIONCMD@
+MDMXNESTCHOOSER = @MDMXNESTCHOOSER@
+MDM_CUSTOM_CONF = @MDM_CUSTOM_CONF@
+MDM_DEFAULTS_CONF = @MDM_DEFAULTS_CONF@
+MDM_OLD_CONF = @MDM_OLD_CONF@
+MDM_PID_FILE = @MDM_PID_FILE@
+MDM_RBAC_SYSCMD_KEYS = @MDM_RBAC_SYSCMD_KEYS@
+MDM_USER_PATH = @MDM_USER_PATH@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_LIBS = @GLIB_LIBS@
@@ -410,8 +410,8 @@ dmconfdir = @dmconfdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
-gdmconfdir = @gdmconfdir@
-gdmlocaledir = @gdmlocaledir@
+mdmconfdir = @mdmconfdir@
+mdmlocaledir = @mdmlocaledir@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -461,66 +461,66 @@ INCLUDES = \
 #	-DGTK_DISABLE_DEPRECATED			\
 #	-DGNOME_DISABLE_DEPRECATED			\
 #
-noinst_LIBRARIES = libgdmwm.a libgdmcommon.a libgdmgreeter.a
-gdmphotosetup_SOURCES = \
-	gdmphotosetup.c	
+noinst_LIBRARIES = libmdmwm.a libmdmcommon.a libmdmgreeter.a
+mdmphotosetup_SOURCES = \
+	mdmphotosetup.c	
 
-gdmXnestchooser_SOURCES = \
-	gdmXnestchooser.c
+mdmXnestchooser_SOURCES = \
+	mdmXnestchooser.c
 
-gdmflexiserver_SOURCES = \
-	gdmflexiserver.c
+mdmflexiserver_SOURCES = \
+	mdmflexiserver.c
 
-gdmdynamic_SOURCES = \
-	gdmdynamic.c
+mdmdynamic_SOURCES = \
+	mdmdynamic.c
 
-libgdmwm_a_SOURCES = \
-	gdmwm.c			\
-	gdmwm.h
+libmdmwm_a_SOURCES = \
+	mdmwm.c			\
+	mdmwm.h
 
-libgdmgreeter_a_SOURCES = \
-	gdmgreeter.c		\
-	gdmgreeter.h		\
-	gdmlanguages.c		\
-	gdmlanguages.h		\
-	gdmsession.c		\
-	gdmsession.h		\
-	gdmuser.c		\
-	gdmuser.h		\
+libmdmgreeter_a_SOURCES = \
+	mdmgreeter.c		\
+	mdmgreeter.h		\
+	mdmlanguages.c		\
+	mdmlanguages.h		\
+	mdmsession.c		\
+	mdmsession.h		\
+	mdmuser.c		\
+	mdmuser.h		\
 	$(NULL)
 
-libgdmcommon_a_SOURCES = \
+libmdmcommon_a_SOURCES = \
 	misc.c			\
 	misc.h			\
-	gdmcomm.c		\
-	gdmcomm.h		\
-	gdmconfig.c		\
-	gdmconfig.h		\
-	gdmcommon.c		\
-	gdmcommon.h		\
+	mdmcomm.c		\
+	mdmcomm.h		\
+	mdmconfig.c		\
+	mdmconfig.h		\
+	mdmcommon.c		\
+	mdmcommon.h		\
 	$(NULL)
 
-gdmchooser_SOURCES = \
-	gdmchooser.c		\
+mdmchooser_SOURCES = \
+	mdmchooser.c		\
 	misc.c			\
 	misc.h			\
 	$(NULL)
 
-gdmlogin_SOURCES = \
-	gdmlogin.c
+mdmlogin_SOURCES = \
+	mdmlogin.c
 
-gdmsetup_SOURCES = \
-	gdmsession.c		\
-	gdmsession.h		\
-	gdmuser.c		\
-	gdmuser.h		\
-	gdmsetup.c
+mdmsetup_SOURCES = \
+	mdmsession.c		\
+	mdmsession.h		\
+	mdmuser.c		\
+	mdmuser.h		\
+	mdmsetup.c
 
-gdmchooser_LDFLAGS = -export-dynamic
-gdmchooser_LDADD = \
+mdmchooser_LDFLAGS = -export-dynamic
+mdmchooser_LDADD = \
 	$(EXTRA_CHOOSER_LIBS)	\
-	libgdmwm.a		\
-	libgdmcommon.a		\
+	libmdmwm.a		\
+	libmdmcommon.a		\
 	$(GUIGLADE_LIBS)	\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
@@ -528,7 +528,7 @@ gdmchooser_LDADD = \
 	$(PANGO_LIBS)		\
 	$(GDK_LIBS)		\
 	$(GDKPIXBUF_LIBS)	\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(X_EXTRA_LIBS)		\
 	$(XINERAMA_LIBS)	\
 	$(X_LIBS)		\
@@ -537,11 +537,11 @@ gdmchooser_LDADD = \
 	-lfontconfig		\
 	$(NULL)
 
-gdmlogin_LDADD = \
+mdmlogin_LDADD = \
 	$(EXTRA_GREETER_LIBS)	\
-	libgdmwm.a		\
-	libgdmcommon.a		\
-	libgdmgreeter.a		\
+	libmdmwm.a		\
+	libmdmcommon.a		\
+	libmdmgreeter.a		\
 	$(GUING_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
@@ -549,7 +549,7 @@ gdmlogin_LDADD = \
 	$(GDK_LIBS)		\
 	$(PANGO_LIBS)		\
 	$(GDKPIXBUF_LIBS)	\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(X_EXTRA_LIBS)		\
 	$(XINERAMA_LIBS)	\
 	$(X_LIBS)		\
@@ -558,14 +558,14 @@ gdmlogin_LDADD = \
 	$(NULL)
 
 
-# LIBGNOMEUI should be removed from gdmsetup at some point.
+# LIBGNOMEUI should be removed from mdmsetup at some point.
 # It is needed because it uses gnome_help_display_uri(), which
 # should be replaced at some point.
 #
-gdmsetup_CFLAGS = $(LIBGNOMEUI_CFLAGS)
-gdmsetup_LDFLAGS = -export-dynamic
-gdmsetup_LDADD = \
-	libgdmcommon.a		\
+mdmsetup_CFLAGS = $(LIBGNOMEUI_CFLAGS)
+mdmsetup_LDFLAGS = -export-dynamic
+mdmsetup_LDADD = \
+	libmdmcommon.a		\
 	$(GUI_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
@@ -576,15 +576,15 @@ gdmsetup_LDADD = \
 	$(EXTRA_SOCKET_LIB)	\
 	$(EXTRA_NSL_LIB)	\
 	$(LIBGNOMEUI_LIBS)	\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(X_LIBS)		\
 	-lXau			\
 	-lX11			\
 	-lfontconfig		\
 	$(NULL)
 
-gdmphotosetup_LDADD = \
-	libgdmcommon.a		\
+mdmphotosetup_LDADD = \
+	libmdmcommon.a		\
 	$(GUI_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
@@ -596,11 +596,11 @@ gdmphotosetup_LDADD = \
 	$(EXTRA_NSL_LIB)	\
 	-lX11			\
 	-lfontconfig		\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(NULL)
 
-gdmXnestchooser_LDADD = \
-	libgdmcommon.a		\
+mdmXnestchooser_LDADD = \
+	libmdmcommon.a		\
 	$(GUI_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
@@ -612,17 +612,17 @@ gdmXnestchooser_LDADD = \
 	-lXau			\
 	-lX11			\
 	-lfontconfig		\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(NULL)
 
-gdmflexiserver_LDADD = \
-	libgdmcommon.a		\
+mdmflexiserver_LDADD = \
+	libmdmcommon.a		\
 	$(GUI_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
 	$(GOBJECT_LIBS)		\
 	$(GDK_LIBS)		\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(EXTRA_SOCKET_LIB)	\
 	$(EXTRA_NSL_LIB)	\
 	$(X_LIBS)		\
@@ -631,14 +631,14 @@ gdmflexiserver_LDADD = \
 	-lfontconfig		\
 	$(NULL)
 
-gdmdynamic_LDADD = \
-	libgdmcommon.a		\
+mdmdynamic_LDADD = \
+	libmdmcommon.a		\
 	$(GUI_LIBS)		\
 	$(INTLLIBS) 		\
 	$(GLIB_LIBS) 		\
 	$(GOBJECT_LIBS) 	\
 	$(GDK_LIBS) 		\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(EXTRA_SOCKET_LIB)	\
 	$(EXTRA_NSL_LIB)	\
 	$(X_LIBS)		\
@@ -647,25 +647,25 @@ gdmdynamic_LDADD = \
 	-lfontconfig		\
 	$(NULL)
 
-Settingsdir = $(datadir)/gdm/applications
-Settings_files = gdmphotosetup.desktop
-Settings_in_files = gdmphotosetup.desktop.in
+Settingsdir = $(datadir)/mdm/applications
+Settings_files = mdmphotosetup.desktop
+Settings_in_files = mdmphotosetup.desktop.in
 Settings_DATA = $(Settings_files)
-Systemdir = $(datadir)/gdm/applications
+Systemdir = $(datadir)/mdm/applications
 System_files = \
-	gdmsetup.desktop	\
-	gdmflexiserver.desktop	\
-	gdmflexiserver-xnest.desktop
+	mdmsetup.desktop	\
+	mdmflexiserver.desktop	\
+	mdmflexiserver-xnest.desktop
 
 System_in_files = \
-	gdmsetup.desktop.in.in			\
-	gdmflexiserver.desktop.in		\
-	gdmflexiserver-xnest.desktop.in.in
+	mdmsetup.desktop.in.in			\
+	mdmflexiserver.desktop.in		\
+	mdmflexiserver-xnest.desktop.in.in
 
 System_DATA = $(System_files)
-CLEANFILES = gdmsetup.desktop gdmsetup.desktop.in gdmflexiserver.desktop gdmflexiserver-xnest.desktop gdmflexiserver-xnest.desktop.in gdmphotosetup.desktop
-Gladedir = $(datadir)/gdm
-Glade_DATA = gdmsetup.glade gdmchooser.glade gdmphotosetup.glade
+CLEANFILES = mdmsetup.desktop mdmsetup.desktop.in mdmflexiserver.desktop mdmflexiserver-xnest.desktop mdmflexiserver-xnest.desktop.in mdmphotosetup.desktop
+Gladedir = $(datadir)/mdm
+Glade_DATA = mdmsetup.glade mdmchooser.glade mdmphotosetup.glade
 EXTRA_DIST = \
 	$(Glade_DATA)		\
 	$(System_DATA)		\
@@ -706,23 +706,23 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-gdmflexiserver-xnest.desktop.in: $(top_builddir)/config.status $(srcdir)/gdmflexiserver-xnest.desktop.in.in
+mdmflexiserver-xnest.desktop.in: $(top_builddir)/config.status $(srcdir)/mdmflexiserver-xnest.desktop.in.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libgdmcommon.a: $(libgdmcommon_a_OBJECTS) $(libgdmcommon_a_DEPENDENCIES) 
-	-rm -f libgdmcommon.a
-	$(libgdmcommon_a_AR) libgdmcommon.a $(libgdmcommon_a_OBJECTS) $(libgdmcommon_a_LIBADD)
-	$(RANLIB) libgdmcommon.a
-libgdmgreeter.a: $(libgdmgreeter_a_OBJECTS) $(libgdmgreeter_a_DEPENDENCIES) 
-	-rm -f libgdmgreeter.a
-	$(libgdmgreeter_a_AR) libgdmgreeter.a $(libgdmgreeter_a_OBJECTS) $(libgdmgreeter_a_LIBADD)
-	$(RANLIB) libgdmgreeter.a
-libgdmwm.a: $(libgdmwm_a_OBJECTS) $(libgdmwm_a_DEPENDENCIES) 
-	-rm -f libgdmwm.a
-	$(libgdmwm_a_AR) libgdmwm.a $(libgdmwm_a_OBJECTS) $(libgdmwm_a_LIBADD)
-	$(RANLIB) libgdmwm.a
+libmdmcommon.a: $(libmdmcommon_a_OBJECTS) $(libmdmcommon_a_DEPENDENCIES) 
+	-rm -f libmdmcommon.a
+	$(libmdmcommon_a_AR) libmdmcommon.a $(libmdmcommon_a_OBJECTS) $(libmdmcommon_a_LIBADD)
+	$(RANLIB) libmdmcommon.a
+libmdmgreeter.a: $(libmdmgreeter_a_OBJECTS) $(libmdmgreeter_a_DEPENDENCIES) 
+	-rm -f libmdmgreeter.a
+	$(libmdmgreeter_a_AR) libmdmgreeter.a $(libmdmgreeter_a_OBJECTS) $(libmdmgreeter_a_LIBADD)
+	$(RANLIB) libmdmgreeter.a
+libmdmwm.a: $(libmdmwm_a_OBJECTS) $(libmdmwm_a_DEPENDENCIES) 
+	-rm -f libmdmwm.a
+	$(libmdmwm_a_AR) libmdmwm.a $(libmdmwm_a_OBJECTS) $(libmdmwm_a_LIBADD)
+	$(RANLIB) libmdmwm.a
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
 	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
@@ -807,27 +807,27 @@ clean-sbinPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-gdmXnestchooser$(EXEEXT): $(gdmXnestchooser_OBJECTS) $(gdmXnestchooser_DEPENDENCIES) 
-	@rm -f gdmXnestchooser$(EXEEXT)
-	$(LINK) $(gdmXnestchooser_OBJECTS) $(gdmXnestchooser_LDADD) $(LIBS)
-gdmchooser$(EXEEXT): $(gdmchooser_OBJECTS) $(gdmchooser_DEPENDENCIES) 
-	@rm -f gdmchooser$(EXEEXT)
-	$(gdmchooser_LINK) $(gdmchooser_OBJECTS) $(gdmchooser_LDADD) $(LIBS)
-gdmdynamic$(EXEEXT): $(gdmdynamic_OBJECTS) $(gdmdynamic_DEPENDENCIES) 
-	@rm -f gdmdynamic$(EXEEXT)
-	$(LINK) $(gdmdynamic_OBJECTS) $(gdmdynamic_LDADD) $(LIBS)
-gdmflexiserver$(EXEEXT): $(gdmflexiserver_OBJECTS) $(gdmflexiserver_DEPENDENCIES) 
-	@rm -f gdmflexiserver$(EXEEXT)
-	$(LINK) $(gdmflexiserver_OBJECTS) $(gdmflexiserver_LDADD) $(LIBS)
-gdmlogin$(EXEEXT): $(gdmlogin_OBJECTS) $(gdmlogin_DEPENDENCIES) 
-	@rm -f gdmlogin$(EXEEXT)
-	$(LINK) $(gdmlogin_OBJECTS) $(gdmlogin_LDADD) $(LIBS)
-gdmphotosetup$(EXEEXT): $(gdmphotosetup_OBJECTS) $(gdmphotosetup_DEPENDENCIES) 
-	@rm -f gdmphotosetup$(EXEEXT)
-	$(LINK) $(gdmphotosetup_OBJECTS) $(gdmphotosetup_LDADD) $(LIBS)
-gdmsetup$(EXEEXT): $(gdmsetup_OBJECTS) $(gdmsetup_DEPENDENCIES) 
-	@rm -f gdmsetup$(EXEEXT)
-	$(gdmsetup_LINK) $(gdmsetup_OBJECTS) $(gdmsetup_LDADD) $(LIBS)
+mdmXnestchooser$(EXEEXT): $(mdmXnestchooser_OBJECTS) $(mdmXnestchooser_DEPENDENCIES) 
+	@rm -f mdmXnestchooser$(EXEEXT)
+	$(LINK) $(mdmXnestchooser_OBJECTS) $(mdmXnestchooser_LDADD) $(LIBS)
+mdmchooser$(EXEEXT): $(mdmchooser_OBJECTS) $(mdmchooser_DEPENDENCIES) 
+	@rm -f mdmchooser$(EXEEXT)
+	$(mdmchooser_LINK) $(mdmchooser_OBJECTS) $(mdmchooser_LDADD) $(LIBS)
+mdmdynamic$(EXEEXT): $(mdmdynamic_OBJECTS) $(mdmdynamic_DEPENDENCIES) 
+	@rm -f mdmdynamic$(EXEEXT)
+	$(LINK) $(mdmdynamic_OBJECTS) $(mdmdynamic_LDADD) $(LIBS)
+mdmflexiserver$(EXEEXT): $(mdmflexiserver_OBJECTS) $(mdmflexiserver_DEPENDENCIES) 
+	@rm -f mdmflexiserver$(EXEEXT)
+	$(LINK) $(mdmflexiserver_OBJECTS) $(mdmflexiserver_LDADD) $(LIBS)
+mdmlogin$(EXEEXT): $(mdmlogin_OBJECTS) $(mdmlogin_DEPENDENCIES) 
+	@rm -f mdmlogin$(EXEEXT)
+	$(LINK) $(mdmlogin_OBJECTS) $(mdmlogin_LDADD) $(LIBS)
+mdmphotosetup$(EXEEXT): $(mdmphotosetup_OBJECTS) $(mdmphotosetup_DEPENDENCIES) 
+	@rm -f mdmphotosetup$(EXEEXT)
+	$(LINK) $(mdmphotosetup_OBJECTS) $(mdmphotosetup_LDADD) $(LIBS)
+mdmsetup$(EXEEXT): $(mdmsetup_OBJECTS) $(mdmsetup_DEPENDENCIES) 
+	@rm -f mdmsetup$(EXEEXT)
+	$(mdmsetup_LINK) $(mdmsetup_OBJECTS) $(mdmsetup_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -835,23 +835,23 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmXnestchooser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmchooser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmcomm.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmcommon.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmconfig.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmdynamic.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmflexiserver.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmgreeter.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmlanguages.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmlogin.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmphotosetup.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmsession.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmsetup-gdmsession.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmsetup-gdmsetup.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmsetup-gdmuser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmuser.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmwm.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmXnestchooser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmchooser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmcomm.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmcommon.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmconfig.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmdynamic.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmflexiserver.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmgreeter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmlanguages.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmlogin.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmphotosetup.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmsession.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmsetup-mdmsession.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmsetup-mdmsetup.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmsetup-mdmuser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmuser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmwm.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/misc.Po@am__quote@
 
 .c.o:
@@ -875,47 +875,47 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-gdmsetup-gdmsession.o: gdmsession.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -MT gdmsetup-gdmsession.o -MD -MP -MF $(DEPDIR)/gdmsetup-gdmsession.Tpo -c -o gdmsetup-gdmsession.o `test -f 'gdmsession.c' || echo '$(srcdir)/'`gdmsession.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/gdmsetup-gdmsession.Tpo $(DEPDIR)/gdmsetup-gdmsession.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gdmsession.c' object='gdmsetup-gdmsession.o' libtool=no @AMDEPBACKSLASH@
+mdmsetup-mdmsession.o: mdmsession.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -MT mdmsetup-mdmsession.o -MD -MP -MF $(DEPDIR)/mdmsetup-mdmsession.Tpo -c -o mdmsetup-mdmsession.o `test -f 'mdmsession.c' || echo '$(srcdir)/'`mdmsession.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/mdmsetup-mdmsession.Tpo $(DEPDIR)/mdmsetup-mdmsession.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mdmsession.c' object='mdmsetup-mdmsession.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -c -o gdmsetup-gdmsession.o `test -f 'gdmsession.c' || echo '$(srcdir)/'`gdmsession.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -c -o mdmsetup-mdmsession.o `test -f 'mdmsession.c' || echo '$(srcdir)/'`mdmsession.c
 
-gdmsetup-gdmsession.obj: gdmsession.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -MT gdmsetup-gdmsession.obj -MD -MP -MF $(DEPDIR)/gdmsetup-gdmsession.Tpo -c -o gdmsetup-gdmsession.obj `if test -f 'gdmsession.c'; then $(CYGPATH_W) 'gdmsession.c'; else $(CYGPATH_W) '$(srcdir)/gdmsession.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/gdmsetup-gdmsession.Tpo $(DEPDIR)/gdmsetup-gdmsession.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gdmsession.c' object='gdmsetup-gdmsession.obj' libtool=no @AMDEPBACKSLASH@
+mdmsetup-mdmsession.obj: mdmsession.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -MT mdmsetup-mdmsession.obj -MD -MP -MF $(DEPDIR)/mdmsetup-mdmsession.Tpo -c -o mdmsetup-mdmsession.obj `if test -f 'mdmsession.c'; then $(CYGPATH_W) 'mdmsession.c'; else $(CYGPATH_W) '$(srcdir)/mdmsession.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/mdmsetup-mdmsession.Tpo $(DEPDIR)/mdmsetup-mdmsession.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mdmsession.c' object='mdmsetup-mdmsession.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -c -o gdmsetup-gdmsession.obj `if test -f 'gdmsession.c'; then $(CYGPATH_W) 'gdmsession.c'; else $(CYGPATH_W) '$(srcdir)/gdmsession.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -c -o mdmsetup-mdmsession.obj `if test -f 'mdmsession.c'; then $(CYGPATH_W) 'mdmsession.c'; else $(CYGPATH_W) '$(srcdir)/mdmsession.c'; fi`
 
-gdmsetup-gdmuser.o: gdmuser.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -MT gdmsetup-gdmuser.o -MD -MP -MF $(DEPDIR)/gdmsetup-gdmuser.Tpo -c -o gdmsetup-gdmuser.o `test -f 'gdmuser.c' || echo '$(srcdir)/'`gdmuser.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/gdmsetup-gdmuser.Tpo $(DEPDIR)/gdmsetup-gdmuser.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gdmuser.c' object='gdmsetup-gdmuser.o' libtool=no @AMDEPBACKSLASH@
+mdmsetup-mdmuser.o: mdmuser.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -MT mdmsetup-mdmuser.o -MD -MP -MF $(DEPDIR)/mdmsetup-mdmuser.Tpo -c -o mdmsetup-mdmuser.o `test -f 'mdmuser.c' || echo '$(srcdir)/'`mdmuser.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/mdmsetup-mdmuser.Tpo $(DEPDIR)/mdmsetup-mdmuser.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mdmuser.c' object='mdmsetup-mdmuser.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -c -o gdmsetup-gdmuser.o `test -f 'gdmuser.c' || echo '$(srcdir)/'`gdmuser.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -c -o mdmsetup-mdmuser.o `test -f 'mdmuser.c' || echo '$(srcdir)/'`mdmuser.c
 
-gdmsetup-gdmuser.obj: gdmuser.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -MT gdmsetup-gdmuser.obj -MD -MP -MF $(DEPDIR)/gdmsetup-gdmuser.Tpo -c -o gdmsetup-gdmuser.obj `if test -f 'gdmuser.c'; then $(CYGPATH_W) 'gdmuser.c'; else $(CYGPATH_W) '$(srcdir)/gdmuser.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/gdmsetup-gdmuser.Tpo $(DEPDIR)/gdmsetup-gdmuser.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gdmuser.c' object='gdmsetup-gdmuser.obj' libtool=no @AMDEPBACKSLASH@
+mdmsetup-mdmuser.obj: mdmuser.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -MT mdmsetup-mdmuser.obj -MD -MP -MF $(DEPDIR)/mdmsetup-mdmuser.Tpo -c -o mdmsetup-mdmuser.obj `if test -f 'mdmuser.c'; then $(CYGPATH_W) 'mdmuser.c'; else $(CYGPATH_W) '$(srcdir)/mdmuser.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/mdmsetup-mdmuser.Tpo $(DEPDIR)/mdmsetup-mdmuser.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mdmuser.c' object='mdmsetup-mdmuser.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -c -o gdmsetup-gdmuser.obj `if test -f 'gdmuser.c'; then $(CYGPATH_W) 'gdmuser.c'; else $(CYGPATH_W) '$(srcdir)/gdmuser.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -c -o mdmsetup-mdmuser.obj `if test -f 'mdmuser.c'; then $(CYGPATH_W) 'mdmuser.c'; else $(CYGPATH_W) '$(srcdir)/mdmuser.c'; fi`
 
-gdmsetup-gdmsetup.o: gdmsetup.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -MT gdmsetup-gdmsetup.o -MD -MP -MF $(DEPDIR)/gdmsetup-gdmsetup.Tpo -c -o gdmsetup-gdmsetup.o `test -f 'gdmsetup.c' || echo '$(srcdir)/'`gdmsetup.c
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/gdmsetup-gdmsetup.Tpo $(DEPDIR)/gdmsetup-gdmsetup.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gdmsetup.c' object='gdmsetup-gdmsetup.o' libtool=no @AMDEPBACKSLASH@
+mdmsetup-mdmsetup.o: mdmsetup.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -MT mdmsetup-mdmsetup.o -MD -MP -MF $(DEPDIR)/mdmsetup-mdmsetup.Tpo -c -o mdmsetup-mdmsetup.o `test -f 'mdmsetup.c' || echo '$(srcdir)/'`mdmsetup.c
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/mdmsetup-mdmsetup.Tpo $(DEPDIR)/mdmsetup-mdmsetup.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mdmsetup.c' object='mdmsetup-mdmsetup.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -c -o gdmsetup-gdmsetup.o `test -f 'gdmsetup.c' || echo '$(srcdir)/'`gdmsetup.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -c -o mdmsetup-mdmsetup.o `test -f 'mdmsetup.c' || echo '$(srcdir)/'`mdmsetup.c
 
-gdmsetup-gdmsetup.obj: gdmsetup.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -MT gdmsetup-gdmsetup.obj -MD -MP -MF $(DEPDIR)/gdmsetup-gdmsetup.Tpo -c -o gdmsetup-gdmsetup.obj `if test -f 'gdmsetup.c'; then $(CYGPATH_W) 'gdmsetup.c'; else $(CYGPATH_W) '$(srcdir)/gdmsetup.c'; fi`
-@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/gdmsetup-gdmsetup.Tpo $(DEPDIR)/gdmsetup-gdmsetup.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gdmsetup.c' object='gdmsetup-gdmsetup.obj' libtool=no @AMDEPBACKSLASH@
+mdmsetup-mdmsetup.obj: mdmsetup.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -MT mdmsetup-mdmsetup.obj -MD -MP -MF $(DEPDIR)/mdmsetup-mdmsetup.Tpo -c -o mdmsetup-mdmsetup.obj `if test -f 'mdmsetup.c'; then $(CYGPATH_W) 'mdmsetup.c'; else $(CYGPATH_W) '$(srcdir)/mdmsetup.c'; fi`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/mdmsetup-mdmsetup.Tpo $(DEPDIR)/mdmsetup-mdmsetup.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mdmsetup.c' object='mdmsetup-mdmsetup.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gdmsetup_CFLAGS) $(CFLAGS) -c -o gdmsetup-gdmsetup.obj `if test -f 'gdmsetup.c'; then $(CYGPATH_W) 'gdmsetup.c'; else $(CYGPATH_W) '$(srcdir)/gdmsetup.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mdmsetup_CFLAGS) $(CFLAGS) -c -o mdmsetup-mdmsetup.obj `if test -f 'mdmsetup.c'; then $(CYGPATH_W) 'mdmsetup.c'; else $(CYGPATH_W) '$(srcdir)/mdmsetup.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1271,15 +1271,15 @@ uninstall-am: uninstall-GladeDATA uninstall-SettingsDATA \
 	uninstall-sbinPROGRAMS
 
 
-gdmsetup.desktop.in: $(srcdir)/gdmsetup.desktop.in.in
-	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/gdmsetup.desktop.in.in \
-		>gdmsetup.desktop.in
+mdmsetup.desktop.in: $(srcdir)/mdmsetup.desktop.in.in
+	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/mdmsetup.desktop.in.in \
+		>mdmsetup.desktop.in
 
 @INTLTOOL_DESKTOP_RULE@
 
 install-data-local:
-	-test -z "$(DESTDIR)$(bindir)/gdmXnest" || rm -f $(DESTDIR)$(bindir)/gdmXnest
-	$(LN_S) -f gdmXnestchooser $(DESTDIR)$(bindir)/gdmXnest
+	-test -z "$(DESTDIR)$(bindir)/mdmXnest" || rm -f $(DESTDIR)$(bindir)/mdmXnest
+	$(LN_S) -f mdmXnestchooser $(DESTDIR)$(bindir)/mdmXnest
 
 clean-local:
 	rm -f $(System_files) $(Settings_files)

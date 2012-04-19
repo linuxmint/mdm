@@ -1,11 +1,11 @@
 
-This file is just a place to note ideas about GDM that are maybe
+This file is just a place to note ideas about MDM that are maybe
 experimental or not significant enough to report a bug.  Refore
-to http://bugzilla.gnome.org in the "gdm" category for the real 
-TODO list for GDM.
+to http://bugzilla.gnome.org in the "mdm" category for the real 
+TODO list for MDM.
 
- + On Solaris GDM uses /etc/logindevperm (see README.install)
-   and it might be useful to simply make GDM's PreSession and
+ + On Solaris MDM uses /etc/logindevperm (see README.install)
+   and it might be useful to simply make MDM's PreSession and
    PostSession scripts process /etc/logindevperm directly and
    not call the library interface on Solaris.  
 
@@ -29,7 +29,7 @@ TODO list for GDM.
    mainloopishness and during pinging set up an alarm or some other
    polling thing that checks all the mainloops stuff.
   
- + Resource limits have been implemented into the GDM slaves, but
+ + Resource limits have been implemented into the MDM slaves, but
    perhaps more could be done.  Always keep eye out for leaks.
 
 Small TODO things:

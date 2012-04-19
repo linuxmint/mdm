@@ -6,15 +6,15 @@ if test "x$UNSAFE_TO_TRANSLATE" = "xyes" ; then
   unset LC_MESSAGES
 fi
 
-if test -x "$LIBEXECDIR/gdmtranslate" ; then
-  GDMTRANSLATE="$LIBEXECDIR/gdmtranslate"
+if test -x "$LIBEXECDIR/mdmtranslate" ; then
+  MDMTRANSLATE="$LIBEXECDIR/mdmtranslate"
 else
-  GDMTRANSLATE=
+  MDMTRANSLATE=
 fi
 
 gettextfunc () {
-  if test "x$GDMTRANSLATE" != "x" ; then
-    "$GDMTRANSLATE" "$1"
+  if test "x$MDMTRANSLATE" != "x" ; then
+    "$MDMTRANSLATE" "$1"
   else
     echo "$1"
   fi
@@ -22,7 +22,7 @@ gettextfunc () {
 
 OLD_IFS=$IFS
 
-gdmwhich () {
+mdmwhich () {
   COMMAND="$1"
   OUTPUT=
   IFS=:
@@ -38,19 +38,19 @@ gdmwhich () {
   echo "$OUTPUT"
 }
 
-MSG3=`gettextfunc "Failed to start the X server (your graphical interface).  It is likely that it is not set up correctly.  You will need to log in on a console and reconfigure the X server.  Then restart GDM."`
+MSG3=`gettextfunc "Failed to start the X server (your graphical interface).  It is likely that it is not set up correctly.  You will need to log in on a console and reconfigure the X server.  Then restart MDM."`
 MSG4=`gettextfunc "Would you like to try to configure the X server?  Note that you will need the root password for this."`
 MSG5=`gettextfunc "Please type in the root (privileged user) password."`
 MSG6=`gettextfunc "Trying to restart the X server."`
-MSG7=`gettextfunc "The X server is now disabled.  Restart GDM when it is configured correctly."`
+MSG7=`gettextfunc "The X server is now disabled.  Restart MDM when it is configured correctly."`
 MSG8=`gettextfunc "Failed to start the X server (your graphical interface).  It is likely that it is not set up correctly.  Would you like to view the X server output to diagnose the problem?"`
 MSG9=`gettextfunc "Would you like to view the detailed X server output as well?"`
 
 # there are some env vars defined:
 # XLOG = the log file for the X server
-# BINDIR = location of gdm binaries
-# SBINDIR = location of gdm system binaries
-# LIBEXECDIR = location of gdm libexec binaries (gdmaskpass, gdmopen)
+# BINDIR = location of mdm binaries
+# SBINDIR = location of mdm system binaries
+# LIBEXECDIR = location of mdm libexec binaries (mdmaskpass, mdmopen)
 
 # return values are
 # 0 = try again, runs this server again
@@ -81,14 +81,14 @@ for n in \
 done
 
 #
-# Now we check for dialog and gdmaskpass
+# Now we check for dialog and mdmaskpass
 #
-DIALOG=`gdmwhich dialog`
+DIALOG=`mdmwhich dialog`
 if test "x$DIALOG" = "x" ; then
-  DIALOG=`gdmwhich whiptail`
+  DIALOG=`mdmwhich whiptail`
 fi
-if test -x "$LIBEXECDIR/gdmaskpass" ; then
-  ASKPASS="$LIBEXECDIR/gdmaskpass"
+if test -x "$LIBEXECDIR/mdmaskpass" ; then
+  ASKPASS="$LIBEXECDIR/mdmaskpass"
 else
   ASKPASS=
 fi
@@ -115,10 +115,10 @@ if grep '^\(Cannot open mouse\|No core pointer\)' "$XLOG" 2> /dev/null ; then
 
 fi
 
-# we require 'gdmopen', to open a console, because we really dont
+# we require 'mdmopen', to open a console, because we really dont
 # have one.  Perhaps someone should try to figure out some shell
 # black magic to get this to work on other then linux systems
-if test ! -x "$LIBEXECDIR/gdmopen" ; then
+if test ! -x "$LIBEXECDIR/mdmopen" ; then
   exit 32
 fi
 
@@ -130,7 +130,7 @@ else
   # We do a lot of work wastefully over again, but oh well,
   # perhaps this needs fixing.
   #
-  "$LIBEXECDIR/gdmopen" -l /bin/sh -c "$0 -noopen $@"
+  "$LIBEXECDIR/mdmopen" -l /bin/sh -c "$0 -noopen $@"
   exit $?
 fi
 

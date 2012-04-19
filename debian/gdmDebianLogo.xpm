@@ -1,5 +1,5 @@
 /* XPM */
-static char * gdmDebianLogo_xpm[] = {
+static char * mdmDebianLogo_xpm[] = {
 "233 307 637 2",
 "  	c None",
 ". 	c #FFFFFF",

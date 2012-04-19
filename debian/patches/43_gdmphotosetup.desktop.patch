@@ -1,10 +1,10 @@
-Index: gdm-2.20.0/gui/gdmphotosetup.desktop.in
+Index: mdm-2.20.0/gui/mdmphotosetup.desktop.in
 ===================================================================
---- gdm-2.20.0.orig/gui/gdmphotosetup.desktop.in	2007-09-17 16:45:38.000000000 +0200
-+++ gdm-2.20.0/gui/gdmphotosetup.desktop.in	2007-10-06 16:21:17.190262944 +0200
+--- mdm-2.20.0.orig/gui/mdmphotosetup.desktop.in	2007-09-17 16:45:38.000000000 +0200
++++ mdm-2.20.0/gui/mdmphotosetup.desktop.in	2007-10-06 16:21:17.190262944 +0200
 @@ -7,6 +7,7 @@
- Exec=gdmphotosetup
- Icon=gdm-login-photo
+ Exec=mdmphotosetup
+ Icon=mdm-login-photo
  StartupNotify=true
 +NoDisplay=true
  Terminal=false

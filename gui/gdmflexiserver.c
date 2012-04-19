@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- *    GDMflexiserver - run a flexible server
+ *    MDMflexiserver - run a flexible server
  *    (c)2001 Queen of England
  *
  *    This program is free software; you can redistribute it and/or modify
@@ -39,15 +39,15 @@
 
 #include <X11/Xauth.h>
 
-#include "gdm.h"
-#include "gdmcomm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
+#include "mdm.h"
+#include "mdmcomm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-log.h"
-#include "gdm-socket-protocol.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-log.h"
+#include "mdm-socket-protocol.h"
+#include "mdm-daemon-config-keys.h"
 #include "server.h"
 
 static GSList *xservers          = NULL;
@@ -65,7 +65,7 @@ static gboolean startnew         = FALSE;
 static gchar **args_remaining    = NULL; 
 
 GOptionEntry options [] = {
-	{ "command", 'c', 0, G_OPTION_ARG_STRING, &send_command, N_("Send the specified protocol command to GDM"), N_("COMMAND") },
+	{ "command", 'c', 0, G_OPTION_ARG_STRING, &send_command, N_("Send the specified protocol command to MDM"), N_("COMMAND") },
 	{ "xnest", 'n', 0, G_OPTION_ARG_NONE, &use_xnest, N_("Xnest mode"), NULL },
 	{ "no-lock", 'l', 0, G_OPTION_ARG_NONE, &no_lock, N_("Do not lock current screen"), NULL },
 	{ "debug", 'd', 0, G_OPTION_ARG_NONE, &debug_in, N_("Debugging output"), NULL },
@@ -90,7 +90,7 @@ get_cur_vt (void)
 		return cur_vt;
 	}
 
-	ret = gdmcomm_call_gdm ("QUERY_VT", auth_cookie, "2.5.90.0", 5);
+	ret = mdmcomm_call_mdm ("QUERY_VT", auth_cookie, "2.5.90.0", 5);
 	if (ve_string_empty (ret) || strncmp (ret, "OK ", 3) != 0) {
 		goto out;
 	}
@@ -140,14 +140,14 @@ change_vt (int vt)
 	char *cmd;
 	char *ret;
 
-	cmd = g_strdup_printf (GDM_SUP_SET_VT " %d", vt);
-	ret = gdmcomm_call_gdm (cmd, auth_cookie, "2.5.90.0", 5);
+	cmd = g_strdup_printf (MDM_SUP_SET_VT " %d", vt);
+	ret = mdmcomm_call_mdm (cmd, auth_cookie, "2.5.90.0", 5);
 	g_free (cmd);
 
 	if (ve_string_empty (ret) ||
 	    strcmp (ret, "OK") != 0) {
 		GtkWidget *dialog;
-		const char *message = gdmcomm_get_error_message (ret, use_xnest);
+		const char *message = mdmcomm_get_error_message (ret, use_xnest);
 
 		dialog = hig_dialog_new (NULL /* parent */,
 					 GTK_DIALOG_MODAL /* flags */,
@@ -176,7 +176,7 @@ get_vt_num (char **vec, char *vtpart, int depth)
 	for (i = 0; vec[i] != NULL; i++) {
 		char **rvec;
 		rvec = g_strsplit (vec[i], ",", -1);
-		if (gdm_vector_len (rvec) != 3) {
+		if (mdm_vector_len (rvec) != 3) {
 			g_strfreev (rvec);
 			continue;
 		}
@@ -218,14 +218,14 @@ create_model (char **vec)
 		char **rvec;
 		int vt;
 		rvec = g_strsplit (vec[i], ",", -1);
-		if (gdm_vector_len (rvec) != 3) {
+		if (mdm_vector_len (rvec) != 3) {
 			g_strfreev (rvec);
 			continue;
 		}
 
 		vt = get_vt_num (vec, rvec[2], 5);
 
-		if (strcmp (rvec[0], gdmcomm_get_display ()) != 0 &&
+		if (strcmp (rvec[0], mdmcomm_get_display ()) != 0 &&
 		    vt >= 0) {
 			char *user;
 			char *disp;
@@ -537,7 +537,7 @@ check_for_users (void)
 	    get_cur_vt () < 0)
 		return;
 
-	ret = gdmcomm_call_gdm ("CONSOLE_SERVERS", auth_cookie, "2.2.4.0", 5);
+	ret = mdmcomm_call_mdm ("CONSOLE_SERVERS", auth_cookie, "2.2.4.0", 5);
 	if (ve_string_empty (ret) ||
 	    strncmp (ret, "OK ", 3) != 0) {
 		g_free (ret);
@@ -555,14 +555,14 @@ check_for_users (void)
 		char **rvec;
 		int vt;
 		rvec = g_strsplit (vec[i], ",", -1);
-		if (gdm_vector_len (rvec) != 3) {
+		if (mdm_vector_len (rvec) != 3) {
 			g_strfreev (rvec);
 			continue;
 		}
 
 		vt = get_vt_num (vec, rvec[2], 5);
 
-		if (strcmp (rvec[0], gdmcomm_get_display ()) != 0 &&
+		if (strcmp (rvec[0], mdmcomm_get_display ()) != 0 &&
 		    vt >= 0) {
 			/* this is not the current display */
 			extra++;
@@ -586,12 +586,12 @@ read_servers (void)
 {
 	GSList *li;
 
-        xservers = gdm_config_get_xservers (TRUE);
+        xservers = mdm_config_get_xservers (TRUE);
 
 	for (li = xservers; li != NULL; li = li->next) {
-		GdmXserver *svr = li->data;
+		MdmXserver *svr = li->data;
 
-		if (strcmp (svr->id, GDM_STANDARD) == 0)
+		if (strcmp (svr->id, MDM_STANDARD) == 0)
 			got_standard = TRUE;
 
 		if (server != NULL &&
@@ -616,7 +616,7 @@ choose_server (void)
 
 	if (xservers->next == NULL &&
 	    got_standard)
-		return g_strdup (GDM_STANDARD);
+		return g_strdup (MDM_STANDARD);
 
 	dialog = gtk_dialog_new_with_buttons (_("Choose server"),
 					      NULL /* parent */,
@@ -642,12 +642,12 @@ choose_server (void)
 	}
 
 	for (li = xservers; li != NULL; li = li->next) {
-		GdmXserver *svr = li->data;
+		MdmXserver *svr = li->data;
 		w = gtk_radio_button_new_with_label
 			(group, svr->name ? svr->name : svr->id);
 		gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 		if (got_standard &&
-		    strcmp (svr->id, GDM_STANDARD) == 0)
+		    strcmp (svr->id, MDM_STANDARD) == 0)
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w),
 						      TRUE);
 		g_object_set_data (G_OBJECT (w), "ServerID", svr->id);
@@ -685,7 +685,7 @@ choose_server (void)
 /**
  * is_key
  *
- * Since GDM keys sometimes have default values defined in the gdm.h header
+ * Since MDM keys sometimes have default values defined in the mdm.h header
  * file (e.g. key=value), this function strips off the "=value" from both
  * keys passed in to do a comparison.
  */
@@ -751,7 +751,7 @@ main (int argc, char *argv[])
 	textdomain (GETTEXT_PACKAGE);
 
 	/* Option parsing */
-	ctx = g_option_context_new ("- New gdm login");
+	ctx = g_option_context_new ("- New mdm login");
 	g_option_context_add_main_entries (ctx, options, _("main options"));
 	g_option_context_parse (ctx, &argc, &argv, NULL);
 	g_option_context_free (ctx);
@@ -761,16 +761,16 @@ main (int argc, char *argv[])
 		return 0;
 	}
 
-	gdm_log_init ();
-	gdm_log_set_debug (debug_in);
+	mdm_log_init ();
+	mdm_log_set_debug (debug_in);
 
 	if (args_remaining != NULL && args_remaining[0] != NULL)
 		server = args_remaining[0];
 
 	if (send_command != NULL) {
-		if ( ! gdmcomm_check (FALSE)) {
-			gdm_common_error (_("Error: GDM (GNOME Display Manager) is not running."));
-			gdm_common_error (_("You might be using a different display manager."));
+		if ( ! mdmcomm_check (FALSE)) {
+			mdm_common_error (_("Error: MDM (GNOME Display Manager) is not running."));
+			mdm_common_error (_("You might be using a different display manager."));
 			return 1;
 		}
 	} else {
@@ -783,13 +783,13 @@ main (int argc, char *argv[])
 		 */
 		gtk_init (&argc, &argv);
 
-		if ( ! gdmcomm_check (TRUE)) {
+		if ( ! mdmcomm_check (TRUE)) {
 			return 1;
 		}
 	}
 
 	/* Start reading config data in bulk */
-	gdmcomm_comm_bulk_start ();
+	mdmcomm_comm_bulk_start ();
 
 	/* Process --command option */
 
@@ -800,21 +800,21 @@ main (int argc, char *argv[])
 		/* gdk_init is needed for cookie code to get display */
 		gdk_init (&argc, &argv);
 		if (authenticate)
-			auth_cookie = gdmcomm_get_auth_cookie ();
+			auth_cookie = mdmcomm_get_auth_cookie ();
 
 		/*
 		 * If asking for a translatable config value, then try to get
 		 * the translated value first.  If this fails, then go ahead
 		 * and call the normal sockets command.
 		 */
-		if (strncmp (send_command, GDM_SUP_GET_CONFIG " ",
-		    strlen (GDM_SUP_GET_CONFIG " ")) == 0) {
+		if (strncmp (send_command, MDM_SUP_GET_CONFIG " ",
+		    strlen (MDM_SUP_GET_CONFIG " ")) == 0) {
 			gchar *value = NULL;
-			const char *key = &send_command[strlen (GDM_SUP_GET_CONFIG " ")];
+			const char *key = &send_command[strlen (MDM_SUP_GET_CONFIG " ")];
 
-			if (is_key (GDM_KEY_WELCOME, key) ||
-			    is_key (GDM_KEY_REMOTE_WELCOME, key)) {
-				value = gdm_config_get_translated_string ((gchar *)key);
+			if (is_key (MDM_KEY_WELCOME, key) ||
+			    is_key (MDM_KEY_REMOTE_WELCOME, key)) {
+				value = mdm_config_get_translated_string ((gchar *)key);
 				if (value != NULL) {
 					ret = g_strdup_printf ("OK %s", value);
 				}
@@ -822,18 +822,18 @@ main (int argc, char *argv[])
 
 			/*
 			 * If the above didn't return a value, then must be a
-			 * different key, so call gdmcomm_call_gdm.
+			 * different key, so call mdmcomm_call_mdm.
 			 */
 			if (value == NULL)
-				ret = gdmcomm_call_gdm (send_command, auth_cookie,
+				ret = mdmcomm_call_mdm (send_command, auth_cookie,
 							"2.2.4.0", 5);
 		} else {
-			ret = gdmcomm_call_gdm (send_command, auth_cookie,
+			ret = mdmcomm_call_mdm (send_command, auth_cookie,
 						"2.2.4.0", 5);
 		}
 
 		/* At this point we are done using the socket, so close it */
-		gdmcomm_comm_bulk_stop ();
+		mdmcomm_comm_bulk_stop ();
 
 		if (ret != NULL) {
 			g_print ("%s\n", ret);
@@ -843,10 +843,10 @@ main (int argc, char *argv[])
 						 GTK_DIALOG_MODAL /* flags */,
 						 GTK_MESSAGE_ERROR,
 						 GTK_BUTTONS_OK,
-						 _("Cannot communicate with GDM "
+						 _("Cannot communicate with MDM "
 						   "(The GNOME Display Manager)"),
 						 _("Perhaps you have an old version "
-						   "of GDM running."));
+						   "of MDM running."));
 			gtk_widget_show_all (dialog);
 			gtk_dialog_run (GTK_DIALOG (dialog));
 			gtk_widget_destroy (dialog);
@@ -855,7 +855,7 @@ main (int argc, char *argv[])
 	}
 
 	/*
-	 * Now process what gdmflexiserver is more frequently used to
+	 * Now process what mdmflexiserver is more frequently used to
 	 * do, start VT (Virtual Terminal) sesions - at least on
 	 * systems where it is supported.  On systems where it is not
 	 * supporteed VT stands for "Very Tight" and will mess up your
@@ -871,15 +871,15 @@ main (int argc, char *argv[])
 	 * Always attempt to get cookie and authenticate.  On remote
 	 * servers
 	 */
-	auth_cookie = gdmcomm_get_auth_cookie ();
+	auth_cookie = mdmcomm_get_auth_cookie ();
 
 	if (use_xnest) {
-		char *cookie = gdmcomm_get_a_cookie (FALSE /* binary */);
+		char *cookie = mdmcomm_get_a_cookie (FALSE /* binary */);
 
 		if (cookie == NULL) {
 
 			/* At this point we are done using the socket, so close it */
-			gdmcomm_comm_bulk_stop ();
+			mdmcomm_comm_bulk_stop ();
 
 			dialog = hig_dialog_new (NULL /* parent */,
 						 GTK_DIALOG_MODAL /* flags */,
@@ -895,8 +895,8 @@ main (int argc, char *argv[])
 			gtk_widget_destroy (dialog);
 			return 1;
 		}
-		command = g_strdup_printf (GDM_SUP_FLEXI_XNEST " %s %d %s %s",
-					   gdmcomm_get_display (),
+		command = g_strdup_printf (MDM_SUP_FLEXI_XNEST " %s %d %s %s",
+					   mdmcomm_get_display (),
 					   (int)getuid (),
 					   cookie,
 					   XauFileName ());
@@ -911,7 +911,7 @@ main (int argc, char *argv[])
 		if (auth_cookie == NULL) {
 
 			/* At this point we are done using the socket, so close it */
-			gdmcomm_comm_bulk_stop ();
+			mdmcomm_comm_bulk_stop ();
 
 			dialog = hig_dialog_new (NULL /* parent */,
 						 GTK_DIALOG_MODAL /* flags */,
@@ -932,20 +932,20 @@ main (int argc, char *argv[])
 		read_servers ();
 		server = choose_server ();
 		if (server == NULL)
-			command = g_strdup (GDM_SUP_FLEXI_XSERVER);
+			command = g_strdup (MDM_SUP_FLEXI_XSERVER);
 		else
-			command = g_strdup_printf (GDM_SUP_FLEXI_XSERVER " %s",
+			command = g_strdup_printf (MDM_SUP_FLEXI_XSERVER " %s",
 						   server);
 		version = "2.2.4.0";
 	}
 
-	ret = gdmcomm_call_gdm (command, auth_cookie, version, 5);
+	ret = mdmcomm_call_mdm (command, auth_cookie, version, 5);
 	g_free (command);
 	g_free (auth_cookie);
 	g_strfreev (args_remaining);
 
 	/* At this point we are done using the socket, so close it */
-	gdmcomm_comm_bulk_stop ();
+	mdmcomm_comm_bulk_stop ();
 
 	if (ret != NULL &&
 	    strncmp (ret, "OK ", 3) == 0) {
@@ -961,7 +961,7 @@ main (int argc, char *argv[])
 		return 0;
 	}
 
-	message = gdmcomm_get_error_message (ret, use_xnest);
+	message = mdmcomm_get_error_message (ret, use_xnest);
 
 	dialog = hig_dialog_new (NULL /* parent */,
 				 GTK_DIALOG_MODAL /* flags */,
@@ -995,7 +995,7 @@ torture (void)
 		return;
 	}
 
-	strcpy (addr.sun_path, "/tmp/.gdm_socket");
+	strcpy (addr.sun_path, "/tmp/.mdm_socket");
 	addr.sun_family = AF_UNIX;
 
 	if (connect (fd, &addr, sizeof (addr)) < 0) {

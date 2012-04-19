@@ -1,12 +1,12 @@
-# Zulu translation of gdm2.
+# Zulu translation of mdm2.
 # Copyright (C) 2004 Zuza Software Foundation (Translate.org.za)
-# This file is distributed under the same license as the gdm2 package.
+# This file is distributed under the same license as the mdm2 package.
 #
 # Zuza Software Foundation <info@translate.org.za>, 2004
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gdm2 HEAD\n"
+"Project-Id-Version: mdm2 HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-09 13:30+0200\n"
 "PO-Revision-Date: 2004-12-09 12:23+0200\n"
@@ -38,11 +38,11 @@ msgstr "Lokho inhlangano yohlelo enephutha"
 msgid ""
 "I cannot start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly.  You will need to log in on a console and rerun "
-"the X configuration program.  Then restart GDM."
+"the X configuration program.  Then restart MDM."
 msgstr ""
 "Angikhoni ukuqala isisebenzisi X (isiboniso esisenhlanganisweni). Udinga "
 "ukungena kwisizimaziso bese uqale uhlelo lwesimo esilinganisiwe X. Bese "
-"uqale iGDM."
+"uqale iMDM."
 
 #: config/gettextfoo.h:4
 msgid ""
@@ -62,10 +62,10 @@ msgstr "Ngizozama ukuqala isisebenzisi uX futhi."
 
 #: config/gettextfoo.h:7
 msgid ""
-"I will disable this X server for now.  Restart GDM when it is configured "
+"I will disable this X server for now.  Restart MDM when it is configured "
 "correctly."
 msgstr ""
-"Ngizokhenenda isisebenzisi uX okwamanje. Uqala iGDM uma isilinganiswe kahle."
+"Ngizokhenenda isisebenzisi uX okwamanje. Uqala iMDM uma isilinganiswe kahle."
 
 #: config/gettextfoo.h:8
 msgid ""
@@ -143,10 +143,10 @@ msgstr ""
 #: daemon/auth.c:74
 #, c-format
 msgid ""
-"GDM could not write a new authorization entry to disk.  Possibly out of "
+"MDM could not write a new authorization entry to disk.  Possibly out of "
 "diskspace.%s%s"
 msgstr ""
-"I-GDM ayikhoni ukubhala isivumelwano mngenisi esisha ecwecweni. Kungenzeka "
+"I-MDM ayikhoni ukubhala isivumelwano mngenisi esisha ecwecweni. Kungenzeka "
 "ayikho esikhaleni secwecwe.%s%s"
 
 #: daemon/auth.c:204
@@ -180,7 +180,7 @@ msgstr "%s: Ikhekhi alibhaleki"
 msgid "%s: Ignoring suspiciously looking cookie file %s"
 msgstr "%s: Nganaki ikhekhi lohele osolekayo %s"
 
-#: daemon/auth.c:898 daemon/gdm.c:2018 daemon/gdm.c:2374
+#: daemon/auth.c:898 daemon/mdm.c:2018 daemon/mdm.c:2374
 #, c-format
 msgid "Can't write to %s: %s"
 msgstr "Ngakhoni ukubhala ku %s: %s"
@@ -190,9 +190,9 @@ msgstr "Ngakhoni ukubhala ku %s: %s"
 #. * cought that elsewhere.  Things are just
 #. * not working out, so tell the user.
 #. * However this may have been caused by a malicious local user
-#. * zapping the display repeatedly, that shouldn't cause gdm
+#. * zapping the display repeatedly, that shouldn't cause mdm
 #. * to stop working completely so just wait for 2 minutes,
-#. * that should give people ample time to stop gdm if needed,
+#. * that should give people ample time to stop mdm if needed,
 #. * or just wait for the stupid malicious user to get bored
 #. * and go away
 #: daemon/display.c:114
@@ -213,8 +213,8 @@ msgstr "%s: Ngakhoni ukwenza umbhavuma"
 
 #: daemon/display.c:336
 #, c-format
-msgid "%s: Failed forking gdm slave process for %s"
-msgstr "%s: Ngehlulekile ukubhudla inkambiso yesigqila se-gdm %s"
+msgid "%s: Failed forking mdm slave process for %s"
+msgstr "%s: Ngehlulekile ukubhudla inkambiso yesigqila se-mdm %s"
 
 #: daemon/errorgui.c:356
 #, c-format
@@ -280,131 +280,131 @@ msgstr "%s: %s ibhaleka ngeqoqo/ngokunye."
 msgid "%s: %s is bigger than sysadmin specified maximum file size."
 msgstr "%s: %s enkule kunohlelo mlawuli ocaciswe ihele eligcwele."
 
-#: daemon/gdm-net.c:271
+#: daemon/mdm-net.c:271
 #, c-format
 msgid "%s: Could not make socket"
 msgstr "%s: Ngakhoni ukwenza isikhoxe"
 
-#: daemon/gdm-net.c:302
+#: daemon/mdm-net.c:302
 #, c-format
 msgid "%s: Could not bind socket"
 msgstr "%s: Ngakhoni ukubopha isikhoxe"
 
-#: daemon/gdm-net.c:388
+#: daemon/mdm-net.c:388
 #, c-format
 msgid "%s: Could not make FIFO"
 msgstr "%s: ngakhoni ukukwenza iFIFO"
 
-#: daemon/gdm-net.c:396
+#: daemon/mdm-net.c:396
 #, c-format
 msgid "%s: Could not open FIFO"
 msgstr "%s : ngakhoni ukuvula uFIFO"
 
-#: daemon/gdm.c:264
+#: daemon/mdm.c:264
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this "
-"does not exist. Please correct gdm configuration %s and restart gdm."
+"does not exist. Please correct mdm configuration %s and restart mdm."
 msgstr ""
 "Isisebenzisi sesivumelo sikhombisi (daemon/ServAuthDir) ihlelwe ku %s kodwa "
-"ayikho. Lungisa isilinganiso segdm %s bese uqala i-gdm futhi."
+"ayikho. Lungisa isilinganiso semdm %s bese uqala i-mdm futhi."
 
-#: daemon/gdm.c:273
+#: daemon/mdm.c:273
 #, c-format
 msgid "%s: Authdir %s does not exist. Aborting."
 msgstr "%s: Authdir %s asikho. Ngiyaphunza."
 
-#: daemon/gdm.c:278
+#: daemon/mdm.c:278
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this is "
-"not a directory. Please correct gdm configuration %s and restart gdm."
+"not a directory. Please correct mdm configuration %s and restart mdm."
 msgstr ""
 "Isisebenzisi sesivumelo sikhombisi (daemon/ServAuthDir) ihlelwe ku %s kodwa "
-"akusiyisikhombisi. Lungisa isilinganiso segdm %s bese uqala i-gdm futhi."
+"akusiyisikhombisi. Lungisa isilinganiso semdm %s bese uqala i-mdm futhi."
 
-#: daemon/gdm.c:287
+#: daemon/mdm.c:287
 #, c-format
 msgid "%s: Authdir %s is not a directory. Aborting."
 msgstr "%s: Authdir akusiyi sivumelo nkomba %s. Ngiyaphunza."
 
-#: daemon/gdm.c:300
+#: daemon/mdm.c:300
 #, c-format
 msgid ""
 "%s: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s."
 msgstr "%s: Logdir %s asikho noma akusiyikhombisi. Usebenzise ServAuthDir %s."
 
-#: daemon/gdm.c:329 gui/gdmlogin.c:650 gui/greeter/greeter.c:105
+#: daemon/mdm.c:329 gui/mdmlogin.c:650 gui/greeter/greeter.c:105
 #, c-format
 msgid "%s: No configuration file: %s. Using defaults."
 msgstr "%s. Akuna hele wesilinganisi: %s. Sebenzisa amaphutha."
 
-#: daemon/gdm.c:380
+#: daemon/mdm.c:380
 #, c-format
-msgid "%s: BaseXsession empty, using %s/gdm/Xsession"
+msgid "%s: BaseXsession empty, using %s/mdm/Xsession"
 msgstr ""
-"%s: isiseko senhlanganiso ka-X ayinalutho, sebenzisa %s/gdm/ yenhlanganiso "
+"%s: isiseko senhlanganiso ka-X ayinalutho, sebenzisa %s/mdm/ yenhlanganiso "
 "ka-X"
 
-#: daemon/gdm.c:424
+#: daemon/mdm.c:424
 #, c-format
 msgid "%s: Standard X server not found, trying alternatives"
 msgstr "%s: Isisebenzi esivamile-X asitholakala, zama ababambeli"
 
-#: daemon/gdm.c:456
+#: daemon/mdm.c:456
 #, c-format
 msgid "%s: XDMCP was enabled while there is no XDMCP support, turning it off"
 msgstr "%s: iXDMCP isetshenziswe kungena msizi weXDMCP, icishe"
 
-#: daemon/gdm.c:469
+#: daemon/mdm.c:469
 #, c-format
 msgid "%s: Root cannot be autologged in, turing off automatic login"
 msgstr ""
 "%s: Impande ingengeniswe ngokuzenzakalela, cisha umngeniso ozenzakalelayo"
 
-#: daemon/gdm.c:482
+#: daemon/mdm.c:482
 #, c-format
 msgid "%s: Root cannot be autologged in, turing off timed login"
 msgstr "%s: Impande ingengeniswe ngokuzenzakalela, cisha umngenisi ocushiwe"
 
-#: daemon/gdm.c:488
+#: daemon/mdm.c:488
 #, c-format
 msgid "%s: TimedLoginDelay less than 5, so I will just use 5."
 msgstr ""
 "%s: Umngenisi mbambizeli ocushiwe ngaphansi kwesihlanu, ngizosebenzisa "
 "isihlanu."
 
-#: daemon/gdm.c:498
+#: daemon/mdm.c:498
 #, c-format
 msgid "%s: No greeter specified."
 msgstr "%s: Akunasithakazeli esiphawuliwe."
 
-#: daemon/gdm.c:501
+#: daemon/mdm.c:501
 #, c-format
 msgid "%s: No remote greeter specified."
 msgstr "%s: Akunasithakazeli esiphawuliwe esibuqamama."
 
-#: daemon/gdm.c:505
+#: daemon/mdm.c:505
 #, c-format
 msgid "%s: No sessions directory specified."
 msgstr "%s: Akunanhlanganiso sikhombi ephawuliwe."
 
-#: daemon/gdm.c:530
+#: daemon/mdm.c:530
 #, c-format
 msgid "%s: Empty server command, using standard one."
 msgstr "%s: Umlayelo wesisebenzisi ongenalutho, sebenzisa ojwayelekile."
 
-#: daemon/gdm.c:573
+#: daemon/mdm.c:573
 #, c-format
 msgid "%s: Display number %d in use!  I will use %d"
 msgstr "%s: Bonisa inani lika %d elisetshenziswayo! Ngizosebenzisa %d"
 
-#: daemon/gdm.c:592
+#: daemon/mdm.c:592
 #, c-format
 msgid "%s: Invalid server line in config file. Ignoring!"
 msgstr "%s: Intambo yesisebenzi ongumyeme kuhele wesilinganiso. Nganaki!"
 
-#: daemon/gdm.c:603 daemon/gdm.c:644
+#: daemon/mdm.c:603 daemon/mdm.c:644
 #, c-format
 msgid "%s: XDMCP disabled and no local servers defined. Aborting!"
 msgstr ""
@@ -412,7 +412,7 @@ msgstr ""
 
 #. start
 #. server uid
-#: daemon/gdm.c:621
+#: daemon/mdm.c:621
 #, c-format
 msgid ""
 "%s: XDMCP disabled and no local servers defined. Adding %s on :%d to allow "
@@ -421,123 +421,123 @@ msgstr ""
 "%s: XDMCP ayisebenzi futhi izisebenzi zakulendawo azicacisiwe: Thayisela %"
 "s : %d izovumela isilinganisi."
 
-#: daemon/gdm.c:636
+#: daemon/mdm.c:636
 #, c-format
 msgid ""
-"XDMCP is disabled and gdm cannot find any local server to start.  Aborting!  "
-"Please correct the configuration %s and restart gdm."
+"XDMCP is disabled and mdm cannot find any local server to start.  Aborting!  "
+"Please correct the configuration %s and restart mdm."
 msgstr ""
-"i-XDMCP ayisebenzi kanti negdm ayitholi izisebenzisi zasendaweni ukuze "
-"iqala. Ngayaphunza! Lungisa isilinganisi %s bese uqala i-gdm."
+"i-XDMCP ayisebenzi kanti nemdm ayitholi izisebenzisi zasendaweni ukuze "
+"iqala. Ngayaphunza! Lungisa isilinganisi %s bese uqala i-mdm."
 
-#: daemon/gdm.c:658
+#: daemon/mdm.c:658
 #, c-format
 msgid ""
-"The gdm user does not exist. Please correct gdm configuration %s and restart "
-"gdm."
-msgstr "Umsebenzisi wegdm akekho. Lungisa isilinganisi %s bese uqala igdm."
+"The mdm user does not exist. Please correct mdm configuration %s and restart "
+"mdm."
+msgstr "Umsebenzisi wemdm akekho. Lungisa isilinganisi %s bese uqala imdm."
 
-#: daemon/gdm.c:665
+#: daemon/mdm.c:665
 #, c-format
-msgid "%s: Can't find the gdm user (%s). Aborting!"
-msgstr "%s: angitholi umsenzisi wegdm (%s). Ngiyaphunza!"
+msgid "%s: Can't find the mdm user (%s). Aborting!"
+msgstr "%s: angitholi umsenzisi wemdm (%s). Ngiyaphunza!"
 
-#: daemon/gdm.c:672
-#, c-format
-msgid ""
-"The gdm user is set to be root, but this is not allowed since it can pose a "
-"security risk.  Please correct gdm configuration %s and restart gdm."
-msgstr ""
-"Umsebenzisi we-gdm uhlelwe waba impande, lokhu akuvumelekile kungaba "
-"nobungozi kwezokuphepha. Lungisa isilinganisi segdm %s bese uqala i-gdm."
-
-#: daemon/gdm.c:680
-#, c-format
-msgid "%s: The gdm user should not be root. Aborting!"
-msgstr "%s: Umsebenzisi wegdm akufanele abe impande. Ngiyaphunza!"
-
-#: daemon/gdm.c:687
+#: daemon/mdm.c:672
 #, c-format
 msgid ""
-"The gdm group does not exist. Please correct gdm configuration %s and "
-"restart gdm."
-msgstr "Iqoqo lo-gdm alikho. Lungisa isilinganisi segdm %s bese uqala i-gdm."
+"The mdm user is set to be root, but this is not allowed since it can pose a "
+"security risk.  Please correct mdm configuration %s and restart mdm."
+msgstr ""
+"Umsebenzisi we-mdm uhlelwe waba impande, lokhu akuvumelekile kungaba "
+"nobungozi kwezokuphepha. Lungisa isilinganisi semdm %s bese uqala i-mdm."
 
-#: daemon/gdm.c:694
+#: daemon/mdm.c:680
 #, c-format
-msgid "%s: Can't find the gdm group (%s). Aborting!"
-msgstr "%s: Angitholi iqoqo legdm (%s). Ngiyaphunza!"
+msgid "%s: The mdm user should not be root. Aborting!"
+msgstr "%s: Umsebenzisi wemdm akufanele abe impande. Ngiyaphunza!"
 
-#: daemon/gdm.c:701
+#: daemon/mdm.c:687
 #, c-format
 msgid ""
-"The gdm group is set to be root, but this is not allowed since it can pose a "
-"security risk. Please correct gdm configuration %s and restart gdm."
-msgstr ""
-"Iqoqo le-gdm lihlelwe njengempande, lokhu akuvumelekile kungaba nobungozi "
-"kwezokuphepha. Lungisa isilinganisi se-gdm %s bese uqala i-gdm."
+"The mdm group does not exist. Please correct mdm configuration %s and "
+"restart mdm."
+msgstr "Iqoqo lo-mdm alikho. Lungisa isilinganisi semdm %s bese uqala i-mdm."
 
-#: daemon/gdm.c:709
+#: daemon/mdm.c:694
 #, c-format
-msgid "%s: The gdm group should not be root. Aborting!"
-msgstr "%s: Iqoqo legdm akufanele libe impande. Ngiyaphunza!"
+msgid "%s: Can't find the mdm group (%s). Aborting!"
+msgstr "%s: Angitholi iqoqo lemdm (%s). Ngiyaphunza!"
 
-#: daemon/gdm.c:724
+#: daemon/mdm.c:701
 #, c-format
-msgid "%s: Greeter not found or can't be executed by the gdm user"
+msgid ""
+"The mdm group is set to be root, but this is not allowed since it can pose a "
+"security risk. Please correct mdm configuration %s and restart mdm."
 msgstr ""
-"%s: Isithakazeli asitholakalanga noma umsebenzisi wegdm akakhoni ukusenza"
+"Iqoqo le-mdm lihlelwe njengempande, lokhu akuvumelekile kungaba nobungozi "
+"kwezokuphepha. Lungisa isilinganisi se-mdm %s bese uqala i-mdm."
 
-#: daemon/gdm.c:731
+#: daemon/mdm.c:709
 #, c-format
-msgid "%s: Remote greeter not found or can't be executed by the gdm user"
+msgid "%s: The mdm group should not be root. Aborting!"
+msgstr "%s: Iqoqo lemdm akufanele libe impande. Ngiyaphunza!"
+
+#: daemon/mdm.c:724
+#, c-format
+msgid "%s: Greeter not found or can't be executed by the mdm user"
 msgstr ""
-"%s: Isithakazeli esibuqamama asitholakali noma umsebenzisi wegdm akakhoni "
+"%s: Isithakazeli asitholakalanga noma umsebenzisi wemdm akakhoni ukusenza"
+
+#: daemon/mdm.c:731
+#, c-format
+msgid "%s: Remote greeter not found or can't be executed by the mdm user"
+msgstr ""
+"%s: Isithakazeli esibuqamama asitholakali noma umsebenzisi wemdm akakhoni "
 "ukusenza"
 
-#: daemon/gdm.c:742
+#: daemon/mdm.c:742
 #, c-format
-msgid "%s: Chooser not found or it can't be executed by the gdm user"
-msgstr "%s: Umkhethi akatholakali noma umsebenzisi wegdm akakhoni ukusenza"
+msgid "%s: Chooser not found or it can't be executed by the mdm user"
+msgstr "%s: Umkhethi akatholakali noma umsebenzisi wemdm akakhoni ukusenza"
 
-#: daemon/gdm.c:751
+#: daemon/mdm.c:751
 msgid "No daemon/ServAuthDir specified in the configuration file"
 msgstr ""
 "Akuna daemon/isisebenzisi sesivumelo sikhombisi esishiwo kuhele welinganisi"
 
-#: daemon/gdm.c:753
+#: daemon/mdm.c:753
 #, c-format
 msgid "%s: No daemon/ServAuthDir specified."
 msgstr "%s: Akuna daemon/isisebenzisi sesivumelo sikhombisi esishiwo."
 
-#: daemon/gdm.c:777
+#: daemon/mdm.c:777
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but is not "
-"owned by user %s and group %s. Please correct the ownership or gdm "
-"configuration %s and restart gdm."
+"owned by user %s and group %s. Please correct the ownership or mdm "
+"configuration %s and restart mdm."
 msgstr ""
 "Isisebenzisi sesivumelo sikhombisi (daemon/ServAuthDir) lihlelwe ku %s "
-"asingeyomsebenzisi %s neqembu %s. Lungisa ubuphathi noma isilinganisi se-gdm "
-"%s bese uqale i-gdm."
+"asingeyomsebenzisi %s neqembu %s. Lungisa ubuphathi noma isilinganisi se-mdm "
+"%s bese uqale i-mdm."
 
-#: daemon/gdm.c:788
+#: daemon/mdm.c:788
 #, c-format
 msgid "%s: Authdir %s is not owned by user %s, group %s. Aborting."
 msgstr "%s: Authdir %s asiphethwe ngumsebenzisi %s, iqembu %s. Ngiyaphunza."
 
-#: daemon/gdm.c:794
+#: daemon/mdm.c:794
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but has the "
 "wrong permissions, it should have permissions of %o. Please correct the "
-"permissions or the gdm configuration %s and restart gdm."
+"permissions or the mdm configuration %s and restart mdm."
 msgstr ""
 "Isisebenzisi sesivumelo sikhombisi (daemon/ServAuthDir) ihlelwe kwi-%s kodwa "
 "inezimvume ezingalungile, kufanele ibe nezimvume %o. Lungisa izimvume noma "
-"isilinganisi segdm %s bese uqala i-gdm."
+"isilinganisi semdm %s bese uqala i-mdm."
 
-#: daemon/gdm.c:805
+#: daemon/mdm.c:805
 #, c-format
 msgid "%s: Authdir %s has wrong permissions %o. Should be %o. Aborting."
 msgstr ""
@@ -545,57 +545,57 @@ msgstr ""
 "Ngiyaphunza."
 
 #. FIXME: how to handle this?
-#: daemon/gdm.c:861 daemon/gdm.c:869 daemon/gdm.c:2149 daemon/gdm.c:2157
+#: daemon/mdm.c:861 daemon/mdm.c:869 daemon/mdm.c:2149 daemon/mdm.c:2157
 #, c-format
 msgid "Cannot write PID file %s, possibly out of diskspace.  Error: %s\n"
 msgstr ""
 "Angikhoni ukubhala ihele iPID %s,  Kungenzeka ayikho esikhaleni secwecwe. "
 "Iphutha: %s\n"
 
-#: daemon/gdm.c:863 daemon/gdm.c:871 daemon/gdm.c:2151 daemon/gdm.c:2159
+#: daemon/mdm.c:863 daemon/mdm.c:871 daemon/mdm.c:2151 daemon/mdm.c:2159
 #, c-format
 msgid "Cannot write PID file %s, possibly out of diskspace.  Error: %s"
 msgstr ""
 "Angikhoni ukubhala ihele iPID %s,  Kungenzeka ayikho esikhaleni secwecwe. "
 "Iphutha: %s"
 
-#: daemon/gdm.c:881
+#: daemon/mdm.c:881
 #, c-format
 msgid "%s: fork() failed!"
 msgstr "%s: bhudla() iphuthile!"
 
 #. should never happen
-#: daemon/gdm.c:884 daemon/slave.c:3437
+#: daemon/mdm.c:884 daemon/slave.c:3437
 #, c-format
 msgid "%s: setsid() failed: %s!"
 msgstr "%s: hlela isid() iphuthile: %s!"
 
-#: daemon/gdm.c:1071
+#: daemon/mdm.c:1071
 #, c-format
 msgid "%s: Trying failsafe X server %s"
 msgstr "%s: Zama isisebenzisi sephutha somkhawulo-X %s"
 
-#: daemon/gdm.c:1089
+#: daemon/mdm.c:1089
 #, c-format
 msgid "%s: Running the XKeepsCrashing script"
 msgstr "%s: Sebenzisa umbhalo olondoloziwe osakumahlazeka"
 
-#: daemon/gdm.c:1209
+#: daemon/mdm.c:1209
 msgid ""
 "I cannot start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly. You will need to log in on a console and rerun "
-"the X configuration program.  Then restart GDM."
+"the X configuration program.  Then restart MDM."
 msgstr ""
 "Angikhoni ukuqala isisebenzisi u-X (kwisibonisi eisenhlanganisweni). "
 "Kungenzeka ukuthi ayihlelwanga kahle. Udinga ukungena kwisizimaziso bese "
-"uqale uhlelo lwesimo esilinganisiwe X. Bese uqale iGDM."
+"uqale uhlelo lwesimo esilinganisiwe X. Bese uqale iMDM."
 
 #. else {
 #. * At this point .... screw the user, we don't know how to
 #. * talk to him.  He's on some 'l33t system anyway, so syslog
 #. * reading will do him good
 #. * }
-#: daemon/gdm.c:1221
+#: daemon/mdm.c:1221
 #, c-format
 msgid ""
 "Failed to start X server several times in a short time period; disabling "
@@ -604,46 +604,46 @@ msgstr ""
 "Ngihlulekile ukuqala isisebenzisi u-X kaningana esikhathini esincane, "
 "khenenda isiboniso %s"
 
-#: daemon/gdm.c:1229 daemon/gdm.c:2877
+#: daemon/mdm.c:1229 daemon/mdm.c:2877
 msgid "Master suspending..."
 msgstr "Ummisi omkhulu..."
 
-#: daemon/gdm.c:1283
+#: daemon/mdm.c:1283
 #, c-format
 msgid "System is rebooting, please wait ..."
 msgstr "Uhlelo lusaqala phansi, linda ..."
 
-#: daemon/gdm.c:1285
+#: daemon/mdm.c:1285
 #, c-format
 msgid "System is shutting down, please wait ..."
 msgstr "Uhlelo lusacima, linda ..."
 
-#: daemon/gdm.c:1296
+#: daemon/mdm.c:1296
 msgid "Master halting..."
 msgstr "Umnqikazisi omkhulu..."
 
-#: daemon/gdm.c:1309
+#: daemon/mdm.c:1309
 #, c-format
 msgid "%s: Halt failed: %s"
 msgstr "%s: Umqikazisi wehlulekile: %s"
 
-#: daemon/gdm.c:1318
+#: daemon/mdm.c:1318
 msgid "Master rebooting..."
 msgstr "Uqali phansi wehlelo omkhulu..."
 
-#: daemon/gdm.c:1331
+#: daemon/mdm.c:1331
 #, c-format
 msgid "%s: Reboot failed: %s"
 msgstr "%s: Ukuqala phansi uhlelo kwehlulekile: %s"
 
-#: daemon/gdm.c:1429
+#: daemon/mdm.c:1429
 #, c-format
 msgid "Reboot or Halt request when there is no system menu from display %s"
 msgstr ""
 "Cela ukuqala phansi uhlelo noma unqikazise uma isiboniso sohlu singekho "
 "ohlelweni %s"
 
-#: daemon/gdm.c:1438
+#: daemon/mdm.c:1438
 #, c-format
 msgid "Restart, Reboot or Halt request from a non-local display %s"
 msgstr ""
@@ -651,52 +651,52 @@ msgstr ""
 "esingakho kulewondawo %s"
 
 #. Bury this display for good
-#: daemon/gdm.c:1504
+#: daemon/mdm.c:1504
 #, c-format
 msgid "%s: Aborting display %s"
 msgstr "%s: Phunza isiboniso %s"
 
-#: daemon/gdm.c:1655
-msgid "GDM restarting ..."
-msgstr "i-GDM iqala futhu ..."
+#: daemon/mdm.c:1655
+msgid "MDM restarting ..."
+msgstr "i-MDM iqala futhu ..."
 
-#: daemon/gdm.c:1659
+#: daemon/mdm.c:1659
 msgid "Failed to restart self"
 msgstr "Yehlulekile ukuziqalela"
 
 #. FIXME: note that this could mean out of memory
-#: daemon/gdm.c:1733
+#: daemon/mdm.c:1733
 msgid "main daemon: Got SIGABRT, something went very wrong. Going down!"
 msgstr ""
 "daemon yamampela: Ithole SIGABRT, kukhona okuhambe kabi kakhulu. Ishona "
 "phansi!"
 
-#: daemon/gdm.c:1892
+#: daemon/mdm.c:1892
 msgid "Do not fork into the background"
 msgstr "Ungabhodli isizinda"
 
-#: daemon/gdm.c:1894
+#: daemon/mdm.c:1894
 msgid "No console (local) servers to be run"
 msgstr "Akuna sizimazisi (sasekhaya) sesibenzisi esingasetshenziswa"
 
-#: daemon/gdm.c:1896
+#: daemon/mdm.c:1896
 msgid "Preserve LD_* variables"
 msgstr "Gcina I LD_* eguquguqukayo"
 
-#: daemon/gdm.c:1898
-msgid "Print GDM version"
-msgstr "Cindezela umhumusho weGDM"
+#: daemon/mdm.c:1898
+msgid "Print MDM version"
+msgstr "Cindezela umhumusho weMDM"
 
-#: daemon/gdm.c:1900
+#: daemon/mdm.c:1900
 msgid "Start the first X server but then halt until we get a GO in the fifo"
 msgstr "Qala isisebenzisi X bese unqikaza size sithole uhamba kwififo"
 
-#: daemon/gdm.c:2007 daemon/gdm.c:2343
+#: daemon/mdm.c:2007 daemon/mdm.c:2343
 #, c-format
 msgid "Can't open %s for writing"
 msgstr "Ngakhoni ukuvula %s yokubhalela"
 
-#: daemon/gdm.c:2064 gui/gdmchooser.c:2057
+#: daemon/mdm.c:2064 gui/mdmchooser.c:2057
 #, c-format
 msgid ""
 "Error on option %s: %s.\n"
@@ -705,46 +705,46 @@ msgstr ""
 "Iphutha okhethweni %s: %s.\n"
 "Sebenzisa '%s --help' ukubona uhla olukhona lokhetho lemilayelo.\n"
 
-#: daemon/gdm.c:2087
-msgid "Only root wants to run gdm\n"
-msgstr "Impande kuphela efuna ukusebenzisa igdm\n"
+#: daemon/mdm.c:2087
+msgid "Only root wants to run mdm\n"
+msgstr "Impande kuphela efuna ukusebenzisa imdm\n"
 
-#: daemon/gdm.c:2103 daemon/gdm.c:2107 daemon/gdm.c:2182 daemon/gdm.c:2186
-#: daemon/gdm.c:2190 daemon/gdm.c:2194 daemon/gdm.c:2204 daemon/gdm.c:2210
-#: daemon/gdm.c:2221 daemon/misc.c:1648 daemon/misc.c:1652 daemon/misc.c:1656
+#: daemon/mdm.c:2103 daemon/mdm.c:2107 daemon/mdm.c:2182 daemon/mdm.c:2186
+#: daemon/mdm.c:2190 daemon/mdm.c:2194 daemon/mdm.c:2204 daemon/mdm.c:2210
+#: daemon/mdm.c:2221 daemon/misc.c:1648 daemon/misc.c:1652 daemon/misc.c:1656
 #: daemon/misc.c:1663 daemon/misc.c:1667 daemon/misc.c:1671
 #: daemon/server.c:521 daemon/server.c:534 daemon/slave.c:811
 #: daemon/slave.c:825 daemon/slave.c:835 daemon/slave.c:845 daemon/slave.c:857
-#: gui/gdmchooser.c:1936 gui/gdmchooser.c:1939 gui/gdmchooser.c:1942
-#: gui/gdmlogin.c:3958 gui/gdmlogin.c:3966 gui/gdmlogin.c:3969
+#: gui/mdmchooser.c:1936 gui/mdmchooser.c:1939 gui/mdmchooser.c:1942
+#: gui/mdmlogin.c:3958 gui/mdmlogin.c:3966 gui/mdmlogin.c:3969
 #: gui/greeter/greeter.c:1085 gui/greeter/greeter.c:1093
 #: gui/greeter/greeter.c:1096
 #, c-format
 msgid "%s: Error setting up %s signal handler: %s"
 msgstr "%s: Iphutha ekuhlelweni kwe-%s kumphathi yenhlamkhosi: %s"
 
-#: daemon/gdm.c:2131
-msgid "gdm already running. Aborting!"
-msgstr "igdm iyasebenza. Ngiyaphunza!"
+#: daemon/mdm.c:2131
+msgid "mdm already running. Aborting!"
+msgstr "imdm iyasebenza. Ngiyaphunza!"
 
-#: daemon/gdm.c:2230
+#: daemon/mdm.c:2230
 #, c-format
 msgid "%s: Error setting up CHLD signal handler"
 msgstr "%s: Iphutha ekuhlelweni kweCHLD kumphathi yenhlabamkhosi"
 
-#: daemon/gdm.c:3633 daemon/gdm.c:3652
+#: daemon/mdm.c:3633 daemon/mdm.c:3652
 msgid "FLEXI_XSERVER request denied: Not authenticated"
 msgstr "Isicelo FLEXI_XSERVER senqatshelwe: Akunasiqiniseko"
 
 #. Don't print the name to syslog as it might be
 #. * long and dangerous
-#: daemon/gdm.c:3670
+#: daemon/mdm.c:3670
 msgid "Unknown server type requested, using standard server."
 msgstr ""
 "Uhlobo lwesisebenzisa olwangaziwa luceliwe, kusetshenziswa isisebenzisa "
 "esijwayelekile."
 
-#: daemon/gdm.c:3674
+#: daemon/mdm.c:3674
 #, c-format
 msgid ""
 "Requested server %s not allowed to be used for flexible servers, using "
@@ -753,15 +753,15 @@ msgstr ""
 "Isisebenzisi %s esicelewe asivumekanga ukusetshenziswa kwizisebenzisi "
 "ezipetekiswayo, usebenzisa isisebenzisi esiywayelekile."
 
-#: daemon/gdm.c:3796
+#: daemon/mdm.c:3796
 msgid "QUERY_LOGOUT_ACTION request denied: Not authenticated"
 msgstr "QUERY_LOGOUT_ACTION senqatshelwe: Asiqinesekwanga"
 
-#: daemon/gdm.c:3854 daemon/gdm.c:3909
+#: daemon/mdm.c:3854 daemon/mdm.c:3909
 msgid "SET_LOGOUT_ACTION request denied: Not authenticated"
 msgstr "Isicelo SET_LOGOUT_ACTION senqatshelwe. Asiqinisekwanga"
 
-#: daemon/gdm.c:3954 daemon/gdm.c:3981
+#: daemon/mdm.c:3954 daemon/mdm.c:3981
 msgid "QUERY_VT request denied: Not authenticated"
 msgstr "Isicelo QUERY_VT senqatshelwe. Asiqinisekwanga"
 
@@ -952,7 +952,7 @@ msgid ""
 "Please contact your system administrator\n"
 "or check your syslog to diagnose.\n"
 "In the meantime this display will be\n"
-"disabled.  Please restart gdm when\n"
+"disabled.  Please restart mdm when\n"
 "the problem is corrected."
 msgstr ""
 "Ngakhonanga ukuqala isisebenzisi X\n"
@@ -961,7 +961,7 @@ msgstr ""
 "Hlangana nomphathi wohlelo lwakho\n"
 "noma hlola umngenisi wohlelo lwakho\n"
 "ukucubungula. Okwamanje isiboniso\n"
-"sizokhenendwa. Qala futhi i-gdm uma\n"
+"sizokhenendwa. Qala futhi i-mdm uma\n"
 "iphutha ku selilungisiwe."
 
 #: daemon/slave.c:1470
@@ -1001,8 +1001,8 @@ msgstr ""
 
 #: daemon/slave.c:2454 daemon/slave.c:2459
 #, c-format
-msgid "%s: Can't init pipe to gdmgreeter"
-msgstr "%s: Ngakhoni uku-init umbhavuma kugdm yesithakazeli"
+msgid "%s: Can't init pipe to mdmgreeter"
+msgstr "%s: Ngakhoni uku-init umbhavuma kumdm yesithakazeli"
 
 #: daemon/slave.c:2582
 msgid ""
@@ -1074,8 +1074,8 @@ msgstr "%s: Iphutha okuqaleni isithakazeli esiboniseni %s"
 
 #: daemon/slave.c:2676
 #, c-format
-msgid "%s: Can't fork gdmgreeter process"
-msgstr "%s: Ngakhoni ukubhudla inkambiso yesithakazeli segdm"
+msgid "%s: Can't fork mdmgreeter process"
+msgstr "%s: Ngakhoni ukubhudla inkambiso yesithakazeli semdm"
 
 #: daemon/slave.c:2761
 #, c-format
@@ -1084,8 +1084,8 @@ msgstr "%s: Ngakhoni ukuvula ufifo!"
 
 #: daemon/slave.c:2937
 #, c-format
-msgid "%s: Can't init pipe to gdmchooser"
-msgstr "%s: Ngakhoni uku-init kumbhavuma ku mkhethi-gdm"
+msgid "%s: Can't init pipe to mdmchooser"
+msgstr "%s: Ngakhoni uku-init kumbhavuma ku mkhethi-mdm"
 
 #: daemon/slave.c:3035
 msgid ""
@@ -1102,8 +1102,8 @@ msgstr "%s: Iphutha ekuqaleni umkhethi esibonisweni %s"
 
 #: daemon/slave.c:3042
 #, c-format
-msgid "%s: Can't fork gdmchooser process"
-msgstr "%s: Ngakhoni ukubhudla inkimbiso yomkhethi -gdm"
+msgid "%s: Can't fork mdmchooser process"
+msgstr "%s: Ngakhoni ukubhudla inkimbiso yomkhethi -mdm"
 
 #: daemon/slave.c:3338
 #, c-format
@@ -1273,12 +1273,12 @@ msgstr "%s: Umbombo wasekhaya ku %s: '%s' awukho."
 
 #: daemon/slave.c:4076
 msgid ""
-"GDM could not write to your authorization file.  This could mean that you "
+"MDM could not write to your authorization file.  This could mean that you "
 "are out of disk space or that your home directory could not be opened for "
 "writing.  In any case, it is not possible to log in.  Please contact your "
 "system administrator"
 msgstr ""
-"I-GDM ayikhonanga ukubhala kuhele wesigunyazo. Lokhu kungasho ukuthi awusena "
+"I-MDM ayikhonanga ukubhala kuhele wesigunyazo. Lokhu kungasho ukuthi awusena "
 "sikhala ecwecweni lakho noma umbombo wekhaya awuvulekanga ukuze kubhalelwe. "
 "Noma kunjalo, akukhonakali ukuthi ungene. Xhumana nomphathi hlelo wakho"
 
@@ -1303,8 +1303,8 @@ msgid "View details (~/.xsession-errors file)"
 msgstr "Bona imininingwane (~/.xsession-errors ihele)"
 
 #: daemon/slave.c:4385
-msgid "GDM detected a shutdown or reboot in progress."
-msgstr "I-GDM ihlonge ukucima noma ukuqala okwenzakalayo."
+msgid "MDM detected a shutdown or reboot in progress."
+msgstr "I-MDM ihlonge ukucima noma ukuqala okwenzakalayo."
 
 #: daemon/slave.c:4479
 #, c-format
@@ -1359,21 +1359,21 @@ msgstr "Qiniseka inkinobho yombhalo omkhulu ayigunyazwanga."
 
 #. I think I'll add the buttons next to this
 #: daemon/verify-crypt.c:127 daemon/verify-pam.c:441
-#: daemon/verify-shadow.c:126 gui/gdmlogin.c:3069
+#: daemon/verify-shadow.c:126 gui/mdmlogin.c:3069
 msgid "Please enter your username"
 msgstr "Faka ibizo-lokusetshenziswa"
 
 #. login: is whacked always translate to Username:
 #: daemon/verify-crypt.c:128 daemon/verify-pam.c:341 daemon/verify-pam.c:342
 #: daemon/verify-pam.c:343 daemon/verify-pam.c:428 daemon/verify-pam.c:787
-#: daemon/verify-shadow.c:127 gui/gdmlogin.c:1073 gui/gdmlogin.c:1087
-#: gui/gdmlogin.c:1873 gui/gdmlogin.c:2372 gui/greeter/greeter.c:281
+#: daemon/verify-shadow.c:127 gui/mdmlogin.c:1073 gui/mdmlogin.c:1087
+#: gui/mdmlogin.c:1873 gui/mdmlogin.c:2372 gui/greeter/greeter.c:281
 #: gui/greeter/greeter_parser.c:1061
 msgid "Username:"
 msgstr "Ibizo-lokusetshenziswa:"
 
 #: daemon/verify-crypt.c:166 daemon/verify-pam.c:344 daemon/verify-pam.c:345
-#: daemon/verify-pam.c:489 daemon/verify-shadow.c:184 gui/gdmlogin.c:1905
+#: daemon/verify-pam.c:489 daemon/verify-shadow.c:184 gui/mdmlogin.c:1905
 msgid "Password:"
 msgstr "Umngenisi-bizo:"
 
@@ -1652,8 +1652,8 @@ msgstr ""
 "Umphathi hlelo ukhinande ukungenala ohlelweni lwakho okwesikhashana."
 
 #: daemon/verify-pam.c:1428 daemon/verify-pam.c:1430
-msgid "Can't find PAM configuration for gdm."
-msgstr "Ngatholi isilinganisi-PAM yegdm."
+msgid "Can't find PAM configuration for mdm."
+msgstr "Ngatholi isilinganisi-PAM yemdm."
 
 #: daemon/xdmcp.c:369
 #, c-format
@@ -1796,78 +1796,78 @@ msgstr "%s: Thola UKUPHILISA kummemi onqatshelwe %s"
 msgid "%s: No XDMCP support"
 msgstr "%s: Akuna sesekelo se-XCMCP"
 
-#: gui/gdmXnestchooser.c:166 gui/gdmXnestchooser.c:173
+#: gui/mdmXnestchooser.c:166 gui/mdmXnestchooser.c:173
 msgid "Xnest command line"
 msgstr "Isilayezo Xnest"
 
-#: gui/gdmXnestchooser.c:166 gui/gdmXnestchooser.c:173
+#: gui/mdmXnestchooser.c:166 gui/mdmXnestchooser.c:173
 msgid "STRING"
 msgstr "UMHUMO"
 
-#: gui/gdmXnestchooser.c:167 gui/gdmXnestchooser.c:174
+#: gui/mdmXnestchooser.c:167 gui/mdmXnestchooser.c:174
 msgid "Extra options for Xnest"
 msgstr "Ukhetho olungeziwe lwesidleke-X"
 
-#: gui/gdmXnestchooser.c:167 gui/gdmXnestchooser.c:174
+#: gui/mdmXnestchooser.c:167 gui/mdmXnestchooser.c:174
 msgid "OPTIONS"
 msgstr "AMAKHETHO"
 
-#: gui/gdmXnestchooser.c:168 gui/gdmXnestchooser.c:178
+#: gui/mdmXnestchooser.c:168 gui/mdmXnestchooser.c:178
 msgid "Run in background"
 msgstr "Sebenzisa esizindeni"
 
-#: gui/gdmXnestchooser.c:175
+#: gui/mdmXnestchooser.c:175
 msgid "Just run Xnest, no query (no chooser)"
 msgstr "Sebenzisa isidleke-X, ungakhonondi (ngaphandle kokhetho)"
 
-#: gui/gdmXnestchooser.c:176
+#: gui/mdmXnestchooser.c:176
 msgid "Do direct query instead of indirect (chooser)"
 msgstr "Khononda ngqo kunokungaqondi nqgo (ukhetho)"
 
-#: gui/gdmXnestchooser.c:177
+#: gui/mdmXnestchooser.c:177
 msgid "Run broadcast instead of indirect (chooser)"
 msgstr "Sebenzisa ukusakaza esimweni sengaqondile (ukhetho)"
 
-#: gui/gdmXnestchooser.c:179
-msgid "Don't check for running gdm"
-msgstr "Ungahloli ukusebenza kwegdm"
+#: gui/mdmXnestchooser.c:179
+msgid "Don't check for running mdm"
+msgstr "Ungahloli ukusebenza kwemdm"
 
 #. markup
-#: gui/gdmXnestchooser.c:521
+#: gui/mdmXnestchooser.c:521
 msgid "Xnest doesn't exist."
 msgstr "Xnest asikho"
 
-#: gui/gdmXnestchooser.c:523
+#: gui/mdmXnestchooser.c:523
 msgid "Please ask your system administrator to install it."
 msgstr "Cela umphathi wehlelo ukuthi ayifake."
 
 #. markup
-#: gui/gdmXnestchooser.c:549
+#: gui/mdmXnestchooser.c:549
 msgid "Indirect XDMCP is not enabled"
 msgstr "IXDMCP engaqondile ngqo ayigunyazwanga"
 
-#: gui/gdmXnestchooser.c:551 gui/gdmXnestchooser.c:572
+#: gui/mdmXnestchooser.c:551 gui/mdmXnestchooser.c:572
 msgid ""
-"Please ask your system administrator to enable it in the GDM configurator "
+"Please ask your system administrator to enable it in the MDM configurator "
 "program."
-msgstr "Cela umphathi hlelo ukuyigunyaza kwihlelo lesilinganiso se-GDM."
+msgstr "Cela umphathi hlelo ukuyigunyaza kwihlelo lesilinganiso se-MDM."
 
 #. markup
-#: gui/gdmXnestchooser.c:570
+#: gui/mdmXnestchooser.c:570
 msgid "XDMCP is not enabled"
 msgstr "XDMCP ikhenendiwe"
 
 #. markup
-#: gui/gdmXnestchooser.c:604
-msgid "GDM is not running"
-msgstr "GDM ayisebenzi"
+#: gui/mdmXnestchooser.c:604
+msgid "MDM is not running"
+msgstr "MDM ayisebenzi"
 
-#: gui/gdmXnestchooser.c:606
+#: gui/mdmXnestchooser.c:606
 msgid "Please ask your system administrator to start it."
 msgstr "Cela umphathi wohlelo ukuyiqala."
 
 #. markup
-#: gui/gdmXnestchooser.c:623
+#: gui/mdmXnestchooser.c:623
 msgid "Could not find a free display number"
 msgstr "Ngakhonanga ukuthola inani lesiboniso elikhululekile"
 
@@ -1876,73 +1876,73 @@ msgstr "Ngakhonanga ukuthola inani lesiboniso elikhululekile"
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gui/gdmchooser-strings.c:7 gui/gdmchooser.glade.h:5
-msgid "GDM Host Chooser"
-msgstr "Ukmkhethi woMmemi weGDM"
+#: gui/mdmchooser-strings.c:7 gui/mdmchooser.glade.h:5
+msgid "MDM Host Chooser"
+msgstr "Ukmkhethi woMmemi weMDM"
 
-#: gui/gdmchooser-strings.c:8 gui/gdmchooser.glade.h:6
+#: gui/mdmchooser-strings.c:8 gui/mdmchooser.glade.h:6
 msgid "How to use this application"
 msgstr "Usebenzisa kanjani lesisebenziso"
 
-#: gui/gdmchooser-strings.c:9 gui/gdmchooser.glade.h:8
+#: gui/mdmchooser-strings.c:9 gui/mdmchooser.glade.h:8
 msgid "Probe the network"
 msgstr "Hlola ulwembu"
 
-#: gui/gdmchooser-strings.c:10 gui/gdmchooser.glade.h:4
+#: gui/mdmchooser-strings.c:10 gui/mdmchooser.glade.h:4
 msgid "Exit the application"
 msgstr "Phuma kusisebenziso"
 
-#: gui/gdmchooser-strings.c:11 gui/gdmchooser.glade.h:7
+#: gui/mdmchooser-strings.c:11 gui/mdmchooser.glade.h:7
 msgid "Open a session to the selected host"
 msgstr "Vula inhlanganiso kummemi okhethiwe"
 
-#: gui/gdmchooser-strings.c:12 gui/gdmchooser.glade.h:3
+#: gui/mdmchooser-strings.c:12 gui/mdmchooser.glade.h:3
 msgid "C_onnect"
 msgstr "H_langanisa"
 
-#: gui/gdmchooser-strings.c:13 gui/gdmchooser.glade.h:10
+#: gui/mdmchooser-strings.c:13 gui/mdmchooser.glade.h:10
 msgid "Status"
 msgstr "Isimo"
 
-#: gui/gdmchooser-strings.c:14 gui/gdmchooser.glade.h:2
+#: gui/mdmchooser-strings.c:14 gui/mdmchooser.glade.h:2
 msgid "A_dd host: "
 msgstr "E_ngeza ummemi: "
 
 #. EOF
-#: gui/gdmchooser-strings.c:15 gui/gdmchooser.glade.h:1
-#: gui/gdmsetup-strings.c:19 gui/gdmsetup-strings.c:21
-#: gui/gdmsetup-strings.c:26 gui/gdmsetup-strings.c:32
-#: gui/gdmsetup-strings.c:37 gui/gdmsetup-strings.c:47
-#: gui/gdmsetup-strings.c:85 gui/gdmsetup.glade.h:2
+#: gui/mdmchooser-strings.c:15 gui/mdmchooser.glade.h:1
+#: gui/mdmsetup-strings.c:19 gui/mdmsetup-strings.c:21
+#: gui/mdmsetup-strings.c:26 gui/mdmsetup-strings.c:32
+#: gui/mdmsetup-strings.c:37 gui/mdmsetup-strings.c:47
+#: gui/mdmsetup-strings.c:85 gui/mdmsetup.glade.h:2
 msgid "*"
 msgstr "*"
 
-#: gui/gdmchooser-strings.c:16 gui/gdmchooser.glade.h:9
+#: gui/mdmchooser-strings.c:16 gui/mdmchooser.glade.h:9
 msgid "Query and add this host to the above list"
 msgstr "Khononda bese wengeza lommemi kuhlu oluphezulu"
 
-#: gui/gdmchooser-strings.c:17 gui/gdmchooser.glade.h:11
+#: gui/mdmchooser-strings.c:17 gui/mdmchooser.glade.h:11
 msgid "_Add"
 msgstr "_Hlanganisa"
 
-#: gui/gdmchooser.c:80
+#: gui/mdmchooser.c:80
 msgid "Please wait: scanning local network..."
 msgstr "Ima: sahlola ulwembu lwasendaweni..."
 
-#: gui/gdmchooser.c:81
+#: gui/mdmchooser.c:81
 msgid "No serving hosts were found."
 msgstr "Akutholakalanga msekeli wommemi."
 
-#: gui/gdmchooser.c:82
+#: gui/mdmchooser.c:82
 msgid "Choose a ho_st to connect to:"
 msgstr "Khetha umme_mi ozoxhuma kuye:"
 
 #. markup
-#: gui/gdmchooser.c:659
+#: gui/mdmchooser.c:659
 msgid "Cannot connect to remote server"
 msgstr "Ngakhoni ukuxhumana nesisebenzisi esibuqamama"
 
-#: gui/gdmchooser.c:660
+#: gui/mdmchooser.c:660
 #, c-format
 msgid ""
 "The host \"%s\" is not willing to support a login session right now.  Please "
@@ -1952,11 +1952,11 @@ msgstr ""
 "futhi emva kwesikhathi."
 
 #. markup
-#: gui/gdmchooser.c:1284
+#: gui/mdmchooser.c:1284
 msgid "Did not receive response from server"
 msgstr "Ngatholanga impendulo kusisebenzisi"
 
-#: gui/gdmchooser.c:1285
+#: gui/mdmchooser.c:1285
 #, c-format
 msgid ""
 "Did not receive any response from host \"%s\" in %d seconds.  Perhaps the "
@@ -1967,16 +1967,16 @@ msgstr ""
 "akavulwanga, noma ayizimisele ukusekela inhlanganiso yomngenisi okwamanje. "
 "Zama futhi emva kwesikhathi."
 
-#: gui/gdmchooser.c:1391
+#: gui/mdmchooser.c:1391
 msgid "Cannot find host"
 msgstr "Ngatholi ummemi"
 
-#: gui/gdmchooser.c:1392
+#: gui/mdmchooser.c:1392
 #, c-format
 msgid "I cannot find the host \"%s\", perhaps you have mistyped it."
 msgstr "Ngakhoni ukuthola ummemi \"%s\", mhlawumbe uwubhalanga kahle."
 
-#: gui/gdmchooser.c:1678
+#: gui/mdmchooser.c:1678
 msgid ""
 "The main area of this application shows the hosts on the local network that "
 "have \"XDMCP\" enabled. This allows users to login remotely to other "
@@ -1992,61 +1992,61 @@ msgstr ""
 "Ungahlola abammemi abasha olwembini ngokucofoza \"Buyekeza\".Uma usukhethe "
 "ummemi cofoza\"Xhumanisa\" ukuvula inhlanganiso kuloyomshini."
 
-#: gui/gdmchooser.c:1725
+#: gui/mdmchooser.c:1725
 #, c-format
 msgid "Can't open default host icon: %s"
 msgstr "Ngakhoni ukuvula iphutha lesibonakalisi sommemi: %s"
 
-#: gui/gdmchooser.c:1950 gui/gdmlogin.c:3977 gui/gdmlogin.c:3984
+#: gui/mdmchooser.c:1950 gui/mdmlogin.c:3977 gui/mdmlogin.c:3984
 #: gui/greeter/greeter.c:1104 gui/greeter/greeter.c:1111
 msgid "Could not set signal mask!"
 msgstr "Ngakhonanga ukuhlela isivuvu senhlabamkhosi!"
 
-#: gui/gdmchooser.c:1956
+#: gui/mdmchooser.c:1956
 msgid "Socket for xdm communication"
 msgstr "Isikhoxe sekuzwana kwexdm"
 
-#: gui/gdmchooser.c:1956
+#: gui/mdmchooser.c:1956
 msgid "SOCKET"
 msgstr "ISIKHOXE"
 
-#: gui/gdmchooser.c:1959
+#: gui/mdmchooser.c:1959
 msgid "Client address to return in response to xdm"
 msgstr "Ikheli lekhasimende lizobuya ngokuvumelana nexdm"
 
-#: gui/gdmchooser.c:1959
+#: gui/mdmchooser.c:1959
 msgid "ADDRESS"
 msgstr "IKHELI"
 
-#: gui/gdmchooser.c:1962
+#: gui/mdmchooser.c:1962
 msgid "Connection type to return in response to xdm"
 msgstr "Inhlobo yokuhlanganisa izobuya ngokuvumelana nexdm"
 
-#: gui/gdmchooser.c:1962
+#: gui/mdmchooser.c:1962
 msgid "TYPE"
 msgstr "INHLOBO"
 
 #. markup
-#: gui/gdmchooser.c:2091
+#: gui/mdmchooser.c:2091
 msgid "Cannot run chooser"
 msgstr "Ngakhoni ukusebenzisa ukhetho"
 
-#: gui/gdmchooser.c:2092
+#: gui/mdmchooser.c:2092
 #, c-format
 msgid ""
 "The chooser version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr ""
-"Umhumusho wokhetho (%s) akufani nomhumusho daemon (%s). Ufukule i-gdm. Qala "
-"i-gdm daemon futhi noma qala phansi isiga-nyezi."
+"Umhumusho wokhetho (%s) akufani nomhumusho daemon (%s). Ufukule i-mdm. Qala "
+"i-mdm daemon futhi noma qala phansi isiga-nyezi."
 
 #. markup
-#: gui/gdmcomm.c:405 gui/gdmphotosetup.c:70
-msgid "GDM (The GNOME Display Manager) is not running."
-msgstr "GDM (Umphathi Siboniso se-GNOME) asisebenzi."
+#: gui/mdmcomm.c:405 gui/mdmphotosetup.c:70
+msgid "MDM (The GNOME Display Manager) is not running."
+msgstr "MDM (Umphathi Siboniso se-GNOME) asisebenzi."
 
-#: gui/gdmcomm.c:408 gui/gdmphotosetup.c:73
+#: gui/mdmcomm.c:408 gui/mdmphotosetup.c:73
 msgid ""
 "You might in fact be using a different display manager, such as KDM (KDE "
 "Display Manager) or xdm."
@@ -2054,44 +2054,44 @@ msgstr ""
 "Kungenzeka usebenzisa umphathi siboniso esehlukile, njenge KDM (Mphathi "
 "Siboniso KDE) noma ixdm."
 
-#: gui/gdmcomm.c:411 gui/gdmphotosetup.c:76
+#: gui/mdmcomm.c:411 gui/mdmphotosetup.c:76
 msgid ""
-"If you still wish to use this feature, either start GDM yourself or ask your "
-"system administrator to start GDM."
+"If you still wish to use this feature, either start MDM yourself or ask your "
+"system administrator to start MDM."
 msgstr ""
-"Uma usafisa ukusebenzisa lesici esiqhamileyo, ungaqala i-GDM noma ucele "
-"umphathi hlelo akuqalele i-GDM."
+"Uma usafisa ukusebenzisa lesici esiqhamileyo, ungaqala i-MDM noma ucele "
+"umphathi hlelo akuqalele i-MDM."
 
 #. markup
-#: gui/gdmcomm.c:433 gui/gdmflexiserver.c:697
-msgid "Cannot communicate with GDM (The GNOME Display Manager)"
-msgstr "Ngakhoni ukuzwana neGDM ( Mphathi Siboniso weGNOME)"
+#: gui/mdmcomm.c:433 gui/mdmflexiserver.c:697
+msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgstr "Ngakhoni ukuzwana neMDM ( Mphathi Siboniso weGNOME)"
 
-#: gui/gdmcomm.c:436 gui/gdmflexiserver.c:700
-msgid "Perhaps you have an old version of GDM running."
-msgstr "Mhlawumbe usebenzisa umhumusho wakudala weGDM."
+#: gui/mdmcomm.c:436 gui/mdmflexiserver.c:700
+msgid "Perhaps you have an old version of MDM running."
+msgstr "Mhlawumbe usebenzisa umhumusho wakudala weMDM."
 
-#: gui/gdmcomm.c:453 gui/gdmcomm.c:456
-msgid "Cannot communicate with gdm, perhaps you have an old version running."
-msgstr "Ngakhoni ukuzwana ne-gdm, mhlawumbe usebenzisa umhumusho wakudala."
+#: gui/mdmcomm.c:453 gui/mdmcomm.c:456
+msgid "Cannot communicate with mdm, perhaps you have an old version running."
+msgstr "Ngakhoni ukuzwana ne-mdm, mhlawumbe usebenzisa umhumusho wakudala."
 
-#: gui/gdmcomm.c:459
+#: gui/mdmcomm.c:459
 msgid "The allowed limit of flexible X servers reached."
 msgstr "Isiphelo esivumelekile sezisebenzisa X ezipetekayo sifinyelelwe."
 
-#: gui/gdmcomm.c:461
+#: gui/mdmcomm.c:461
 msgid "There were errors trying to start the X server."
 msgstr "Kube namaphutha ekuzameni ukuqala isisebenzisi-X."
 
-#: gui/gdmcomm.c:463
+#: gui/mdmcomm.c:463
 msgid "The X server failed.  Perhaps it is not configured well."
 msgstr "Isisebenzisi-X sehlulekile. Mhlawumbe asilinganiswanga kahle."
 
-#: gui/gdmcomm.c:466
+#: gui/mdmcomm.c:466
 msgid "Too many X sessions running."
 msgstr "Kusebenza izinhlanganiso-X eziningi."
 
-#: gui/gdmcomm.c:468
+#: gui/mdmcomm.c:468
 msgid ""
 "The nested X server (Xnest) cannot connect to your current X server.  You "
 "may be missing an X authorization file."
@@ -2099,20 +2099,20 @@ msgstr ""
 "Isisebenzisi sesidleke-X (Xnest) singexhume kwisisebenzisi-X samanje. Ungabe "
 "uswele umgunyazi hele-X."
 
-#: gui/gdmcomm.c:473
+#: gui/mdmcomm.c:473
 msgid ""
-"The nested X server (Xnest) is not available, or gdm is badly configured.\n"
+"The nested X server (Xnest) is not available, or mdm is badly configured.\n"
 "Please install the Xnest package in order to use the nested login."
 msgstr ""
-"Isisebenzisi sesidleke-X (Xnest) asikho, noma ugdm ulinganiswe kabi.\n"
+"Isisebenzisi sesidleke-X (Xnest) asikho, noma umdm ulinganiswe kabi.\n"
 "Faka isijumba sesidleke-X ukuze usebenzise umngenisi osesidlekeni."
 
-#: gui/gdmcomm.c:478
+#: gui/mdmcomm.c:478
 msgid ""
-"The X server is not available, it is likely that gdm is badly configured."
-msgstr "Isisebenzisi-X asikho, kungenzeka igdm ilinganiswe kabi."
+"The X server is not available, it is likely that mdm is badly configured."
+msgstr "Isisebenzisi-X asikho, kungenzeka imdm ilinganiswe kabi."
 
-#: gui/gdmcomm.c:482
+#: gui/mdmcomm.c:482
 msgid ""
 "Trying to set an unknown logout action, or trying to set a logout action "
 "which is not available."
@@ -2120,19 +2120,19 @@ msgstr ""
 "Zama ukuhlela isenzo somngeni-phuma esingaziwa, noma zama ukuhlela isenzo "
 "somngeni-phuma esingekho."
 
-#: gui/gdmcomm.c:485
+#: gui/mdmcomm.c:485
 msgid "Virtual terminals not supported."
 msgstr "Izigungu lezo azesekelwe."
 
-#: gui/gdmcomm.c:487
+#: gui/mdmcomm.c:487
 msgid "Trying to change to an invalid virtual terminal number."
 msgstr "Ngizama ukuguqukela kwinani lesigungu elingekho mthethweni."
 
-#: gui/gdmcomm.c:489
+#: gui/mdmcomm.c:489
 msgid "Trying to update an unsupported configuration key."
 msgstr "Ngizama ukufukula inkinombo yesilinganiso esingasekelwe."
 
-#: gui/gdmcomm.c:491
+#: gui/mdmcomm.c:491
 msgid ""
 "You do not seem to have authentication needed be for this operation.  "
 "Perhaps your .Xauthority file is not set up correctly."
@@ -2140,65 +2140,65 @@ msgstr ""
 "Kungathi awunasiqiniseko esidingakalayo salesisebenziso. Mhlawumbe ."
 "Xauthority lakho alihleliwe kahle."
 
-#: gui/gdmcomm.c:495
-msgid "Too many messages were sent to gdm and it hung upon us."
-msgstr "Imilayezo eminingi ithunyelwe ku-gdm ilengisiwe."
+#: gui/mdmcomm.c:495
+msgid "Too many messages were sent to mdm and it hung upon us."
+msgstr "Imilayezo eminingi ithunyelwe ku-mdm ilengisiwe."
 
-#: gui/gdmcomm.c:498
+#: gui/mdmcomm.c:498
 msgid "Unknown error occured."
 msgstr "Kwenzeke iphutha elingaziwa."
 
-#: gui/gdmflexiserver-xnest.desktop.in.h:1
+#: gui/mdmflexiserver-xnest.desktop.in.h:1
 msgid "Log in as another user inside a nested window"
 msgstr "Ngena njengomunye umsebenzisi phakathi kwefasitela elisesidlekeni"
 
-#: gui/gdmflexiserver-xnest.desktop.in.h:2
+#: gui/mdmflexiserver-xnest.desktop.in.h:2
 msgid "New Login in a Nested Window"
 msgstr "uMngenis Omusha eSidlekeni seFasitela"
 
 #. markup
-#: gui/gdmflexiserver.c:100
+#: gui/mdmflexiserver.c:100
 msgid "Cannot change display"
 msgstr "Ngakhoni ukushintsha isiboniso"
 
-#: gui/gdmflexiserver.c:177
+#: gui/mdmflexiserver.c:177
 msgid "Nobody"
 msgstr "Ngamuntu"
 
-#: gui/gdmflexiserver.c:212
+#: gui/mdmflexiserver.c:212
 #, c-format
 msgid "Display %s on virtual terminal %d"
 msgstr "Bonisa %s kusona isigungu %d"
 
-#: gui/gdmflexiserver.c:217
+#: gui/mdmflexiserver.c:217
 #, c-format
 msgid "Nested display %s on virtual terminal %d"
 msgstr "Isiboniso esidlekelwe ku%s kusigungu %d"
 
-#: gui/gdmflexiserver.c:247 gui/gdmlogin.c:2917
+#: gui/mdmflexiserver.c:247 gui/mdmlogin.c:2917
 #: gui/greeter/greeter_item_ulist.c:449
 msgid "Username"
 msgstr "Ibizo-lokusetshenziswa"
 
-#: gui/gdmflexiserver.c:256
+#: gui/mdmflexiserver.c:256
 msgid "Display"
 msgstr "Bonisa"
 
-#: gui/gdmflexiserver.c:310
+#: gui/mdmflexiserver.c:310
 msgid "Open Displays"
 msgstr "Vula Iziboniso"
 
 #. parent
 #. flags
-#: gui/gdmflexiserver.c:313
+#: gui/mdmflexiserver.c:313
 msgid "_Open New Display"
 msgstr "_Vula Isiboniso Esisha"
 
-#: gui/gdmflexiserver.c:315
+#: gui/mdmflexiserver.c:315
 msgid "Change to _Existing Display"
 msgstr "Shintshela ku _Siboniso Esikhona"
 
-#: gui/gdmflexiserver.c:323
+#: gui/mdmflexiserver.c:323
 msgid ""
 "There are some displays already open.  You can select one from the list "
 "below or open a new one."
@@ -2206,602 +2206,602 @@ msgstr ""
 "Kukhona iziboniso esezivulekile. Ungakhetha enye kuhlu olungaphansi noma "
 "uvule esisha."
 
-#: gui/gdmflexiserver.c:390 gui/gdmflexiserver.c:785
+#: gui/mdmflexiserver.c:390 gui/mdmflexiserver.c:785
 msgid "Can't lock screen"
 msgstr "Ngakhoni ukuvala isibuko"
 
-#: gui/gdmflexiserver.c:393 gui/gdmflexiserver.c:788
+#: gui/mdmflexiserver.c:393 gui/mdmflexiserver.c:788
 msgid "Can't disable xscreensaver display hacks"
 msgstr "Ngakhoni ukukhenenda isibuko-x sesiboniso siyajunduza"
 
-#: gui/gdmflexiserver.c:548
+#: gui/mdmflexiserver.c:548
 msgid "Choose server"
 msgstr "Khetha isisebenzisi"
 
-#: gui/gdmflexiserver.c:559
+#: gui/mdmflexiserver.c:559
 msgid "Choose the X server to start"
 msgstr "Khetha isisebenzisi-X ukuqala"
 
-#: gui/gdmflexiserver.c:565
+#: gui/mdmflexiserver.c:565
 msgid "Standard server"
 msgstr "Isisebenzisi esijwayelekile"
 
-#: gui/gdmflexiserver.c:632
-msgid "Send the specified protocol command to gdm"
-msgstr "Thumela umlayezo wesiphakamiso sesivumelwano esichaziwe kugdm"
+#: gui/mdmflexiserver.c:632
+msgid "Send the specified protocol command to mdm"
+msgstr "Thumela umlayezo wesiphakamiso sesivumelwano esichaziwe kumdm"
 
-#: gui/gdmflexiserver.c:632
+#: gui/mdmflexiserver.c:632
 msgid "COMMAND"
 msgstr "LAYELA"
 
-#: gui/gdmflexiserver.c:633
+#: gui/mdmflexiserver.c:633
 msgid "Xnest mode"
 msgstr "Isimo Xnest"
 
-#: gui/gdmflexiserver.c:634
+#: gui/mdmflexiserver.c:634
 msgid "Do not lock current screen"
 msgstr "Ungavali isibuko esikhona manje"
 
-#: gui/gdmflexiserver.c:635
+#: gui/mdmflexiserver.c:635
 msgid "Debugging output"
 msgstr "Hlanza ukhiphi miphumela"
 
-#: gui/gdmflexiserver.c:636
+#: gui/mdmflexiserver.c:636
 msgid "Authenticate before running --command"
 msgstr "Qiniseka ngaphambi kokusebenzisa -- isilayezo"
 
 #. markup
-#: gui/gdmflexiserver.c:725
+#: gui/mdmflexiserver.c:725
 msgid "You do not seem to have the authentication needed for this operation"
 msgstr "Ngathi awunasiqiniseko esidingakalayo kulesisisetshenziswa"
 
-#: gui/gdmflexiserver.c:729
+#: gui/mdmflexiserver.c:729
 msgid "Perhaps your .Xauthority file is not set up correctly."
 msgstr "Mhawumbe ihele .Xauthority alihlelwanga kahle."
 
 #. markup
-#: gui/gdmflexiserver.c:753
+#: gui/mdmflexiserver.c:753
 msgid "You do not seem to be logged in on the console"
 msgstr "Kubonakala ngathi awungenanga kumzimazisi"
 
-#: gui/gdmflexiserver.c:756
+#: gui/mdmflexiserver.c:756
 msgid "Starting a new login only works correctly on the console."
 msgstr "Ukuqala umngenisi omusha usebenza kahle ngesizimazisi esilungile."
 
 #. markup
-#: gui/gdmflexiserver.c:803
+#: gui/mdmflexiserver.c:803
 msgid "Cannot start new display"
 msgstr "Ngakhoni ukuqala isiboniso esisha"
 
-#: gui/gdmflexiserver.desktop.in.h:1
+#: gui/mdmflexiserver.desktop.in.h:1
 msgid "Log in as another user without logging out"
 msgstr "Ngena njengomunye umsebenzisi ngaphandle komngenisi -phuma"
 
-#: gui/gdmflexiserver.desktop.in.h:2
+#: gui/mdmflexiserver.desktop.in.h:2
 msgid "New Login"
 msgstr "Umngenisi omusha"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:53
+#: gui/mdmlanguages.c:53
 msgid "A-M|Afrikaans"
 msgstr "A-M|Isibunu"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:55
+#: gui/mdmlanguages.c:55
 msgid "A-M|Albanian"
 msgstr "A-M|Albanian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:57
+#: gui/mdmlanguages.c:57
 msgid "A-M|Amharic"
 msgstr "A-M|Amharic"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:59
+#: gui/mdmlanguages.c:59
 msgid "A-M|Arabic (Egypt)"
 msgstr "A-M|Arabic (Egiphite)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:61
+#: gui/mdmlanguages.c:61
 msgid "A-M|Arabic (Lebanon)"
 msgstr "A-M|Arabic (eLebanon)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:63
+#: gui/mdmlanguages.c:63
 msgid "A-M|Armenian"
 msgstr "A-M|Armenian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:65
+#: gui/mdmlanguages.c:65
 msgid "A-M|Azerbaijani"
 msgstr "A-M|Azerbaijani"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:67
+#: gui/mdmlanguages.c:67
 msgid "A-M|Basque"
 msgstr "A-M|Basque"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:69
+#: gui/mdmlanguages.c:69
 msgid "A-M|Belarusian"
 msgstr "A-M|Belarusian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:71
+#: gui/mdmlanguages.c:71
 msgid "A-M|Bengali"
 msgstr "A-M|Bengali"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:73
+#: gui/mdmlanguages.c:73
 msgid "A-M|Bengali (India)"
 msgstr "A-M|Bengali (eIndia)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:75
+#: gui/mdmlanguages.c:75
 msgid "A-M|Bulgarian"
 msgstr "A-M|Bulgarian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:77
+#: gui/mdmlanguages.c:77
 msgid "A-M|Bosnian"
 msgstr "A-M|Bosnian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:79
+#: gui/mdmlanguages.c:79
 msgid "A-M|Catalan"
 msgstr "A-M|Catalan"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:81
+#: gui/mdmlanguages.c:81
 msgid "A-M|Chinese (simplified)"
 msgstr "A-M|Chinese (wanzelula)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:83
+#: gui/mdmlanguages.c:83
 msgid "A-M|Chinese (traditional)"
 msgstr "A-M|Chinese (isiko)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:85
+#: gui/mdmlanguages.c:85
 msgid "A-M|Croatian"
 msgstr "A-M|Croatian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:87
+#: gui/mdmlanguages.c:87
 msgid "A-M|Czech"
 msgstr "A-M|Czech"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:89
+#: gui/mdmlanguages.c:89
 msgid "A-M|Danish"
 msgstr "A-M|Danish"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:91
+#: gui/mdmlanguages.c:91
 msgid "A-M|Dutch"
 msgstr "A-M|Dutch"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:93
+#: gui/mdmlanguages.c:93
 msgid "A-M|English"
 msgstr "A-M|Isingisi"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:95
+#: gui/mdmlanguages.c:95
 msgid "A-M|English (USA)"
 msgstr "A-M|Isingisi (Imelika)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:97
+#: gui/mdmlanguages.c:97
 msgid "A-M|English (Australia)"
 msgstr "A-M|Isingisi (Australia)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:99
+#: gui/mdmlanguages.c:99
 msgid "A-M|English (UK)"
 msgstr "A-M|Isingisi (UK)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:101
+#: gui/mdmlanguages.c:101
 msgid "A-M|English (Canada)"
 msgstr "A-M|Isingisi (Canada)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:103
+#: gui/mdmlanguages.c:103
 msgid "A-M|English (Ireland)"
 msgstr "A-M|Isingisi (Ireland)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:105
+#: gui/mdmlanguages.c:105
 msgid "A-M|English (Denmark)"
 msgstr "A-M|Isingisi (Denmark)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:107
+#: gui/mdmlanguages.c:107
 msgid "A-M|English (South Africa)"
 msgstr "A-M|Isingisi (Iningizimu Afrika)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:109
+#: gui/mdmlanguages.c:109
 msgid "A-M|Estonian"
 msgstr "A-M|Estonian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:111
+#: gui/mdmlanguages.c:111
 msgid "A-M|Finnish"
 msgstr "A-M|Finnish"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:113
+#: gui/mdmlanguages.c:113
 msgid "A-M|French"
 msgstr "A-M|French"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:115
+#: gui/mdmlanguages.c:115
 msgid "A-M|French (Belgium)"
 msgstr "A-M|French (Belgium)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:117
+#: gui/mdmlanguages.c:117
 msgid "A-M|French (Switzerland)"
 msgstr "A-M|French (Switzerland)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:119
+#: gui/mdmlanguages.c:119
 msgid "A-M|Galician"
 msgstr "A-M|Galician"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:121
+#: gui/mdmlanguages.c:121
 msgid "A-M|German"
 msgstr "A-M|IsiJalamani"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:123
+#: gui/mdmlanguages.c:123
 msgid "A-M|German (Austria)"
 msgstr "A-M|IsiJalamani (Austria)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:125
+#: gui/mdmlanguages.c:125
 msgid "A-M|German (Switzerland)"
 msgstr "A-M|IsiJalamani (Switzerland)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:127
+#: gui/mdmlanguages.c:127
 msgid "A-M|Greek"
 msgstr "A-M|Greek"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:129
+#: gui/mdmlanguages.c:129
 msgid "A-M|Gujarati"
 msgstr "A-M|Gujarati"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:131 gui/gdmlanguages.c:133
+#: gui/mdmlanguages.c:131 gui/mdmlanguages.c:133
 msgid "A-M|Hebrew"
 msgstr "A-M|Hebheru"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:135
+#: gui/mdmlanguages.c:135
 msgid "A-M|Hindi"
 msgstr "A-M|Hindi"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:137
+#: gui/mdmlanguages.c:137
 msgid "A-M|Hungarian"
 msgstr "A-M|Hungarian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:139
+#: gui/mdmlanguages.c:139
 msgid "A-M|Icelandic"
 msgstr "A-M|Icelandic"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:141
+#: gui/mdmlanguages.c:141
 msgid "A-M|Indonesian"
 msgstr "A-M|Indonesian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:143
+#: gui/mdmlanguages.c:143
 msgid "A-M|Interlingua"
 msgstr "A-M|Interlingua"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:145
+#: gui/mdmlanguages.c:145
 msgid "A-M|Irish"
 msgstr "A-M|Irish"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:147
+#: gui/mdmlanguages.c:147
 msgid "A-M|Italian"
 msgstr "A-M|IsiTaliyani"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:149
+#: gui/mdmlanguages.c:149
 msgid "A-M|Japanese"
 msgstr "A-M|Japanese"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:151
+#: gui/mdmlanguages.c:151
 msgid "A-M|Kannada"
 msgstr "A-M|Kannada"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:153
+#: gui/mdmlanguages.c:153
 msgid "A-M|Korean"
 msgstr "A-M|Korean"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:155
+#: gui/mdmlanguages.c:155
 msgid "A-M|Latvian"
 msgstr "A-M|Latvian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:157
+#: gui/mdmlanguages.c:157
 msgid "A-M|Lithuanian"
 msgstr "A-M|Lithuanian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:159
+#: gui/mdmlanguages.c:159
 msgid "A-M|Macedonian"
 msgstr "A-M|Macedonian"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:161
+#: gui/mdmlanguages.c:161
 msgid "A-M|Malay"
 msgstr "A-M|Malay"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:163
+#: gui/mdmlanguages.c:163
 msgid "A-M|Malayalam"
 msgstr "A-M|Malayalam"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:165
+#: gui/mdmlanguages.c:165
 msgid "A-M|Marathi"
 msgstr "A-M|Marathi"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: gui/gdmlanguages.c:167
+#: gui/mdmlanguages.c:167
 msgid "A-M|Mongolian"
 msgstr "A-M|Mongolian"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:169
+#: gui/mdmlanguages.c:169
 msgid "N-Z|Northern Sotho"
 msgstr ""
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:171
+#: gui/mdmlanguages.c:171
 msgid "N-Z|Norwegian (bokmal)"
 msgstr "N-Z|Norwegian (bokmal)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:173
+#: gui/mdmlanguages.c:173
 msgid "N-Z|Norwegian (nynorsk)"
 msgstr "N-Z|Norwegian (nynorsk)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:175
+#: gui/mdmlanguages.c:175
 msgid "N-Z|Oriya"
 msgstr "N-Z|Oriya"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:177
+#: gui/mdmlanguages.c:177
 msgid "N-Z|Panjabi"
 msgstr "N-Z|Panjabi"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:179
+#: gui/mdmlanguages.c:179
 msgid "N-Z|Persian"
 msgstr "N-Z|Persian"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:181
+#: gui/mdmlanguages.c:181
 msgid "N-Z|Polish"
 msgstr "N-Z|Polish"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:183
+#: gui/mdmlanguages.c:183
 msgid "N-Z|Portuguese"
 msgstr "N-Z|IsiPotukesi"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:185
+#: gui/mdmlanguages.c:185
 msgid "N-Z|Portuguese (Brazilian)"
 msgstr "N-Z|IsiPotukesi (Brazilian)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:187
+#: gui/mdmlanguages.c:187
 msgid "N-Z|Romanian"
 msgstr "N-Z|Romanian"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:189
+#: gui/mdmlanguages.c:189
 msgid "N-Z|Russian"
 msgstr "N-Z|Russian"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:191 gui/gdmlanguages.c:193
+#: gui/mdmlanguages.c:191 gui/mdmlanguages.c:193
 msgid "N-Z|Serbian"
 msgstr "N-Z|Serbian"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:195
+#: gui/mdmlanguages.c:195
 msgid "N-Z|Serbian (Latin)"
 msgstr "N-Z|Serbian (Latin)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:197
+#: gui/mdmlanguages.c:197
 msgid "N-Z|Serbian (Jekavian)"
 msgstr "N-Z|Serbian (Jekavian)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:199
+#: gui/mdmlanguages.c:199
 msgid "N-Z|Slovak"
 msgstr "N-Z|Slovak"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:201
+#: gui/mdmlanguages.c:201
 msgid "N-Z|Slovenian"
 msgstr "N-Z|Slovenian"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:203
+#: gui/mdmlanguages.c:203
 msgid "N-Z|Spanish"
 msgstr "N-Z|Spanish"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:205
+#: gui/mdmlanguages.c:205
 msgid "N-Z|Spanish (Mexico)"
 msgstr "N-Z|Spanish (Mexico)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:207
+#: gui/mdmlanguages.c:207
 msgid "N-Z|Swedish"
 msgstr "N-Z|Swedish"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:209
+#: gui/mdmlanguages.c:209
 msgid "N-Z|Swedish (Finland)"
 msgstr "N-Z|Swedish (Finland)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:211
+#: gui/mdmlanguages.c:211
 msgid "N-Z|Tamil"
 msgstr "N-Z|Tamil"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:213
+#: gui/mdmlanguages.c:213
 msgid "N-Z|Telugu"
 msgstr "N-Z|Telugu"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:215
+#: gui/mdmlanguages.c:215
 msgid "N-Z|Thai"
 msgstr "N-Z|Thai"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:217
+#: gui/mdmlanguages.c:217
 msgid "N-Z|Turkish"
 msgstr "N-Z|Turkish"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:219
+#: gui/mdmlanguages.c:219
 msgid "N-Z|Ukrainian"
 msgstr "N-Z|Ukrainian"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:221
+#: gui/mdmlanguages.c:221
 msgid "N-Z|Vietnamese"
 msgstr "N-Z|Vietnamese"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:223
+#: gui/mdmlanguages.c:223
 msgid "N-Z|Walloon"
 msgstr "N-Z|Walloon"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:225
+#: gui/mdmlanguages.c:225
 msgid "N-Z|Welsh"
 msgstr "N-Z|Welsh"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:227
+#: gui/mdmlanguages.c:227
 msgid "N-Z|Yiddish"
 msgstr "N-Z|Yiddish"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: gui/gdmlanguages.c:229
+#: gui/mdmlanguages.c:229
 msgid "N-Z|Zulu"
 msgstr "N-Z|IsiZulu"
 
 #. This is the POSIX/C locale for english, should really be in Other
-#: gui/gdmlanguages.c:231
+#: gui/mdmlanguages.c:231
 msgid "Other|POSIX/C English"
 msgstr "Okunye|POSIX/C Isingisi"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: gui/gdmlanguages.c:427
+#: gui/mdmlanguages.c:427
 msgid "A-M"
 msgstr "A-M"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: gui/gdmlanguages.c:435
+#: gui/mdmlanguages.c:435
 msgid "N-Z"
 msgstr "N-Z"
 
-#: gui/gdmlogin.c:222 gui/greeter/greeter_parser.c:1047
+#: gui/mdmlogin.c:222 gui/greeter/greeter_parser.c:1047
 #, c-format
 msgid "User %s will login in %d seconds"
 msgstr "Umsebenzisi %s uzongena emizuzwaneni %d"
 
-#: gui/gdmlogin.c:447
+#: gui/mdmlogin.c:447
 #, c-format
 msgid "%s: String too long!"
 msgstr "%s: Umhumo mude kakhulu."
 
-#: gui/gdmlogin.c:449
+#: gui/mdmlogin.c:449
 #, c-format
 msgid "%sWelcome to %s%s"
 msgstr "%sWamukelekile ku %s%s"
 
 #. markup
-#: gui/gdmlogin.c:537
+#: gui/mdmlogin.c:537
 msgid "Could not fork a new process!"
 msgstr "Ngakhoni ukubhudla inkimbiso entsha."
 
-#: gui/gdmlogin.c:539
+#: gui/mdmlogin.c:539
 msgid "You likely won't be able to log in either."
 msgstr "Kungakhonakala ukuthi engekhone ukungena."
 
-#: gui/gdmlogin.c:583 gui/greeter/greeter_system.c:45
+#: gui/mdmlogin.c:583 gui/greeter/greeter_system.c:45
 msgid "Are you sure you want to reboot the machine?"
 msgstr "Uqinisekile ufuna ukuqala phansi umshini?"
 
 #. markup
-#: gui/gdmlogin.c:585 gui/gdmlogin.c:2781 gui/greeter/greeter_parser.c:1027
+#: gui/mdmlogin.c:585 gui/mdmlogin.c:2781 gui/greeter/greeter_parser.c:1027
 #: gui/greeter/greeter_system.c:47 gui/greeter/greeter_system.c:168
 msgid "_Reboot"
 msgstr "_Qalela phansi"
 
-#: gui/gdmlogin.c:597 gui/greeter/greeter_system.c:58
+#: gui/mdmlogin.c:597 gui/greeter/greeter_system.c:58
 msgid "Are you sure you want to shut down the machine?"
 msgstr "Uqinisekile ufuna ukucima umshini?"
 
 #. markup
-#: gui/gdmlogin.c:599 gui/gdmlogin.c:2794 gui/greeter/greeter_parser.c:1017
+#: gui/mdmlogin.c:599 gui/mdmlogin.c:2794 gui/greeter/greeter_parser.c:1017
 #: gui/greeter/greeter_system.c:60 gui/greeter/greeter_system.c:180
 msgid "Shut _Down"
 msgstr "Cisha"
 
-#: gui/gdmlogin.c:619 gui/greeter/greeter_system.c:70
+#: gui/mdmlogin.c:619 gui/greeter/greeter_system.c:70
 msgid "Are you sure you want to suspend the machine?"
 msgstr "Uqinisekile ufuna ukumisa umshini?"
 
 #. markup
-#: gui/gdmlogin.c:621 gui/gdmlogin.c:2808 gui/greeter/greeter_system.c:72
+#: gui/mdmlogin.c:621 gui/mdmlogin.c:2808 gui/greeter/greeter_system.c:72
 msgid "_Suspend"
 msgstr "_Misa"
 
-#: gui/gdmlogin.c:685 gui/gdmlogin.c:3752 gui/greeter/greeter.c:164
+#: gui/mdmlogin.c:685 gui/mdmlogin.c:3752 gui/greeter/greeter.c:164
 #: gui/greeter/greeter.c:858
 msgid "Welcome"
 msgstr "Wamukelekile"
 
-#: gui/gdmlogin.c:688 gui/gdmlogin.c:3755 gui/greeter/greeter.c:167
+#: gui/mdmlogin.c:688 gui/mdmlogin.c:3755 gui/greeter/greeter.c:167
 #: gui/greeter/greeter.c:861
 #, c-format
 msgid "Welcome to %n"
 msgstr "Wamukelekile e%n"
 
-#: gui/gdmlogin.c:736 gui/greeter/greeter.c:192
+#: gui/mdmlogin.c:736 gui/greeter/greeter.c:192
 msgid "TimedLoginDelay was less than 5.  I'll just use 5."
 msgstr "TimedLoginDelay ocushiwe ngaphansi 5, ngizosebenzisa 5."
 
-#: gui/gdmlogin.c:854 gui/greeter/greeter_session.c:119
+#: gui/mdmlogin.c:854 gui/greeter/greeter_session.c:119
 #, c-format
 msgid ""
 "Your preferred session type %s is not installed on this machine.\n"
@@ -2811,13 +2811,13 @@ msgstr ""
 "Bewufuna ukwenza %s iphutha lenhlanganiso yakho nakusasa?"
 
 #. markup
-#: gui/gdmlogin.c:860 gui/gdmlogin.c:887 gui/gdmlogin.c:965
+#: gui/mdmlogin.c:860 gui/mdmlogin.c:887 gui/mdmlogin.c:965
 #: gui/greeter/greeter_action_language.c:143 gui/greeter/greeter_session.c:125
 #: gui/greeter/greeter_session.c:155
 msgid "Make _Default"
 msgstr "Yenza _Iphutha"
 
-#: gui/gdmlogin.c:860 gui/greeter/greeter_session.c:125
+#: gui/mdmlogin.c:860 gui/greeter/greeter_session.c:125
 msgid "Just _Log In"
 msgstr "_Ngena nje"
 
@@ -2825,7 +2825,7 @@ msgstr "_Ngena nje"
 #. no_group
 #. untranslated
 #. markup
-#: gui/gdmlogin.c:879 gui/gdmlogin.c:959
+#: gui/mdmlogin.c:879 gui/mdmlogin.c:959
 #: gui/greeter/greeter_action_language.c:137 gui/greeter/greeter_session.c:147
 #, c-format
 msgid ""
@@ -2835,12 +2835,12 @@ msgstr ""
 "Ukhethe %s kulenhlanganiso, kodwa uhlelo lwephutha lakho i-%s.\n"
 "Bewufuna ukwenza %s iphutha lenhlanganiso yakho nakusasa?"
 
-#: gui/gdmlogin.c:887 gui/gdmlogin.c:965
+#: gui/mdmlogin.c:887 gui/mdmlogin.c:965
 #: gui/greeter/greeter_action_language.c:143 gui/greeter/greeter_session.c:155
 msgid "Just For _This Session"
 msgstr "Okwa _lenhlanganiso"
 
-#: gui/gdmlogin.c:897 gui/greeter/greeter_session.c:168
+#: gui/mdmlogin.c:897 gui/greeter/greeter_session.c:168
 #, c-format
 msgid ""
 "You have chosen %s for this session.\n"
@@ -2853,53 +2853,53 @@ msgstr ""
 "sebenzisa inzuzo 'switchdesk' isisebenzi\n"
 "(Uhlelo->Ithulusi lokucisha isiga-nyezi kwihlu eliphezulu)."
 
-#: gui/gdmlogin.c:941 gui/gdmlogin.c:950
+#: gui/mdmlogin.c:941 gui/mdmlogin.c:950
 #: gui/greeter/greeter_action_language.c:53
 #: gui/greeter/greeter_action_language.c:121
 #: gui/greeter/greeter_action_language.c:129
 msgid "System Default"
 msgstr "Iphutha lohlelo"
 
-#: gui/gdmlogin.c:1074 gui/gdmlogin.c:1088 gui/gdmlogin.c:1875
-#: gui/gdmlogin.c:2373 gui/gdmlogin.c:3023
+#: gui/mdmlogin.c:1074 gui/mdmlogin.c:1088 gui/mdmlogin.c:1875
+#: gui/mdmlogin.c:2373 gui/mdmlogin.c:3023
 msgid "_Username:"
 msgstr "_Ibizo-lomsebenzisi:"
 
-#: gui/gdmlogin.c:1146
+#: gui/mdmlogin.c:1146
 #, c-format
 msgid "%s session selected"
 msgstr "%s nhlanganiso ikhethiwe"
 
-#: gui/gdmlogin.c:1172 gui/gdmlogin.c:1482 gui/greeter/greeter_session.c:271
+#: gui/mdmlogin.c:1172 gui/mdmlogin.c:1482 gui/greeter/greeter_session.c:271
 msgid "_Last"
 msgstr "_Okokugcina"
 
-#: gui/gdmlogin.c:1183 gui/greeter/greeter_session.c:277
+#: gui/mdmlogin.c:1183 gui/greeter/greeter_session.c:277
 msgid "Log in using the session that you have used last time you logged in"
 msgstr "Ngena usebenzisa inhlanganiso oyisebenzise ngenkathi ungena okokugcina"
 
-#: gui/gdmlogin.c:1194 gui/greeter/greeter_session.c:264
+#: gui/mdmlogin.c:1194 gui/greeter/greeter_session.c:264
 msgid "Failsafe Gnome"
 msgstr "Iphutha lomkhawulo GNOME"
 
-#: gui/gdmlogin.c:1195 gui/greeter/greeter_session.c:265
+#: gui/mdmlogin.c:1195 gui/greeter/greeter_session.c:265
 msgid "Failsafe xterm"
 msgstr "Iphutha lesikhawulo u-X"
 
-#: gui/gdmlogin.c:1344 gui/greeter/greeter_session.c:429
+#: gui/mdmlogin.c:1344 gui/greeter/greeter_session.c:429
 #, c-format
 msgid "%s: Session directory %s not found!"
 msgstr "%s: Umbombo wenhlanganiso %s ayitholakali!"
 
-#: gui/gdmlogin.c:1350 gui/greeter/greeter_session.c:437
+#: gui/mdmlogin.c:1350 gui/greeter/greeter_session.c:437
 msgid "Yaikes, nothing found in the session directory."
 msgstr "Yaikes, akutholakali lutho kumbombo wenhlanganiso."
 
-#: gui/gdmlogin.c:1361 gui/greeter/greeter_session.c:449
+#: gui/mdmlogin.c:1361 gui/greeter/greeter_session.c:449
 msgid "Failsafe _Gnome"
 msgstr "Iphutha lomkhawulo _GNOME"
 
-#: gui/gdmlogin.c:1363 gui/greeter/greeter_session.c:451
+#: gui/mdmlogin.c:1363 gui/greeter/greeter_session.c:451
 msgid ""
 "This is a failsafe session that will log you into GNOME.  No startup scripts "
 "will be read and it is only to be used when you can't log in otherwise.  "
@@ -2909,11 +2909,11 @@ msgstr ""
 "umbhalo wokuqalisa futhi izosetshenziswa uma ungakhoni ukungena ngenye "
 "indlela kuphela. i-GNOME izosebenzisa 'iPhutha' enhlanganisweni."
 
-#: gui/gdmlogin.c:1386 gui/greeter/greeter_session.c:473
+#: gui/mdmlogin.c:1386 gui/greeter/greeter_session.c:473
 msgid "Failsafe _Terminal"
 msgstr "Isigungu_iphutha lomkhawulo"
 
-#: gui/gdmlogin.c:1388 gui/greeter/greeter_session.c:475
+#: gui/mdmlogin.c:1388 gui/greeter/greeter_session.c:475
 msgid ""
 "This is a failsafe session that will log you into a terminal.  No startup "
 "scripts will be read and it is only to be used when you can't log in "
@@ -2923,7 +2923,7 @@ msgstr ""
 "kufundwe umbhalo wokuqalisa futhi izosetshenziswa uma ungakhoni ukungena "
 "ngenye indlela kuphela. Mawufuna ukuphuma esigungwini, bhala 'uphuma'."
 
-#: gui/gdmlogin.c:1409 gui/greeter/greeter_session.c:495
+#: gui/mdmlogin.c:1409 gui/greeter/greeter_session.c:495
 msgid "No default session link found. Using Failsafe GNOME.\n"
 msgstr ""
 "Akutholakalanga umxhumanisi wephutha lenhlanganiso. Sebenzisa iphutha "
@@ -2933,75 +2933,75 @@ msgstr ""
 #. no_group
 #. untranslated
 #. makrup
-#: gui/gdmlogin.c:1453
+#: gui/mdmlogin.c:1453
 #, c-format
 msgid "%s language selected"
 msgstr "%s ulwimi olukhethiwe"
 
-#: gui/gdmlogin.c:1493
+#: gui/mdmlogin.c:1493
 msgid "Log in using the language that you have used last time you logged in"
 msgstr "Ngena usebenzisa ulwimi olusebenzise mawungena okokugcina"
 
-#: gui/gdmlogin.c:1497
+#: gui/mdmlogin.c:1497
 msgid "_System Default"
 msgstr "_Iphutha lohlelo"
 
-#: gui/gdmlogin.c:1508
+#: gui/mdmlogin.c:1508
 msgid "Log in using the default system language"
 msgstr "Ngena usebenzisa iphutha lohlelo lolwimi"
 
-#: gui/gdmlogin.c:1528
+#: gui/mdmlogin.c:1528
 msgid "_Other"
 msgstr "_Okunye"
 
-#: gui/gdmlogin.c:1906
+#: gui/mdmlogin.c:1906
 msgid "_Password:"
 msgstr "_Ibizo-ngena:"
 
 #. markup
 #. translators:  This is a nice and evil eggie text, translate
 #. * to your favourite currency
-#: gui/gdmlogin.c:2130 gui/greeter/greeter.c:434
+#: gui/mdmlogin.c:2130 gui/greeter/greeter.c:434
 msgid "Please insert 25 cents to log in."
 msgstr "Faka amasenti angamashumi amabili nanhlanu ukungena"
 
-#: gui/gdmlogin.c:2381
+#: gui/mdmlogin.c:2381
 msgid "Doubleclick on the user to log in"
 msgstr "Cofoza kabili kumsebenzisi ukungena"
 
-#: gui/gdmlogin.c:2506
+#: gui/mdmlogin.c:2506
 msgid "GNOME Desktop Manager"
 msgstr "Umphathi weSikhamu Sokubuka seGNOME"
 
-#: gui/gdmlogin.c:2532 gui/greeter/greeter_item.c:139
+#: gui/mdmlogin.c:2532 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"
 msgstr "%a %b %d, %H:%M"
 
-#: gui/gdmlogin.c:2534 gui/greeter/greeter_item.c:143
+#: gui/mdmlogin.c:2534 gui/greeter/greeter_item.c:143
 msgid "%a %b %d, %l:%M %p"
 msgstr "%a %b %d, %l:%M %p"
 
-#: gui/gdmlogin.c:2583
+#: gui/mdmlogin.c:2583
 msgid "Finger"
 msgstr "Khomba"
 
-#: gui/gdmlogin.c:2689
-msgid "GDM Login"
-msgstr "Umngenisi GDM"
+#: gui/mdmlogin.c:2689
+msgid "MDM Login"
+msgstr "Umngenisi MDM"
 
-#: gui/gdmlogin.c:2732 gui/greeter/greeter_parser.c:997
+#: gui/mdmlogin.c:2732 gui/greeter/greeter_parser.c:997
 msgid "_Session"
 msgstr "_Inhlamganiso"
 
-#: gui/gdmlogin.c:2739 gui/greeter/greeter_parser.c:992
+#: gui/mdmlogin.c:2739 gui/greeter/greeter_parser.c:992
 msgid "_Language"
 msgstr "_Ulwimi"
 
-#: gui/gdmlogin.c:2751 gui/greeter/greeter_system.c:134
+#: gui/mdmlogin.c:2751 gui/greeter/greeter_system.c:134
 msgid "_XDMCP Chooser..."
 msgstr "Umkhethi we-_XDMCP..."
 
-#: gui/gdmlogin.c:2758 gui/greeter/greeter_system.c:141
+#: gui/mdmlogin.c:2758 gui/greeter/greeter_system.c:141
 #: gui/greeter/greeter_system.c:331
 msgid ""
 "Run an XDMCP chooser which will allow you to log into available remote "
@@ -3010,117 +3010,117 @@ msgstr ""
 "Sebenzisa isikhethi seXDMCP esizokuvumela ukungena kumshini okhona buqamama, "
 "uma ikhona."
 
-#: gui/gdmlogin.c:2767 gui/greeter/greeter_system.c:149
+#: gui/mdmlogin.c:2767 gui/greeter/greeter_system.c:149
 msgid "_Configure Login Manager..."
 msgstr "_Linganisisa Umphathi woMngenisi..."
 
-#: gui/gdmlogin.c:2774 gui/greeter/greeter_system.c:156
+#: gui/mdmlogin.c:2774 gui/greeter/greeter_system.c:156
 #: gui/greeter/greeter_system.c:351
 msgid ""
-"Configure GDM (this login manager). This will require the root password."
+"Configure MDM (this login manager). This will require the root password."
 msgstr ""
-"Linganisisa iGDM (lesiphathi somngenisi). Lokhu kuzodinga impande-bizo ngena."
+"Linganisisa iMDM (lesiphathi somngenisi). Lokhu kuzodinga impande-bizo ngena."
 
-#: gui/gdmlogin.c:2788 gui/greeter/greeter_system.c:175
+#: gui/mdmlogin.c:2788 gui/greeter/greeter_system.c:175
 msgid "Reboot your computer"
 msgstr "Qalela phansi isiga-nyezi"
 
-#: gui/gdmlogin.c:2801 gui/greeter/greeter_system.c:187
+#: gui/mdmlogin.c:2801 gui/greeter/greeter_system.c:187
 msgid "Shut down the system so that you may safely turn off the computer."
 msgstr "Cima uhlelo ukuze kucimeke isiga-nyezi ngokuphephile."
 
-#: gui/gdmlogin.c:2815 gui/greeter/greeter_system.c:200
+#: gui/mdmlogin.c:2815 gui/greeter/greeter_system.c:200
 msgid "Suspend your computer"
 msgstr "Misa isiga-nyezi"
 
-#: gui/gdmlogin.c:2821 gui/greeter/greeter_parser.c:1002
+#: gui/mdmlogin.c:2821 gui/greeter/greeter_parser.c:1002
 msgid "_Actions"
 msgstr "_Izenzo"
 
-#: gui/gdmlogin.c:2830
+#: gui/mdmlogin.c:2830
 msgid "_Theme"
 msgstr "_Indikimba"
 
-#: gui/gdmlogin.c:2841 gui/greeter/greeter_canvas_item.c:146
+#: gui/mdmlogin.c:2841 gui/greeter/greeter_canvas_item.c:146
 #: gui/greeter/greeter_parser.c:1012
 msgid "_Quit"
 msgstr "_Yeka"
 
-#: gui/gdmlogin.c:2843 gui/greeter/greeter_canvas_item.c:148
+#: gui/mdmlogin.c:2843 gui/greeter/greeter_canvas_item.c:148
 #: gui/greeter/greeter_parser.c:1007
 msgid "D_isconnect"
 msgstr "H_lukanisa"
 
-#: gui/gdmlogin.c:2910 gui/greeter/greeter_item_ulist.c:442
+#: gui/mdmlogin.c:2910 gui/greeter/greeter_item_ulist.c:442
 msgid "Icon"
 msgstr "Isibonakalisi"
 
-#: gui/gdmlogin.c:3391
+#: gui/mdmlogin.c:3391
 #, c-format
 msgid "Can't open DefaultImage: %s. Suspending face browser!"
 msgstr "Ngakhoni ukuvula isithombe sephutha: %s. Misa isiyaluzi!"
 
-#: gui/gdmlogin.c:3413 gui/gdmsetup.c:569 gui/greeter/greeter_item_ulist.c:297
+#: gui/mdmlogin.c:3413 gui/mdmsetup.c:569 gui/greeter/greeter_item_ulist.c:297
 msgid "Too many users to list here..."
 msgstr "Abasebenzisi abaningi abazohlelwa lapha..."
 
 #. markup
-#: gui/gdmlogin.c:3831 gui/gdmlogin.c:3862 gui/gdmlogin.c:3906
+#: gui/mdmlogin.c:3831 gui/mdmlogin.c:3862 gui/mdmlogin.c:3906
 #: gui/greeter/greeter.c:637 gui/greeter/greeter.c:668
 #: gui/greeter/greeter.c:713
 msgid "Cannot start the greeter"
 msgstr "Ngakhoni ukuqala isithakazeli"
 
-#: gui/gdmlogin.c:3832 gui/gdmlogin.c:3863
+#: gui/mdmlogin.c:3832 gui/mdmlogin.c:3863
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version.  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr ""
-"Isihumusho sesithakazeli (%s) asifani nesihumusho sedaemon. Ufukule i-gdm. "
-"Qala gdm daemo futhi noma qalela phansi isiga-nyezi."
+"Isihumusho sesithakazeli (%s) asifani nesihumusho sedaemon. Ufukule i-mdm. "
+"Qala mdm daemo futhi noma qalela phansi isiga-nyezi."
 
-#: gui/gdmlogin.c:3869 gui/gdmlogin.c:3915 gui/greeter/greeter.c:675
+#: gui/mdmlogin.c:3869 gui/mdmlogin.c:3915 gui/greeter/greeter.c:675
 #: gui/greeter/greeter.c:722
 msgid "Reboot"
 msgstr "Qalela phansi"
 
-#: gui/gdmlogin.c:3907
+#: gui/mdmlogin.c:3907
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded gdm.  Please restart the gdm daemon or reboot the "
+"probably just upgraded mdm.  Please restart the mdm daemon or reboot the "
 "computer."
 msgstr ""
 "Isihumusho sesithakazeli (%s) asifani nesihumusho sedaemon (%s). Ufukule i-"
-"gdm. Qala gdm daemon futhi noma qalela phansi isiga-nyezi."
+"mdm. Qala mdm daemon futhi noma qalela phansi isiga-nyezi."
 
-#: gui/gdmlogin.c:3913 gui/greeter/greeter.c:720
+#: gui/mdmlogin.c:3913 gui/greeter/greeter.c:720
 msgid "Restart"
 msgstr "Qala futhi"
 
 #. markup
-#: gui/gdmlogin.c:4099 gui/greeter/greeter.c:1335
+#: gui/mdmlogin.c:4099 gui/greeter/greeter.c:1335
 msgid "Session directory is missing"
 msgstr "Inhlanganiso yombombo ayikho"
 
-#: gui/gdmlogin.c:4101 gui/greeter/greeter.c:1337
+#: gui/mdmlogin.c:4101 gui/greeter/greeter.c:1337
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the gdm "
+"sessions you can use, but you should log in and correct the mdm "
 "configuration."
 msgstr ""
 "Inhlanganiso yombombo ayikho noma ayinalutho! Kukhona izinhlanganiso "
 "ezimbili ongazisenenzisa, kodwa kufanele ungene bese ulungisa isilinganisi "
-"se-gdm."
+"se-mdm."
 
 #. markup
-#: gui/gdmlogin.c:4125 gui/greeter/greeter.c:1362
+#: gui/mdmlogin.c:4125 gui/greeter/greeter.c:1362
 msgid "Configuration is not correct"
 msgstr "Isilinganiso asilungile"
 
-#: gui/gdmlogin.c:4127 gui/greeter/greeter.c:1364
+#: gui/mdmlogin.c:4127 gui/greeter/greeter.c:1364
 msgid ""
 "The configuration file contains an invalid command line for the login "
 "dialog, and thus I ran the default command.  Please fix your configuration."
@@ -3130,56 +3130,56 @@ msgstr ""
 "sakho."
 
 #. markup
-#: gui/gdmlogin.c:4152 gui/greeter/greeter.c:1391
+#: gui/mdmlogin.c:4152 gui/greeter/greeter.c:1391
 msgid "No configuration was found"
 msgstr "Akutholakalanga isilinganisi"
 
-#: gui/gdmlogin.c:4154 gui/greeter/greeter.c:1393
+#: gui/mdmlogin.c:4154 gui/greeter/greeter.c:1393
 msgid ""
-"The configuration was not found.  GDM is using defaults to run this "
-"session.  You should log in and create a configuration file with the GDM "
+"The configuration was not found.  MDM is using defaults to run this "
+"session.  You should log in and create a configuration file with the MDM "
 "configuration program."
 msgstr ""
-"Isilinganisi asitholakalanga. i-GDM isebenzisa amaphutha ukusebenzisa "
+"Isilinganisi asitholakalanga. i-MDM isebenzisa amaphutha ukusebenzisa "
 "lenhlanganiso. Kufanele ungene bese wakha ihele lesilinganisi ngesilinganisi "
-"sohlelo le-GDM."
+"sohlelo le-MDM."
 
 #. markup
-#: gui/gdmphotosetup.c:144
+#: gui/mdmphotosetup.c:144
 msgid "The face browser is not configured"
 msgstr "Isiyaluzi asilinganisiwe"
 
-#: gui/gdmphotosetup.c:147
+#: gui/mdmphotosetup.c:147
 msgid ""
-"The face browser is not configured in the GDM configuration.  Please ask "
-"your system administrator to enable it in the GDM configurator program."
+"The face browser is not configured in the MDM configuration.  Please ask "
+"your system administrator to enable it in the MDM configurator program."
 msgstr ""
-"Isiyaluzi asilinganisiwe kusilinganisi we-GDM. Cela umphathi hlelo "
-"ukuyilungisa kuhlelo lwesilinganisi se-GDM."
+"Isiyaluzi asilinganisiwe kusilinganisi we-MDM. Cela umphathi hlelo "
+"ukuyilungisa kuhlelo lwesilinganisi se-MDM."
 
-#: gui/gdmphotosetup.c:157 gui/gdmphotosetup.desktop.in.h:2
+#: gui/mdmphotosetup.c:157 gui/mdmphotosetup.desktop.in.h:2
 msgid "Login Photo"
 msgstr "Isithombe Sokungena"
 
-#: gui/gdmphotosetup.c:167
+#: gui/mdmphotosetup.c:167
 msgid "Select a photograph to show in the facebrowser:"
 msgstr "Khetha isithombe sokutshengisa kwisiyaluzi esibonakalayo:"
 
-#: gui/gdmphotosetup.c:172
+#: gui/mdmphotosetup.c:172
 msgid "Browse"
 msgstr "Yaluza"
 
 #. markup
-#: gui/gdmphotosetup.c:206
+#: gui/mdmphotosetup.c:206
 msgid "No picture selected."
 msgstr "Akuna sithombe esikhethiwe."
 
 #. markup
-#: gui/gdmphotosetup.c:217
+#: gui/mdmphotosetup.c:217
 msgid "Picture is too large"
 msgstr "Isithombe sikhulu kakhulu"
 
-#: gui/gdmphotosetup.c:218
+#: gui/mdmphotosetup.c:218
 #, c-format
 msgid ""
 "The system administrator disallowed pictures larger than %d bytes to show in "
@@ -3189,11 +3189,11 @@ msgstr ""
 "esibonakalayo"
 
 #. markup
-#: gui/gdmphotosetup.c:245 gui/gdmphotosetup.c:267
+#: gui/mdmphotosetup.c:245 gui/mdmphotosetup.c:267
 msgid "Cannot open file"
 msgstr "Ngakhoni ukuvula ihele"
 
-#: gui/gdmphotosetup.c:246
+#: gui/mdmphotosetup.c:246
 #, c-format
 msgid ""
 "File %s cannot be open for reading\n"
@@ -3202,7 +3202,7 @@ msgstr ""
 "Ihele %s alivuleki ukuze kufundwe\n"
 ". Iphutha: %s"
 
-#: gui/gdmphotosetup.c:268
+#: gui/mdmphotosetup.c:268
 #, c-format
 msgid ""
 "File %s cannot be open for writing\n"
@@ -3211,11 +3211,11 @@ msgstr ""
 "Ihele %s alivuleki ukuze kubhalwe\n"
 " Iphutha: %s"
 
-#: gui/gdmphotosetup.desktop.in.h:1
+#: gui/mdmphotosetup.desktop.in.h:1
 msgid ""
-"Change the picture that will show in the GDM (login manager) face browser"
+"Change the picture that will show in the MDM (login manager) face browser"
 msgstr ""
-"Shintsha isithombe esizoboniswa kuGDM (umphathi womngenisi) isiyaluzi "
+"Shintsha isithombe esizoboniswa kuMDM (umphathi womngenisi) isiyaluzi "
 "esibonakalayo"
 
 #.
@@ -3223,51 +3223,51 @@ msgstr ""
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gui/gdmsetup-strings.c:7 gui/gdmsetup.desktop.in.h:2
-#: gui/gdmsetup.glade.h:26
+#: gui/mdmsetup-strings.c:7 gui/mdmsetup.desktop.in.h:2
+#: gui/mdmsetup.glade.h:26
 msgid "Login Screen Setup"
 msgstr "Umngenisi Wokuhlela Isibuko"
 
-#: gui/gdmsetup-strings.c:8 gui/gdmsetup.glade.h:22
+#: gui/mdmsetup-strings.c:8 gui/mdmsetup.glade.h:22
 msgid "Greeter"
 msgstr "Isithakazeli"
 
-#: gui/gdmsetup-strings.c:9 gui/gdmsetup-strings.c:24
-#: gui/gdmsetup-strings.c:29 gui/gdmsetup-strings.c:36
-#: gui/gdmsetup-strings.c:39 gui/gdmsetup-strings.c:42
-#: gui/gdmsetup-strings.c:65 gui/gdmsetup-strings.c:71
-#: gui/gdmsetup-strings.c:73 gui/gdmsetup-strings.c:79
-#: gui/gdmsetup-strings.c:82 gui/gdmsetup-strings.c:90 gui/gdmsetup.glade.h:1
+#: gui/mdmsetup-strings.c:9 gui/mdmsetup-strings.c:24
+#: gui/mdmsetup-strings.c:29 gui/mdmsetup-strings.c:36
+#: gui/mdmsetup-strings.c:39 gui/mdmsetup-strings.c:42
+#: gui/mdmsetup-strings.c:65 gui/mdmsetup-strings.c:71
+#: gui/mdmsetup-strings.c:73 gui/mdmsetup-strings.c:79
+#: gui/mdmsetup-strings.c:82 gui/mdmsetup-strings.c:90 gui/mdmsetup.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: gui/gdmsetup-strings.c:10 gui/gdmsetup.glade.h:24
+#: gui/mdmsetup-strings.c:10 gui/mdmsetup.glade.h:24
 msgid "L_ocal: "
 msgstr "N_dawoleyo: "
 
-#: gui/gdmsetup-strings.c:11 gui/gdmsetup.glade.h:66
+#: gui/mdmsetup-strings.c:11 gui/mdmsetup.glade.h:66
 msgid "_Remote: "
 msgstr "_Buqamama: "
 
-#: gui/gdmsetup-strings.c:12 gui/gdmsetup.glade.h:70
+#: gui/mdmsetup-strings.c:12 gui/mdmsetup.glade.h:70
 msgid "_Welcome string: "
 msgstr "_Umhumo wokwamukela: "
 
-#: gui/gdmsetup-strings.c:13 gui/gdmsetup.glade.h:43
+#: gui/mdmsetup-strings.c:13 gui/mdmsetup.glade.h:43
 msgid "Re_mote welcome string: "
 msgstr "Umhumo wakwamukela obu_qamama: "
 
-#: gui/gdmsetup-strings.c:14 gui/gdmsetup-strings.c:16
-#: gui/gdmsetup-strings.c:51 gui/gdmsetup.c:969 gui/gdmsetup.glade.h:50
+#: gui/mdmsetup-strings.c:14 gui/mdmsetup-strings.c:16
+#: gui/mdmsetup-strings.c:51 gui/mdmsetup.c:969 gui/mdmsetup.glade.h:50
 msgid "Standard greeter"
 msgstr "Isithakazeli esijwayelekile"
 
-#: gui/gdmsetup-strings.c:15 gui/gdmsetup-strings.c:17
-#: gui/gdmsetup-strings.c:63 gui/gdmsetup.c:971 gui/gdmsetup.glade.h:21
+#: gui/mdmsetup-strings.c:15 gui/mdmsetup-strings.c:17
+#: gui/mdmsetup-strings.c:63 gui/mdmsetup.c:971 gui/mdmsetup.glade.h:21
 msgid "Graphical greeter"
 msgstr "Isithakazeli esiqhamile"
 
-#: gui/gdmsetup-strings.c:18 gui/gdmsetup.glade.h:52
+#: gui/mdmsetup-strings.c:18 gui/mdmsetup.glade.h:52
 #, no-c-format
 msgid ""
 "String to be shown in the greeter as welcome.  You can insert %n in here and "
@@ -3276,7 +3276,7 @@ msgstr ""
 "Uhumo ozotshengiswa kwisithakazeli njengesamukelo. Ungafaka %n lapha "
 "izonanelwa ngegama lesiga-nyezi sakho."
 
-#: gui/gdmsetup-strings.c:20 gui/gdmsetup.glade.h:54
+#: gui/mdmsetup-strings.c:20 gui/mdmsetup.glade.h:54
 #, no-c-format
 msgid ""
 "String to be shown in the greeter for people logging in remotely with "
@@ -3286,107 +3286,107 @@ msgstr ""
 "Umhumo ozotshengiswa kusithakazeli ukungenisa abantu abangena buqamama nge-"
 "XDMCP. Ungafaka %n lapha izonanelwa ngegama lesiga-nyezi sakho."
 
-#: gui/gdmsetup-strings.c:22 gui/gdmsetup.glade.h:10
+#: gui/mdmsetup-strings.c:22 gui/mdmsetup.glade.h:10
 msgid "Always use 24 hour cloc_k format"
 msgstr "Sebenzisa isimo sesikhat_hi samahora angashumi amabili nane"
 
-#: gui/gdmsetup-strings.c:23 gui/gdmsetup.glade.h:12
+#: gui/mdmsetup-strings.c:23 gui/mdmsetup.glade.h:12
 msgid "Automatic Login"
 msgstr "Umngenisi ozenzakalelayo"
 
-#: gui/gdmsetup-strings.c:25 gui/gdmsetup.glade.h:58
+#: gui/mdmsetup-strings.c:25 gui/mdmsetup.glade.h:58
 msgid "_Automatic login username:"
 msgstr "Ibizo-mngenisi lomngenisi _ozenzakalelayo:"
 
-#: gui/gdmsetup-strings.c:27 gui/gdmsetup.glade.h:63
+#: gui/mdmsetup-strings.c:27 gui/mdmsetup.glade.h:63
 msgid "_Login a user automatically on first bootup"
 msgstr "_Ngenisa umsebenzisi ngokuzenzakalela ngokuvuleka kokuqala"
 
-#: gui/gdmsetup-strings.c:28 gui/gdmsetup.glade.h:55
+#: gui/mdmsetup-strings.c:28 gui/mdmsetup.glade.h:55
 msgid "Timed Login"
 msgstr "Umngenisi ocushiwe"
 
-#: gui/gdmsetup-strings.c:30 gui/gdmsetup.glade.h:56
+#: gui/mdmsetup-strings.c:30 gui/mdmsetup.glade.h:56
 msgid "Timed login us_ername:"
 msgstr "Ib_izo-mngenisi lomngenisi ocushiwe:"
 
-#: gui/gdmsetup-strings.c:31 gui/gdmsetup.glade.h:68
+#: gui/mdmsetup-strings.c:31 gui/mdmsetup.glade.h:68
 msgid "_Seconds before login:"
 msgstr "_Imizuzwana ngaphambi kokungena:"
 
-#: gui/gdmsetup-strings.c:33 gui/gdmsetup.glade.h:27
+#: gui/mdmsetup-strings.c:33 gui/mdmsetup.glade.h:27
 msgid "Login a user automa_tically after a specified number of seconds"
 msgstr "Ngenisa umsebenzisi ngokuzenza_kalela emuva kwenani lemizuzwana eshiwo"
 
-#: gui/gdmsetup-strings.c:34 gui/gdmsetup.glade.h:20
+#: gui/mdmsetup-strings.c:34 gui/mdmsetup.glade.h:20
 msgid "General"
 msgstr "Jikelele"
 
-#: gui/gdmsetup-strings.c:35 gui/gdmsetup.glade.h:28
+#: gui/mdmsetup-strings.c:35 gui/mdmsetup.glade.h:28
 msgid "Logo"
 msgstr "Isiboniso"
 
-#: gui/gdmsetup-strings.c:38 gui/gdmsetup.glade.h:35
+#: gui/mdmsetup-strings.c:38 gui/mdmsetup.glade.h:35
 msgid "Miscellaneous"
 msgstr "Inhlanganisela"
 
-#: gui/gdmsetup-strings.c:40 gui/gdmsetup.glade.h:47
+#: gui/mdmsetup-strings.c:40 gui/mdmsetup.glade.h:47
 msgid "Show choosable user images (_face browser)"
 msgstr "Tshengisa izithombe ezikhethekayo (_isiyaluzi esibonakalayo)"
 
-#: gui/gdmsetup-strings.c:41 gui/gdmsetup.glade.h:13
+#: gui/mdmsetup-strings.c:41 gui/mdmsetup.glade.h:13
 msgid "Background"
 msgstr "Isizinda"
 
-#: gui/gdmsetup-strings.c:43 gui/gdmsetup.glade.h:64
+#: gui/mdmsetup-strings.c:43 gui/mdmsetup.glade.h:64
 msgid "_No background"
 msgstr "_Akuna sizinda"
 
-#: gui/gdmsetup-strings.c:44 gui/gdmsetup.glade.h:61
+#: gui/mdmsetup-strings.c:44 gui/mdmsetup.glade.h:61
 msgid "_Image"
 msgstr "_Isithombe"
 
-#: gui/gdmsetup-strings.c:45 gui/gdmsetup.glade.h:14
+#: gui/mdmsetup-strings.c:45 gui/mdmsetup.glade.h:14
 msgid "Co_lor"
 msgstr "Umb_ala"
 
-#: gui/gdmsetup-strings.c:46 gui/gdmsetup.glade.h:67
+#: gui/mdmsetup-strings.c:46 gui/mdmsetup.glade.h:67
 msgid "_Scale background image to fit"
 msgstr "_Linganisa isithombe esisesizindeni ukuthi silingane"
 
-#: gui/gdmsetup-strings.c:48 gui/gdmsetup.glade.h:65
+#: gui/mdmsetup-strings.c:48 gui/mdmsetup.glade.h:65
 msgid "_Only color on remote displays"
 msgstr "_Umbala owodwa kusiboniso esibuqamama"
 
-#: gui/gdmsetup-strings.c:49 gui/gdmsetup.glade.h:59
+#: gui/mdmsetup-strings.c:49 gui/mdmsetup.glade.h:59
 msgid "_Background color: "
 msgstr "_Isizinda sombala: "
 
-#: gui/gdmsetup-strings.c:50 gui/gdmsetup.glade.h:39
+#: gui/mdmsetup-strings.c:50 gui/mdmsetup.glade.h:39
 msgid "Pick a color"
 msgstr "Khetha umbala"
 
-#: gui/gdmsetup-strings.c:52 gui/gdmsetup.glade.h:42
+#: gui/mdmsetup-strings.c:52 gui/mdmsetup.glade.h:42
 msgid "Preview:"
 msgstr "Bona kuqala:"
 
-#: gui/gdmsetup-strings.c:53 gui/gdmsetup.glade.h:37
+#: gui/mdmsetup-strings.c:53 gui/mdmsetup.glade.h:37
 msgid "No screenshot available"
 msgstr "Akuna sithombe sesibuko"
 
-#: gui/gdmsetup-strings.c:54 gui/gdmsetup.glade.h:16
+#: gui/mdmsetup-strings.c:54 gui/mdmsetup.glade.h:16
 msgid "Description:"
 msgstr "Cacisa:"
 
-#: gui/gdmsetup-strings.c:55 gui/gdmsetup.glade.h:15
+#: gui/mdmsetup-strings.c:55 gui/mdmsetup.glade.h:15
 msgid "Copyright:"
 msgstr "Ilungelo lomqambi:"
 
-#: gui/gdmsetup-strings.c:56 gui/gdmsetup.glade.h:11
+#: gui/mdmsetup-strings.c:56 gui/mdmsetup.glade.h:11
 msgid "Author:"
 msgstr "Umqambi:"
 
-#: gui/gdmsetup-strings.c:57 gui/gdmsetup.glade.h:74
+#: gui/mdmsetup-strings.c:57 gui/mdmsetup.glade.h:74
 msgid ""
 "description\n"
 "widget"
@@ -3394,39 +3394,39 @@ msgstr ""
 "isichasisi\n"
 " widget"
 
-#: gui/gdmsetup-strings.c:59 gui/gdmsetup.glade.h:72
+#: gui/mdmsetup-strings.c:59 gui/mdmsetup.glade.h:72
 msgid "author"
 msgstr "umqambi"
 
-#: gui/gdmsetup-strings.c:60 gui/gdmsetup.glade.h:73
+#: gui/mdmsetup-strings.c:60 gui/mdmsetup.glade.h:73
 msgid "copyright"
 msgstr "ilungelo lomqambi"
 
-#: gui/gdmsetup-strings.c:61 gui/gdmsetup.glade.h:62
+#: gui/mdmsetup-strings.c:61 gui/mdmsetup.glade.h:62
 msgid "_Install new theme"
 msgstr "_Faka indikimba entsha"
 
-#: gui/gdmsetup-strings.c:62 gui/gdmsetup.glade.h:60
+#: gui/mdmsetup-strings.c:62 gui/mdmsetup.glade.h:60
 msgid "_Delete theme"
 msgstr "_Cima indikimba"
 
-#: gui/gdmsetup-strings.c:64 gui/gdmsetup-strings.c:78 gui/gdmsetup.glade.h:38
+#: gui/mdmsetup-strings.c:64 gui/mdmsetup-strings.c:78 gui/mdmsetup.glade.h:38
 msgid "Options"
 msgstr "Amakhetho"
 
-#: gui/gdmsetup-strings.c:66 gui/gdmsetup.glade.h:5
-msgid "Allow _root to login with GDM"
-msgstr "Vumela _impande ingene neGDM"
+#: gui/mdmsetup-strings.c:66 gui/mdmsetup.glade.h:5
+msgid "Allow _root to login with MDM"
+msgstr "Vumela _impande ingene neMDM"
 
-#: gui/gdmsetup-strings.c:67 gui/gdmsetup.glade.h:8
-msgid "Allow root to login r_emotely with GDM"
-msgstr "Vumela impande ingene BU_qamama ngeGDM"
+#: gui/mdmsetup-strings.c:67 gui/mdmsetup.glade.h:8
+msgid "Allow root to login r_emotely with MDM"
+msgstr "Vumela impande ingene BU_qamama ngeMDM"
 
-#: gui/gdmsetup-strings.c:68 gui/gdmsetup.glade.h:7
+#: gui/mdmsetup-strings.c:68 gui/mdmsetup.glade.h:7
 msgid "Allow remote _timed logins"
 msgstr "Vumela abangenisi _abacushwe buqamama"
 
-#: gui/gdmsetup-strings.c:69 gui/gdmsetup.glade.h:48
+#: gui/mdmsetup-strings.c:69 gui/mdmsetup.glade.h:48
 msgid ""
 "Show the \"Actions\" menu (formerly known as the \"System\" menu).  If not "
 "set, none of the system commands will be available (this includes reboot, "
@@ -3436,19 +3436,19 @@ msgstr ""
 "ungethole imilayelo yohlelo (lokhu kuhlanganisa noqala phansi, ukucima, "
 "ukulinginisa, nokhetho)"
 
-#: gui/gdmsetup-strings.c:70 gui/gdmsetup.glade.h:46
+#: gui/mdmsetup-strings.c:70 gui/mdmsetup.glade.h:46
 msgid "Show _actions menu"
 msgstr "Tshengisa uhlu _lwezenzo"
 
-#: gui/gdmsetup-strings.c:72 gui/gdmsetup.glade.h:6
+#: gui/mdmsetup-strings.c:72 gui/mdmsetup.glade.h:6
 msgid "Allow c_onfiguration from the login screen"
 msgstr "Vumela isi_linganisi kusibuko somngenisi"
 
-#: gui/gdmsetup-strings.c:74 gui/gdmsetup.glade.h:4
+#: gui/mdmsetup-strings.c:74 gui/mdmsetup.glade.h:4
 msgid "Allo_w running XDMCP chooser from the login screen"
 msgstr "Vume_la ukusebenzisa ukhetho lweXDMCP kusibuko somngenisi"
 
-#: gui/gdmsetup-strings.c:75 gui/gdmsetup.glade.h:9
+#: gui/mdmsetup-strings.c:75 gui/mdmsetup.glade.h:9
 msgid ""
 "Always disallow TCP connections to _X server (disables all remote "
 "connections)"
@@ -3456,96 +3456,96 @@ msgstr ""
 "Ungavumeli ukuxhumane kweTCP kwisebenzisi -_X (khenenda yonke imixhumano "
 "ebuqamama)"
 
-#: gui/gdmsetup-strings.c:76 gui/gdmsetup.glade.h:44
+#: gui/mdmsetup-strings.c:76 gui/mdmsetup.glade.h:44
 msgid "Retry _delay (seconds) :"
 msgstr "Zama futhi _ukubambezeleka (imizuzwana) :"
 
-#: gui/gdmsetup-strings.c:77 gui/gdmsetup.glade.h:45
+#: gui/mdmsetup-strings.c:77 gui/mdmsetup.glade.h:45
 msgid "Security"
 msgstr "Ukulondeka"
 
-#: gui/gdmsetup-strings.c:80 gui/gdmsetup.glade.h:19
+#: gui/mdmsetup-strings.c:80 gui/mdmsetup.glade.h:19
 msgid "Enable _accessibility modules"
 msgstr "Gunyaza izi_bumbo ezingenekayo"
 
-#: gui/gdmsetup-strings.c:81 gui/gdmsetup.glade.h:29
+#: gui/mdmsetup-strings.c:81 gui/mdmsetup.glade.h:29
 msgid "Make a _sound when login window is ready"
 msgstr "Enza um_sindo uma ifasitela lomngenisi livulile"
 
-#: gui/gdmsetup-strings.c:83 gui/gdmsetup.glade.h:71
+#: gui/mdmsetup-strings.c:83 gui/mdmsetup.glade.h:71
 msgid "acc_sound_file_box"
 msgstr "acc _ihele _lebhokisi _lomsindo"
 
-#: gui/gdmsetup-strings.c:84 gui/gdmsetup.glade.h:49
+#: gui/mdmsetup-strings.c:84 gui/mdmsetup.glade.h:49
 msgid "Sound _file:"
 msgstr "_Ihele Lomsindo:"
 
-#: gui/gdmsetup-strings.c:86 gui/gdmsetup.glade.h:69
+#: gui/mdmsetup-strings.c:86 gui/mdmsetup.glade.h:69
 msgid "_Test sound"
 msgstr "_Sihloli msindo"
 
-#: gui/gdmsetup-strings.c:87 gui/gdmsetup.glade.h:3
+#: gui/mdmsetup-strings.c:87 gui/mdmsetup.glade.h:3
 msgid "Accessibility"
 msgstr "Ngenekayo"
 
-#: gui/gdmsetup-strings.c:88 gui/gdmsetup.glade.h:36
+#: gui/mdmsetup-strings.c:88 gui/mdmsetup.glade.h:36
 msgid ""
 "No XDMCP support in the binary.  To enable XDMCP support you must recompile "
-"GDM with the XDMCP libraries."
+"MDM with the XDMCP libraries."
 msgstr ""
 "Akuna siseki esimbaxa-mbili ku-XDMCP. Ukugunyaza iseseki se-XDMCP kufanele "
-"uqoqele i-GDM ngemgcina-lwazi we-XDMCP."
+"uqoqele i-MDM ngemgcina-lwazi we-XDMCP."
 
-#: gui/gdmsetup-strings.c:89 gui/gdmsetup.glade.h:18
+#: gui/mdmsetup-strings.c:89 gui/mdmsetup.glade.h:18
 msgid "Enable _XDMCP"
 msgstr "Gunyaza _XDMCP"
 
-#: gui/gdmsetup-strings.c:91 gui/gdmsetup.glade.h:23
+#: gui/mdmsetup-strings.c:91 gui/mdmsetup.glade.h:23
 msgid "Honour _indirect requests"
 msgstr "Hlonipha _izicelo ezingaqondile"
 
-#: gui/gdmsetup-strings.c:92 gui/gdmsetup.glade.h:25
+#: gui/mdmsetup-strings.c:92 gui/mdmsetup.glade.h:25
 msgid "Listen on _UDP port: "
 msgstr "Lalela ethekwini _UDP: "
 
-#: gui/gdmsetup-strings.c:93 gui/gdmsetup.glade.h:31
+#: gui/mdmsetup-strings.c:93 gui/mdmsetup.glade.h:31
 msgid "Maximum _pending requests:"
 msgstr "Umphelelo wezicelo _ezisalindiwe:"
 
-#: gui/gdmsetup-strings.c:94 gui/gdmsetup.glade.h:30
+#: gui/mdmsetup-strings.c:94 gui/mdmsetup.glade.h:30
 msgid "Max p_ending indirect requests:"
 msgstr "Umphelelo wezicelo _ezisalindiwe ezingaqondile ngqo:"
 
-#: gui/gdmsetup-strings.c:95 gui/gdmsetup.glade.h:32
+#: gui/mdmsetup-strings.c:95 gui/mdmsetup.glade.h:32
 msgid "Maximum _remote sessions:"
 msgstr "Umphelelo wezinhlanganiso _ezibuqamama:"
 
-#: gui/gdmsetup-strings.c:96 gui/gdmsetup.glade.h:33
+#: gui/mdmsetup-strings.c:96 gui/mdmsetup.glade.h:33
 msgid "Maximum _wait time:"
 msgstr "Umphelelo wesikhathi _sokulinda:"
 
-#: gui/gdmsetup-strings.c:97 gui/gdmsetup.glade.h:34
+#: gui/mdmsetup-strings.c:97 gui/mdmsetup.glade.h:34
 msgid "Maximum indirect w_ait time:"
 msgstr "Umphelelo wesikhathi sokul_inda esingaqondile ngqo:"
 
-#: gui/gdmsetup-strings.c:98 gui/gdmsetup.glade.h:17
+#: gui/mdmsetup-strings.c:98 gui/mdmsetup.glade.h:17
 msgid "Displays per _host:"
 msgstr "Bonisa ngoku_mmemi:"
 
-#: gui/gdmsetup-strings.c:99 gui/gdmsetup.glade.h:40
+#: gui/mdmsetup-strings.c:99 gui/mdmsetup.glade.h:40
 msgid "Pin_g interval (seconds):"
 msgstr "Isigam_u esithi ntwii (imizuzwana):"
 
-#: gui/gdmsetup-strings.c:100 gui/gdmsetup.glade.h:41
+#: gui/mdmsetup-strings.c:100 gui/mdmsetup.glade.h:41
 msgid "Ping interval (seconds):"
 msgstr "Isigamu esithintwii (imizuzwana):"
 
-#: gui/gdmsetup-strings.c:101 gui/gdmsetup.glade.h:57
+#: gui/mdmsetup-strings.c:101 gui/mdmsetup.glade.h:57
 msgid "XDMCP"
 msgstr "XDMCP"
 
 #. markup
-#: gui/gdmsetup.c:164
+#: gui/mdmsetup.c:164
 msgid ""
 "An error occured while trying to contact the login screens.  Not all updates "
 "may have taken effect."
@@ -3554,79 +3554,79 @@ msgstr ""
 "imifukulo eyenzakele."
 
 #. markup
-#: gui/gdmsetup.c:487
+#: gui/mdmsetup.c:487
 msgid ""
 "Autologin or timed login to the superuser (root) account is not allowed."
 msgstr ""
 "Umngenisi ozenzakalelayo noma umngenisi ocushiwe kusinanzela somsebenzisi "
 "omkhulu (impande) asivunyelwe."
 
-#: gui/gdmsetup.c:1756
+#: gui/mdmsetup.c:1756
 msgid "Archive is not of a subdirectory"
 msgstr "Umlandu akusingowombombo omncane"
 
-#: gui/gdmsetup.c:1764
+#: gui/mdmsetup.c:1764
 msgid "Archive is not of a single subdirectory"
 msgstr "Umlandu akusingowombombo owodwa omncane"
 
-#: gui/gdmsetup.c:1788 gui/gdmsetup.c:1868
+#: gui/mdmsetup.c:1788 gui/mdmsetup.c:1868
 msgid "File not a tar.gz or tar archive"
 msgstr "Ihele akusiyi-tar.gz noma umlandu tar"
 
-#: gui/gdmsetup.c:1790
-msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr "Umlandu awuhlanganise iGdm-Sithazeli-Ndikimba.hele wolwazi"
+#: gui/mdmsetup.c:1790
+msgid "Archive does not include a MdmGreeterTheme.info file"
+msgstr "Umlandu awuhlanganise iMdm-Sithazeli-Ndikimba.hele wolwazi"
 
-#: gui/gdmsetup.c:1812
+#: gui/mdmsetup.c:1812
 msgid "File does not exist"
 msgstr "Ihele alikho"
 
 #. markup
-#: gui/gdmsetup.c:1926
+#: gui/mdmsetup.c:1926
 msgid "No file selected"
 msgstr "Akukhethwe hele"
 
 #. markup
-#: gui/gdmsetup.c:1954
+#: gui/mdmsetup.c:1954
 msgid "Not a theme archive"
 msgstr "Akusiyindikimba yomlandu"
 
-#: gui/gdmsetup.c:1955
+#: gui/mdmsetup.c:1955
 #, c-format
 msgid "Details: %s"
 msgstr "Imininingwane: %s"
 
 #. FIXME: if exists already perhaps we could also have an
 #. * option to change the dir name
-#: gui/gdmsetup.c:1973
+#: gui/mdmsetup.c:1973
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed, install again anyway?"
 msgstr "Indikimba yombombo '%s' ngathi seyifakiwe, ungayifaka futhi?"
 
 #. markup
-#: gui/gdmsetup.c:2059
+#: gui/mdmsetup.c:2059
 msgid "Some error occured when installing the theme"
 msgstr "Iphutha lenzekile masifaka indikimba"
 
-#: gui/gdmsetup.c:2105
+#: gui/mdmsetup.c:2105
 msgid "Select new theme archive to install"
 msgstr "Khetha indikimba yomlandu omusha uyifake"
 
-#: gui/gdmsetup.c:2109
+#: gui/mdmsetup.c:2109
 msgid "_Install"
 msgstr "_Faka"
 
-#: gui/gdmsetup.c:2173
+#: gui/mdmsetup.c:2173
 #, c-format
 msgid "Do you really wish to remove theme '%s' from the system?"
 msgstr "Ngabe ufisa ukususa indikimba '%s' kuhlelo?"
 
 #. This is the temporary help dialog
-#: gui/gdmsetup.c:2386
+#: gui/mdmsetup.c:2386
 #, c-format
 msgid ""
-"This configuration window changes settings for the GDM daemon, which is the "
+"This configuration window changes settings for the MDM daemon, which is the "
 "graphical login screen for GNOME.  Changes that you make will take effect "
 "immediately.\n"
 "\n"
@@ -3636,7 +3636,7 @@ msgid ""
 "For complete documentation see the GNOME help browser Under the category "
 "GNOME/System."
 msgstr ""
-"Lelifasitela lesilinganisi liguqula izinhlelo ze GDM daemon, isiqhamisi "
+"Lelifasitela lesilinganisi liguqula izinhlelo ze MDM daemon, isiqhamisi "
 "sesibuko somngenisi we-GNOME. Izinguquko ozozenza zofezeka manjalo.\n"
 "\n"
 "Qaphela ukuthi khetho lwezilinganisi oluhlelwe lapha. Ungafuna ukuhlela %s "
@@ -3646,36 +3646,36 @@ msgstr ""
 "umbhalo ophelele."
 
 #. markup
-#: gui/gdmsetup.c:2797
-msgid "You must be the superuser (root) to configure GDM."
-msgstr "Kufanele ube ngumsebenzisi omkhulu (impande) ukulinganisa iGDM."
+#: gui/mdmsetup.c:2797
+msgid "You must be the superuser (root) to configure MDM."
+msgstr "Kufanele ube ngumsebenzisi omkhulu (impande) ukulinganisa iMDM."
 
 #. EOF
-#: gui/gdmsetup.desktop.in.h:1
-msgid "A graphical application for configuring the GNOME Display Manager (GDM)"
-msgstr "Isisebenziso esiqhamile sokulinganisa iGNOME Mphathi Siboniso (GDM)"
+#: gui/mdmsetup.desktop.in.h:1
+msgid "A graphical application for configuring the GNOME Display Manager (MDM)"
+msgstr "Isisebenziso esiqhamile sokulinganisa iGNOME Mphathi Siboniso (MDM)"
 
 #: gui/greeter/greeter.c:638 gui/greeter/greeter.c:669
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version.\n"
-"You have probably just upgraded gdm.\n"
-"Please restart the gdm daemon or reboot the computer."
+"You have probably just upgraded mdm.\n"
+"Please restart the mdm daemon or reboot the computer."
 msgstr ""
 "Ukuhunyushwa kwesithakazeli (%s) asifani nesihunyushwa sedaemon.\n"
-"Ufukule i-gdm.\n"
-"Qala igdm daemon futhi noma qala phansi isiga-nyezi."
+"Ufukule i-mdm.\n"
+"Qala imdm daemon futhi noma qala phansi isiga-nyezi."
 
 #: gui/greeter/greeter.c:714
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).\n"
-"You have probably just upgraded gdm.\n"
-"Please restart the gdm daemon or reboot the computer."
+"You have probably just upgraded mdm.\n"
+"Please restart the mdm daemon or reboot the computer."
 msgstr ""
 "Ukuhunyushwa kwesithakazeli (%s) asifani nesihunyushwa sedaemon (%s).\n"
-"Ufukule i-gdm.\n"
-"Qala i-gdm daemon futhi noma qala phansi isiga-nyezi."
+"Ufukule i-mdm.\n"
+"Qala i-mdm daemon futhi noma qala phansi isiga-nyezi."
 
 #: gui/greeter/greeter.c:1173
 #, c-format
@@ -3707,10 +3707,10 @@ msgstr ""
 #: gui/greeter/greeter.c:1284
 msgid ""
 "I could not start the standard greeter.  This display will abort and you may "
-"have to login another way and fix the installation of gdm"
+"have to login another way and fix the installation of mdm"
 msgstr ""
 "Angikhonanga ukuqala isithakazeli esejwayelekile. Lesiboniso sizophunza "
-"kungafuneka ungene ngenye indlela bese ulungisa ukufakwa kwe-gdm"
+"kungafuneka ungene ngenye indlela bese ulungisa ukufakwa kwe-mdm"
 
 #: gui/greeter/greeter_action_language.c:46
 msgid "Last"
@@ -3799,45 +3799,45 @@ msgstr "Sebenzisa isikhethi se-_XDMCP"
 msgid "Confi_gure the login manager"
 msgstr "Linga_nisela umngenisi womphathi"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 Bond, James Bond"
 msgstr "(c) 2002 Bond, James Bond"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:2
 msgid "Bond, James Bond"
 msgstr "Bond, James Bond"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:3
 msgid "Circles"
 msgstr "Iziyingi"
 
-#: gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:4
 msgid "Theme with blue circles"
 msgstr "Indikimba yezingi ezuluhlaza okwesibhakabhaka"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:1
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:1
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 GNOME"
 msgstr "(C) 2002 GNOME"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles with a Face Browser"
 msgstr "GNOME ukuhlukana kwesidwebi ngezizungezo sine siyaluzi sobuso"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:3
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:3
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:3
 msgid "GNOME Artists"
 msgstr "Ingcweti yeGNOME"
 
-#: gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME with Browser"
 msgstr "Injabulo yeGNOME enesiyaluzi"
 
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:2
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles"
 msgstr "GNOME ukuhlukana kwesidwebi ngezizungezo"
 
-#: gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:4
+#: gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME"
 msgstr "Injabulo yeGNOME"
 
@@ -3850,12 +3850,12 @@ msgstr ""
 "Iphutha makusetshenziswa (%s)\n"
 " ehlangene ne(%s)"
 
-#: utils/gdmaskpass.c:26
+#: utils/mdmaskpass.c:26
 #, c-format
-msgid "gdmaskpass only runs as root\n"
-msgstr "igdmaskpass isebenza njengempande kuphela\n"
+msgid "mdmaskpass only runs as root\n"
+msgstr "imdmaskpass isebenza njengempande kuphela\n"
 
-#: utils/gdmaskpass.c:42 utils/gdmaskpass.c:48
+#: utils/mdmaskpass.c:42 utils/mdmaskpass.c:48
 #, c-format
 msgid "Authentication failure!\n"
 msgstr "Ukwehluleka kwesiqiniseko\n"

@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,15 +24,15 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#include "gdm.h"
-#include "gdmcommon.h"
-#include "gdmconfig.h"
-#include "gdmwm.h"
+#include "mdm.h"
+#include "mdmcommon.h"
+#include "mdmconfig.h"
+#include "mdmwm.h"
 #include "misc.h"
 
-#include "gdm-common.h"
-#include "gdm-socket-protocol.h"
-#include "gdm-daemon-config-keys.h"
+#include "mdm-common.h"
+#include "mdm-socket-protocol.h"
+#include "mdm-daemon-config-keys.h"
 
 #include "greeter.h"
 #include "greeter_configuration.h"
@@ -42,12 +42,12 @@
 #include "greeter_parser.h"
 
 GtkWidget       *dialog;
-extern gboolean  GdmHaltFound;
-extern gboolean  GdmRebootFound;
-extern gboolean *GdmCustomCmdsFound;
-extern gboolean  GdmAnyCustomCmdsFound;
-extern gboolean  GdmSuspendFound;
-extern gboolean  GdmConfiguratorFound;
+extern gboolean  MdmHaltFound;
+extern gboolean  MdmRebootFound;
+extern gboolean *MdmCustomCmdsFound;
+extern gboolean  MdmAnyCustomCmdsFound;
+extern gboolean  MdmSuspendFound;
+extern gboolean  MdmConfiguratorFound;
 
 /* doesn't check for executability, just for existance */
 static gboolean
@@ -77,7 +77,7 @@ bin_exists (const char *command)
 static void
 query_greeter_restart_handler (void)
 {
-	if (gdm_wm_warn_dialog (_("Are you sure you want to restart the computer?"), "",
+	if (mdm_wm_warn_dialog (_("Are you sure you want to restart the computer?"), "",
 			     _("_Restart"), NULL, TRUE) == GTK_RESPONSE_YES) {
 		_exit (DISPLAY_REBOOT);
 	}
@@ -88,10 +88,10 @@ query_greeter_custom_cmd_handler (GtkWidget *widget, gpointer data)
 {
         if (data) {
 		gint *cmd_id = (gint*)data;
-	        gchar * key_string = g_strdup_printf ("%s%d=", GDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, *cmd_id);
-		if (gdm_wm_warn_dialog (gdm_config_get_string (key_string) , "", 
+	        gchar * key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, *cmd_id);
+		if (mdm_wm_warn_dialog (mdm_config_get_string (key_string) , "", 
 					GTK_STOCK_OK, NULL, TRUE) == GTK_RESPONSE_YES) {
-		        printf ("%c%c%c%d\n", STX, BEL, GDM_INTERRUPT_CUSTOM_CMD, *cmd_id);
+		        printf ("%c%c%c%d\n", STX, BEL, MDM_INTERRUPT_CUSTOM_CMD, *cmd_id);
 			fflush (stdout);
 		}
 		g_free (key_string);		
@@ -101,7 +101,7 @@ query_greeter_custom_cmd_handler (GtkWidget *widget, gpointer data)
 static void
 query_greeter_halt_handler (void)
 {
-	if (gdm_wm_warn_dialog (_("Are you sure you want to Shut Down the computer?"), "",
+	if (mdm_wm_warn_dialog (_("Are you sure you want to Shut Down the computer?"), "",
 			     _("Shut _Down"), NULL, TRUE) == GTK_RESPONSE_YES) {
 		_exit (DISPLAY_HALT);
 	}
@@ -110,10 +110,10 @@ query_greeter_halt_handler (void)
 static void
 query_greeter_suspend_handler (void)
 {
-	if (gdm_wm_warn_dialog (_("Are you sure you want to suspend the computer?"), "",
+	if (mdm_wm_warn_dialog (_("Are you sure you want to suspend the computer?"), "",
 			     _("_Suspend"), NULL, TRUE) == GTK_RESPONSE_YES) {
 		/* suspend interruption */
-		printf ("%c%c%c\n", STX, BEL, GDM_INTERRUPT_SUSPEND);
+		printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_SUSPEND);
 		fflush (stdout);
 	}
 }
@@ -127,7 +127,7 @@ greeter_restart_handler (void)
 static void
 greeter_custom_cmd_handler (gint cmd_id)
 {
-	printf ("%c%c%c%d\n", STX, BEL, GDM_INTERRUPT_CUSTOM_CMD, cmd_id);
+	printf ("%c%c%c%d\n", STX, BEL, MDM_INTERRUPT_CUSTOM_CMD, cmd_id);
 	fflush (stdout);
 }
 
@@ -140,7 +140,7 @@ greeter_halt_handler (void)
 static void
 greeter_suspend_handler (void)
 {
-	printf ("%c%c%c\n", STX, BEL, GDM_INTERRUPT_SUSPEND);
+	printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_SUSPEND);
 	fflush (stdout);
 }
 
@@ -153,10 +153,10 @@ greeter_config_handler (void)
 	greeter_item_ulist_unset_selected_user ();
 
 	/* we should be now fine for focusing new windows */
-	gdm_wm_focus_new_windows (TRUE);
+	mdm_wm_focus_new_windows (TRUE);
 
 	/* configure interruption */
-	printf ("%c%c%c\n", STX, BEL, GDM_INTERRUPT_CONFIGURE);
+	printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_CONFIGURE);
 	fflush (stdout);
 }
 
@@ -173,11 +173,11 @@ greeter_system_append_system_menu (GtkWidget *menu)
 	gint i = 0;
 
 	/* should never be allowed by the UI */
-	if ( ! gdm_config_get_bool (GDM_KEY_SYSTEM_MENU) ||
-	    ve_string_empty (g_getenv ("GDM_IS_LOCAL")))
+	if ( ! mdm_config_get_bool (MDM_KEY_SYSTEM_MENU) ||
+	    ve_string_empty (g_getenv ("MDM_IS_LOCAL")))
 		return;
 
-	if (gdm_config_get_bool (GDM_KEY_CHOOSER_BUTTON)) {
+	if (mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
 		w = gtk_image_menu_item_new_with_mnemonic (_("Remote Login via _XDMCP..."));
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w),
 			gtk_image_new_from_icon_name ("preferences-desktop-remote-desktop", GTK_ICON_SIZE_MENU));
@@ -193,12 +193,12 @@ greeter_system_append_system_menu (GtkWidget *menu)
 	 * Disable Configuration if using accessibility (AddGtkModules) since
 	 * using it with accessibility causes a hang.
 	 */
-	if (gdm_config_get_bool (GDM_KEY_CONFIG_AVAILABLE) &&
-	    !gdm_config_get_bool (GDM_KEY_ADD_GTK_MODULES) &&
-	    bin_exists (gdm_config_get_string (GDM_KEY_CONFIGURATOR))) {
+	if (mdm_config_get_bool (MDM_KEY_CONFIG_AVAILABLE) &&
+	    !mdm_config_get_bool (MDM_KEY_ADD_GTK_MODULES) &&
+	    bin_exists (mdm_config_get_string (MDM_KEY_CONFIGURATOR))) {
 		w = gtk_image_menu_item_new_with_mnemonic (_("Confi_gure Login Manager..."));
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w),
-			gtk_image_new_from_icon_name ("gdmsetup", GTK_ICON_SIZE_MENU));
+			gtk_image_new_from_icon_name ("mdmsetup", GTK_ICON_SIZE_MENU));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), w);
 		gtk_widget_show (GTK_WIDGET (w));
@@ -207,13 +207,13 @@ greeter_system_append_system_menu (GtkWidget *menu)
 				  NULL);
 	}
 
-	if (GdmRebootFound || GdmHaltFound || GdmSuspendFound || GdmAnyCustomCmdsFound) {
+	if (MdmRebootFound || MdmHaltFound || MdmSuspendFound || MdmAnyCustomCmdsFound) {
 		sep = gtk_separator_menu_item_new ();
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), sep);
 		gtk_widget_show (sep);
 	}
 
-	if (GdmRebootFound && gdm_common_is_action_available ("REBOOT")) {
+	if (MdmRebootFound && mdm_common_is_action_available ("REBOOT")) {
  		w = gtk_image_menu_item_new_with_mnemonic (_("_Restart"));
  		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w),
  					       gtk_image_new_from_icon_name ("system-restart", GTK_ICON_SIZE_MENU));
@@ -224,7 +224,7 @@ greeter_system_append_system_menu (GtkWidget *menu)
 				  NULL);
 	}
 
-	if (GdmHaltFound && gdm_common_is_action_available ("HALT")) {
+	if (MdmHaltFound && mdm_common_is_action_available ("HALT")) {
  		w = gtk_image_menu_item_new_with_mnemonic (_("Shut _Down"));
  		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w), 
  					       gtk_image_new_from_icon_name ("system-shut-down", GTK_ICON_SIZE_MENU));
@@ -235,7 +235,7 @@ greeter_system_append_system_menu (GtkWidget *menu)
 				  NULL);
 	}
 
-	if (GdmSuspendFound && gdm_common_is_action_available ("SUSPEND")) {
+	if (MdmSuspendFound && mdm_common_is_action_available ("SUSPEND")) {
  		w = gtk_image_menu_item_new_with_mnemonic (_("Sus_pend"));
  		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w),
  					       gtk_image_new_from_icon_name ("system-suspend", GTK_ICON_SIZE_MENU));
@@ -246,15 +246,15 @@ greeter_system_append_system_menu (GtkWidget *menu)
 				  NULL);
 	}
 
-	if (GdmAnyCustomCmdsFound &&
-	    gdm_common_is_action_available ("CUSTOM_CMD")) {
-		for (i = 0; i < GDM_CUSTOM_COMMAND_MAX; i++) {
-		        if (GdmCustomCmdsFound[i]){
+	if (MdmAnyCustomCmdsFound &&
+	    mdm_common_is_action_available ("CUSTOM_CMD")) {
+		for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
+		        if (MdmCustomCmdsFound[i]){
 				gint * cmd_index = g_new0(gint, 1);
 				gchar * key_string = NULL;
 				*cmd_index = i;
-				key_string = g_strdup_printf ("%s%d=", GDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
-				w = gtk_menu_item_new_with_mnemonic (gdm_config_get_string(key_string));
+				key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
+				w = gtk_menu_item_new_with_mnemonic (mdm_config_get_string(key_string));
 				gtk_menu_shell_append (GTK_MENU_SHELL (menu), w);
 				gtk_widget_show (GTK_WIDGET (w));
 				g_signal_connect (G_OBJECT (w), "activate",
@@ -301,8 +301,8 @@ greeter_system_handler (GreeterItemInfo *info,
   static GtkTooltips *tooltips = NULL;
 
   /* should never be allowed by the UI */
-  if ( ! gdm_config_get_bool (GDM_KEY_SYSTEM_MENU) ||
-       ve_string_empty (g_getenv ("GDM_IS_LOCAL")))
+  if ( ! mdm_config_get_bool (MDM_KEY_SYSTEM_MENU) ||
+       ve_string_empty (g_getenv ("MDM_IS_LOCAL")))
 	  return;
 
   dialog = gtk_dialog_new ();
@@ -342,7 +342,7 @@ greeter_system_handler (GreeterItemInfo *info,
 		      vbox,
 		      TRUE, TRUE, 0);
 
-  if (GdmHaltFound) {
+  if (MdmHaltFound) {
 	  if (group_radio != NULL)
 		  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (group_radio));
 	  halt_radio = gtk_radio_button_new_with_mnemonic (radio_group,
@@ -360,7 +360,7 @@ greeter_system_handler (GreeterItemInfo *info,
 	  gtk_widget_show (halt_radio);
   }
 
-  if (GdmRebootFound) {
+  if (MdmRebootFound) {
 	  if (group_radio != NULL)
 		  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (group_radio));
 	  restart_radio = gtk_radio_button_new_with_mnemonic (radio_group,
@@ -377,21 +377,21 @@ greeter_system_handler (GreeterItemInfo *info,
 	  gtk_widget_show (restart_radio);
   }
 
-  if (GdmAnyCustomCmdsFound) {
-	  custom_cmds_radio = g_new0 (GtkWidget*, GDM_CUSTOM_COMMAND_MAX); 
-	  for (i = 0; i < GDM_CUSTOM_COMMAND_MAX; i++) {
+  if (MdmAnyCustomCmdsFound) {
+	  custom_cmds_radio = g_new0 (GtkWidget*, MDM_CUSTOM_COMMAND_MAX); 
+	  for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
 	          custom_cmds_radio[i] = NULL;
-		  if (GdmCustomCmdsFound[i]){
+		  if (MdmCustomCmdsFound[i]){
 		          gchar * key_string = NULL;
-			  key_string = g_strdup_printf ("%s%d=", GDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
+			  key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
 			  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (group_radio));
 			  custom_cmds_radio[i] = gtk_radio_button_new_with_mnemonic (radio_group,
-										     gdm_config_get_string(key_string));
+										     mdm_config_get_string(key_string));
 			  group_radio = custom_cmds_radio[i];
 			  g_free (key_string);
-			  key_string = g_strdup_printf ("%s%d=", GDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE, i);
+			  key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE, i);
 			  gtk_tooltips_set_tip (tooltips, GTK_WIDGET (custom_cmds_radio[i]),
-						gdm_config_get_string(key_string),
+						mdm_config_get_string(key_string),
 						NULL);
 			  g_signal_connect (G_OBJECT(custom_cmds_radio[i]), "button_press_event",
 					    G_CALLBACK(radio_button_press_event), NULL);
@@ -404,7 +404,7 @@ greeter_system_handler (GreeterItemInfo *info,
 	  }
   }
 
-  if (GdmSuspendFound) {
+  if (MdmSuspendFound) {
 	  if (group_radio != NULL)
 		  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (group_radio));
 	  suspend_radio = gtk_radio_button_new_with_mnemonic (radio_group,
@@ -421,7 +421,7 @@ greeter_system_handler (GreeterItemInfo *info,
 	  gtk_widget_show (suspend_radio);
   }
 
-  if (gdm_config_get_bool (GDM_KEY_CHOOSER_BUTTON)) {
+  if (mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
 	  if (group_radio != NULL)
 		  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (group_radio));
 	  chooser_radio = gtk_radio_button_new_with_mnemonic (radio_group,
@@ -444,16 +444,16 @@ greeter_system_handler (GreeterItemInfo *info,
    * Disable Configuration if using accessibility (AddGtkModules) since
    * using it with accessibility causes a hang.
    */
-  if (gdm_config_get_bool (GDM_KEY_CONFIG_AVAILABLE) &&
-      !gdm_config_get_bool (GDM_KEY_ADD_GTK_MODULES) &&
-      bin_exists (gdm_config_get_string (GDM_KEY_CONFIGURATOR))) {
+  if (mdm_config_get_bool (MDM_KEY_CONFIG_AVAILABLE) &&
+      !mdm_config_get_bool (MDM_KEY_ADD_GTK_MODULES) &&
+      bin_exists (mdm_config_get_string (MDM_KEY_CONFIGURATOR))) {
 	  if (group_radio != NULL)
 		  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (group_radio));
 	  config_radio = gtk_radio_button_new_with_mnemonic (radio_group,
 							     _("Confi_gure the login manager"));
 	  group_radio = config_radio;
 	  gtk_tooltips_set_tip (tooltips, GTK_WIDGET (config_radio),
-				_("Configure GDM (this login manager). "
+				_("Configure MDM (this login manager). "
 				  "This will require the root password."),
 				NULL);
 	  g_signal_connect (G_OBJECT(config_radio), "button_press_event",
@@ -476,11 +476,11 @@ greeter_system_handler (GreeterItemInfo *info,
 				   GTK_RESPONSE_OK);
   
   gtk_widget_show_all (dialog);
-  gdm_wm_center_window (GTK_WINDOW (dialog));
+  mdm_wm_center_window (GTK_WINDOW (dialog));
 
-  gdm_wm_no_login_focus_push ();
+  mdm_wm_no_login_focus_push ();
   ret = gtk_dialog_run (GTK_DIALOG (dialog));
-  gdm_wm_no_login_focus_pop ();
+  mdm_wm_no_login_focus_pop ();
   
   if (ret != GTK_RESPONSE_OK)
     {
@@ -499,7 +499,7 @@ greeter_system_handler (GreeterItemInfo *info,
   else if (chooser_radio != NULL && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (chooser_radio)))
     greeter_chooser_handler ();
   else
-    for (i = 0; i < GDM_CUSTOM_COMMAND_MAX; i++) {
+    for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
 	if (custom_cmds_radio[i] != NULL &&  gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (custom_cmds_radio[i])))
 	    greeter_custom_cmd_handler (i);
     }  
@@ -532,7 +532,7 @@ greeter_item_system_setup (void)
 					 (ActionFunc)greeter_chooser_handler,
 					 NULL);
 
-  for (i = 0; i < GDM_CUSTOM_COMMAND_MAX; i++) {
+  for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
 	  gint * cmd_index = g_new0(gint, 1);
 	  gchar * key_string;
 	  *cmd_index = i;

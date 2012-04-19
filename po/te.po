@@ -1,11 +1,11 @@
-# Telugu translation of gdm2.
+# Telugu translation of mdm2.
 # Copyright (C) 2007 Swecha Telugu Localisation Team <localisation@swecha.org>
-# This file is distributed under the same license as the gdm2 package.
+# This file is distributed under the same license as the mdm2 package.
 # Matapathi Pramod <pramod@swecha.net>, 2007.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gdm2\n"
+"Project-Id-Version: mdm2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-19 15:18+0530\n"
 "PO-Revision-Date: 2007-08-26 16:18+0530\n"
@@ -16,23 +16,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: ../common/gdm-config.c:338
+#: ../common/mdm-config.c:338
 #, c-format
 msgid "Didn't understand `%s' (expected integer)"
 msgstr "`%s' తెలుసుకొనుటకు వీలుకాలేదు (నిరీక్షించబడిన పూర్ణాంకం)"
 
-#: ../common/gdm-config.c:346
+#: ../common/mdm-config.c:346
 #, c-format
 msgid "Integer `%s' is too large or small"
 msgstr "పూర్ణాంకం `%s' చాలా పెద్దది లేదా చిన్నదిగా ఉంది"
 
-#: ../common/gdm-config.c:376
+#: ../common/mdm-config.c:376
 #, c-format
 msgid "Didn't understand `%s' (expected true or false)"
 msgstr "`%s' తెలుసుకొనుటకు వీలుకాలేదు (నిరీక్షించబడిన నిజము లేదా అబద్దం)"
 
-#: ../common/gdm-config.c:388 ../common/gdm-config.c:400
-#: ../common/gdm-config.c:412 ../common/gdm-config.c:427
+#: ../common/mdm-config.c:388 ../common/mdm-config.c:400
+#: ../common/mdm-config.c:412 ../common/mdm-config.c:427
 #, c-format
 msgid "Text contains invalid UTF-8"
 msgstr "పాఠం నిస్సారమైన యుటియఫ్-8 కలిగివుంది"
@@ -62,7 +62,7 @@ msgstr "ఈ సమకూర్పు Xబంట్రౌతు లిపి న�
 msgid ""
 "Failed to start the X server (your graphical interface).  It is likely that "
 "it is not set up correctly.  You will need to log in on a console and "
-"reconfigure the X server.  Then restart GDM."
+"reconfigure the X server.  Then restart MDM."
 msgstr ""
 "X సేవిక మొదలు పెట్టుట విఫలమైంది (మీ యొక్క చిత్రరూప సంవిధానం).  ఇది అది పోలిఉంది అది సవరించి "
 "అమర్చబడలేదు.  నీవు ఒక ఓదార్పు  పై  నమోదుచేయవలెను మరియు X సేవికను మరలా రూపకరించు.  అప్పుడు "
@@ -86,7 +86,7 @@ msgstr "X సేవికను మరలా మొదలుపెట్టు�
 
 #: ../config/gettextfoo.h:9
 msgid ""
-"The X server is now disabled.  Restart GDM when it is configured correctly."
+"The X server is now disabled.  Restart MDM when it is configured correctly."
 msgstr "X సేవిక ప్రస్తుతం నిరుపయోగం.  అది రూపకరించి సవరించినపుడు  జిడియం మరలా మొదలుపెట్టు."
 
 #: ../config/gettextfoo.h:10
@@ -163,7 +163,7 @@ msgstr "%s: కొత్త అధికారం ఇవ్వబడిన చ�
 #: ../daemon/auth.c:72
 #, c-format
 msgid ""
-"GDM could not write a new authorization entry to disk.  Possibly out of "
+"MDM could not write a new authorization entry to disk.  Possibly out of "
 "diskspace.%s%s"
 msgstr "జిడియం కొత్త అధికారం ఇవ్వబడిన చేర్పు ఖనికి వ్రాయుటకు వీలుకాదు.  సాధ్యముగా  ఖని ఖాళీ.%s%s"
 
@@ -198,7 +198,7 @@ msgstr "%s: కుకీ వ్రాయుటకు వీలుకాదు"
 msgid "%s: Ignoring suspiciously looking cookie file %s"
 msgstr "%s: %s అనుమానపడెడు తాళం వేయబడిన కుకీ దస్త్రం పట్టించుకోవట్లేదు "
 
-#: ../daemon/auth.c:867 ../daemon/gdm.c:1509 ../daemon/gdm.c:1883
+#: ../daemon/auth.c:867 ../daemon/mdm.c:1509 ../daemon/mdm.c:1883
 #, c-format
 msgid "Can't write to %s: %s"
 msgstr "%s కు వ్రాయుటకు వీలుకాదు: %s"
@@ -208,9 +208,9 @@ msgstr "%s కు వ్రాయుటకు వీలుకాదు: %s"
 #. * cought that elsewhere.  Things are just
 #. * not working out, so tell the user.
 #. * However this may have been caused by a malicious local user
-#. * zapping the display repeatedly, that shouldn't cause gdm
+#. * zapping the display repeatedly, that shouldn't cause mdm
 #. * to stop working completely so just wait for 2 minutes,
-#. * that should give people ample time to stop gdm if needed,
+#. * that should give people ample time to stop mdm if needed,
 #. * or just wait for the stupid malicious user to get bored
 #. * and go away
 #: ../daemon/display.c:196
@@ -231,7 +231,7 @@ msgstr "%s: పైప్ సృష్టించుటకు వీలుకా
 
 #: ../daemon/display.c:416
 #, c-format
-msgid "%s: Failed forking GDM slave process for %s"
+msgid "%s: Failed forking MDM slave process for %s"
 msgstr "%s: %s కొరకు జిడియం బానిస క్రమణం పంగలకర్రయందు విఫలం"
 
 #: ../daemon/errorgui.c:362
@@ -299,82 +299,82 @@ msgstr "%s: %s సముదాయం/వేరైన దాని ద్వా�
 msgid "%s: %s is bigger than sysadmin specified maximum file size."
 msgstr "%s: %s నిర్థేశింపబడిన అత్యధిక దస్త్ర పరిమాణం కంటే సిసాడ్మిన్ పెద్దది."
 
-#: ../daemon/gdm-daemon-config.c:1131
+#: ../daemon/mdm-daemon-config.c:1131
 #, c-format
 msgid "%s: Priority out of bounds; changed to %d"
 msgstr "%s: ప్రాథామ్యం మితిముల వెలుపల; %d కి మార్చబడినది"
 
-#: ../daemon/gdm-daemon-config.c:1137
+#: ../daemon/mdm-daemon-config.c:1137
 #, c-format
 msgid "%s: Empty server command; using standard command."
 msgstr "%s: సేవిక ఆదేశం ఖాళీ; ప్రామాణికమైన ఆదేశం వాడుతున్నది."
 
-#: ../daemon/gdm-daemon-config.c:1388
+#: ../daemon/mdm-daemon-config.c:1388
 #, c-format
 msgid ""
 "%s: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s."
 msgstr "%s: నమోదు వివరం %s వివరం కాదు లేదా కలిగి లేదు . %s సేవికప్రామాణికవివరం."
 
-#: ../daemon/gdm-daemon-config.c:1413
+#: ../daemon/mdm-daemon-config.c:1413
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this "
-"does not exist. Please correct GDM configuration and restart GDM."
+"does not exist. Please correct MDM configuration and restart MDM."
 msgstr ""
 "సేవిక అధికారమిచ్చు వివరం (సూత్రధారి/సేవికప్రామాణికవివరం) %s కు అమర్చబడి ఉంది కాని ఇది కలిగి లేదు. దయచేసి "
 "సరియైన జిడియం రూపకరించు మరియు జిడియం మరలామొదలుపెట్టు ."
 
-#: ../daemon/gdm-daemon-config.c:1424
+#: ../daemon/mdm-daemon-config.c:1424
 #, c-format
 msgid "%s: Authdir %s does not exist. Aborting."
 msgstr "%s: ప్రామాణికవివరం %s కలిగిలేదు. అర్థాంతరముగా ఆపివేయుచున్నది."
 
-#: ../daemon/gdm-daemon-config.c:1429
+#: ../daemon/mdm-daemon-config.c:1429
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but this is "
-"not a directory. Please correct GDM configuration and restart GDM."
+"not a directory. Please correct MDM configuration and restart MDM."
 msgstr ""
 "సేవిక అధికారమిచ్చు వివరం (సూత్రధారి/సేవికప్రామాణికవివరం) %s కు అమర్చబడి ఉంది కాని ఇది వివరం కాదు. "
 "దయచేసి సరియైన జిడియం రూపకరించు మరియు జిడియం మరలామొదలుపెట్టు ."
 
-#: ../daemon/gdm-daemon-config.c:1440
+#: ../daemon/mdm-daemon-config.c:1440
 #, c-format
 msgid "%s: Authdir %s is not a directory. Aborting."
 msgstr "%s: ప్రామాణికవివరం %s ఒక వివరం కాదు. అర్థాంతరముగా ఆపివేయుచున్నది."
 
-#: ../daemon/gdm-daemon-config.c:1589
+#: ../daemon/mdm-daemon-config.c:1589
 #, c-format
 msgid "%s: BaseXsession empty; using %s"
 msgstr "%s: మూలంXసమకూర్పు శూన్యము. %s వాడుచున్నది. "
 
-#: ../daemon/gdm-daemon-config.c:1633
+#: ../daemon/mdm-daemon-config.c:1633
 #, c-format
 msgid "%s: Standard X server not found; trying alternatives"
 msgstr "%s: ప్రామాణిక X సేవిక దొరకలేదు; మార్పుకలుగజేయునవి ప్రయత్నించుచున్నది"
 
-#: ../daemon/gdm-daemon-config.c:1695
+#: ../daemon/mdm-daemon-config.c:1695
 #, c-format
 msgid "%s: No greeter specified."
 msgstr "%s: ఎటువంటి నమస్కరించునది నిర్థేశింపబడలేదు."
 
-#: ../daemon/gdm-daemon-config.c:1711
+#: ../daemon/mdm-daemon-config.c:1711
 #, c-format
 msgid "%s: No remote greeter specified."
 msgstr "%s: ఎటువంటి సూదూర నమస్కరించునది నిర్థేశింపబడలేదు."
 
-#: ../daemon/gdm-daemon-config.c:1727
+#: ../daemon/mdm-daemon-config.c:1727
 #, c-format
 msgid "%s: No sessions directory specified."
 msgstr "%s: ఎటువంటి సమకూర్పుల వివరం నిర్థేశింపబడలేదు."
 
-#: ../daemon/gdm-daemon-config.c:1775
+#: ../daemon/mdm-daemon-config.c:1775
 #, c-format
 msgid "%s: XDMCP was enabled while there is no XDMCP support; turning it off"
 msgstr ""
 "%s: ఎక్స్డియంసిపి ఉపయోగించబడినది అక్కడ ఎటువంటి ఎక్స్డియంసిపి సహకారం లేనప్పుడు; దాన్ని ఆపివేయుచున్నది "
 
-#: ../daemon/gdm-daemon-config.c:1983 ../daemon/gdm-daemon-config.c:2026
+#: ../daemon/mdm-daemon-config.c:1983 ../daemon/mdm-daemon-config.c:2026
 #, c-format
 msgid "%s: XDMCP disabled and no static servers defined. Aborting!"
 msgstr ""
@@ -383,7 +383,7 @@ msgstr ""
 
 #. start
 #. server uid
-#: ../daemon/gdm-daemon-config.c:2002
+#: ../daemon/mdm-daemon-config.c:2002
 #, c-format
 msgid ""
 "%s: XDMCP disabled and no static servers defined. Adding %s on :%d to allow "
@@ -392,282 +392,282 @@ msgstr ""
 "%s: ఎక్స్డియంసిపి నిరుపయోగము మరియు ఎటువంటి స్థావరమైన సేవిక నిర్వచించబడలేదు. %s పై  చేర్చుచున్నది :%"
 "d కు అనుమతించు రూపకరణ!"
 
-#: ../daemon/gdm-daemon-config.c:2017
+#: ../daemon/mdm-daemon-config.c:2017
 msgid ""
-"XDMCP is disabled and GDM cannot find any static server to start.  "
-"Aborting!  Please correct the configuration and restart GDM."
+"XDMCP is disabled and MDM cannot find any static server to start.  "
+"Aborting!  Please correct the configuration and restart MDM."
 msgstr ""
 "ఎక్స్డియంసిపి నిరుపయోగంగా ఉంది మరియు ఎదైనా స్థావరమైన సేవిక మొదలుపెట్టుటకు  జిడియం వెతకలేకపోయింది.  "
 "అర్థాంతరముగా ఆపివేయుచున్నది!  దయచేసి సరియైన జిడియం రూపకరించు మరియు జిడియం మరలామొదలుపెట్టు ."
 
-#: ../daemon/gdm-daemon-config.c:2060
+#: ../daemon/mdm-daemon-config.c:2060
 #, c-format
 msgid ""
-"The GDM user '%s' does not exist. Please correct GDM configuration and "
-"restart GDM."
+"The MDM user '%s' does not exist. Please correct MDM configuration and "
+"restart MDM."
 msgstr ""
 "జిడియం వినియోగదారు '%s' కలిగి లేదు.  దయచేసి సరియైన జిడియం రూపకరించు మరియు జిడియం మరలామొదలుపెట్టు ."
 
-#: ../daemon/gdm-daemon-config.c:2068
+#: ../daemon/mdm-daemon-config.c:2068
 #, c-format
-msgid "%s: Can't find the GDM user '%s'. Aborting!"
+msgid "%s: Can't find the MDM user '%s'. Aborting!"
 msgstr "%s: '%s' జిడియం వినియోగదారు వెతుకుట వీలుకాలేదు. అర్థాంతరముగా ఆపివేయుచున్నది!"
 
-#: ../daemon/gdm-daemon-config.c:2075
+#: ../daemon/mdm-daemon-config.c:2075
 msgid ""
-"The GDM user is set to be root, but this is not allowed since it can pose a "
-"security risk.  Please correct GDM configuration and restart GDM."
+"The MDM user is set to be root, but this is not allowed since it can pose a "
+"security risk.  Please correct MDM configuration and restart MDM."
 msgstr ""
 "జిడియం వినియోగదారు మూలంకు అమర్చబడి ఉండెను, రక్షణ అపాయము.  దయచేసి సరియైన జిడియం రూపకరించు మరియు "
 "జిడియం మరలామొదలుపెట్టు ."
 
-#: ../daemon/gdm-daemon-config.c:2085
+#: ../daemon/mdm-daemon-config.c:2085
 #, c-format
-msgid "%s: The GDM user should not be root. Aborting!"
+msgid "%s: The MDM user should not be root. Aborting!"
 msgstr "%s: జిడియం వినియోగదారు మూలం కలిగి ఉండరాదు. అర్థాంతరముగా ఆపివేయుచున్నది!"
 
-#: ../daemon/gdm-daemon-config.c:2092
+#: ../daemon/mdm-daemon-config.c:2092
 #, c-format
 msgid ""
-"The GDM group '%s' does not exist. Please correct GDM configuration and "
-"restart GDM."
+"The MDM group '%s' does not exist. Please correct MDM configuration and "
+"restart MDM."
 msgstr ""
-"జిడియం సముదాయం '%s' కలిగి లేదు. దయచేసి సరియైన జిడియం రూపకరించు మరియు  GDM మరలామొదలుపెట్టు ."
+"జిడియం సముదాయం '%s' కలిగి లేదు. దయచేసి సరియైన జిడియం రూపకరించు మరియు  MDM మరలామొదలుపెట్టు ."
 
-#: ../daemon/gdm-daemon-config.c:2100
+#: ../daemon/mdm-daemon-config.c:2100
 #, c-format
-msgid "%s: Can't find the GDM group '%s'. Aborting!"
+msgid "%s: Can't find the MDM group '%s'. Aborting!"
 msgstr "%s: '%s' జిడియం సముదాయం వెతుకుటకు వీలుకాదు.అర్థాంతరముగా ఆపివేయుచున్నది!"
 
-#: ../daemon/gdm-daemon-config.c:2107
+#: ../daemon/mdm-daemon-config.c:2107
 msgid ""
-"The GDM group is set to be root, but this is not allowed since it can pose a "
-"security risk. Please correct GDM configuration and restart GDM."
+"The MDM group is set to be root, but this is not allowed since it can pose a "
+"security risk. Please correct MDM configuration and restart MDM."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2116
+#: ../daemon/mdm-daemon-config.c:2116
 #, c-format
-msgid "%s: The GDM group should not be root. Aborting!"
+msgid "%s: The MDM group should not be root. Aborting!"
 msgstr "%s: జిడియం సముదాయం మూలం కలిగి ఉండరాదు. అర్థాంతరముగా ఆపివేయుచున్నది!"
 
-#: ../daemon/gdm-daemon-config.c:2164
+#: ../daemon/mdm-daemon-config.c:2164
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but is not "
-"owned by user %d and group %d. Please correct the ownership or GDM "
-"configuration and restart GDM."
+"owned by user %d and group %d. Please correct the ownership or MDM "
+"configuration and restart MDM."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2177
+#: ../daemon/mdm-daemon-config.c:2177
 #, c-format
 msgid "%s: Authdir %s is not owned by user %d, group %d. Aborting."
 msgstr ""
 "%s: ప్రామాణిక వివరం %s వినియోగదారుని ద్వారా స్వంతం చేయబడలేదు %d, సముదాయం %d. అర్థాంతరముగా "
 "ఆపివేయుచున్నది."
 
-#: ../daemon/gdm-daemon-config.c:2186
+#: ../daemon/mdm-daemon-config.c:2186
 #, c-format
 msgid ""
 "Server Authorization directory (daemon/ServAuthDir) is set to %s but has the "
 "wrong permissions: it should have permissions of %o. Please correct the "
-"permissions or the GDM configuration and restart GDM."
+"permissions or the MDM configuration and restart MDM."
 msgstr ""
 
-#: ../daemon/gdm-daemon-config.c:2199
+#: ../daemon/mdm-daemon-config.c:2199
 #, c-format
 msgid "%s: Authdir %s has wrong permissions %o. Should be %o. Aborting."
 msgstr ""
 "%s: ప్రామాణికరణవివరం %s చెడు అనుమతులు కలిగిన %o. కలిగి ఉండు %o. అర్థాంతరముగా ఆపివేయుచున్నది."
 
-#: ../daemon/gdm-net.c:337
+#: ../daemon/mdm-net.c:337
 #, c-format
 msgid "%s: Could not make socket"
 msgstr "%s:తొర్ర తయారుచేయుటకు వీలుకాదు"
 
-#: ../daemon/gdm-net.c:368
+#: ../daemon/mdm-net.c:368
 #, c-format
 msgid "%s: Could not bind socket"
 msgstr "%s: తొర్ర బంధించుటకు వీలుకాదు"
 
-#: ../daemon/gdm-net.c:454
+#: ../daemon/mdm-net.c:454
 #, c-format
 msgid "%s: Could not make FIFO"
 msgstr "%s: ఫిఫో తయారుచేయుటకు వీలుకాదు"
 
-#: ../daemon/gdm-net.c:462
+#: ../daemon/mdm-net.c:462
 #, c-format
 msgid "%s: Could not open FIFO"
 msgstr "%s: ఫిఫో తెరుచుటకు వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:565
+#: ../daemon/mdm-xdmcp-manager.c:565
 msgid "Could not create socket!"
 msgstr "తొర్ర సృష్టించుటకు వీలుకాదు!"
 
-#: ../daemon/gdm-xdmcp-manager.c:788
+#: ../daemon/mdm-xdmcp-manager.c:788
 #, c-format
 msgid "Denied XDMCP query from host %s"
 msgstr "%s ఆతిథ్యం నుండి ఎక్స్డియంసిపి ప్రశ్న తిరస్కరించినది"
 
-#: ../daemon/gdm-xdmcp-manager.c:939 ../daemon/gdm-xdmcp-manager.c:1004
+#: ../daemon/mdm-xdmcp-manager.c:939 ../daemon/mdm-xdmcp-manager.c:1004
 msgid "Could not extract authlist from packet"
 msgstr "పొట్లం నుండి ప్రామాణికజాబితా పెరుగుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:952 ../daemon/gdm-xdmcp-manager.c:1068
+#: ../daemon/mdm-xdmcp-manager.c:952 ../daemon/mdm-xdmcp-manager.c:1068
 msgid "Error in checksum"
 msgstr "తనిఖీమొత్తం లో దోషం"
 
-#: ../daemon/gdm-xdmcp-manager.c:1256
+#: ../daemon/mdm-xdmcp-manager.c:1256
 msgid "Bad address"
 msgstr "చెడు చిరునామా"
 
-#: ../daemon/gdm-xdmcp-manager.c:1336
+#: ../daemon/mdm-xdmcp-manager.c:1336
 #, c-format
 msgid "%s: Could not read display address"
 msgstr "%s: ప్రదర్శన చిరునామా చదువుటకు వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1344
+#: ../daemon/mdm-xdmcp-manager.c:1344
 #, c-format
 msgid "%s: Could not read display port number"
 msgstr "%s: రేవు సంఖ్య ప్రదర్శించు చదువుటకు వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1353
+#: ../daemon/mdm-xdmcp-manager.c:1353
 #, c-format
 msgid "%s: Could not extract authlist from packet"
 msgstr "%s: పొట్లం నుండి ప్రామాణికజాబితా పెరుగుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1373
+#: ../daemon/mdm-xdmcp-manager.c:1373
 #, c-format
 msgid "%s: Error in checksum"
 msgstr "%s: తనిఖీమొత్తం లో దోషం"
 
-#: ../daemon/gdm-xdmcp-manager.c:1838
+#: ../daemon/mdm-xdmcp-manager.c:1838
 #, c-format
 msgid "%s: Got REQUEST from banned host %s"
 msgstr "%s: %s నిషేధింపబడిన ఆతిథ్యం నుండి ప్రార్థన పొందు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1850 ../daemon/gdm-xdmcp-manager.c:2171
-#: ../daemon/gdm-xdmcp-manager.c:2403
+#: ../daemon/mdm-xdmcp-manager.c:1850 ../daemon/mdm-xdmcp-manager.c:2171
+#: ../daemon/mdm-xdmcp-manager.c:2403
 #, c-format
 msgid "%s: Could not read Display Number"
 msgstr "%s: ప్రదర్శించు సంఖ్య చదువుటకు వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1857
+#: ../daemon/mdm-xdmcp-manager.c:1857
 #, c-format
 msgid "%s: Could not read Connection Type"
 msgstr "%s: బంధం పద్దతి చదువుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1864
+#: ../daemon/mdm-xdmcp-manager.c:1864
 #, c-format
 msgid "%s: Could not read Client Address"
 msgstr "%s:బంట్రౌతు చిరునామా చదువుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1872
+#: ../daemon/mdm-xdmcp-manager.c:1872
 #, c-format
 msgid "%s: Could not read Authentication Names"
 msgstr "%s: ప్రామాణీకరణ నామములు చదువుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1881
+#: ../daemon/mdm-xdmcp-manager.c:1881
 #, c-format
 msgid "%s: Could not read Authentication Data"
 msgstr "%s: ప్రామాణీకరణ దత్తాంశం చదువుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1891
+#: ../daemon/mdm-xdmcp-manager.c:1891
 #, c-format
 msgid "%s: Could not read Authorization List"
 msgstr "%s: అధికారమిచ్చు జాబితా చదువుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1909
+#: ../daemon/mdm-xdmcp-manager.c:1909
 #, c-format
 msgid "%s: Could not read Manufacturer ID"
 msgstr "%s: తయారుచేయువాని ఐడి చదువుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:1934
+#: ../daemon/mdm-xdmcp-manager.c:1934
 #, c-format
 msgid "%s: Failed checksum from %s"
 msgstr "%s: %s తనిఖీ మెత్తం నుండి విఫలమైంది"
 
-#: ../daemon/gdm-xdmcp-manager.c:2154
+#: ../daemon/mdm-xdmcp-manager.c:2154
 #, c-format
 msgid "%s: Got Manage from banned host %s"
 msgstr "%s: %s నిషేధింపబడిన ఆతిథ్యం నుండి నిర్వహించుట పొందు"
 
-#: ../daemon/gdm-xdmcp-manager.c:2164 ../daemon/gdm-xdmcp-manager.c:2410
+#: ../daemon/mdm-xdmcp-manager.c:2164 ../daemon/mdm-xdmcp-manager.c:2410
 #, c-format
 msgid "%s: Could not read Session ID"
 msgstr "%s: సమకూర్పు ఐడి చదువుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:2178
+#: ../daemon/mdm-xdmcp-manager.c:2178
 #, c-format
 msgid "%s: Could not read Display Class"
 msgstr "%s: ప్రదర్శన తరగతి చదువుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:2273 ../daemon/gdm-xdmcp-manager.c:2320
-#: ../daemon/gdm-xdmcp-manager.c:2326
+#: ../daemon/mdm-xdmcp-manager.c:2273 ../daemon/mdm-xdmcp-manager.c:2320
+#: ../daemon/mdm-xdmcp-manager.c:2326
 #, c-format
 msgid "%s: Could not read address"
 msgstr "%s: చిరునామా చదువుట వీలుకాదు"
 
-#: ../daemon/gdm-xdmcp-manager.c:2393
+#: ../daemon/mdm-xdmcp-manager.c:2393
 #, c-format
 msgid "%s: Got KEEPALIVE from banned host %s"
 msgstr "%s: %s నిషేధించబడిన ఆతిథ్యం నుండి కదలికగాఉంచుట పొందు"
 
-#: ../daemon/gdm-xdmcp-manager.c:2476
+#: ../daemon/mdm-xdmcp-manager.c:2476
 msgid "XDMCP: Could not create XDMCP buffer!"
 msgstr "ఎక్స్డియంసిపి: ఎక్స్డియంసిపి బఫర్ సృష్టించుటకు వీలుకాదు!"
 
-#: ../daemon/gdm-xdmcp-manager.c:2482
+#: ../daemon/mdm-xdmcp-manager.c:2482
 msgid "XDMCP: Could not read XDMCP header!"
 msgstr "ఎక్స్డియంసిపి: ఎక్స్డియంసిపి పీఠిక చదువుట వీలుకాదు!"
 
-#: ../daemon/gdm-xdmcp-manager.c:2488
+#: ../daemon/mdm-xdmcp-manager.c:2488
 msgid "XDMCP: Incorrect XDMCP version!"
 msgstr "ఎక్స్డియంసిపి: ఎక్స్డియంసిపి వివరణ సరికానిది!"
 
-#: ../daemon/gdm-xdmcp-manager.c:2875
+#: ../daemon/mdm-xdmcp-manager.c:2875
 #, c-format
 msgid "Could not get server hostname: %s!"
 msgstr "సేవిక ఆతిథ్య నామము పొందుట వీలుకాదు: %s!"
 
 #. FIXME: how to handle this?
-#: ../daemon/gdm.c:195 ../daemon/gdm.c:203 ../daemon/gdm.c:1645
-#: ../daemon/gdm.c:1653
+#: ../daemon/mdm.c:195 ../daemon/mdm.c:203 ../daemon/mdm.c:1645
+#: ../daemon/mdm.c:1653
 #, c-format
 msgid "Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"
 msgstr "%s పిఐడి దస్త్రం వ్రాయుటకు వీలుకాదు: సాధ్యముగా ఖని ఖాళీ. దోషము: %s\n"
 
-#: ../daemon/gdm.c:197 ../daemon/gdm.c:205 ../daemon/gdm.c:1647
-#: ../daemon/gdm.c:1655
+#: ../daemon/mdm.c:197 ../daemon/mdm.c:205 ../daemon/mdm.c:1647
+#: ../daemon/mdm.c:1655
 #, c-format
 msgid "Cannot write PID file %s: possibly out of diskspace.  Error: %s"
 msgstr "%s పిఐడి దస్త్రం వ్రాయుటకు వీలుకాదు: సాధ్యముగా ఖని ఖాళీ. దోషము: %s"
 
-#: ../daemon/gdm.c:216
+#: ../daemon/mdm.c:216
 #, c-format
 msgid "%s: fork () failed!"
 msgstr "%s: పంగలకర్ర () విఫలమైంది!"
 
 #. should never happen
-#: ../daemon/gdm.c:219 ../daemon/slave.c:3581
+#: ../daemon/mdm.c:219 ../daemon/slave.c:3581
 #, c-format
 msgid "%s: setsid () failed: %s!"
 msgstr "%s: సెట్ సిడ్ () విఫలమైంది: %s!"
 
-#: ../daemon/gdm.c:445
+#: ../daemon/mdm.c:445
 #, c-format
 msgid "%s: Trying failsafe X server %s"
 msgstr "%s: %s విఫలక్షేమంగానున్న X సేవిక  ప్రయత్నించుచున్నది"
 
-#: ../daemon/gdm.c:463
+#: ../daemon/mdm.c:463
 #, c-format
 msgid "%s: Running the XKeepsCrashing script"
 msgstr "%s: Xఉంచుకుప్పకూలు లిపి నడుపుచున్నది"
 
-#: ../daemon/gdm.c:577
+#: ../daemon/mdm.c:577
 msgid ""
 "The X server (your graphical interface) cannot be started.  It is likely "
 "that it is not set up correctly.  You will need to log in on a console and "
-"rerun the X configuration application, then restart GDM."
+"rerun the X configuration application, then restart MDM."
 msgstr ""
 
 #. else {
@@ -675,7 +675,7 @@ msgstr ""
 #. * talk to him.  He's on some 'l33t system anyway, so syslog
 #. * reading will do him good
 #. * }
-#: ../daemon/gdm.c:589
+#: ../daemon/mdm.c:589
 #, c-format
 msgid ""
 "Failed to start X server several times in a short time period; disabling "
@@ -684,184 +684,184 @@ msgstr ""
 "ఒక చిన్న సమయ వ్యవథిలో కొన్ని సమయాలలో X సేవిక మొదలు పెట్టుటకు విఫలమైంది; %s ప్రదర్శన "
 "నిరుపయోగపరచుచున్నది"
 
-#: ../daemon/gdm.c:652 ../daemon/gdm.c:2529
+#: ../daemon/mdm.c:652 ../daemon/mdm.c:2529
 msgid "Master suspending..."
 msgstr "యజమానిని నిలువగరించుచున్నది..."
 
-#: ../daemon/gdm.c:683
+#: ../daemon/mdm.c:683
 #, c-format
 msgid "System is restarting, please wait ..."
 msgstr "వ్యవస్థ మరలామొదలవుతున్నది,దయచేసి ఆగుము..."
 
-#: ../daemon/gdm.c:685
+#: ../daemon/mdm.c:685
 #, c-format
 msgid "System is shutting down, please wait ..."
 msgstr "వ్యవస్థ మూసివేయబడుతున్నది,దయచేసి ఆగుము..."
 
-#: ../daemon/gdm.c:696
+#: ../daemon/mdm.c:696
 msgid "Master halting..."
 msgstr "యజమానిని నిలుపుచున్నది..."
 
-#: ../daemon/gdm.c:718
+#: ../daemon/mdm.c:718
 msgid "Restarting computer..."
 msgstr "కంప్యూటర్ మరలామొదలవుతున్నది..."
 
 #. We are just feeling very paranoid
-#: ../daemon/gdm.c:740
+#: ../daemon/mdm.c:740
 #, c-format
 msgid "custom_cmd: Custom command index %ld outside permitted range [0,%d)"
 msgstr "మలచిన_సియండి: మలచిన ఆదేశం సూచి %ld బయటివైపు  అనుమతినిచ్చిన శ్రేణి [0,%d)"
 
-#: ../daemon/gdm.c:761
+#: ../daemon/mdm.c:761
 #, c-format
 msgid "Executing custom command %ld with restart option..."
 msgstr "ఇఛ్ఛాపూర్వకం మరలామొదలుపెట్టుట %ld తో  మలచిన ఆదేశం నిర్వర్తించుచున్నది..."
 
-#: ../daemon/gdm.c:784 ../daemon/gdm.c:822
+#: ../daemon/mdm.c:784 ../daemon/mdm.c:822
 #, c-format
 msgid "%s: Execution of custom command failed: %s"
 msgstr "%s: నిర్వర్తించదగ్గ మలచిన ఆదేశం విఫలమైంది: %s"
 
-#: ../daemon/gdm.c:793
+#: ../daemon/mdm.c:793
 #, c-format
 msgid "Executing custom command %ld with no restart option ..."
 msgstr "ఇఛ్ఛాపూర్వకం మరలామొదలుపెట్టుట లేకుండా  %ld తో మలచిన ఆదేశం నిర్వర్తించుచున్నది..."
 
 #. failed fork
-#: ../daemon/gdm.c:799
+#: ../daemon/mdm.c:799
 #, c-format
 msgid "custom_cmd: forking process for custom command %ld failed"
 msgstr "మలచిన_సియండి: పంగలకర్ర క్రమణం కొరకు మలచిన ఆదేశం %ld విఫలమైంది"
 
-#: ../daemon/gdm.c:833
+#: ../daemon/mdm.c:833
 #, c-format
 msgid "custom_cmd: child %d returned %d"
 msgstr "మలచిన_సియండి: %d శిశువు  %d వెనక్కితిరగబడినది"
 
-#: ../daemon/gdm.c:942
+#: ../daemon/mdm.c:942
 #, c-format
 msgid ""
-"Restart GDM, Restart machine, Suspend, or Halt request when there is no "
+"Restart MDM, Restart machine, Suspend, or Halt request when there is no "
 "system menu from display %s"
 msgstr ""
 "జిడియం మరలా మొదలుపెట్టు, యంత్రమును మరలామొదలుపెట్టు, నిలువగల, లేదా నిలుచు ప్రార్థన అక్కడ లేనప్పుడు "
 "%s ప్రదర్శన నుండి వ్యవస్థ జాబితా"
 
-#: ../daemon/gdm.c:951
+#: ../daemon/mdm.c:951
 #, c-format
 msgid ""
-"Restart GDM, Restart machine, Suspend or Halt request from a non-static "
+"Restart MDM, Restart machine, Suspend or Halt request from a non-static "
 "display %s"
 msgstr ""
 "జిడియం మరలా మొదలుపెట్టు, యంత్రమును మరలామొదలుపెట్టు, ఒక స్థావరం కాని దాని నుండి  నిలువగల లేదా "
 "నిలుచు ప్రార్థన %s ప్రదర్శన"
 
 #. Bury this display for good
-#: ../daemon/gdm.c:1017
+#: ../daemon/mdm.c:1017
 #, c-format
 msgid "%s: Aborting display %s"
 msgstr "%s: ప్రదర్శన అర్థాంతరముగా నిలిపివేయుచున్నది %s"
 
-#: ../daemon/gdm.c:1168
-msgid "GDM restarting ..."
+#: ../daemon/mdm.c:1168
+msgid "MDM restarting ..."
 msgstr "జిడియం మరలామొదలుపెట్టుచున్నది..."
 
-#: ../daemon/gdm.c:1172
+#: ../daemon/mdm.c:1172
 msgid "Failed to restart self"
 msgstr "మొదలుపెట్టుటకు విఫలమైంది"
 
 #. FIXME: note that this could mean out of memory
-#: ../daemon/gdm.c:1257
+#: ../daemon/mdm.c:1257
 msgid "main daemon: Got SIGABRT. Something went very wrong. Going down!"
 msgstr "మూల సూత్రథారి: SIGABRT పొందు. ఏదోఒకటి చాలా తప్పుగా వెళ్ళబడింది. క్రిందికి వెళ్ళుచున్నది!"
 
-#: ../daemon/gdm.c:1414
+#: ../daemon/mdm.c:1414
 msgid "Do not fork into the background"
 msgstr "పూర్వరంగం లోకి పంగలకర్ర చేయకు"
 
-#: ../daemon/gdm.c:1416
+#: ../daemon/mdm.c:1416
 msgid "No console (static) servers to be run"
 msgstr "ఎటువంటి ఓదార్పు (స్థావరమైన) సేవికలు నడుపుటకు ఉండు"
 
-#: ../daemon/gdm.c:1418
-msgid "Alternative GDM System Defaults configuration file"
+#: ../daemon/mdm.c:1418
+msgid "Alternative MDM System Defaults configuration file"
 msgstr "ప్రత్యామ్నాయ జిడియం వ్యవస్థ అప్రమేయాలు రూపకరించు దస్త్రం"
 
-#: ../daemon/gdm.c:1418
+#: ../daemon/mdm.c:1418
 msgid "CONFIGFILE"
 msgstr "రూపకరణ దస్త్రం"
 
-#: ../daemon/gdm.c:1420
+#: ../daemon/mdm.c:1420
 msgid "Preserve LD_* variables"
 msgstr "యధాస్థితిలో  ఎల్డి_* చరరాశులు"
 
-#: ../daemon/gdm.c:1422
-msgid "Print GDM version"
+#: ../daemon/mdm.c:1422
+msgid "Print MDM version"
 msgstr "జిడియం వివరణం ముద్రించు"
 
-#: ../daemon/gdm.c:1424
+#: ../daemon/mdm.c:1424
 msgid "Start the first X server but then halt until we get a GO in the fifo"
 msgstr "మొదటి X సేవిక మొదలుపెట్టుము కాని అపుడు మనము ఫిఫో లో ఒక వెళ్ళు పొందు వరకు నిలుపుము"
 
-#: ../daemon/gdm.c:1498 ../daemon/gdm.c:1847
+#: ../daemon/mdm.c:1498 ../daemon/mdm.c:1847
 #, c-format
 msgid "Can't open %s for writing"
 msgstr "%s వ్రాయుట కొరకు తెరువలేము"
 
-#: ../daemon/gdm.c:1549
+#: ../daemon/mdm.c:1549
 msgid "- The GNOME login manager"
 msgstr "- గ్నోమ్ నమోదు అభికర్త"
 
-#: ../daemon/gdm.c:1550 ../gui/gdmXnestchooser.c:486
-#: ../gui/gdmXnestchooser.c:494 ../gui/gdmchooser.c:1976
+#: ../daemon/mdm.c:1550 ../gui/mdmXnestchooser.c:486
+#: ../gui/mdmXnestchooser.c:494 ../gui/mdmchooser.c:1976
 msgid "main options"
 msgstr "ముఖ్యమైన ఇఛ్ఛాపూర్వకములు"
 
 #. make sure the pid file doesn't get wiped
-#: ../daemon/gdm.c:1582
-msgid "Only root wants to run GDM\n"
+#: ../daemon/mdm.c:1582
+msgid "Only root wants to run MDM\n"
 msgstr "జిడియం నడుపుటకు మూలం మాత్రమే లేకపోయింది\n"
 
-#: ../daemon/gdm.c:1601 ../daemon/gdm.c:1605 ../daemon/gdm.c:1683
-#: ../daemon/gdm.c:1687 ../daemon/gdm.c:1691 ../daemon/gdm.c:1695
-#: ../daemon/gdm.c:1705 ../daemon/gdm.c:1711 ../daemon/gdm.c:1722
+#: ../daemon/mdm.c:1601 ../daemon/mdm.c:1605 ../daemon/mdm.c:1683
+#: ../daemon/mdm.c:1687 ../daemon/mdm.c:1691 ../daemon/mdm.c:1695
+#: ../daemon/mdm.c:1705 ../daemon/mdm.c:1711 ../daemon/mdm.c:1722
 #: ../daemon/misc.c:1384 ../daemon/misc.c:1388 ../daemon/misc.c:1392
 #: ../daemon/misc.c:1399 ../daemon/misc.c:1403 ../daemon/misc.c:1407
 #: ../daemon/server.c:528 ../daemon/server.c:541 ../daemon/slave.c:873
 #: ../daemon/slave.c:887 ../daemon/slave.c:897 ../daemon/slave.c:907
-#: ../daemon/slave.c:919 ../gui/gdmlogin.c:3371 ../gui/gdmlogin.c:3382
-#: ../gui/gdmlogin.c:3388
+#: ../daemon/slave.c:919 ../gui/mdmlogin.c:3371 ../gui/mdmlogin.c:3382
+#: ../gui/mdmlogin.c:3388
 #, c-format
 msgid "%s: Error setting up %s signal handler: %s"
 msgstr "%s: %s సైగ ఉపయోగించునది అమరిక పై దోషము: %s"
 
-#: ../daemon/gdm.c:1627
-msgid "GDM already running. Aborting!"
+#: ../daemon/mdm.c:1627
+msgid "MDM already running. Aborting!"
 msgstr "జిడియం ఇదివరకే నడుచుచున్నది. అర్థాంతరముగా ఆపివేయుచున్నది!"
 
-#: ../daemon/gdm.c:1731
+#: ../daemon/mdm.c:1731
 #, c-format
 msgid "%s: Error setting up CHLD signal handler"
 msgstr "%s: శిశువు సైగలు ఉపయోగించునది అమరిక పై దోషము"
 
-#: ../daemon/gdm.c:3185
+#: ../daemon/mdm.c:3185
 msgid "DYNAMIC request denied: Not authenticated"
 msgstr "చురుకైన ప్రార్థన తిరస్కరించబడినది: ప్రామాణీకరించబడలేదు"
 
-#: ../daemon/gdm.c:3478 ../daemon/gdm.c:3742 ../daemon/gdm.c:3826
-#: ../daemon/gdm.c:3956 ../daemon/gdm.c:4003 ../daemon/gdm.c:4071
-#: ../daemon/gdm.c:4134 ../daemon/gdm.c:4174 ../daemon/gdm.c:4219
+#: ../daemon/mdm.c:3478 ../daemon/mdm.c:3742 ../daemon/mdm.c:3826
+#: ../daemon/mdm.c:3956 ../daemon/mdm.c:4003 ../daemon/mdm.c:4071
+#: ../daemon/mdm.c:4134 ../daemon/mdm.c:4174 ../daemon/mdm.c:4219
 #, c-format
 msgid "%s request denied: Not authenticated"
 msgstr "%s ప్రార్థన తిరస్కరించబడినది: ప్రామాణీకరించబడలేదు"
 
 #. Don't print the name to syslog as it might be
 #. * long and dangerous
-#: ../daemon/gdm.c:3512
+#: ../daemon/mdm.c:3512
 msgid "Unknown server type requested; using standard server."
 msgstr "తెలియని సేవిక పద్దతి ప్రార్థించబడినది; స్థిరమైన సేవిక వాడుచున్నది."
 
-#: ../daemon/gdm.c:3516
+#: ../daemon/mdm.c:3516
 #, c-format
 msgid ""
 "Requested server %s not allowed to be used for flexible servers; using "
@@ -905,7 +905,7 @@ msgstr "వెనక్కిపడు ఓదార్పు మొదలుప�
 #, c-format
 msgid ""
 "There already appears to be an X server running on display %s.  Should "
-"another display number by tried?  Answering no will cause GDM to attempt "
+"another display number by tried?  Answering no will cause MDM to attempt "
 "starting the server on %s again.%s"
 msgstr ""
 
@@ -1054,7 +1054,7 @@ msgid ""
 "Please contact your system administrator\n"
 "or check your syslog to diagnose.\n"
 "In the meantime this display will be\n"
-"disabled.  Please restart GDM when\n"
+"disabled.  Please restart MDM when\n"
 "the problem is corrected."
 msgstr ""
 
@@ -1105,13 +1105,13 @@ msgstr ""
 
 #: ../daemon/slave.c:2613 ../daemon/slave.c:2618
 #, c-format
-msgid "%s: Can't init pipe to gdmgreeter"
+msgid "%s: Can't init pipe to mdmgreeter"
 msgstr "%s: జిడియం వందనము కు పైప్ ను సంసిద్దించలేవు"
 
 #: ../daemon/slave.c:2770
 msgid ""
 "No servers were defined in the configuration file and XDMCP was disabled.  "
-"This can only be a configuration error.  GDM has started a single server for "
+"This can only be a configuration error.  MDM has started a single server for "
 "you.  You should log in and fix the configuration.  Note that automatic and "
 "timed logins are disabled now."
 msgstr ""
@@ -1163,7 +1163,7 @@ msgstr "%s: %s ప్రదర్శన పై  నమస్కరించు �
 
 #: ../daemon/slave.c:2861
 #, c-format
-msgid "%s: Can't fork gdmgreeter process"
+msgid "%s: Can't fork mdmgreeter process"
 msgstr "%s: జిడియం నమస్కరించు క్రమణం పంగలకర్ర విఫలమైంది"
 
 #: ../daemon/slave.c:2941
@@ -1173,7 +1173,7 @@ msgstr "%s: ఫిఫో తెరచుటకు విఫలమైంది!"
 
 #: ../daemon/slave.c:3119
 #, c-format
-msgid "%s: Can't init pipe to gdmchooser"
+msgid "%s: Can't init pipe to mdmchooser"
 msgstr "%s: జిడియం ఎంచుకొనుటకు పైప్ init వీలుకాదు"
 
 #: ../daemon/slave.c:3230
@@ -1189,7 +1189,7 @@ msgstr "%s: %s ప్రదర్శన పై ఎంచుకొనుట మ�
 
 #: ../daemon/slave.c:3237
 #, c-format
-msgid "%s: Can't fork gdmchooser process"
+msgid "%s: Can't fork mdmchooser process"
 msgstr "%s: పంగలకర్ర  జిడియం ఎంచుకొనునది క్రమణం వీలుకాదు"
 
 #: ../daemon/slave.c:3470
@@ -1362,7 +1362,7 @@ msgstr ""
 
 #: ../daemon/slave.c:4714
 msgid ""
-"GDM could not write to your authorization file.  This could mean that you "
+"MDM could not write to your authorization file.  This could mean that you "
 "are out of disk space or that your home directory could not be opened for "
 "writing.  In any case, it is not possible to log in.  Please contact your "
 "system administrator"
@@ -1386,7 +1386,7 @@ msgid "View details (~/.xsession-errors file)"
 msgstr "సవిస్తరములుగా దర్శనం (~/.xసమకూర్పు-దోషముల దస్త్రం)"
 
 #: ../daemon/slave.c:5068
-msgid "GDM detected a halt or restart in progress."
+msgid "MDM detected a halt or restart in progress."
 msgstr "పురోగమనంలో ఒక నిలుపు లేదా మరలామొదలుపెట్టుట జిడియం ఆచూకీతీయబడినది."
 
 #: ../daemon/slave.c:5444
@@ -1443,15 +1443,15 @@ msgstr "దయచేసి మీ యొక్క వినియోగదార
 #: ../daemon/verify-crypt.c:125 ../daemon/verify-pam.c:464
 #: ../daemon/verify-pam.c:465 ../daemon/verify-pam.c:466
 #: ../daemon/verify-pam.c:547 ../daemon/verify-pam.c:960
-#: ../daemon/verify-shadow.c:127 ../gui/gdmlogin.c:868 ../gui/gdmlogin.c:882
-#: ../gui/gdmlogin.c:1349 ../gui/gdmlogin.c:1845 ../gui/greeter/greeter.c:247
+#: ../daemon/verify-shadow.c:127 ../gui/mdmlogin.c:868 ../gui/mdmlogin.c:882
+#: ../gui/mdmlogin.c:1349 ../gui/mdmlogin.c:1845 ../gui/greeter/greeter.c:247
 #: ../gui/greeter/greeter_parser.c:403
 msgid "Username:"
 msgstr "వినియోగదారునామము:"
 
 #: ../daemon/verify-crypt.c:163 ../daemon/verify-pam.c:467
 #: ../daemon/verify-pam.c:468 ../daemon/verify-pam.c:578
-#: ../daemon/verify-shadow.c:184 ../gui/gdmlogin.c:1384
+#: ../daemon/verify-shadow.c:184 ../gui/mdmlogin.c:1384
 msgid "Password:"
 msgstr "రహస్య పదము:"
 
@@ -1749,95 +1749,95 @@ msgstr ""
 msgid "%s: No XDMCP support"
 msgstr "%s: ఎక్స్డియంసిపి సహకారం లేదు"
 
-#: ../gui/gdmXnestchooser.c:175 ../gui/gdmXnestchooser.c:183
+#: ../gui/mdmXnestchooser.c:175 ../gui/mdmXnestchooser.c:183
 msgid "Xnest command line"
 msgstr "Xనెస్ట్ ఆదేశవాక్యం"
 
-#: ../gui/gdmXnestchooser.c:175 ../gui/gdmXnestchooser.c:183
+#: ../gui/mdmXnestchooser.c:175 ../gui/mdmXnestchooser.c:183
 msgid "STRING"
 msgstr "పదబంధం"
 
-#: ../gui/gdmXnestchooser.c:176 ../gui/gdmXnestchooser.c:184
+#: ../gui/mdmXnestchooser.c:176 ../gui/mdmXnestchooser.c:184
 msgid "Extra options for Xnest"
 msgstr "Xగూడు కొరకు అధిక ఇఛ్ఛాపూర్వకాలు"
 
-#: ../gui/gdmXnestchooser.c:176 ../gui/gdmXnestchooser.c:184
+#: ../gui/mdmXnestchooser.c:176 ../gui/mdmXnestchooser.c:184
 msgid "OPTIONS"
 msgstr "ఇఛ్ఛాపూర్వకాలు"
 
-#: ../gui/gdmXnestchooser.c:177 ../gui/gdmXnestchooser.c:188
+#: ../gui/mdmXnestchooser.c:177 ../gui/mdmXnestchooser.c:188
 msgid "Run in background"
 msgstr "పూర్వరంగంలో నడుపు"
 
-#: ../gui/gdmXnestchooser.c:185
+#: ../gui/mdmXnestchooser.c:185
 msgid "Just run Xnest, no query (no chooser)"
 msgstr "Xగూడును సరిగా నడుపుము,ఎటువంటి ప్రశ్నలేదు (ఎటువంటి వందనములేదు)"
 
-#: ../gui/gdmXnestchooser.c:186
+#: ../gui/mdmXnestchooser.c:186
 msgid "Do direct query instead of indirect (chooser)"
 msgstr "వక్రముకు ప్రత్యామ్నాయముగా సూటిగా ప్రశ్నించుము (ఎంచుకొనునది)"
 
-#: ../gui/gdmXnestchooser.c:187
+#: ../gui/mdmXnestchooser.c:187
 msgid "Run broadcast instead of indirect (chooser)"
 msgstr "వక్రము యొక్క బదులుగా వెదజల్లినట్టుగా నడుపుము (ఎంచుకొనునది)"
 
-#: ../gui/gdmXnestchooser.c:189
-msgid "Don't check for running GDM"
+#: ../gui/mdmXnestchooser.c:189
+msgid "Don't check for running MDM"
 msgstr "జిడియం నడుపుట కొరకు తనిఖీచేయకుము"
 
-#: ../gui/gdmXnestchooser.c:485
-msgid "- Nested gdm login chooser"
+#: ../gui/mdmXnestchooser.c:485
+msgid "- Nested mdm login chooser"
 msgstr "- గూడుకట్టబడిన జిడియం ప్రవేశద్వారం ఎంచుకొనునది"
 
-#: ../gui/gdmXnestchooser.c:493
-msgid "- Nested gdm login"
+#: ../gui/mdmXnestchooser.c:493
+msgid "- Nested mdm login"
 msgstr "- గూడుకట్టబడిన జిడియం ప్రవేశద్వారం"
 
-#: ../gui/gdmXnestchooser.c:523
+#: ../gui/mdmXnestchooser.c:523
 msgid "Xnest doesn't exist."
 msgstr "Xగూడు కలిగిలేదు."
 
-#: ../gui/gdmXnestchooser.c:524
+#: ../gui/mdmXnestchooser.c:524
 msgid "Please ask your system administrator to install it."
 msgstr "దయచేసి దానిని నెలకొల్పుటకు మీ యొక్క వ్యవస్థ నిర్వాహకి ని అడుగుము."
 
-#: ../gui/gdmXnestchooser.c:548
+#: ../gui/mdmXnestchooser.c:548
 msgid "Indirect XDMCP is not enabled"
 msgstr "వక్రమైన ఎక్స్డియంసిపి ఉపయోగించబడలేదు"
 
-#: ../gui/gdmXnestchooser.c:549 ../gui/gdmXnestchooser.c:566
+#: ../gui/mdmXnestchooser.c:549 ../gui/mdmXnestchooser.c:566
 msgid "Please ask your system administrator to enable this feature."
 msgstr "ఈ విశిష్టత ఉపయోగించుటకు దయచేసి మీ యొక్క వ్యవస్థ నిర్వాహకి ని అడుగుము."
 
-#: ../gui/gdmXnestchooser.c:565
+#: ../gui/mdmXnestchooser.c:565
 msgid "XDMCP is not enabled"
 msgstr "ఎక్స్డియంసిపి ఉపయోగించబడలేదు"
 
-#: ../gui/gdmXnestchooser.c:596
-msgid "GDM is not running"
+#: ../gui/mdmXnestchooser.c:596
+msgid "MDM is not running"
 msgstr "జిడియం నడుచుటలేదు"
 
-#: ../gui/gdmXnestchooser.c:597
+#: ../gui/mdmXnestchooser.c:597
 msgid "Please ask your system administrator to start it."
 msgstr "దయచేసి దానిని మొదలుపెట్టుటకు మీ యొక్క వ్యవస్థ నిర్వాహకిని అడుగుము."
 
-#: ../gui/gdmXnestchooser.c:613
+#: ../gui/mdmXnestchooser.c:613
 msgid "Could not find a free display number"
 msgstr "ఒక ఉచిత ప్రదర్శన సంఖ్య వెతుకుటకు వీలుకాదు"
 
-#: ../gui/gdmchooser.c:86
+#: ../gui/mdmchooser.c:86
 msgid "Please wait: scanning local network..."
 msgstr "దయచేసి ఆగుము: స్థానిక అల్లికను సంశోధించుచున్నది..."
 
-#: ../gui/gdmchooser.c:87
+#: ../gui/mdmchooser.c:87
 msgid "No serving hosts were found."
 msgstr "ఎటువంటి ఆతిథ్యములు దొరకలేదు."
 
-#: ../gui/gdmchooser.c:88
+#: ../gui/mdmchooser.c:88
 msgid "Choose a ho_st to connect to:"
 msgstr "_అనుసంధానపరచుటకు ఒక ఆతిథ్యం ఎంచుకొనుటకు:"
 
-#: ../gui/gdmchooser.c:646
+#: ../gui/mdmchooser.c:646
 #, c-format
 msgid ""
 "The host \"%s\" is not willing to support a login session right now.  Please "
@@ -1846,11 +1846,11 @@ msgstr ""
 "\"%s\" ఆతిథ్యం ఒక ప్రవేశద్వారం సమకూర్పు ప్రస్తుతము సహకారముకు ఇష్టములేదు. దయచేసి తరువాత మరలా "
 "ప్రయత్నించుము."
 
-#: ../gui/gdmchooser.c:655
+#: ../gui/mdmchooser.c:655
 msgid "Cannot connect to remote server"
 msgstr "సుదూర సేవిక కు అనుసంధానపరచుట వీలుకాదు"
 
-#: ../gui/gdmchooser.c:1306
+#: ../gui/mdmchooser.c:1306
 #, c-format
 msgid ""
 "Did not receive any response from host \"%s\" in %d seconds.  Perhaps the "
@@ -1858,20 +1858,20 @@ msgid ""
 "now.  Please try again later."
 msgstr ""
 
-#: ../gui/gdmchooser.c:1318
+#: ../gui/mdmchooser.c:1318
 msgid "Did not receive response from server"
 msgstr "సేవిక నుండి స్పందన స్వీకరించలేకపోయింది"
 
-#: ../gui/gdmchooser.c:1420
+#: ../gui/mdmchooser.c:1420
 #, c-format
 msgid "Cannot find the host \"%s\". Perhaps you have mistyped it."
 msgstr "\"%s\" ఆతిథ్యం వెతకలేము. నీవు దానిని "
 
-#: ../gui/gdmchooser.c:1428
+#: ../gui/mdmchooser.c:1428
 msgid "Cannot find host"
 msgstr "ఆతిథ్యం వెతకలేకపోయింది"
 
-#: ../gui/gdmchooser.c:1629
+#: ../gui/mdmchooser.c:1629
 msgid ""
 "The main area of this application shows the hosts on the local network that "
 "have \"XDMCP\" enabled. This allows users to login remotely to other "
@@ -1881,142 +1881,142 @@ msgid ""
 "have selected a host click \"Connect\" to open a session to that computer."
 msgstr ""
 
-#: ../gui/gdmchooser.c:1905
+#: ../gui/mdmchooser.c:1905
 msgid "Socket for xdm communication"
 msgstr "xdm కొరకు "
 
-#: ../gui/gdmchooser.c:1905
+#: ../gui/mdmchooser.c:1905
 msgid "SOCKET"
 msgstr "తొర్ర"
 
-#: ../gui/gdmchooser.c:1907
+#: ../gui/mdmchooser.c:1907
 msgid "Client address to return in response to xdm"
 msgstr "xdmకు స్పందన లో పురాగమనంకు బంట్రౌతు చిరునామా"
 
-#: ../gui/gdmchooser.c:1907
+#: ../gui/mdmchooser.c:1907
 msgid "ADDRESS"
 msgstr "చిరునామా"
 
-#: ../gui/gdmchooser.c:1909
+#: ../gui/mdmchooser.c:1909
 msgid "Connection type to return in response to xdm"
 msgstr "xdmకు స్పందన లో పురాగమనంకు బంధం రకము"
 
-#: ../gui/gdmchooser.c:1909
+#: ../gui/mdmchooser.c:1909
 msgid "TYPE"
 msgstr "పద్దతి"
 
-#: ../gui/gdmchooser.c:1975
-msgid "- gdm login chooser"
-msgstr "- gdm ప్రవేశద్వారం ఎంచుకొనునది"
+#: ../gui/mdmchooser.c:1975
+msgid "- mdm login chooser"
+msgstr "- mdm ప్రవేశద్వారం ఎంచుకొనునది"
 
-#: ../gui/gdmchooser.c:2042
+#: ../gui/mdmchooser.c:2042
 #, c-format
 msgid ""
 "The chooser version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded GDM.  Please restart the GDM daemon or the computer."
+"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
 msgstr ""
 
-#: ../gui/gdmchooser.c:2052
+#: ../gui/mdmchooser.c:2052
 msgid "Cannot run chooser"
 msgstr "ఎంచుకొనునది నడుపుట వీలుకాదు"
 
 #. EOF
-#: ../gui/gdmchooser.glade.h:1
+#: ../gui/mdmchooser.glade.h:1
 msgid "A_dd host: "
 msgstr "_ఆతిథ్యం చేర్చు: "
 
-#: ../gui/gdmchooser.glade.h:2
+#: ../gui/mdmchooser.glade.h:2
 msgid "C_onnect"
 msgstr "_అనుసంధించు"
 
-#: ../gui/gdmchooser.glade.h:3
+#: ../gui/mdmchooser.glade.h:3
 msgid "Exit the application"
 msgstr "కార్యక్షేత్రము బయటకు"
 
-#: ../gui/gdmchooser.glade.h:4
+#: ../gui/mdmchooser.glade.h:4
 msgid "How to use this application"
 msgstr "ఈ కార్యక్షేత్రమును ఎలా వాడవలెను"
 
-#: ../gui/gdmchooser.glade.h:5
+#: ../gui/mdmchooser.glade.h:5
 msgid "Login Host Chooser"
 msgstr "ప్రవేశద్వారం ఆతిథ్యం ఎంచుకొనునది"
 
-#: ../gui/gdmchooser.glade.h:6
+#: ../gui/mdmchooser.glade.h:6
 msgid "Open a session to the selected host"
 msgstr "ఎంచుకొనబడిన ఆతిథ్యం కు ఒక సమకూర్పు తెరువు"
 
-#: ../gui/gdmchooser.glade.h:7
+#: ../gui/mdmchooser.glade.h:7
 msgid "Probe the network"
 msgstr "అల్లిక ను శోధించువలె"
 
-#: ../gui/gdmchooser.glade.h:8
+#: ../gui/mdmchooser.glade.h:8
 msgid "Query and add this host to the above list"
 msgstr "ప్రశ్న మరియు ఈ ఆతిథ్యం పైన జాబితాకు చేర్చుము"
 
-#: ../gui/gdmchooser.glade.h:9
+#: ../gui/mdmchooser.glade.h:9
 msgid "Status"
 msgstr "సుస్థితి"
 
-#: ../gui/gdmchooser.glade.h:10
+#: ../gui/mdmchooser.glade.h:10
 msgid "_Add"
 msgstr "_చేర్చు"
 
-#: ../gui/gdmcomm.c:628
-msgid "GDM (GNOME Display Manager) is not running."
+#: ../gui/mdmcomm.c:628
+msgid "MDM (GNOME Display Manager) is not running."
 msgstr "జిడియం (గ్నోమ్ ప్రదర్శన అభికర్త) నడుచుటలేదు."
 
-#: ../gui/gdmcomm.c:630
+#: ../gui/mdmcomm.c:630
 msgid ""
 "You might be using a different display manager, such as KDM (KDE Display "
 "Manager), CDE login (dtlogin), or xdm. If you wish to use this feature, then "
-"your system will need to be configured to use GDM instead."
+"your system will need to be configured to use MDM instead."
 msgstr ""
 
-#: ../gui/gdmcomm.c:653 ../gui/gdmflexiserver.c:839
-msgid "Cannot communicate with GDM (The GNOME Display Manager)"
+#: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:839
+msgid "Cannot communicate with MDM (The GNOME Display Manager)"
 msgstr "జిడియం తో తెలియజేయలేము (గ్నోమ్ ప్రదర్శన అభికర్త)"
 
-#: ../gui/gdmcomm.c:655 ../gui/gdmflexiserver.c:841
-msgid "Perhaps you have an old version of GDM running."
+#: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:841
+msgid "Perhaps you have an old version of MDM running."
 msgstr "ఒకవేళ నీవు ఒక పాత వివరణము యొక్క జిడియం నడుచుచున్నది."
 
-#: ../gui/gdmcomm.c:672 ../gui/gdmcomm.c:675
-msgid "Cannot communicate with GDM. Perhaps you have an old version running."
+#: ../gui/mdmcomm.c:672 ../gui/mdmcomm.c:675
+msgid "Cannot communicate with MDM. Perhaps you have an old version running."
 msgstr "జిడియం తో తెలియజేయలేము. ఒకవేళ నీవు ఒక పాత వివరణము కలిగిఉండి నడుచుచున్నది."
 
-#: ../gui/gdmcomm.c:678
+#: ../gui/mdmcomm.c:678
 msgid "The allowed limit of flexible X servers reached."
 msgstr "అనుమతింపబడిన హద్దు యొక్క మృదువైన X సేవికలు చేరినవి."
 
-#: ../gui/gdmcomm.c:680
+#: ../gui/mdmcomm.c:680
 msgid "There were errors trying to start the X server."
 msgstr "X సేవిక మొదలుపెట్టుటకు ప్రయత్నించుటలో అక్కడ దోషములు ఏర్పడినవి."
 
-#: ../gui/gdmcomm.c:682
+#: ../gui/mdmcomm.c:682
 msgid "The X server failed.  Perhaps it is not configured well."
 msgstr "X సేవిక విఫలమైంది. ఒక వేళ అది సరిగ్గా రూపకరించకపోవచ్చు."
 
-#: ../gui/gdmcomm.c:685
+#: ../gui/mdmcomm.c:685
 msgid "Too many X sessions running."
 msgstr "చాలా సహితము X సమకూర్పులు నడుచుచున్నవి."
 
-#: ../gui/gdmcomm.c:687
+#: ../gui/mdmcomm.c:687
 msgid ""
 "The nested X server cannot connect to your current X server.  You may be "
 "missing an X authorization file."
 msgstr ""
 
-#: ../gui/gdmcomm.c:692
+#: ../gui/mdmcomm.c:692
 msgid ""
-"The nested X server is not available, or GDM is badly configured.\n"
+"The nested X server is not available, or MDM is badly configured.\n"
 "Please install the Xnest package in order to use the nested login."
 msgstr ""
 
-#: ../gui/gdmcomm.c:697
-msgid "The X server is not available. GDM may be misconfigured."
+#: ../gui/mdmcomm.c:697
+msgid "The X server is not available. MDM may be misconfigured."
 msgstr "X సేవిక లభించలేదు. జిడియం తప్పుగా రూపకరించి ఉండవచ్చు."
 
-#: ../gui/gdmcomm.c:700
+#: ../gui/mdmcomm.c:700
 msgid ""
 "Trying to set an unknown logout action, or trying to set a logout action "
 "which is not available."
@@ -2024,41 +2024,41 @@ msgstr ""
 "ఒక తెలియని నిష్ర్కమణ ద్వారం క్రియ అమర్చుటకు ప్రయత్నించుచున్నది, లేదా ఒక నిష్ర్కమణ ద్వారం క్రియ "
 "అమర్చుటకు ప్రయత్నించుచున్నది ఏదైతే లభించలేదో."
 
-#: ../gui/gdmcomm.c:703
+#: ../gui/mdmcomm.c:703
 msgid "Virtual terminals not supported."
 msgstr "వాస్తవప్రతిరూప మూలాలు సహకారం లేనివి."
 
-#: ../gui/gdmcomm.c:705
+#: ../gui/mdmcomm.c:705
 msgid "Trying to change to an invalid virtual terminal number."
 msgstr "ఒక నిస్సారమైన వాస్తవప్రతిరూప మూలం సంఖ్య కు మార్చుటకు ప్రయత్నించుచున్నది."
 
-#: ../gui/gdmcomm.c:707
+#: ../gui/mdmcomm.c:707
 msgid "Trying to update an unsupported configuration key."
 msgstr "ఒక సహకరించని రూపకరణ మీట తాజాపరచుటకు ప్రయత్నించుచున్నది."
 
-#: ../gui/gdmcomm.c:709
+#: ../gui/mdmcomm.c:709
 msgid ""
 "You do not seem to have the authentication needed for this operation.  "
 "Perhaps your .Xauthority file is not set up correctly."
 msgstr ""
 
-#: ../gui/gdmcomm.c:713
-msgid "Too many messages were sent to GDM and it hung up on us."
+#: ../gui/mdmcomm.c:713
+msgid "Too many messages were sent to MDM and it hung up on us."
 msgstr "జిడియం కు సహితము చాలా సందేశములు పంపబడినవి మరియు అది మనపై వ్రేలాడదీయబడినది."
 
-#: ../gui/gdmcomm.c:716
+#: ../gui/mdmcomm.c:716
 msgid "Unknown error occurred."
 msgstr "తెలియని దోషము ఏర్పడింది."
 
-#: ../gui/gdmcommon.c:751
+#: ../gui/mdmcommon.c:751
 msgid "The accessibility registry was not found."
 msgstr "అందుబాటు పట్టీలో చేర్చుట దొరకలేదు."
 
-#: ../gui/gdmcommon.c:774
+#: ../gui/mdmcommon.c:774
 msgid "The accessibility registry could not be started."
 msgstr "అందుబాటు పట్టీలో చేర్చుట మొదలుపెట్టుటకు వీలుకాదు."
 
-#: ../gui/gdmcommon.c:836
+#: ../gui/mdmcommon.c:836
 msgid "%a %b %d, %H:%M"
 msgstr "%a %b %d, %H:%M"
 
@@ -2066,58 +2066,58 @@ msgstr "%a %b %d, %H:%M"
 #. %H:%M if your language does not have AM and PM
 #. equivalent.  Note: %l is a strftime option for
 #. 12-hour clock format
-#: ../gui/gdmcommon.c:842
+#: ../gui/mdmcommon.c:842
 msgid "%a %b %d, %l:%M %p"
 msgstr "%a %b %d, %l:%M %p"
 
-#: ../gui/gdmcommon.c:942
+#: ../gui/mdmcommon.c:942
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d క్షణము"
 msgstr[1] "%d క్షణములు"
 
-#: ../gui/gdmdynamic.c:54
+#: ../gui/mdmdynamic.c:54
 #, c-format
 msgid "Usage: %s [-b][-v] and one of the following:\n"
 msgstr "వాడుక: %s [-b][-v] మరియు క్రింది వానిలో ఒకటి:\n"
 
-#: ../gui/gdmdynamic.c:55
+#: ../gui/mdmdynamic.c:55
 #, c-format
 msgid "\t-a display\n"
 msgstr "\t-a ప్రదర్శన\n"
 
-#: ../gui/gdmdynamic.c:56
+#: ../gui/mdmdynamic.c:56
 #, c-format
 msgid "\t-r display\n"
 msgstr "\t-r ప్రదర్శన\n"
 
-#: ../gui/gdmdynamic.c:57
+#: ../gui/mdmdynamic.c:57
 #, c-format
 msgid "\t-d display\n"
 msgstr "\t-d ప్రదర్శన\n"
 
-#: ../gui/gdmdynamic.c:58
+#: ../gui/mdmdynamic.c:58
 #, c-format
 msgid "\t-l [server_name]\n"
 msgstr "\t-l [సేవిక_నామము]\n"
 
-#: ../gui/gdmdynamic.c:59
+#: ../gui/mdmdynamic.c:59
 #, c-format
 msgid "\t-t maximum tries to connect (default 15)\n"
 msgstr "\t-t అనుసంధించుటకు అత్యధిక ప్రయత్నములు (అప్రమేయం 15)\n"
 
-#: ../gui/gdmdynamic.c:60
+#: ../gui/mdmdynamic.c:60
 #, c-format
 msgid "\t-s sleep value (default 8)\n"
 msgstr "\t-s నిద్రించు విలువ (అప్రమేయం 8)\n"
 
-#: ../gui/gdmdynamic.c:237
+#: ../gui/mdmdynamic.c:237
 #, c-format
 msgid "Server busy, will sleep.\n"
 msgstr "సేవికకు తీరికలేదు, నిద్రించును.\n"
 
-#: ../gui/gdmdynamic.c:327
+#: ../gui/mdmdynamic.c:327
 #, c-format
 msgid "Connection to daemon failed, sleeping for %d seconds.  Retry %d of %d\n"
 msgstr ""
@@ -2125,89 +2125,89 @@ msgstr ""
 "మరలాప్రయత్నించు\n"
 
 #. This is a serious error, so print a message even if verbose is off
-#: ../gui/gdmdynamic.c:350
+#: ../gui/mdmdynamic.c:350
 #, c-format
 msgid "Failed to connect to server after %d retries\n"
 msgstr "%d ప్రయత్నముల తర్వాత సేవికకు అనుసంధానపరచుటకు విఫలమైంది \n"
 
-#: ../gui/gdmflexiserver-xnest.desktop.in.in.h:1
+#: ../gui/mdmflexiserver-xnest.desktop.in.in.h:1
 msgid "Login as another user in a window"
 msgstr "ఒక గవాక్షం లో మరియొక వినియోగదారు లాగా ప్రవేశద్వారం"
 
-#: ../gui/gdmflexiserver-xnest.desktop.in.in.h:2
+#: ../gui/mdmflexiserver-xnest.desktop.in.in.h:2
 msgid "New Login in a Window"
 msgstr "ఒక గవాక్షం లో కొత్త ప్రవేశద్వారం"
 
-#: ../gui/gdmflexiserver.c:68
-msgid "Send the specified protocol command to GDM"
+#: ../gui/mdmflexiserver.c:68
+msgid "Send the specified protocol command to MDM"
 msgstr "జిడియం కు నిర్థేశింపబడిన ప్రోటోకాల్ ఆదేశం పంపుము"
 
-#: ../gui/gdmflexiserver.c:68
+#: ../gui/mdmflexiserver.c:68
 msgid "COMMAND"
 msgstr "ఆదేశం"
 
-#: ../gui/gdmflexiserver.c:69
+#: ../gui/mdmflexiserver.c:69
 msgid "Xnest mode"
 msgstr "Xగూడు విధము"
 
-#: ../gui/gdmflexiserver.c:70
+#: ../gui/mdmflexiserver.c:70
 msgid "Do not lock current screen"
 msgstr "ప్రస్తుత తెరకు తాళం వేయకు"
 
-#: ../gui/gdmflexiserver.c:71
+#: ../gui/mdmflexiserver.c:71
 msgid "Debugging output"
 msgstr "దిగుబడిని లోపనిర్మూలనంచేయుచున్నది"
 
-#: ../gui/gdmflexiserver.c:72
+#: ../gui/mdmflexiserver.c:72
 msgid "Authenticate before running --command"
 msgstr "--ఆదేశం ప్రామాణీకరణకు ముందు నడుచుచున్నది"
 
-#: ../gui/gdmflexiserver.c:73
+#: ../gui/mdmflexiserver.c:73
 msgid "Start new flexible session; do not show popup"
 msgstr "కొత్త మృదువైన సమకూర్పు మొదలుపెట్టు; ప్రత్యక్షమవుట చూపకుము"
 
-#: ../gui/gdmflexiserver.c:156
+#: ../gui/mdmflexiserver.c:156
 msgid "Cannot change display"
 msgstr "ప్రదర్శన మార్చుట వీలుకాదు"
 
-#: ../gui/gdmflexiserver.c:234
+#: ../gui/mdmflexiserver.c:234
 msgid "Nobody"
 msgstr "ఎవరు కాదు"
 
-#: ../gui/gdmflexiserver.c:269
+#: ../gui/mdmflexiserver.c:269
 #, c-format
 msgid "Display %s on virtual terminal %d"
 msgstr "%s ప్రదర్శన పై %d వాస్తవప్రతిరూప మూలం"
 
-#: ../gui/gdmflexiserver.c:274
+#: ../gui/mdmflexiserver.c:274
 #, c-format
 msgid "Nested display %s on virtual terminal %d"
 msgstr "%s ప్రదర్శన %d వాస్తవ ప్రతిరూపం పై"
 
-#: ../gui/gdmflexiserver.c:304 ../gui/gdmlogin.c:2397
+#: ../gui/mdmflexiserver.c:304 ../gui/mdmlogin.c:2397
 #: ../gui/greeter/greeter_item_ulist.c:311
 msgid "Username"
 msgstr "వినియోగదారునామము"
 
-#: ../gui/gdmflexiserver.c:313
+#: ../gui/mdmflexiserver.c:313
 msgid "Display"
 msgstr "ప్రదర్శన"
 
-#: ../gui/gdmflexiserver.c:424
+#: ../gui/mdmflexiserver.c:424
 msgid "Open Displays"
 msgstr "ప్రదర్శనలు తెరువు"
 
 #. parent
 #. flags
-#: ../gui/gdmflexiserver.c:427
+#: ../gui/mdmflexiserver.c:427
 msgid "_Open New Display"
 msgstr "_కొత్త ప్రదర్శన తెరువు"
 
-#: ../gui/gdmflexiserver.c:429
+#: ../gui/mdmflexiserver.c:429
 msgid "Change to _Existing Display"
 msgstr "_కలిగివున్న ప్రదర్శన కు మార్చుము"
 
-#: ../gui/gdmflexiserver.c:437
+#: ../gui/mdmflexiserver.c:437
 msgid ""
 "There are some displays already open.  You can select one from the list "
 "below or open a new one."
@@ -2215,662 +2215,662 @@ msgstr ""
 "అక్కడ కొన్ని ప్రదర్శనలు ఇదివరకే తెరచివున్నవి. క్రింది జాబితా నుండి నీవు ఒక దానిని ఎంచుకొనవచ్చు లేదా ఒక "
 "కొత్త దాన్ని తెరువు."
 
-#: ../gui/gdmflexiserver.c:621
+#: ../gui/mdmflexiserver.c:621
 msgid "Choose server"
 msgstr "సేవిక ఎంచుకొను"
 
-#: ../gui/gdmflexiserver.c:632
+#: ../gui/mdmflexiserver.c:632
 msgid "Choose the X server to start"
 msgstr "మొదలుపెట్టుటకు X సేవిక ఎంచుకొను"
 
-#: ../gui/gdmflexiserver.c:638
+#: ../gui/mdmflexiserver.c:638
 msgid "Standard server"
 msgstr "ప్రమాణమైన సేవిక"
 
-#: ../gui/gdmflexiserver.c:774
-msgid "Error: GDM (GNOME Display Manager) is not running."
+#: ../gui/mdmflexiserver.c:774
+msgid "Error: MDM (GNOME Display Manager) is not running."
 msgstr "దోషము: జిడియం (గ్నోమ్ ప్రదర్శన నిర్వాహకి) నడుచుటలేదు."
 
-#: ../gui/gdmflexiserver.c:775
+#: ../gui/mdmflexiserver.c:775
 msgid "You might be using a different display manager."
 msgstr "నీవు ఒక వేరొక ప్రదర్శన అభికర్త వాడి ఉండవచ్చు."
 
-#: ../gui/gdmflexiserver.c:881
+#: ../gui/mdmflexiserver.c:881
 msgid "You do not seem to have the authentication needed for this operation"
 msgstr "ఈ కార్యము కొరకు ప్రామాణీకరణ అవసరం కలిగిఉండుటకు కనబడుటలేదు."
 
-#: ../gui/gdmflexiserver.c:884
+#: ../gui/mdmflexiserver.c:884
 msgid "Perhaps your .Xauthority file is not set up correctly."
 msgstr "ఒకవేళ మీయొక్క .Xఅధికారము దస్త్రం సరిగా అమర్చిపెట్టకపోవచ్చు."
 
-#: ../gui/gdmflexiserver.c:913
+#: ../gui/mdmflexiserver.c:913
 msgid "You do not seem to be logged in on the console"
 msgstr "నీవు ఓదార్పు పై లోపలికి నమోదవబడినట్టు కనబడుటలేదు."
 
-#: ../gui/gdmflexiserver.c:915
+#: ../gui/mdmflexiserver.c:915
 msgid "Starting a new login only works correctly on the console."
 msgstr "ఓదార్పు పై ఒక కొత్త ప్రవేశద్వారం మాత్రమే సరిగా పనిచేస్తుంది"
 
-#: ../gui/gdmflexiserver.c:962
+#: ../gui/mdmflexiserver.c:962
 msgid "Cannot start new display"
 msgstr "కొత్త ప్రదర్శన మొదలుపెట్టుటకు వీలుకాదు"
 
-#: ../gui/gdmflexiserver.desktop.in.h:1
+#: ../gui/mdmflexiserver.desktop.in.h:1
 msgid "Log in as another user without logging out"
 msgstr "ప్రవేశద్వారం బయటకి వెళ్ళకుండా మరియొక వినియోగదారు లాగా లోపలికి నమోదవు"
 
-#: ../gui/gdmflexiserver.desktop.in.h:2
+#: ../gui/mdmflexiserver.desktop.in.h:2
 msgid "New Login"
 msgstr "కొత్త ప్రవేశద్వారం"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:81
+#: ../gui/mdmlanguages.c:81
 msgid "A-M|Afrikaans"
 msgstr "ఎ-యమ్|ఆఫ్రికంస్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:83
+#: ../gui/mdmlanguages.c:83
 msgid "A-M|Albanian"
 msgstr "ఎ-యమ్|అల్బానియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:85
+#: ../gui/mdmlanguages.c:85
 msgid "A-M|Amharic"
 msgstr "ఎ-యమ్|అమ్హారిక్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:87
+#: ../gui/mdmlanguages.c:87
 msgid "A-M|Arabic (Egypt)"
 msgstr "ఎ-యమ్|అరబిక్ (ఈజిప్ట్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:89
+#: ../gui/mdmlanguages.c:89
 msgid "A-M|Arabic (Lebanon)"
 msgstr "ఎ-యమ్|అరబిక్ (లిబనాన్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:91
+#: ../gui/mdmlanguages.c:91
 msgid "A-M|Arabic (Saudi Arabia)"
 msgstr "ఎ-యమ్|అరబిక్ (సౌదీ అరేబియా)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:93
+#: ../gui/mdmlanguages.c:93
 msgid "A-M|Armenian"
 msgstr "ఎ-యమ్|అర్మేనియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:95
+#: ../gui/mdmlanguages.c:95
 msgid "A-M|Azerbaijani"
 msgstr "ఎ-యమ్|అజెర్బేయ్జాని"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:97
+#: ../gui/mdmlanguages.c:97
 msgid "A-M|Basque"
 msgstr "ఎ-యమ్|బాస్క్యూ"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:99
+#: ../gui/mdmlanguages.c:99
 msgid "A-M|Belarusian"
 msgstr "ఎ-యమ్|బెలారూసియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:101
+#: ../gui/mdmlanguages.c:101
 msgid "A-M|Bengali"
 msgstr "ఎ-యమ్|బెంగాలీ"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:103
+#: ../gui/mdmlanguages.c:103
 msgid "A-M|Bengali (India)"
 msgstr "ఎ-యమ్|బెంగాలీ (ఇండియా)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:105
+#: ../gui/mdmlanguages.c:105
 msgid "A-M|Bulgarian"
 msgstr "ఎ-యమ్|బల్గేరియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:107
+#: ../gui/mdmlanguages.c:107
 msgid "A-M|Bosnian"
 msgstr "ఎ-యమ్|బొసానియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:109
+#: ../gui/mdmlanguages.c:109
 msgid "A-M|Catalan"
 msgstr "ఎ-యమ్|కాటాలాన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:111
+#: ../gui/mdmlanguages.c:111
 msgid "A-M|Chinese (China Mainland)"
 msgstr "ఎ-యమ్|చైనీస్  (చైనా మెయిన్ల్యాండ్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:113
+#: ../gui/mdmlanguages.c:113
 msgid "A-M|Chinese (Hong Kong)"
 msgstr "ఎ-యమ్|చైనీస్ (హాంగ్ కాంగ్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:115
+#: ../gui/mdmlanguages.c:115
 msgid "A-M|Chinese (Singapore)"
 msgstr "ఎ-యమ్|చైనీస్ (సింగపూర్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:117
+#: ../gui/mdmlanguages.c:117
 msgid "A-M|Chinese (Taiwan)"
 msgstr "ఎ-యమ్|చైనీస్ (తైవాన్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:119
+#: ../gui/mdmlanguages.c:119
 msgid "A-M|Croatian"
 msgstr "ఎ-యమ్|క్రోఆటియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:121
+#: ../gui/mdmlanguages.c:121
 msgid "A-M|Czech"
 msgstr "ఎ-యమ్|క్జీఖ్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:123
+#: ../gui/mdmlanguages.c:123
 msgid "A-M|Danish"
 msgstr "ఎ-యమ్|డానిష్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:125
+#: ../gui/mdmlanguages.c:125
 msgid "A-M|Dutch"
 msgstr "ఎ-యమ్|డచ్చ్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:127
+#: ../gui/mdmlanguages.c:127
 msgid "A-M|Dutch (Belgium)"
 msgstr "ఎ-యమ్|డచ్చ్ (బెల్జియం)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:129
+#: ../gui/mdmlanguages.c:129
 msgid "A-M|English (USA)"
 msgstr "ఎ-యమ్|ఇంగ్లీష్ (యుఎస్ఎ)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:131
+#: ../gui/mdmlanguages.c:131
 msgid "A-M|English (Australia)"
 msgstr "ఎ-యమ్|ఇంగ్లీష్ (ఆష్ట్రేలియా)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:133
+#: ../gui/mdmlanguages.c:133
 msgid "A-M|English (UK)"
 msgstr "ఎ-యమ్|ఇంగ్లీష్ (యుకె)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:135
+#: ../gui/mdmlanguages.c:135
 msgid "A-M|English (Canada)"
 msgstr "ఎ-యమ్|ఇంగ్లీష్ (కెనడా)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:137
+#: ../gui/mdmlanguages.c:137
 msgid "A-M|English (Ireland)"
 msgstr "ఎ-యమ్|ఇంగ్లీష్ (ఐర్లాండ్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:139
+#: ../gui/mdmlanguages.c:139
 msgid "A-M|English (Denmark)"
 msgstr "ఎ-యమ్|ఇంగ్లీష్ (డెన్మార్క్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:141
+#: ../gui/mdmlanguages.c:141
 msgid "A-M|English (South Africa)"
 msgstr "ఎ-యమ్|ఇంగ్లీష్ (సౌత్ ఆఫ్రికా)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:143
+#: ../gui/mdmlanguages.c:143
 msgid "A-M|English (Malta)"
 msgstr "ఎ-యమ్|ఇంగ్లీష్ (మల్టా)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:145
+#: ../gui/mdmlanguages.c:145
 msgid "A-M|English (New Zealand)"
 msgstr "ఎ-యమ్|ఇంగ్లీష్ (న్యూజిలాండ్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:147
+#: ../gui/mdmlanguages.c:147
 msgid "A-M|Estonian"
 msgstr "ఎ-యమ్|ఎస్టోనియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:149
+#: ../gui/mdmlanguages.c:149
 msgid "A-M|Finnish"
 msgstr "ఎ-యమ్|ఫిన్నిష్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:151
+#: ../gui/mdmlanguages.c:151
 msgid "A-M|French"
 msgstr "ఎ-యమ్|ఫ్రెంచ్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:153
+#: ../gui/mdmlanguages.c:153
 msgid "A-M|French (Belgium)"
 msgstr "ఎ-యమ్|ఫ్రెంచ్ (బెల్జియం)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:155
+#: ../gui/mdmlanguages.c:155
 msgid "A-M|French (Canada)"
 msgstr "ఎ-యమ్|ఫ్రెంచ్ (కెనడా)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:157
+#: ../gui/mdmlanguages.c:157
 msgid "A-M|French (Luxembourg)"
 msgstr "ఎ-యమ్|ఫ్రెంచ్ (లుక్సెంబౌర్గ్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:159
+#: ../gui/mdmlanguages.c:159
 msgid "A-M|French (Switzerland)"
 msgstr "ఎ-యమ్|ఫ్రెంచ్ (స్విట్జర్లాండ్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:161
+#: ../gui/mdmlanguages.c:161
 msgid "A-M|Galician"
 msgstr "ఎ-యమ్|గెలిసియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:163
+#: ../gui/mdmlanguages.c:163
 msgid "A-M|German"
 msgstr "ఎ-యమ్|జర్మన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:165
+#: ../gui/mdmlanguages.c:165
 msgid "A-M|German (Austria)"
 msgstr "ఎ-యమ్|జర్మన్ (ఆష్ట్రియా)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:167
+#: ../gui/mdmlanguages.c:167
 msgid "A-M|German (Luxembourg)"
 msgstr "ఎ-యమ్|జర్మన్ (లుక్సెంబౌర్గ్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:169
+#: ../gui/mdmlanguages.c:169
 msgid "A-M|German (Switzerland)"
 msgstr "ఎ-యమ్|జర్మన్ (స్విట్జర్లాండ్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:171
+#: ../gui/mdmlanguages.c:171
 msgid "A-M|Greek"
 msgstr "ఎ-యమ్|గ్రీక్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:173
+#: ../gui/mdmlanguages.c:173
 msgid "A-M|Greek (Cyprus)"
 msgstr "ఎ-యమ్|గ్రీక్ (సిప్రస్)"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:175
+#: ../gui/mdmlanguages.c:175
 msgid "A-M|Gujarati"
 msgstr "ఎ-యమ్|గుజరాతి"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:177 ../gui/gdmlanguages.c:179
+#: ../gui/mdmlanguages.c:177 ../gui/mdmlanguages.c:179
 msgid "A-M|Hebrew"
 msgstr "ఎ-యమ్|హెర్బ్యూ"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:181
+#: ../gui/mdmlanguages.c:181
 msgid "A-M|Hindi"
 msgstr "ఎ-యమ్|హిందీ"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:183
+#: ../gui/mdmlanguages.c:183
 msgid "A-M|Hungarian"
 msgstr "ఎ-యమ్|హంగేరియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:185
+#: ../gui/mdmlanguages.c:185
 msgid "A-M|Icelandic"
 msgstr "ఎ-యమ్|ఐస్లాండిక్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:187
+#: ../gui/mdmlanguages.c:187
 msgid "A-M|Indonesian"
 msgstr "ఎ-యమ్|ఇండోనేషియా"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:189
+#: ../gui/mdmlanguages.c:189
 msgid "A-M|Interlingua"
 msgstr "ఎ-యమ్|ఇంటర్లింగువా"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:191
+#: ../gui/mdmlanguages.c:191
 msgid "A-M|Irish"
 msgstr "ఎ-యమ్|ఇరిష్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:193
+#: ../gui/mdmlanguages.c:193
 msgid "A-M|Italian"
 msgstr "ఎ-యమ్|ఇటాలియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:195
+#: ../gui/mdmlanguages.c:195
 msgid "A-M|Japanese"
 msgstr "ఎ-యమ్|జపనీస్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:197
+#: ../gui/mdmlanguages.c:197
 msgid "A-M|Kannada"
 msgstr "ఎ-యమ్|కన్నడ"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:199
+#: ../gui/mdmlanguages.c:199
 msgid "A-M|Kinyarwanda"
 msgstr "ఎ-యమ్|కిన్యర్వండా"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:201
+#: ../gui/mdmlanguages.c:201
 msgid "A-M|Korean"
 msgstr "ఎ-యమ్|కొరియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:203
+#: ../gui/mdmlanguages.c:203
 msgid "A-M|Latvian"
 msgstr "ఎ-యమ్|లాట్వియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:205
+#: ../gui/mdmlanguages.c:205
 msgid "A-M|Lithuanian"
 msgstr "ఎ-యమ్|లిథుయానియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:207
+#: ../gui/mdmlanguages.c:207
 msgid "A-M|Macedonian"
 msgstr "ఎ-యమ్|మెసిడోనియన్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:209
+#: ../gui/mdmlanguages.c:209
 msgid "A-M|Malay"
 msgstr "ఎ-యమ్|మలయ్"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:211
+#: ../gui/mdmlanguages.c:211
 msgid "A-M|Malayalam"
 msgstr "ఎ-యమ్|మలయాళం"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:213
+#: ../gui/mdmlanguages.c:213
 msgid "A-M|Maltese"
 msgstr "ఎ-యమ్|మల్టీసి"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:215
+#: ../gui/mdmlanguages.c:215
 msgid "A-M|Marathi"
 msgstr "ఎ-యమ్|మరాఠి"
 
 #. Note translate the A-M to the A-M you used in the group label
-#: ../gui/gdmlanguages.c:217
+#: ../gui/mdmlanguages.c:217
 msgid "A-M|Mongolian"
 msgstr "ఎ-యమ్|మంగోలియన్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:219
+#: ../gui/mdmlanguages.c:219
 msgid "N-Z|Northern Sotho"
 msgstr "ఎన్-జడ్|నార్తర్న్ సోథో"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:221
+#: ../gui/mdmlanguages.c:221
 msgid "N-Z|Norwegian (bokmal)"
 msgstr "ఎన్-జడ్|నార్వేజియన్ (బొక్మాల్)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:223
+#: ../gui/mdmlanguages.c:223
 msgid "N-Z|Norwegian (nynorsk)"
 msgstr "ఎన్-జడ్|నార్వేజియన్ (నైనార్స్క్)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:225
+#: ../gui/mdmlanguages.c:225
 msgid "N-Z|Oriya"
 msgstr "ఎన్-జడ్|ఒరియా"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:227
+#: ../gui/mdmlanguages.c:227
 msgid "N-Z|Punjabi"
 msgstr "ఎన్-జడ్|పంజాబీ"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:229
+#: ../gui/mdmlanguages.c:229
 msgid "N-Z|Persian"
 msgstr "ఎన్-జడ్|పర్సియన్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:231
+#: ../gui/mdmlanguages.c:231
 msgid "N-Z|Polish"
 msgstr "ఎన్-జడ్|పోలిష్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:233
+#: ../gui/mdmlanguages.c:233
 msgid "N-Z|Portuguese"
 msgstr "ఎన్-జడ్|పోర్చుగీస్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:235
+#: ../gui/mdmlanguages.c:235
 msgid "N-Z|Portuguese (Brazilian)"
 msgstr "ఎన్-జడ్|పోర్చుగీస్ (బ్రజీలియన్)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:237
+#: ../gui/mdmlanguages.c:237
 msgid "N-Z|Romanian"
 msgstr "ఎన్-జడ్|రొమానియన్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:239
+#: ../gui/mdmlanguages.c:239
 msgid "N-Z|Russian"
 msgstr "ఎన్-జడ్|రష్యన్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:241
+#: ../gui/mdmlanguages.c:241
 msgid "N-Z|Serbian"
 msgstr "ఎన్-జడ్|సెర్బియన్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:243
+#: ../gui/mdmlanguages.c:243
 msgid "N-Z|Serbian (Serbia & Montenegro)"
 msgstr "ఎన్-జడ్|సెర్బియన్ (సెర్బియా &మోంటెనెర్గో)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:245
+#: ../gui/mdmlanguages.c:245
 msgid "N-Z|Serbian (Montenegro)"
 msgstr "ఎన్-జడ్|సెర్బియన్ (మోంటెనెర్గో)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:247
+#: ../gui/mdmlanguages.c:247
 msgid "N-Z|Serbian (Serbia)"
 msgstr "ఎన్-జడ్|సెర్బియన్ (సెర్బియా)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:249
+#: ../gui/mdmlanguages.c:249
 msgid "N-Z|Serbian (Latin)"
 msgstr "ఎన్-జడ్|సెర్బియన్ (లాటిన్)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:251
+#: ../gui/mdmlanguages.c:251
 msgid "N-Z|Serbian (Jekavian)"
 msgstr "ఎన్-జడ్|సెర్బియన్ (జెకావియన్)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:253
+#: ../gui/mdmlanguages.c:253
 msgid "N-Z|Serbian (Bosnia)"
 msgstr "ఎన్-జడ్|సెర్బియన్ (బోస్నియా)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:255
+#: ../gui/mdmlanguages.c:255
 msgid "N-Z|Slovak"
 msgstr "ఎన్-జడ్|స్లోవాక్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:257
+#: ../gui/mdmlanguages.c:257
 msgid "N-Z|Slovenian"
 msgstr "ఎన్-జడ్|స్లోవెనియన్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:259
+#: ../gui/mdmlanguages.c:259
 msgid "N-Z|Spanish"
 msgstr "ఎన్-జడ్|స్పానిష్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:261
+#: ../gui/mdmlanguages.c:261
 msgid "N-Z|Spanish (Argentina)"
 msgstr "ఎన్-జడ్|స్పానిష్ (అర్జెంటీనా)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:263
+#: ../gui/mdmlanguages.c:263
 msgid "N-Z|Spanish (Bolivia)"
 msgstr "ఎన్-జడ్|స్పానిష్ (బొలీవియా)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:265
+#: ../gui/mdmlanguages.c:265
 msgid "N-Z|Spanish (Chile)"
 msgstr "ఎన్-జడ్|స్పానిష్ (చిలీ)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:267
+#: ../gui/mdmlanguages.c:267
 msgid "N-Z|Spanish (Colombia)"
 msgstr "ఎన్-జడ్|స్పానిష్ (కొలంబియా)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:269
+#: ../gui/mdmlanguages.c:269
 msgid "N-Z|Spanish (Costa Rica)"
 msgstr "ఎన్-జడ్|స్పానిష్ (కోస్టా రికా)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:271
+#: ../gui/mdmlanguages.c:271
 msgid "N-Z|Spanish (Ecuador)"
 msgstr "ఎన్-జడ్|స్పానిష్ (ఈక్వెడార్)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:273
+#: ../gui/mdmlanguages.c:273
 msgid "N-Z|Spanish (Guatemala)"
 msgstr "ఎన్-జడ్|స్పానిష్ (గ్వాటెమాలా)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:275
+#: ../gui/mdmlanguages.c:275
 msgid "N-Z|Spanish (Mexico)"
 msgstr "ఎన్-జడ్|స్పానిష్ (మెక్సికో)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:277
+#: ../gui/mdmlanguages.c:277
 msgid "N-Z|Spanish (Nicaragua)"
 msgstr "ఎన్-జడ్|స్పానిష్ (నికరాగ్వా)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:279
+#: ../gui/mdmlanguages.c:279
 msgid "N-Z|Spanish (Panama)"
 msgstr "ఎన్-జడ్|స్పానిష్ (పనమా)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:281
+#: ../gui/mdmlanguages.c:281
 msgid "N-Z|Spanish (Peru)"
 msgstr "ఎన్-జడ్|స్పానిష్ (పెరు)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:283
+#: ../gui/mdmlanguages.c:283
 msgid "N-Z|Spanish (Paraguay)"
 msgstr "ఎన్-జడ్|స్పానిష్ (పారాగ్వేయ్)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:285
+#: ../gui/mdmlanguages.c:285
 msgid "N-Z|Spanish (El Salvador)"
 msgstr "ఎన్-జడ్|స్పానిష్ (ఎల్ స్లెవెడార్)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:287
+#: ../gui/mdmlanguages.c:287
 msgid "N-Z|Spanish (Uruguay)"
 msgstr "ఎన్-జడ్|స్పానిష్(ఉరుగ్వేయ్)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:289
+#: ../gui/mdmlanguages.c:289
 msgid "N-Z|Spanish (Venezuela)"
 msgstr "ఎన్-జడ్|స్పానిష్ (వెనెజులా)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:291
+#: ../gui/mdmlanguages.c:291
 msgid "N-Z|Swedish"
 msgstr "ఎన్-జడ్|స్వీడిష్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:293
+#: ../gui/mdmlanguages.c:293
 msgid "N-Z|Swedish (Finland)"
 msgstr "ఎన్-జడ్|స్వీడిష్ (ఫిన్లాండ్)"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:295
+#: ../gui/mdmlanguages.c:295
 msgid "N-Z|Tamil"
 msgstr "ఎన్-జడ్|తమిళ్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:297
+#: ../gui/mdmlanguages.c:297
 msgid "N-Z|Telugu"
 msgstr "ఎన్-జడ్|తెలుగు"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:299
+#: ../gui/mdmlanguages.c:299
 msgid "N-Z|Thai"
 msgstr "ఎన్-జడ్|థాయ్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:301
+#: ../gui/mdmlanguages.c:301
 msgid "N-Z|Turkish"
 msgstr "ఎన్-జడ్|టర్కి ష్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:303
+#: ../gui/mdmlanguages.c:303
 msgid "N-Z|Ukrainian"
 msgstr "ఎన్-జడ్|యుక్రెనియన్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:305
+#: ../gui/mdmlanguages.c:305
 msgid "N-Z|Vietnamese"
 msgstr "ఎన్-జడ్|వీట్నామీస్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:307
+#: ../gui/mdmlanguages.c:307
 msgid "N-Z|Walloon"
 msgstr "ఎన్-జడ్|వాలూన్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:309
+#: ../gui/mdmlanguages.c:309
 msgid "N-Z|Welsh"
 msgstr "ఎన్-జడ్|వెల్ష్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:311
+#: ../gui/mdmlanguages.c:311
 msgid "N-Z|Xhosa"
 msgstr "ఎన్-జడ్|గ్జోసా"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:313
+#: ../gui/mdmlanguages.c:313
 msgid "N-Z|Yiddish"
 msgstr "ఎన్-జడ్|ఇద్దిష్"
 
 #. Note translate the N-Z to the N-Z you used in the group label
-#: ../gui/gdmlanguages.c:315
+#: ../gui/mdmlanguages.c:315
 msgid "N-Z|Zulu"
 msgstr "ఎన్-జడ్|జులు"
 
 #. This is the POSIX/C locale for english, should really be in Other
-#: ../gui/gdmlanguages.c:317
+#: ../gui/mdmlanguages.c:317
 msgid "Other|POSIX/C English"
 msgstr "మరియొక|పోసిక్స్/సి ఇంగ్లీష్"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: ../gui/gdmlanguages.c:503
+#: ../gui/mdmlanguages.c:503
 msgid "A-M"
 msgstr "ఏ-యం"
 
 #. This should be the same as in the front of the language strings
 #. * else the languages will appear in the "Other" submenu
-#: ../gui/gdmlanguages.c:511
+#: ../gui/mdmlanguages.c:511
 msgid "N-Z"
 msgstr "ఎన్-జడ్"
 
-#: ../gui/gdmlanguages.c:679
+#: ../gui/mdmlanguages.c:679
 msgid "Last language"
 msgstr "చివరి భాష"
 
-#: ../gui/gdmlanguages.c:686 ../gui/gdmlanguages.c:760
-#: ../gui/gdmlanguages.c:768
+#: ../gui/mdmlanguages.c:686 ../gui/mdmlanguages.c:760
+#: ../gui/mdmlanguages.c:768
 msgid "System Default"
 msgstr "వ్యవస్థ అప్రమేయం"
 
@@ -2878,141 +2878,141 @@ msgstr "వ్యవస్థ అప్రమేయం"
 #. no_group
 #. untranslated
 #. markup
-#: ../gui/gdmlanguages.c:776 ../gui/gdmlogin.c:1501 ../gui/gdmlogin.c:1515
+#: ../gui/mdmlanguages.c:776 ../gui/mdmlogin.c:1501 ../gui/mdmlogin.c:1515
 #: ../gui/greeter/greeter.c:333 ../gui/greeter/greeter.c:348
 #, c-format
 msgid "Do you wish to make %s the default for future sessions?"
 msgstr "భవిష్యత్తు సమకూర్పుల కొరకు %s అప్రమేయం కు మీరు ఇష్టపడుతున్నారా?"
 
-#: ../gui/gdmlanguages.c:778 ../gui/gdmlogin.c:1518
+#: ../gui/mdmlanguages.c:778 ../gui/mdmlogin.c:1518
 #: ../gui/greeter/greeter.c:351
 #, c-format
 msgid "You have chosen %s for this session, but your default setting is %s."
 msgstr "మీరు ఈ సమకూర్పు కొరకు %s ఎంచుకున్నారు, కాని %s మీ యొక్క అప్రమేయ అమరిక."
 
-#: ../gui/gdmlanguages.c:784 ../gui/gdmlogin.c:1508 ../gui/gdmlogin.c:1524
+#: ../gui/mdmlanguages.c:784 ../gui/mdmlogin.c:1508 ../gui/mdmlogin.c:1524
 #: ../gui/greeter/greeter.c:340 ../gui/greeter/greeter.c:357
 msgid "Make _Default"
 msgstr "_అప్రమేయం ఏర్పరచు"
 
-#: ../gui/gdmlanguages.c:784 ../gui/gdmlogin.c:1524
+#: ../gui/mdmlanguages.c:784 ../gui/mdmlogin.c:1524
 #: ../gui/greeter/greeter.c:357
 msgid "Just For _This Session"
 msgstr "_ఈ సమకూర్పు కొరకు ఇప్పుడు"
 
-#: ../gui/gdmlanguages.c:839
+#: ../gui/mdmlanguages.c:839
 msgid "Select a Language"
 msgstr "భాషను ఎంచుకొనుము"
 
-#: ../gui/gdmlanguages.c:849
+#: ../gui/mdmlanguages.c:849
 msgid "Change _Language"
 msgstr "_భాషను మార్చుము"
 
-#: ../gui/gdmlanguages.c:869
+#: ../gui/mdmlanguages.c:869
 msgid "_Select the language for your session to use:"
 msgstr "_మీ యొక్క సమకూర్పు వాడుటకు భాషను ఎంచుకొనుము."
 
-#: ../gui/gdmlanguages.c:931
+#: ../gui/mdmlanguages.c:931
 msgid "the login screen"
 msgstr "ప్రవేశద్వారం తెర"
 
-#: ../gui/gdmlanguages.c:932
+#: ../gui/mdmlanguages.c:932
 #, c-format
 msgid "Do you wish to restart %s with the chosen language?"
 msgstr "ఎంచుకోబడిన భాషతో %s మొదలుపెట్టుటకు నీవు ఇష్టపడుతున్నావా?"
 
-#: ../gui/gdmlanguages.c:934
+#: ../gui/mdmlanguages.c:934
 #, c-format
 msgid "You will restart %s with the %s locale."
 msgstr "%s కార్యరంగం తో %s మొదలుపెట్టుటకు వీలుకాదు."
 
-#: ../gui/gdmlanguages.c:938
+#: ../gui/mdmlanguages.c:938
 msgid "_Yes"
 msgstr "_అవును"
 
-#: ../gui/gdmlanguages.c:938
+#: ../gui/mdmlanguages.c:938
 msgid "_No"
 msgstr "_కాదు"
 
-#: ../gui/gdmlogin.c:388
+#: ../gui/mdmlogin.c:388
 #, c-format
 msgid "Cannot run command '%s': %s."
 msgstr "'%s' ఆదేశం నడుపుటకు వీలుకాదు: %s."
 
-#: ../gui/gdmlogin.c:396
+#: ../gui/mdmlogin.c:396
 msgid "Cannot start background application"
 msgstr "పూర్వరంగం కార్యక్షేత్రము మొదలుపెట్టుటకు వీలుకాదు"
 
-#: ../gui/gdmlogin.c:471 ../gui/greeter/greeter_parser.c:389
+#: ../gui/mdmlogin.c:471 ../gui/greeter/greeter_parser.c:389
 msgid "User %u will login in %t"
 msgstr "%u వినియోగదారు %t లో ప్రవేశద్వారం"
 
-#: ../gui/gdmlogin.c:696 ../gui/greeter/greeter_system.c:80
+#: ../gui/mdmlogin.c:696 ../gui/greeter/greeter_system.c:80
 msgid "Are you sure you want to restart the computer?"
 msgstr "కంప్యూటర్ ను మరలాప్రారంభించుటకు నీవు నిశ్చయమై వున్నావా?"
 
-#: ../gui/gdmlogin.c:697 ../gui/gdmlogin.c:2249
+#: ../gui/mdmlogin.c:697 ../gui/mdmlogin.c:2249
 #: ../gui/greeter/greeter_parser.c:364 ../gui/greeter/greeter_system.c:81
 #: ../gui/greeter/greeter_system.c:217
 msgid "_Restart"
 msgstr "_మరలామొదలుపెట్టు"
 
-#: ../gui/gdmlogin.c:725 ../gui/greeter/greeter_system.c:104
+#: ../gui/mdmlogin.c:725 ../gui/greeter/greeter_system.c:104
 msgid "Are you sure you want to Shut Down the computer?"
 msgstr "కంప్యూటర్ ను మూసివేయుటకు నీవు నిశ్చయమై వున్నావా?"
 
-#: ../gui/gdmlogin.c:726 ../gui/gdmlogin.c:2260
+#: ../gui/mdmlogin.c:726 ../gui/mdmlogin.c:2260
 #: ../gui/greeter/greeter_parser.c:354 ../gui/greeter/greeter_system.c:105
 #: ../gui/greeter/greeter_system.c:228
 msgid "Shut _Down"
 msgstr "_మూసివేయు"
 
-#: ../gui/gdmlogin.c:744 ../gui/greeter/greeter_system.c:113
+#: ../gui/mdmlogin.c:744 ../gui/greeter/greeter_system.c:113
 msgid "Are you sure you want to suspend the computer?"
 msgstr "కంప్యూటర్ ను నిలువగలచుటకు నీవు నిశ్చయమై వున్నావా?"
 
-#: ../gui/gdmlogin.c:745 ../gui/gdmlogin.c:2271
+#: ../gui/mdmlogin.c:745 ../gui/mdmlogin.c:2271
 #: ../gui/greeter/greeter_system.c:114
 msgid "_Suspend"
 msgstr "_నిలువగల"
 
-#: ../gui/gdmlogin.c:869 ../gui/gdmlogin.c:883 ../gui/gdmlogin.c:1353
-#: ../gui/gdmlogin.c:1846 ../gui/gdmlogin.c:2501
+#: ../gui/mdmlogin.c:869 ../gui/mdmlogin.c:883 ../gui/mdmlogin.c:1353
+#: ../gui/mdmlogin.c:1846 ../gui/mdmlogin.c:2501
 msgid "_Username:"
 msgstr "_వినియోగదారునామము:"
 
-#: ../gui/gdmlogin.c:959
+#: ../gui/mdmlogin.c:959
 #, c-format
 msgid "%s session selected"
 msgstr "%s సమకూర్పు ఎంచుకొనబడినది"
 
-#: ../gui/gdmlogin.c:980
+#: ../gui/mdmlogin.c:980
 msgid "_Last"
 msgstr "_చివరి"
 
-#: ../gui/gdmlogin.c:1065 ../gui/greeter/greeter_canvas_item.c:162
+#: ../gui/mdmlogin.c:1065 ../gui/greeter/greeter_canvas_item.c:162
 msgid "Select _Language..."
 msgstr "_భాష ఎంచుకొను..."
 
-#: ../gui/gdmlogin.c:1385
+#: ../gui/mdmlogin.c:1385
 msgid "_Password:"
 msgstr "_రహస్యపదము:"
 
-#: ../gui/gdmlogin.c:1504 ../gui/greeter/greeter.c:336
+#: ../gui/mdmlogin.c:1504 ../gui/greeter/greeter.c:336
 #, c-format
 msgid "Your preferred session type %s is not installed on this computer."
 msgstr "మీ యొక్క %s సమకూర్పు పద్దతి ఎంచుకొనబడుట ఈ కంప్యూటర్ పై నెలకొల్పబడలేదు."
 
-#: ../gui/gdmlogin.c:1508 ../gui/greeter/greeter.c:340
+#: ../gui/mdmlogin.c:1508 ../gui/greeter/greeter.c:340
 msgid "Just _Log In"
 msgstr "_ప్రవేశద్వారం ఇప్పుడే"
 
-#: ../gui/gdmlogin.c:1531 ../gui/greeter/greeter.c:364
+#: ../gui/mdmlogin.c:1531 ../gui/greeter/greeter.c:364
 #, c-format
 msgid "You have chosen %s for this session"
 msgstr "ఈ సమకూర్పు కొరకు మీరు %s ఎంచుకొనబడినది"
 
-#: ../gui/gdmlogin.c:1534 ../gui/greeter/greeter.c:367
+#: ../gui/mdmlogin.c:1534 ../gui/greeter/greeter.c:367
 #, c-format
 msgid ""
 "If you wish to make %s the default for future sessions, run the 'switchdesk' "
@@ -3021,201 +3021,201 @@ msgstr ""
 
 #. translators:  This is a nice and evil eggie text, translate
 #. * to your favourite currency
-#: ../gui/gdmlogin.c:1649 ../gui/greeter/greeter.c:462
+#: ../gui/mdmlogin.c:1649 ../gui/greeter/greeter.c:462
 msgid "Please insert 25 cents to log in."
 msgstr "ప్రవేశద్వారంకు దయచేసిస్ 25 శాతములు చేర్చుము."
 
-#: ../gui/gdmlogin.c:1967
+#: ../gui/mdmlogin.c:1967
 msgid "GNOME Desktop Manager"
 msgstr "గ్నోమ్ గవాక్ష నిర్వాహకి"
 
-#: ../gui/gdmlogin.c:2033
+#: ../gui/mdmlogin.c:2033
 msgid "Finger"
 msgstr "వ్రేలు"
 
-#: ../gui/gdmlogin.c:2158
-msgid "GDM Login"
+#: ../gui/mdmlogin.c:2158
+msgid "MDM Login"
 msgstr "జిడియం సమకూర్పు"
 
-#: ../gui/gdmlogin.c:2201
+#: ../gui/mdmlogin.c:2201
 msgid "S_ession"
 msgstr "_సమకూర్పు"
 
-#: ../gui/gdmlogin.c:2208 ../gui/greeter/greeter_parser.c:329
+#: ../gui/mdmlogin.c:2208 ../gui/greeter/greeter_parser.c:329
 msgid "_Language"
 msgstr "_భాషలు"
 
-#: ../gui/gdmlogin.c:2222 ../gui/greeter/greeter_system.c:181
+#: ../gui/mdmlogin.c:2222 ../gui/greeter/greeter_system.c:181
 msgid "Remote Login via _XDMCP..."
 msgstr "_ఎక్స్డియంసిపి ద్వార సూదూర ప్రవేశద్వారం..."
 
-#: ../gui/gdmlogin.c:2238
+#: ../gui/mdmlogin.c:2238
 msgid "_Configure Login Manager..."
 msgstr "_ప్రవేశద్వారం నిర్వాహకిని రూపకరించు..."
 
-#: ../gui/gdmlogin.c:2300 ../gui/greeter/greeter_parser.c:339
+#: ../gui/mdmlogin.c:2300 ../gui/greeter/greeter_parser.c:339
 msgid "_Actions"
 msgstr "_క్రియలు"
 
-#: ../gui/gdmlogin.c:2309
+#: ../gui/mdmlogin.c:2309
 msgid "_Theme"
 msgstr "_వైవిథ్యాంశం"
 
-#: ../gui/gdmlogin.c:2320 ../gui/greeter/greeter_canvas_item.c:189
+#: ../gui/mdmlogin.c:2320 ../gui/greeter/greeter_canvas_item.c:189
 #: ../gui/greeter/greeter_parser.c:349
 msgid "_Quit"
 msgstr "_త్యజించు"
 
-#: ../gui/gdmlogin.c:2322 ../gui/greeter/greeter_canvas_item.c:193
+#: ../gui/mdmlogin.c:2322 ../gui/greeter/greeter_canvas_item.c:193
 #: ../gui/greeter/greeter_parser.c:344
 msgid "D_isconnect"
 msgstr "_తెంచు"
 
-#: ../gui/gdmlogin.c:2390 ../gui/greeter/greeter_item_ulist.c:305
+#: ../gui/mdmlogin.c:2390 ../gui/greeter/greeter_item_ulist.c:305
 msgid "Icon"
 msgstr "ప్రతిమ"
 
-#: ../gui/gdmlogin.c:2471
+#: ../gui/mdmlogin.c:2471
 msgid "Welcome"
 msgstr "సుస్వాగతము"
 
-#: ../gui/gdmlogin.c:2592 ../gui/greeter/greeter_parser.c:418
+#: ../gui/mdmlogin.c:2592 ../gui/greeter/greeter_parser.c:418
 msgid "_Start Again"
 msgstr "_మరలా మెదలుపెట్టు"
 
-#: ../gui/gdmlogin.c:3210 ../gui/gdmlogin.c:3244 ../gui/greeter/greeter.c:706
+#: ../gui/mdmlogin.c:3210 ../gui/mdmlogin.c:3244 ../gui/greeter/greeter.c:706
 #: ../gui/greeter/greeter.c:741
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version. You have "
-"probably just upgraded GDM. Please restart the GDM daemon or the computer."
+"probably just upgraded MDM. Please restart the MDM daemon or the computer."
 msgstr ""
 "(%s) వివరణము వందనము సూత్రధారి వివరణమునకు సరిపోలదు.  మీరు బహూశా జిడియం ఇప్పుడే "
 "మెరుగుపరచబడినది.  దయచేసి జిడియం సూత్రధారి లేదా కంప్యూటర్ను మరలామొదలుపెట్టు."
 
-#: ../gui/gdmlogin.c:3220 ../gui/gdmlogin.c:3254 ../gui/gdmlogin.c:3302
+#: ../gui/mdmlogin.c:3220 ../gui/mdmlogin.c:3254 ../gui/mdmlogin.c:3302
 #: ../gui/greeter/greeter.c:716 ../gui/greeter/greeter.c:751
 #: ../gui/greeter/greeter.c:800
 msgid "Cannot start the greeter"
 msgstr "వందనము మొదలుపెట్టుట వీలుకాదు"
 
-#: ../gui/gdmlogin.c:3259
+#: ../gui/mdmlogin.c:3259
 msgid "Restart"
 msgstr "మరలామొదలుపెట్టు"
 
-#: ../gui/gdmlogin.c:3292 ../gui/greeter/greeter.c:790
+#: ../gui/mdmlogin.c:3292 ../gui/greeter/greeter.c:790
 #, c-format
 msgid ""
 "The greeter version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded GDM.  Please restart the GDM daemon or the computer."
+"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
 msgstr ""
 "(%s) వివరణము వందనము (%s) సూత్రధారి వివరణమునకు సరిపోలదు.  మీరు బహూశా జిడియం ఇప్పుడే "
 "మెరుగుపరచబడినది.  దయచేసి జిడియం సూత్రధారి లేదా కంప్యూటర్ను మరలామొదలుపెట్టు."
 
-#: ../gui/gdmlogin.c:3307 ../gui/greeter/greeter.c:805
-msgid "Restart GDM"
+#: ../gui/mdmlogin.c:3307 ../gui/greeter/greeter.c:805
+msgid "Restart MDM"
 msgstr "జిడియం మరలామొదలుపెట్టుము"
 
-#: ../gui/gdmlogin.c:3309
+#: ../gui/mdmlogin.c:3309
 msgid "Restart computer"
 msgstr "కంప్యూటర్ మారలామొదలుపెట్టుము"
 
-#: ../gui/gdmlogin.c:3399
+#: ../gui/mdmlogin.c:3399
 msgid "Could not set signal mask!"
 msgstr "సైగల మాస్క్ అమర్చుట వీలుకాదు!"
 
-#: ../gui/gdmlogin.c:3517 ../gui/greeter/greeter.c:1597
+#: ../gui/mdmlogin.c:3517 ../gui/greeter/greeter.c:1597
 msgid "Session directory is missing"
 msgstr "సమకూర్పు వివరము తప్పిపోయినది"
 
-#: ../gui/gdmlogin.c:3518
+#: ../gui/mdmlogin.c:3518
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the GDM "
+"sessions you can use, but you should log in and correct the MDM "
 "configuration."
 msgstr ""
 
-#: ../gui/gdmlogin.c:3541 ../gui/greeter/greeter.c:1622
+#: ../gui/mdmlogin.c:3541 ../gui/greeter/greeter.c:1622
 msgid "Configuration is not correct"
 msgstr "రూపకరణ సరియైనది కాదు"
 
-#: ../gui/gdmlogin.c:3542 ../gui/greeter/greeter.c:1623
+#: ../gui/mdmlogin.c:3542 ../gui/greeter/greeter.c:1623
 msgid ""
 "The configuration file contains an invalid command line for the login "
 "dialog, so running the default command.  Please fix your configuration."
 msgstr ""
 
-#: ../gui/gdmphotosetup.c:214
+#: ../gui/mdmphotosetup.c:214
 #, c-format
 msgid "File %s cannot be opened for writing."
 msgstr "%s దస్త్రం ఎదురుచూచుట కొరకు తెరచబడుట వీలుకాదు."
 
-#: ../gui/gdmphotosetup.c:221
+#: ../gui/mdmphotosetup.c:221
 msgid "Cannot open file"
 msgstr "దస్త్రం తెరచుటకు వీలుకాదు"
 
-#: ../gui/gdmphotosetup.c:275
+#: ../gui/mdmphotosetup.c:275
 msgid "Select User Image"
 msgstr "వినియోగదారు ప్రతిరూపం ఎంచుకొను"
 
-#: ../gui/gdmphotosetup.c:299 ../gui/gdmsetup.c:4326 ../gui/gdmsetup.c:7129
-#: ../gui/gdmsetup.c:7269 ../gui/gdmsetup.c:7582 ../gui/gdmsetup.c:7721
+#: ../gui/mdmphotosetup.c:299 ../gui/mdmsetup.c:4326 ../gui/mdmsetup.c:7129
+#: ../gui/mdmsetup.c:7269 ../gui/mdmsetup.c:7582 ../gui/mdmsetup.c:7721
 msgid "Images"
 msgstr "ప్రతిరూపములు"
 
-#: ../gui/gdmphotosetup.c:304 ../gui/gdmsetup.c:4464 ../gui/gdmsetup.c:7134
-#: ../gui/gdmsetup.c:7274 ../gui/gdmsetup.c:7587 ../gui/gdmsetup.c:7726
+#: ../gui/mdmphotosetup.c:304 ../gui/mdmsetup.c:4464 ../gui/mdmsetup.c:7134
+#: ../gui/mdmsetup.c:7274 ../gui/mdmsetup.c:7587 ../gui/mdmsetup.c:7726
 msgid "All Files"
 msgstr "అన్ని దస్త్రములు"
 
-#: ../gui/gdmphotosetup.desktop.in.h:1
+#: ../gui/mdmphotosetup.desktop.in.h:1
 msgid ""
-"Change the picture that will show in the GDM (login manager) face browser"
+"Change the picture that will show in the MDM (login manager) face browser"
 msgstr "జిడియం (ప్రవేశద్వారం నిర్వాహకి) ముఖ అన్వేషిలో చూపబడు చిత్రమును మార్చుము"
 
-#: ../gui/gdmphotosetup.desktop.in.h:2
+#: ../gui/mdmphotosetup.desktop.in.h:2
 msgid "Login Photo"
 msgstr "ప్రవేశద్వారం చిత్రం"
 
-#: ../gui/gdmphotosetup.glade.h:1
+#: ../gui/mdmphotosetup.glade.h:1
 msgid "<b>User Image</b>"
 msgstr "<b>వినియోగదారు ప్రతిరూపం</b>"
 
-#: ../gui/gdmphotosetup.glade.h:2
+#: ../gui/mdmphotosetup.glade.h:2
 msgid "Login Photo Preferences"
 msgstr "ప్రవేశద్వారం చిత్రం అభీష్టాలు"
 
-#: ../gui/gdmsession.c:142 ../gui/gdmsession.c:332
+#: ../gui/mdmsession.c:142 ../gui/mdmsession.c:332
 msgid "Failsafe _GNOME"
 msgstr "_విఫలరక్షిత గ్నోమ్"
 
-#: ../gui/gdmsession.c:143 ../gui/gdmsession.c:333
+#: ../gui/mdmsession.c:143 ../gui/mdmsession.c:333
 msgid "Failsafe GNOME"
 msgstr "విఫలరక్షిత గ్నోమ్"
 
-#: ../gui/gdmsession.c:144 ../gui/gdmsession.c:334
+#: ../gui/mdmsession.c:144 ../gui/mdmsession.c:334
 msgid ""
 "This is a failsafe session that will log you into GNOME. No startup scripts "
 "will be read and it is only to be used when you can't log in otherwise.  "
 "GNOME will use the 'Default' session."
 msgstr ""
 
-#: ../gui/gdmsession.c:155 ../gui/gdmsession.c:345
+#: ../gui/mdmsession.c:155 ../gui/mdmsession.c:345
 msgid "Failsafe _Terminal"
 msgstr "_విఫలరక్షిత అగ్రం"
 
-#: ../gui/gdmsession.c:156 ../gui/gdmsession.c:346
+#: ../gui/mdmsession.c:156 ../gui/mdmsession.c:346
 msgid "Failsafe Terminal"
 msgstr "విఫలరక్షిత అగ్రం"
 
-#: ../gui/gdmsession.c:157 ../gui/gdmsession.c:347
+#: ../gui/mdmsession.c:157 ../gui/mdmsession.c:347
 msgid ""
 "This is a failsafe session that will log you into a terminal.  No startup "
 "scripts will be read and it is only to be used when you can't log in "
 "otherwise.  To exit the terminal, type 'exit'."
 msgstr ""
 
-#: ../gui/gdmsetup.c:320
+#: ../gui/mdmsetup.c:320
 msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
@@ -3223,247 +3223,247 @@ msgstr ""
 "నమోదు తెరలు పరిచయం ప్రయత్నిస్తున్నపుడు ఒక దోషం ఏర్పడింది. అన్నికాదు తాజాపరచుట పర్యవసానం "
 "తీసుకొనవచ్చును."
 
-#: ../gui/gdmsetup.c:792 ../gui/gdmsetup.c:2988
+#: ../gui/mdmsetup.c:792 ../gui/mdmsetup.c:2988
 msgid "Users include list modification"
 msgstr "జాబితా సవరణ కలుపుకొని వినియోగదారులు "
 
-#: ../gui/gdmsetup.c:793
+#: ../gui/mdmsetup.c:793
 msgid ""
 "Some of the users in the Include list (Users tab) now have uid lower than "
 "MinimalUID and will be removed."
 msgstr ""
 
-#: ../gui/gdmsetup.c:1206 ../gui/gdmsetup.c:1232 ../gui/gdmsetup.c:1391
-#: ../gui/gdmsetup.c:1795
+#: ../gui/mdmsetup.c:1206 ../gui/mdmsetup.c:1232 ../gui/mdmsetup.c:1391
+#: ../gui/mdmsetup.c:1795
 msgid "Themed"
 msgstr "వైవిథ్యాంశపరచబడిన"
 
-#: ../gui/gdmsetup.c:1209 ../gui/gdmsetup.c:1235
+#: ../gui/mdmsetup.c:1209 ../gui/mdmsetup.c:1235
 msgid "Themed with face browser"
 msgstr "ముఖ అన్వేషితో వైవిథ్యాంశపరచబడిన"
 
-#: ../gui/gdmsetup.c:1212 ../gui/gdmsetup.c:1253
+#: ../gui/mdmsetup.c:1212 ../gui/mdmsetup.c:1253
 msgid "Plain"
 msgstr "సమమైన"
 
 #. Themed with face browser
-#: ../gui/gdmsetup.c:1215 ../gui/gdmsetup.c:1256
+#: ../gui/mdmsetup.c:1215 ../gui/mdmsetup.c:1256
 msgid "Plain with face browser"
 msgstr "ముఖ అన్వేషితో సమమైన"
 
-#: ../gui/gdmsetup.c:1443
+#: ../gui/mdmsetup.c:1443
 msgid "Autologin or timed login to the root account is forbidden."
 msgstr "మూల ఖాతాకు స్వయంప్రవేశద్వారం లేదా సమయానుసార ప్రవేశద్వారం నిషేధింపబడినది."
 
-#: ../gui/gdmsetup.c:1445 ../gui/gdmsetup.c:2725 ../gui/gdmsetup.c:2829
+#: ../gui/mdmsetup.c:1445 ../gui/mdmsetup.c:2725 ../gui/mdmsetup.c:2829
 #, c-format
 msgid "The \"%s\" user UID is lower than allowed MinimalUID."
 msgstr "\"%s\" అనుమతింపబడి సూక్ష్మీకరించు యుఐడి కన్నాయుఐడి వినియోగదారు క్రిందస్థాయు."
 
-#: ../gui/gdmsetup.c:1452
+#: ../gui/mdmsetup.c:1452
 msgid "User not allowed"
 msgstr "వినియోగదారు అనుమతించబడడు"
 
-#: ../gui/gdmsetup.c:1629 ../gui/gdmsetup.glade.h:3
+#: ../gui/mdmsetup.c:1629 ../gui/mdmsetup.glade.h:3
 msgid "(Enabled)"
 msgstr "(ఉపయోగించబడినవి)"
 
-#: ../gui/gdmsetup.c:1631
+#: ../gui/mdmsetup.c:1631
 msgid "(Disabled)"
 msgstr "(నిరుపయోగపరచబడినవి)"
 
-#: ../gui/gdmsetup.c:1849 ../gui/gdmsetup.c:1881 ../gui/gdmsetup.c:5033
+#: ../gui/mdmsetup.c:1849 ../gui/mdmsetup.c:1881 ../gui/mdmsetup.c:5033
 msgid "No themes selected!"
 msgstr "ఎటువంటి వైవిథ్యాంశములు ఎంచుకొనబడలేదు!"
 
-#: ../gui/gdmsetup.c:1850 ../gui/gdmsetup.c:1882 ../gui/gdmsetup.c:5034
+#: ../gui/mdmsetup.c:1850 ../gui/mdmsetup.c:1882 ../gui/mdmsetup.c:5034
 msgid ""
 "You need one or more themes selected for the \"Random from selected\" option "
 "to be valid. Failure to do so will force \"Selected only\" mode."
 msgstr ""
 
-#: ../gui/gdmsetup.c:2008
+#: ../gui/mdmsetup.c:2008
 msgid "Apply changes to the modified command?"
 msgstr "సరిచేయబడిన ఆదేశంకు మార్పులను అనుసంధించు?"
 
-#: ../gui/gdmsetup.c:2009
+#: ../gui/mdmsetup.c:2009
 msgid "If you don't apply, the changes will be discarded."
 msgstr "ఒకవేళ నీవు అనుసంధించకపోతే, మార్పులు నిరాకరించబడును."
 
-#: ../gui/gdmsetup.c:2451
+#: ../gui/mdmsetup.c:2451
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr "మూల ఖాతాకు సమయానుసార ప్రవేశద్వారం లేదా స్వయంచాలకప్రవేశద్వారం అనుమతింపబడదు."
 
-#: ../gui/gdmsetup.c:2670
+#: ../gui/mdmsetup.c:2670
 #, c-format
 msgid "The \"%s\" user already exists in the include list."
 msgstr "\"%s\" కలుపబడిన జాబితాలో వినియోగదారు ఇదివరకే కలిగివున్నాడు. "
 
-#: ../gui/gdmsetup.c:2678 ../gui/gdmsetup.c:2706 ../gui/gdmsetup.c:2733
-#: ../gui/gdmsetup.c:2763 ../gui/gdmsetup.c:2837
+#: ../gui/mdmsetup.c:2678 ../gui/mdmsetup.c:2706 ../gui/mdmsetup.c:2733
+#: ../gui/mdmsetup.c:2763 ../gui/mdmsetup.c:2837
 msgid "Cannot add user"
 msgstr "వినియోగదారు చేర్చుటకు వీలుకాదు"
 
-#: ../gui/gdmsetup.c:2698
+#: ../gui/mdmsetup.c:2698
 #, c-format
 msgid "The \"%s\" user already exists in the exclude list."
 msgstr "\"%s\" బహిష్కరించబడిన జాబితాలో వినియోగదారు ఇదివరకే కలిగివున్నాడు."
 
-#: ../gui/gdmsetup.c:2755
+#: ../gui/mdmsetup.c:2755
 #, c-format
 msgid "The \"%s\" user does not exist."
 msgstr "\"%s\" వినియోగదారు కలిగిలేడు."
 
-#: ../gui/gdmsetup.c:2919
+#: ../gui/mdmsetup.c:2919
 msgid "Invalid command path"
 msgstr "నిస్సారమైన ఆదేశం త్రోవ"
 
-#: ../gui/gdmsetup.c:2920
+#: ../gui/mdmsetup.c:2920
 msgid ""
 "The path you provided for this command is not valid. The changes will not be "
 "saved."
 msgstr "నీవు సిద్దముచేయబడిన త్రోవ ఈ ఆదేశం కొరకు వర్తించదు. ఈ మార్పులు  దాచబడవు."
 
-#: ../gui/gdmsetup.c:2989
+#: ../gui/mdmsetup.c:2989
 msgid ""
 "Some of the users had uid lower than MinimalUID (Security tab) and could not "
 "be added."
 msgstr ""
 
 #. first get the file
-#: ../gui/gdmsetup.c:3618
+#: ../gui/mdmsetup.c:3618
 msgid "Select Command"
 msgstr "ఆదేశం ఎంచుకొను"
 
-#: ../gui/gdmsetup.c:3644 ../gui/gdmsetup.c:5559
+#: ../gui/mdmsetup.c:3644 ../gui/mdmsetup.c:5559
 msgid "No file selected"
 msgstr "ఎటువంటి దస్త్రం ఎంచుకొనబడలేదు"
 
-#: ../gui/gdmsetup.c:3809
+#: ../gui/mdmsetup.c:3809
 msgid "Apply the changes to commands before closing?"
 msgstr "మూసివేయుటకు ముందు ఆదేశములకు మార్పులను అనుసంధించు"
 
-#: ../gui/gdmsetup.c:3810
+#: ../gui/mdmsetup.c:3810
 msgid "If you don't apply, the changes made will be disregarded."
 msgstr "ఒకవేళ నీవు అనుసంధించకపోతే, "
 
-#: ../gui/gdmsetup.c:3813 ../gui/gdmsetup.c:8158
+#: ../gui/mdmsetup.c:3813 ../gui/mdmsetup.c:8158
 msgid "Close _without Applying"
 msgstr "_అనుసంధించకుండా మూసివేయు"
 
 #. Add halt, reboot and suspend commands
-#: ../gui/gdmsetup.c:3904
+#: ../gui/mdmsetup.c:3904
 msgid "Halt command"
 msgstr "ఆదేశం"
 
-#: ../gui/gdmsetup.c:3905
+#: ../gui/mdmsetup.c:3905
 msgid "Reboot command"
 msgstr "పునఃప్రారంభం ఆదేశం"
 
-#: ../gui/gdmsetup.c:3906
+#: ../gui/mdmsetup.c:3906
 msgid "Suspend command"
 msgstr "నిలువగల ఆదేశం"
 
-#: ../gui/gdmsetup.c:4459 ../gui/gdmsetup.glade.h:135
+#: ../gui/mdmsetup.c:4459 ../gui/mdmsetup.glade.h:135
 msgid "Sounds"
 msgstr "ధ్వనిలు"
 
-#: ../gui/gdmsetup.c:4678 ../gui/gdmsetup.c:4732
+#: ../gui/mdmsetup.c:4678 ../gui/mdmsetup.c:4732
 msgid "None"
 msgstr "ఏదీకాదు"
 
-#: ../gui/gdmsetup.c:5207
+#: ../gui/mdmsetup.c:5207
 msgid "Archive is not of a subdirectory"
 msgstr "ఒక మూలవివరం యొక్క సంగ్రహం కాదు"
 
-#: ../gui/gdmsetup.c:5215
+#: ../gui/mdmsetup.c:5215
 msgid "Archive is not of a single subdirectory"
 msgstr "ఒక ఒంటరి మూలవివరం యొక్క సంగ్రహం కాదు"
 
-#: ../gui/gdmsetup.c:5239 ../gui/gdmsetup.c:5316
+#: ../gui/mdmsetup.c:5239 ../gui/mdmsetup.c:5316
 msgid "File not a tar.gz or tar archive"
 msgstr "దస్త్రం ఒక tar.gz లేదా tar సంగ్రహం కాదు"
 
-#: ../gui/gdmsetup.c:5241
-msgid "Archive does not include a GdmGreeterTheme.info file"
+#: ../gui/mdmsetup.c:5241
+msgid "Archive does not include a MdmGreeterTheme.info file"
 msgstr "ఒక జిడియం వందనమువైవిథ్యాంశం .సమాచార దస్త్రం సంగ్రహం కలుపుకొనుట చేయలేము"
 
-#: ../gui/gdmsetup.c:5263
+#: ../gui/mdmsetup.c:5263
 msgid "File does not exist"
 msgstr "దస్త్రం కలిగిలేదు"
 
-#: ../gui/gdmsetup.c:5382
+#: ../gui/mdmsetup.c:5382
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../gui/gdmsetup.c:5389
+#: ../gui/mdmsetup.c:5389
 msgid "Not a theme archive"
 msgstr "ఒక వైవిథ్యాంశ సంగ్రహం కాదు"
 
 #. FIXME: if exists already perhaps we could also have an
 #. * option to change the dir name
-#: ../gui/gdmsetup.c:5411
+#: ../gui/mdmsetup.c:5411
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
 msgstr "'%s' వైవిథ్యాంశం వివరము ఇదివరకే నెలకొల్పబడినట్టు కనబడుచున్నది. మరలా ఏవిధముగానైనా నెలకొల్పు?"
 
-#: ../gui/gdmsetup.c:5503
+#: ../gui/mdmsetup.c:5503
 msgid "Some error occurred when installing the theme"
 msgstr "వైవిథ్యాంశం నెలకొల్పుచున్నప్పుడు కొన్ని దోషములు సంభవించినవి"
 
-#: ../gui/gdmsetup.c:5581
+#: ../gui/mdmsetup.c:5581
 msgid "Select Theme Archive"
 msgstr "వైవిథ్యాంశం సంగ్రహం ఎంచుకొను"
 
-#: ../gui/gdmsetup.c:5585 ../gui/gdmsetup.c:6678
+#: ../gui/mdmsetup.c:5585 ../gui/mdmsetup.c:6678
 msgid "_Install"
 msgstr "_నెలకొల్పుట"
 
-#: ../gui/gdmsetup.c:5589
+#: ../gui/mdmsetup.c:5589
 msgid "Theme archives"
 msgstr "వైవిథ్యాంశం సంగ్రహములు"
 
-#: ../gui/gdmsetup.c:5690
+#: ../gui/mdmsetup.c:5690
 msgid "Theme active in \"Selected only\" mode"
 msgstr "వైవిథ్యాంశం క్రియాశీలించుట లో \"ఎంచుకోబడినవి మాత్రమే\" విధం"
 
-#: ../gui/gdmsetup.c:5691
+#: ../gui/mdmsetup.c:5691
 msgid ""
 "This theme cannot be deleted at this point. If you wish to delete this theme "
 "switch to \"Selected only\" mode, and deselect it by choosing a different "
 "theme."
 msgstr ""
 
-#: ../gui/gdmsetup.c:5720
+#: ../gui/mdmsetup.c:5720
 #, c-format
 msgid "Remove the \"%s\" theme?"
 msgstr "\"%s\" వైవిథ్యాంశం తొలగించు?"
 
-#: ../gui/gdmsetup.c:5728
+#: ../gui/mdmsetup.c:5728
 msgid "If you choose to remove the theme, it will be permanently lost."
 msgstr "ఒకవేళ నీవు వైవిథ్యాంశంను తొలగించుటకు ఎంచుకొనినచో, అది శాశ్వతంగా తొలగిపోవును."
 
-#: ../gui/gdmsetup.c:5736
+#: ../gui/mdmsetup.c:5736
 msgid "_Remove Theme"
 msgstr "_వైవిథ్యాంశం తొలగించు"
 
-#: ../gui/gdmsetup.c:6667
+#: ../gui/mdmsetup.c:6667
 #, c-format
 msgid "Install the theme from '%s'?"
 msgstr "'%s' నుండి వైవిథ్యాంశం నెలకొల్పు?"
 
-#: ../gui/gdmsetup.c:6668
+#: ../gui/mdmsetup.c:6668
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
 msgstr "'%s' దస్త్రం నుండి వైవిథ్యాంశం చేర్చుటకు నెలకొల్పుటను ఎంచుకొను."
 
 #. This is the temporary help dialog
-#: ../gui/gdmsetup.c:6923
+#: ../gui/mdmsetup.c:6923
 #, c-format
 msgid ""
-"This configuration window changes settings for the GDM daemon, which is the "
+"This configuration window changes settings for the MDM daemon, which is the "
 "graphical login screen for GNOME.  Changes that you make will take effect "
 "immediately.\n"
 "\n"
@@ -3474,23 +3474,23 @@ msgid ""
 "category."
 msgstr ""
 
-#: ../gui/gdmsetup.c:7521
+#: ../gui/mdmsetup.c:7521
 msgid "auto"
 msgstr "స్వయం"
 
-#: ../gui/gdmsetup.c:7524
+#: ../gui/mdmsetup.c:7524
 msgid "yes"
 msgstr "అవును"
 
-#: ../gui/gdmsetup.c:7527
+#: ../gui/mdmsetup.c:7527
 msgid "no"
 msgstr "కాదు"
 
-#: ../gui/gdmsetup.c:8136
+#: ../gui/mdmsetup.c:8136
 msgid "Random theme mode change"
 msgstr "విభిన్న వైవిథ్యాంశ విధము మార్పు"
 
-#: ../gui/gdmsetup.c:8137
+#: ../gui/mdmsetup.c:8137
 msgid ""
 "Since no themes were selected in random theme mode switching back to single "
 "theme mode."
@@ -3498,48 +3498,48 @@ msgstr ""
 "విభిన్న వైవిథ్యాంశ విధంలో ఎటువంటి వైవిథ్యాంశములు ఎంచుకొనబడలేదు సైగకు వెనుక మీటపరచుచున్నవైవిథ్యాంశ "
 "విధం."
 
-#: ../gui/gdmsetup.c:8154
+#: ../gui/mdmsetup.c:8154
 msgid "Apply the changes to users before closing?"
 msgstr "మూసివేయుటకు ముందు వినియోగదారులకు మార్పులను అనుసంధించు?"
 
-#: ../gui/gdmsetup.c:8155
+#: ../gui/mdmsetup.c:8155
 msgid ""
 "If you don't apply, the changes made on the Users tab will be disregarded."
 msgstr "ఒకవేళ నీవు అనుసంధించకపోతే, వినియోగదారుల బొత్తంపై చేసిన మార్పులు నిర్లక్ష్యముగును."
 
-#: ../gui/gdmsetup.c:8224
+#: ../gui/mdmsetup.c:8224
 msgid "Could not access configuration file (defaults.conf)"
 msgstr "రూపకరించు దస్త్రం సాంగత్యపరచుటకు వీలుకాదు (అప్రమేయములు.రూపకరణ)"
 
-#: ../gui/gdmsetup.c:8225 ../gui/gdmsetup.c:8242
+#: ../gui/mdmsetup.c:8225 ../gui/mdmsetup.c:8242
 msgid ""
 "Make sure that the file exists before launching login manager config utility."
 msgstr ""
 "ప్రవేశద్వారం అభికర్త రూపకరణ సౌలభ్యం ప్రయోగించుటకు ముందు దస్త్రం కలిగిఉందని నిశ్చయము ఏర్పరచు."
 
-#: ../gui/gdmsetup.c:8241
+#: ../gui/mdmsetup.c:8241
 msgid "Could not access configuration file (custom.conf)"
 msgstr "రూపకరించు దస్త్రం సాంగత్యపరచుటకు వీలుకాదు (మలచిన.రూపకరణ)"
 
-#: ../gui/gdmsetup.c:8289
-msgid "You must be the root user to configure GDM."
+#: ../gui/mdmsetup.c:8289
+msgid "You must be the root user to configure MDM."
 msgstr "జిడియం రూపకరించుటకు నీవు ఖశ్చితంగా మూలం వినియోగదారు అయి ఉండవలయును"
 
 #. EOF
-#: ../gui/gdmsetup.desktop.in.in.h:1
-msgid "Configure GDM login window appearance and behavior"
+#: ../gui/mdmsetup.desktop.in.in.h:1
+msgid "Configure MDM login window appearance and behavior"
 msgstr "జిడియం ప్రవేశద్వారం గవాక్షం రూపం మరియు ప్రవర్తన రూపకరించు"
 
-#: ../gui/gdmsetup.desktop.in.in.h:2
+#: ../gui/mdmsetup.desktop.in.in.h:2
 msgid "Login Window"
 msgstr "ప్రవేశద్వార గవాక్షం"
 
-#: ../gui/gdmsetup.glade.h:2
+#: ../gui/mdmsetup.glade.h:2
 #, no-c-format
 msgid "%n will be replaced by hostname"
 msgstr "%n ఆతిథ్యనామము ద్వారా  పునఃస్థాపించు ఇఛ్ఛ ఉండు"
 
-#: ../gui/gdmsetup.glade.h:4
+#: ../gui/mdmsetup.glade.h:4
 msgid ""
 "<b>Note:</b>  Users in the Include list will appear in the face browser if "
 "enabled and will appear in the user drop-down lists for automatic and timed "
@@ -3548,60 +3548,60 @@ msgid ""
 "allowed to join Include list."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:5
+#: ../gui/mdmsetup.glade.h:5
 msgid ""
 "<b>Note:</b> You can select different commands from the drop-down list, and "
 "modify them through relevant fields located below. To save changes press "
 "Apply Command Changes button."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:6
+#: ../gui/mdmsetup.glade.h:6
 msgid ""
 "<b>Warning:</b>  Incorrect settings could prevent the X server from "
-"restarting.  Changes to these settings will not take effect until GDM is "
+"restarting.  Changes to these settings will not take effect until MDM is "
 "restarted."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:7
+#: ../gui/mdmsetup.glade.h:7
 msgid "A_dd..."
 msgstr "_చేర్చు..."
 
-#: ../gui/gdmsetup.glade.h:8
+#: ../gui/mdmsetup.glade.h:8
 msgid "A_llow remote system administrator login"
 msgstr "వ్యవస్థ నిర్వాహకి ప్రవేశద్వారం అనుమతించు"
 
-#: ../gui/gdmsetup.glade.h:9
+#: ../gui/mdmsetup.glade.h:9
 msgid "A_pply User Changes"
 msgstr "_వినియోగదారు మార్పులు అనుసంధించు"
 
-#: ../gui/gdmsetup.glade.h:10
+#: ../gui/mdmsetup.glade.h:10
 msgid "Accessibility"
 msgstr "అందుబాటు"
 
-#: ../gui/gdmsetup.glade.h:11
+#: ../gui/mdmsetup.glade.h:11
 msgid "Accessible from the outside of the login manager"
 msgstr "ప్రవేశద్వారం అభికర్త యొక్కబయటివైపు నుండి సాంగత్యపరచబడుతుంది"
 
-#: ../gui/gdmsetup.glade.h:12
+#: ../gui/mdmsetup.glade.h:12
 msgid "Add / Modify Servers To Start"
 msgstr "మొదలుపెట్టుటకు సేవికలను చేర్చు/మార్చు"
 
-#: ../gui/gdmsetup.glade.h:13
+#: ../gui/mdmsetup.glade.h:13
 msgid "Add S_erver..."
 msgstr "_సేవిక చేర్చు..."
 
-#: ../gui/gdmsetup.glade.h:14
+#: ../gui/mdmsetup.glade.h:14
 msgid "Add User"
 msgstr "వినియోగదారు చేర్చు"
 
-#: ../gui/gdmsetup.glade.h:15
+#: ../gui/mdmsetup.glade.h:15
 msgid ""
 "Adds a chooser button to the Actions menu that will restart the current X "
 "server with a chooser.  XDMCP does not need to be enabled on the local "
 "computer for this to work."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:16
+#: ../gui/mdmsetup.glade.h:16
 msgid ""
 "All users with a lower UID will be excluded from the face browser, automatic "
 "and timed login."
@@ -3609,40 +3609,40 @@ msgstr ""
 "ఒక క్రిందిస్థాయి యుఐడి తో అందరు వినియోగదారులు ముఖ అన్వేషి నుండి బహిష్కరించబడినవి, స్వయంచాలక మరియు "
 "సమయానుసార ప్రవేశద్వారం."
 
-#: ../gui/gdmsetup.glade.h:17
+#: ../gui/mdmsetup.glade.h:17
 msgid "Allo_w remote timed logins"
 msgstr "_సుదూర సమయానుసార ప్రవేశద్వారములు అనుమతించు"
 
-#: ../gui/gdmsetup.glade.h:18
+#: ../gui/mdmsetup.glade.h:18
 msgid ""
 "Allow changing the GTK+ (widget) theme from the greeter. Currently this only "
 "affects the standard greeter. The theme will stay in effect on this display "
-"until changed and will affect all the other windows that are put up by GDM."
+"until changed and will affect all the other windows that are put up by MDM."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:19
+#: ../gui/mdmsetup.glade.h:19
 msgid "Allow group writable files and directories."
 msgstr "సముదాయం వ్రాయబడు దస్త్రములు మరియు వివరములు అనుమతించు."
 
-#: ../gui/gdmsetup.glade.h:20
+#: ../gui/mdmsetup.glade.h:20
 msgid "Allow logi_n if group write permissions on user's home directory"
 msgstr "_వినియోగదారుల నివాస వివరం పై ఒకవేళ సముదాయం వ్రాయు అనుమతులు  ప్రవేశద్వారం అనుమతించు"
 
-#: ../gui/gdmsetup.glade.h:21
+#: ../gui/mdmsetup.glade.h:21
 msgid "Allow login _if all write permissions on user's home directory"
 msgstr "_వినియోగదారుల నివాస వివరం పై ఒకవేళ అన్ని వ్రాయు అనుమతులు  ప్రవేశద్వారం అనుమతించు"
 
-#: ../gui/gdmsetup.glade.h:22
+#: ../gui/mdmsetup.glade.h:22
 msgid "Allow world writable files and directories."
 msgstr "దేశ వ్రాయబడు దస్త్రములు మరియు వివరములు అనుమతించు."
 
-#: ../gui/gdmsetup.glade.h:23
+#: ../gui/mdmsetup.glade.h:23
 msgid ""
 "Allows the configurator to be run from the greeter. Note that the user will "
 "need to type in the root password before the configurator will be started."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:24
+#: ../gui/mdmsetup.glade.h:24
 msgid ""
 "Always append -nolisten tcp to the command line of local X servers, thus "
 "disallowing TCP connection.  This is useful if you do not care for allowing "
@@ -3651,61 +3651,61 @@ msgid ""
 "Also disables X forwarding, but does not affect XDMCP."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:25
+#: ../gui/mdmsetup.glade.h:25
 msgid "Apply Co_mmand Changes"
 msgstr "ఆదేశం మార్పులను అనుసంధించు"
 
-#: ../gui/gdmsetup.glade.h:26
+#: ../gui/mdmsetup.glade.h:26
 msgid "Author:"
 msgstr "గ్రంధకర్త:"
 
-#: ../gui/gdmsetup.glade.h:27
+#: ../gui/mdmsetup.glade.h:27
 msgid "Background"
 msgstr "పూర్వరంగం"
 
-#: ../gui/gdmsetup.glade.h:28
+#: ../gui/mdmsetup.glade.h:28
 msgid "Background color of the greeter."
 msgstr "వందనము యొక్క పూర్వరంగం వర్ణము"
 
-#: ../gui/gdmsetup.glade.h:29
+#: ../gui/mdmsetup.glade.h:29
 msgid "Behaviour"
 msgstr "ప్రవర్తన"
 
-#: ../gui/gdmsetup.glade.h:30
+#: ../gui/mdmsetup.glade.h:30
 msgid "C_ommand:"
 msgstr "_ఆదేశం:"
 
-#: ../gui/gdmsetup.glade.h:31
+#: ../gui/mdmsetup.glade.h:31
 msgid "C_ustom:"
 msgstr "_మలచిన:"
 
-#: ../gui/gdmsetup.glade.h:32
+#: ../gui/mdmsetup.glade.h:32
 msgid ""
 "Checks the ownership of the home directories before writing to them. This "
 "prevents security issues in case of bad setup."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:33
+#: ../gui/mdmsetup.glade.h:33
 msgid "Co_lor:"
 msgstr "_వర్ణము:"
 
-#: ../gui/gdmsetup.glade.h:34
+#: ../gui/mdmsetup.glade.h:34
 msgid "Color depth:"
 msgstr "వర్ణము "
 
-#: ../gui/gdmsetup.glade.h:35
+#: ../gui/mdmsetup.glade.h:35
 msgid "Comma_nd type:"
 msgstr "_ఆదేశం రకము:"
 
-#: ../gui/gdmsetup.glade.h:36
+#: ../gui/mdmsetup.glade.h:36
 msgid "Configure XDMC_P..."
 msgstr "_ఎక్స్డియంసిపి రూపకరించు..."
 
-#: ../gui/gdmsetup.glade.h:37
+#: ../gui/mdmsetup.glade.h:37
 msgid "Configure _X Server..."
 msgstr "_ X సేవిక రూపకరించు..."
 
-#: ../gui/gdmsetup.glade.h:38
+#: ../gui/mdmsetup.glade.h:38
 msgid ""
 "Controls which text to display next to the logo image in the greeter for "
 "remote XDMCP sessions."
@@ -3713,7 +3713,7 @@ msgstr ""
 "తరువాత పాఠం ప్రదర్శనకు ఏది నియంత్రిస్తుందో ఆ వందనములో చిహ్నము ప్రతిరూపం కు  సుదూర ఎక్స్డియంసిపి "
 "సమకూర్పుల కొరకు."
 
-#: ../gui/gdmsetup.glade.h:39
+#: ../gui/mdmsetup.glade.h:39
 msgid ""
 "Controls which text to display next to the logo image in the standard "
 "greeter. This string is only used for local logins."
@@ -3721,30 +3721,30 @@ msgstr ""
 "తరువాత పాఠం ప్రదర్శనకు ఏది నియంత్రిస్తుందో ఆ ప్రామాణికంలో చిహ్నము ప్రతిరూపం కు  వందనము. ఈ "
 "పదబంధం స్థానిక ప్రవేశద్వారముల కొరకు మాత్రమే వాడుటకు."
 
-#: ../gui/gdmsetup.glade.h:40
+#: ../gui/mdmsetup.glade.h:40
 msgid "Copyright:"
 msgstr "నకలుహక్కు:"
 
-#: ../gui/gdmsetup.glade.h:41
+#: ../gui/mdmsetup.glade.h:41
 msgid "De_fault face:"
 msgstr "‌_అప్రమేయ ముఖం:"
 
-#: ../gui/gdmsetup.glade.h:42
+#: ../gui/mdmsetup.glade.h:42
 msgid "De_fault session:"
 msgstr "_అప్రమేయ సమకూర్పు:"
 
-#: ../gui/gdmsetup.glade.h:43
+#: ../gui/mdmsetup.glade.h:43
 msgid "Delay in seconds before the Timed login user will be logged in."
 msgstr "సమయానుసార ప్రవేశద్వారం వినియోగదారు నమోదులో క్షణములలో ఆలస్యంకు ముందు"
 
-#: ../gui/gdmsetup.glade.h:44
+#: ../gui/mdmsetup.glade.h:44
 msgid ""
 "Determines the maximum number of remote display connections which will be "
 "managed simultaneously. I.e. the total number of remote displays that can "
 "use your host."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:45
+#: ../gui/mdmsetup.glade.h:45
 msgid ""
 "Determines the maximum number of seconds between the time where a user "
 "chooses a host and the subsequent indirect query where the user is connected "
@@ -3752,27 +3752,27 @@ msgid ""
 "host is forgotten and the indirect slot freed up for other displays."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:46
+#: ../gui/mdmsetup.glade.h:46
 msgid "Disa_ble multiple logins for a single user"
 msgstr "ఒక ఒంటరి వినియోగదారు కొరకు బహుగుణములుగల ప్రవేశద్వారములు నిరుపయోగపరచు"
 
-#: ../gui/gdmsetup.glade.h:47
+#: ../gui/mdmsetup.glade.h:47
 msgid "Display the title bar in the greeter."
 msgstr "వందనములో శీర్షిక పట్టీని ప్రదర్శించు."
 
-#: ../gui/gdmsetup.glade.h:48
+#: ../gui/mdmsetup.glade.h:48
 msgid "Displays per _host:"
 msgstr "_ఆతిథ్యం గుండా ప్రదర్శనలు:"
 
-#: ../gui/gdmsetup.glade.h:49
+#: ../gui/mdmsetup.glade.h:49
 msgid "Displays this image as the background in the greeter."
 msgstr "వందనములో ఈ ప్రతిరూపం పూర్వరంగంవలే ప్రదర్శింపబడుతుంది."
 
-#: ../gui/gdmsetup.glade.h:50
+#: ../gui/mdmsetup.glade.h:50
 msgid "Do not show image for _remote logins"
 msgstr "_సుదూర ప్రవేశద్వారముల కొరకు ప్రతిరూపం చూపకుము"
 
-#: ../gui/gdmsetup.glade.h:51
+#: ../gui/mdmsetup.glade.h:51
 msgid ""
 "Does not place cookies into the users home directory if this directory is on "
 "NFS."
@@ -3780,40 +3780,40 @@ msgstr ""
 "Does not place cookies into the users home directory if this directory is on "
 "NFS."
 
-#: ../gui/gdmsetup.glade.h:52
+#: ../gui/mdmsetup.glade.h:52
 msgid "Don't restart the login manager after the execution"
 msgstr "నిర్వర్తించిన తరువాత ప్రవేశద్వారం నిర్వాహకి ని మరలామొదలుపెట్టకు"
 
-#: ../gui/gdmsetup.glade.h:53
+#: ../gui/mdmsetup.glade.h:53
 msgid "E_dit Commands..."
 msgstr "_ఆదేశాలను సరిచేయు..."
 
-#: ../gui/gdmsetup.glade.h:54
+#: ../gui/mdmsetup.glade.h:54
 msgid "E_xclude:"
 msgstr "_బహిష్కరించు:"
 
-#: ../gui/gdmsetup.glade.h:55
+#: ../gui/mdmsetup.glade.h:55
 msgid "Ena_ble debug messages to system log"
 msgstr "_వ్యవస్థ నమోదుకు లోపనిర్మూలన ఆదేశాలు ఉపయోగించు"
 
-#: ../gui/gdmsetup.glade.h:56
+#: ../gui/mdmsetup.glade.h:56
 msgid "Enable _Timed Login"
 msgstr "_సమయానుసార ప్రవేశద్వారం ఉపయోగించు"
 
-#: ../gui/gdmsetup.glade.h:57
+#: ../gui/mdmsetup.glade.h:57
 msgid ""
-"Enables XDMCP INDIRECT choosing (i.e. remote execution of gdmchooser) for X-"
+"Enables XDMCP INDIRECT choosing (i.e. remote execution of mdmchooser) for X-"
 "terminals which don't supply their own display browser."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:58
+#: ../gui/mdmsetup.glade.h:58
 msgid ""
 "Enables greeter to be launched with additional Gtk+ modules. This is useful "
 "when extra features are required such as accessible login. Note that only "
 "\"trusted\" modules should be used to minimize security issues."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:59
+#: ../gui/mdmsetup.glade.h:59
 msgid ""
 "Full path and arguments for the command to be executed. If the value is "
 "missing, the command will not be available."
@@ -3821,36 +3821,36 @@ msgstr ""
 "ఆదేశం కు పూర్తి త్రోవ మరియు క్రమానుగతసంకేతములు నిర్వర్తించబడుతుంది.  ఒకవేళ  విలువ తప్పిపోయినచో, "
 "ఆదేశం లభించు ఇఛ్ఛ ఉండదు."
 
-#: ../gui/gdmsetup.glade.h:60
+#: ../gui/mdmsetup.glade.h:60
 msgid "Full path and arguments to the command to be executed"
 msgstr "ఆదేశం కు పూర్తి త్రోవ మరియు క్రమానుగతసంకేతములు నిర్వర్తించబడుతుంది"
 
-#: ../gui/gdmsetup.glade.h:61
+#: ../gui/mdmsetup.glade.h:61
 msgid ""
-"GDM should run the login window on this server and allow a user to log in.  "
-"If not selected, then GDM will just run this server and wait for it to "
+"MDM should run the login window on this server and allow a user to log in.  "
+"If not selected, then MDM will just run this server and wait for it to "
 "terminate."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:62
+#: ../gui/mdmsetup.glade.h:62
 msgid "General"
 msgstr "సాధారణమైన"
 
-#: ../gui/gdmsetup.glade.h:63
+#: ../gui/mdmsetup.glade.h:63
 msgid ""
 "Given user should be logged in after a number of seconds (set with Pause "
 "before login) of inactivity on the login screen.  This is useful for public "
 "access terminals or perhaps even home use."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:64
+#: ../gui/mdmsetup.glade.h:64
 msgid ""
 "Given user should be logged in upon first bootup.  No password will be "
 "asked.  This is useful for single user workstations where local console "
 "security is not an issue."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:65
+#: ../gui/mdmsetup.glade.h:65
 msgid ""
 "Greeter\n"
 "Chooser"
@@ -3858,48 +3858,48 @@ msgstr ""
 "వందనము\n"
 "ఎంచుకొనునది"
 
-#: ../gui/gdmsetup.glade.h:67
+#: ../gui/mdmsetup.glade.h:67
 msgid "Honor _indirect requests"
 msgstr "_గౌరవ వక్రమైన మనవిలు"
 
-#: ../gui/gdmsetup.glade.h:68
+#: ../gui/mdmsetup.glade.h:68
 msgid "I_mage:"
 msgstr "_ప్రతిరూపం:"
 
-#: ../gui/gdmsetup.glade.h:69
+#: ../gui/mdmsetup.glade.h:69
 msgid "I_nclude:"
 msgstr "_కలుపుకొను:"
 
-#: ../gui/gdmsetup.glade.h:70
+#: ../gui/mdmsetup.glade.h:70
 msgid ""
-"If a user has no defined face image, GDM will use the \"stock_person\" icon "
+"If a user has no defined face image, MDM will use the \"stock_person\" icon "
 "defined in the current GTK+ theme.  If no such image is defined, the image "
 "specified by DefaultFace will be used.  The image must be in an gdk-pixbuf "
-"supported format and the file must be readable to the GDM user."
+"supported format and the file must be readable to the MDM user."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:71
+#: ../gui/mdmsetup.glade.h:71
 msgid ""
 "Image file to display in the logo box. The file must be in an gdk-pixbuf "
-"supported format and it must be readable by the GDM user. If no file is "
+"supported format and it must be readable by the MDM user. If no file is "
 "specified the logo feature is disabled."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:72
+#: ../gui/mdmsetup.glade.h:72
 msgid "Includ_e Hostname Chooser (XDMCP) menu item"
 msgstr "_ఆతిథ్యనామము ఎంచుకొను (ఎక్స్డియంసిపి) జాబితా పద్దు కలుపుకొను"
 
-#: ../gui/gdmsetup.glade.h:73
+#: ../gui/mdmsetup.glade.h:73
 msgid "Include Con_figure menu item"
 msgstr "_రూపకరించు జాబితా పద్దు కలుపుకొనుము"
 
-#: ../gui/gdmsetup.glade.h:74
+#: ../gui/mdmsetup.glade.h:74
 msgid ""
 "Indicates that the X server should be started at a different process "
 "priority."
 msgstr "X సేవిక ఒక భేదమైన క్రమణం వద్ద మొదలుపెట్టబడుతుందని అది సూచిస్తుంది ప్రాధాన్యత."
 
-#: ../gui/gdmsetup.glade.h:75
+#: ../gui/mdmsetup.glade.h:75
 msgid ""
 "Interval in which to ping the X server in seconds.  If the X server doesn't "
 "return before the next time we ping it, the connection is stopped and the "
@@ -3907,79 +3907,79 @@ msgid ""
 msgstr ""
 
 #. This defines the label that will appear on the list/radiobutton items and stands for L(ist)R(adiobutton)label
-#: ../gui/gdmsetup.glade.h:77
+#: ../gui/mdmsetup.glade.h:77
 msgid "LRla_bel:"
 msgstr "_ఎల్ఆర్ లేబుల్:"
 
-#: ../gui/gdmsetup.glade.h:78
+#: ../gui/mdmsetup.glade.h:78
 msgid "La_unch:"
 msgstr "_ప్రయోగించు:"
 
-#: ../gui/gdmsetup.glade.h:79
+#: ../gui/mdmsetup.glade.h:79
 msgid "Listen on _UDP port: "
 msgstr "_యుడిపి రేవు పై ఆలకించు:"
 
-#: ../gui/gdmsetup.glade.h:80
+#: ../gui/mdmsetup.glade.h:80
 msgid "Loc_k position of the window"
 msgstr "_గవాక్షం యొక్క తాళం స్థానము"
 
-#: ../gui/gdmsetup.glade.h:81
+#: ../gui/mdmsetup.glade.h:81
 msgid "Local"
 msgstr "స్థానిక"
 
-#: ../gui/gdmsetup.glade.h:82
+#: ../gui/mdmsetup.glade.h:82
 msgid "Login Window Preferences"
 msgstr "ప్రవేశద్వారం గవాక్ష అభీష్టాలు"
 
-#: ../gui/gdmsetup.glade.h:83
+#: ../gui/mdmsetup.glade.h:83
 msgid "Login _failed:"
 msgstr "_ప్రవేశద్వారం విఫలమైంది:"
 
-#: ../gui/gdmsetup.glade.h:84
+#: ../gui/mdmsetup.glade.h:84
 msgid "Login _retry delay:"
 msgstr "_ప్రవేశద్వారం మరలాప్రయత్నించు ఆలస్యము:"
 
-#: ../gui/gdmsetup.glade.h:85
+#: ../gui/mdmsetup.glade.h:85
 msgid "Login _successful:"
 msgstr "_ప్రవేశద్వారం విజయవంతం:"
 
-#: ../gui/gdmsetup.glade.h:86
+#: ../gui/mdmsetup.glade.h:86
 msgid "Logo"
 msgstr "చిహ్నము"
 
-#: ../gui/gdmsetup.glade.h:87
+#: ../gui/mdmsetup.glade.h:87
 msgid "Maximum _remote sessions:"
 msgstr "_అత్యధిక సుదూర సమకూర్పులు:"
 
-#: ../gui/gdmsetup.glade.h:88
+#: ../gui/mdmsetup.glade.h:88
 msgid "Maximum _wait time:"
 msgstr "అత్యధిక నిరీక్షించు సమయం:"
 
-#: ../gui/gdmsetup.glade.h:89
+#: ../gui/mdmsetup.glade.h:89
 msgid "Maximum indirect w_ait time:"
 msgstr "_అత్యధిక వక్రమైన నిరీక్షించు సమయం:"
 
-#: ../gui/gdmsetup.glade.h:90
+#: ../gui/mdmsetup.glade.h:90
 msgid "Maximum p_ending indirect requests:"
 msgstr "_అత్యధిక నిల్వవున్న వక్రమైన మనవిలు:"
 
-#: ../gui/gdmsetup.glade.h:91
+#: ../gui/mdmsetup.glade.h:91
 msgid "Menu Bar"
 msgstr "జాబితా పట్టీ"
 
-#: ../gui/gdmsetup.glade.h:92
+#: ../gui/mdmsetup.glade.h:92
 msgid "Messa_ge:"
 msgstr "_సందేశము:"
 
-#: ../gui/gdmsetup.glade.h:93
+#: ../gui/mdmsetup.glade.h:93
 msgid "Ne_ver place cookies on NFS"
 msgstr "_ఎన్ఎఫ్ఎస్ పై కుకీ ఎప్పుడును స్థానములేదు"
 
-#: ../gui/gdmsetup.glade.h:94
+#: ../gui/mdmsetup.glade.h:94
 msgid "No _restart required"
 msgstr "_ మరలామొదలుపెట్టుట అవసరంలేదు"
 
-#: ../gui/gdmsetup.glade.h:95
+#: ../gui/mdmsetup.glade.h:95
 msgid ""
 "Number of simultaneously provided displays with host choosers.  If more "
 "queries from different hosts come in, the oldest ones will be forgotten."
@@ -3987,36 +3987,36 @@ msgstr ""
 "ఆతిథ్యం ఎంచుకొనువారితో  సంఖ్య యొక్క సమకాలీనమైన ప్రదర్శనలు సిద్దంచేయబడినవి .  ఒకవేళ చాలా భేదమైన "
 "ఆతిథ్యముల నుండి  లోపలికి రాబడిన, ఒకానోక పాతది మరచిపోయి ఉండవచ్చును."
 
-#: ../gui/gdmsetup.glade.h:96
+#: ../gui/mdmsetup.glade.h:96
 msgid "Only allow login i_f user owns their home directory"
 msgstr "ఒకవేళ వినియోగదారు తన నివాస వివరము స్వంతపరచుకున్నపుడు మాత్రమే ప్రవేశద్వారం అనుమతిస్తుంది"
 
-#: ../gui/gdmsetup.glade.h:97
+#: ../gui/mdmsetup.glade.h:97
 msgid "Op_tions:\t"
 msgstr "ఇఛ్ఛాపూర్వకాలు:\t"
 
-#: ../gui/gdmsetup.glade.h:98
+#: ../gui/mdmsetup.glade.h:98
 msgid "Pa_th:"
 msgstr "_త్రోవ:"
 
-#: ../gui/gdmsetup.glade.h:99
+#: ../gui/mdmsetup.glade.h:99
 msgid "Paranoia option. Only accepts user owned files and directories."
 msgstr ""
 "పారానోయియా ఇఛ్ఛాపూర్వకం. వినియోగదారు స్వంతంచేసుకున్న దస్త్రములు మరియు వివరములు మాత్రమే ఆమోదించును."
 
-#: ../gui/gdmsetup.glade.h:100
+#: ../gui/mdmsetup.glade.h:100
 msgid "Per_sistent"
 msgstr "_మూర్ఖపుపట్టు"
 
-#: ../gui/gdmsetup.glade.h:101
+#: ../gui/mdmsetup.glade.h:101
 msgid "Permissions"
 msgstr "అనుమతులు"
 
-#: ../gui/gdmsetup.glade.h:102
+#: ../gui/mdmsetup.glade.h:102
 msgid "Pick Background Color"
 msgstr "పూర్వరంగం వర్ణమును ఎత్తుకొను"
 
-#: ../gui/gdmsetup.glade.h:103
+#: ../gui/mdmsetup.glade.h:103
 msgid ""
 "Plain\n"
 "Plain with face browser\n"
@@ -4028,38 +4028,38 @@ msgstr ""
 "వైవిథ్యాంశ\n"
 "వైవిథ్యాంశ ముఖ అన్వేషితో"
 
-#: ../gui/gdmsetup.glade.h:107
+#: ../gui/mdmsetup.glade.h:107
 msgid "Qui_ver when incorrect username/password entered"
 msgstr "_సరికాని వినియోగదారునామము/రహస్యపదము ప్రవేశింపబడినప్పుడు వణుకు"
 
-#: ../gui/gdmsetup.glade.h:108
+#: ../gui/mdmsetup.glade.h:108
 msgid "R_emove"
 msgstr "_తొలగించు"
 
-#: ../gui/gdmsetup.glade.h:109
+#: ../gui/mdmsetup.glade.h:109
 msgid "Re_move Server"
 msgstr "_సేవిక తొలగించు"
 
-#: ../gui/gdmsetup.glade.h:110
+#: ../gui/mdmsetup.glade.h:110
 msgid "Reboot, Halt, Suspend and Custom Command Preferences"
 msgstr "పునఃప్రారంభం, ఆగు, నిలువగల మరియు మలచిన ఆదేశం అభీష్టాలు"
 
-#: ../gui/gdmsetup.glade.h:111
+#: ../gui/mdmsetup.glade.h:111
 msgid "Refresh rate:"
 msgstr "పునర్వికాసం నిర్ణయింపబడినవంతు:"
 
-#: ../gui/gdmsetup.glade.h:112
+#: ../gui/mdmsetup.glade.h:112
 msgid "Remote"
 msgstr "సుదూర"
 
-#: ../gui/gdmsetup.glade.h:113
+#: ../gui/mdmsetup.glade.h:113
 msgid ""
 "Remote connections through XDMCP will be allowed to log into the \"TimedLogin"
 "\" user by letting the login window time out, just like the local user on "
 "the first console."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:114
+#: ../gui/mdmsetup.glade.h:114
 msgid ""
 "Remote login disabled\n"
 "Same as Local"
@@ -4067,35 +4067,35 @@ msgstr ""
 "సుదూర ప్రవేశద్వారం నిరుపయోగము\n"
 "స్థానిక వలె భేదములేని"
 
-#: ../gui/gdmsetup.glade.h:116
+#: ../gui/mdmsetup.glade.h:116
 msgid "Resolution:"
 msgstr "నిశ్చయము:"
 
-#: ../gui/gdmsetup.glade.h:117
+#: ../gui/mdmsetup.glade.h:117
 msgid "Sc_ale to fit screen"
 msgstr "తెరకు తగిన కొలబద్ద"
 
-#: ../gui/gdmsetup.glade.h:118
+#: ../gui/mdmsetup.glade.h:118
 msgid "Scale background image to fit the screen."
 msgstr "తెరకు తగిన పూర్వరంగం ప్రతిరూపం కొలబద్ద."
 
-#: ../gui/gdmsetup.glade.h:119
+#: ../gui/mdmsetup.glade.h:119
 msgid "Security"
 msgstr "రక్షణ"
 
-#: ../gui/gdmsetup.glade.h:120
+#: ../gui/mdmsetup.glade.h:120
 msgid "Select Background Image"
 msgstr "పూర్వరంగం ప్రతిరూపం ఎంచుకొను"
 
-#: ../gui/gdmsetup.glade.h:121
+#: ../gui/mdmsetup.glade.h:121
 msgid "Select Logo Image"
 msgstr "చిహ్నము ప్రతిరూపం ఎంచుకొను"
 
-#: ../gui/gdmsetup.glade.h:122
+#: ../gui/mdmsetup.glade.h:122
 msgid "Select Sound File"
 msgstr "ధ్వని దస్త్రం ఎంచుకొను"
 
-#: ../gui/gdmsetup.glade.h:123
+#: ../gui/mdmsetup.glade.h:123
 msgid ""
 "Selected only\n"
 "Random from selected\n"
@@ -4103,79 +4103,79 @@ msgstr ""
 "ఎంచుకొనబడినది మాత్రమే\n"
 "క్రమములేని దాని నుండి ఎంచుకొనబడినది\n"
 
-#: ../gui/gdmsetup.glade.h:126
+#: ../gui/mdmsetup.glade.h:126
 msgid ""
 "Sends debug output to the syslog.  This can be useful for tracking down "
-"problems with GDM.  This output tends to be verbose so should not be turned "
+"problems with MDM.  This output tends to be verbose so should not be turned "
 "on for general use."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:127
+#: ../gui/mdmsetup.glade.h:127
 msgid "Server Settings"
 msgstr "సేవిక అమరికలు"
 
-#: ../gui/gdmsetup.glade.h:128
+#: ../gui/mdmsetup.glade.h:128
 msgid "Server _name:"
 msgstr "_సేవిక నామము:"
 
-#: ../gui/gdmsetup.glade.h:129
+#: ../gui/mdmsetup.glade.h:129
 msgid "Servers To Start"
 msgstr "మొదలుపెట్టుటకు సేవికలు"
 
-#: ../gui/gdmsetup.glade.h:130
+#: ../gui/mdmsetup.glade.h:130
 msgid "Set positio_n of the window:"
 msgstr "_గవాక్షం యొక్క స్థానమును అమర్చు:"
 
-#: ../gui/gdmsetup.glade.h:131
+#: ../gui/mdmsetup.glade.h:131
 msgid "Sh_ow title bar"
 msgstr "_శీర్షిక పట్టా చూపుము"
 
-#: ../gui/gdmsetup.glade.h:132
+#: ../gui/mdmsetup.glade.h:132
 msgid "Shake the display when an incorrect username/password is entered."
 msgstr "ఒక సరికాని వినియోగదారునామము/రహస్యపదము చేర్చినపుడు ప్రదర్శనను కదుపు ."
 
-#: ../gui/gdmsetup.glade.h:133
+#: ../gui/mdmsetup.glade.h:133
 msgid "Sho_w Actions menu"
 msgstr "_క్రియల జాబితా చూపుము"
 
-#: ../gui/gdmsetup.glade.h:134
+#: ../gui/mdmsetup.glade.h:134
 msgid ""
 "Show visual feedback in the password entry. Turning this option on can be a "
 "security hazard as the length of your password can be guessed."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:136
+#: ../gui/mdmsetup.glade.h:136
 msgid ""
 "Specifies if Custom Command will appear outside the login manager, for "
 "example on the desktop through the Log Out/Shut Down widgets."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:137
+#: ../gui/mdmsetup.glade.h:137
 msgid ""
-"Specifies if gdm will be stopped/restarted once Custom Command has been "
+"Specifies if mdm will be stopped/restarted once Custom Command has been "
 "executed."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:138
+#: ../gui/mdmsetup.glade.h:138
 msgid ""
 "Specifies the label that will be displayed on the Custom Command buttons and "
 "menu items."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:139
+#: ../gui/mdmsetup.glade.h:139
 msgid ""
 "Specifies the label that will be displayed on the Custom Command list items "
 "and radio buttons."
 msgstr ""
 "లేబుల్ పేర్కొనబడిన మలచిన ఆదేశం జాబితా వస్తువుల పై అది ప్రదర్శింపబడుతుంది మరియు రేడియో బొత్తముల పై."
 
-#: ../gui/gdmsetup.glade.h:140
+#: ../gui/mdmsetup.glade.h:140
 msgid ""
 "Specifies the message that will be displayed on Custom Command tooltip "
 "entries."
 msgstr "సందేశం పేర్కొనబడిన మలచిన ఆదేశం పనిముట్లచిట్కా పై అది ప్రదర్శింపబడుతుంది ప్రవేశములు."
 
-#: ../gui/gdmsetup.glade.h:141
+#: ../gui/mdmsetup.glade.h:141
 msgid ""
 "Specifies the message that will be displayed on the warning dialog box when "
 "one of the Custom Command widgets is activated."
@@ -4183,41 +4183,41 @@ msgstr ""
 "సందేశం పేర్కొనబడిన హెచ్చరిక వివరణ పేటిక పై అది ప్రదర్శింపబడు సంకల్పం ఉండుఒక మలచిన ఆదేశం యొక్క "
 "విడ్జెట్స్ క్రియాశీలీకరించబడినపుడు."
 
-#: ../gui/gdmsetup.glade.h:142
+#: ../gui/mdmsetup.glade.h:142
 msgid ""
 "Systemwide directory for face files. The sysadmin can place icons for users "
 "here without touching their homedirs. Faces are named after their users' "
 "logins. The face images must be stored in gdk-pixbuf supported formats and "
-"they must be readable for the GDM user."
+"they must be readable for the MDM user."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:143
+#: ../gui/mdmsetup.glade.h:143
 msgid "T_ooltip:"
 msgstr "_పనిముట్టు చిట్కా:"
 
-#: ../gui/gdmsetup.glade.h:144
+#: ../gui/mdmsetup.glade.h:144
 msgid "Text to appear in the warning pop-up dialogs"
 msgstr "హెచ్చరిక ప్రత్యక్షమయ్యే వివరణల లో కనబడుటకు పాఠం"
 
-#: ../gui/gdmsetup.glade.h:145
+#: ../gui/mdmsetup.glade.h:145
 msgid "Text to appear on the buttons and menu items"
 msgstr "బొత్తంలు మరియు జాబితా వస్తువుల పై కనబడుటకు పాఠం"
 
-#: ../gui/gdmsetup.glade.h:146
+#: ../gui/mdmsetup.glade.h:146
 msgid "Text to appear on the radio buttons and list items"
 msgstr "రేడియో బొత్తంలు మరియు జాబితా వస్తువుల పై కనబడుటకు పాఠం"
 
-#: ../gui/gdmsetup.glade.h:147
+#: ../gui/mdmsetup.glade.h:147
 msgid "Text to appear on the tooltips"
 msgstr "పనిముట్టుచిట్కా పై కనబడుటకు పాఠం"
 
-#: ../gui/gdmsetup.glade.h:148
+#: ../gui/mdmsetup.glade.h:148
 msgid ""
-"The UDP port number gdm should listen to for XDMCP requests. Don't change "
+"The UDP port number mdm should listen to for XDMCP requests. Don't change "
 "this unless you know what you are doing."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:149
+#: ../gui/mdmsetup.glade.h:149
 msgid ""
 "The command to execute, with full path to the binary of the X server, and "
 "any extra arguments needed. Example: /usr/X11R6/bin/X"
@@ -4225,27 +4225,27 @@ msgstr ""
 "నిర్వర్తించుటకు ఆదేశం, X సేవిక యొక్క ద్విసంఖ్యామానంకు మొత్తం త్రోవతో, మరియు ఏదేని అధికమైన "
 "క్రమానుగతసంకేతం అవసరం. ఉదాహారణ: /usr/X11R6/bin/X"
 
-#: ../gui/gdmsetup.glade.h:150
+#: ../gui/mdmsetup.glade.h:150
 msgid "The greeter will play a sound after a failed login attempt."
 msgstr "ఒక విఫలమైన ప్రవేశద్వారం ప్రయత్నించు తరువాత వందనము ఒక ధ్వని ఆడుతుంది."
 
-#: ../gui/gdmsetup.glade.h:151
+#: ../gui/mdmsetup.glade.h:151
 msgid "The greeter will play a sound after a successful login attempt."
 msgstr "ఒక విజయవంతమైన ప్రవేశద్వారం ప్రయత్నించు తరువాత వందనము ఒక ధ్వని ఆడుతుంది."
 
-#: ../gui/gdmsetup.glade.h:152
+#: ../gui/mdmsetup.glade.h:152
 msgid "The greeter will play a sound or beep when it is ready for a login."
 msgstr "వందనము ఒక ధ్వని లేదా బీప్ ఒక ప్రవేశద్వారం కొరకు సిద్దంగా ఉన్నపుడు ఆడును. "
 
-#: ../gui/gdmsetup.glade.h:153
+#: ../gui/mdmsetup.glade.h:153
 msgid "The horizontal position of the login window."
 msgstr "ప్రవేశద్వారం గవాక్షం యొక్క సమతలంగావున్న స్థానము"
 
-#: ../gui/gdmsetup.glade.h:154
+#: ../gui/mdmsetup.glade.h:154
 msgid "The name that will be displayed to the user."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:155
+#: ../gui/mdmsetup.glade.h:155
 msgid ""
 "The number of seconds that should pass before reactivating the entry field "
 "after a failed login."
@@ -4253,16 +4253,16 @@ msgstr ""
 "క్షణముల యొక్క సంఖ్య చేర్చు క్షేత్రం మరలాక్రియాశీలీకరించ ముందు అది పోతుందిఒక క్షేత్రం ప్రవేశద్వారం "
 "తరువాత."
 
-#: ../gui/gdmsetup.glade.h:156
+#: ../gui/mdmsetup.glade.h:156
 msgid "The position of the login window cannot be changed."
 msgstr "ప్రవేశద్వారం గవాక్షం యొక్క స్థానము మార్చబడుటకు వీలుకాదు."
 
-#: ../gui/gdmsetup.glade.h:157
+#: ../gui/mdmsetup.glade.h:157
 msgid ""
 "The position of the login window is determined by Position X / Position Y."
 msgstr "ప్రవేశద్వారం గవాక్షం యొక్క స్థానము స్థానము X / స్థానము Y ద్వారా నిశ్చయింపబడుతుంది."
 
-#: ../gui/gdmsetup.glade.h:158
+#: ../gui/mdmsetup.glade.h:158
 msgid ""
 "The session that is used by default if the user does not have a saved "
 "preference and has picked 'Last' from the list of sessions."
@@ -4270,15 +4270,15 @@ msgstr ""
 "ఆ సమకూర్పు అప్రమేయం ద్వారా వాడబడుతుంది ఒక వేళ వినియోగదారు  ఒక దాచబడినది కలిగిలేకుంటే అభీష్టాలు మరియు "
 "ఎంచుకోబడి కల్గిన 'చివరి' సమకూర్పుల యొక్క జాబితాల నుండి."
 
-#: ../gui/gdmsetup.glade.h:159
+#: ../gui/mdmsetup.glade.h:159
 msgid "The vertical position of the login window."
 msgstr "నిలువు స్థానము యొక్క ప్రవేశద్వారం గవాక్షం."
 
-#: ../gui/gdmsetup.glade.h:160
+#: ../gui/mdmsetup.glade.h:160
 msgid "Themes"
 msgstr "వైవిథ్యాంశములు"
 
-#: ../gui/gdmsetup.glade.h:161
+#: ../gui/mdmsetup.glade.h:161
 msgid ""
 "This server is available as a choice when a user wishes to run a flexible, "
 "on demand server."
@@ -4286,38 +4286,38 @@ msgstr ""
 "ఒక ఏర్చుకొనుట లాగ సేవిక లభ్యత ఉన్న ఒక వినియోగదారు ఒక మృదువైన నడుపుట కోరుచున్నాడు, ఆవశ్యముగా "
 "అడుగు సేవిక పై."
 
-#: ../gui/gdmsetup.glade.h:162
+#: ../gui/mdmsetup.glade.h:162
 msgid ""
-"To avoid denial of service attacks, GDM has fixed size queue of pending "
+"To avoid denial of service attacks, MDM has fixed size queue of pending "
 "connections. Please note that this parameter does *not* limit the number of "
 "remote displays which can be managed. It only limits the number of displays "
 "initiating a connection simultaneously."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:163
+#: ../gui/mdmsetup.glade.h:163
 msgid ""
-"To prevent attackers from filling up the pending queue, GDM will only allow "
+"To prevent attackers from filling up the pending queue, MDM will only allow "
 "one connection for each remote computer.  If you want to provide display "
 "services to computers with more than one screen, you should increase the "
 "this value accordingly."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:164
+#: ../gui/mdmsetup.glade.h:164
 msgid ""
 "Turns the Actions menu (which used to be called System menu) on or off.  If "
 "this is off then one of the actions will be available anywhere.  These "
 "actions include Shutdown, Restart, Custom, Configure, XDMCP chooser and such."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:165
+#: ../gui/mdmsetup.glade.h:165
 msgid "U_ser:"
 msgstr "_వినియోగదారు:"
 
-#: ../gui/gdmsetup.glade.h:166
+#: ../gui/mdmsetup.glade.h:166
 msgid "Us_e 24 Hour Clock:"
 msgstr "_24 గంటల గడియారము వాడుము:"
 
-#: ../gui/gdmsetup.glade.h:167
+#: ../gui/mdmsetup.glade.h:167
 msgid ""
 "Use circles instead of asterisks in the password entry. This may not work "
 "with all fonts however."
@@ -4325,190 +4325,190 @@ msgstr ""
 "రహస్యపదము చేర్చుటలో నక్షత్ర చిహ్నాముల యొక్క బదులుగా వృత్తములు వాడు . ఇది పని చేయక పోవచ్చు అన్ని "
 "అక్షరశైలిలతో ఏవిధముగానైనను."
 
-#: ../gui/gdmsetup.glade.h:168
+#: ../gui/mdmsetup.glade.h:168
 msgid "Users"
 msgstr "వినియోగదారులు"
 
-#: ../gui/gdmsetup.glade.h:169
+#: ../gui/mdmsetup.glade.h:169
 msgid "Welcome Message"
 msgstr "సుస్వాగతం సందేశం"
 
-#: ../gui/gdmsetup.glade.h:170
+#: ../gui/mdmsetup.glade.h:170
 msgid ""
-"When GDM is ready to manage a remote display, an ACCEPT packet is sent to it "
+"When MDM is ready to manage a remote display, an ACCEPT packet is sent to it "
 "containing a unique session id which will be used in future XDMCP "
-"conversations. GDM will then place the session id in the pending queue "
+"conversations. MDM will then place the session id in the pending queue "
 "waiting for the display to respond with a MANAGE request. If no response is "
-"received within maximum wait time, GDM will declare the display dead and "
+"received within maximum wait time, MDM will declare the display dead and "
 "erase it from the pending queue freeing up the slot for other displays."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:171
+#: ../gui/mdmsetup.glade.h:171
 msgid ""
 "When the user logs in and already has an existing session, they are "
 "connected to that session rather than starting a new session.  This only "
-"works for sessions running on Virtual Terminals started with gdmflexiserver, "
+"works for sessions running on Virtual Terminals started with mdmflexiserver, "
 "and not with XDMCP."
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:172
+#: ../gui/mdmsetup.glade.h:172
 msgid "X Server Login Window Preferences"
 msgstr "X సేవిక ప్రవేశద్వారం గవాక్షం అభీష్టాలు"
 
-#: ../gui/gdmsetup.glade.h:173
+#: ../gui/mdmsetup.glade.h:173
 msgid "XDMCP Login Window Preferences"
 msgstr "ఎక్స్డియంసిపి ప్రవేశద్వారం గవాక్షం అభీష్టాలు"
 
-#: ../gui/gdmsetup.glade.h:174
+#: ../gui/mdmsetup.glade.h:174
 msgid "_Add..."
 msgstr "_కూడుట..."
 
-#: ../gui/gdmsetup.glade.h:175
+#: ../gui/mdmsetup.glade.h:175
 msgid "_Add/Modify..."
 msgstr "_కూడుట/మార్చుట..."
 
-#: ../gui/gdmsetup.glade.h:176
+#: ../gui/mdmsetup.glade.h:176
 msgid "_Allow local system administrator login"
 msgstr "_స్థానిక వ్యవస్థ నిర్వాహాకి ప్రవేశద్వారం అనుమతించు"
 
-#: ../gui/gdmsetup.glade.h:177
+#: ../gui/mdmsetup.glade.h:177
 msgid "_Allow users to change fonts and colors of plain greeter"
 msgstr "_సాధారణ నమస్కారము యొక్క వర్ణములు మరియు అక్షరశైలిలను వినియోగదారులు మార్చుటకు అనుమతించు"
 
-#: ../gui/gdmsetup.glade.h:178
+#: ../gui/mdmsetup.glade.h:178
 msgid "_Background color:"
 msgstr "_పూర్వరంగం వర్ణము:"
 
-#: ../gui/gdmsetup.glade.h:180
+#: ../gui/mdmsetup.glade.h:180
 #, no-c-format
 msgid "_Default: \"Welcome to %n\""
 msgstr "_అప్రమేయం: \"సుస్వాగతం కు %n\""
 
-#: ../gui/gdmsetup.glade.h:181
+#: ../gui/mdmsetup.glade.h:181
 msgid "_Default: \"Welcome\""
 msgstr "_అప్రమేయం: \"సుస్వాగతం\""
 
-#: ../gui/gdmsetup.glade.h:182
+#: ../gui/mdmsetup.glade.h:182
 msgid "_Deny TCP connections to Xserver"
 msgstr "_Xసేవికకు టిసిపి బంధాలు లేదను"
 
-#: ../gui/gdmsetup.glade.h:183
+#: ../gui/mdmsetup.glade.h:183
 msgid "_Enable Automatic Login"
 msgstr "_స్వయంచాలక ప్రవేశద్వారం ఉపయోగించు"
 
-#: ../gui/gdmsetup.glade.h:184
+#: ../gui/mdmsetup.glade.h:184
 msgid "_Enable accessible login"
 msgstr "_సాంగత్యపరచు ప్రవేశద్వారం ఉపయోగించు"
 
-#: ../gui/gdmsetup.glade.h:185
+#: ../gui/mdmsetup.glade.h:185
 msgid "_Flexible (on demand)"
 msgstr "_మృదువైన (అవశ్యముగా అడుగుట పై)"
 
-#: ../gui/gdmsetup.glade.h:186
+#: ../gui/mdmsetup.glade.h:186
 msgid "_Global face dir:"
 msgstr "_మొత్తంగా ముఖ వివరం:"
 
-#: ../gui/gdmsetup.glade.h:187
+#: ../gui/mdmsetup.glade.h:187
 msgid "_GtkRC file:"
 msgstr "_జిటికెఆర్సి దస్త్రం:"
 
-#: ../gui/gdmsetup.glade.h:188
+#: ../gui/mdmsetup.glade.h:188
 msgid "_Image:"
 msgstr "_ప్రతిరూపం:"
 
-#: ../gui/gdmsetup.glade.h:189
+#: ../gui/mdmsetup.glade.h:189
 msgid "_Include all users from /etc/passwd (not for NIS)"
 msgstr "_ /etc/రహస్యపదము (ఎన్ఐఎస్ కొరకు కాదు) నుండి వినియోగదారులు అన్ని కలుపుకొను"
 
-#: ../gui/gdmsetup.glade.h:190
+#: ../gui/mdmsetup.glade.h:190
 msgid "_Label:"
 msgstr "_లేబుల్:"
 
-#: ../gui/gdmsetup.glade.h:191
+#: ../gui/mdmsetup.glade.h:191
 msgid "_Login screen ready:"
 msgstr "‌‌_ప్రవేశద్వారం తెర సిద్దం:"
 
-#: ../gui/gdmsetup.glade.h:192
+#: ../gui/mdmsetup.glade.h:192
 msgid "_Logins are handled by this computer"
 msgstr "_ఈ కంప్యూటర్ ద్వారా ప్రవేశద్వారాలు అదుపుచేయబడతాయి"
 
-#: ../gui/gdmsetup.glade.h:193
+#: ../gui/mdmsetup.glade.h:193
 msgid "_Maximum pending requests:"
 msgstr "_అత్యధిక నిల్వలో ఉన్న ప్రార్థనలు:"
 
-#: ../gui/gdmsetup.glade.h:194
+#: ../gui/mdmsetup.glade.h:194
 msgid "_Minimal UID:"
 msgstr "‌_సూక్ష్మీకరించబడిన యూఐడి:"
 
-#: ../gui/gdmsetup.glade.h:195
+#: ../gui/mdmsetup.glade.h:195
 msgid "_Only allow login if user's home directory permissions are secure"
 msgstr "_వినియోగదారుల నివాస వివరం అనుమతులు రక్షితమైతే ప్రవేశద్వారం మాత్రమే అనుమతించు"
 
-#: ../gui/gdmsetup.glade.h:196
+#: ../gui/mdmsetup.glade.h:196
 msgid "_Path:        "
 msgstr "_త్రోవ:        "
 
-#: ../gui/gdmsetup.glade.h:197
+#: ../gui/mdmsetup.glade.h:197
 msgid "_Pause before login:"
 msgstr "_ప్రవేశద్వారంకు మునుపు విరామం:"
 
-#: ../gui/gdmsetup.glade.h:198
+#: ../gui/mdmsetup.glade.h:198
 msgid "_Ping interval:"
 msgstr "_పింగ్ విరామం:"
 
-#: ../gui/gdmsetup.glade.h:199
+#: ../gui/mdmsetup.glade.h:199
 msgid "_Priority:"
 msgstr "_ప్రాధామ్యం:"
 
-#: ../gui/gdmsetup.glade.h:200
+#: ../gui/mdmsetup.glade.h:200
 msgid "_Remove"
 msgstr "_తొలగించు"
 
-#: ../gui/gdmsetup.glade.h:201
+#: ../gui/mdmsetup.glade.h:201
 msgid "_Remove..."
 msgstr "_తొలగించు..."
 
-#: ../gui/gdmsetup.glade.h:202
+#: ../gui/mdmsetup.glade.h:202
 msgid "_Server:"
 msgstr "_సేవిక:"
 
-#: ../gui/gdmsetup.glade.h:203
+#: ../gui/mdmsetup.glade.h:203
 msgid "_Servers:"
 msgstr "_సేవికలు:"
 
-#: ../gui/gdmsetup.glade.h:204
+#: ../gui/mdmsetup.glade.h:204
 msgid "_Show visual feedback (asterisks) in the password entry"
 msgstr "‌_రహస్యపదము చేర్పులో (నక్షత్ర చిహ్నాముల) వెనుకచేర్పు దృష్టి చూపుము"
 
-#: ../gui/gdmsetup.glade.h:205
+#: ../gui/mdmsetup.glade.h:205
 msgid "_Style:"
 msgstr "_శైలి:"
 
-#: ../gui/gdmsetup.glade.h:206
+#: ../gui/mdmsetup.glade.h:206
 msgid "_Theme:"
 msgstr "_వైవిథ్యాంశం:"
 
-#: ../gui/gdmsetup.glade.h:207
+#: ../gui/mdmsetup.glade.h:207
 msgid "_Use circles instead of asterisks in the password entry"
 msgstr "_రహస్యపదము చేర్పులో నక్షత్ర చిహ్నాముల యొక్క బదులుగా వృత్తములు వాడుము"
 
-#: ../gui/gdmsetup.glade.h:208
+#: ../gui/mdmsetup.glade.h:208
 msgid "_User:"
 msgstr "_వినియోగదారు:"
 
-#: ../gui/gdmsetup.glade.h:209
+#: ../gui/mdmsetup.glade.h:209
 msgid "_VT:"
 msgstr "_విటి:"
 
-#: ../gui/gdmsetup.glade.h:210
+#: ../gui/mdmsetup.glade.h:210
 msgid "_X coordinate"
 msgstr "_X సమానమైన"
 
-#: ../gui/gdmsetup.glade.h:211
+#: ../gui/mdmsetup.glade.h:211
 msgid "_Y coordinate"
 msgstr "_Y సమానమైన"
 
-#: ../gui/gdmsetup.glade.h:212
+#: ../gui/mdmsetup.glade.h:212
 msgid ""
 "auto\n"
 "yes\n"
@@ -4518,15 +4518,15 @@ msgstr ""
 "అవును\n"
 "కాదు"
 
-#: ../gui/gdmsetup.glade.h:215
+#: ../gui/mdmsetup.glade.h:215
 msgid "dummy"
 msgstr ""
 
-#: ../gui/gdmsetup.glade.h:216
+#: ../gui/mdmsetup.glade.h:216
 msgid "seconds"
 msgstr "క్షణములు"
 
-#: ../gui/gdmuser.c:286 ../gui/gdmuser.c:288
+#: ../gui/mdmuser.c:286 ../gui/mdmuser.c:288
 msgid "Too many users to list here..."
 msgstr "ఇక్కడ చాలా మంది వినియోగదారుల జాబితాకు..."
 
@@ -4560,13 +4560,13 @@ msgstr ""
 #: ../gui/greeter/greeter.c:1531
 msgid ""
 "The GTK+ greeter could not be started.  This display will abort and you may "
-"have to login another way and fix the installation of GDM"
+"have to login another way and fix the installation of MDM"
 msgstr ""
 
 #: ../gui/greeter/greeter.c:1598
 msgid ""
 "Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the gdm "
+"sessions you can use, but you should log in and correct the mdm "
 "configuration."
 msgstr ""
 
@@ -4681,48 +4681,48 @@ msgstr "_ప్రవేశద్వారం యజమానిని రూప
 
 #: ../gui/greeter/greeter_system.c:456
 msgid ""
-"Configure GDM (this login manager). This will require the root password."
+"Configure MDM (this login manager). This will require the root password."
 msgstr "జిడియం రూపకరించు (ఈ ప్రవేశద్వారం యజమాని). దీనికి మూల రహస్యపదం ఆపేక్షించవలయును."
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 Bond, James Bond"
 msgstr "(c) 2002 బాండ్, జేంస్ బాండ్"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:2
 msgid "Bond, James Bond"
 msgstr "బాండ్, జేంస్ బాండ్"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:3
 msgid "Circles"
 msgstr "వృత్తములు"
 
-#: ../gui/greeter/themes/circles/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/circles/MdmGreeterTheme.desktop.in.h:4
 msgid "Theme with blue circles"
 msgstr "నీలంరంగు వృత్తముల తో వైవిధ్యాంశం"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:1
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:1
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:1
 msgid "(c) 2002 GNOME"
 msgstr "(c) 2002 గ్నోమ్"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles with a Face Browser"
 msgstr "ఒక ముఖ అన్వేషి తో గ్నోమ్ కళ మారుట యొక్క వృత్తములు"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:3
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:3
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:3
 msgid "GNOME Artists"
 msgstr "గ్నోమ్ చిత్రకారులు"
 
-#: ../gui/greeter/themes/happygnome-list/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/happygnome-list/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME with Browser"
 msgstr "అన్వేషి తో సంతోషమైన గ్నోమ్"
 
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:2
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:2
 msgid "GNOME Art variation of Circles"
 msgstr "గ్నోమ్ కళ మారుట యొక్క వృత్తములు"
 
-#: ../gui/greeter/themes/happygnome/GdmGreeterTheme.desktop.in.h:4
+#: ../gui/greeter/themes/happygnome/MdmGreeterTheme.desktop.in.h:4
 msgid "Happy GNOME"
 msgstr "సంతోష గ్నోమ్"
 
@@ -4741,65 +4741,65 @@ msgstr ""
 msgid "Cannot open gestures file: %s"
 msgstr "అభినయముల దస్త్రం తెరచుట వీలుకాదు: %s"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:38
+#: ../utils/mdm-dmx-reconnect-proxy.c:38
 msgid "DMX display to migrate to"
 msgstr "డియంఎక్స్ ప్రదర్శన కు వలస కు"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:39 ../utils/gdm-dmx-reconnect-proxy.c:44
+#: ../utils/mdm-dmx-reconnect-proxy.c:39 ../utils/mdm-dmx-reconnect-proxy.c:44
 msgid "DISPLAY"
 msgstr "ప్రదర్శన"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:43
+#: ../utils/mdm-dmx-reconnect-proxy.c:43
 msgid "Backend display name"
 msgstr "వెనుకచివర ప్రదర్శన నామము"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:48
+#: ../utils/mdm-dmx-reconnect-proxy.c:48
 msgid "Xauthority file for destination display"
 msgstr "గమ్యం ప్రదర్శన కొరకు Xఅధికారము దస్త్రం"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:49 ../utils/gdm-dmx-reconnect-proxy.c:54
+#: ../utils/mdm-dmx-reconnect-proxy.c:49 ../utils/mdm-dmx-reconnect-proxy.c:54
 msgid "AUTHFILE"
 msgstr "ప్రామాణికదస్త్రం"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:53
+#: ../utils/mdm-dmx-reconnect-proxy.c:53
 msgid "Xauthority file for backend display"
 msgstr "వెనుకచివర ప్రదర్శన కొరకు Xఅధికారము దస్త్రం"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:71
+#: ../utils/mdm-dmx-reconnect-proxy.c:71
 #, c-format
 msgid "Failed to open display \"%s\"\n"
 msgstr "\"%s\" ప్రదర్శన తెరచుటకు విఫలమైంది \n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:75
+#: ../utils/mdm-dmx-reconnect-proxy.c:75
 #, c-format
 msgid "DMX extension not present on \"%s\"\n"
 msgstr "\"%s\" పై డియంఎక్స్ పొడగింపు ప్రస్తుతం లేదు \n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:98
+#: ../utils/mdm-dmx-reconnect-proxy.c:98
 msgid "- migrate a backend display from one DMX display to another"
 msgstr "- ఒక డియంఎక్స్ ప్రదర్శన కు మరియొకదానికి ప్రదర్శన నుండి ఒక వెనుకచివర వలస"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:104
+#: ../utils/mdm-dmx-reconnect-proxy.c:104
 #, c-format
 msgid "You must specify a destination DMX display using %s\n"
 msgstr "%s వాడుట ఒక  గమ్యం డియంఎక్స్ ప్రదర్శన నీవు పేర్కొనవలయును \n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:109
+#: ../utils/mdm-dmx-reconnect-proxy.c:109
 #, c-format
 msgid "You must specify a backend display by using %s\n"
 msgstr "%s వాడుట ద్వారా ఒక వెనుకచివర ప్రదర్శన నీవు పేర్కొనవలయును \n"
 
-#: ../utils/gdm-dmx-reconnect-proxy.c:124
+#: ../utils/mdm-dmx-reconnect-proxy.c:124
 #, c-format
 msgid "DMXAddScreen \"%s\" failed on \"%s\"\n"
 msgstr "డియంఎక్స్ చేర్చుతెర \"%s\" పై విఫలమైంది \"%s\"\n"
 
-#: ../utils/gdmaskpass.c:26
+#: ../utils/mdmaskpass.c:26
 #, c-format
-msgid "gdmaskpass only runs as root\n"
+msgid "mdmaskpass only runs as root\n"
 msgstr "జిడియం మాస్క్ పోవు మూలం వలె మాత్రమే నడుస్తుంది\n"
 
-#: ../utils/gdmaskpass.c:42 ../utils/gdmaskpass.c:48
+#: ../utils/mdmaskpass.c:42 ../utils/mdmaskpass.c:48
 #, c-format
 msgid "Authentication failure!\n"
 msgstr "ప్రమాణీకరణ విఫలం!\n"

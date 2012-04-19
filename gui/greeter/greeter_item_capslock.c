@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -41,15 +41,15 @@ get_parent_display (void)
 
   tested = TRUE;
 
-  if (g_getenv ("GDM_PARENT_DISPLAY") != NULL)
+  if (g_getenv ("MDM_PARENT_DISPLAY") != NULL)
     {
       char *old_xauth = g_strdup (g_getenv ("XAUTHORITY"));
-      if (g_getenv ("GDM_PARENT_XAUTHORITY") != NULL)
+      if (g_getenv ("MDM_PARENT_XAUTHORITY") != NULL)
         {
 	  g_setenv ("XAUTHORITY",
-		    g_getenv ("GDM_PARENT_XAUTHORITY"), TRUE);
+		    g_getenv ("MDM_PARENT_XAUTHORITY"), TRUE);
 	}
-      dsp = XOpenDisplay (g_getenv ("GDM_PARENT_DISPLAY"));
+      dsp = XOpenDisplay (g_getenv ("MDM_PARENT_DISPLAY"));
       if (old_xauth != NULL)
         g_setenv ("XAUTHORITY", old_xauth, TRUE);
       else

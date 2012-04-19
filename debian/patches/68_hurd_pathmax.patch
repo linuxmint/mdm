@@ -1,5 +1,5 @@
---- a/daemon/gdm.c
-+++ b/daemon/gdm.c
+--- a/daemon/mdm.c
++++ b/daemon/mdm.c
 @@ -1439,28 +1439,33 @@
  static gboolean
  linux_only_is_running (pid_t pid)
@@ -40,8 +40,8 @@
  }
  
  static void
---- a/daemon/gdm-daemon-config.c
-+++ b/daemon/gdm-daemon-config.c
+--- a/daemon/mdm-daemon-config.c
++++ b/daemon/mdm-daemon-config.c
 @@ -2524,13 +2524,13 @@
  		}
  
@@ -73,14 +73,14 @@
 @@ -4191,14 +4189,13 @@
  	/* If using pseudo-devices, setup symlink if it does not exist */
  	if (device != NULL &&
- 	    gdm_daemon_config_get_value_bool (GDM_KEY_UTMP_PSEUDO_DEVICE)) {
+ 	    mdm_daemon_config_get_value_bool (MDM_KEY_UTMP_PSEUDO_DEVICE)) {
 -		gchar buf[MAXPATHLEN + 1];
 +		gchar *buf;
  
 -		memset (buf, 0, sizeof (gchar) * (MAXPATHLEN + 1));
  
  		if (stat (device, &st) != 0) {
- 			gdm_debug ("Creating pseudo-device %s", device);
+ 			mdm_debug ("Creating pseudo-device %s", device);
  			symlink ("/dev/null", device);
 -		} else if (readlink (device, buf, MAXPATHLEN) > 0) {
 +		} else if ((buf = realpath (device, NULL)) != NULL) {
@@ -89,9 +89,9 @@
  				struct utimbuf  timebuf;
 @@ -4214,6 +4211,7 @@
  			} else {
- 				gdm_debug ("Device %s points to %s", device, buf);
+ 				mdm_debug ("Device %s points to %s", device, buf);
  			}
 +			free (buf);
  		} else {
- 			gdm_debug ("Device %s is not a symlink", device);
+ 			mdm_debug ("Device %s is not a symlink", device);
  		}

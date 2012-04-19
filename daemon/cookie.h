@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -16,16 +16,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GDM_COOKIE_H
-#define GDM_COOKIE_H
+#ifndef MDM_COOKIE_H
+#define MDM_COOKIE_H
 
-void gdm_cookie_generate (char **cookie,
+void mdm_cookie_generate (char **cookie,
                           char **bcookie);
 
 /* Add some more time based randomness, should be done
  * at less predictable events */
-void gdm_random_tick (void);
+void mdm_random_tick (void);
 
-#endif /* GDM_COOKIE_H */
+#endif /* MDM_COOKIE_H */
 
 /* EOF */

@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -37,50 +37,50 @@
 
 #include <glib/gi18n.h>
 
-#include "gdm.h"
-#include "gdm-net.h"
+#include "mdm.h"
+#include "mdm-net.h"
 #include "server.h"
 #include "display.h"
 #include "slave.h"
 #include "misc.h"
 #include "choose.h"
 #include "auth.h"
-#include "gdm-net.h"
+#include "mdm-net.h"
 
-#include "gdm-common.h"
-#include "gdm-log.h"
-#include "gdm-daemon-config.h"
+#include "mdm-common.h"
+#include "mdm-log.h"
+#include "mdm-daemon-config.h"
 
 /* External vars */
-extern GdmConnection *fifoconn;
-extern GdmConnection *pipeconn;
-extern GdmConnection *unixconn;
+extern MdmConnection *fifoconn;
+extern MdmConnection *pipeconn;
+extern MdmConnection *unixconn;
 extern int slave_fifo_pipe_fd; /* the slavepipe (like fifo) connection, this is the write end */
 extern gint flexi_servers;
 
 /**
- * gdm_display_alloc:
+ * mdm_display_alloc:
  * @id: Local display number
  * @command: Command line for starting the X server
  *
  * Allocate display structure for a local X server
  */
 
-GdmDisplay *
-gdm_display_alloc (gint id, const gchar *command, const gchar *device)
+MdmDisplay *
+mdm_display_alloc (gint id, const gchar *command, const gchar *device)
 {
     gchar hostname[1024];
-    GdmDisplay *d;
+    MdmDisplay *d;
 
     hostname[1023] = '\0';
     if (gethostname (hostname, 1023) == -1)
             strcpy (hostname, "localhost.localdomain");
 
-    d = g_new0 (GdmDisplay, 1);
+    d = g_new0 (MdmDisplay, 1);
 
-    d->logout_action = GDM_LOGOUT_ACTION_NONE;
+    d->logout_action = MDM_LOGOUT_ACTION_NONE;
     d->authfile = NULL;
-    d->authfile_gdm = NULL;
+    d->authfile_mdm = NULL;
     d->auths = NULL;
     d->userauth = NULL;
     d->command = g_strdup (command);
@@ -143,7 +143,7 @@ gdm_display_alloc (gint id, const gchar *command, const gchar *device)
 }
 
 static gboolean
-gdm_display_check_loop (GdmDisplay *disp)
+mdm_display_check_loop (MdmDisplay *disp)
 {
   time_t now;
   time_t since_last;
@@ -151,7 +151,7 @@ gdm_display_check_loop (GdmDisplay *disp)
   
   now = time (NULL);
 
-  gdm_debug ("loop check: last_start %ld, last_loop %ld, now: %ld, retry_count: %d", (long)disp->last_start_time, (long) disp->last_loop_start_time, (long) now, disp->retry_count);
+  mdm_debug ("loop check: last_start %ld, last_loop %ld, now: %ld, retry_count: %d", (long)disp->last_start_time, (long) disp->last_loop_start_time, (long) now, disp->retry_count);
   
   if (disp->last_loop_start_time > now || disp->last_loop_start_time == 0)
     {
@@ -162,7 +162,7 @@ gdm_display_check_loop (GdmDisplay *disp)
       disp->last_start_time = now;
       disp->retry_count = 1;
 
-      gdm_debug ("Resetting counts for loop of death detection");
+      mdm_debug ("Resetting counts for loop of death detection");
       
       return TRUE;
     }
@@ -181,7 +181,7 @@ gdm_display_check_loop (GdmDisplay *disp)
       disp->last_start_time = now;
       disp->retry_count = 1;
 
-      gdm_debug ("Resetting counts for loop of death detection, 90 seconds elapsed since loop started or session lasted more then 30 seconds.");
+      mdm_debug ("Resetting counts for loop of death detection, 90 seconds elapsed since loop started or session lasted more then 30 seconds.");
       
       return TRUE;
     }
@@ -195,9 +195,9 @@ gdm_display_check_loop (GdmDisplay *disp)
 	   * cought that elsewhere.  Things are just
 	   * not working out, so tell the user.
 	   * However this may have been caused by a malicious local user
-	   * zapping the display repeatedly, that shouldn't cause gdm
+	   * zapping the display repeatedly, that shouldn't cause mdm
 	   * to stop working completely so just wait for 2 minutes,
-	   * that should give people ample time to stop gdm if needed,
+	   * that should give people ample time to stop mdm if needed,
 	   * or just wait for the stupid malicious user to get bored
 	   * and go away */
 	  char *s = g_strdup_printf (C_(N_("The display server has been shut down "
@@ -209,9 +209,9 @@ gdm_display_check_loop (GdmDisplay *disp)
 	  /* only display a dialog box if this is a local display */
 	  if (disp->type == TYPE_STATIC ||
 	      disp->type == TYPE_FLEXI) {
-		  gdm_text_message_dialog (s);
+		  mdm_text_message_dialog (s);
 	  }
-	  gdm_error ("%s", s);
+	  mdm_error ("%s", s);
 	  g_free (s);
 
 	  /* Wait 2 minutes */
@@ -228,12 +228,12 @@ gdm_display_check_loop (GdmDisplay *disp)
   }
   
   /* At least 8 seconds between start attempts, but only after
-   * the second start attempt, so you can try to kill gdm from the console
+   * the second start attempt, so you can try to kill mdm from the console
    * in these gaps.
    */
   if (disp->retry_count > 2 && since_last < 8)
     {
-      gdm_debug ("Will sleep %ld seconds before next X server restart attempt",
+      mdm_debug ("Will sleep %ld seconds before next X server restart attempt",
                  (long)(8 - since_last));
       now = time (NULL) + 8 - since_last;
       disp->sleep_before_run = 8 - since_last;
@@ -253,7 +253,7 @@ gdm_display_check_loop (GdmDisplay *disp)
 }
 
 static void
-whack_old_slave (GdmDisplay *d, gboolean kill_connection)
+whack_old_slave (MdmDisplay *d, gboolean kill_connection)
 {
     time_t t = time (NULL);
     gboolean waitsleep = TRUE;
@@ -261,9 +261,9 @@ whack_old_slave (GdmDisplay *d, gboolean kill_connection)
     if (kill_connection) {
 	    /* This should never happen, but just in case */
 	    if (d->socket_conn != NULL) {
-		    GdmConnection *conn = d->socket_conn;
+		    MdmConnection *conn = d->socket_conn;
 		    d->socket_conn = NULL;
-		    gdm_connection_set_close_notify (conn, NULL, NULL);
+		    mdm_connection_set_close_notify (conn, NULL, NULL);
 	    }
     }
 
@@ -293,9 +293,9 @@ wait_again:
 		    /* rekill the slave to tell it to
 		       hurry up and die if we're getting
 		       killed ourselves */
-		    if ((gdm_daemon_config_signal_terminthup_was_notified ()) ||
+		    if ((mdm_daemon_config_signal_terminthup_was_notified ()) ||
 			(t + 10 <= time (NULL))) {
-			    gdm_debug ("whack_old_slave: GOT ANOTHER SIGTERM (or it was 10 secs already), killing slave again with SIGKILL");
+			    mdm_debug ("whack_old_slave: GOT ANOTHER SIGTERM (or it was 10 secs already), killing slave again with SIGKILL");
 			    t = time (NULL);
 			    kill (d->slavepid, SIGKILL);
 			    goto wait_again;
@@ -305,7 +305,7 @@ wait_again:
 	    }
 
 	    if (WIFSIGNALED (exitstatus)) {
-		    gdm_debug ("whack_old_slave: Slave crashed (signal %d), killing its children",
+		    mdm_debug ("whack_old_slave: Slave crashed (signal %d), killing its children",
 			       (int)WTERMSIG (exitstatus));
 
 		    if (d->sesspid > 1)
@@ -360,7 +360,7 @@ contracts_pre_fork ()
 	if ((errno = ct_tmpl_activate (contracts_fd)))
 		goto exit;
 
-	gdm_debug ("Set active contract");
+	mdm_debug ("Set active contract");
 	return;
 
 exit:
@@ -370,7 +370,7 @@ exit:
 	contracts_fd = -1;
 
 	if (errno) {
-		gdm_debug (
+		mdm_debug (
 			"Error setting up active contract template: %s while %s",
 			strerror (errno), errmsg);
 	}
@@ -384,11 +384,11 @@ contracts_post_fork_child ()
 		return;
 
 	if ((errno = (ct_tmpl_clear (contracts_fd)))) {
-		gdm_debug (
+		mdm_debug (
 			"Error clearing active contract template (child): %s",
 			strerror (errno));
 	} else {
-		gdm_debug ("Cleared active contract template (child)");
+		mdm_debug ("Cleared active contract template (child)");
 	}
 
 	(void) close (contracts_fd);
@@ -409,22 +409,22 @@ contracts_post_fork_parent (int fork_succeeded)
 		return;
 
 	if ((errno = ct_tmpl_clear (contracts_fd)))
-		gdm_debug ("Error while clearing active contract template: %s",
+		mdm_debug ("Error while clearing active contract template: %s",
 			   strerror (errno));
 	else
-		gdm_debug ("Cleared active contract template (parent)");
+		mdm_debug ("Cleared active contract template (parent)");
 
 	if (!fork_succeeded)
 		return;
 
 	if ((cfd = open64 (CTFS_ROOT "/process/latest", O_RDONLY)) == -1) {
-		gdm_debug ("Error getting latest contract: %s",
+		mdm_debug ("Error getting latest contract: %s",
 			   strerror(errno));
 		return;
 	}
 
 	if ((errno = ct_status_read (cfd, CTD_COMMON, &status)) != 0) {
-		gdm_debug ("Error getting latest contract ID: %s",
+		mdm_debug ("Error getting latest contract ID: %s",
 			   strerror(errno));
 		(void) close (cfd);
 		return;
@@ -437,37 +437,37 @@ contracts_post_fork_parent (int fork_succeeded)
 
 	if ((snprintf (path, PATH_MAX, CTFS_ROOT "/all/%ld/ctl", latest)) >=
 	     PATH_MAX) {
-		gdm_debug ("Error opening the latest contract ctl file: %s",
+		mdm_debug ("Error opening the latest contract ctl file: %s",
 			   strerror (ENAMETOOLONG));
 		return;
 	}
 
 	cfd = open64 (path, O_WRONLY);
 	if (cfd == -1) {
-		gdm_debug ("Error opening the latest contract ctl file: %s",
+		mdm_debug ("Error opening the latest contract ctl file: %s",
 			   strerror (errno));
 		return;
 	}
  
 	if ((errno = ct_ctl_abandon (cfd)))
-		gdm_debug ("Error abandoning latest contract: %s",
+		mdm_debug ("Error abandoning latest contract: %s",
 			   strerror (errno));
 	else
-		gdm_debug ("Abandoned latest contract");
+		mdm_debug ("Abandoned latest contract");
 
 	(void) close (cfd);
 }
 #endif HAVE_SMF_CONTRACTS
 
 /**
- * gdm_display_manage:
- * @d: Pointer to a GdmDisplay struct
+ * mdm_display_manage:
+ * @d: Pointer to a MdmDisplay struct
  *
  * Manage (Initialize and start login session) display
  */
 
 gboolean 
-gdm_display_manage (GdmDisplay *d)
+mdm_display_manage (MdmDisplay *d)
 {
     pid_t pid;
     int fds[2];
@@ -475,17 +475,17 @@ gdm_display_manage (GdmDisplay *d)
     if (!d) 
 	return FALSE;
 
-    gdm_debug ("gdm_display_manage: Managing %s", d->name);
+    mdm_debug ("mdm_display_manage: Managing %s", d->name);
 
     if (pipe (fds) < 0) {
-	    gdm_error (_("%s: Cannot create pipe"), "gdm_display_manage");
+	    mdm_error (_("%s: Cannot create pipe"), "mdm_display_manage");
     }
 
-    if ( ! gdm_display_check_loop (d))
+    if ( ! mdm_display_check_loop (d))
 	    return FALSE;
 
     if (d->slavepid != 0)
-	    gdm_debug ("gdm_display_manage: Old slave pid is %d", (int)d->slavepid);
+	    mdm_debug ("mdm_display_manage: Old slave pid is %d", (int)d->slavepid);
 
     /* If we have an old slave process hanging around, kill it */
     /* This shouldn't be a normal code path however, so it doesn't matter
@@ -494,11 +494,11 @@ gdm_display_manage (GdmDisplay *d)
 
     /* Ensure that /tmp/.ICE-unix and /tmp/.X11-unix exist and have the
      * correct permissions */
-    gdm_ensure_sanity ();
+    mdm_ensure_sanity ();
 
     d->managetime = time (NULL);
 
-    gdm_debug ("Forking slave process");
+    mdm_debug ("Forking slave process");
 
 #ifdef HAVE_SMF_CONTRACTS
     contracts_pre_fork ();
@@ -523,53 +523,53 @@ gdm_display_manage (GdmDisplay *d)
 
 	/* In the child setup empty mask and set all signals to
 	 * default values, we'll make them more fun later */
-	gdm_unset_signals ();
+	mdm_unset_signals ();
 
 	d->slavepid = getpid ();
 
-	gdm_connection_close (fifoconn);
+	mdm_connection_close (fifoconn);
 	fifoconn = NULL;
-	gdm_connection_close (pipeconn);
+	mdm_connection_close (pipeconn);
 	pipeconn = NULL;
-	gdm_connection_close (unixconn);
+	mdm_connection_close (unixconn);
 	unixconn = NULL;
 
-	gdm_log_shutdown ();
+	mdm_log_shutdown ();
 
 	/* Close everything */
-	gdm_close_all_descriptors (0 /* from */, fds[0] /* except */, slave_fifo_pipe_fd /* except2 */);
+	mdm_close_all_descriptors (0 /* from */, fds[0] /* except */, slave_fifo_pipe_fd /* except2 */);
 
 	/* No error checking here - if it's messed the best response
          * is to ignore & try to continue */
-	gdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
-	gdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
-	gdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
+	mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
+	mdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
+	mdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
 
-	gdm_log_init ();
+	mdm_log_init ();
 
 	d->slave_notify_fd = fds[0];
 
 	fcntl (d->slave_notify_fd, F_SETFL, fcntl (d->slave_notify_fd, F_GETFL) | O_NONBLOCK);
 
-	gdm_slave_start (d);
+	mdm_slave_start (d);
 	/* should never retern */
 
 	/* yaikes, how did we ever get here? */
-	gdm_server_stop (d);
+	mdm_server_stop (d);
 	_exit (DISPLAY_REMANAGE);
 
 	break;
 
     case -1:
 	d->slavepid = 0;
-	gdm_error (_("%s: Failed forking GDM slave process for %s"),
-		   "gdm_display_manage",
+	mdm_error (_("%s: Failed forking MDM slave process for %s"),
+		   "mdm_display_manage",
 		   d->name);
 
 	return FALSE;
 
     default:
-	gdm_debug ("gdm_display_manage: Forked slave: %d",
+	mdm_debug ("mdm_display_manage: Forked slave: %d",
 		   (int)pid);
 	d->master_notify_fd = fds[1];
 	VE_IGNORE_EINTR (close (fds[0]));
@@ -601,23 +601,23 @@ gdm_display_manage (GdmDisplay *d)
 
 
 /**
- * gdm_display_unmanage:
- * @d: Pointer to a GdmDisplay struct
+ * mdm_display_unmanage:
+ * @d: Pointer to a MdmDisplay struct
  *
  * Stop services for a display
  */
 void
-gdm_display_unmanage (GdmDisplay *d)
+mdm_display_unmanage (MdmDisplay *d)
 {
     if (!d)
 	return;
 
-    gdm_debug ("gdm_display_unmanage: Stopping %s (slave pid: %d)",
+    mdm_debug ("mdm_display_unmanage: Stopping %s (slave pid: %d)",
 	       d->name, (int)d->slavepid);
 
     /* whack connections about this display */
     if (unixconn != NULL)
-      gdm_kill_subconnections_with_display (unixconn, d);
+      mdm_kill_subconnections_with_display (unixconn, d);
 
     /* Kill slave, this may in fact hang for a bit at least until the
      * slave dies, which should be ASAP though */
@@ -625,9 +625,9 @@ gdm_display_unmanage (GdmDisplay *d)
     
     d->dispstat = DISPLAY_DEAD;
     if (d->type != TYPE_STATIC || d->removeconf)
-	gdm_display_dispose (d);
+	mdm_display_dispose (d);
 
-    gdm_debug ("gdm_display_unmanage: Display stopped");
+    mdm_debug ("mdm_display_unmanage: Display stopped");
 }
 
 
@@ -640,12 +640,12 @@ count_session_limits (void)
 	GSList *li;
 	GSList *displays;
 
-	displays = gdm_daemon_config_get_display_list ();
+	displays = mdm_daemon_config_get_display_list ();
 
 	flexi_servers = 0;
 
 	for (li = displays; li != NULL; li = li->next) {
-		GdmDisplay *d = li->data;
+		MdmDisplay *d = li->data;
 
 		if (SERVER_IS_FLEXI (d)) {
 			flexi_servers++;
@@ -654,14 +654,14 @@ count_session_limits (void)
 }
 
 /**
- * gdm_display_dispose:
- * @d: Pointer to a GdmDisplay struct
+ * mdm_display_dispose:
+ * @d: Pointer to a MdmDisplay struct
  *
  * Deallocate display and all its resources
  */
 
 void
-gdm_display_dispose (GdmDisplay *d)
+mdm_display_dispose (MdmDisplay *d)
 {
 
     if (d == NULL)
@@ -669,12 +669,12 @@ gdm_display_dispose (GdmDisplay *d)
 
     /* paranoia */
     if (unixconn != NULL)
-            gdm_kill_subconnections_with_display (unixconn, d);
+            mdm_kill_subconnections_with_display (unixconn, d);
 
     if (d->socket_conn != NULL) {
-	    GdmConnection *conn = d->socket_conn;
+	    MdmConnection *conn = d->socket_conn;
 	    d->socket_conn = NULL;
-	    gdm_connection_set_close_notify (conn, NULL, NULL);
+	    mdm_connection_set_close_notify (conn, NULL, NULL);
     }
 
     if (d->slave_notify_fd >= 0) {
@@ -687,7 +687,7 @@ gdm_display_dispose (GdmDisplay *d)
 	    d->master_notify_fd = -1;
     }
 
-    gdm_daemon_config_display_list_remove (d);
+    mdm_daemon_config_display_list_remove (d);
 
     d->dispstat = DISPLAY_DEAD;
     d->type = -1;
@@ -695,7 +695,7 @@ gdm_display_dispose (GdmDisplay *d)
     count_session_limits ();
 
     if (d->name) {
-	gdm_debug ("gdm_display_dispose: Disposing %s", d->name);
+	mdm_debug ("mdm_display_dispose: Disposing %s", d->name);
 	g_free (d->name);
 	d->name = NULL;
     }
@@ -716,8 +716,8 @@ gdm_display_dispose (GdmDisplay *d)
     g_free (d->authfile);
     d->authfile = NULL;
 
-    g_free (d->authfile_gdm);
-    d->authfile_gdm = NULL;
+    g_free (d->authfile_mdm);
+    d->authfile_mdm = NULL;
 
     if (d->type == TYPE_XDMCP_PROXY) {
 	    if (d->parent_auth_file != NULL) {
@@ -734,12 +734,12 @@ gdm_display_dispose (GdmDisplay *d)
     d->parent_temp_auth_file = NULL;
 
     if (d->auths) {
-	    gdm_auth_free_auth_list (d->auths);
+	    mdm_auth_free_auth_list (d->auths);
 	    d->auths = NULL;
     }
 
     if (d->local_auths) {
-	    gdm_auth_free_auth_list (d->local_auths);
+	    mdm_auth_free_auth_list (d->local_auths);
 	    d->local_auths = NULL;
     }
 
@@ -762,7 +762,7 @@ gdm_display_dispose (GdmDisplay *d)
     d->bcookie = NULL;
 
     if (d->indirect_id > 0)
-	    gdm_choose_indirect_dispose_empty_id (d->indirect_id);
+	    mdm_choose_indirect_dispose_empty_id (d->indirect_id);
     d->indirect_id = 0;
 
     g_free (d->parent_disp);
@@ -809,23 +809,23 @@ gdm_display_dispose (GdmDisplay *d)
 
 
 /**
- * gdm_display_lookup:
+ * mdm_display_lookup:
  * @pid: pid of slave process to look up
  *
  * Return the display managed by pid
  */
 
-GdmDisplay *
-gdm_display_lookup (pid_t pid)
+MdmDisplay *
+mdm_display_lookup (pid_t pid)
 {
     GSList *li;
     GSList *displays;
 
-    displays = gdm_daemon_config_get_display_list ();
+    displays = mdm_daemon_config_get_display_list ();
 
     /* Find slave in display list */
     for (li = displays; li != NULL; li = li->next) {
-	    GdmDisplay *d = li->data;
+	    MdmDisplay *d = li->data;
 
 	    if (d != NULL &&
 		pid == d->slavepid)

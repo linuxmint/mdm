@@ -1,8 +1,8 @@
 /*
- *  GDM - THe GNOME Display Manager
+ *  MDM - THe GNOME Display Manager
  *  Copyright (C) 2001 Queen of England, (c)2002 George Lebl
  *    
- *  GDMcommunication routines
+ *  MDMcommunication routines
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,29 +20,29 @@
  * 
  */
 
-#ifndef GDMCOMM_H
-#define GDMCOMM_H
+#ifndef MDMCOMM_H
+#define MDMCOMM_H
 
-void		gdmcomm_set_debug (gboolean enable);
-void		gdmcomm_set_quiet_errors (gboolean enable);
-char *		gdmcomm_call_gdm (const char *command,
+void		mdmcomm_set_debug (gboolean enable);
+void		mdmcomm_set_quiet_errors (gboolean enable);
+char *		mdmcomm_call_mdm (const char *command,
 				  const char *auth_cookie,
 				  const char *min_version,
 				  int tries);
-gboolean	gdmcomm_did_connection_fail (void);
-void		gdmcomm_set_allow_sleep (gboolean val);
-void		gdmcomm_comm_bulk_start (void);
-void		gdmcomm_comm_bulk_stop (void);
-const char *	gdmcomm_get_display (void);
+gboolean	mdmcomm_did_connection_fail (void);
+void		mdmcomm_set_allow_sleep (gboolean val);
+void		mdmcomm_comm_bulk_start (void);
+void		mdmcomm_comm_bulk_stop (void);
+const char *	mdmcomm_get_display (void);
 
 /* This just gets a cookie of MIT-MAGIC-COOKIE-1 type */
-char *		gdmcomm_get_a_cookie (gboolean binary);
+char *		mdmcomm_get_a_cookie (gboolean binary);
 
-/* get the gdm auth cookie */
-char *		gdmcomm_get_auth_cookie (void);
+/* get the mdm auth cookie */
+char *		mdmcomm_get_auth_cookie (void);
 
-gboolean	gdmcomm_check (gboolean show_dialog);
-const char *	gdmcomm_get_error_message (const char *ret,
+gboolean	mdmcomm_check (gboolean show_dialog);
+const char *	mdmcomm_get_error_message (const char *ret,
 					   gboolean use_xnest);
 
-#endif /* GDMCOMM_H */
+#endif /* MDMCOMM_H */

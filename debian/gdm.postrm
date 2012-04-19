@@ -9,25 +9,25 @@ if [ "$1" = "abort-install" ] || [ "$1" = "abort-upgrade" ]; then
 fi
 
 if [ "$1" = "purge" ] ; then
-        update-rc.d gdm remove >/dev/null
-        rm -f /etc/default/gdm
-        if [ -d /etc/gdm ]; then
-                rmdir --ignore-fail-on-non-empty /etc/gdm/Init /etc/gdm/PreSession /etc/gdm/PostSession /etc/gdm/PostLogin /etc/gdm/Sessions /etc/gdm 2>/dev/null
+        update-rc.d mdm remove >/dev/null
+        rm -f /etc/default/mdm
+        if [ -d /etc/mdm ]; then
+                rmdir --ignore-fail-on-non-empty /etc/mdm/Init /etc/mdm/PreSession /etc/mdm/PostSession /etc/mdm/PostLogin /etc/mdm/Sessions /etc/mdm 2>/dev/null
         fi
-        if [ -d /var/lib/gdm ]; then
-                rm -r /var/lib/gdm
+        if [ -d /var/lib/mdm ]; then
+                rm -r /var/lib/mdm
         fi
-        if [ -d /var/log/gdm ]; then
-                rm -r /var/log/gdm
+        if [ -d /var/log/mdm ]; then
+                rm -r /var/log/mdm
         fi
-        if getent passwd gdm >/dev/null; then
+        if getent passwd mdm >/dev/null; then
                 if [ -x /usr/sbin/deluser ]; then
-                        deluser --system gdm
+                        deluser --system mdm
                 fi
         fi
-        if getent group gdm >/dev/null; then
+        if getent group mdm >/dev/null; then
                 if [ -x /usr/sbin/delgroup ]; then
-                        delgroup --system gdm
+                        delgroup --system mdm
                 fi
         fi
 fi

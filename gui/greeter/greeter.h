@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 
 #include <gtk/gtk.h>
 
-extern gboolean DOING_GDM_DEVELOPMENT;
+extern gboolean DOING_MDM_DEVELOPMENT;
 extern GtkWidget *canvas;
 extern GtkWidget *window;
 

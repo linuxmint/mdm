@@ -33,7 +33,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-sbin_PROGRAMS = gdm-binary$(EXEEXT) $(am__EXEEXT_1)
+sbin_PROGRAMS = mdm-binary$(EXEEXT) $(am__EXEEXT_1)
 @XDMCP_SUPPORT_TRUE@am__append_1 = $(XDMCP_SOURCES)
 @WITH_CONSOLE_KIT_TRUE@am__append_2 = $(CONSOLE_KIT_SOURCES)
 @WITH_CONSOLE_KIT_TRUE@am__append_3 = $(DBUS_LIBS)
@@ -53,39 +53,39 @@ am__EXEEXT_1 =
 am__installdirs = "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(sbindir)"
 sbinPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(sbin_PROGRAMS)
-am__gdm_binary_SOURCES_DIST = gdm.c gdm.h gdm-daemon-config.c \
-	gdm-daemon-config.h gdm-daemon-config-entries.h \
-	gdm-daemon-config-keys.h gdm-socket-protocol.h display.c \
+am__mdm_binary_SOURCES_DIST = mdm.c mdm.h mdm-daemon-config.c \
+	mdm-daemon-config.h mdm-daemon-config-entries.h \
+	mdm-daemon-config-keys.h mdm-socket-protocol.h display.c \
 	display.h fstype.c slave.c slave.h server.c server.h misc.c \
 	misc.h auth.c auth.h cookie.c cookie.h xdmcp.c xdmcp.h \
 	choose.c choose.h filecheck.c filecheck.h md5.c md5.h @VRFY@.c \
-	verify.h errorgui.c errorgui.h gdm-net.c gdm-net.h getvt.c \
-	getvt.h gdm-xdmcp-manager.c gdm-xdmcp-manager.h \
-	gdmconsolekit.c gdmconsolekit.h
+	verify.h errorgui.c errorgui.h mdm-net.c mdm-net.h getvt.c \
+	getvt.h mdm-xdmcp-manager.c mdm-xdmcp-manager.h \
+	mdmconsolekit.c mdmconsolekit.h
 am__objects_1 =
-am__objects_2 = gdm-xdmcp-manager.$(OBJEXT) $(am__objects_1)
+am__objects_2 = mdm-xdmcp-manager.$(OBJEXT) $(am__objects_1)
 @XDMCP_SUPPORT_TRUE@am__objects_3 = $(am__objects_2)
-am__objects_4 = gdmconsolekit.$(OBJEXT) $(am__objects_1)
+am__objects_4 = mdmconsolekit.$(OBJEXT) $(am__objects_1)
 @WITH_CONSOLE_KIT_TRUE@am__objects_5 = $(am__objects_4)
-am_gdm_binary_OBJECTS = gdm.$(OBJEXT) gdm-daemon-config.$(OBJEXT) \
+am_mdm_binary_OBJECTS = mdm.$(OBJEXT) mdm-daemon-config.$(OBJEXT) \
 	display.$(OBJEXT) fstype.$(OBJEXT) slave.$(OBJEXT) \
 	server.$(OBJEXT) misc.$(OBJEXT) auth.$(OBJEXT) \
 	cookie.$(OBJEXT) xdmcp.$(OBJEXT) choose.$(OBJEXT) \
 	filecheck.$(OBJEXT) md5.$(OBJEXT) @VRFY@.$(OBJEXT) \
-	errorgui.$(OBJEXT) gdm-net.$(OBJEXT) getvt.$(OBJEXT) \
+	errorgui.$(OBJEXT) mdm-net.$(OBJEXT) getvt.$(OBJEXT) \
 	$(am__objects_1) $(am__objects_3) $(am__objects_5)
-gdm_binary_OBJECTS = $(am_gdm_binary_OBJECTS)
+mdm_binary_OBJECTS = $(am_mdm_binary_OBJECTS)
 am__DEPENDENCIES_1 =
 @WITH_CONSOLE_KIT_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1)
-gdm_binary_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+mdm_binary_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(top_builddir)/common/libgdmcommon.a \
+	$(am__DEPENDENCIES_1) $(top_builddir)/common/libmdmcommon.a \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2)
-gdm_binary_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+mdm_binary_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(gdm_binary_LDFLAGS) $(LDFLAGS) -o $@
+	$(mdm_binary_LDFLAGS) $(LDFLAGS) -o $@
 sbinSCRIPT_INSTALL = $(INSTALL_SCRIPT)
 SCRIPTS = $(sbin_SCRIPTS)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -100,9 +100,9 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(gdm_binary_SOURCES) $(EXTRA_gdm_binary_SOURCES)
-DIST_SOURCES = $(am__gdm_binary_SOURCES_DIST) \
-	$(EXTRA_gdm_binary_SOURCES)
+SOURCES = $(mdm_binary_SOURCES) $(EXTRA_mdm_binary_SOURCES)
+DIST_SOURCES = $(am__mdm_binary_SOURCES_DIST) \
+	$(EXTRA_mdm_binary_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -151,7 +151,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 EXTRA_CHOOSER_LIBS = @EXTRA_CHOOSER_LIBS@
 EXTRA_DAEMON_LIBS = @EXTRA_DAEMON_LIBS@
-EXTRA_GDMASKPASS_LIBS = @EXTRA_GDMASKPASS_LIBS@
+EXTRA_MDMASKPASS_LIBS = @EXTRA_MDMASKPASS_LIBS@
 EXTRA_GREETER_LIBS = @EXTRA_GREETER_LIBS@
 EXTRA_NSL_LIB = @EXTRA_NSL_LIB@
 EXTRA_SOCKET_LIB = @EXTRA_SOCKET_LIB@
@@ -161,22 +161,22 @@ GDKPIXBUF_CFLAGS = @GDKPIXBUF_CFLAGS@
 GDKPIXBUF_LIBS = @GDKPIXBUF_LIBS@
 GDK_CFLAGS = @GDK_CFLAGS@
 GDK_LIBS = @GDK_LIBS@
-GDMASKPASS = @GDMASKPASS@
-GDMCHOOSER = @GDMCHOOSER@
-GDMGNOMESESSIONCMD = @GDMGNOMESESSIONCMD@
-GDMOPEN = @GDMOPEN@
-GDMPREFETCH = @GDMPREFETCH@
-GDMPREFETCHCMD = @GDMPREFETCHCMD@
-GDMPREFETCHLIST = @GDMPREFETCHLIST@
-GDMSSHSESSION = @GDMSSHSESSION@
-GDMSSHSESSIONCMD = @GDMSSHSESSIONCMD@
-GDMXNESTCHOOSER = @GDMXNESTCHOOSER@
-GDM_CUSTOM_CONF = @GDM_CUSTOM_CONF@
-GDM_DEFAULTS_CONF = @GDM_DEFAULTS_CONF@
-GDM_OLD_CONF = @GDM_OLD_CONF@
-GDM_PID_FILE = @GDM_PID_FILE@
-GDM_RBAC_SYSCMD_KEYS = @GDM_RBAC_SYSCMD_KEYS@
-GDM_USER_PATH = @GDM_USER_PATH@
+MDMASKPASS = @MDMASKPASS@
+MDMCHOOSER = @MDMCHOOSER@
+MDMGNOMESESSIONCMD = @MDMGNOMESESSIONCMD@
+MDMOPEN = @MDMOPEN@
+MDMPREFETCH = @MDMPREFETCH@
+MDMPREFETCHCMD = @MDMPREFETCHCMD@
+MDMPREFETCHLIST = @MDMPREFETCHLIST@
+MDMSSHSESSION = @MDMSSHSESSION@
+MDMSSHSESSIONCMD = @MDMSSHSESSIONCMD@
+MDMXNESTCHOOSER = @MDMXNESTCHOOSER@
+MDM_CUSTOM_CONF = @MDM_CUSTOM_CONF@
+MDM_DEFAULTS_CONF = @MDM_DEFAULTS_CONF@
+MDM_OLD_CONF = @MDM_OLD_CONF@
+MDM_PID_FILE = @MDM_PID_FILE@
+MDM_RBAC_SYSCMD_KEYS = @MDM_RBAC_SYSCMD_KEYS@
+MDM_USER_PATH = @MDM_USER_PATH@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_LIBS = @GLIB_LIBS@
@@ -309,8 +309,8 @@ dmconfdir = @dmconfdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
-gdmconfdir = @gdmconfdir@
-gdmlocaledir = @gdmlocaledir@
+mdmconfdir = @mdmconfdir@
+mdmlocaledir = @mdmlocaledir@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -348,53 +348,53 @@ NULL =
 # we don't link to everything
 INCLUDES = -I. -I.. -I$(top_srcdir)/common -DAUTHDIR=\"$(authdir)\" \
 	-DBINDIR=\"$(bindir)\" -DDATADIR=\"$(datadir)\" \
-	-DDMCONFDIR=\"$(dmconfdir)\" -DGDMCONFDIR=\"$(gdmconfdir)\" \
-	-DGDMLOCALEDIR=\"$(gdmlocaledir)\" -DLIBDIR=\"$(libdir)\" \
+	-DDMCONFDIR=\"$(dmconfdir)\" -DMDMCONFDIR=\"$(mdmconfdir)\" \
+	-DMDMLOCALEDIR=\"$(mdmlocaledir)\" -DLIBDIR=\"$(libdir)\" \
 	-DLIBEXECDIR=\"$(libexecdir)\" -DLOGDIR=\"$(logdir)\" \
 	-DPIXMAPDIR=\"$(pixmapdir)\" -DSBINDIR=\"$(sbindir)\" \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
-	-DGDM_DEFAULTS_CONF=\"$(GDM_DEFAULTS_CONF)\" \
-	-DGDM_CUSTOM_CONF=\"$(GDM_CUSTOM_CONF)\" \
-	-DGDM_OLD_CONF=\"$(GDM_OLD_CONF)\" $(GUI_CFLAGS) \
+	-DMDM_DEFAULTS_CONF=\"$(MDM_DEFAULTS_CONF)\" \
+	-DMDM_CUSTOM_CONF=\"$(MDM_CUSTOM_CONF)\" \
+	-DMDM_OLD_CONF=\"$(MDM_OLD_CONF)\" $(GUI_CFLAGS) \
 	$(DAEMON_CFLAGS) -DLANG_CONFIG_FILE=\"$(LANG_CONFIG_FILE)\" \
 	$(GNOME_INCLUDEDIR) \
-	-DGREETERTHEMEDIR=\""$(datadir)/gdm/themes"\" $(NULL) \
+	-DGREETERTHEMEDIR=\""$(datadir)/mdm/themes"\" $(NULL) \
 	$(am__append_4)
-gdm_binary_SOURCES = gdm.c gdm.h gdm-daemon-config.c \
-	gdm-daemon-config.h gdm-daemon-config-entries.h \
-	gdm-daemon-config-keys.h gdm-socket-protocol.h display.c \
+mdm_binary_SOURCES = mdm.c mdm.h mdm-daemon-config.c \
+	mdm-daemon-config.h mdm-daemon-config-entries.h \
+	mdm-daemon-config-keys.h mdm-socket-protocol.h display.c \
 	display.h fstype.c slave.c slave.h server.c server.h misc.c \
 	misc.h auth.c auth.h cookie.c cookie.h xdmcp.c xdmcp.h \
 	choose.c choose.h filecheck.c filecheck.h md5.c md5.h @VRFY@.c \
-	verify.h errorgui.c errorgui.h gdm-net.c gdm-net.h getvt.c \
+	verify.h errorgui.c errorgui.h mdm-net.c mdm-net.h getvt.c \
 	getvt.h $(NULL) $(am__append_1) $(am__append_2)
 XDMCP_SOURCES = \
-	gdm-xdmcp-manager.c	\
-	gdm-xdmcp-manager.h	\
+	mdm-xdmcp-manager.c	\
+	mdm-xdmcp-manager.h	\
 	$(NULL)
 
-EXTRA_gdm_binary_SOURCES = verify-pam.c verify-crypt.c verify-shadow.c \
+EXTRA_mdm_binary_SOURCES = verify-pam.c verify-crypt.c verify-shadow.c \
 	$(XDMCP_SOURCES) $(NULL) $(CONSOLE_KIT_SOURCES)
 CONSOLE_KIT_SOURCES = \
-	gdmconsolekit.c		\
-	gdmconsolekit.h		\
+	mdmconsolekit.c		\
+	mdmconsolekit.h		\
 	$(NULL)
 
 
 # Note that these libs are in LDFLAGS because they should come before
 # everything else on the link line as they may override stuff
-gdm_binary_LDFLAGS = \
+mdm_binary_LDFLAGS = \
 	$(EXTRA_DAEMON_LIBS)			\
 	$(NULL)
 
-gdm_binary_LDADD = $(DAEMON_LIBS) $(INTLLIBS) $(GLIB_LIBS) \
+mdm_binary_LDADD = $(DAEMON_LIBS) $(INTLLIBS) $(GLIB_LIBS) \
 	$(GOBJECT_LIBS) $(GDK_LIBS) \
-	$(top_builddir)/common/libgdmcommon.a $(X_LIBS) \
+	$(top_builddir)/common/libmdmcommon.a $(X_LIBS) \
 	$(XINERAMA_LIBS) $(XDMCP_LIBS) $(LIBWRAP_LIBS) -lXau -lX11 \
 	-lXext $(NULL) $(am__append_3)
-sbin_SCRIPTS = gdm
-CLEANFILES = gdm
-EXTRA_DIST = gdm.in
+sbin_SCRIPTS = mdm
+CLEANFILES = mdm
+EXTRA_DIST = mdm.in
 all: all-am
 
 .SUFFIXES:
@@ -456,9 +456,9 @@ clean-sbinPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-gdm-binary$(EXEEXT): $(gdm_binary_OBJECTS) $(gdm_binary_DEPENDENCIES) 
-	@rm -f gdm-binary$(EXEEXT)
-	$(gdm_binary_LINK) $(gdm_binary_OBJECTS) $(gdm_binary_LDADD) $(LIBS)
+mdm-binary$(EXEEXT): $(mdm_binary_OBJECTS) $(mdm_binary_DEPENDENCIES) 
+	@rm -f mdm-binary$(EXEEXT)
+	$(mdm_binary_LINK) $(mdm_binary_OBJECTS) $(mdm_binary_LDADD) $(LIBS)
 install-sbinSCRIPTS: $(sbin_SCRIPTS)
 	@$(NORMAL_INSTALL)
 	test -z "$(sbindir)" || $(MKDIR_P) "$(DESTDIR)$(sbindir)"
@@ -493,11 +493,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/errorgui.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/filecheck.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fstype.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdm-daemon-config.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdm-net.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdm-xdmcp-manager.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdm.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdmconsolekit.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdm-daemon-config.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdm-net.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdm-xdmcp-manager.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdm.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmconsolekit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getvt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/md5.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/misc.Po@am__quote@
@@ -718,8 +718,8 @@ uninstall-am: uninstall-sbinPROGRAMS uninstall-sbinSCRIPTS
 	uninstall-sbinSCRIPTS
 
 
-gdm: $(srcdir)/gdm.in
-	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/gdm.in >gdm
+mdm: $(srcdir)/mdm.in
+	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/mdm.in >mdm
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

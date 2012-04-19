@@ -9,9 +9,9 @@ DEFS = @DEFS@ \
 	-DBINDIR=\"@bindir@\" 				\
 	-DDATADIR=\"@datadir@\" 			\
 	-DDMCONFDIR=\"@dmconfdir@\" 			\
-	-DGDMCONFDIR=\"@gdmconfdir@\"			\
-	-DGDMLOCALEDIR=\"@gdmlocaledir@\" 		\
-	-DGDM_GLADE_DIR=\"@datadir@/gdm\" 		\
+	-DMDMCONFDIR=\"@mdmconfdir@\"			\
+	-DMDMLOCALEDIR=\"@mdmlocaledir@\" 		\
+	-DMDM_GLADE_DIR=\"@datadir@/mdm\" 		\
 	-DLIBDIR=\"@libdir@\" 				\
 	-DLIBEXECDIR=\"@libexecdir@\" 			\
 	-DLOGDIR=\"@logdir@\"				\
@@ -36,81 +36,81 @@ INCLUDES = \
 #	-DGNOME_DISABLE_DEPRECATED			\
 #
 
-noinst_LIBRARIES = libgdmwm.a libgdmcommon.a libgdmgreeter.a
+noinst_LIBRARIES = libmdmwm.a libmdmcommon.a libmdmgreeter.a
 
 libexec_PROGRAMS = \
-	@GDMCHOOSER@ 		\
-	gdmlogin
+	@MDMCHOOSER@ 		\
+	mdmlogin
 
 sbin_PROGRAMS = \
-	gdmsetup
+	mdmsetup
 
 bin_PROGRAMS = \
-	gdmphotosetup 		\
-	@GDMXNESTCHOOSER@	\
-	gdmflexiserver      \
-	gdmdynamic
-EXTRA_PROGRAMS = gdmchooser gdmXnestchooser
+	mdmphotosetup 		\
+	@MDMXNESTCHOOSER@	\
+	mdmflexiserver      \
+	mdmdynamic
+EXTRA_PROGRAMS = mdmchooser mdmXnestchooser
 
-gdmphotosetup_SOURCES = \
-	gdmphotosetup.c	
+mdmphotosetup_SOURCES = \
+	mdmphotosetup.c	
 
-gdmXnestchooser_SOURCES = \
-	gdmXnestchooser.c
+mdmXnestchooser_SOURCES = \
+	mdmXnestchooser.c
 
-gdmflexiserver_SOURCES = \
-	gdmflexiserver.c
+mdmflexiserver_SOURCES = \
+	mdmflexiserver.c
 
-gdmdynamic_SOURCES = \
-	gdmdynamic.c
+mdmdynamic_SOURCES = \
+	mdmdynamic.c
 
-libgdmwm_a_SOURCES = \
-	gdmwm.c			\
-	gdmwm.h
+libmdmwm_a_SOURCES = \
+	mdmwm.c			\
+	mdmwm.h
 
-libgdmgreeter_a_SOURCES = \
-	gdmgreeter.c		\
-	gdmgreeter.h		\
-	gdmlanguages.c		\
-	gdmlanguages.h		\
-	gdmsession.c		\
-	gdmsession.h		\
-	gdmuser.c		\
-	gdmuser.h		\
+libmdmgreeter_a_SOURCES = \
+	mdmgreeter.c		\
+	mdmgreeter.h		\
+	mdmlanguages.c		\
+	mdmlanguages.h		\
+	mdmsession.c		\
+	mdmsession.h		\
+	mdmuser.c		\
+	mdmuser.h		\
 	$(NULL)
 
-libgdmcommon_a_SOURCES = \
+libmdmcommon_a_SOURCES = \
 	misc.c			\
 	misc.h			\
-	gdmcomm.c		\
-	gdmcomm.h		\
-	gdmconfig.c		\
-	gdmconfig.h		\
-	gdmcommon.c		\
-	gdmcommon.h		\
+	mdmcomm.c		\
+	mdmcomm.h		\
+	mdmconfig.c		\
+	mdmconfig.h		\
+	mdmcommon.c		\
+	mdmcommon.h		\
 	$(NULL)
 
-gdmchooser_SOURCES = \
-	gdmchooser.c		\
+mdmchooser_SOURCES = \
+	mdmchooser.c		\
 	misc.c			\
 	misc.h			\
 	$(NULL)
 
-gdmlogin_SOURCES = \
-	gdmlogin.c
+mdmlogin_SOURCES = \
+	mdmlogin.c
 
-gdmsetup_SOURCES = \
-	gdmsession.c		\
-	gdmsession.h		\
-	gdmuser.c		\
-	gdmuser.h		\
-	gdmsetup.c
+mdmsetup_SOURCES = \
+	mdmsession.c		\
+	mdmsession.h		\
+	mdmuser.c		\
+	mdmuser.h		\
+	mdmsetup.c
 
-gdmchooser_LDFLAGS = -export-dynamic
-gdmchooser_LDADD = \
+mdmchooser_LDFLAGS = -export-dynamic
+mdmchooser_LDADD = \
 	$(EXTRA_CHOOSER_LIBS)	\
-	libgdmwm.a		\
-	libgdmcommon.a		\
+	libmdmwm.a		\
+	libmdmcommon.a		\
 	$(GUIGLADE_LIBS)	\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
@@ -118,7 +118,7 @@ gdmchooser_LDADD = \
 	$(PANGO_LIBS)		\
 	$(GDK_LIBS)		\
 	$(GDKPIXBUF_LIBS)	\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(X_EXTRA_LIBS)		\
 	$(XINERAMA_LIBS)	\
 	$(X_LIBS)		\
@@ -127,11 +127,11 @@ gdmchooser_LDADD = \
 	-lfontconfig		\
 	$(NULL)
 
-gdmlogin_LDADD = \
+mdmlogin_LDADD = \
 	$(EXTRA_GREETER_LIBS)	\
-	libgdmwm.a		\
-	libgdmcommon.a		\
-	libgdmgreeter.a		\
+	libmdmwm.a		\
+	libmdmcommon.a		\
+	libmdmgreeter.a		\
 	$(GUING_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
@@ -139,7 +139,7 @@ gdmlogin_LDADD = \
 	$(GDK_LIBS)		\
 	$(PANGO_LIBS)		\
 	$(GDKPIXBUF_LIBS)	\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(X_EXTRA_LIBS)		\
 	$(XINERAMA_LIBS)	\
 	$(X_LIBS)		\
@@ -147,14 +147,14 @@ gdmlogin_LDADD = \
 	-lfontconfig		\
 	$(NULL)
 
-# LIBGNOMEUI should be removed from gdmsetup at some point.
+# LIBGNOMEUI should be removed from mdmsetup at some point.
 # It is needed because it uses gnome_help_display_uri(), which
 # should be replaced at some point.
 #
-gdmsetup_CFLAGS = $(LIBGNOMEUI_CFLAGS)
-gdmsetup_LDFLAGS = -export-dynamic
-gdmsetup_LDADD = \
-	libgdmcommon.a		\
+mdmsetup_CFLAGS = $(LIBGNOMEUI_CFLAGS)
+mdmsetup_LDFLAGS = -export-dynamic
+mdmsetup_LDADD = \
+	libmdmcommon.a		\
 	$(GUI_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
@@ -165,15 +165,15 @@ gdmsetup_LDADD = \
 	$(EXTRA_SOCKET_LIB)	\
 	$(EXTRA_NSL_LIB)	\
 	$(LIBGNOMEUI_LIBS)	\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(X_LIBS)		\
 	-lXau			\
 	-lX11			\
 	-lfontconfig		\
 	$(NULL)
 
-gdmphotosetup_LDADD = \
-	libgdmcommon.a		\
+mdmphotosetup_LDADD = \
+	libmdmcommon.a		\
 	$(GUI_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
@@ -185,11 +185,11 @@ gdmphotosetup_LDADD = \
 	$(EXTRA_NSL_LIB)	\
 	-lX11			\
 	-lfontconfig		\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(NULL)
 
-gdmXnestchooser_LDADD = \
-	libgdmcommon.a		\
+mdmXnestchooser_LDADD = \
+	libmdmcommon.a		\
 	$(GUI_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
@@ -201,17 +201,17 @@ gdmXnestchooser_LDADD = \
 	-lXau			\
 	-lX11			\
 	-lfontconfig		\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(NULL)
 
-gdmflexiserver_LDADD = \
-	libgdmcommon.a		\
+mdmflexiserver_LDADD = \
+	libmdmcommon.a		\
 	$(GUI_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
 	$(GOBJECT_LIBS)		\
 	$(GDK_LIBS)		\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(EXTRA_SOCKET_LIB)	\
 	$(EXTRA_NSL_LIB)	\
 	$(X_LIBS)		\
@@ -220,14 +220,14 @@ gdmflexiserver_LDADD = \
 	-lfontconfig		\
 	$(NULL)
 
-gdmdynamic_LDADD = 		\
-	libgdmcommon.a		\
+mdmdynamic_LDADD = 		\
+	libmdmcommon.a		\
 	$(GUI_LIBS)		\
 	$(INTLLIBS) 		\
 	$(GLIB_LIBS) 		\
 	$(GOBJECT_LIBS) 	\
 	$(GDK_LIBS) 		\
-	$(top_builddir)/common/libgdmcommon.a \
+	$(top_builddir)/common/libmdmcommon.a \
 	$(EXTRA_SOCKET_LIB)	\
 	$(EXTRA_NSL_LIB)	\
 	$(X_LIBS)		\
@@ -236,36 +236,36 @@ gdmdynamic_LDADD = 		\
 	-lfontconfig		\
 	$(NULL)
 
-Settingsdir = $(datadir)/gdm/applications
-Settings_files = gdmphotosetup.desktop
-Settings_in_files = gdmphotosetup.desktop.in
+Settingsdir = $(datadir)/mdm/applications
+Settings_files = mdmphotosetup.desktop
+Settings_in_files = mdmphotosetup.desktop.in
 Settings_DATA = $(Settings_files)
 
-Systemdir = $(datadir)/gdm/applications
+Systemdir = $(datadir)/mdm/applications
 System_files = \
-	gdmsetup.desktop	\
-	gdmflexiserver.desktop	\
-	gdmflexiserver-xnest.desktop
+	mdmsetup.desktop	\
+	mdmflexiserver.desktop	\
+	mdmflexiserver-xnest.desktop
 System_in_files = \
-	gdmsetup.desktop.in.in			\
-	gdmflexiserver.desktop.in		\
-	gdmflexiserver-xnest.desktop.in.in
+	mdmsetup.desktop.in.in			\
+	mdmflexiserver.desktop.in		\
+	mdmflexiserver-xnest.desktop.in.in
 System_DATA = $(System_files)
 
-CLEANFILES = gdmsetup.desktop gdmsetup.desktop.in gdmflexiserver.desktop gdmflexiserver-xnest.desktop gdmflexiserver-xnest.desktop.in gdmphotosetup.desktop
+CLEANFILES = mdmsetup.desktop mdmsetup.desktop.in mdmflexiserver.desktop mdmflexiserver-xnest.desktop mdmflexiserver-xnest.desktop.in mdmphotosetup.desktop
 
-gdmsetup.desktop.in: $(srcdir)/gdmsetup.desktop.in.in
-	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/gdmsetup.desktop.in.in \
-		>gdmsetup.desktop.in
+mdmsetup.desktop.in: $(srcdir)/mdmsetup.desktop.in.in
+	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/mdmsetup.desktop.in.in \
+		>mdmsetup.desktop.in
 
 @INTLTOOL_DESKTOP_RULE@
 
-Gladedir = $(datadir)/gdm
-Glade_DATA = gdmsetup.glade gdmchooser.glade gdmphotosetup.glade
+Gladedir = $(datadir)/mdm
+Glade_DATA = mdmsetup.glade mdmchooser.glade mdmphotosetup.glade
 
 install-data-local:
-	-test -z "$(DESTDIR)$(bindir)/gdmXnest" || rm -f $(DESTDIR)$(bindir)/gdmXnest
-	$(LN_S) -f gdmXnestchooser $(DESTDIR)$(bindir)/gdmXnest
+	-test -z "$(DESTDIR)$(bindir)/mdmXnest" || rm -f $(DESTDIR)$(bindir)/mdmXnest
+	$(LN_S) -f mdmXnestchooser $(DESTDIR)$(bindir)/mdmXnest
 
 EXTRA_DIST = \
 	$(Glade_DATA)		\

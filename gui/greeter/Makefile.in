@@ -33,7 +33,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-libexec_PROGRAMS = gdmgreeter$(EXEEXT)
+libexec_PROGRAMS = mdmgreeter$(EXEEXT)
 subdir = gui/greeter
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -48,7 +48,7 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(bindir)"
 libexecPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(libexec_PROGRAMS)
-am_gdmgreeter_OBJECTS = greeter.$(OBJEXT) \
+am_mdmgreeter_OBJECTS = greeter.$(OBJEXT) \
 	greeter_canvas_text.$(OBJEXT) greeter_canvas_item.$(OBJEXT) \
 	greeter_events.$(OBJEXT) greeter_geometry.$(OBJEXT) \
 	greeter_item.$(OBJEXT) greeter_item_timed.$(OBJEXT) \
@@ -56,10 +56,10 @@ am_gdmgreeter_OBJECTS = greeter.$(OBJEXT) \
 	greeter_item_pam.$(OBJEXT) greeter_item_ulist.$(OBJEXT) \
 	greeter_item_customlist.$(OBJEXT) greeter_parser.$(OBJEXT) \
 	greeter_session.$(OBJEXT) greeter_system.$(OBJEXT)
-gdmgreeter_OBJECTS = $(am_gdmgreeter_OBJECTS)
+mdmgreeter_OBJECTS = $(am_mdmgreeter_OBJECTS)
 am__DEPENDENCIES_1 =
-gdmgreeter_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(top_builddir)/common/libgdmcommon.a $(am__DEPENDENCIES_1) \
+mdmgreeter_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(top_builddir)/common/libmdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -79,8 +79,8 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(gdmgreeter_SOURCES)
-DIST_SOURCES = $(gdmgreeter_SOURCES)
+SOURCES = $(mdmgreeter_SOURCES)
+DIST_SOURCES = $(mdmgreeter_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -139,7 +139,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 EXTRA_CHOOSER_LIBS = @EXTRA_CHOOSER_LIBS@
 EXTRA_DAEMON_LIBS = @EXTRA_DAEMON_LIBS@
-EXTRA_GDMASKPASS_LIBS = @EXTRA_GDMASKPASS_LIBS@
+EXTRA_MDMASKPASS_LIBS = @EXTRA_MDMASKPASS_LIBS@
 EXTRA_GREETER_LIBS = @EXTRA_GREETER_LIBS@
 EXTRA_NSL_LIB = @EXTRA_NSL_LIB@
 EXTRA_SOCKET_LIB = @EXTRA_SOCKET_LIB@
@@ -149,22 +149,22 @@ GDKPIXBUF_CFLAGS = @GDKPIXBUF_CFLAGS@
 GDKPIXBUF_LIBS = @GDKPIXBUF_LIBS@
 GDK_CFLAGS = @GDK_CFLAGS@
 GDK_LIBS = @GDK_LIBS@
-GDMASKPASS = @GDMASKPASS@
-GDMCHOOSER = @GDMCHOOSER@
-GDMGNOMESESSIONCMD = @GDMGNOMESESSIONCMD@
-GDMOPEN = @GDMOPEN@
-GDMPREFETCH = @GDMPREFETCH@
-GDMPREFETCHCMD = @GDMPREFETCHCMD@
-GDMPREFETCHLIST = @GDMPREFETCHLIST@
-GDMSSHSESSION = @GDMSSHSESSION@
-GDMSSHSESSIONCMD = @GDMSSHSESSIONCMD@
-GDMXNESTCHOOSER = @GDMXNESTCHOOSER@
-GDM_CUSTOM_CONF = @GDM_CUSTOM_CONF@
-GDM_DEFAULTS_CONF = @GDM_DEFAULTS_CONF@
-GDM_OLD_CONF = @GDM_OLD_CONF@
-GDM_PID_FILE = @GDM_PID_FILE@
-GDM_RBAC_SYSCMD_KEYS = @GDM_RBAC_SYSCMD_KEYS@
-GDM_USER_PATH = @GDM_USER_PATH@
+MDMASKPASS = @MDMASKPASS@
+MDMCHOOSER = @MDMCHOOSER@
+MDMGNOMESESSIONCMD = @MDMGNOMESESSIONCMD@
+MDMOPEN = @MDMOPEN@
+MDMPREFETCH = @MDMPREFETCH@
+MDMPREFETCHCMD = @MDMPREFETCHCMD@
+MDMPREFETCHLIST = @MDMPREFETCHLIST@
+MDMSSHSESSION = @MDMSSHSESSION@
+MDMSSHSESSIONCMD = @MDMSSHSESSIONCMD@
+MDMXNESTCHOOSER = @MDMXNESTCHOOSER@
+MDM_CUSTOM_CONF = @MDM_CUSTOM_CONF@
+MDM_DEFAULTS_CONF = @MDM_DEFAULTS_CONF@
+MDM_OLD_CONF = @MDM_OLD_CONF@
+MDM_PID_FILE = @MDM_PID_FILE@
+MDM_RBAC_SYSCMD_KEYS = @MDM_RBAC_SYSCMD_KEYS@
+MDM_USER_PATH = @MDM_USER_PATH@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_LIBS = @GLIB_LIBS@
@@ -297,8 +297,8 @@ dmconfdir = @dmconfdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
-gdmconfdir = @gdmconfdir@
-gdmlocaledir = @gdmlocaledir@
+mdmconfdir = @mdmconfdir@
+mdmlocaledir = @mdmlocaledir@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -338,10 +338,10 @@ INCLUDES = \
 	-I$(top_srcdir)/common				\
 	-DAUTHDIR=\""$(authdir)"\"		 	\
 	-DDATADIR=\""$(datadir)"\"		 	\
-	-DGDM_DATADIR=\""$(pkgdatadir)"\"		\
+	-DMDM_DATADIR=\""$(pkgdatadir)"\"		\
 	-DDMCONFDIR=\""$(dmconfdir)"\"		 	\
-	-DGDM_CONFIG_FILE=\"$(gdmconfdir)/gdm.conf\"	\
-	-DGDMLOCALEDIR=\""$(gdmlocaledir)"\"		\
+	-DMDM_CONFIG_FILE=\"$(mdmconfdir)/mdm.conf\"	\
+	-DMDMLOCALEDIR=\""$(mdmlocaledir)"\"		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" 	\
 	-DLIBEXECDIR=\""$(libexecdir)"\" 		\
 	-DSBINDIR=\""$(sbindir)"\"		 	\
@@ -352,10 +352,10 @@ INCLUDES = \
 	$(GREETER_CFLAGS)
 
 bin_SCRIPTS = \
-	gdmthemetester
+	mdmthemetester
 
-CLEANFILES = gdmthemetester
-gdmgreeter_SOURCES = \
+CLEANFILES = mdmthemetester
+mdmgreeter_SOURCES = \
 	greeter.c \
 	greeter.h \
 	greeter_canvas_text.c \
@@ -388,13 +388,13 @@ gdmgreeter_SOURCES = \
 	greeter_system.c \
 	greeter_system.h
 
-gdmgreeter_LDADD = \
+mdmgreeter_LDADD = \
 	$(EXTRA_GREETER_LIBS)   \
 	-L$(top_builddir)/gui	\
-	-lgdmwm			\
-	-lgdmcommon		\
-	-lgdmgreeter		\
-	$(top_builddir)/common/libgdmcommon.a \
+	-lmdmwm			\
+	-lmdmcommon		\
+	-lmdmgreeter		\
+	$(top_builddir)/common/libmdmcommon.a \
 	$(GLIB_LIBS)		\
 	$(GOBJECT_LIBS)		\
 	$(PANGO_LIBS)		\
@@ -409,7 +409,7 @@ gdmgreeter_LDADD = \
 	-lfontconfig
 
 EXTRA_DIST = \
-	gdmthemetester.in \
+	mdmthemetester.in \
 	greeter.dtd
 
 all: all-recursive
@@ -473,9 +473,9 @@ clean-libexecPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-gdmgreeter$(EXEEXT): $(gdmgreeter_OBJECTS) $(gdmgreeter_DEPENDENCIES) 
-	@rm -f gdmgreeter$(EXEEXT)
-	$(LINK) $(gdmgreeter_OBJECTS) $(gdmgreeter_LDADD) $(LIBS)
+mdmgreeter$(EXEEXT): $(mdmgreeter_OBJECTS) $(mdmgreeter_DEPENDENCIES) 
+	@rm -f mdmgreeter$(EXEEXT)
+	$(LINK) $(mdmgreeter_OBJECTS) $(mdmgreeter_LDADD) $(LIBS)
 install-binSCRIPTS: $(bin_SCRIPTS)
 	@$(NORMAL_INSTALL)
 	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
@@ -832,9 +832,9 @@ uninstall-am: uninstall-binSCRIPTS uninstall-libexecPROGRAMS
 	uninstall-binSCRIPTS uninstall-libexecPROGRAMS
 
 
-gdmthemetester: $(srcdir)/gdmthemetester.in
+mdmthemetester: $(srcdir)/mdmthemetester.in
 	sed -e 's,[@]libexecdir[@],$(libexecdir),g' \
-		<$(srcdir)/gdmthemetester.in >gdmthemetester
+		<$(srcdir)/mdmthemetester.in >mdmthemetester
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

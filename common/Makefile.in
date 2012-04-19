@@ -48,23 +48,23 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 LIBRARIES = $(noinst_LIBRARIES)
 ARFLAGS = cru
-libgdmcommon_a_AR = $(AR) $(ARFLAGS)
-libgdmcommon_a_LIBADD =
+libmdmcommon_a_AR = $(AR) $(ARFLAGS)
+libmdmcommon_a_LIBADD =
 am__objects_1 =
-am_libgdmcommon_a_OBJECTS = gdm-common.$(OBJEXT) \
-	gdm-common-config.$(OBJEXT) gdm-config.$(OBJEXT) \
-	gdm-log.$(OBJEXT) ve-signal.$(OBJEXT) $(am__objects_1)
-libgdmcommon_a_OBJECTS = $(am_libgdmcommon_a_OBJECTS)
+am_libmdmcommon_a_OBJECTS = mdm-common.$(OBJEXT) \
+	mdm-common-config.$(OBJEXT) mdm-config.$(OBJEXT) \
+	mdm-log.$(OBJEXT) ve-signal.$(OBJEXT) $(am__objects_1)
+libmdmcommon_a_OBJECTS = $(am_libmdmcommon_a_OBJECTS)
 am__EXEEXT_1 =
 PROGRAMS = $(noinst_PROGRAMS)
 am_test_config_OBJECTS = test-config.$(OBJEXT) $(am__objects_1)
 test_config_OBJECTS = $(am_test_config_OBJECTS)
 am__DEPENDENCIES_1 =
-test_config_DEPENDENCIES = libgdmcommon.a $(am__DEPENDENCIES_1) \
+test_config_DEPENDENCIES = libmdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 am_test_log_OBJECTS = test-log.$(OBJEXT) $(am__objects_1)
 test_log_OBJECTS = $(am_test_log_OBJECTS)
-test_log_DEPENDENCIES = libgdmcommon.a $(am__DEPENDENCIES_1) \
+test_log_DEPENDENCIES = libmdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -78,9 +78,9 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libgdmcommon_a_SOURCES) $(test_config_SOURCES) \
+SOURCES = $(libmdmcommon_a_SOURCES) $(test_config_SOURCES) \
 	$(test_log_SOURCES)
-DIST_SOURCES = $(libgdmcommon_a_SOURCES) $(test_config_SOURCES) \
+DIST_SOURCES = $(libmdmcommon_a_SOURCES) $(test_config_SOURCES) \
 	$(test_log_SOURCES)
 ETAGS = etags
 CTAGS = ctags
@@ -130,7 +130,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 EXTRA_CHOOSER_LIBS = @EXTRA_CHOOSER_LIBS@
 EXTRA_DAEMON_LIBS = @EXTRA_DAEMON_LIBS@
-EXTRA_GDMASKPASS_LIBS = @EXTRA_GDMASKPASS_LIBS@
+EXTRA_MDMASKPASS_LIBS = @EXTRA_MDMASKPASS_LIBS@
 EXTRA_GREETER_LIBS = @EXTRA_GREETER_LIBS@
 EXTRA_NSL_LIB = @EXTRA_NSL_LIB@
 EXTRA_SOCKET_LIB = @EXTRA_SOCKET_LIB@
@@ -140,22 +140,22 @@ GDKPIXBUF_CFLAGS = @GDKPIXBUF_CFLAGS@
 GDKPIXBUF_LIBS = @GDKPIXBUF_LIBS@
 GDK_CFLAGS = @GDK_CFLAGS@
 GDK_LIBS = @GDK_LIBS@
-GDMASKPASS = @GDMASKPASS@
-GDMCHOOSER = @GDMCHOOSER@
-GDMGNOMESESSIONCMD = @GDMGNOMESESSIONCMD@
-GDMOPEN = @GDMOPEN@
-GDMPREFETCH = @GDMPREFETCH@
-GDMPREFETCHCMD = @GDMPREFETCHCMD@
-GDMPREFETCHLIST = @GDMPREFETCHLIST@
-GDMSSHSESSION = @GDMSSHSESSION@
-GDMSSHSESSIONCMD = @GDMSSHSESSIONCMD@
-GDMXNESTCHOOSER = @GDMXNESTCHOOSER@
-GDM_CUSTOM_CONF = @GDM_CUSTOM_CONF@
-GDM_DEFAULTS_CONF = @GDM_DEFAULTS_CONF@
-GDM_OLD_CONF = @GDM_OLD_CONF@
-GDM_PID_FILE = @GDM_PID_FILE@
-GDM_RBAC_SYSCMD_KEYS = @GDM_RBAC_SYSCMD_KEYS@
-GDM_USER_PATH = @GDM_USER_PATH@
+MDMASKPASS = @MDMASKPASS@
+MDMCHOOSER = @MDMCHOOSER@
+MDMGNOMESESSIONCMD = @MDMGNOMESESSIONCMD@
+MDMOPEN = @MDMOPEN@
+MDMPREFETCH = @MDMPREFETCH@
+MDMPREFETCHCMD = @MDMPREFETCHCMD@
+MDMPREFETCHLIST = @MDMPREFETCHLIST@
+MDMSSHSESSION = @MDMSSHSESSION@
+MDMSSHSESSIONCMD = @MDMSSHSESSIONCMD@
+MDMXNESTCHOOSER = @MDMXNESTCHOOSER@
+MDM_CUSTOM_CONF = @MDM_CUSTOM_CONF@
+MDM_DEFAULTS_CONF = @MDM_DEFAULTS_CONF@
+MDM_OLD_CONF = @MDM_OLD_CONF@
+MDM_PID_FILE = @MDM_PID_FILE@
+MDM_RBAC_SYSCMD_KEYS = @MDM_RBAC_SYSCMD_KEYS@
+MDM_USER_PATH = @MDM_USER_PATH@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_LIBS = @GLIB_LIBS@
@@ -288,8 +288,8 @@ dmconfdir = @dmconfdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
-gdmconfdir = @gdmconfdir@
-gdmlocaledir = @gdmlocaledir@
+mdmconfdir = @mdmconfdir@
+mdmlocaledir = @mdmlocaledir@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -330,43 +330,43 @@ INCLUDES = \
 	-DBINDIR=\"$(bindir)\"				\
 	-DDATADIR=\"$(datadir)\"			\
 	-DDMCONFDIR=\"$(dmconfdir)\"			\
-	-DGDMCONFDIR=\"$(gdmconfdir)\"			\
-	-DGDMLOCALEDIR=\"$(gdmlocaledir)\"		\
+	-DMDMCONFDIR=\"$(mdmconfdir)\"			\
+	-DMDMLOCALEDIR=\"$(mdmlocaledir)\"		\
 	-DLIBDIR=\"$(libdir)\"				\
 	-DLIBEXECDIR=\"$(libexecdir)\"			\
 	-DLOGDIR=\"$(logdir)\"				\
 	-DPIXMAPDIR=\"$(pixmapdir)\"			\
 	-DSBINDIR=\"$(sbindir)\"			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGDM_DEFAULTS_CONF=\"$(GDM_DEFAULTS_CONF)\"	\
-	-DGDM_CUSTOM_CONF=\"$(GDM_CUSTOM_CONF)\"	\
-	-DGDM_OLD_CONF=\"$(GDM_OLD_CONF)\"		\
+	-DMDM_DEFAULTS_CONF=\"$(MDM_DEFAULTS_CONF)\"	\
+	-DMDM_CUSTOM_CONF=\"$(MDM_CUSTOM_CONF)\"	\
+	-DMDM_OLD_CONF=\"$(MDM_OLD_CONF)\"		\
 	$(GLIB_CFLAGS)
 
 noinst_LIBRARIES = \
-	libgdmcommon.a		\
+	libmdmcommon.a		\
 	$(null)
 
-libgdmcommon_a_SOURCES = \
-	gdm-common.h		\
-	gdm-common.c		\
-	gdm-common-config.h	\
-	gdm-common-config.c	\
-	gdm-config.h		\
-	gdm-config.c		\
-	gdm-log.h		\
-	gdm-log.c		\
+libmdmcommon_a_SOURCES = \
+	mdm-common.h		\
+	mdm-common.c		\
+	mdm-common-config.h	\
+	mdm-common-config.c	\
+	mdm-config.h		\
+	mdm-config.c		\
+	mdm-log.h		\
+	mdm-log.c		\
 	ve-signal.h		\
 	ve-signal.c		\
 	$(NULL)
 
 test_config_SOURCES = \
-	$(top_builddir)/daemon/gdm-daemon-config-entries.h	\
+	$(top_builddir)/daemon/mdm-daemon-config-entries.h	\
 	test-config.c	 	\
 	$(NULL)
 
 test_config_LDADD = \
-	libgdmcommon.a	\
+	libmdmcommon.a	\
 	$(GLIB_LIBS)		\
 	$(NULL)
 
@@ -375,7 +375,7 @@ test_log_SOURCES = \
 	$(NULL)
 
 test_log_LDADD = \
-	libgdmcommon.a	\
+	libmdmcommon.a	\
 	$(GLIB_LIBS)		\
 	$(NULL)
 
@@ -415,10 +415,10 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libgdmcommon.a: $(libgdmcommon_a_OBJECTS) $(libgdmcommon_a_DEPENDENCIES) 
-	-rm -f libgdmcommon.a
-	$(libgdmcommon_a_AR) libgdmcommon.a $(libgdmcommon_a_OBJECTS) $(libgdmcommon_a_LIBADD)
-	$(RANLIB) libgdmcommon.a
+libmdmcommon.a: $(libmdmcommon_a_OBJECTS) $(libmdmcommon_a_DEPENDENCIES) 
+	-rm -f libmdmcommon.a
+	$(libmdmcommon_a_AR) libmdmcommon.a $(libmdmcommon_a_OBJECTS) $(libmdmcommon_a_LIBADD)
+	$(RANLIB) libmdmcommon.a
 
 clean-noinstPROGRAMS:
 	@list='$(noinst_PROGRAMS)'; for p in $$list; do \
@@ -439,10 +439,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdm-common-config.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdm-common.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdm-config.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdm-log.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdm-common-config.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdm-common.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdm-config.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdm-log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-config.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ve-signal.Po@am__quote@

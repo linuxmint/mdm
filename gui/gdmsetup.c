@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDMSetup
+ * MDMSetup
  * Copyright (C) 2002, George Lebl
  *
  * This program is free software; you can redistribute it and/or modify
@@ -41,40 +41,40 @@
 #include <glade/glade.h>
 #include <glib/gi18n.h>
 
-#include "gdm.h"
-#include "gdmcommon.h"
+#include "mdm.h"
+#include "mdmcommon.h"
 #include "misc.h"
-#include "gdmcomm.h"
-#include "gdmuser.h"
-#include "gdmsession.h"
-#include "gdmconfig.h"
+#include "mdmcomm.h"
+#include "mdmuser.h"
+#include "mdmsession.h"
+#include "mdmconfig.h"
 
-#include "gdm-common.h"
-#include "gdm-socket-protocol.h"
-#include "gdm-daemon-config-keys.h"
-#include "gdm-log.h"
+#include "mdm-common.h"
+#include "mdm-socket-protocol.h"
+#include "mdm-daemon-config-keys.h"
+#include "mdm-log.h"
 
 #include "server.h"
 
-static char     *GdmSoundProgram = NULL;
-static gchar    *GdmExclude      = NULL;
-static gchar    *GdmInclude      = NULL;
-static gint      GdmIconMaxHeight;
-static gint      GdmIconMaxWidth;
-static gboolean  GdmIncludeAll;
-static gboolean  GdmUserChangesUnsaved;
-static gboolean  GdmRandomFromSelectedChangesWarn;
+static char     *MdmSoundProgram = NULL;
+static gchar    *MdmExclude      = NULL;
+static gchar    *MdmInclude      = NULL;
+static gint      MdmIconMaxHeight;
+static gint      MdmIconMaxWidth;
+static gboolean  MdmIncludeAll;
+static gboolean  MdmUserChangesUnsaved;
+static gboolean  MdmRandomFromSelectedChangesWarn;
 static gint      last_selected_command;
 
-/* set the DOING_GDM_DEVELOPMENT env variable if you want to
+/* set the DOING_MDM_DEVELOPMENT env variable if you want to
  * search for the glade file in the current dir and not the system
  * install dir, better then something you have to change
  * in the source and recompile
  */
 
-static gboolean  DOING_GDM_DEVELOPMENT = FALSE;
-static gboolean  RUNNING_UNDER_GDM     = FALSE;
-static gboolean  gdm_running           = FALSE;
+static gboolean  DOING_MDM_DEVELOPMENT = FALSE;
+static gboolean  RUNNING_UNDER_MDM     = FALSE;
+static gboolean  mdm_running           = FALSE;
 static GladeXML  *xml;
 static GladeXML  *xml_add_users;
 static GladeXML  *xml_add_xservers;
@@ -92,7 +92,7 @@ static GSList    *xservers;
 
 /* This is used to store changes made to all
    possible fields of custom/normal commands */
-static GHashTable  *GdmCommandChangesUnsaved = NULL;
+static GHashTable  *MdmCommandChangesUnsaved = NULL;
 
 /* Used to store all available sessions */
 static GList *sessions = NULL;
@@ -269,13 +269,13 @@ update_greeters (void)
 	static gboolean shown_error = FALSE;
 	gboolean have_error = FALSE;
 
-	/* recheck for gdm */
-	gdm_running = gdmcomm_check (FALSE);
+	/* recheck for mdm */
+	mdm_running = mdmcomm_check (FALSE);
 
-	if ( ! gdm_running)
+	if ( ! mdm_running)
 		return;
 
-	ret = gdmcomm_call_gdm (GDM_SUP_GREETERPIDS,
+	ret = mdmcomm_call_mdm (MDM_SUP_GREETERPIDS,
 				NULL /* auth_cookie */,
 				"2.3.90.2",
 				5);
@@ -373,14 +373,14 @@ update_key (const char *key)
 	if (key == NULL)
 	       return;
 
-	/* recheck for gdm */
-	gdm_running = gdmcomm_check (FALSE);
+	/* recheck for mdm */
+	mdm_running = mdmcomm_check (FALSE);
 
-	if (gdm_running) {
+	if (mdm_running) {
 		char *ret;
-		char *s = g_strdup_printf ("%s %s", GDM_SUP_UPDATE_CONFIG,
+		char *s = g_strdup_printf ("%s %s", MDM_SUP_UPDATE_CONFIG,
 					   key);
-		ret = gdmcomm_call_gdm (s,
+		ret = mdmcomm_call_mdm (s,
 					NULL /* auth_cookie */,
 					"2.3.90.2",
 					5);
@@ -390,23 +390,23 @@ update_key (const char *key)
 }
 
 static void
-gdm_setup_config_set_bool (const char *key, gboolean val)
+mdm_setup_config_set_bool (const char *key, gboolean val)
 {
 	GKeyFile *cfg;
 	GKeyFile *custom_cfg;
         gboolean defaultval;
 
-        cfg = gdm_common_config_load (config_file, NULL);
-	custom_cfg = gdm_common_config_load (custom_config_file, NULL);
-	gdm_common_config_get_boolean (cfg, key, &defaultval, NULL);
+        cfg = mdm_common_config_load (config_file, NULL);
+	custom_cfg = mdm_common_config_load (custom_config_file, NULL);
+	mdm_common_config_get_boolean (cfg, key, &defaultval, NULL);
 
         if (val == defaultval) {
-		gdm_common_config_remove_key (custom_cfg, key, NULL);
+		mdm_common_config_remove_key (custom_cfg, key, NULL);
 	} else {
-		gdm_common_config_set_boolean (custom_cfg, key, val);
+		mdm_common_config_set_boolean (custom_cfg, key, val);
 	}
 
-	gdm_common_config_save (custom_cfg, custom_config_file, NULL);
+	mdm_common_config_save (custom_cfg, custom_config_file, NULL);
 
 	g_key_file_free (cfg);
 	g_key_file_free (custom_cfg);
@@ -415,23 +415,23 @@ gdm_setup_config_set_bool (const char *key, gboolean val)
 }
 
 static void
-gdm_setup_config_set_int (const char *key, int val)
+mdm_setup_config_set_int (const char *key, int val)
 {
 	GKeyFile *cfg;
 	GKeyFile *custom_cfg;
         int       defaultval;
 
-        cfg = gdm_common_config_load (config_file, NULL);
-	custom_cfg = gdm_common_config_load (custom_config_file, NULL);
-	gdm_common_config_get_int (cfg, key, &defaultval, NULL);
+        cfg = mdm_common_config_load (config_file, NULL);
+	custom_cfg = mdm_common_config_load (custom_config_file, NULL);
+	mdm_common_config_get_int (cfg, key, &defaultval, NULL);
 
 	if (val == defaultval) {
-		gdm_common_config_remove_key (custom_cfg, key, NULL);
+		mdm_common_config_remove_key (custom_cfg, key, NULL);
 	} else {
-		gdm_common_config_set_int (custom_cfg, key, val);
+		mdm_common_config_set_int (custom_cfg, key, val);
 	}
 
-	gdm_common_config_save (custom_cfg, custom_config_file, NULL);
+	mdm_common_config_save (custom_cfg, custom_config_file, NULL);
 
 	g_key_file_free (cfg);
 	g_key_file_free (custom_cfg);
@@ -440,27 +440,27 @@ gdm_setup_config_set_int (const char *key, int val)
 }
 
 static void
-gdm_setup_config_set_string (const char *key, gchar *val)
+mdm_setup_config_set_string (const char *key, gchar *val)
 {
 	GKeyFile *cfg;
 	GKeyFile *custom_cfg;
         char     *defaultval;
 
-        cfg = gdm_common_config_load (config_file, NULL);
-	custom_cfg = gdm_common_config_load (custom_config_file, NULL);
-	gdm_common_config_get_string (cfg, key, &defaultval, NULL);
+        cfg = mdm_common_config_load (config_file, NULL);
+	custom_cfg = mdm_common_config_load (custom_config_file, NULL);
+	mdm_common_config_get_string (cfg, key, &defaultval, NULL);
 
 	if (defaultval != NULL &&
 	    strcmp (ve_sure_string (val), ve_sure_string (defaultval)) == 0) {
-		gdm_common_config_remove_key (custom_cfg, key, NULL);
+		mdm_common_config_remove_key (custom_cfg, key, NULL);
 	} else {
-		gdm_common_config_set_string (custom_cfg, key, val);
+		mdm_common_config_set_string (custom_cfg, key, val);
 	}
 
 	if (defaultval)
 		g_free (defaultval);
 
-	gdm_common_config_save (custom_cfg, custom_config_file, NULL);
+	mdm_common_config_save (custom_cfg, custom_config_file, NULL);
 
 	g_key_file_free (cfg);
 	g_key_file_free (custom_cfg);
@@ -474,14 +474,14 @@ radiogroup_timeout (GtkWidget *toggle)
 	const char *key = g_object_get_data (G_OBJECT (toggle), "key");
 	GSList *radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
 		
-	if (strcmp (ve_sure_string (key), GDM_KEY_RELAX_PERM) == 0) {
+	if (strcmp (ve_sure_string (key), MDM_KEY_RELAX_PERM) == 0) {
 		GSList *tmp;
 		gint val;
 		gint selected = 0;
 		gint i = 0;
 		gint list_size;
 		
-		val = gdm_config_get_int ((gchar *)key);
+		val = mdm_config_get_int ((gchar *)key);
 		list_size = g_slist_length (radio_group) - 1;
 		
 		for (tmp = radio_group; tmp != NULL; tmp = tmp->next, i++) {
@@ -492,7 +492,7 @@ radiogroup_timeout (GtkWidget *toggle)
 		}
 		
 		if (val != selected)
-			gdm_setup_config_set_int (key, selected);
+			mdm_setup_config_set_int (key, selected);
 			
 	}
 	return FALSE;	
@@ -511,9 +511,9 @@ static gboolean
 toggle_timeout (GtkWidget *toggle)
 {
 	const char *key = g_object_get_data (G_OBJECT (toggle), "key");
-	gboolean    val = gdm_config_get_bool ((gchar *)key);
+	gboolean    val = mdm_config_get_bool ((gchar *)key);
 
-	if (strcmp (ve_sure_string (key), GDM_KEY_GLOBAL_FACE_DIR) == 0) {
+	if (strcmp (ve_sure_string (key), MDM_KEY_GLOBAL_FACE_DIR) == 0) {
 		/* Once enabled write the curently selected item
 		   in the filechooser widget, otherwise disable
 		   the config entry, i.e. write an empty string */
@@ -523,16 +523,16 @@ toggle_timeout (GtkWidget *toggle)
 
 			file_chooser = glade_xml_get_widget (xml, "global_face_dir_filechooser");
 			filename  = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
-			if (strcmp (ve_sure_string (gdm_config_get_string ((char*)key)),
+			if (strcmp (ve_sure_string (mdm_config_get_string ((char*)key)),
 				    ve_sure_string (filename)) != 0)
-				gdm_setup_config_set_string (key, ve_sure_string (filename));
+				mdm_setup_config_set_string (key, ve_sure_string (filename));
 
 			g_free (filename);
 		}
 		else
-			gdm_setup_config_set_string (key, "");		    
+			mdm_setup_config_set_string (key, "");		    
 	}	
-	else if (strcmp (ve_sure_string (key), GDM_KEY_DEFAULT_FACE) == 0) {
+	else if (strcmp (ve_sure_string (key), MDM_KEY_DEFAULT_FACE) == 0) {
 		/* Once enabled write the curently selected item
 		   in the filechooser widget, otherwise disable
 		   the config entry, i.e. write an empty string */
@@ -544,16 +544,16 @@ toggle_timeout (GtkWidget *toggle)
 
 			filename  = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
 			
-			if (strcmp (ve_sure_string (gdm_config_get_string ((char*)key)), 
+			if (strcmp (ve_sure_string (mdm_config_get_string ((char*)key)), 
 				    ve_sure_string (filename)) != 0)				
-				gdm_setup_config_set_string (key, ve_sure_string (filename));
+				mdm_setup_config_set_string (key, ve_sure_string (filename));
 			
 			g_free (filename);
 		}
 		else
-			gdm_setup_config_set_string (key, "");		    
+			mdm_setup_config_set_string (key, "");		    
 	}
-	else if (strcmp (ve_sure_string (key), GDM_KEY_GTKRC) == 0) {
+	else if (strcmp (ve_sure_string (key), MDM_KEY_GTKRC) == 0) {
 		/* Once enabled write the curently selected item
 		   in the filechooser widget, otherwise disable
 		   the config entry, i.e. write an empty string */
@@ -565,16 +565,16 @@ toggle_timeout (GtkWidget *toggle)
 
 			filename  = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
 			
-			if (strcmp (ve_sure_string (gdm_config_get_string ((char*)key)), 
+			if (strcmp (ve_sure_string (mdm_config_get_string ((char*)key)), 
 				    ve_sure_string (filename)) != 0)				
-				gdm_setup_config_set_string (key, ve_sure_string (filename));
+				mdm_setup_config_set_string (key, ve_sure_string (filename));
 			
 			g_free (filename);
 		}
 		else
-			gdm_setup_config_set_string (key, "");		    
+			mdm_setup_config_set_string (key, "");		    
 	}
-	else if (strcmp (ve_sure_string (key), GDM_KEY_DEFAULT_SESSION) == 0) {
+	else if (strcmp (ve_sure_string (key), MDM_KEY_DEFAULT_SESSION) == 0) {
 		/* Once enabled write the curently selected item
 		   in the combobox widget, otherwise disable
 		   the config entry, i.e. write an empty string */		
@@ -589,23 +589,23 @@ toggle_timeout (GtkWidget *toggle)
 
 			selected = gtk_combo_box_get_active (GTK_COMBO_BOX (default_session_combobox));
 			
-			value = gdm_config_get_string ((gchar *)key);
+			value = mdm_config_get_string ((gchar *)key);
 									
 			new_val = g_strdup ((gchar*) g_list_nth_data (sessions, selected));					
 			
 			if (strcmp (ve_sure_string (value), ve_sure_string (new_val)) != 0)				
-				gdm_setup_config_set_string (key, ve_sure_string (new_val));
+				mdm_setup_config_set_string (key, ve_sure_string (new_val));
 			
 			g_free (value);
 			g_free (new_val);
 		}
 		else
-			gdm_setup_config_set_string (key, "");		    
+			mdm_setup_config_set_string (key, "");		    
 	}	
 	else {
 		/* All other cases */
 		if ( ! bool_equal (val, GTK_TOGGLE_BUTTON (toggle)->active)) {
-			gdm_setup_config_set_bool (key, GTK_TOGGLE_BUTTON (toggle)->active);
+			mdm_setup_config_set_bool (key, GTK_TOGGLE_BUTTON (toggle)->active);
 		}
 	}	
 
@@ -617,8 +617,8 @@ command_toggle_timeout (GtkWidget *toggle)
 {
 	const char *key = g_object_get_data (G_OBJECT (toggle), "key");
 	
-	if (strcmp (ve_sure_string (key), GDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE) == 0 ||
-	    strcmp (ve_sure_string (key), GDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE) == 0) {
+	if (strcmp (ve_sure_string (key), MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE) == 0 ||
+	    strcmp (ve_sure_string (key), MDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE) == 0) {
 		/* This only applies to custom commands
 		   First find which command has been ticked on/off then put the new value 
 		   together with the corresponding key into the command changed hash. 
@@ -641,20 +641,20 @@ command_toggle_timeout (GtkWidget *toggle)
 		
 		i = selected - CUSTOM_CMD;
 		key_string = g_strdup_printf("%s%d=", ve_sure_string (key), i); 
-		old_val = gdm_config_get_bool (key_string);
+		old_val = mdm_config_get_bool (key_string);
 		
 		if (val != old_val) {	
 			gboolean *p_val = g_new0 (gboolean, 1);
 			*p_val = val;
-			g_hash_table_insert (GdmCommandChangesUnsaved, g_strdup (key_string), p_val);
+			g_hash_table_insert (MdmCommandChangesUnsaved, g_strdup (key_string), p_val);
 		}
-		else if (g_hash_table_lookup (GdmCommandChangesUnsaved, key_string) != NULL) {
-			g_hash_table_remove (GdmCommandChangesUnsaved, key_string);
+		else if (g_hash_table_lookup (MdmCommandChangesUnsaved, key_string) != NULL) {
+			g_hash_table_remove (MdmCommandChangesUnsaved, key_string);
 		}
 		
 		g_free (key_string);
 		
-		if (g_hash_table_size (GdmCommandChangesUnsaved) == 0)
+		if (g_hash_table_size (MdmCommandChangesUnsaved) == 0)
 			gtk_widget_set_sensitive (apply_cmd_changes, FALSE);
 		else 
 			gtk_widget_set_sensitive (apply_cmd_changes, TRUE);
@@ -675,12 +675,12 @@ logo_toggle_timeout (GtkWidget *toggle)
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooserbutton));
 	
  	if ((GTK_TOGGLE_BUTTON (toggle)->active) == FALSE) {
-		gdm_setup_config_set_string (GDM_KEY_CHOOSER_BUTTON_LOGO, filename);	
-		gdm_setup_config_set_string (key, "");
+		mdm_setup_config_set_string (MDM_KEY_CHOOSER_BUTTON_LOGO, filename);	
+		mdm_setup_config_set_string (key, "");
 	}
 	else if (filename != NULL) {
-		gdm_setup_config_set_string (GDM_KEY_CHOOSER_BUTTON_LOGO, filename);
-		gdm_setup_config_set_string (key, filename);
+		mdm_setup_config_set_string (MDM_KEY_CHOOSER_BUTTON_LOGO, filename);
+		mdm_setup_config_set_string (key, filename);
 	}
 	update_greeters ();
 	g_free (filename);
@@ -740,9 +740,9 @@ intspin_timeout (GtkWidget *spin)
 	int val;
 	gboolean greeters_need_update = FALSE;
 
-	val = gdm_config_get_int ((gchar *)key);
+	val = mdm_config_get_int ((gchar *)key);
 
-	if (strcmp (ve_sure_string (key), GDM_KEY_MINIMAL_UID) == 0){
+	if (strcmp (ve_sure_string (key), MDM_KEY_MINIMAL_UID) == 0){
 		/* We have changed MinimalUID, so we need to go through
 		   the list of existing users in the Include list and remove
 		   the entries that do not match the criteria anymore. If there 
@@ -755,12 +755,12 @@ intspin_timeout (GtkWidget *spin)
 		gchar *timedlogon_user;
 		
 		
-		list = g_strsplit (GdmInclude, ",", 0);
+		list = g_strsplit (MdmInclude, ",", 0);
 		for (i=0; list != NULL && list[i] != NULL; i++) {
-			if (gdm_user_uid (list[i]) >= new_val) 
+			if (mdm_user_uid (list[i]) >= new_val) 
 				continue;					
 			
-			GdmInclude = strings_list_remove (GdmInclude, list[i], ",");
+			MdmInclude = strings_list_remove (MdmInclude, list[i], ",");
 			removed = strings_list_add(removed, list[i], ",");
 			
 		}
@@ -809,7 +809,7 @@ intspin_timeout (GtkWidget *spin)
 			g_free (text);
 			/* Now we need to save updated list, toggle the 
 			   automatic and timed loggon comboboxes and update greeters */
-			gdm_setup_config_set_string (GDM_KEY_INCLUDE, GdmInclude);				
+			mdm_setup_config_set_string (MDM_KEY_INCLUDE, MdmInclude);				
 			
 			greeters_need_update = TRUE;
 
@@ -819,19 +819,19 @@ intspin_timeout (GtkWidget *spin)
 
 		/* We also need to check if user (if any) in the
 		   autologon/timed logon still match the criteria */
-		autologon_user = gdm_config_get_string (GDM_KEY_AUTOMATIC_LOGIN);
-		timedlogon_user = gdm_config_get_string (GDM_KEY_TIMED_LOGIN);
+		autologon_user = mdm_config_get_string (MDM_KEY_AUTOMATIC_LOGIN);
+		timedlogon_user = mdm_config_get_string (MDM_KEY_TIMED_LOGIN);
 
 		if(!ve_string_empty (autologon_user)) {
-			if (gdm_is_user_valid (autologon_user) && gdm_user_uid (autologon_user) < new_val) {
-				gdm_setup_config_set_string (GDM_KEY_AUTOMATIC_LOGIN, "");			
+			if (mdm_is_user_valid (autologon_user) && mdm_user_uid (autologon_user) < new_val) {
+				mdm_setup_config_set_string (MDM_KEY_AUTOMATIC_LOGIN, "");			
 				greeters_need_update = TRUE;
 			}
 		}
 
 		if(!ve_string_empty (timedlogon_user)) {
-			if (gdm_is_user_valid (timedlogon_user) && gdm_user_uid (timedlogon_user) < new_val) {
-				gdm_setup_config_set_string (GDM_KEY_TIMED_LOGIN, "");						
+			if (mdm_is_user_valid (timedlogon_user) && mdm_user_uid (timedlogon_user) < new_val) {
+				mdm_setup_config_set_string (MDM_KEY_TIMED_LOGIN, "");						
 				greeters_need_update = TRUE;
 			}
 		}
@@ -842,13 +842,13 @@ intspin_timeout (GtkWidget *spin)
 	}
 
 	if (val != new_val)
-		gdm_setup_config_set_int (key, new_val);
+		mdm_setup_config_set_int (key, new_val);
 
 	if (greeters_need_update) {
 		setup_user_combobox_list ("autologin_combo",
-					  GDM_KEY_AUTOMATIC_LOGIN);
+					  MDM_KEY_AUTOMATIC_LOGIN);
 		setup_user_combobox_list ("timedlogin_combo",
-					  GDM_KEY_TIMED_LOGIN);
+					  MDM_KEY_TIMED_LOGIN);
 		update_greeters ();
 	}
 
@@ -866,7 +866,7 @@ static GSList *displays_inactive = NULL;
 static GHashTable *dispval_hash  = NULL;
 
 static void
-gdm_load_displays (GKeyFile *cfg,
+mdm_load_displays (GKeyFile *cfg,
 		   char    **keys)
 {
 	GSList *li2;
@@ -884,8 +884,8 @@ gdm_load_displays (GKeyFile *cfg,
 			int keynum = atoi (key);
 			gboolean skip_entry = FALSE;
 
-			fullkey = g_strdup_printf ("%s/%s", GDM_KEY_SECTION_SERVERS, key);
-			gdm_common_config_get_string (cfg, fullkey, &dispval, NULL);
+			fullkey = g_strdup_printf ("%s/%s", MDM_KEY_SECTION_SERVERS, key);
+			mdm_common_config_get_string (cfg, fullkey, &dispval, NULL);
 			g_free (fullkey);
 
 			/* Do not add if already in the list */
@@ -976,18 +976,18 @@ xservers_get_displays (GtkListStore *store)
 	GSList *li;
 	gchar *server, *options;
 
-	custom_cfg = gdm_common_config_load (custom_config_file, NULL);
-        cfg = gdm_common_config_load (config_file, NULL);
+	custom_cfg = mdm_common_config_load (custom_config_file, NULL);
+        cfg = mdm_common_config_load (config_file, NULL);
 
 	/* Fill list with all the active displays */
 	if (custom_cfg != NULL) {
-		keys = g_key_file_get_keys (custom_cfg, GDM_KEY_SECTION_SERVERS, NULL, NULL);
-		gdm_load_displays (custom_cfg, keys);
+		keys = g_key_file_get_keys (custom_cfg, MDM_KEY_SECTION_SERVERS, NULL, NULL);
+		mdm_load_displays (custom_cfg, keys);
 		g_strfreev (keys);
 	}
 
-	keys = g_key_file_get_keys (cfg, GDM_KEY_SECTION_SERVERS, NULL, NULL);
-	gdm_load_displays (cfg, keys);
+	keys = g_key_file_get_keys (cfg, MDM_KEY_SECTION_SERVERS, NULL, NULL);
+	mdm_load_displays (cfg, keys);
 	g_strfreev (keys);
 
 	for (li = displays; li != NULL; li = li->next) {
@@ -1029,7 +1029,7 @@ xserver_update_delete_sensitivity ()
 	GtkWidget *modify_combobox, *delete_button;
 	GtkListStore *store;
 	GtkTreeIter iter;
-	GdmXserver *xserver;
+	MdmXserver *xserver;
 	gchar *text;
 	gchar *selected;
 	gboolean valid;
@@ -1091,7 +1091,7 @@ void init_servers_combobox (int index)
 	GtkWidget *flexible_checkbutton;
 	GtkWidget *priority_spinbutton;
 	GtkListStore *store;
-	GdmXserver *xserver;
+	MdmXserver *xserver;
 
 	mod_combobox = glade_xml_get_widget (xml_xservers, "xserver_mod_combobox");
 	name_entry = glade_xml_get_widget (xml_xservers, "xserver_name_entry");
@@ -1195,9 +1195,9 @@ refresh_remote_tab (void)
 	gtk_combo_box_remove_text (GTK_COMBO_BOX (remote_greeter), REMOTE_PLAIN);
 	
 	local_style  = gtk_combo_box_get_active (GTK_COMBO_BOX (local_greeter));
-	remote_style = gdm_config_get_string (GDM_KEY_REMOTE_GREETER);
+	remote_style = mdm_config_get_string (MDM_KEY_REMOTE_GREETER);
 					     			 
-	if (gdm_config_get_bool (GDM_KEY_XDMCP) == FALSE) {
+	if (mdm_config_get_bool (MDM_KEY_XDMCP) == FALSE) {
 				
 		if (local_style == LOCAL_PLAIN) {
 			gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Themed"));
@@ -1221,7 +1221,7 @@ refresh_remote_tab (void)
 		gtk_widget_hide (configure_xdmcp_vbox);
 	}
 	else {
-		gboolean use_browser = gdm_config_get_bool (GDM_KEY_BROWSER);
+		gboolean use_browser = mdm_config_get_bool (MDM_KEY_BROWSER);
 		
 		if (local_style == LOCAL_PLAIN || local_style == LOCAL_PLAIN_WITH_FACE) {
 
@@ -1232,13 +1232,13 @@ refresh_remote_tab (void)
 				gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Themed with face browser"));
 			}
 			
-			if (strstr (remote_style, "/gdmlogin") != NULL) {
+			if (strstr (remote_style, "/mdmlogin") != NULL) {
 				gtk_combo_box_set_active (GTK_COMBO_BOX (remote_greeter), REMOTE_SAME_AS_LOCAL);
 				update_remote_sensitivity (FALSE);
 				gtk_widget_show (remote_plain_vbox);
 				gtk_widget_hide (remote_themed_vbox);
 			}
-			else if (strstr (remote_style, "/gdmgreeter") != NULL) {
+			else if (strstr (remote_style, "/mdmgreeter") != NULL) {
 				gtk_combo_box_set_active (GTK_COMBO_BOX (remote_greeter), REMOTE_THEMED);
 				update_remote_sensitivity (TRUE);
 				gtk_widget_hide (remote_plain_vbox);
@@ -1253,20 +1253,20 @@ refresh_remote_tab (void)
 				gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Plain with face browser"));
 			}
 
-			if (strstr (remote_style, "/gdmlogin") != NULL) {				
+			if (strstr (remote_style, "/mdmlogin") != NULL) {				
 				gtk_combo_box_set_active (GTK_COMBO_BOX (remote_greeter), REMOTE_PLAIN);
 				update_remote_sensitivity (TRUE);
 				gtk_widget_hide (remote_themed_vbox);
 				gtk_widget_show (remote_plain_vbox);
 			}
-			else if (strstr (remote_style, "/gdmgreeter") != NULL) {
+			else if (strstr (remote_style, "/mdmgreeter") != NULL) {
 				gtk_combo_box_set_active (GTK_COMBO_BOX (remote_greeter), REMOTE_SAME_AS_LOCAL);
 				update_remote_sensitivity (FALSE);
 				gtk_widget_hide (remote_plain_vbox);
 				gtk_widget_show (remote_themed_vbox);
 			}
 		}
-		gtk_widget_set_sensitive (allowremoteauto, gdm_config_get_bool (GDM_KEY_XDMCP));
+		gtk_widget_set_sensitive (allowremoteauto, mdm_config_get_bool (MDM_KEY_XDMCP));
 		gtk_widget_set_sensitive (allowremoteroot, TRUE);
 		gtk_widget_show (welcome_message_vbox);
 		gtk_widget_show (configure_xdmcp_vbox);
@@ -1279,41 +1279,41 @@ refresh_remote_tab (void)
  * displays section and the normal configuration sections.
  */
 static void
-update_xserver (gchar *section, GdmXserver *svr)
+update_xserver (gchar *section, MdmXserver *svr)
 {
 	GKeyFile *custom_cfg;
 	gchar *real_section;
 	gchar *key;
 
-	custom_cfg = gdm_common_config_load (custom_config_file, NULL);
-	real_section = g_strdup_printf ("%s%s", GDM_KEY_SERVER_PREFIX, section);
+	custom_cfg = mdm_common_config_load (custom_config_file, NULL);
+	real_section = g_strdup_printf ("%s%s", MDM_KEY_SERVER_PREFIX, section);
 
-	key = g_strconcat (real_section, "/" GDM_KEY_SERVER_NAME, NULL);
-	gdm_common_config_set_string (custom_cfg, key, svr->name);
+	key = g_strconcat (real_section, "/" MDM_KEY_SERVER_NAME, NULL);
+	mdm_common_config_set_string (custom_cfg, key, svr->name);
 	g_free (key);
 
-	key = g_strconcat (real_section, "/" GDM_KEY_SERVER_COMMAND, NULL);
-	gdm_common_config_set_string (custom_cfg, key, svr->command);
+	key = g_strconcat (real_section, "/" MDM_KEY_SERVER_COMMAND, NULL);
+	mdm_common_config_set_string (custom_cfg, key, svr->command);
 	g_free (key);
 
-	key = g_strconcat (real_section, "/", GDM_KEY_SERVER_CHOOSER, NULL);
-	gdm_common_config_set_boolean (custom_cfg, key, svr->chooser);
+	key = g_strconcat (real_section, "/", MDM_KEY_SERVER_CHOOSER, NULL);
+	mdm_common_config_set_boolean (custom_cfg, key, svr->chooser);
 	g_free (key);
 
-	key = g_strconcat (real_section, "/" GDM_KEY_SERVER_HANDLED, NULL);
-	gdm_common_config_set_boolean (custom_cfg, key, svr->handled);
+	key = g_strconcat (real_section, "/" MDM_KEY_SERVER_HANDLED, NULL);
+	mdm_common_config_set_boolean (custom_cfg, key, svr->handled);
 	g_free (key);
 
-	key = g_strconcat (real_section, "/" GDM_KEY_SERVER_FLEXIBLE, NULL);
-	gdm_common_config_set_boolean (custom_cfg, key, svr->flexible);
+	key = g_strconcat (real_section, "/" MDM_KEY_SERVER_FLEXIBLE, NULL);
+	mdm_common_config_set_boolean (custom_cfg, key, svr->flexible);
 	g_free (key);
 
-	key = g_strconcat (real_section, "/" GDM_KEY_SERVER_PRIORITY, NULL);
-	gdm_common_config_set_int (custom_cfg, key, svr->priority);
+	key = g_strconcat (real_section, "/" MDM_KEY_SERVER_PRIORITY, NULL);
+	mdm_common_config_set_int (custom_cfg, key, svr->priority);
 	g_free (key);
 
         g_free (real_section);
-	gdm_common_config_save (custom_cfg, custom_config_file, NULL);
+	mdm_common_config_save (custom_cfg, custom_config_file, NULL);
 
 	g_key_file_free (custom_cfg);
 
@@ -1327,40 +1327,40 @@ combobox_timeout (GtkWidget *combo_box)
 	int selected = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_box));
 
 	/* Local Greeter Comboboxes */
-	if (strcmp (ve_sure_string (key), GDM_KEY_GREETER) == 0) {
+	if (strcmp (ve_sure_string (key), MDM_KEY_GREETER) == 0) {
 
 		gchar *old_key_val;
 		gchar *new_key_val;
 		gboolean browser_val;
 
-		old_key_val = gdm_config_get_string ((gchar *)key);
+		old_key_val = mdm_config_get_string ((gchar *)key);
 		new_key_val = NULL;
 
 		if (selected == LOCAL_PLAIN_WITH_FACE) {		
-			new_key_val = g_strdup (LIBEXECDIR "/gdmlogin");
+			new_key_val = g_strdup (LIBEXECDIR "/mdmlogin");
 			browser_val = TRUE;
 		} 
 		else if (selected == LOCAL_THEMED) {
-			new_key_val = g_strdup (LIBEXECDIR "/gdmgreeter");
+			new_key_val = g_strdup (LIBEXECDIR "/mdmgreeter");
 			browser_val = FALSE;
 		}
 		else if (selected == LOCAL_THEMED_WITH_FACE) {
-			new_key_val = g_strdup (LIBEXECDIR "/gdmgreeter");
+			new_key_val = g_strdup (LIBEXECDIR "/mdmgreeter");
 			browser_val = TRUE;
 		}
 		else {  /* Plain style */
-			new_key_val = g_strdup (LIBEXECDIR "/gdmlogin");
+			new_key_val = g_strdup (LIBEXECDIR "/mdmlogin");
 			browser_val = FALSE;
 		}		
 		
 		if (new_key_val && 
 		    strcmp (ve_sure_string (old_key_val), ve_sure_string (new_key_val)) != 0) {	
 		    
-			gdm_setup_config_set_string (key, new_key_val);
-			gdm_setup_config_set_bool (GDM_KEY_BROWSER, browser_val);
+			mdm_setup_config_set_string (key, new_key_val);
+			mdm_setup_config_set_bool (MDM_KEY_BROWSER, browser_val);
 		}
 		else {
-			gdm_setup_config_set_bool (GDM_KEY_BROWSER, browser_val);
+			mdm_setup_config_set_bool (MDM_KEY_BROWSER, browser_val);
 		}
 		update_greeters ();
 		
@@ -1368,16 +1368,16 @@ combobox_timeout (GtkWidget *combo_box)
 		g_free (new_key_val);
 	}
 	/* Remote Greeter Comboboxes */
-	else if (strcmp (ve_sure_string (key), GDM_KEY_REMOTE_GREETER) == 0) {
+	else if (strcmp (ve_sure_string (key), MDM_KEY_REMOTE_GREETER) == 0) {
 		
 		if (selected == REMOTE_DISABLED) {
-			gdm_setup_config_set_bool (GDM_KEY_XDMCP, FALSE);		
+			mdm_setup_config_set_bool (MDM_KEY_XDMCP, FALSE);		
 		} else {
 			gchar    *new_key_val = NULL;
 			gboolean free_new_val = TRUE;
 						
 			if (selected == REMOTE_SAME_AS_LOCAL) {
-				new_key_val  = gdm_config_get_string (GDM_KEY_GREETER);
+				new_key_val  = mdm_config_get_string (MDM_KEY_GREETER);
 				free_new_val = FALSE;
 			}
 			else {
@@ -1386,16 +1386,16 @@ combobox_timeout (GtkWidget *combo_box)
 				selected_text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (combo_box));
 
 				if (strstr (ve_sure_string (selected_text), _("Themed")) != NULL) {
-					new_key_val = g_strdup (LIBEXECDIR "/gdmgreeter");
+					new_key_val = g_strdup (LIBEXECDIR "/mdmgreeter");
 				}
 				else {
-					new_key_val = g_strdup (LIBEXECDIR "/gdmlogin");
+					new_key_val = g_strdup (LIBEXECDIR "/mdmlogin");
 				}
 				g_free (selected_text);
 			}			
 			
-			gdm_setup_config_set_string (key, new_key_val);
-			gdm_setup_config_set_bool (GDM_KEY_XDMCP, TRUE);
+			mdm_setup_config_set_string (key, new_key_val);
+			mdm_setup_config_set_bool (MDM_KEY_XDMCP, TRUE);
 			if (free_new_val)
 				g_free (new_key_val);
 		}
@@ -1403,8 +1403,8 @@ combobox_timeout (GtkWidget *combo_box)
 		return FALSE;
 
 	/* Automatic Login Combobox */
-	} else if (strcmp (ve_sure_string (key), GDM_KEY_AUTOMATIC_LOGIN) == 0 ||
-	           strcmp (ve_sure_string (key), GDM_KEY_TIMED_LOGIN) == 0) {
+	} else if (strcmp (ve_sure_string (key), MDM_KEY_AUTOMATIC_LOGIN) == 0 ||
+	           strcmp (ve_sure_string (key), MDM_KEY_TIMED_LOGIN) == 0) {
 
 		GtkTreeIter iter;
 		char *new_val = NULL;
@@ -1425,18 +1425,18 @@ combobox_timeout (GtkWidget *combo_box)
 			   criteria or is not root. If its case 2. we do not do any checking */
 			
 			new_val = gtk_combo_box_get_active_text (GTK_COMBO_BOX (combo_box));
-			if (gdm_is_user_valid (ve_sure_string (new_val))) {
-				gint user_uid = gdm_user_uid (new_val);
-				gint GdmMinimalUID = gdm_config_get_int (GDM_KEY_MINIMAL_UID);
+			if (mdm_is_user_valid (ve_sure_string (new_val))) {
+				gint user_uid = mdm_user_uid (new_val);
+				gint MdmMinimalUID = mdm_config_get_int (MDM_KEY_MINIMAL_UID);
 				
-				if (user_uid == 0 || user_uid < GdmMinimalUID) {
+				if (user_uid == 0 || user_uid < MdmMinimalUID) {
 					/* we can't accept users that have uid lower
 					   than minimal uid, or uid = 0 (root) */
 					gchar *str;
 					GtkWidget *dialog;
 					GtkWidget *setup_dialog;
 					
-					if (gdm_user_uid (new_val) == 0)
+					if (mdm_user_uid (new_val) == 0)
 						str = g_strdup (_("Autologin or timed login to the root account is forbidden."));
 					else 
 						str = g_strdup_printf (_("The \"%s\" user UID is lower than allowed MinimalUID."), new_val);				
@@ -1459,21 +1459,21 @@ combobox_timeout (GtkWidget *combo_box)
 		}
 
 
-		val = gdm_config_get_string ((gchar *)key);
+		val = mdm_config_get_string ((gchar *)key);
 		if (new_val &&
 		    strcmp (ve_sure_string (val), ve_sure_string (new_val)) != 0) {
 
-			gdm_setup_config_set_string (key, new_val);
+			mdm_setup_config_set_string (key, new_val);
 		}
 		g_free (new_val);
 	} 
-	else if (strcmp (ve_sure_string (key), GDM_KEY_GRAPHICAL_THEME_RAND) == 0 ) {	
+	else if (strcmp (ve_sure_string (key), MDM_KEY_GRAPHICAL_THEME_RAND) == 0 ) {	
 	
 		/* Theme Combobox */
 		gboolean new_val;
 		gboolean old_val ;
 		
-		old_val = gdm_config_get_bool ((gchar *)key);
+		old_val = mdm_config_get_bool ((gchar *)key);
 
 		/* Choose to display radio or checkbox toggle column.
 		   We will only set this option to true if there is at least one
@@ -1486,10 +1486,10 @@ combobox_timeout (GtkWidget *combo_box)
 
 		/* Update config */
 		if (new_val != old_val)
-			gdm_setup_config_set_bool (key, new_val);
+			mdm_setup_config_set_bool (key, new_val);
 	}
 	/* Style combobox */
-	else if (strcmp (ve_sure_string (key), GDM_KEY_SERVER_CHOOSER) == 0) {
+	else if (strcmp (ve_sure_string (key), MDM_KEY_SERVER_CHOOSER) == 0) {
 		GtkWidget *mod_combobox;
 		GtkWidget *style_combobox;
 		GSList *li;
@@ -1503,7 +1503,7 @@ combobox_timeout (GtkWidget *combo_box)
 		section = gtk_combo_box_get_active_text (GTK_COMBO_BOX (mod_combobox));
 
 		for (li = xservers; li != NULL; li = li->next) {
-			GdmXserver *svr = li->data;
+			MdmXserver *svr = li->data;
 			if (strcmp (ve_sure_string (svr->id), ve_sure_string (section)) == 0) {
 
 				val_old = svr->chooser;
@@ -1520,27 +1520,27 @@ combobox_timeout (GtkWidget *combo_box)
 		g_free (section);
 	}
 	/* Use 24 clock combobox */
-	else if (strcmp (ve_sure_string (key), GDM_KEY_USE_24_CLOCK) == 0) {		
+	else if (strcmp (ve_sure_string (key), MDM_KEY_USE_24_CLOCK) == 0) {		
 		gchar *val;		
 		gchar *new_val;
 		
 		new_val = gtk_combo_box_get_active_text (GTK_COMBO_BOX (combo_box));
-		val     = gdm_config_get_string ((gchar *)key);
+		val     = mdm_config_get_string ((gchar *)key);
 
 		if (new_val) {
                     if (strcmp (_(new_val), _("auto"))) {
                        if (strcasecmp (ve_sure_string (val), "auto") != 0)
-                          gdm_setup_config_set_string (key, "auto");
+                          mdm_setup_config_set_string (key, "auto");
                     }
                     else if (strcmp (_(new_val), _("yes"))) {
                        if (strcasecmp (ve_sure_string (val), "true") != 0 &&
                            strcasecmp (ve_sure_string (val), "yes") != 0)
-                          gdm_setup_config_set_string (key, "true");
+                          mdm_setup_config_set_string (key, "true");
                     }
                     else {
                        if (strcasecmp (ve_sure_string (val), "false") != 0 &&
                            strcasecmp (ve_sure_string (val), "no") != 0) 
-                           gdm_setup_config_set_string (key, "false");
+                           mdm_setup_config_set_string (key, "false");
 		    }
 		}
 		g_free (new_val);
@@ -1567,17 +1567,17 @@ combobox_timeout (GtkWidget *combo_box)
 		status_label = glade_xml_get_widget (xml_commands, "command_status_label");
 
 		if (selected == HALT_CMD) {
-			val = gdm_config_get_string (GDM_KEY_HALT);		
+			val = mdm_config_get_string (MDM_KEY_HALT);		
 			gtk_entry_set_text (GTK_ENTRY (hrs_cmd_entry), ve_sure_string (val));
 			enabled_command = !ve_string_empty (val);
 		}
 		else if (selected == REBOOT_CMD) {
-			val = gdm_config_get_string (GDM_KEY_REBOOT);			
+			val = mdm_config_get_string (MDM_KEY_REBOOT);			
 			gtk_entry_set_text (GTK_ENTRY (hrs_cmd_entry), ve_sure_string (val));
 			enabled_command = !ve_string_empty (val);
 		}
 		else if (selected == SUSPEND_CMD) {
-			val = gdm_config_get_string (GDM_KEY_SUSPEND);			
+			val = mdm_config_get_string (MDM_KEY_SUSPEND);			
 			gtk_entry_set_text (GTK_ENTRY (hrs_cmd_entry), ve_sure_string (val));
 			enabled_command = !ve_string_empty (val);
 		}
@@ -1586,49 +1586,49 @@ combobox_timeout (GtkWidget *combo_box)
 
 			gint i = selected - CUSTOM_CMD;
 			/* Here we are going to deal with custom commands */
-			key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-			val = gdm_config_get_string (key_string);
+			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
+			val = mdm_config_get_string (key_string);
 			gtk_entry_set_text (GTK_ENTRY (cust_cmd_entry), ve_sure_string (val));
 			enabled_command = !ve_string_empty (val);
 			g_free (key_string);
 			g_free (val);
 			
-			key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
+			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
 			cust_cmd_label_entry  = glade_xml_get_widget (xml_commands, "custom_cmd_label_entry");
-			val = gdm_config_get_string (key_string);
+			val = mdm_config_get_string (key_string);
 			gtk_entry_set_text (GTK_ENTRY (cust_cmd_label_entry), ve_sure_string (val));
 			g_free (key_string);
 			g_free (val);
 
-			key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
+			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
 			cust_cmd_lrlabel_entry  = glade_xml_get_widget (xml_commands, "custom_cmd_lrlabel_entry");
-			val = gdm_config_get_string (key_string);
+			val = mdm_config_get_string (key_string);
 			gtk_entry_set_text (GTK_ENTRY (cust_cmd_lrlabel_entry), ve_sure_string (val));
 			g_free (key_string);
 			g_free (val);
 
-			key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, i);
+			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, i);
 			cust_cmd_text_entry  = glade_xml_get_widget (xml_commands, "custom_cmd_text_entry");
-			val = gdm_config_get_string (key_string);
+			val = mdm_config_get_string (key_string);
 			gtk_entry_set_text (GTK_ENTRY (cust_cmd_text_entry), ve_sure_string (val));
 			g_free (key_string);
 			g_free (val);
 			
-			key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE, i);
+			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE, i);
 			cust_cmd_tooltip_entry  = glade_xml_get_widget (xml_commands, "custom_cmd_tooltip_entry");
-			val = gdm_config_get_string (key_string);
+			val = mdm_config_get_string (key_string);
 			gtk_entry_set_text (GTK_ENTRY (cust_cmd_tooltip_entry), ve_sure_string (val));
 			g_free (key_string);
 			
-			key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE, i);
+			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE, i);
 			cust_cmd_norestart_checkbox  = glade_xml_get_widget (xml_commands, "custom_cmd_norestart_checkbutton");
-			bool_val = gdm_config_get_bool (key_string);
+			bool_val = mdm_config_get_bool (key_string);
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cust_cmd_norestart_checkbox), bool_val);
 			g_free (key_string);
 			
-			key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
+			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
 			cust_cmd_persistent_checkbox  = glade_xml_get_widget (xml_commands, "custom_cmd_persistent_checkbutton");
-			bool_val = gdm_config_get_bool (key_string);
+			bool_val = mdm_config_get_bool (key_string);
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cust_cmd_persistent_checkbox), bool_val);
 			g_free (key_string);
 
@@ -1641,17 +1641,17 @@ combobox_timeout (GtkWidget *combo_box)
 			gtk_label_set_text (GTK_LABEL (status_label), _("(Disabled)"));	
 	}
 	/* Default session combobox*/
-	else if (strcmp (ve_sure_string (key), GDM_KEY_DEFAULT_SESSION) == 0) {
+	else if (strcmp (ve_sure_string (key), MDM_KEY_DEFAULT_SESSION) == 0) {
 		/* First we get the selected index. Next we lookup the actual
 		   filename in the List of sessions */
 		gchar *val;
 		gchar *new_val = NULL;
 		
-		val = gdm_config_get_string ((gchar *)key);
+		val = mdm_config_get_string ((gchar *)key);
 		new_val = g_strdup ((gchar*) g_list_nth_data (sessions, selected));
 		
 		if (strcmp (ve_sure_string (val), ve_sure_string (new_val)) != 0)
-			gdm_setup_config_set_string (key,  ve_sure_string (new_val));
+			mdm_setup_config_set_string (key,  ve_sure_string (new_val));
 
 		g_free (new_val);
 		g_free (val);		
@@ -1715,7 +1715,7 @@ combobox_changed (GtkWidget *combobox)
 {
 	const char *key = g_object_get_data (G_OBJECT (combobox), "key");
 	
-	if (strcmp (ve_sure_string (key), GDM_KEY_GREETER) == 0) {
+	if (strcmp (ve_sure_string (key), MDM_KEY_GREETER) == 0) {
 
 		GtkWidget *local_plain_vbox;
 		GtkWidget *local_themed_vbox;
@@ -1736,7 +1736,7 @@ combobox_changed (GtkWidget *combobox)
 			gtk_widget_hide (local_themed_vbox);
 		}
 	}
-	else if (strcmp (ve_sure_string (key), GDM_KEY_REMOTE_GREETER) == 0) {
+	else if (strcmp (ve_sure_string (key), MDM_KEY_REMOTE_GREETER) == 0) {
 
 		GtkWidget *remote_plain_vbox;
 		GtkWidget *remote_themed_vbox;
@@ -1784,10 +1784,10 @@ combobox_changed (GtkWidget *combobox)
 			if (selected == REMOTE_SAME_AS_LOCAL) {
 				gchar *greeter_style;
 				
-				greeter_style = gdm_config_get_string (GDM_KEY_GREETER);
+				greeter_style = mdm_config_get_string (MDM_KEY_GREETER);
 				update_remote_sensitivity (FALSE);
 				
-				if (strstr (greeter_style, "/gdmgreeter") != NULL) {
+				if (strstr (greeter_style, "/mdmgreeter") != NULL) {
 					gtk_widget_hide (remote_plain_vbox);
 					gtk_widget_show (remote_themed_vbox);
 				}
@@ -1815,7 +1815,7 @@ combobox_changed (GtkWidget *combobox)
 		}
 
 	}
-	else if (strcmp (ve_sure_string (key), GDM_KEY_GRAPHICAL_THEME_RAND) == 0) {
+	else if (strcmp (ve_sure_string (key), MDM_KEY_GRAPHICAL_THEME_RAND) == 0) {
 
 		GtkWidget *theme_list;
 		GtkWidget *theme_list_remote;
@@ -1863,10 +1863,10 @@ combobox_changed (GtkWidget *combobox)
 					gtk_dialog_run (GTK_DIALOG (warn_dlg));
 					gtk_widget_destroy (warn_dlg);
 					
-					GdmRandomFromSelectedChangesWarn = TRUE;
+					MdmRandomFromSelectedChangesWarn = TRUE;
 				}
 				else if (selected == ONE_THEME)
-					GdmRandomFromSelectedChangesWarn = FALSE;
+					MdmRandomFromSelectedChangesWarn = FALSE;
 			}
 		}
 		else {
@@ -1896,10 +1896,10 @@ combobox_changed (GtkWidget *combobox)
 					gtk_dialog_run (GTK_DIALOG (warn_dlg));
 					gtk_widget_destroy (warn_dlg);
 					
-					GdmRandomFromSelectedChangesWarn = TRUE;
+					MdmRandomFromSelectedChangesWarn = TRUE;
 				}
 				else if (selected == ONE_THEME) {
-					GdmRandomFromSelectedChangesWarn = FALSE;
+					MdmRandomFromSelectedChangesWarn = FALSE;
 				}
 			}
 		}
@@ -1945,13 +1945,13 @@ combobox_changed (GtkWidget *combobox)
 		else {
 			GValue value = {0, };
 			GtkTreeModel *model;
-			gboolean GdmGraphicalThemeRand;
+			gboolean MdmGraphicalThemeRand;
 			
 			/* Determine if the theme selected is currently active */
 			model = gtk_tree_view_get_model (GTK_TREE_VIEW (theme_list));
 			
-			GdmGraphicalThemeRand = gdm_config_get_bool (GDM_KEY_GRAPHICAL_THEME_RAND);
-			if (GdmGraphicalThemeRand) {
+			MdmGraphicalThemeRand = mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND);
+			if (MdmGraphicalThemeRand) {
 				gtk_tree_model_get_value (model, &iter,
 				                          THEME_COLUMN_SELECTED_LIST, &value);
 				
@@ -1989,7 +1989,7 @@ combobox_changed (GtkWidget *combobox)
 			g_value_unset (&value);
 		}      			      
 	}
-	else if (strcmp (ve_sure_string (key), GDM_KEY_SERVER_PREFIX) == 0 ) {
+	else if (strcmp (ve_sure_string (key), MDM_KEY_SERVER_PREFIX) == 0 ) {
 		init_servers_combobox (gtk_combo_box_get_active (GTK_COMBO_BOX (combobox)));
 	}
 	else if (strcmp (ve_sure_string (key), "command_chooser_combobox") == 0) {
@@ -2002,7 +2002,7 @@ combobox_changed (GtkWidget *combobox)
 		/* First of all we need to check if we had made any changes
 		   to any of the command fields. If so user gets reminded and
 		   given an option to save, or discard */
-		if (g_hash_table_size (GdmCommandChangesUnsaved) != 0) {
+		if (g_hash_table_size (MdmCommandChangesUnsaved) != 0) {
 			GtkWidget *prompt;
 			GtkWidget *setup_dialog;
 			GtkWidget *apply_command;
@@ -2030,7 +2030,7 @@ combobox_changed (GtkWidget *combobox)
 				g_signal_emit_by_name (G_OBJECT (apply_command), "clicked");
 			
 			else {
-				g_hash_table_remove_all (GdmCommandChangesUnsaved);				
+				g_hash_table_remove_all (MdmCommandChangesUnsaved);				
 				gtk_widget_set_sensitive (apply_command, FALSE);	
 			}
 		}
@@ -2106,7 +2106,7 @@ toggle_toggled_sensitivity_negative (GtkWidget *toggle, GtkWidget *depend)
 static void
 timedlogin_allow_remote_toggled (GtkWidget *toggle, GtkWidget *depend)
 {
-	if (gdm_config_get_bool (GDM_KEY_XDMCP) == TRUE) {
+	if (mdm_config_get_bool (MDM_KEY_XDMCP) == TRUE) {
 		gtk_widget_set_sensitive (depend, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)));
 	}
 	else {
@@ -2122,7 +2122,7 @@ setup_notify_toggle (const char *name,
 	gboolean val;
 
 	toggle = glade_xml_get_widget (xml, name);
-	val    = gdm_config_get_bool ((gchar *)key);
+	val    = mdm_config_get_bool ((gchar *)key);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), val);
 
@@ -2190,7 +2190,7 @@ setup_notify_toggle (const char *name,
 		gtk_widget_set_sensitive (timedlogin_seconds_spin_button, val);
 		gtk_widget_set_sensitive (timedlogin_seconds_units, val);
 
-		if (gdm_config_get_bool (GDM_KEY_XDMCP) == FALSE) {
+		if (mdm_config_get_bool (MDM_KEY_XDMCP) == FALSE) {
 			gtk_widget_set_sensitive (timedlogin_allow_remote, FALSE);
 		}
 		else {
@@ -2319,19 +2319,19 @@ commands_entry_timeout (GtkWidget *entry)
 		gchar *cmd_key = NULL;
 
 		if (selected == HALT_CMD)
-			cmd_key = g_strdup (GDM_KEY_HALT);			
+			cmd_key = g_strdup (MDM_KEY_HALT);			
 		else if (selected == REBOOT_CMD)
-			cmd_key = g_strdup (GDM_KEY_REBOOT);
+			cmd_key = g_strdup (MDM_KEY_REBOOT);
 		else if (selected == SUSPEND_CMD)
-			cmd_key = g_strdup (GDM_KEY_SUSPEND);
+			cmd_key = g_strdup (MDM_KEY_SUSPEND);
 		
-		old_val = gdm_config_get_string (cmd_key);		
+		old_val = mdm_config_get_string (cmd_key);		
 			
 		if (strcmp (ve_sure_string (val), ve_sure_string (old_val)) != 0) 			
-			g_hash_table_insert (GdmCommandChangesUnsaved, g_strdup (cmd_key), g_strdup (val));
+			g_hash_table_insert (MdmCommandChangesUnsaved, g_strdup (cmd_key), g_strdup (val));
 
-		else if (g_hash_table_lookup (GdmCommandChangesUnsaved, cmd_key) != NULL)			
-			g_hash_table_remove (GdmCommandChangesUnsaved, cmd_key);		
+		else if (g_hash_table_lookup (MdmCommandChangesUnsaved, cmd_key) != NULL)			
+			g_hash_table_remove (MdmCommandChangesUnsaved, cmd_key);		
 		
 		g_free (old_val);
 		g_free (cmd_key);
@@ -2344,20 +2344,20 @@ commands_entry_timeout (GtkWidget *entry)
 
 		i = selected - CUSTOM_CMD;
 		key_string = g_strdup_printf("%s%d=", ve_sure_string (key), i); 
-		old_val = gdm_config_get_string (key_string);				
+		old_val = mdm_config_get_string (key_string);				
 	
 		
 		if (strcmp (ve_sure_string (val), ve_sure_string (old_val)) != 0)
-			g_hash_table_insert (GdmCommandChangesUnsaved, g_strdup (key_string), g_strdup (val));
+			g_hash_table_insert (MdmCommandChangesUnsaved, g_strdup (key_string), g_strdup (val));
 		
-		else if (g_hash_table_lookup (GdmCommandChangesUnsaved, key_string) != NULL)
-			g_hash_table_remove (GdmCommandChangesUnsaved, key_string);
+		else if (g_hash_table_lookup (MdmCommandChangesUnsaved, key_string) != NULL)
+			g_hash_table_remove (MdmCommandChangesUnsaved, key_string);
 		
 		g_free (old_val);
 		g_free (key_string);
 	}	
 	
-	if (g_hash_table_size (GdmCommandChangesUnsaved) == 0)
+	if (g_hash_table_size (MdmCommandChangesUnsaved) == 0)
 		gtk_widget_set_sensitive (apply_cmd_changes, FALSE);
 	else 
 		gtk_widget_set_sensitive (apply_cmd_changes, TRUE);
@@ -2413,7 +2413,7 @@ setup_xdmcp_notify_toggle (const char *name,
 
 	toggle = glade_xml_get_widget (xml_xdmcp, name);
 
-	val = gdm_config_get_bool ((gchar *)key);
+	val = mdm_config_get_bool ((gchar *)key);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), val);
 
@@ -2451,7 +2451,7 @@ root_not_allowed (GtkWidget *combo_box)
 						 GTK_BUTTONS_OK,
 						 _("Autologin or timed login to the root account is not allowed."),
 						 "");
-		if (RUNNING_UNDER_GDM)
+		if (RUNNING_UNDER_MDM)
 			setup_cursor (GDK_LEFT_PTR);
 		gtk_dialog_run (GTK_DIALOG (dlg));
 		gtk_widget_destroy (dlg);
@@ -2476,14 +2476,14 @@ setup_user_combobox_list (const char *name, const char *key)
 	GList *users = NULL;
 	GList *users_string = NULL;
 	GList *li;
-	static gboolean GDM_IS_LOCAL = FALSE;
+	static gboolean MDM_IS_LOCAL = FALSE;
 	char *selected_user;
 	gint size_of_users = 0;
 	int selected = -1;
 	int cnt;
 
 	combobox_store = gtk_list_store_new (USERLIST_NUM_COLUMNS, G_TYPE_STRING);
-	selected_user  = gdm_config_get_string ((gchar *)key);
+	selected_user  = mdm_config_get_string ((gchar *)key);
 
 	/* normally empty */
 	users_string = g_list_append (users_string, g_strdup (""));
@@ -2491,13 +2491,13 @@ setup_user_combobox_list (const char *name, const char *key)
 	if ( ! ve_string_empty (selected_user))
 		users_string = g_list_append (users_string, g_strdup (selected_user));
 
-	if (ve_string_empty (g_getenv ("GDM_IS_LOCAL")))
-		GDM_IS_LOCAL = FALSE;
+	if (ve_string_empty (g_getenv ("MDM_IS_LOCAL")))
+		MDM_IS_LOCAL = FALSE;
 	else
-		GDM_IS_LOCAL = TRUE;
+		MDM_IS_LOCAL = TRUE;
 
-	gdm_users_init (&users, &users_string, selected_user, NULL,
-	                &size_of_users, GDM_IS_LOCAL, FALSE);
+	mdm_users_init (&users, &users_string, selected_user, NULL,
+	                &size_of_users, MDM_IS_LOCAL, FALSE);
 
 	users_string = g_list_sort (users_string, users_string_compare_func);
 
@@ -2540,7 +2540,7 @@ setup_intspin (const char *name,
 	       const char *key)
 {
 	GtkWidget *spin = glade_xml_get_widget (xml, name);
-	int val = gdm_config_get_int ((gchar *)key);
+	int val = mdm_config_get_int ((gchar *)key);
 
 	g_object_set_data_full (G_OBJECT (spin),
 				"key", g_strdup (key),
@@ -2558,7 +2558,7 @@ setup_xdmcp_intspin (const char *name,
 	             const char *key)
 {
 	GtkWidget *spin;
-	int val = gdm_config_get_int ((gchar *)key);
+	int val = mdm_config_get_int ((gchar *)key);
 
 	spin = glade_xml_get_widget (xml_xdmcp, name);
 
@@ -2596,12 +2596,12 @@ setup_include_exclude (GtkWidget *treeview, const char *key)
 	gtk_tree_view_set_model (GTK_TREE_VIEW(treeview),
 		(GTK_TREE_MODEL (face_store)));
 
-	if ((! ve_string_empty (GdmInclude)) && 
-            (strcmp (ve_sure_string (key), GDM_KEY_INCLUDE) == 0))
-		list = g_strsplit (GdmInclude, ",", 0);
-	else if ((! ve_string_empty (GdmExclude)) &&
-                 (strcmp (ve_sure_string (key), GDM_KEY_EXCLUDE) == 0))
-		list = g_strsplit (GdmExclude, ",", 0);
+	if ((! ve_string_empty (MdmInclude)) && 
+            (strcmp (ve_sure_string (key), MDM_KEY_INCLUDE) == 0))
+		list = g_strsplit (MdmInclude, ",", 0);
+	else if ((! ve_string_empty (MdmExclude)) &&
+                 (strcmp (ve_sure_string (key), MDM_KEY_EXCLUDE) == 0))
+		list = g_strsplit (MdmExclude, ",", 0);
 	else
 		list = NULL;
 
@@ -2658,7 +2658,7 @@ face_add (FaceData *fd)
 	user_entry = glade_xml_get_widget (xml_add_users, "fb_addentry");
 	text = gtk_entry_get_text (GTK_ENTRY (user_entry));
 
-	if (gdm_is_user_valid (text)) {
+	if (mdm_is_user_valid (text)) {
 		valid = gtk_tree_model_get_iter_first (fd->fc->include_model, &iter);
 		while (valid) {
 			gtk_tree_model_get (fd->fc->include_model, &iter, USERLIST_NAME,
@@ -2717,8 +2717,8 @@ face_add (FaceData *fd)
 
 		if (fd->type == INCLUDE) {
 			/* Now the user is valid but his/hers UID might be smaller than the MinimalUID */
-			gint user_uid = gdm_user_uid (text);
-			if (user_uid < gdm_config_get_int (GDM_KEY_MINIMAL_UID)) {
+			gint user_uid = mdm_user_uid (text);
+			if (user_uid < mdm_config_get_int (MDM_KEY_MINIMAL_UID)) {
 				GtkWidget *setup_dialog;
 				GtkWidget *dialog;
 				gchar *str;
@@ -2747,7 +2747,7 @@ face_add (FaceData *fd)
 				USERLIST_NAME, text, -1);
 		}
 		gtk_widget_set_sensitive (fd->fc->apply, TRUE);
-		GdmUserChangesUnsaved = TRUE;
+		MdmUserChangesUnsaved = TRUE;
 	} else {
 		GtkWidget *setup_dialog;
 		GtkWidget *dialog;
@@ -2783,7 +2783,7 @@ face_del (GtkWidget *button, gpointer data)
 		if (gtk_tree_selection_get_selected (selection, &(fd->fc->include_model), &iter)) {
 			gtk_list_store_remove (fd->fc->include_store, &iter);
 			gtk_widget_set_sensitive (fd->fc->apply, TRUE);
-			GdmUserChangesUnsaved = TRUE;
+			MdmUserChangesUnsaved = TRUE;
 		}
 	} else if (fd->type == EXCLUDE) {
 		selection = gtk_tree_view_get_selection (
@@ -2792,7 +2792,7 @@ face_del (GtkWidget *button, gpointer data)
 		if (gtk_tree_selection_get_selected (selection, &(fd->fc->exclude_model), &iter)) {
 			gtk_list_store_remove (fd->fc->exclude_store, &iter);
 			gtk_widget_set_sensitive (fd->fc->apply, TRUE);
-			GdmUserChangesUnsaved = TRUE;
+			MdmUserChangesUnsaved = TRUE;
 		}
 	}
 }
@@ -2821,8 +2821,8 @@ browser_move (GtkWidget *button, gpointer data)
 	        gtk_tree_model_get (model, &iter, USERLIST_NAME, &text, -1);
 		if (fd->type == INCLUDE) {
 			/* We cant move the users that have uid smaller that MinimalUID */
-			gint user_uid = gdm_user_uid (text);
-			if (user_uid < gdm_config_get_int (GDM_KEY_MINIMAL_UID)) {
+			gint user_uid = mdm_user_uid (text);
+			if (user_uid < mdm_config_get_int (MDM_KEY_MINIMAL_UID)) {
 				GtkWidget *setup_dialog;
 				GtkWidget *dialog;
 				gchar *str;
@@ -2853,7 +2853,7 @@ browser_move (GtkWidget *button, gpointer data)
 				USERLIST_NAME, text, -1);
 		}
 		gtk_widget_set_sensitive (fd->fc->apply, TRUE);
-		GdmUserChangesUnsaved = TRUE;
+		MdmUserChangesUnsaved = TRUE;
 	}
 }
 
@@ -2864,15 +2864,15 @@ static gboolean
 unsaved_data_from_hash_table_func (gpointer key, gpointer value, gpointer user_data)
 {
 	gchar *c_key = key;
-        if (strncmp (c_key, GDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE, 
-		     strlen (GDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE)) == 0 ||
-	    strncmp (c_key, GDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE,
-		     strlen (GDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE)) == 0) {
+        if (strncmp (c_key, MDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE, 
+		     strlen (MDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE)) == 0 ||
+	    strncmp (c_key, MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE,
+		     strlen (MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE)) == 0) {
 		gboolean *p_val = (gboolean*)value;
-		gdm_setup_config_set_bool (c_key, *p_val);
+		mdm_setup_config_set_bool (c_key, *p_val);
 	}
 	else
-		gdm_setup_config_set_string (c_key, (gchar*)value);	
+		mdm_setup_config_set_string (c_key, (gchar*)value);	
 	
 	/* And final cleanup */
 	g_free (value);
@@ -2904,10 +2904,10 @@ command_apply (GtkWidget *button, gpointer data)
 
 	command = gtk_entry_get_text (GTK_ENTRY (cmd_path_entry));
 	
-	command_exists = ve_string_empty (command) || gdm_working_command_exists (command);
+	command_exists = ve_string_empty (command) || mdm_working_command_exists (command);
 	
 	if(command_exists)
-		g_hash_table_foreach_remove (GdmCommandChangesUnsaved,
+		g_hash_table_foreach_remove (MdmCommandChangesUnsaved,
 					     (GHRFunc) unsaved_data_from_hash_table_func, NULL);
 	
 	else {
@@ -2926,8 +2926,8 @@ command_apply (GtkWidget *button, gpointer data)
 	}
 	
 	/* Just to make sure */
-	if (g_hash_table_size (GdmCommandChangesUnsaved) != 0)
-		g_hash_table_remove_all (GdmCommandChangesUnsaved);
+	if (g_hash_table_size (MdmCommandChangesUnsaved) != 0)
+		g_hash_table_remove_all (MdmCommandChangesUnsaved);
 
 	gtk_widget_set_sensitive (button, FALSE);
 	
@@ -2952,7 +2952,7 @@ browser_apply (GtkWidget *button, gpointer data)
 	gint minimalUID = -1;
 	gboolean any_removed = FALSE;
 	
-	minimalUID = gdm_config_get_int (GDM_KEY_MINIMAL_UID);
+	minimalUID = mdm_config_get_int (MDM_KEY_MINIMAL_UID);
 	
 	valid = gtk_tree_model_get_iter_first (fc->include_model, &iter);
 	while (valid) {
@@ -2963,7 +2963,7 @@ browser_apply (GtkWidget *button, gpointer data)
 		   a user and clicking on the apply button UID has not changed 
 		   If so then the offending users should be removed
 		*/
-		if (gdm_user_uid (model_text) < minimalUID) {
+		if (mdm_user_uid (model_text) < minimalUID) {
 			valid = gtk_list_store_remove (fc->include_store, &iter);
 			any_removed = TRUE;
 		}
@@ -2995,11 +2995,11 @@ browser_apply (GtkWidget *button, gpointer data)
 		
 	}
 
-	val = gdm_config_get_string (GDM_KEY_INCLUDE);
+	val = mdm_config_get_string (MDM_KEY_INCLUDE);
 
 	if (strcmp (ve_sure_string (val),
 		    ve_sure_string (userlist->str)) != 0) {
-		gdm_setup_config_set_string (GDM_KEY_INCLUDE, userlist->str);
+		mdm_setup_config_set_string (MDM_KEY_INCLUDE, userlist->str);
 		update_greet = TRUE;
 	}
 
@@ -3019,11 +3019,11 @@ browser_apply (GtkWidget *button, gpointer data)
 		valid = gtk_tree_model_iter_next (fc->exclude_model, &iter);
 	}
 
-	val = gdm_config_get_string (GDM_KEY_EXCLUDE);
+	val = mdm_config_get_string (MDM_KEY_EXCLUDE);
 
 	if (strcmp (ve_sure_string (val),
 		    ve_sure_string (userlist->str)) != 0) {
-		gdm_setup_config_set_string (GDM_KEY_EXCLUDE, userlist->str);
+		mdm_setup_config_set_string (MDM_KEY_EXCLUDE, userlist->str);
 		update_greet = TRUE;
 	}
 
@@ -3031,15 +3031,15 @@ browser_apply (GtkWidget *button, gpointer data)
 		update_greeters ();
 
 	/* Re-initialize combox with updated userlist. */
-	GdmInclude = gdm_config_get_string (GDM_KEY_INCLUDE);
-	GdmExclude = gdm_config_get_string (GDM_KEY_EXCLUDE);
+	MdmInclude = mdm_config_get_string (MDM_KEY_INCLUDE);
+	MdmExclude = mdm_config_get_string (MDM_KEY_EXCLUDE);
 	setup_user_combobox_list ("autologin_combo",
-			  GDM_KEY_AUTOMATIC_LOGIN);
+			  MDM_KEY_AUTOMATIC_LOGIN);
 	setup_user_combobox_list ("timedlogin_combo",
-			  GDM_KEY_TIMED_LOGIN);
+			  MDM_KEY_TIMED_LOGIN);
 	gtk_widget_set_sensitive (button, FALSE);
 
-	GdmUserChangesUnsaved = FALSE;
+	MdmUserChangesUnsaved = FALSE;
 	g_string_free (userlist, TRUE);
 }
 
@@ -3145,9 +3145,9 @@ setup_face (void)
 	fc.allusers          = glade_xml_get_widget (xml, "fb_allusers");
 
 	fc.include_store = setup_include_exclude (fc.include_treeview,
-	                                          GDM_KEY_INCLUDE);
+	                                          MDM_KEY_INCLUDE);
 	fc.exclude_store = setup_include_exclude (fc.exclude_treeview,
-	                                          GDM_KEY_EXCLUDE);
+	                                          MDM_KEY_EXCLUDE);
 
 	fc.include_model = gtk_tree_view_get_model (
 	                   GTK_TREE_VIEW (fc.include_treeview));
@@ -3169,7 +3169,7 @@ setup_face (void)
 	face_apply.include = &fd_include;
 	face_apply.exclude = &fd_exclude;
 
-	xml_add_users = glade_xml_new (GDM_GLADE_DIR "/gdmsetup.glade", "add_user_dialog", NULL);
+	xml_add_users = glade_xml_new (MDM_GLADE_DIR "/mdmsetup.glade", "add_user_dialog", NULL);
 
 	g_signal_connect (G_OBJECT (fc.include_add), "clicked",
 	                  G_CALLBACK (users_add_button_clicked), &fd_include);
@@ -3209,25 +3209,25 @@ static void
 include_all_toggle (GtkWidget *toggle)
 {
 	if (GTK_TOGGLE_BUTTON (toggle)->active)
-		GdmIncludeAll = TRUE;
+		MdmIncludeAll = TRUE;
 	else
-		GdmIncludeAll = FALSE;
+		MdmIncludeAll = FALSE;
 
 	setup_user_combobox_list ("autologin_combo",
-			  GDM_KEY_AUTOMATIC_LOGIN);
+			  MDM_KEY_AUTOMATIC_LOGIN);
 	setup_user_combobox_list ("timedlogin_combo",
-			  GDM_KEY_TIMED_LOGIN);
+			  MDM_KEY_TIMED_LOGIN);
 }
 
 static gboolean
 greeter_toggle_timeout (GtkWidget *toggle)
 {
 	const char *key = g_object_get_data (G_OBJECT (toggle), "key");
-	gboolean val = gdm_config_get_bool ((gchar *)key);
+	gboolean val = mdm_config_get_bool ((gchar *)key);
 
 	if ( ! bool_equal (val, GTK_TOGGLE_BUTTON (toggle)->active)) {
 	
-		if (strcmp (ve_sure_string (key), GDM_KEY_BACKGROUND_SCALE_TO_FIT) == 0) {
+		if (strcmp (ve_sure_string (key), MDM_KEY_BACKGROUND_SCALE_TO_FIT) == 0) {
 	
 			if (gtk_notebook_get_current_page (GTK_NOTEBOOK (setup_notebook)) == LOCAL_TAB) {
 
@@ -3247,10 +3247,10 @@ greeter_toggle_timeout (GtkWidget *toggle)
 				                              GTK_TOGGLE_BUTTON (toggle)->active);	
 			}
 		}
-		gdm_setup_config_set_bool (key, GTK_TOGGLE_BUTTON (toggle)->active);
+		mdm_setup_config_set_bool (key, GTK_TOGGLE_BUTTON (toggle)->active);
 		update_greeters ();
 
-		if (strcmp (ve_sure_string (key), GDM_KEY_INCLUDE_ALL) == 0) {
+		if (strcmp (ve_sure_string (key), MDM_KEY_INCLUDE_ALL) == 0) {
 			include_all_toggle (toggle);
 		}
 	}
@@ -3311,19 +3311,19 @@ local_background_type_toggle_timeout (GtkWidget *toggle)
 		
 	if (image_value == TRUE && color_value == TRUE) {		
 		/* Image & color */
-                gdm_setup_config_set_int (GDM_KEY_BACKGROUND_TYPE, 1);
+                mdm_setup_config_set_int (MDM_KEY_BACKGROUND_TYPE, 1);
 	}
 	else if (image_value == FALSE && color_value == TRUE) {
 		/* Color only */
-		gdm_setup_config_set_int (GDM_KEY_BACKGROUND_TYPE, 2);
+		mdm_setup_config_set_int (MDM_KEY_BACKGROUND_TYPE, 2);
 	}
 	else if (image_value == TRUE && color_value == FALSE) {
 		/* Image only*/
-		gdm_setup_config_set_int (GDM_KEY_BACKGROUND_TYPE, 3);
+		mdm_setup_config_set_int (MDM_KEY_BACKGROUND_TYPE, 3);
 	}
 	else {
 		/* No Background */
-		gdm_setup_config_set_int (GDM_KEY_BACKGROUND_TYPE, 0);
+		mdm_setup_config_set_int (MDM_KEY_BACKGROUND_TYPE, 0);
 	}
 		
 	update_greeters ();
@@ -3341,7 +3341,7 @@ setup_greeter_toggle (const char *name,
 		      const char *key)
 {
 	GtkWidget *toggle = glade_xml_get_widget (xml, name);
-	gboolean val = gdm_config_get_bool ((gchar *)key);
+	gboolean val = mdm_config_get_bool ((gchar *)key);
 
 	g_object_set_data_full (G_OBJECT (toggle), "key", g_strdup (key),
 		(GDestroyNotify) g_free);
@@ -3469,7 +3469,7 @@ greeter_color_timeout (GtkWidget *picker)
 
 		GtkWidget *colorbutton;
 		
-		if (strcmp (GDM_KEY_GRAPHICAL_THEMED_COLOR, ve_sure_string (key)) == 0) {
+		if (strcmp (MDM_KEY_GRAPHICAL_THEMED_COLOR, ve_sure_string (key)) == 0) {
 			colorbutton = glade_xml_get_widget (xml, "remote_background_theme_colorbutton");
 		} else {
 			colorbutton = glade_xml_get_widget (xml, "remote_background_colorbutton");
@@ -3479,7 +3479,7 @@ greeter_color_timeout (GtkWidget *picker)
 	else {
 		GtkWidget *colorbutton;
 
-		if (strcmp (GDM_KEY_GRAPHICAL_THEMED_COLOR, ve_sure_string (key)) == 0) {
+		if (strcmp (MDM_KEY_GRAPHICAL_THEMED_COLOR, ve_sure_string (key)) == 0) {
 			colorbutton = glade_xml_get_widget (xml, "local_background_theme_colorbutton");
 		} else {
 			colorbutton = glade_xml_get_widget (xml, "local_background_colorbutton");
@@ -3492,10 +3492,10 @@ greeter_color_timeout (GtkWidget *picker)
 	                         (guint16)color_val.green / 256, 
 	                         (guint16)color_val.blue / 256);
 
-	val = gdm_config_get_string ((gchar *)key);
+	val = mdm_config_get_string ((gchar *)key);
 
 	if (strcmp (ve_sure_string (val), ve_sure_string (color)) != 0) {
-		gdm_setup_config_set_string (key, ve_sure_string (color));
+		mdm_setup_config_set_string (key, ve_sure_string (color));
 		update_greeters ();
 	}
 
@@ -3516,7 +3516,7 @@ setup_greeter_color (const char *name,
 		     const char *key)
 {
 	GtkWidget *picker = glade_xml_get_widget (xml, name);
-	char *val = gdm_config_get_string ((gchar *)key);
+	char *val = mdm_config_get_string ((gchar *)key);
 
 	g_object_set_data_full (G_OBJECT (picker),
 				"key", g_strdup (key),
@@ -3557,17 +3557,17 @@ greeter_entry_untranslate_timeout (GtkWidget *entry)
 	char       *prefix;
 	char      **keys;
 
-	custom_cfg = gdm_common_config_load (custom_config_file, NULL);
+	custom_cfg = mdm_common_config_load (custom_config_file, NULL);
         key = g_object_get_data (G_OBJECT (entry), "key");
 
 	text = gtk_entry_get_text (GTK_ENTRY (entry));
 
 	config_group = config_key = NULL;
-	if (! gdm_common_config_parse_key_string (key, &config_group, &config_key, NULL, NULL)) {
+	if (! mdm_common_config_parse_key_string (key, &config_group, &config_key, NULL, NULL)) {
 		goto out;
 	}
 
-	gdm_setup_config_set_string (key, (char *)ve_sure_string (text));
+	mdm_setup_config_set_string (key, (char *)ve_sure_string (text));
 	update_greeters ();
 
  out:
@@ -3645,19 +3645,19 @@ command_response (GtkWidget *button, gpointer data)
 	selected = gtk_combo_box_get_active (GTK_COMBO_BOX (command_combobox));
 	
 	if (selected == HALT_CMD)
-		value = gdm_config_get_string (GDM_KEY_HALT);			
+		value = mdm_config_get_string (MDM_KEY_HALT);			
 	else if (selected == REBOOT_CMD)
-		value = gdm_config_get_string (GDM_KEY_REBOOT);		
+		value = mdm_config_get_string (MDM_KEY_REBOOT);		
 	else if (selected == SUSPEND_CMD) 
-		value = gdm_config_get_string (GDM_KEY_SUSPEND);
+		value = mdm_config_get_string (MDM_KEY_SUSPEND);
 	else {
 		gchar *key_string;
 		gint i;
 
 		i = selected - CUSTOM_CMD;
 		
-		key_string = g_strdup_printf("%s%d=", GDM_KEY_CUSTOM_CMD_TEMPLATE, i); 
-		value = gdm_config_get_string (key_string);		
+		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i); 
+		value = mdm_config_get_string (key_string);		
 		g_free (key_string);
 	}
 	
@@ -3683,9 +3683,9 @@ default_filechooser_response (GtkWidget *file_chooser, gpointer data)
 		
 	filename  = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
 	key = g_object_get_data (G_OBJECT (file_chooser), "key");	
-	value     = gdm_config_get_string (key);
+	value     = mdm_config_get_string (key);
 	
-	if (strcmp (ve_sure_string (key), GDM_KEY_GLOBAL_FACE_DIR) == 0) {
+	if (strcmp (ve_sure_string (key), MDM_KEY_GLOBAL_FACE_DIR) == 0) {
 		/* we need to append trailing / so it matches the default
 		   config  values. This is not really necessary but makes
 		   things neater */
@@ -3694,14 +3694,14 @@ default_filechooser_response (GtkWidget *file_chooser, gpointer data)
 		corr_filename = g_strdup_printf("%s/", ve_sure_string (filename));
 		
 		if (strcmp (ve_sure_string (value), corr_filename) != 0)
-			gdm_setup_config_set_string (key, corr_filename);	
+			mdm_setup_config_set_string (key, corr_filename);	
 		
 		g_free (corr_filename);
 	}
 	else {
 		/* All other cases */
 		if (strcmp (ve_sure_string (value), ve_sure_string (filename)) != 0)
-			gdm_setup_config_set_string (key, ve_sure_string (filename));		
+			mdm_setup_config_set_string (key, ve_sure_string (filename));		
 	}
 	
 	g_free (filename);
@@ -3729,7 +3729,7 @@ setup_greeter_untranslate_entry (const char *name,
 	GtkWidget *entry = glade_xml_get_widget (xml, name);
 	char *val;
 
-	val = gdm_config_get_translated_string ((gchar *)key);
+	val = mdm_config_get_translated_string ((gchar *)key);
 
 	g_object_set_data_full (G_OBJECT (entry),
 				"key", g_strdup (key),
@@ -3754,7 +3754,7 @@ xdmcp_button_clicked (void)
 
 		GtkWidget *parent;
 
-		xml_xdmcp = glade_xml_new (GDM_GLADE_DIR "/gdmsetup.glade", "xdmcp_dialog", NULL);
+		xml_xdmcp = glade_xml_new (MDM_GLADE_DIR "/mdmsetup.glade", "xdmcp_dialog", NULL);
 
 		parent = glade_xml_get_widget (xml, "setup_dialog");
 		dialog = glade_xml_get_widget (xml_xdmcp, "xdmcp_dialog");
@@ -3762,15 +3762,15 @@ xdmcp_button_clicked (void)
 		gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
 		gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
 
-		setup_xdmcp_notify_toggle ("honour_indirect", GDM_KEY_INDIRECT);
-		setup_xdmcp_intspin ("udpport", GDM_KEY_UDP_PORT);
-		setup_xdmcp_intspin ("maxpending", GDM_KEY_MAX_PENDING);
-		setup_xdmcp_intspin ("maxpendingindirect", GDM_KEY_MAX_INDIRECT);
-		setup_xdmcp_intspin ("maxremotesessions", GDM_KEY_MAX_SESSIONS);
-		setup_xdmcp_intspin ("maxwait", GDM_KEY_MAX_WAIT);
-		setup_xdmcp_intspin ("maxwaitindirect", GDM_KEY_MAX_WAIT_INDIRECT);
-		setup_xdmcp_intspin ("displaysperhost", GDM_KEY_DISPLAYS_PER_HOST);
-		setup_xdmcp_intspin ("pinginterval", GDM_KEY_PING_INTERVAL);
+		setup_xdmcp_notify_toggle ("honour_indirect", MDM_KEY_INDIRECT);
+		setup_xdmcp_intspin ("udpport", MDM_KEY_UDP_PORT);
+		setup_xdmcp_intspin ("maxpending", MDM_KEY_MAX_PENDING);
+		setup_xdmcp_intspin ("maxpendingindirect", MDM_KEY_MAX_INDIRECT);
+		setup_xdmcp_intspin ("maxremotesessions", MDM_KEY_MAX_SESSIONS);
+		setup_xdmcp_intspin ("maxwait", MDM_KEY_MAX_WAIT);
+		setup_xdmcp_intspin ("maxwaitindirect", MDM_KEY_MAX_WAIT_INDIRECT);
+		setup_xdmcp_intspin ("displaysperhost", MDM_KEY_DISPLAYS_PER_HOST);
+		setup_xdmcp_intspin ("pinginterval", MDM_KEY_PING_INTERVAL);
 	}
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_hide (dialog);
@@ -3782,7 +3782,7 @@ apply_command_changes (GObject *object, gint response, gpointer command_data)
 {
 	GtkWidget *dialog = command_data;
 	
-	if (g_hash_table_size (GdmCommandChangesUnsaved) != 0 && 
+	if (g_hash_table_size (MdmCommandChangesUnsaved) != 0 && 
 	    response != GTK_RESPONSE_HELP) {
 
 		GtkWidget *prompt;
@@ -3810,8 +3810,8 @@ apply_command_changes (GObject *object, gint response, gpointer command_data)
 		}
 		else {
 			/* Just to make sure */
-			if (g_hash_table_size (GdmCommandChangesUnsaved) != 0)
-				g_hash_table_remove_all (GdmCommandChangesUnsaved);
+			if (g_hash_table_size (MdmCommandChangesUnsaved) != 0)
+				g_hash_table_remove_all (MdmCommandChangesUnsaved);
 		}
 	}
 }
@@ -3852,7 +3852,7 @@ command_button_clicked (void)
 		GtkWidget *apply_command_changes_button;
 		gint i;
 
-		xml_commands = glade_xml_new (GDM_GLADE_DIR "/gdmsetup.glade", "commands_dialog", NULL);
+		xml_commands = glade_xml_new (MDM_GLADE_DIR "/mdmsetup.glade", "commands_dialog", NULL);
 
 		command_chooser = glade_xml_get_widget (xml_commands, "cmd_type_combobox");
 
@@ -3883,7 +3883,7 @@ command_button_clicked (void)
 		gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
 
 		/* Set up unsaved changes storage container */
-		GdmCommandChangesUnsaved = g_hash_table_new (g_str_hash, g_str_equal);
+		MdmCommandChangesUnsaved = g_hash_table_new (g_str_hash, g_str_equal);
 				
 		
 		/* Add halt, reboot and suspend commands */
@@ -3892,7 +3892,7 @@ command_button_clicked (void)
 		gtk_combo_box_append_text (GTK_COMBO_BOX (command_chooser), _("Suspend command"));
 		
 		/* Add all the custom commands */
-		for (i = 0; i < GDM_CUSTOM_COMMAND_MAX; i++) {
+		for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
 			gchar *label = g_strdup_printf("Custom command %d", i);
 			gtk_combo_box_append_text (GTK_COMBO_BOX (command_chooser), label);
 			g_free (label);
@@ -3908,14 +3908,14 @@ command_button_clicked (void)
 		   as their only functionality would be to notify about changes */
 		
 		setup_commands_text_entry ("hrs_cmd_path_entry", "hrs_custom_cmd");
-		setup_commands_text_entry ("custom_cmd_path_entry", GDM_KEY_CUSTOM_CMD_TEMPLATE);
-		setup_commands_text_entry ("custom_cmd_label_entry", GDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE);
-		setup_commands_text_entry ("custom_cmd_lrlabel_entry", GDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE);
-		setup_commands_text_entry ("custom_cmd_text_entry", GDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE);
-		setup_commands_text_entry ("custom_cmd_tooltip_entry", GDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE);
+		setup_commands_text_entry ("custom_cmd_path_entry", MDM_KEY_CUSTOM_CMD_TEMPLATE);
+		setup_commands_text_entry ("custom_cmd_label_entry", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE);
+		setup_commands_text_entry ("custom_cmd_lrlabel_entry", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE);
+		setup_commands_text_entry ("custom_cmd_text_entry", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE);
+		setup_commands_text_entry ("custom_cmd_tooltip_entry", MDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE);
 		
-		setup_commands_notify_toggle ("custom_cmd_persistent_checkbutton", GDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE);
-		setup_commands_notify_toggle ("custom_cmd_norestart_checkbutton", GDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE);	
+		setup_commands_notify_toggle ("custom_cmd_persistent_checkbutton", MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE);
+		setup_commands_notify_toggle ("custom_cmd_norestart_checkbutton", MDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE);	
 		
 		/* Set up append command buttons */
 		setup_general_command_buttons("hrs_command_add", "add_hrs_cmd_button");
@@ -3949,7 +3949,7 @@ command_button_clicked (void)
 	do {
 		response = gtk_dialog_run (GTK_DIALOG (dialog));
 		if (response == GTK_RESPONSE_HELP) {
-			g_spawn_command_line_sync ("gnome-open ghelp:gdm", NULL, NULL,
+			g_spawn_command_line_sync ("gnome-open ghelp:mdm", NULL, NULL,
 						   NULL, NULL);
 		}
 	} while (response != GTK_RESPONSE_CLOSE &&
@@ -3971,21 +3971,21 @@ setup_greeter_combobox (const char *name,
                         const char *key)
 {
 	GtkWidget *combobox = glade_xml_get_widget (xml, name);
-	char *greetval      = g_strdup (gdm_config_get_string ((gchar *)key));
+	char *greetval      = g_strdup (mdm_config_get_string ((gchar *)key));
 
 	if (greetval != NULL &&
 	    strcmp (ve_sure_string (greetval),
-	    LIBEXECDIR "/gdmlogin --disable-sound --disable-crash-dialog") == 0) {
+	    LIBEXECDIR "/mdmlogin --disable-sound --disable-crash-dialog") == 0) {
 		g_free (greetval);
-		greetval = g_strdup (LIBEXECDIR "/gdmlogin");
+		greetval = g_strdup (LIBEXECDIR "/mdmlogin");
 	}
 
 	/* Set initial state of local style combo box. */
-	if (strcmp (ve_sure_string (key), GDM_KEY_GREETER) == 0) {
+	if (strcmp (ve_sure_string (key), MDM_KEY_GREETER) == 0) {
 
-		gboolean val = gdm_config_get_bool (GDM_KEY_BROWSER);
+		gboolean val = mdm_config_get_bool (MDM_KEY_BROWSER);
 
-		if (strstr (greetval, "/gdmlogin") != NULL) {
+		if (strstr (greetval, "/mdmlogin") != NULL) {
 	
 			GtkWidget *local_plain_vbox;
 			GtkWidget *local_themed_vbox;			
@@ -4002,7 +4002,7 @@ setup_greeter_combobox (const char *name,
 			gtk_widget_show (local_plain_vbox);
 			gtk_widget_hide (local_themed_vbox);
 		}
-		else if (strstr (greetval, "/gdmgreeter") != NULL) {
+		else if (strstr (greetval, "/mdmgreeter") != NULL) {
 			GtkWidget *local_plain_vbox;
 			GtkWidget *local_themed_vbox;
 
@@ -4020,7 +4020,7 @@ setup_greeter_combobox (const char *name,
 		}
 	}
 	/* Set initial state of remote style combo box. */
-	else if (strcmp (ve_sure_string (key), GDM_KEY_REMOTE_GREETER) == 0) {
+	else if (strcmp (ve_sure_string (key), MDM_KEY_REMOTE_GREETER) == 0) {
 		refresh_remote_tab ();
 	}
 
@@ -4111,7 +4111,7 @@ themes_list_contains (const char *themes_list, const char *theme)
 	if (ve_string_empty (themes_list))
 		return FALSE;
 
-	vec = g_strsplit (themes_list, GDM_DELIMITER_THEMES, -1);
+	vec = g_strsplit (themes_list, MDM_DELIMITER_THEMES, -1);
 	if (vec == NULL)
 		return FALSE;
 
@@ -4206,8 +4206,8 @@ strings_list_remove (char *strings_list, const char *string, const char *sep)
 static void
 acc_modules_toggled (GtkWidget *toggle, gpointer data)
 {
-	gboolean add_gtk_modules = gdm_config_get_bool (GDM_KEY_ADD_GTK_MODULES);
-	char *modules_list       = g_strdup (gdm_config_get_string (GDM_KEY_GTK_MODULES_LIST));
+	gboolean add_gtk_modules = mdm_config_get_bool (MDM_KEY_ADD_GTK_MODULES);
+	char *modules_list       = g_strdup (mdm_config_get_string (MDM_KEY_GTK_MODULES_LIST));
 
 	/* first whack the modules from the list */
 	modules_list = modules_list_remove (modules_list, "gail");
@@ -4222,24 +4222,24 @@ acc_modules_toggled (GtkWidget *toggle, gpointer data)
 		}
 
 		modules_list = strings_list_add (modules_list, "gail",
-			GDM_DELIMITER_MODULES);
+			MDM_DELIMITER_MODULES);
 		modules_list = strings_list_add (modules_list, "atk-bridge",
-			GDM_DELIMITER_MODULES);
+			MDM_DELIMITER_MODULES);
 		modules_list = strings_list_add (modules_list,
 			LIBDIR "/gtk-2.0/modules/libkeymouselistener",
-			GDM_DELIMITER_MODULES);
+			MDM_DELIMITER_MODULES);
 		modules_list = strings_list_add (modules_list,
 			LIBDIR "/gtk-2.0/modules/libdwellmouselistener",
-			GDM_DELIMITER_MODULES);
+			MDM_DELIMITER_MODULES);
 		add_gtk_modules = TRUE;
 	}
 
 	if (ve_string_empty (modules_list))
 		add_gtk_modules = FALSE;
 
-	gdm_setup_config_set_string (GDM_KEY_GTK_MODULES_LIST,
+	mdm_setup_config_set_string (MDM_KEY_GTK_MODULES_LIST,
 	                      ve_sure_string (modules_list));
-	gdm_setup_config_set_bool (GDM_KEY_ADD_GTK_MODULES,
+	mdm_setup_config_set_bool (MDM_KEY_ADD_GTK_MODULES,
 	                    add_gtk_modules);
 
 	g_free (modules_list);
@@ -4253,10 +4253,10 @@ test_sound (GtkWidget *button, gpointer data)
 	const char *argv[3];
 
 	if ((filename == NULL) || g_access (filename, R_OK) != 0 ||
-	    ve_string_empty (GdmSoundProgram))
+	    ve_string_empty (MdmSoundProgram))
 	       return;
 
-	argv[0] = GdmSoundProgram;
+	argv[0] = MdmSoundProgram;
 	argv[1] = filename;
 	argv[2] = NULL;
 
@@ -4281,10 +4281,10 @@ sound_response (GtkWidget *file_chooser, gpointer data)
 		
 	filename  = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
 	sound_key = g_object_get_data (G_OBJECT (file_chooser), "key");	
-	value     = gdm_config_get_string (sound_key);
+	value     = mdm_config_get_string (sound_key);
 	
 	if (strcmp (ve_sure_string (value), ve_sure_string (filename)) != 0) {
-		gdm_setup_config_set_string (sound_key,
+		mdm_setup_config_set_string (sound_key,
 			(char *)ve_sure_string (filename));
 		update_greeters ();
 	}
@@ -4302,7 +4302,7 @@ setup_users_tab (void)
 	gchar *filename;
 
 	setup_greeter_toggle ("fb_allusers",
-			      GDM_KEY_INCLUDE_ALL);
+			      MDM_KEY_INCLUDE_ALL);
 	setup_face ();
 
 	/* Setup default face */
@@ -4313,7 +4313,7 @@ setup_users_tab (void)
         gtk_file_filter_add_pixbuf_formats (filter);
         gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (default_face_filechooser), filter);
 
-	filename = gdm_config_get_string (GDM_KEY_DEFAULT_FACE);
+	filename = mdm_config_get_string (MDM_KEY_DEFAULT_FACE);
 
 	default_face_checkbox = glade_xml_get_widget (xml, "default_face_checkbutton");
 
@@ -4331,14 +4331,14 @@ setup_users_tab (void)
 	}
 	
 	g_object_set_data_full (G_OBJECT (default_face_filechooser),
-				"key", g_strdup (GDM_KEY_DEFAULT_FACE),
+				"key", g_strdup (MDM_KEY_DEFAULT_FACE),
 				(GDestroyNotify) g_free);
 	g_signal_connect (G_OBJECT (default_face_filechooser), "selection-changed",
 			  G_CALLBACK (default_filechooser_response),
 			  NULL);	
 	
 	g_object_set_data_full (G_OBJECT (default_face_checkbox),
-				"key", g_strdup (GDM_KEY_DEFAULT_FACE),
+				"key", g_strdup (MDM_KEY_DEFAULT_FACE),
 				(GDestroyNotify) g_free);       	
 	g_signal_connect (G_OBJECT (default_face_checkbox), "toggled",
 			  G_CALLBACK (toggle_toggled), default_face_checkbox);	
@@ -4350,7 +4350,7 @@ setup_users_tab (void)
 	
 	global_face_dir_filechooser = glade_xml_get_widget (xml, "global_face_dir_filechooser");
 
-	filename = gdm_config_get_string (GDM_KEY_GLOBAL_FACE_DIR);
+	filename = mdm_config_get_string (MDM_KEY_GLOBAL_FACE_DIR);
 
 	global_face_dir_checkbox = glade_xml_get_widget (xml, "global_face_dir_checkbutton");
 
@@ -4367,13 +4367,13 @@ setup_users_tab (void)
        
 
 	g_object_set_data_full (G_OBJECT (global_face_dir_filechooser),
-				"key", g_strdup (GDM_KEY_GLOBAL_FACE_DIR),
+				"key", g_strdup (MDM_KEY_GLOBAL_FACE_DIR),
 				(GDestroyNotify) g_free);		
 	g_signal_connect (G_OBJECT (global_face_dir_filechooser), "selection-changed",
 			  G_CALLBACK (default_filechooser_response), NULL);
 			
 	g_object_set_data_full (G_OBJECT (global_face_dir_checkbox),
-				"key", g_strdup (GDM_KEY_GLOBAL_FACE_DIR),
+				"key", g_strdup (MDM_KEY_GLOBAL_FACE_DIR),
 				(GDestroyNotify) g_free);       	
 	g_signal_connect (G_OBJECT (global_face_dir_checkbox), "toggled",
 			  G_CALLBACK (toggle_toggled), global_face_dir_checkbox);	
@@ -4395,9 +4395,9 @@ setup_accessibility_tab (void)
 	GtkFileFilter *all_sounds_filter;
 	GtkFileFilter *all_files_filter;
 	gboolean add_gtk_modules;
-	gchar *gdm_key_sound_ready;
-	gchar *gdm_key_sound_success;
-	gchar *gdm_key_sound_failure;
+	gchar *mdm_key_sound_ready;
+	gchar *mdm_key_sound_success;
+	gchar *mdm_key_sound_failure;
 	gchar *modules_list;
 	gchar *value;
 	
@@ -4416,16 +4416,16 @@ setup_accessibility_tab (void)
 	access_sound_failure_play_button = glade_xml_get_widget (xml, "acc_soundtest_failure_button");
 
 	setup_greeter_toggle ("acc_theme",
-	                      GDM_KEY_ALLOW_GTK_THEME_CHANGE);
+	                      MDM_KEY_ALLOW_GTK_THEME_CHANGE);
 	setup_greeter_toggle ("acc_sound_ready", 
-	                      GDM_KEY_SOUND_ON_LOGIN);
+	                      MDM_KEY_SOUND_ON_LOGIN);
 	setup_greeter_toggle ("acc_sound_success",
-	                      GDM_KEY_SOUND_ON_LOGIN_SUCCESS);
+	                      MDM_KEY_SOUND_ON_LOGIN_SUCCESS);
 	setup_greeter_toggle ("acc_sound_failure",
-	                      GDM_KEY_SOUND_ON_LOGIN_FAILURE);
+	                      MDM_KEY_SOUND_ON_LOGIN_FAILURE);
 
-	add_gtk_modules = gdm_config_get_bool (GDM_KEY_ADD_GTK_MODULES);
-	modules_list    = gdm_config_get_string (GDM_KEY_GTK_MODULES_LIST);
+	add_gtk_modules = mdm_config_get_bool (MDM_KEY_ADD_GTK_MODULES);
+	modules_list    = mdm_config_get_string (MDM_KEY_GTK_MODULES_LIST);
 
 	if (!(add_gtk_modules &&
 	    modules_list_contains (modules_list, "gail") &&
@@ -4459,7 +4459,7 @@ setup_accessibility_tab (void)
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (access_sound_failure_file_chooser), all_sounds_filter);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (access_sound_failure_file_chooser), all_files_filter);
 		
-	value = gdm_config_get_string (GDM_KEY_SOUND_ON_LOGIN_FILE);
+	value = mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE);
 
 	if (value != NULL && *value != '\0') {
 		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (access_sound_ready_file_chooser), 
@@ -4470,7 +4470,7 @@ setup_accessibility_tab (void)
 		                                     DATADIR"/sounds");
 	}
 
-	value = gdm_config_get_string (GDM_KEY_SOUND_ON_LOGIN_SUCCESS_FILE);
+	value = mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_SUCCESS_FILE);
 
 	if (value != NULL && *value != '\0') {
 		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (access_sound_success_file_chooser),
@@ -4481,7 +4481,7 @@ setup_accessibility_tab (void)
 		                                     DATADIR"/sounds");
 	}
 	
-	value = gdm_config_get_string (GDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE);
+	value = mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE);
 
 	if (value != NULL && *value != '\0') {
 		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (access_sound_failure_file_chooser),
@@ -4492,20 +4492,20 @@ setup_accessibility_tab (void)
 		                                     DATADIR"/sounds");
 	}
 	
-	gdm_key_sound_ready = g_strdup (GDM_KEY_SOUND_ON_LOGIN_FILE);
+	mdm_key_sound_ready = g_strdup (MDM_KEY_SOUND_ON_LOGIN_FILE);
 	
 	g_object_set_data (G_OBJECT (access_sound_ready_file_chooser), "key",
-	                   gdm_key_sound_ready);
+	                   mdm_key_sound_ready);
 	
-	gdm_key_sound_success = g_strdup (GDM_KEY_SOUND_ON_LOGIN_SUCCESS_FILE);
+	mdm_key_sound_success = g_strdup (MDM_KEY_SOUND_ON_LOGIN_SUCCESS_FILE);
 
 	g_object_set_data (G_OBJECT (access_sound_success_file_chooser), "key",
-	                   gdm_key_sound_success);
+	                   mdm_key_sound_success);
 	
-	gdm_key_sound_failure = g_strdup (GDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE);
+	mdm_key_sound_failure = g_strdup (MDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE);
 
 	g_object_set_data (G_OBJECT (access_sound_failure_file_chooser), "key",
-	                   gdm_key_sound_failure);
+	                   mdm_key_sound_failure);
 
 	g_signal_connect (G_OBJECT (enable_accessible_login), "toggled",
 			  G_CALLBACK (acc_modules_toggled), NULL);			  			  
@@ -4531,12 +4531,12 @@ get_theme_dir (void)
 	 * we use strdup to build a reasonable value if the configuration value
 	 * is not good.  So use g_strdup here.
 	 */
-	char *theme_dir = g_strdup (gdm_config_get_string (GDM_KEY_GRAPHICAL_THEME_DIR));
+	char *theme_dir = g_strdup (mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME_DIR));
 
 	if (theme_dir == NULL ||
 	    theme_dir[0] == '\0' ||
 	    g_access (theme_dir, R_OK) != 0) {
-		theme_dir = g_strdup (DATADIR "/gdm/themes/");
+		theme_dir = g_strdup (DATADIR "/mdm/themes/");
 	}
 
 	return theme_dir;
@@ -4564,7 +4564,7 @@ gg_selection_changed (GtkTreeSelection *selection, gpointer data)
 	GtkTextBuffer *buffer_local, *buffer_remote;
 	GtkTextIter iter_local, iter_remote;
 	GValue value  = {0, };
-	gboolean GdmGraphicalThemeRand;
+	gboolean MdmGraphicalThemeRand;
 	gchar *str;
 	gint selected = -1;
 
@@ -4630,8 +4630,8 @@ gg_selection_changed (GtkTreeSelection *selection, gpointer data)
 		gtk_widget_set_sensitive (delete_button_remote, TRUE);
 	}
 	/* Determine if the theme selected is currently active */
-	GdmGraphicalThemeRand = gdm_config_get_bool (GDM_KEY_GRAPHICAL_THEME_RAND);
-	if (GdmGraphicalThemeRand) {
+	MdmGraphicalThemeRand = mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND);
+	if (MdmGraphicalThemeRand) {
 		gtk_tree_model_get_value (model, &iter, THEME_COLUMN_SELECTED_LIST, &value);
 	} else {
 		gtk_tree_model_get_value (model, &iter, THEME_COLUMN_SELECTED, &value);
@@ -4748,18 +4748,18 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 		if (dent->d_name[0] == '.')
 			continue;
 		n = g_strconcat (theme_dir, "/", dent->d_name,
-				 "/GdmGreeterTheme.desktop", NULL);
+				 "/MdmGreeterTheme.desktop", NULL);
 		if (g_access (n, R_OK) != 0) {
 			g_free (n);
 			n = g_strconcat (theme_dir, "/", dent->d_name,
-					 "/GdmGreeterTheme.info", NULL);
+					 "/MdmGreeterTheme.info", NULL);
 		}
 		if (g_access (n, R_OK) != 0) {
 			g_free (n);
 			continue;
 		}
 
-		file = gdm_get_theme_greeter (n, dent->d_name);
+		file = mdm_get_theme_greeter (n, dent->d_name);
 		full = g_strconcat (theme_dir, "/", dent->d_name,
 				    "/", file, NULL);
 		if (g_access (full, R_OK) != 0) {
@@ -4782,24 +4782,24 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 			/* It might be the case that the config option RandomThemes that 
 			   do not longer exist in the theme dir. Here we rectifying that */
 			real_selected_themes = strings_list_add (real_selected_themes,
-								 dent->d_name, GDM_DELIMITER_THEMES);
+								 dent->d_name, MDM_DELIMITER_THEMES);
 		}
 		else
 			sel_themes = FALSE;
 
-		theme_file = gdm_common_config_load (n, NULL);
+		theme_file = mdm_common_config_load (n, NULL);
 		name = NULL;
-		gdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Name", &name, NULL);
+		mdm_common_config_get_translated_string (theme_file, "MdmGreeterTheme/Name", &name, NULL);
 		if (ve_string_empty (name)) {
 			g_free (name);
 			name = g_strdup (dent->d_name);
 		}
 
 		desc = author = copyright = ss = NULL;
-		gdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Description", &desc, NULL);
-		gdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Author", &author, NULL);
-		gdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Copyright", &copyright, NULL);
-		gdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Screenshot", &ss, NULL);
+		mdm_common_config_get_translated_string (theme_file, "MdmGreeterTheme/Description", &desc, NULL);
+		mdm_common_config_get_translated_string (theme_file, "MdmGreeterTheme/Author", &author, NULL);
+		mdm_common_config_get_translated_string (theme_file, "MdmGreeterTheme/Copyright", &copyright, NULL);
+		mdm_common_config_get_translated_string (theme_file, "MdmGreeterTheme/Screenshot", &ss, NULL);
 
 		g_key_file_free (theme_file);
 
@@ -4874,8 +4874,8 @@ greeter_theme_timeout (GtkWidget *toggle)
 	char *theme;
 	char *themes;
 
-	theme  = gdm_config_get_string (GDM_KEY_GRAPHICAL_THEME);
-	themes = gdm_config_get_string (GDM_KEY_GRAPHICAL_THEMES);
+	theme  = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);
+	themes = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMES);
 
 	/* If no checkbox themes selected */
 	if (selected_themes == NULL)
@@ -4885,7 +4885,7 @@ greeter_theme_timeout (GtkWidget *toggle)
 	if (strcmp (ve_sure_string (theme),
 		ve_sure_string (selected_theme)) != 0) {
 
-		gdm_setup_config_set_string (GDM_KEY_GRAPHICAL_THEME,
+		mdm_setup_config_set_string (MDM_KEY_GRAPHICAL_THEME,
 			selected_theme);
 		update_greeters ();
 	}
@@ -4893,7 +4893,7 @@ greeter_theme_timeout (GtkWidget *toggle)
 	if (strcmp (ve_sure_string (themes),
 		ve_sure_string (selected_themes)) != 0) {
 
-		gdm_setup_config_set_string (GDM_KEY_GRAPHICAL_THEMES,
+		mdm_setup_config_set_string (MDM_KEY_GRAPHICAL_THEMES,
 			selected_themes);
 
 		/* This should only be executed if we dealing with
@@ -4902,14 +4902,14 @@ greeter_theme_timeout (GtkWidget *toggle)
 		   If there is at least one random theme selected and the random 
 		   theme option was false we force it to be true */		
 		if (ve_string_empty (selected_themes) && 
-		    gdm_config_get_bool (GDM_KEY_GRAPHICAL_THEME_RAND)) {
-			gdm_setup_config_set_bool (GDM_KEY_GRAPHICAL_THEME_RAND, FALSE);
-			GdmRandomFromSelectedChangesWarn = TRUE;
+		    mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND)) {
+			mdm_setup_config_set_bool (MDM_KEY_GRAPHICAL_THEME_RAND, FALSE);
+			MdmRandomFromSelectedChangesWarn = TRUE;
 			
 		} else if (!ve_string_empty (selected_themes) && 
-			   !gdm_config_get_bool (GDM_KEY_GRAPHICAL_THEME_RAND)) {
-			gdm_setup_config_set_bool (GDM_KEY_GRAPHICAL_THEME_RAND, TRUE);
-			GdmRandomFromSelectedChangesWarn = FALSE;
+			   !mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND)) {
+			mdm_setup_config_set_bool (MDM_KEY_GRAPHICAL_THEME_RAND, TRUE);
+			MdmRandomFromSelectedChangesWarn = FALSE;
 		}
 	       
 		update_greeters ();
@@ -5000,7 +5000,7 @@ selected_toggled (GtkCellRendererToggle *cell,
 	
 			if (selected)
 				selected_themes = strings_list_add (selected_themes,
-					theme_name, GDM_DELIMITER_THEMES);
+					theme_name, MDM_DELIMITER_THEMES);
 	
 			g_free (theme_name);
 			gtk_tree_path_next (path);
@@ -5206,14 +5206,14 @@ get_the_dir (FILE *fp, char **error)
 		}
 
 		if ( ! got_info) {
-			s = g_strconcat (dir, "/GdmGreeterTheme.info", NULL);
+			s = g_strconcat (dir, "/MdmGreeterTheme.info", NULL);
 			if (strcmp (ve_sure_string (buf), ve_sure_string (s)) == 0)
 				got_info = TRUE;
 			g_free (s);
 		}
 
 		if ( ! got_info) {
-			s = g_strconcat (dir, "/GdmGreeterTheme.desktop", NULL);
+			s = g_strconcat (dir, "/MdmGreeterTheme.desktop", NULL);
 			if (strcmp (ve_sure_string (buf), ve_sure_string (s)) == 0)
 				got_info = TRUE;
 			g_free (s);
@@ -5227,7 +5227,7 @@ get_the_dir (FILE *fp, char **error)
 		*error = _("File not a tar.gz or tar archive");
 	else
 		*error = _("Archive does not include a "
-			   "GdmGreeterTheme.info file");
+			   "MdmGreeterTheme.info file");
 
 	g_free (dir);
 	return NULL;
@@ -5611,7 +5611,7 @@ delete_theme (GtkWidget *button, gpointer data)
 	GValue value = {0, };
 	GtkWidget *dlg;
 	char *s;
-	gboolean GdmGraphicalThemeRand;
+	gboolean MdmGraphicalThemeRand;
 	gboolean selected_warning = FALSE;
 	gint selected = -1;
 
@@ -5635,9 +5635,9 @@ delete_theme (GtkWidget *button, gpointer data)
 		return;
 	}
 
-	GdmGraphicalThemeRand = gdm_config_get_bool (GDM_KEY_GRAPHICAL_THEME_RAND);
+	MdmGraphicalThemeRand = mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND);
 
-	if (GdmGraphicalThemeRand) {
+	if (MdmGraphicalThemeRand) {
 		gtk_tree_model_get_value (model, &iter,
 		                          THEME_COLUMN_SELECTED_LIST, &value);
 		
@@ -5789,26 +5789,26 @@ xserver_entry_timeout (GtkWidget *entry)
 	section = gtk_combo_box_get_active_text (GTK_COMBO_BOX (mod_combobox));
 
 	for (li = xservers; li != NULL; li = li->next) {
-		GdmXserver *svr = li->data;
+		MdmXserver *svr = li->data;
 		if (strcmp (ve_sure_string (svr->id), ve_sure_string (section)) == 0) {
 
 			if (strcmp (ve_sure_string (key),
-                            ve_sure_string (GDM_KEY_SERVER_NAME)) == 0)
+                            ve_sure_string (MDM_KEY_SERVER_NAME)) == 0)
 				string_old = svr->name;
 			else if (strcmp (ve_sure_string (key),
-                                 ve_sure_string (GDM_KEY_SERVER_COMMAND)) == 0)
+                                 ve_sure_string (MDM_KEY_SERVER_COMMAND)) == 0)
 				string_old = svr->command;
 
 			/* Update this servers configuration */
 			if (strcmp (ve_sure_string (string_old),
                             ve_sure_string (text)) != 0) {
 				if (strcmp (ve_sure_string (key),
-                                    ve_sure_string (GDM_KEY_SERVER_NAME)) == 0) {
+                                    ve_sure_string (MDM_KEY_SERVER_NAME)) == 0) {
 					if (svr->name)
 						g_free (svr->name);
 					svr->name = g_strdup (text);
 				} else if (strcmp (ve_sure_string (key),
-                                           ve_sure_string (GDM_KEY_SERVER_COMMAND)) == 0) {
+                                           ve_sure_string (MDM_KEY_SERVER_COMMAND)) == 0) {
 					if (svr->command)
 						g_free (svr->command);
 					svr->command = g_strdup (text);;
@@ -5838,12 +5838,12 @@ xserver_priority_timeout (GtkWidget *entry)
 	section = gtk_combo_box_get_active_text (GTK_COMBO_BOX (mod_combobox));
 	
 	for (li = xservers; li != NULL; li = li->next) {
-		GdmXserver *svr = li->data;
+		MdmXserver *svr = li->data;
 		if (strcmp (ve_sure_string (svr->id), ve_sure_string (section)) == 0) {
 			gint new_value;
 			
 			if (strcmp (ve_sure_string (key),
-				    ve_sure_string (GDM_KEY_SERVER_PRIORITY)) == 0)
+				    ve_sure_string (MDM_KEY_SERVER_PRIORITY)) == 0)
 				value = svr->priority;
 			
 			/* Update this servers configuration */
@@ -5876,14 +5876,14 @@ xserver_toggle_timeout (GtkWidget *toggle)
 
 	/* Locate this server's section */
 	for (li = xservers; li != NULL; li = li->next) {
-		GdmXserver *svr = li->data;
+		MdmXserver *svr = li->data;
 		if (strcmp (ve_sure_string (svr->id), ve_sure_string (section)) == 0) {
 
 			if (strcmp (ve_sure_string (key),
-                            ve_sure_string (GDM_KEY_SERVER_HANDLED)) == 0) {
+                            ve_sure_string (MDM_KEY_SERVER_HANDLED)) == 0) {
 				val = svr->handled;
 			} else if (strcmp (ve_sure_string (key),
-                                   ve_sure_string (GDM_KEY_SERVER_FLEXIBLE)) == 0) {
+                                   ve_sure_string (MDM_KEY_SERVER_FLEXIBLE)) == 0) {
 				val = svr->flexible;
 			}
 
@@ -5892,10 +5892,10 @@ xserver_toggle_timeout (GtkWidget *toggle)
 				gboolean new_val = GTK_TOGGLE_BUTTON (toggle)->active;
 
 				if (strcmp (ve_sure_string (key),
-                                    ve_sure_string (GDM_KEY_SERVER_HANDLED)) == 0)
+                                    ve_sure_string (MDM_KEY_SERVER_HANDLED)) == 0)
 					svr->handled = new_val;
 				else if (strcmp (ve_sure_string (key),
-                                         ve_sure_string (GDM_KEY_SERVER_FLEXIBLE)) == 0)
+                                         ve_sure_string (MDM_KEY_SERVER_FLEXIBLE)) == 0)
 					svr->flexible = new_val;
 
 				update_xserver (section, svr);
@@ -5927,7 +5927,7 @@ xserver_priority_changed (GtkWidget *entry)
 }
 
 static void
-xserver_append_combobox (GdmXserver *xserver, GtkComboBox *combobox)
+xserver_append_combobox (MdmXserver *xserver, GtkComboBox *combobox)
 {
 	gtk_combo_box_append_text (combobox, (xserver->id));
 }
@@ -6016,8 +6016,8 @@ xserver_remove_display (gpointer data)
 		gchar *defaultval;
 		gchar *key;
 
-		cfg = gdm_common_config_load (config_file, NULL);
-		custom_cfg = gdm_common_config_load (custom_config_file, NULL);
+		cfg = mdm_common_config_load (config_file, NULL);
+		custom_cfg = mdm_common_config_load (custom_config_file, NULL);
 
 		combo = glade_xml_get_widget (xml_add_xservers, "xserver_server_combobox");
 
@@ -6025,27 +6025,27 @@ xserver_remove_display (gpointer data)
 		gtk_tree_model_get (model, &iter, XSERVER_COLUMN_VT, &vt, -1);
 
 		g_snprintf (vt_value,  sizeof (vt_value), "%d", vt);
-		key = g_strconcat (GDM_KEY_SECTION_SERVERS, "/", vt_value, "=", NULL);
+		key = g_strconcat (MDM_KEY_SECTION_SERVERS, "/", vt_value, "=", NULL);
 
 		defaultval = NULL;
-		gdm_common_config_get_string (cfg, key, &defaultval, NULL);
+		mdm_common_config_get_string (cfg, key, &defaultval, NULL);
 
 		/*
 		 * If the value is in the default config file, set it to inactive in
 		 * the custom config file, else delete it
 		 */
 		if (! ve_string_empty (defaultval)) {
-			gdm_common_config_set_string (custom_cfg, key, "inactive");
+			mdm_common_config_set_string (custom_cfg, key, "inactive");
 		} else {
-			gdm_common_config_remove_key (custom_cfg, key, NULL);
+			mdm_common_config_remove_key (custom_cfg, key, NULL);
 		}
 		g_free (defaultval);
 
-		gdm_common_config_save (custom_cfg, custom_config_file, NULL);
+		mdm_common_config_save (custom_cfg, custom_config_file, NULL);
 		g_key_file_free (custom_cfg);
 		g_key_file_free (cfg);
 
-		/* Update gdmsetup */
+		/* Update mdmsetup */
 		xserver_init_server_list ();
 		xserver_update_delete_sensitivity ();
 	}
@@ -6062,8 +6062,8 @@ xserver_add_display (gpointer data)
 	gchar *defaultval;
 	char spinner_value[3], *key;
 
-        cfg = gdm_common_config_load (config_file, NULL);
-	custom_cfg = gdm_common_config_load (custom_config_file, NULL);
+        cfg = mdm_common_config_load (config_file, NULL);
+	custom_cfg = mdm_common_config_load (custom_config_file, NULL);
 
 	/* Get Widgets from glade */
 	spinner  = glade_xml_get_widget (xml_add_xservers, "xserver_spin_button");
@@ -6075,7 +6075,7 @@ xserver_add_display (gpointer data)
 	g_snprintf (spinner_value,  sizeof (spinner_value), "%d",
 	            gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (spinner)));
 
-	key = g_strconcat (GDM_KEY_SECTION_SERVERS, "/", spinner_value, "=", NULL);
+	key = g_strconcat (MDM_KEY_SECTION_SERVERS, "/", spinner_value, "=", NULL);
 	if (! ve_string_empty (gtk_entry_get_text (GTK_ENTRY (entry)))) {
 		string = g_strconcat (gtk_combo_box_get_active_text (GTK_COMBO_BOX (combo)),
 		                      " ", gtk_entry_get_text (GTK_ENTRY (entry)),
@@ -6085,20 +6085,20 @@ xserver_add_display (gpointer data)
 	}
 
 	defaultval = NULL;
-	gdm_common_config_get_string (cfg, key, &defaultval, NULL);
+	mdm_common_config_get_string (cfg, key, &defaultval, NULL);
 
 	/* Add to config */
 	if (strcmp (ve_sure_string (defaultval), ve_sure_string (string)) == 0) {
-		gdm_common_config_remove_key (custom_cfg, key, NULL);
+		mdm_common_config_remove_key (custom_cfg, key, NULL);
 	} else {
-		gdm_common_config_set_string (custom_cfg, key, ve_sure_string(string));
+		mdm_common_config_set_string (custom_cfg, key, ve_sure_string(string));
 	}
 
-	gdm_common_config_save (custom_cfg, custom_config_file, NULL);
+	mdm_common_config_save (custom_cfg, custom_config_file, NULL);
 	g_key_file_free (custom_cfg);
 	g_key_file_free (cfg);
 
-	/* Reinitialize gdmsetup */
+	/* Reinitialize mdmsetup */
 	xserver_init_servers ();
 	xserver_update_delete_sensitivity ();
 
@@ -6203,7 +6203,7 @@ xserver_add_button_clicked (void)
  * Create a server definition (not the same as removing a server
  * from the list of servers to start)
  */
-#ifdef GDM_TODO_CODE
+#ifdef MDM_TODO_CODE
 static void
 xserver_create (gpointer data)
 {
@@ -6236,7 +6236,7 @@ xserver_create (gpointer data)
 
 	/* TODO: Create a new section for this server */
 	/* TODO: Write this value to the config and update xservers list */
-	/* cfg = gdm_common_config_load (custom_config_file, NULL); */
+	/* cfg = mdm_common_config_load (custom_config_file, NULL); */
 	success = FALSE;
 	/* success = ve_config_add_section (cfg, SECTION_NAME); */
 
@@ -6287,11 +6287,11 @@ xserver_init_definitions ()
  * Deletes a server definition (not the same as removing a server
  * from the list of servers to start)
  *
- * NOTE, now that we have the %{datadir}/gdm/defaults.conf and
- * %{etc}/gdm/custom.conf files, this will need to work like the displays.
+ * NOTE, now that we have the %{datadir}/mdm/defaults.conf and
+ * %{etc}/mdm/custom.conf files, this will need to work like the displays.
  * So if you want to delete something that is defaults.conf you will need
  * to write a new value to custom.conf section for this xserver like
- * "inactive=true".  For this to work, daemon/gdmconfig.c will also need
+ * "inactive=true".  For this to work, daemon/mdmconfig.c will also need
  * to be modified so that it doesn't bother loading xservers that are
  * marked as inactive in the custom.conf file.  As I said, this
  * is the same way the displays already work so the code should be
@@ -6301,7 +6301,7 @@ xserver_init_definitions ()
  * create new server-foo sections in custom.conf and define their
  * displays to only use the ones they define. 
  */
-#ifdef GDM_UNUSED_CODE
+#ifdef MDM_UNUSED_CODE
 static void
 xserver_delete (gpointer data)
 {
@@ -6316,7 +6316,7 @@ xserver_delete (gpointer data)
 	section = gtk_combo_box_get_active_text ( GTK_COMBO_BOX (combobox));
 	custom_cfg = ve_config_get (custom_config_file);
 
-	temp_string = g_strconcat (GDM_KEY_SERVER_PREFIX, section, NULL);
+	temp_string = g_strconcat (MDM_KEY_SERVER_PREFIX, section, NULL);
 	ve_config_delete_section (custom_cfg, temp_string);
 	g_free (temp_string);
 
@@ -6404,25 +6404,25 @@ setup_xserver_support (GladeXML *xml_xservers)
 
 	/* Register these items with keys */
 	g_object_set_data_full (G_OBJECT (servers_combobox), "key",
-	                        g_strdup (GDM_KEY_SERVER_PREFIX),
+	                        g_strdup (MDM_KEY_SERVER_PREFIX),
 	                        (GDestroyNotify) g_free);
 	g_object_set_data_full (G_OBJECT (name_entry), "key",
-	                        g_strdup (GDM_KEY_SERVER_NAME),
+	                        g_strdup (MDM_KEY_SERVER_NAME),
 	                        (GDestroyNotify) g_free);
 	g_object_set_data_full (G_OBJECT (command_entry), "key",
-	                        g_strdup (GDM_KEY_SERVER_COMMAND),
+	                        g_strdup (MDM_KEY_SERVER_COMMAND),
 	                        (GDestroyNotify) g_free);
 	g_object_set_data_full (G_OBJECT (handled_check), "key",
-	                        g_strdup (GDM_KEY_SERVER_HANDLED),
+	                        g_strdup (MDM_KEY_SERVER_HANDLED),
 	                        (GDestroyNotify) g_free);
 	g_object_set_data_full (G_OBJECT (flexible_check), "key",
-	                        g_strdup (GDM_KEY_SERVER_FLEXIBLE),
+	                        g_strdup (MDM_KEY_SERVER_FLEXIBLE),
 	                        (GDestroyNotify) g_free);
 	g_object_set_data_full (G_OBJECT (style_combobox), "key",
-	                        g_strdup (GDM_KEY_SERVER_CHOOSER),
+	                        g_strdup (MDM_KEY_SERVER_CHOOSER),
 	                        (GDestroyNotify) g_free);
 	g_object_set_data_full (G_OBJECT (priority_spinbutton), "key",
-				g_strdup (GDM_KEY_SERVER_PRIORITY),
+				g_strdup (MDM_KEY_SERVER_PRIORITY),
 	                        (GDestroyNotify) g_free);
 	/* Signals Handlers */
     	g_signal_connect (G_OBJECT (name_entry), "changed",
@@ -6463,9 +6463,9 @@ xserver_button_clicked (void)
 		GtkWidget *parent;
 		GtkWidget *button;
 	
-		xml_xservers = glade_xml_new (GDM_GLADE_DIR "/gdmsetup.glade", "xserver_dialog", NULL);
+		xml_xservers = glade_xml_new (MDM_GLADE_DIR "/mdmsetup.glade", "xserver_dialog", NULL);
 
-		xml_add_xservers = glade_xml_new (GDM_GLADE_DIR "/gdmsetup.glade", "add_xserver_dialog", NULL);
+		xml_add_xservers = glade_xml_new (MDM_GLADE_DIR "/mdmsetup.glade", "add_xserver_dialog", NULL);
 
 		parent = glade_xml_get_widget (xml, "setup_dialog");
 		dialog = glade_xml_get_widget (xml_xservers, "xserver_dialog");
@@ -6483,7 +6483,7 @@ xserver_button_clicked (void)
 	do {
 		response = gtk_dialog_run (GTK_DIALOG (dialog));
 		if (response == GTK_RESPONSE_HELP) {
-			g_spawn_command_line_sync ("gnome-open ghelp:gdm", NULL, NULL,
+			g_spawn_command_line_sync ("gnome-open ghelp:mdm", NULL, NULL,
 							NULL, NULL);
 		}
 	} while (response != GTK_RESPONSE_CLOSE &&
@@ -6500,7 +6500,7 @@ setup_radio_group (const gchar *name,
 	gint val;
 	
 	radio = glade_xml_get_widget (xml, name);
-	val   = gdm_config_get_int ((gchar *)key);
+	val   = mdm_config_get_int ((gchar *)key);
 	
 	if (val == position)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
@@ -6522,22 +6522,22 @@ setup_security_tab (void)
 	GtkWidget *XDMCPbutton;
 
 	/* Setup Local administrator login setttings */
-	setup_notify_toggle ("allowroot", GDM_KEY_ALLOW_ROOT);
+	setup_notify_toggle ("allowroot", MDM_KEY_ALLOW_ROOT);
 
 	/* Setup Remote administrator login setttings */
-	setup_notify_toggle ("allowremoteroot", GDM_KEY_ALLOW_REMOTE_ROOT);
+	setup_notify_toggle ("allowremoteroot", MDM_KEY_ALLOW_REMOTE_ROOT);
 
 	/* Setup Enable debug message to system log */
-	setup_notify_toggle ("enable_debug", GDM_KEY_DEBUG);
+	setup_notify_toggle ("enable_debug", MDM_KEY_DEBUG);
 
 	/* Setup Deny TCP connections to Xserver */
-	setup_notify_toggle ("disallow_tcp", GDM_KEY_DISALLOW_TCP);
+	setup_notify_toggle ("disallow_tcp", MDM_KEY_DISALLOW_TCP);
 
 	/* Setup never place cookies on NFS */
-	setup_notify_toggle ("never_cookies_NFS_checkbutton", GDM_KEY_NEVER_PLACE_COOKIES_ON_NFS);
+	setup_notify_toggle ("never_cookies_NFS_checkbutton", MDM_KEY_NEVER_PLACE_COOKIES_ON_NFS);
 
 	/* Setup Retry delay */
-	setup_intspin ("retry_delay", GDM_KEY_RETRY_DELAY);
+	setup_intspin ("retry_delay", MDM_KEY_RETRY_DELAY);
 
 	/* Bold the Enable automatic login label */
 	checkbox = glade_xml_get_widget (xml, "autologin");
@@ -6551,28 +6551,28 @@ setup_security_tab (void)
 
 	/* Setup Enable automatic login */
  	setup_user_combobox ("autologin_combo",
-			     GDM_KEY_AUTOMATIC_LOGIN);
-	setup_notify_toggle ("autologin", GDM_KEY_AUTOMATIC_LOGIN_ENABLE);
+			     MDM_KEY_AUTOMATIC_LOGIN);
+	setup_notify_toggle ("autologin", MDM_KEY_AUTOMATIC_LOGIN_ENABLE);
 
 	/* Setup Enable timed login */
  	setup_user_combobox ("timedlogin_combo",
-			     GDM_KEY_TIMED_LOGIN);
-	setup_intspin ("timedlogin_seconds", GDM_KEY_TIMED_LOGIN_DELAY);
-	setup_notify_toggle ("timedlogin", GDM_KEY_TIMED_LOGIN_ENABLE);
+			     MDM_KEY_TIMED_LOGIN);
+	setup_intspin ("timedlogin_seconds", MDM_KEY_TIMED_LOGIN_DELAY);
+	setup_notify_toggle ("timedlogin", MDM_KEY_TIMED_LOGIN_ENABLE);
 
 	/* Setup Allow remote timed logins */
-	setup_notify_toggle ("allowremoteauto", GDM_KEY_ALLOW_REMOTE_AUTOLOGIN);
+	setup_notify_toggle ("allowremoteauto", MDM_KEY_ALLOW_REMOTE_AUTOLOGIN);
 
 	/* Setup check dir owner */
-	setup_notify_toggle ("check_dir_owner_checkbutton", GDM_KEY_CHECK_DIR_OWNER);	
+	setup_notify_toggle ("check_dir_owner_checkbutton", MDM_KEY_CHECK_DIR_OWNER);	
 	
 	/* Setup Relax permissions */
-	setup_radio_group ("relax_permissions0_radiobutton", GDM_KEY_RELAX_PERM, 0);
-	setup_radio_group ("relax_permissions1_radiobutton", GDM_KEY_RELAX_PERM, 1);
-	setup_radio_group ("relax_permissions2_radiobutton", GDM_KEY_RELAX_PERM, 2);
+	setup_radio_group ("relax_permissions0_radiobutton", MDM_KEY_RELAX_PERM, 0);
+	setup_radio_group ("relax_permissions1_radiobutton", MDM_KEY_RELAX_PERM, 1);
+	setup_radio_group ("relax_permissions2_radiobutton", MDM_KEY_RELAX_PERM, 2);
 	
 	/* Setup MinimalUID */
-	setup_intspin ("minimal_uid_spinbutton", GDM_KEY_MINIMAL_UID);
+	setup_intspin ("minimal_uid_spinbutton", MDM_KEY_MINIMAL_UID);
 
 	/* Setup Configure XDMCP button */
 	XDMCPbutton = glade_xml_get_widget (xml, "config_xserverbutton");
@@ -6710,7 +6710,7 @@ theme_list_equal_func (GtkTreeModel * model,
 static void
 setup_local_themed_settings (void)
 {
-	gboolean GdmGraphicalThemeRand;
+	gboolean MdmGraphicalThemeRand;
 	DIR *dir;
 	GtkListStore *store;
 	GtkCellRenderer *renderer;
@@ -6737,27 +6737,27 @@ setup_local_themed_settings (void)
 	color_colorbutton = glade_xml_get_widget (xml, "local_background_theme_colorbutton");
 
 	g_object_set_data (G_OBJECT (color_colorbutton), "key",
-	                   GDM_KEY_GRAPHICAL_THEMED_COLOR);
+	                   MDM_KEY_GRAPHICAL_THEMED_COLOR);
 
 	setup_greeter_color ("local_background_theme_colorbutton", 
-	                     GDM_KEY_GRAPHICAL_THEMED_COLOR);
+	                     MDM_KEY_GRAPHICAL_THEMED_COLOR);
 
 	theme_dir = get_theme_dir ();
 
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (theme_list), TRUE);
 
-	selected_theme  = gdm_config_get_string (GDM_KEY_GRAPHICAL_THEME);
-	selected_themes = gdm_config_get_string (GDM_KEY_GRAPHICAL_THEMES);
+	selected_theme  = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);
+	selected_themes = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMES);
 
-	/* FIXME: If a theme directory contains the string GDM_DELIMITER_THEMES
+	/* FIXME: If a theme directory contains the string MDM_DELIMITER_THEMES
 		  in the name, then this theme won't work when trying to load as it
 		  will be perceived as two different themes seperated by
-		  GDM_DELIMITER_THEMES.  This can be fixed by setting up an escape
+		  MDM_DELIMITER_THEMES.  This can be fixed by setting up an escape
 		  character for it, but I'm not sure if directories can have the
-		  slash (/) character in them, so I just made GDM_DELIMITER_THEMES
+		  slash (/) character in them, so I just made MDM_DELIMITER_THEMES
 		  equal to "/:" instead. */
 
-	GdmGraphicalThemeRand = gdm_config_get_bool (GDM_KEY_GRAPHICAL_THEME_RAND);
+	MdmGraphicalThemeRand = mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND);
 
 	/* create list store */
 	store = gtk_list_store_new (THEME_NUM_COLUMNS,
@@ -6774,7 +6774,7 @@ setup_local_themed_settings (void)
 
 	/* Register theme mode combobox */
 	g_object_set_data_full (G_OBJECT (mode_combobox), "key",
-		g_strdup (GDM_KEY_GRAPHICAL_THEME_RAND),
+		g_strdup (MDM_KEY_GRAPHICAL_THEME_RAND),
 		(GDestroyNotify) g_free);
 
 	/* Signals */
@@ -6789,7 +6789,7 @@ setup_local_themed_settings (void)
 	/* Init controls */
 	gtk_widget_set_sensitive (del_button, FALSE);
 	gtk_combo_box_set_active (GTK_COMBO_BOX (mode_combobox),
-		GdmGraphicalThemeRand);
+		MdmGraphicalThemeRand);
 
 	/* Read all Themes from directory and store in tree */
 	dir = opendir (theme_dir);
@@ -6813,7 +6813,7 @@ setup_local_themed_settings (void)
 	gtk_tree_view_column_set_attributes (column, renderer,
 		"active", THEME_COLUMN_SELECTED, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (theme_list), column);
-	gtk_tree_view_column_set_visible(column, !GdmGraphicalThemeRand);
+	gtk_tree_view_column_set_visible(column, !MdmGraphicalThemeRand);
 
 	/* The checkbox toggle column */
 	column = gtk_tree_view_column_new ();
@@ -6826,7 +6826,7 @@ setup_local_themed_settings (void)
 	gtk_tree_view_column_set_attributes (column, renderer, "active",
 		THEME_COLUMN_SELECTED_LIST, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (theme_list), column);
-	gtk_tree_view_column_set_visible(column, GdmGraphicalThemeRand);
+	gtk_tree_view_column_set_visible(column, MdmGraphicalThemeRand);
 
 	/* The preview column */
 	column   = gtk_tree_view_column_new ();
@@ -6892,9 +6892,9 @@ dialog_response (GtkWidget *dlg, int response, gpointer data)
 			return;
 		}
 
-		if ( ! RUNNING_UNDER_GDM) {
+		if ( ! RUNNING_UNDER_MDM) {
 			gint exit_status;
-			if (g_spawn_command_line_sync ("gnome-open ghelp:gdm", NULL, NULL,
+			if (g_spawn_command_line_sync ("gnome-open ghelp:mdm", NULL, NULL,
 							&exit_status, NULL) && exit_status == 0)
 				return;
 		}
@@ -6909,7 +6909,7 @@ dialog_response (GtkWidget *dlg, int response, gpointer data)
 			 GTK_BUTTONS_OK,
 			 /* This is the temporary help dialog */
 			 _("This configuration window changes settings "
-			   "for the GDM daemon, which is the graphical "
+			   "for the MDM daemon, which is the graphical "
 			   "login screen for GNOME.  Changes that you make "
 			   "will take effect immediately.\n\n"
 			   "Note that not all configuration options "
@@ -6938,7 +6938,7 @@ background_filechooser_response (GtkWidget *file_chooser, gpointer data)
 				     		
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
 	key      = g_object_get_data (G_OBJECT (file_chooser), "key");	
-	value    = gdm_config_get_string (key);
+	value    = mdm_config_get_string (key);
 
 	/*
 	 * File_name should never be NULL, but something about this GUI causes
@@ -6960,7 +6960,7 @@ background_filechooser_response (GtkWidget *file_chooser, gpointer data)
 		g_free (old_filename);
 
 		if (strcmp (ve_sure_string (value), ve_sure_string (filename)) != 0) {
-			gdm_setup_config_set_string (key, (char *)ve_sure_string (filename));
+			mdm_setup_config_set_string (key, (char *)ve_sure_string (filename));
 			update_greeters ();
 		}
 	}
@@ -6977,7 +6977,7 @@ logo_filechooser_response (GtkWidget *file_chooser, gpointer data)
 	
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
 	key      = g_object_get_data (G_OBJECT (file_chooser), "key");	
-	value    = gdm_config_get_string (key);
+	value    = mdm_config_get_string (key);
 	
 	/*
 	 * File_name should never be NULL, but something about this GUI causes
@@ -6989,7 +6989,7 @@ logo_filechooser_response (GtkWidget *file_chooser, gpointer data)
 		filename = g_strdup (value);
 
 	if (filename == NULL) {
-		value    = gdm_config_get_string (GDM_KEY_CHOOSER_BUTTON_LOGO);
+		value    = mdm_config_get_string (MDM_KEY_CHOOSER_BUTTON_LOGO);
 		if (!ve_string_empty (value))
 			filename = g_strdup (value);
 	}
@@ -7012,7 +7012,7 @@ logo_filechooser_response (GtkWidget *file_chooser, gpointer data)
 		g_free (old_filename);
 
 		if (GTK_TOGGLE_BUTTON (image_toggle)->active == TRUE) {
-			gdm_setup_config_set_string (key,
+			mdm_setup_config_set_string (key,
     	                                      (char *)ve_sure_string (filename));
 			update_greeters ();
 		}
@@ -7105,13 +7105,13 @@ hookup_plain_background (void)
 	image_scale_to_fit = glade_xml_get_widget (xml, "sg_scale_background");
 
 	setup_greeter_color ("local_background_colorbutton", 
-	                     GDM_KEY_BACKGROUND_COLOR);
+	                     MDM_KEY_BACKGROUND_COLOR);
 
 	setup_greeter_toggle ("sg_scale_background",
-			      GDM_KEY_BACKGROUND_SCALE_TO_FIT);
+			      MDM_KEY_BACKGROUND_SCALE_TO_FIT);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_scale_to_fit), 
-	                              gdm_config_get_bool (GDM_KEY_BACKGROUND_SCALE_TO_FIT));
+	                              mdm_config_get_bool (MDM_KEY_BACKGROUND_SCALE_TO_FIT));
 	
         filter = gtk_file_filter_new ();
         gtk_file_filter_set_name (filter, _("Images"));
@@ -7123,7 +7123,7 @@ hookup_plain_background (void)
         gtk_file_filter_add_pattern(filter, "*");
         gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (image_filechooser), filter);
 
-	background_filename = gdm_config_get_string (GDM_KEY_BACKGROUND_IMAGE);
+	background_filename = mdm_config_get_string (MDM_KEY_BACKGROUND_IMAGE);
 
         if (ve_string_empty (background_filename)) {
                 gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (image_filechooser),
@@ -7133,7 +7133,7 @@ hookup_plain_background (void)
 			background_filename);
 	}
 
-	switch (gdm_config_get_int (GDM_KEY_BACKGROUND_TYPE)) {
+	switch (mdm_config_get_int (MDM_KEY_BACKGROUND_TYPE)) {
 	
 		case BACKGROUND_IMAGE_AND_COLOR: {
 			/* Image & Color background type */
@@ -7188,15 +7188,15 @@ hookup_plain_background (void)
 	gtk_widget_show (image_preview); 
 
 	g_object_set_data (G_OBJECT (color_radiobutton), "key",
-	                   GDM_KEY_BACKGROUND_TYPE);
+	                   MDM_KEY_BACKGROUND_TYPE);
 	g_object_set_data (G_OBJECT (color_colorbutton), "key",
-	                   GDM_KEY_BACKGROUND_COLOR);
+	                   MDM_KEY_BACKGROUND_COLOR);
 	g_object_set_data (G_OBJECT (image_radiobutton), "key",
-	                   GDM_KEY_BACKGROUND_TYPE);
+	                   MDM_KEY_BACKGROUND_TYPE);
 	g_object_set_data (G_OBJECT (image_filechooser), "key",
-	                   GDM_KEY_BACKGROUND_IMAGE);			   
+	                   MDM_KEY_BACKGROUND_IMAGE);			   
 	g_object_set_data (G_OBJECT (image_scale_to_fit), "key",
-	                   GDM_KEY_BACKGROUND_SCALE_TO_FIT);
+	                   MDM_KEY_BACKGROUND_SCALE_TO_FIT);
 
 	g_signal_connect (G_OBJECT (color_radiobutton), "toggled",
 	                  G_CALLBACK (local_background_type_toggled), NULL);
@@ -7218,22 +7218,22 @@ static void
 hookup_plain_behaviour (void)
 {
 	/* Setup qiver */
-	setup_notify_toggle ("local_quiver_checkbox", GDM_KEY_QUIVER);
+	setup_notify_toggle ("local_quiver_checkbox", MDM_KEY_QUIVER);
 	
 	/* Setup show title bar */
-	setup_notify_toggle ("local_title_bar_checkbutton", GDM_KEY_TITLE_BAR);
+	setup_notify_toggle ("local_title_bar_checkbutton", MDM_KEY_TITLE_BAR);
 	
 	/* Setup lock position */
-	setup_notify_toggle ("local_lock_pos_checkbox", GDM_KEY_LOCK_POSITION);
+	setup_notify_toggle ("local_lock_pos_checkbox", MDM_KEY_LOCK_POSITION);
 
 	/* Setup set position */
-	setup_notify_toggle ("local_set_pos_checkbox", GDM_KEY_SET_POSITION);
+	setup_notify_toggle ("local_set_pos_checkbox", MDM_KEY_SET_POSITION);
 
 	/* Setup positionX */
-	setup_intspin ("local_posx_spinbutton", GDM_KEY_POSITION_X);
+	setup_intspin ("local_posx_spinbutton", MDM_KEY_POSITION_X);
 
 	/* Setup positionX */
-	setup_intspin ("local_posy_spinbutton", GDM_KEY_POSITION_Y);
+	setup_intspin ("local_posy_spinbutton", MDM_KEY_POSITION_Y);
 	
 }
 
@@ -7263,10 +7263,10 @@ hookup_plain_logo (void)
 	gtk_file_filter_add_pattern(filter, "*");
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (logo_button), filter);
 
-	logo_filename = gdm_config_get_string (GDM_KEY_LOGO);
+	logo_filename = mdm_config_get_string (MDM_KEY_LOGO);
 
 	if (ve_string_empty (logo_filename)) {
-		logo_filename = gdm_config_get_string (GDM_KEY_CHOOSER_BUTTON_LOGO);
+		logo_filename = mdm_config_get_string (MDM_KEY_CHOOSER_BUTTON_LOGO);
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (logo_checkbutton), 
 		                              FALSE);
 		gtk_widget_set_sensitive (logo_button, FALSE);
@@ -7295,8 +7295,8 @@ hookup_plain_logo (void)
 	gtk_widget_set_size_request (image_preview, 128, -1);  
 	gtk_widget_show (image_preview); 
 
-	g_object_set_data (G_OBJECT (logo_button), "key", GDM_KEY_LOGO);
-	g_object_set_data (G_OBJECT (logo_checkbutton), "key", GDM_KEY_LOGO);
+	g_object_set_data (G_OBJECT (logo_button), "key", MDM_KEY_LOGO);
+	g_object_set_data (G_OBJECT (logo_checkbutton), "key", MDM_KEY_LOGO);
 
 	g_signal_connect (G_OBJECT (logo_checkbutton), "toggled", 
 	                  G_CALLBACK (logo_toggle_toggled), NULL);
@@ -7312,9 +7312,9 @@ static void
 setup_plain_menubar (void)
 {
 	/* Initialize and hookup callbacks for plain menu bar settings */
-	setup_notify_toggle ("sysmenu", GDM_KEY_SYSTEM_MENU);
-	setup_notify_toggle ("config_available", GDM_KEY_CONFIG_AVAILABLE);
-	setup_notify_toggle ("chooser_button", GDM_KEY_CHOOSER_BUTTON);
+	setup_notify_toggle ("sysmenu", MDM_KEY_SYSTEM_MENU);
+	setup_notify_toggle ("config_available", MDM_KEY_CONFIG_AVAILABLE);
+	setup_notify_toggle ("chooser_button", MDM_KEY_CHOOSER_BUTTON);
 }
 
 
@@ -7322,16 +7322,16 @@ static void
 setup_local_welcome_message (void)	
 {
 	/* Initialize and hookup callbacks for local welcome message settings */ 
-	setup_greeter_toggle ("sg_defaultwelcome", GDM_KEY_DEFAULT_WELCOME);
- 	setup_greeter_untranslate_entry ("welcome", GDM_KEY_WELCOME);
+	setup_greeter_toggle ("sg_defaultwelcome", MDM_KEY_DEFAULT_WELCOME);
+ 	setup_greeter_untranslate_entry ("welcome", MDM_KEY_WELCOME);
 }
 
 static void
 setup_remote_welcome_message (void)	
 {
 	/* Initialize and hookup callbacks for local welcome message settings */ 
-	setup_greeter_toggle ("sg_defaultwelcomeremote", GDM_KEY_DEFAULT_REMOTE_WELCOME);
- 	setup_greeter_untranslate_entry ("welcomeremote", GDM_KEY_REMOTE_WELCOME);
+	setup_greeter_toggle ("sg_defaultwelcomeremote", MDM_KEY_DEFAULT_REMOTE_WELCOME);
+ 	setup_greeter_untranslate_entry ("welcomeremote", MDM_KEY_REMOTE_WELCOME);
 }
 
 static void
@@ -7339,7 +7339,7 @@ setup_local_plain_settings (void)
 {
 	/* Style setting */
 	setup_greeter_combobox ("local_greeter",
-	                        GDM_KEY_GREETER);
+	                        MDM_KEY_GREETER);
 	
 	/* Plain background settings */
 	hookup_plain_background ();
@@ -7369,14 +7369,14 @@ setup_default_session (void)
 	gint       active = 0;
 	gchar      *org_val;
 
-	_gdm_session_list_init (&sessnames, &org_sessions, NULL, NULL);
+	_mdm_session_list_init (&sessnames, &org_sessions, NULL, NULL);
 	
 	default_session_combobox = glade_xml_get_widget (xml, "default_session_combobox");
 
-	org_val = gdm_config_get_string (GDM_KEY_DEFAULT_SESSION);
+	org_val = mdm_config_get_string (MDM_KEY_DEFAULT_SESSION);
 	
 	for (tmp = org_sessions; tmp != NULL; tmp = tmp->next, i++) {
-		GdmSession *session;
+		MdmSession *session;
 		gchar *file;
 
 		file = (gchar *) tmp->data;
@@ -7415,7 +7415,7 @@ setup_default_session (void)
 		gtk_widget_set_sensitive (default_session_combobox, FALSE);
 	
 	g_object_set_data_full (G_OBJECT (default_session_combobox), "key",
-	                        g_strdup (GDM_KEY_DEFAULT_SESSION),
+	                        g_strdup (MDM_KEY_DEFAULT_SESSION),
 				(GDestroyNotify) g_free);
 	
 	g_signal_connect (default_session_combobox, "changed",
@@ -7426,7 +7426,7 @@ setup_default_session (void)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (default_session_checkbox), !ve_string_empty (org_val));
 	
 	g_object_set_data_full (G_OBJECT (default_session_checkbox),
-				"key", g_strdup (GDM_KEY_DEFAULT_SESSION),
+				"key", g_strdup (MDM_KEY_DEFAULT_SESSION),
 				(GDestroyNotify) g_free);       
 	
 	g_signal_connect (G_OBJECT (default_session_checkbox), "toggled",
@@ -7450,10 +7450,10 @@ setup_general_tab (void)
 
 	
 	/* Setup use visual feedback in the passwotrd entry */
-	setup_notify_toggle ("hide_vis_feedback_passwd_checkbox", GDM_KEY_ENTRY_INVISIBLE);
+	setup_notify_toggle ("hide_vis_feedback_passwd_checkbox", MDM_KEY_ENTRY_INVISIBLE);
 
 	/* Setup always login current session entry */
-	setup_notify_toggle ("a_login_curr_session_checkbutton", GDM_KEY_ALWAYS_LOGIN_CURRENT_SESSION);
+	setup_notify_toggle ("a_login_curr_session_checkbutton", MDM_KEY_ALWAYS_LOGIN_CURRENT_SESSION);
 
 	/* Setup default session */
 	setup_default_session ();
@@ -7461,7 +7461,7 @@ setup_general_tab (void)
 	/* Setup GtkRC file path */
 	gtkrc_filechooser = glade_xml_get_widget (xml, "gtkrc_chooserbutton");
 
-	gtkrc_filename = gdm_config_get_string (GDM_KEY_GTKRC);
+	gtkrc_filename = mdm_config_get_string (MDM_KEY_GTKRC);
 
 	gtkrc_checkbox = glade_xml_get_widget (xml, "gtkrc_checkbutton");
 
@@ -7479,7 +7479,7 @@ setup_general_tab (void)
 	}
 		
 	g_object_set_data_full (G_OBJECT (gtkrc_filechooser),
-				"key", g_strdup (GDM_KEY_GTKRC),
+				"key", g_strdup (MDM_KEY_GTKRC),
 				(GDestroyNotify) g_free);
 
 	g_signal_connect (G_OBJECT (gtkrc_filechooser), "selection-changed",
@@ -7488,7 +7488,7 @@ setup_general_tab (void)
 	
 	
 	g_object_set_data_full (G_OBJECT (gtkrc_checkbox),
-				"key", g_strdup (GDM_KEY_GTKRC),
+				"key", g_strdup (MDM_KEY_GTKRC),
 				(GDestroyNotify) g_free);       
 	
 	g_signal_connect (G_OBJECT (gtkrc_checkbox), "toggled",
@@ -7501,7 +7501,7 @@ setup_general_tab (void)
 	/* Setup user 24Hr Clock */
 	clock_type_chooser = glade_xml_get_widget (xml, "use_24hr_clock_combobox");
 
-	user_24hr_clock = gdm_config_get_string (GDM_KEY_USE_24_CLOCK);
+	user_24hr_clock = mdm_config_get_string (MDM_KEY_USE_24_CLOCK);
 	if (!ve_string_empty (user_24hr_clock)) {
 		if (strcasecmp (ve_sure_string (user_24hr_clock), "auto") == 0) {
 			gtk_combo_box_set_active (GTK_COMBO_BOX (clock_type_chooser), CLOCK_AUTO);
@@ -7517,7 +7517,7 @@ setup_general_tab (void)
 	}
 	
 	g_object_set_data_full (G_OBJECT (clock_type_chooser), "key",
-	                        g_strdup (GDM_KEY_USE_24_CLOCK), (GDestroyNotify) g_free);
+	                        g_strdup (MDM_KEY_USE_24_CLOCK), (GDestroyNotify) g_free);
 	g_signal_connect (G_OBJECT (clock_type_chooser), "changed",
 	                  G_CALLBACK (combobox_changed), NULL);			
 	
@@ -7554,16 +7554,16 @@ hookup_remote_plain_background (void)
 	image_scale_to_fit = glade_xml_get_widget (xml, "sg_scale_background_remote");
 
 	setup_greeter_color ("remote_background_colorbutton",
-	                     GDM_KEY_BACKGROUND_COLOR);
+	                     MDM_KEY_BACKGROUND_COLOR);
 
 	setup_greeter_toggle ("sg_scale_background_remote",
-			      GDM_KEY_BACKGROUND_SCALE_TO_FIT);
+			      MDM_KEY_BACKGROUND_SCALE_TO_FIT);
 
 	setup_greeter_toggle ("sg_remote_color_only",
-			      GDM_KEY_BACKGROUND_REMOTE_ONLY_COLOR);
+			      MDM_KEY_BACKGROUND_REMOTE_ONLY_COLOR);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_scale_to_fit), 
-	                              gdm_config_get_bool (GDM_KEY_BACKGROUND_SCALE_TO_FIT));
+	                              mdm_config_get_bool (MDM_KEY_BACKGROUND_SCALE_TO_FIT));
 	
         filter = gtk_file_filter_new ();
         gtk_file_filter_set_name (filter, _("Images"));
@@ -7575,7 +7575,7 @@ hookup_remote_plain_background (void)
         gtk_file_filter_add_pattern(filter, "*");
         gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (image_filechooser), filter);
 
-	background_filename = gdm_config_get_string (GDM_KEY_BACKGROUND_IMAGE);
+	background_filename = mdm_config_get_string (MDM_KEY_BACKGROUND_IMAGE);
 
         if (ve_string_empty (background_filename)) {
                 gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (image_filechooser),
@@ -7585,7 +7585,7 @@ hookup_remote_plain_background (void)
 			background_filename);
 	}
 
-	switch (gdm_config_get_int (GDM_KEY_BACKGROUND_TYPE)) {
+	switch (mdm_config_get_int (MDM_KEY_BACKGROUND_TYPE)) {
 	
 		case BACKGROUND_IMAGE_AND_COLOR:	{
 			/* Image & Color background type */
@@ -7640,15 +7640,15 @@ hookup_remote_plain_background (void)
 	gtk_widget_show (image_preview); 
 
 	g_object_set_data (G_OBJECT (color_radiobutton), "key",
-	                   GDM_KEY_BACKGROUND_TYPE);
+	                   MDM_KEY_BACKGROUND_TYPE);
 	g_object_set_data (G_OBJECT (color_colorbutton), "key",
-	                   GDM_KEY_BACKGROUND_COLOR);
+	                   MDM_KEY_BACKGROUND_COLOR);
 	g_object_set_data (G_OBJECT (image_radiobutton), "key",
-	                   GDM_KEY_BACKGROUND_TYPE);
+	                   MDM_KEY_BACKGROUND_TYPE);
 	g_object_set_data (G_OBJECT (image_filechooser), "key",
-	                   GDM_KEY_BACKGROUND_IMAGE);			   
+	                   MDM_KEY_BACKGROUND_IMAGE);			   
 	g_object_set_data (G_OBJECT (image_scale_to_fit), "key",
-	                   GDM_KEY_BACKGROUND_SCALE_TO_FIT);
+	                   MDM_KEY_BACKGROUND_SCALE_TO_FIT);
 
 	g_signal_connect (G_OBJECT (color_radiobutton), "toggled",
 	                  G_CALLBACK (local_background_type_toggled), NULL);
@@ -7670,22 +7670,22 @@ static void
 hookup_remote_plain_behaviour (void)
 {
 	/* Setup qiver */
-	setup_notify_toggle ("remote_quiver_checkbox", GDM_KEY_QUIVER);
+	setup_notify_toggle ("remote_quiver_checkbox", MDM_KEY_QUIVER);
 	
 	/* Setup show title bar */
-	setup_notify_toggle ("remote_title_bar_checkbutton", GDM_KEY_TITLE_BAR);
+	setup_notify_toggle ("remote_title_bar_checkbutton", MDM_KEY_TITLE_BAR);
 	
 	/* Setup lock position */
-	setup_notify_toggle ("remote_lock_pos_checkbox", GDM_KEY_LOCK_POSITION);
+	setup_notify_toggle ("remote_lock_pos_checkbox", MDM_KEY_LOCK_POSITION);
 
 	/* Setup set position */
-	setup_notify_toggle ("remote_set_pos_checkbox", GDM_KEY_SET_POSITION);
+	setup_notify_toggle ("remote_set_pos_checkbox", MDM_KEY_SET_POSITION);
 
 	/* Setup positionX */
-	setup_intspin ("remote_posx_spinbutton", GDM_KEY_POSITION_X);
+	setup_intspin ("remote_posx_spinbutton", MDM_KEY_POSITION_X);
 
 	/* Setup positionX */
-	setup_intspin ("remote_posy_spinbutton", GDM_KEY_POSITION_Y);	
+	setup_intspin ("remote_posy_spinbutton", MDM_KEY_POSITION_Y);	
 }
 
 static void
@@ -7714,10 +7714,10 @@ hookup_remote_plain_logo (void)
 	gtk_file_filter_add_pattern(filter, "*");
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (logo_button), filter);
 
-	logo_filename = gdm_config_get_string (GDM_KEY_LOGO);
+	logo_filename = mdm_config_get_string (MDM_KEY_LOGO);
 
 	if (ve_string_empty (logo_filename)) {
-		logo_filename = gdm_config_get_string (GDM_KEY_CHOOSER_BUTTON_LOGO);
+		logo_filename = mdm_config_get_string (MDM_KEY_CHOOSER_BUTTON_LOGO);
 
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (logo_checkbutton), 
 		                              FALSE);
@@ -7746,9 +7746,9 @@ hookup_remote_plain_logo (void)
 	gtk_widget_show (image_preview); 
 
 	g_object_set_data (G_OBJECT (logo_button), "key",
-	                   GDM_KEY_LOGO);
+	                   MDM_KEY_LOGO);
 	g_object_set_data (G_OBJECT (logo_checkbutton), "key",
-	                   GDM_KEY_LOGO);
+	                   MDM_KEY_LOGO);
 
 	g_signal_connect (G_OBJECT (logo_checkbutton), "toggled", 
 	                  G_CALLBACK (logo_toggle_toggled), NULL);
@@ -7776,7 +7776,7 @@ setup_remote_plain_settings (void)
 
 	/* Style setting */
 	setup_greeter_combobox ("remote_greeter",
-	                        GDM_KEY_REMOTE_GREETER);
+	                        MDM_KEY_REMOTE_GREETER);
 	
 	/* Plain background settings */
 	hookup_remote_plain_background ();
@@ -7794,7 +7794,7 @@ setup_remote_plain_settings (void)
 static void
 setup_remote_themed_settings (void)
 {
-	gboolean GdmGraphicalThemeRand;
+	gboolean MdmGraphicalThemeRand;
 	GtkListStore *store;
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
@@ -7820,18 +7820,18 @@ setup_remote_themed_settings (void)
 	color_colorbutton = glade_xml_get_widget (xml, "remote_background_theme_colorbutton");
 
 	g_object_set_data (G_OBJECT (color_colorbutton), "key",
-	                   GDM_KEY_GRAPHICAL_THEMED_COLOR);
+	                   MDM_KEY_GRAPHICAL_THEMED_COLOR);
 
 	setup_greeter_color ("remote_background_theme_colorbutton", 
-	                     GDM_KEY_GRAPHICAL_THEMED_COLOR);
+	                     MDM_KEY_GRAPHICAL_THEMED_COLOR);
 
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (theme_list), TRUE);
 
-	GdmGraphicalThemeRand = gdm_config_get_bool (GDM_KEY_GRAPHICAL_THEME_RAND);
+	MdmGraphicalThemeRand = mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND);
 
 	/* Register theme mode combobox */
 	g_object_set_data_full (G_OBJECT (mode_combobox), "key",
-	                        g_strdup (GDM_KEY_GRAPHICAL_THEME_RAND),
+	                        g_strdup (MDM_KEY_GRAPHICAL_THEME_RAND),
 	                       (GDestroyNotify) g_free);
 
 	store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (theme_list_local)));
@@ -7848,7 +7848,7 @@ setup_remote_themed_settings (void)
 	/* Init controls */
 	gtk_widget_set_sensitive (del_button, FALSE);
 	gtk_combo_box_set_active (GTK_COMBO_BOX (mode_combobox),
-	                          GdmGraphicalThemeRand);
+	                          MdmGraphicalThemeRand);
 
 	/* The radio toggle column */
 	column = gtk_tree_view_column_new ();
@@ -7861,7 +7861,7 @@ setup_remote_themed_settings (void)
 	gtk_tree_view_column_set_attributes (column, renderer,
 	                                     "active", THEME_COLUMN_SELECTED, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (theme_list), column);
-	gtk_tree_view_column_set_visible(column, !GdmGraphicalThemeRand);
+	gtk_tree_view_column_set_visible(column, !MdmGraphicalThemeRand);
 
 	/* The checkbox toggle column */
 	column = gtk_tree_view_column_new ();
@@ -7874,7 +7874,7 @@ setup_remote_themed_settings (void)
 	gtk_tree_view_column_set_attributes (column, renderer, "active",
 	                                     THEME_COLUMN_SELECTED_LIST, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (theme_list), column);
-	gtk_tree_view_column_set_visible (column, GdmGraphicalThemeRand);
+	gtk_tree_view_column_set_visible (column, MdmGraphicalThemeRand);
 
 	/* The preview column */
 	column   = gtk_tree_view_column_new ();
@@ -7942,7 +7942,7 @@ setup_gui (void)
 {
 	GtkWidget *dialog;
 
-	xml = glade_xml_new (GDM_GLADE_DIR "/gdmsetup.glade", "setup_dialog", NULL);
+	xml = glade_xml_new (MDM_GLADE_DIR "/mdmsetup.glade", "setup_dialog", NULL);
 
 	dialog = glade_xml_get_widget (xml, "setup_dialog");
 
@@ -8004,7 +8004,7 @@ get_sensitivity (void)
 	int format_returned;
 
 	if (atom == 0)
-		atom = XInternAtom (disp, "_GDM_SETUP_INSENSITIVE", False);
+		atom = XInternAtom (disp, "_MDM_SETUP_INSENSITIVE", False);
 
 	if (XGetWindowProperty (disp,
 				root,
@@ -8075,7 +8075,7 @@ setup_disable_handler (void)
 }
 
 static gboolean
-gdm_event (GSignalInvocationHint *ihint,
+mdm_event (GSignalInvocationHint *ihint,
 	   guint		n_param_values,
 	   const GValue	       *param_values,
 	   gpointer		data)
@@ -8112,7 +8112,7 @@ apply_user_changes (GObject *object, gint arg1, gpointer user_data)
 	   Then we display two dialogs - one after the other. 
 	   Lets hope that although probable this scenario 
 	   does not araise very often */	
-	if (GdmRandomFromSelectedChangesWarn == TRUE) {
+	if (MdmRandomFromSelectedChangesWarn == TRUE) {
 		
 		GtkWidget *prompt;
 		
@@ -8129,7 +8129,7 @@ apply_user_changes (GObject *object, gint arg1, gpointer user_data)
 		
 	}
 	
-	if (GdmUserChangesUnsaved == TRUE) {
+	if (MdmUserChangesUnsaved == TRUE) {
 
 		GtkWidget *prompt;
 		gint response;
@@ -8169,15 +8169,15 @@ main (int argc, char *argv[])
 {
 	GtkWidget *dialog;
 	char **list;
-	gint GdmMinimalUID;
+	gint MdmMinimalUID;
 	int i;
 
-	gdm_config_never_cache (TRUE);
+	mdm_config_never_cache (TRUE);
 
-	if (g_getenv ("DOING_GDM_DEVELOPMENT") != NULL)
-		DOING_GDM_DEVELOPMENT = TRUE;
-	if (g_getenv ("RUNNING_UNDER_GDM") != NULL)
-		RUNNING_UNDER_GDM = TRUE;
+	if (g_getenv ("DOING_MDM_DEVELOPMENT") != NULL)
+		DOING_MDM_DEVELOPMENT = TRUE;
+	if (g_getenv ("RUNNING_UNDER_MDM") != NULL)
+		RUNNING_UNDER_MDM = TRUE;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -8185,28 +8185,28 @@ main (int argc, char *argv[])
 
 	gtk_init (&argc, &argv);
 
-	gdm_log_init ();
-	gdm_log_set_debug (FALSE);
+	mdm_log_init ();
+	mdm_log_set_debug (FALSE);
 
-	/* Lets check if gdm daemon is running
+	/* Lets check if mdm daemon is running
 	   if no there is no point in continuing
 	*/
-	gdm_running = gdmcomm_check (TRUE);
-	if (gdm_running == FALSE)
+	mdm_running = mdmcomm_check (TRUE);
+	if (mdm_running == FALSE)
 		exit (EXIT_FAILURE);
 
-	gtk_window_set_default_icon_name ("gdmsetup");	
+	gtk_window_set_default_icon_name ("mdmsetup");	
 	glade_init();
 	
 	/* Start using socket */
-	gdmcomm_comm_bulk_start ();
+	mdmcomm_comm_bulk_start ();
 	
-	config_file = gdm_common_get_config_file ();
+	config_file = mdm_common_get_config_file ();
 	if (config_file == NULL) {
 		GtkWidget *dialog;
 
 		/* Done using socket */
-		gdmcomm_comm_bulk_stop ();
+		mdmcomm_comm_bulk_stop ();
 		dialog = hig_dialog_new (NULL /* parent */,
 					 GTK_DIALOG_MODAL /* flags */,
 					 GTK_MESSAGE_ERROR,
@@ -8218,12 +8218,12 @@ main (int argc, char *argv[])
 		gtk_widget_destroy (dialog);
 		exit (EXIT_FAILURE);
 	}
-	custom_config_file = gdm_common_get_custom_config_file ();
+	custom_config_file = mdm_common_get_custom_config_file ();
 	if (custom_config_file == NULL) {
 		GtkWidget *dialog;
 
 		/* Done using socket */
-		gdmcomm_comm_bulk_stop ();
+		mdmcomm_comm_bulk_stop ();
 		dialog = hig_dialog_new (NULL /* parent */,
 					 GTK_DIALOG_MODAL /* flags */,
 					 GTK_MESSAGE_ERROR,
@@ -8236,7 +8236,7 @@ main (int argc, char *argv[])
 		exit (EXIT_FAILURE);
 	}	
 
-	if (RUNNING_UNDER_GDM) {
+	if (RUNNING_UNDER_MDM) {
 		char *gtkrc;
 		char *theme_name;
 
@@ -8244,17 +8244,17 @@ main (int argc, char *argv[])
 		setup_cursor (GDK_WATCH);
 
 		/* parse the given gtk rc first */
-		gtkrc = gdm_config_get_string (GDM_KEY_GTKRC);
+		gtkrc = mdm_config_get_string (MDM_KEY_GTKRC);
 		if ( ! ve_string_empty (gtkrc))
 			gtk_rc_parse (gtkrc);
 
-		theme_name = g_strdup (g_getenv ("GDM_GTK_THEME"));
+		theme_name = g_strdup (g_getenv ("MDM_GTK_THEME"));
 		if (ve_string_empty (theme_name)) {
 			g_free (theme_name);
-			theme_name = gdm_config_get_string (GDM_KEY_GTK_THEME);
-			gdm_set_theme (theme_name);
+			theme_name = mdm_config_get_string (MDM_KEY_GTK_THEME);
+			mdm_set_theme (theme_name);
 		} else {
-			gdm_set_theme (theme_name);
+			mdm_set_theme (theme_name);
 		}
 
 		/* evil, but oh well */
@@ -8262,23 +8262,23 @@ main (int argc, char *argv[])
 	}
 
 	/* Make sure the user is root. If not, they shouldn't be messing with 
-	 * GDM's configuration.
+	 * MDM's configuration.
 	 */
 
-	if ( ! DOING_GDM_DEVELOPMENT &&
+	if ( ! DOING_MDM_DEVELOPMENT &&
 	     geteuid() != 0) {
 		GtkWidget *fatal_error;
 
 		/* Done using socket */
-		gdmcomm_comm_bulk_stop ();
+		mdmcomm_comm_bulk_stop ();
 
 		fatal_error = hig_dialog_new (NULL /* parent */,
 					      GTK_DIALOG_MODAL /* flags */,
 					      GTK_MESSAGE_ERROR,
 					      GTK_BUTTONS_OK,
-					      _("You must be the root user to configure GDM."),
+					      _("You must be the root user to configure MDM."),
 					      "");
-		if (RUNNING_UNDER_GDM)
+		if (RUNNING_UNDER_MDM)
 			setup_cursor (GDK_LEFT_PTR);
 		gtk_dialog_run (GTK_DIALOG (fatal_error));
 		exit (EXIT_FAILURE);
@@ -8288,41 +8288,41 @@ main (int argc, char *argv[])
          * XXX: the setup proggie using a greeter config var for it's
 	 * ui?  Say it ain't so.  Our config sections are SUCH A MESS
          */
-	GdmIconMaxHeight   = gdm_config_get_int (GDM_KEY_MAX_ICON_HEIGHT);
-	GdmIconMaxWidth    = gdm_config_get_int (GDM_KEY_MAX_ICON_WIDTH);
-	GdmIncludeAll      = gdm_config_get_bool (GDM_KEY_INCLUDE_ALL);
-	GdmInclude         = gdm_config_get_string (GDM_KEY_INCLUDE);
+	MdmIconMaxHeight   = mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT);
+	MdmIconMaxWidth    = mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH);
+	MdmIncludeAll      = mdm_config_get_bool (MDM_KEY_INCLUDE_ALL);
+	MdmInclude         = mdm_config_get_string (MDM_KEY_INCLUDE);
 	
 	/* We need to make sure that the users in the include list exist
 	   and have uid that are higher than MinimalUID. This protects us
 	   from invalid data obtained from the config file */
-	GdmMinimalUID = gdm_config_get_int (GDM_KEY_MINIMAL_UID);
-	list = g_strsplit (GdmInclude, ",", 0);
+	MdmMinimalUID = mdm_config_get_int (MDM_KEY_MINIMAL_UID);
+	list = g_strsplit (MdmInclude, ",", 0);
 	for (i=0; list != NULL && list[i] != NULL; i++) {
-		if (gdm_is_user_valid (list[i]) && gdm_user_uid (list[i]) >= GdmMinimalUID)
+		if (mdm_is_user_valid (list[i]) && mdm_user_uid (list[i]) >= MdmMinimalUID)
 			continue;
 		
-		GdmInclude = strings_list_remove (GdmInclude, list[i], ",");
+		MdmInclude = strings_list_remove (MdmInclude, list[i], ",");
 	}
 	g_strfreev (list);
 
-	GdmExclude         = gdm_config_get_string (GDM_KEY_EXCLUDE);
-	GdmSoundProgram    = gdm_config_get_string (GDM_KEY_SOUND_PROGRAM);
+	MdmExclude         = mdm_config_get_string (MDM_KEY_EXCLUDE);
+	MdmSoundProgram    = mdm_config_get_string (MDM_KEY_SOUND_PROGRAM);
 
-	if (ve_string_empty (GdmSoundProgram) ||
-            g_access (GdmSoundProgram, X_OK) != 0) {
-		GdmSoundProgram = NULL;
+	if (ve_string_empty (MdmSoundProgram) ||
+            g_access (MdmSoundProgram, X_OK) != 0) {
+		MdmSoundProgram = NULL;
 	}
 
-        xservers = gdm_config_get_xservers (FALSE);
+        xservers = mdm_config_get_xservers (FALSE);
 
 	/* Done using socket */
-	gdmcomm_comm_bulk_stop ();
+	mdmcomm_comm_bulk_stop ();
 
 	/* Once we corrected the include list we need to save it if
 	   it was modified */
-	if ( strcmp (ve_sure_string (gdm_config_get_string (GDM_KEY_INCLUDE)), ve_sure_string (GdmInclude)) != 0)
-		gdm_setup_config_set_string (GDM_KEY_INCLUDE, GdmInclude);
+	if ( strcmp (ve_sure_string (mdm_config_get_string (MDM_KEY_INCLUDE)), ve_sure_string (MdmInclude)) != 0)
+		mdm_setup_config_set_string (MDM_KEY_INCLUDE, MdmInclude);
 	
 	dialog = setup_gui ();
 
@@ -8330,7 +8330,7 @@ main (int argc, char *argv[])
 			  G_CALLBACK (apply_user_changes), dialog);
 	gtk_widget_show (dialog);
 
-	if (RUNNING_UNDER_GDM) {
+	if (RUNNING_UNDER_MDM) {
 		guint sid;
 
 		/* also setup third button to work as first to work
@@ -8339,7 +8339,7 @@ main (int argc, char *argv[])
 				       GTK_TYPE_WIDGET);
 		g_signal_add_emission_hook (sid,
 					    0 /* detail */,
-					    gdm_event,
+					    mdm_event,
 					    NULL /* data */,
 					    NULL /* destroy_notify */);
 

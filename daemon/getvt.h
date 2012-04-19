@@ -1,4 +1,4 @@
-/* GDM - The GNOME Display Manager
+/* MDM - The GNOME Display Manager
  * Copyright (C) 2002 Queen of England
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,33 +23,33 @@
 #if defined (__linux__) || defined (__sun)
 /* Must check HAVE_SYS_VT since older Solaris doesn't support this. */
 #ifdef HAVE_SYS_VT_H
-#define GDM_USE_SYS_VT
+#define MDM_USE_SYS_VT
 #endif
 #endif
 
 #if defined (__FreeBSD__) || defined (__DragonFly__)
-#define GDM_USE_CONSIO_VT
+#define MDM_USE_CONSIO_VT
 #endif
 
 /* gets an argument we should pass to the X server, on
  * linux for example we get the first empty vt (higher than
- * or equal to GDM_KEY_FIRST_VT) and then return vt<number>
+ * or equal to MDM_KEY_FIRST_VT) and then return vt<number>
  * (e.g. "vt7") as a newly allocated string.
  * Can return NULL if we can't figure out what to do
- * or if GDM_KEY_VT_ALLOCATION is false. */
+ * or if MDM_KEY_VT_ALLOCATION is false. */
 /* fd is opened so that we are saying we have opened this
  * vt.  This should be closed after the server has started.
  * This is to avoid race with other stuff openning this vt.
  * It can be set to -1 if nothing could be opened. */
-char *	gdm_get_empty_vt_argument	(int *fd,
+char *	mdm_get_empty_vt_argument	(int *fd,
 					 int *vt);
 
 /* Change to the specified virtual terminal */
-void	gdm_change_vt			(int vt);
+void	mdm_change_vt			(int vt);
 
 /* Get the current virtual terminal number or -1 if we can't */
-int	gdm_get_current_vt		(void);
-long	gdm_get_current_vtnum		(Display *display);
-gchar * gdm_get_vt_device		(int vtno);
+int	mdm_get_current_vt		(void);
+long	mdm_get_current_vtnum		(Display *display);
+gchar * mdm_get_vt_device		(int vtno);
 
 #endif /* GETVT_H */

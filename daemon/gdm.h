@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * GDM - The GNOME Display Manager
+ * MDM - The GNOME Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,10 +18,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GDM_H
-#define GDM_H
+#ifndef MDM_H
+#define MDM_H
 
-#define GDM_MAX_PASS 256	/* Define a value for password length. Glibc
+#define MDM_MAX_PASS 256	/* Define a value for password length. Glibc
 				 * leaves MAX_PASS undefined. */
 
 /* DO NOTE USE 1, that's used as error if x connection fails usually */
@@ -39,7 +39,7 @@
 #define DISPLAY_XFAILED 64	/* X failed */
 #define DISPLAY_GREETERFAILED 65 /* greeter failed (crashed) */
 #define DISPLAY_RESTARTGREETER 127 /* Restart greeter */
-#define DISPLAY_RESTARTGDM 128	/* Restart GDM */
+#define DISPLAY_RESTARTMDM 128	/* Restart MDM */
 
 enum {
 	DISPLAY_UNBORN /* Not yet started */,
@@ -53,28 +53,28 @@ enum {
 /* The dreaded miscellaneous category */
 #define PIPE_SIZE 4096
 
-#define GDM_SESSION_FAILSAFE_GNOME "GDM_Failsafe.GNOME"
-#define GDM_SESSION_FAILSAFE_XTERM "GDM_Failsafe.XTERM"
+#define MDM_SESSION_FAILSAFE_GNOME "MDM_Failsafe.GNOME"
+#define MDM_SESSION_FAILSAFE_XTERM "MDM_Failsafe.XTERM"
 
 /* FIXME: will support these builtin types later */
-#define GDM_SESSION_DEFAULT "default"
-#define GDM_SESSION_CUSTOM "custom"
-#define GDM_SESSION_FAILSAFE "failsafe"
+#define MDM_SESSION_DEFAULT "default"
+#define MDM_SESSION_CUSTOM "custom"
+#define MDM_SESSION_FAILSAFE "failsafe"
 
-#define GDM_STANDARD "Standard"
+#define MDM_STANDARD "Standard"
 
-#define GDM_RESPONSE_CANCEL "GDM_RESPONSE_CANCEL"
+#define MDM_RESPONSE_CANCEL "MDM_RESPONSE_CANCEL"
 
-#define GDM_CUSTOM_COMMAND_MAX 10 /* maximum number of supported custom commands */
+#define MDM_CUSTOM_COMMAND_MAX 10 /* maximum number of supported custom commands */
 
 #ifdef __sun
-#define GDM_DT_DIR "/var/dt"
-#define GDM_SDTLOGIN_DIR "/var/dt/sdtlogin"
+#define MDM_DT_DIR "/var/dt"
+#define MDM_SDTLOGIN_DIR "/var/dt/sdtlogin"
 #endif
 
 /* If id == NULL, then get the first X server */
-void		gdm_final_cleanup	(void);
+void		mdm_final_cleanup	(void);
 
-#endif /* GDM_H */
+#endif /* MDM_H */
 
 /* EOF */

@@ -9,8 +9,8 @@
 #undef ENABLE_IPV6
 #undef ENABLE_NLS
 #undef ALWAYS_RESTART_SERVER
-#undef GDM_USER_PATH
-#undef GDM_RBAC_SYSCMD_KEYS
+#undef MDM_USER_PATH
+#undef MDM_RBAC_SYSCMD_KEYS
 #undef HAVE_ADT
 #undef HAVE_CATGETS
 #undef HAVE_CHKAUTHATTR
@@ -90,7 +90,7 @@
 #undef FSTYPE_USG_STATFS
 
 /* pid file */
-#undef GDM_PID_FILE
+#undef MDM_PID_FILE
 
 /* Define to 1 if you have the `bind_textdomain_codeset' function. */
 #undef HAVE_BIND_TEXTDOMAIN_CODESET

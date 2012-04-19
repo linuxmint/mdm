@@ -1,4 +1,4 @@
-/* GDM - The Gnome Display Manager
+/* MDM - The Gnome Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003 George Lebl
@@ -19,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef GDM_SESSION_H
-#define GDM_SESSION_H
+#ifndef MDM_SESSION_H
+#define MDM_SESSION_H
 
 #include "misc.h"
 
@@ -31,7 +31,7 @@ typedef struct {
         char *name;
         char *clearname;
         char *comment;
-} GdmSession;
+} MdmSession;
 
 enum {
 	SESSION_LOOKUP_SUCCESS,
@@ -40,24 +40,24 @@ enum {
 	SESSION_LOOKUP_USE_SWITCHDESK
 };
 
-void		gdm_session_list_init		(void);
-void		_gdm_session_list_init		(GHashTable **sessnames,
+void		mdm_session_list_init		(void);
+void		_mdm_session_list_init		(GHashTable **sessnames,
 						 GList **sessions,
 						 gchar **default_session, 
 						 const gchar **current_session);
-gint		gdm_session_sort_func		(const char *a, const char *b);
-const char *	gdm_session_name 		(const char *name);
-void		gdm_session_list_from_hash_table_func (const char *key,
+gint		mdm_session_sort_func		(const char *a, const char *b);
+const char *	mdm_session_name 		(const char *name);
+void		mdm_session_list_from_hash_table_func (const char *key,
 						const char *value,
 						GList **sessions);
-gint		gdm_session_sort_func		(const char *a,
+gint		mdm_session_sort_func		(const char *a,
 						 const char *b);
-char *		gdm_session_lookup 		(const char *saved_session, gint *lookup_status);
+char *		mdm_session_lookup 		(const char *saved_session, gint *lookup_status);
 
-gint		gdm_get_save_session 		(void);
+gint		mdm_get_save_session 		(void);
 
-void		gdm_set_save_session 		(const gint session);
+void		mdm_set_save_session 		(const gint session);
 
-const char *    gdm_get_default_session         (void);
+const char *    mdm_get_default_session         (void);
 
-#endif /* GDM_SESSION_H */
+#endif /* MDM_SESSION_H */
