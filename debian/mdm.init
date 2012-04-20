@@ -6,8 +6,8 @@
 # Required-Stop:     $local_fs $remote_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: GNOME Display Manager
-# Description:       Debian init script for the GNOME Display Manager
+# Short-Description: MDM Display Manager
+# Description:       Debian init script for the MDM Display Manager
 ### END INIT INFO
 #
 # Author:       Ryan Murray <rmurray@debian.org>
@@ -35,19 +35,19 @@ case "$1" in
   start)
         CONFIGURED_DAEMON=$(basename "$(cat $DEFAULT_DISPLAY_MANAGER_FILE 2> /dev/null)")
         if grep -wqs text /proc/cmdline; then
-            log_warning_msg "Not starting GNOME Display Manager (mdm); found 'text' in kernel commandline."
+            log_warning_msg "Not starting MDM Display Manager; found 'text' in kernel commandline."
         elif [ -e "$DEFAULT_DISPLAY_MANAGER_FILE" ] && \
            [ "$HEED_DEFAULT_DISPLAY_MANAGER" = "true" ] && \
            [ "$CONFIGURED_DAEMON" != mdm ] ; then
-                log_action_msg "Not starting GNOME Display Manager; it is not the default display manager"
+                log_action_msg "Not starting MDM Display Manager; it is not the default display manager"
         else
-                log_daemon_msg "Starting GNOME Display Manager" "mdm"
+                log_daemon_msg "Starting MDM Display Manager" "mdm"
                 start_daemon $DAEMON
                 log_end_msg $?
         fi
   ;;
   stop)
-        log_daemon_msg "Stopping GNOME Display Manager" "mdm"
+        log_daemon_msg "Stopping MDM Display Manager" "mdm"
         set +e
         start-stop-daemon --stop --quiet --pidfile /var/run/mdm.pid \
                 --name mdm --retry 5
@@ -55,7 +55,7 @@ case "$1" in
         log_end_msg $?
   ;;
   reload)
-        log_daemon_msg "Scheduling reload of GNOME Display Manager configuration" "mdm"
+        log_daemon_msg "Scheduling reload of MDM Display Manager configuration" "mdm"
         set +e
         start-stop-daemon --stop --signal USR1 --quiet --pidfile \
                 /var/run/mdm.pid --name mdm
