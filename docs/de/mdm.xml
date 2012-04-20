@@ -96,7 +96,7 @@
     <para>Configurator - Die Konfigurationsanwendung (<command>mdmsetup</command>).</para>
 
     <para>
-      MDM - Gnome Display Manager. Used to describe the software package as a
+      MDM - MDM Display Manager. Used to describe the software package as a
       whole.  Sometimes also referred to as MDM2.
     </para>
 

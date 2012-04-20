@@ -1,4 +1,4 @@
-/* MDM - The Gnome Display Manager
+/* MDM - The MDM Display Manager
  * Copyright (C) 1999, 2000 Martin K. Petersen <mkp@mkp.net>
  *
  * This file Copyright (c) 2003 George Lebl

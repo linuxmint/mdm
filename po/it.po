@@ -1,4 +1,4 @@
-# mdm2, the Gnome Display Manager, Italian translation
+# mdm2, the MDM Display Manager, Italian translation
 # Copyright (C) 2000, 2001 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000.
 # Salvo Isaja <salvois@it.gnome.org>, 2001.

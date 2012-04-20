@@ -15,7 +15,7 @@ fi
 # creating mdm user if he isn't already there
 if ! getent passwd mdm >/dev/null; then
         adduser --system --ingroup mdm --home /var/lib/mdm mdm
-        usermod -c "Gnome Display Manager" mdm
+        usermod -c "MDM Display Manager" mdm
         usermod -d "/var/lib/mdm"          mdm
         usermod -g "mdm"                   mdm
         usermod -s "/bin/false"            mdm

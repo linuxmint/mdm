@@ -5368,7 +5368,7 @@ msgstr "Kimlik denetimi başarısız!\n"
 #~ msgid "Do you really wish to remove theme '%s' from the system?"
 #~ msgstr "'%s' temasını gerçekten sistemden silmek istiyor musunuz?"
 
-#~ msgid "Configure the login screen (Gnome Display Manager)"
+#~ msgid "Configure the login screen (MDM Display Manager)"
 #~ msgstr "Giriş yöneticisini ekranını yapılandır (Gnome Görüntü Yöneticisi)"
 
 #~ msgid ""

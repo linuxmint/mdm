@@ -2106,7 +2106,7 @@ msgstr "T_ambah"
 
 #: ../gui/mdmcomm.c:619
 msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "MDM (Gnome Display Manager) tidak jalan"
+msgstr "MDM (MDM Display Manager) tidak jalan"
 
 #: ../gui/mdmcomm.c:621
 msgid ""
@@ -2121,7 +2121,7 @@ msgstr ""
 
 #: ../gui/mdmcomm.c:645 ../gui/mdmflexiserver.c:785
 msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Tidak dapat berkomunikasi dengan MDM (Gnome Display Manager)"
+msgstr "Tidak dapat berkomunikasi dengan MDM (MDM Display Manager)"
 
 #: ../gui/mdmcomm.c:647 ../gui/mdmflexiserver.c:787
 msgid "Perhaps you have an old version of MDM running."

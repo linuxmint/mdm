@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../C/mdm.xml:13(title)
-msgid "Gnome Display Manager Reference Manual"
+msgid "MDM Display Manager Reference Manual"
 msgstr "Manuel de référence du gestionnaire de connexions GNOME"
 
 #: ../C/mdm.xml:17(revnumber)
@@ -258,14 +258,14 @@ msgstr ""
 
 #: ../C/mdm.xml:95(para)
 msgid ""
-"MDM - Gnome Display Manager. Used to describe the software package as a "
+"MDM - MDM Display Manager. Used to describe the software package as a "
 "whole. Sometimes also referred to as MDM2."
 msgstr ""
 "MDM - Le gestionnaire de connexions. Utilisé pour décrire l'ensemble des "
 "paquets de ce logiciel. Parfois désigné sous le nom de MDM2."
 
 #: ../C/mdm.xml:100(para)
-msgid "mdm - The Gnome Display Manager daemon (<command>mdm</command>)."
+msgid "mdm - The MDM Display Manager daemon (<command>mdm</command>)."
 msgstr ""
 "mdm - Le démon du gestionnaire de connexions GNOME (<command>mdm</command>)."
 
@@ -333,7 +333,7 @@ msgstr "Introduction"
 
 #: ../C/mdm.xml:149(para)
 msgid ""
-"The Gnome Display Manager (MDM) is a display manager that implements all "
+"The MDM Display Manager (MDM) is a display manager that implements all "
 "significant features required for managing attached and remote displays. MDM "
 "was written from scratch and does not contain any XDM / X Consortium code."
 msgstr ""

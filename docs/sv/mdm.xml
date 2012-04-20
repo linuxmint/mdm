@@ -8,7 +8,7 @@
 ]>
 <article id="index" lang="sv">
   <articleinfo>
-    <title>Referenshandbok för Gnome Display Manager</title>
+    <title>Referenshandbok för MDM Display Manager</title>
 
     <revhistory>
       <revision>
@@ -101,9 +101,9 @@
 
     <para>Konfigurator - Konfigurationsprogrammet (<command>mdmsetup</command>).</para>
 
-    <para>MDM - Gnome Display Manager. Används för att beskriva programvarupaketet som en helhet. Ibland refereras den till som MDM2.</para>
+    <para>MDM - MDM Display Manager. Används för att beskriva programvarupaketet som en helhet. Ibland refereras den till som MDM2.</para>
 
-    <para>mdm - Gnome Display Manager-demonen (<command>mdm</command>).</para>
+    <para>mdm - MDM Display Manager-demonen (<command>mdm</command>).</para>
 
     <para>Hälsare - Det grafiska inloggningsfönstret (<command>mdmlogin</command> eller <command>mdmgreeter</command>).</para>
 
@@ -142,7 +142,7 @@
       <title>Introdution</title>
 
       <para> 
-        The Gnome Display Manager (MDM) is a display manager that
+        The MDM Display Manager (MDM) is a display manager that
         implements all significant features required for managing
         attached and remote displays.   MDM was written from scratch and
         does not contain any XDM / X Consortium code.

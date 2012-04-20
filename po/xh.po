@@ -3772,7 +3772,7 @@ msgstr ""
 #. EOF
 #: ../gui/mdmsetup.desktop.in.h:1
 #, fuzzy
-msgid "Configure the login screen (Gnome Display Manager)"
+msgid "Configure the login screen (MDM Display Manager)"
 msgstr "Mi_sela umphathi wokungena"
 
 #: ../gui/greeter/greeter.c:640 ../gui/greeter/greeter.c:672

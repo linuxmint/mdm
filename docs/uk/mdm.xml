@@ -101,7 +101,7 @@
 
     <para>Конфігуратор - програма налаштовування (<command>mdmsetup</command>).</para>
 
-    <para>MDM - менеджер дисплеїв середовища Gnome (Gnome Display Manager). Назва використовується при посиланні на програмний пакет взагалі. Іноді відомий як MDM2.</para>
+    <para>MDM - менеджер дисплеїв середовища Gnome (MDM Display Manager). Назва використовується при посиланні на програмний пакет взагалі. Іноді відомий як MDM2.</para>
 
     <para>mdm - програма-сервер менеджеру дисплею середовища Gnome (<command>mdm</command>).</para>
 
@@ -125,7 +125,7 @@
       <title>Введення</title>
 
       <para> 
-        The Gnome Display Manager (MDM) is a display manager that
+        The MDM Display Manager (MDM) is a display manager that
         implements all significant features required for managing
         attached and remote displays.   MDM was written from scratch and
         does not contain any XDM / X Consortium code.

@@ -12,7 +12,7 @@
  | convert it.
  -----------------------------------------------------------
 
-The Gnome Display Manager (MDM) is a display manager that
+The MDM Display Manager (MDM) is a display manager that
 implements all significant features required for managing
 local and remote displays.   For full information about 
 MDM features, refer to the documentation.  In summary,

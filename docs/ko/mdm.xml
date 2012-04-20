@@ -166,12 +166,12 @@
     </para>
 
     <para>
-      MDM - Gnome Display Manager. Used to describe the software package as a
+      MDM - MDM Display Manager. Used to describe the software package as a
       whole.  Sometimes also referred to as MDM2.
     </para>
 
     <para>
-      mdm - The Gnome Display Manager daemon (<command>mdm</command>).
+      mdm - The MDM Display Manager daemon (<command>mdm</command>).
     </para>
 
     <para>
@@ -220,7 +220,7 @@
       </title>
 
       <para> 
-        The Gnome Display Manager (MDM) is a display manager that
+        The MDM Display Manager (MDM) is a display manager that
         implements all significant features required for managing
         attached and remote displays.   MDM was written from scratch and
         does not contain any XDM / X Consortium code.
