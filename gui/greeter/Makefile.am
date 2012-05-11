@@ -91,8 +91,7 @@ mdmgreeter_LDADD = \
 	$(X_EXTRA_LIBS)		\
 	$(XINERAMA_LIBS)	\
 	$(X_LIBS)		\
-	-lX11			\
-	-lfontconfig
+	-lX11			
 
 EXTRA_DIST = \
 	mdmthemetester.in \

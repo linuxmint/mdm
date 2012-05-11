@@ -1,3 +1,9 @@
+mdm (1.0.1) maya; urgency=low
+
+  * Don't rely on fontconfig (can cause segfaults and make MDM crash)
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 11 May 2012 13:55:55 +0100
+
 mdm (1.0.0) debian; urgency=low
 
   * v 1.0.0, forked from GDM 2.20.11-4

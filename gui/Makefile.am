@@ -124,7 +124,6 @@ mdmchooser_LDADD = \
 	$(X_LIBS)		\
 	$(XDMCP_LIBS)		\
 	-lX11			\
-	-lfontconfig		\
 	$(NULL)
 
 mdmlogin_LDADD = \
@@ -144,7 +143,6 @@ mdmlogin_LDADD = \
 	$(XINERAMA_LIBS)	\
 	$(X_LIBS)		\
 	-lX11			\
-	-lfontconfig		\
 	$(NULL)
 
 # LIBGNOMEUI should be removed from mdmsetup at some point.
@@ -169,7 +167,6 @@ mdmsetup_LDADD = \
 	$(X_LIBS)		\
 	-lXau			\
 	-lX11			\
-	-lfontconfig		\
 	$(NULL)
 
 mdmphotosetup_LDADD = \
@@ -184,7 +181,6 @@ mdmphotosetup_LDADD = \
 	$(EXTRA_SOCKET_LIB)	\
 	$(EXTRA_NSL_LIB)	\
 	-lX11			\
-	-lfontconfig		\
 	$(top_builddir)/common/libmdmcommon.a \
 	$(NULL)
 
@@ -200,7 +196,6 @@ mdmXnestchooser_LDADD = \
 	$(X_LIBS)		\
 	-lXau			\
 	-lX11			\
-	-lfontconfig		\
 	$(top_builddir)/common/libmdmcommon.a \
 	$(NULL)
 
@@ -217,7 +212,6 @@ mdmflexiserver_LDADD = \
 	$(X_LIBS)		\
 	-lX11			\
 	-lXau			\
-	-lfontconfig		\
 	$(NULL)
 
 mdmdynamic_LDADD = 		\
@@ -233,7 +227,6 @@ mdmdynamic_LDADD = 		\
 	$(X_LIBS)		\
 	-lX11			\
 	-lXau			\
-	-lfontconfig		\
 	$(NULL)
 
 Settingsdir = $(datadir)/mdm/applications

@@ -32,8 +32,6 @@
 #include <sys/types.h>
 #include <signal.h>
 
-#include <fontconfig/fontconfig.h>
-
 #include <glib/gi18n.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
@@ -1037,49 +1035,8 @@ get_less_specific_locale (const char *locale,
 gboolean
 mdm_common_locale_is_displayable (const gchar *locale)
 {
-  char *language_code;
   gboolean is_displayable;
-
-  FcPattern *pattern;
-  FcObjectSet *object_set;
-  FcFontSet *font_set;
-
-  is_displayable = FALSE;
-  pattern = NULL;
-  object_set = NULL;
-  font_set = NULL;
-
-  language_code = get_less_specific_locale (locale, LOCALE_UP_TO_LANGUAGE);
-
-  pattern = FcPatternBuild (NULL, FC_LANG, FcTypeString, language_code, NULL);
-
-  if (pattern == NULL)
-    goto done;
-
-  object_set = FcObjectSetBuild (NULL, NULL);
-
-  if (object_set == NULL)
-    goto done;
-
-  font_set = FcFontList (NULL, pattern, object_set);
-
-  if (font_set == NULL)
-    goto done;
-
-  is_displayable = (font_set->nfont > 0);
-
-done:
-
-  if (font_set != NULL)
-    FcFontSetDestroy (font_set);
-
-  if (object_set != NULL)
-    FcObjectSetDestroy (object_set);
-
-  if (pattern != NULL)
-    FcPatternDestroy (pattern);
-
-  g_free (language_code);
+  is_displayable = TRUE;
   return is_displayable;
 }
 

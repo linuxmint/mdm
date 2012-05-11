@@ -31,7 +31,6 @@
 #endif
 
 #include "mdmgreeter.h"
-#include <fontconfig/fontconfig.h>
 
 #include <glib/gi18n.h>
 #include <gdk/gdkx.h>
