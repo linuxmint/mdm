@@ -1,3 +1,9 @@
+mdm (1.0.2) maya; urgency=low
+
+  * Don't show "New login in a window" menu item if Xnest isn't installed
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 11 May 2012 19:31:41 +0100
+
 mdm (1.0.1) maya; urgency=low
 
   * Don't rely on fontconfig (can cause segfaults and make MDM crash)
