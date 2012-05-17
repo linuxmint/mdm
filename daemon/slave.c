@@ -3919,7 +3919,17 @@ session_child_run (struct passwd *pwent,
 			if (have_suntsol_extension)
 				g_string_append (fullexec, "/usr/bin/tsoljdslabel ");
 #endif
-			g_string_append (fullexec, sessionexec);
+			//If we find space chars in the session Exec, and there's no quotes around them, add quotes.
+			if ((strchr (sessionexec, ' ') != NULL) && (strchr (sessionexec, '"') == NULL)) {
+				// Exec line doesn't contain quotes, let's add them
+				mdm_debug ("Warning, session Exec line did not contain quotes: %s", sessionexec);
+				g_string_append (fullexec, "\"");
+				g_string_append (fullexec, sessionexec);
+				g_string_append (fullexec, "\"");								
+			} 
+			else {
+				g_string_append (fullexec, sessionexec);
+			}
 		}
 		g_strfreev (bxvec);
 	}
