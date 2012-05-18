@@ -414,7 +414,7 @@ IncludeAll=true
 # file, although MDM will be able to read a standard locale.alias file as well.
 LocaleFile=/etc/mdm/locale.conf
 # Logo shown in the standard greeter.
-Logo=@pixmapdir@/mdmDebianLogo.xpm
+Logo=@pixmapdir@/mdmLogo.xpm
 # Logo shown on file chooser button in mdmsetup (do not modify this value).
 #ChooserButtonLogo=@pixmapdir@/mdm-foot-logo.png
 # The standard greeter should shake if a user entered the wrong username or
