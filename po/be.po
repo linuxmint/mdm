@@ -2923,8 +2923,8 @@ msgid "Doubleclick on the user to log in"
 msgstr "Падвоеная пстрычка на карыстальніке для ўваходу"
 
 #: gui/mdmlogin.c:2475
-msgid "GNOME Desktop Manager"
-msgstr "Мэнаджар стальца GNOME"
+msgid "MDM Desktop Manager"
+msgstr "Мэнаджар стальца MDM"
 
 #: gui/mdmlogin.c:2501 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"

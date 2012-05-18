@@ -3026,7 +3026,7 @@ msgid "Please insert 25 cents to log in."
 msgstr "ప్రవేశద్వారంకు దయచేసిస్ 25 శాతములు చేర్చుము."
 
 #: ../gui/mdmlogin.c:1967
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr "గ్నోమ్ గవాక్ష నిర్వాహకి"
 
 #: ../gui/mdmlogin.c:2033

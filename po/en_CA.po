@@ -3129,8 +3129,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "Please insert 25 cents to log in."
 
 #: ../gui/mdmlogin.c:1967
-msgid "GNOME Desktop Manager"
-msgstr "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
+msgstr "MDM Desktop Manager"
 
 #: ../gui/mdmlogin.c:2033
 msgid "Finger"

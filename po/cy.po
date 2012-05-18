@@ -3042,8 +3042,8 @@ msgstr "Rhowch 20 ceiniog i mewn er mwyn mewngofnodi os gwelwch yn dda."
 
 # TRWSIO
 #: ../gui/mdmlogin.c:2237
-msgid "GNOME Desktop Manager"
-msgstr "Rheolydd Penbwrdd GNOME"
+msgid "MDM Desktop Manager"
+msgstr "Rheolydd Penbwrdd MDM"
 
 #: ../gui/mdmlogin.c:2303
 msgid "Finger"

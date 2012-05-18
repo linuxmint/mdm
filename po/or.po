@@ -3088,7 +3088,7 @@ msgid "Please insert 25 cents to log in."
 msgstr "ଦୟାକରି ଲଗଇନ କରିବା ପାଇଁ ୨୫ ସେଣ୍ଟ ଭରନ୍ତୁ।"
 
 #: ../gui/mdmlogin.c:1973
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr "ନୋମ ଡେସ୍କଟପ୍ ପରିଚାଳକ"
 
 #: ../gui/mdmlogin.c:2039

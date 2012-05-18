@@ -3081,8 +3081,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "कृपया लगइन गर्नका लागि २५ सेन्ट घुसाउनुहोस् ।"
 
 #: ../gui/mdmlogin.c:1967
-msgid "GNOME Desktop Manager"
-msgstr "GNOME डेस्कटप प्रबन्धक"
+msgid "MDM Desktop Manager"
+msgstr "MDM डेस्कटप प्रबन्धक"
 
 #: ../gui/mdmlogin.c:2033
 msgid "Finger"

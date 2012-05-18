@@ -2928,8 +2928,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "প্ৰৱেশ কৰোঁতে ৪ আনা ফেলুন।"
 
 #: ../gui/mdmlogin.c:2106
-msgid "GNOME Desktop Manager"
-msgstr "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
+msgstr "MDM Desktop Manager"
 
 #: ../gui/mdmlogin.c:2172
 msgid "Finger"

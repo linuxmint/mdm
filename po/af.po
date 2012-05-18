@@ -2931,8 +2931,8 @@ msgid "Doubleclick on the user to log in"
 msgstr "Dubbelkliek op gebruiker om aan te meld"
 
 #: gui/mdmlogin.c:2475
-msgid "GNOME Desktop Manager"
-msgstr "GNOME Tafelbladbestuurder"
+msgid "MDM Desktop Manager"
+msgstr "MDM Tafelbladbestuurder"
 
 #: gui/mdmlogin.c:2501 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"

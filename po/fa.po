@@ -2957,7 +2957,7 @@ msgid "Please insert 25 cents to log in."
 msgstr "برای ورود به سیستم لطفاً دو سکهٔ ۵۰ تومانی بیاندازید."
 
 #: ../gui/mdmlogin.c:2104
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr "مدیر رومیزی گنوم"
 
 #: ../gui/mdmlogin.c:2170

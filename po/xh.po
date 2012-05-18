@@ -3057,8 +3057,8 @@ msgid "Doubleclick on the user to log in"
 msgstr "Cofa kabini kumsebenzisi ukuze ungene"
 
 #: ../gui/mdmlogin.c:2508
-msgid "GNOME Desktop Manager"
-msgstr "uMphathi we-Desktop ye-GNOME"
+msgid "MDM Desktop Manager"
+msgstr "uMphathi we-Desktop ye-MDM"
 
 #: ../gui/mdmlogin.c:2534 ../gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"

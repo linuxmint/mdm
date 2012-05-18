@@ -3370,8 +3370,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "Mandoa Ar 50 vao afaka miditra."
 
 #: ../gui/mdmlogin.c:2176
-msgid "GNOME Desktop Manager"
-msgstr "Mpandrindra sehatr'asan'ny GNOME"
+msgid "MDM Desktop Manager"
+msgstr "Mpandrindra sehatr'asan'ny MDM"
 
 #: ../gui/mdmlogin.c:2242
 msgid "Finger"

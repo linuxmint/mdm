@@ -2849,7 +2849,7 @@ msgid "Doubleclick on the user to log in"
 msgstr "वापरकर्ता वर दोनदा क्लिक करून प्रवेश करा"
 
 #: gui/mdmlogin.c:2475
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr "जिनोमचा डेस्कटाॅप व्यवस्थापक"
 
 #: gui/mdmlogin.c:2501 gui/greeter/greeter_item.c:139

@@ -2922,8 +2922,8 @@ msgid "Doubleclick on the user to log in"
 msgstr "Girmək üçün istifadəçiyə cüt tıqlayın"
 
 #: gui/mdmlogin.c:2477
-msgid "GNOME Desktop Manager"
-msgstr "GNOME Masa Üstü İdarəçisi"
+msgid "MDM Desktop Manager"
+msgstr "MDM Masa Üstü İdarəçisi"
 
 #: gui/mdmlogin.c:2503 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"

@@ -2501,8 +2501,8 @@ msgid "Doubleclick on the user to log in"
 msgstr ""
 
 #: gui/mdmlogin.c:2356
-msgid "GNOME Desktop Manager"
-msgstr "Manaedjeu di scribannes di Gnome"
+msgid "MDM Desktop Manager"
+msgstr "Manaedjeu di scribannes di MDM"
 
 #: gui/mdmlogin.c:2382 gui/greeter/greeter_item.c:116
 msgid "%a %b %d, %H:%M"

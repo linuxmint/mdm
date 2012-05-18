@@ -2698,8 +2698,8 @@ msgid "Doubleclick on the user to log in"
 msgstr "Dvostrukim klikom na korisnika se prijavljujete"
 
 #: gui/mdmlogin.c:2475
-msgid "GNOME Desktop Manager"
-msgstr "Radno okruženje GNOMEa"
+msgid "MDM Desktop Manager"
+msgstr "Radno okruženje MDMa"
 
 #: gui/mdmlogin.c:2501 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"

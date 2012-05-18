@@ -3130,7 +3130,7 @@ msgid "Please insert 25 cents to log in."
 msgstr "உள் நுழைவதற்கு 25காசை உள்ளிடவும்."
 
 #: ../gui/mdmlogin.c:1967
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr "க்நோம் மேல்மேசை மேலாளர்"
 
 #: ../gui/mdmlogin.c:2033

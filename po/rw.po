@@ -3078,7 +3078,7 @@ msgid "Please insert 25 cents to log in."
 msgstr "Kongeramo 25% Kuri LOG in"
 
 #: gui/mdmlogin.c:2500
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr ""
 
 #: gui/mdmlogin.c:2526 gui/greeter/greeter_item.c:139

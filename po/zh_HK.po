@@ -2826,8 +2826,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "請投入十元硬幣來登入。"
 
 #: ../gui/mdmlogin.c:2266
-msgid "GNOME Desktop Manager"
-msgstr "GNOME 桌面管理員"
+msgid "MDM Desktop Manager"
+msgstr "MDM 桌面管理員"
 
 #: ../gui/mdmlogin.c:2332
 msgid "Finger"

@@ -2826,8 +2826,8 @@ msgid "Doubleclick on the user to log in"
 msgstr "Хэрэглэгч нэврэхэд давхар шалгах"
 
 #: gui/mdmlogin.c:2475
-msgid "GNOME Desktop Manager"
-msgstr "ГНОМЕ-Дэлгэцийн Менежер"
+msgid "MDM Desktop Manager"
+msgstr "MDM-Дэлгэцийн Менежер"
 
 #: gui/mdmlogin.c:2501
 #: gui/greeter/greeter_item.c:139

@@ -3005,8 +3005,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "Masukan koin Rp 100 logam untuk mulai."
 
 #: ../gui/mdmlogin.c:2266
-msgid "GNOME Desktop Manager"
-msgstr "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
+msgstr "MDM Desktop Manager"
 
 #: ../gui/mdmlogin.c:2332
 msgid "Finger"

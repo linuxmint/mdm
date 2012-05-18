@@ -3230,8 +3230,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "Ievietojiet 25 santīmus, lai pieteiktos."
 
 #: ../gui/mdmlogin.c:2182
-msgid "GNOME Desktop Manager"
-msgstr "GNOME Darbvirsmas Pārvaldnieks"
+msgid "MDM Desktop Manager"
+msgstr "MDM Darbvirsmas Pārvaldnieks"
 
 #: ../gui/mdmlogin.c:2248
 msgid "Finger"

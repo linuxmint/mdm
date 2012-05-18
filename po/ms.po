@@ -2941,8 +2941,8 @@ msgid "Doubleclick on the user to log in"
 msgstr "Klikberganda atas pengguna untuk logMasuk"
 
 #: gui/mdmlogin.c:2506
-msgid "GNOME Desktop Manager"
-msgstr "Pengurus Desktop GNOME"
+msgid "MDM Desktop Manager"
+msgstr "Pengurus Desktop MDM"
 
 #: gui/mdmlogin.c:2532 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"

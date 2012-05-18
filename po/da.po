@@ -2986,8 +2986,8 @@ msgstr "Kast venligst 50 øre i for at logge ind."
 
 # et forsøg på at finde på noget mere dækkende
 #: ../gui/mdmlogin.c:1970
-msgid "GNOME Desktop Manager"
-msgstr "GNOME logind-program"
+msgid "MDM Desktop Manager"
+msgstr "MDM logind-program"
 
 #: ../gui/mdmlogin.c:2036
 msgid "Finger"

@@ -2926,8 +2926,8 @@ msgid "Please insert 25 cents to log in."
 msgstr ""
 
 #: ../gui/mdmlogin.c:1967
-msgid "GNOME Desktop Manager"
-msgstr "Gestionari de burèus GNOME"
+msgid "MDM Desktop Manager"
+msgstr "Gestionari de burèus MDM"
 
 #: ../gui/mdmlogin.c:2033
 msgid "Finger"

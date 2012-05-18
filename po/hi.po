@@ -3229,7 +3229,7 @@ msgid "Please insert 25 cents to log in."
 msgstr "लॉगइन हेतु कृपया 25 पैसे डालें."
 
 #: ../gui/mdmlogin.c:1967
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr "गनोम डेस्कटॉप प्रबंधक"
 
 #: ../gui/mdmlogin.c:2033

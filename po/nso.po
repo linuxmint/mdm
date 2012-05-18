@@ -2715,8 +2715,8 @@ msgid "Doubleclick on the user to log in"
 msgstr "Kgotla modiriši gabedi gore o tsene"
 
 #: gui/mdmlogin.c:2506
-msgid "GNOME Desktop Manager"
-msgstr "Molaodi wa Teseke wa GNOME"
+msgid "MDM Desktop Manager"
+msgstr "Molaodi wa Teseke wa MDM"
 
 #: gui/mdmlogin.c:2532 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"

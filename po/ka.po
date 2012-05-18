@@ -3042,7 +3042,7 @@ msgid "Please insert 25 cents to log in."
 msgstr "-სკენ -."
 
 #: ../gui/mdmlogin.c:2234
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr "გნომის გრაფიკული ინტერფეისი"
 
 #: ../gui/mdmlogin.c:2300

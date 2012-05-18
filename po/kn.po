@@ -3114,8 +3114,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "ಒಳಗೆ ಪ್ರವೇಶಿಸಲು ದಯವಿಟ್ಟು ೨೫ ಸೆಂಟ್ಸನ್ನು ನಮೂದಿಸಿ."
 
 #: ../gui/mdmlogin.c:1967
-msgid "GNOME Desktop Manager"
-msgstr "GNOME ಗಣಕತೆರೆ ವ್ಯವಸ್ಥಾಪಕ"
+msgid "MDM Desktop Manager"
+msgstr "MDM ಗಣಕತೆರೆ ವ್ಯವಸ್ಥಾಪಕ"
 
 #: ../gui/mdmlogin.c:2033
 msgid "Finger"

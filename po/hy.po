@@ -2728,7 +2728,7 @@ msgid "Please insert 25 cents to log in."
 msgstr "Ներմուծեք 25 ցենթ մուտքի համար"
 
 #: ../gui/mdmlogin.c:2234
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr "ԳՆՈՄ Աշխատասեղանի Կառավարիչ"
 
 #: ../gui/mdmlogin.c:2300

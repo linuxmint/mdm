@@ -3080,8 +3080,8 @@ msgid "Please insert 25 cents to log in."
 msgstr ""
 
 #: ../gui/mdmlogin.c:2176
-msgid "GNOME Desktop Manager"
-msgstr "Menajerê Sermasê yê GNOME"
+msgid "MDM Desktop Manager"
+msgstr "Menajerê Sermasê yê MDM"
 
 #: ../gui/mdmlogin.c:2242
 msgid "Finger"

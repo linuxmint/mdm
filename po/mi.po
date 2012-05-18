@@ -2683,7 +2683,7 @@ msgid "Doubleclick on the user to log in"
 msgstr ""
 
 #: gui/mdmlogin.c:2475
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr ""
 
 #: gui/mdmlogin.c:2501 gui/greeter/greeter_item.c:139

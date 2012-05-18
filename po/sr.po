@@ -3347,8 +3347,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "Молим убаците жетон како би могли да се пријавите"
 
 #: ../gui/mdmlogin.c:2182
-msgid "GNOME Desktop Manager"
-msgstr "Радно окружење Гном"
+msgid "MDM Desktop Manager"
+msgstr "Радно окружење MDM"
 
 #: ../gui/mdmlogin.c:2248
 msgid "Finger"

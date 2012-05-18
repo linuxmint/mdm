@@ -2970,8 +2970,8 @@ msgid "Doubleclick on the user to log in"
 msgstr "Cofoza kabili kumsebenzisi ukungena"
 
 #: gui/mdmlogin.c:2506
-msgid "GNOME Desktop Manager"
-msgstr "Umphathi weSikhamu Sokubuka seGNOME"
+msgid "MDM Desktop Manager"
+msgstr "Umphathi weSikhamu Sokubuka seMDM"
 
 #: gui/mdmlogin.c:2532 gui/greeter/greeter_item.c:139
 msgid "%a %b %d, %H:%M"

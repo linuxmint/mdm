@@ -3121,8 +3121,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "ദയവായി പ്രവേശനാനുമതിക്കായി 25 പെസാ നല്‍കൂ."
 
 #: ../gui/mdmlogin.c:1967
-msgid "GNOME Desktop Manager"
-msgstr "GNOME ഡസ്ക്ക്-ടോപ്പ് മാനേജര്‍"
+msgid "MDM Desktop Manager"
+msgstr "MDM ഡസ്ക്ക്-ടോപ്പ് മാനേജര്‍"
 
 #: ../gui/mdmlogin.c:2033
 msgid "Finger"

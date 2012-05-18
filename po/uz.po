@@ -2734,7 +2734,7 @@ msgid "Please insert 25 cents to log in."
 msgstr ""
 
 #: ../gui/mdmlogin.c:1970
-msgid "GNOME Desktop Manager"
+msgid "MDM Desktop Manager"
 msgstr ""
 
 #: ../gui/mdmlogin.c:2036

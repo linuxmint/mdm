@@ -2991,8 +2991,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "Dobjon be egy százast a bejelentkezéshez."
 
 #: ../gui/mdmlogin.c:1970
-msgid "GNOME Desktop Manager"
-msgstr "GNOME Munkaasztal-kezelő"
+msgid "MDM Desktop Manager"
+msgstr "MDM Munkaasztal-kezelő"
 
 #: ../gui/mdmlogin.c:2036
 msgid "Finger"

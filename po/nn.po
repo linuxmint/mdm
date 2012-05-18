@@ -2953,8 +2953,8 @@ msgid "Please insert 25 cents to log in."
 msgstr "Legg på 5 kroner for å logga inn."
 
 #: ../gui/mdmlogin.c:1970
-msgid "GNOME Desktop Manager"
-msgstr "GNOME skrivebordhandsamar"
+msgid "MDM Desktop Manager"
+msgstr "MDM skrivebordhandsamar"
 
 #: ../gui/mdmlogin.c:2036
 msgid "Finger"
