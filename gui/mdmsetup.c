@@ -4748,11 +4748,11 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 		if (dent->d_name[0] == '.')
 			continue;
 		n = g_strconcat (theme_dir, "/", dent->d_name,
-				 "/MdmGreeterTheme.desktop", NULL);
+				 "/GdmGreeterTheme.desktop", NULL);
 		if (g_access (n, R_OK) != 0) {
 			g_free (n);
 			n = g_strconcat (theme_dir, "/", dent->d_name,
-					 "/MdmGreeterTheme.info", NULL);
+					 "/GdmGreeterTheme.info", NULL);
 		}
 		if (g_access (n, R_OK) != 0) {
 			g_free (n);
@@ -4789,17 +4789,17 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 
 		theme_file = mdm_common_config_load (n, NULL);
 		name = NULL;
-		mdm_common_config_get_translated_string (theme_file, "MdmGreeterTheme/Name", &name, NULL);
+		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Name", &name, NULL);
 		if (ve_string_empty (name)) {
 			g_free (name);
 			name = g_strdup (dent->d_name);
 		}
 
 		desc = author = copyright = ss = NULL;
-		mdm_common_config_get_translated_string (theme_file, "MdmGreeterTheme/Description", &desc, NULL);
-		mdm_common_config_get_translated_string (theme_file, "MdmGreeterTheme/Author", &author, NULL);
-		mdm_common_config_get_translated_string (theme_file, "MdmGreeterTheme/Copyright", &copyright, NULL);
-		mdm_common_config_get_translated_string (theme_file, "MdmGreeterTheme/Screenshot", &ss, NULL);
+		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Description", &desc, NULL);
+		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Author", &author, NULL);
+		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Copyright", &copyright, NULL);
+		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Screenshot", &ss, NULL);
 
 		g_key_file_free (theme_file);
 
@@ -5206,14 +5206,14 @@ get_the_dir (FILE *fp, char **error)
 		}
 
 		if ( ! got_info) {
-			s = g_strconcat (dir, "/MdmGreeterTheme.info", NULL);
+			s = g_strconcat (dir, "/GdmGreeterTheme.info", NULL);
 			if (strcmp (ve_sure_string (buf), ve_sure_string (s)) == 0)
 				got_info = TRUE;
 			g_free (s);
 		}
 
 		if ( ! got_info) {
-			s = g_strconcat (dir, "/MdmGreeterTheme.desktop", NULL);
+			s = g_strconcat (dir, "/GdmGreeterTheme.desktop", NULL);
 			if (strcmp (ve_sure_string (buf), ve_sure_string (s)) == 0)
 				got_info = TRUE;
 			g_free (s);
@@ -5227,7 +5227,7 @@ get_the_dir (FILE *fp, char **error)
 		*error = _("File not a tar.gz or tar archive");
 	else
 		*error = _("Archive does not include a "
-			   "MdmGreeterTheme.info file");
+			   "GdmGreeterTheme.info file");
 
 	g_free (dir);
 	return NULL;

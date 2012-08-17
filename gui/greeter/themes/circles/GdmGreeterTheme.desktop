@@ -1,7 +1,7 @@
 # This is not really a .desktop file like the rest, but it's useful to treat
 # it as such
 
-[MdmGreeterTheme]
+[GdmGreeterTheme]
 Encoding=UTF-8
 Greeter=circles.xml
 Name=Circles

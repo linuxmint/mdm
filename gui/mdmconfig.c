@@ -711,7 +711,7 @@ mdm_get_theme_greeter (const gchar *file,
 
 	config = mdm_common_config_load (file, NULL);
 	s = NULL;
-	mdm_common_config_get_translated_string (config, "MdmGreeterTheme/Greeter", &s, NULL);
+	mdm_common_config_get_translated_string (config, "GdmGreeterTheme/Greeter", &s, NULL);
 
 	if (s == NULL || s[0] == '\0') {
 		g_free (s);

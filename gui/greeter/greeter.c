@@ -1136,11 +1136,11 @@ get_theme_file (const char *in, char **theme_dir)
 
   *theme_dir = dir;
 
-  info = g_build_filename (dir, "MdmGreeterTheme.desktop", NULL);
+  info = g_build_filename (dir, "GdmGreeterTheme.desktop", NULL);
   if (g_access (info, R_OK) != 0) {
 	  g_debug ("Could not open %s. The file either doesn't exist or is not readable", info);
 	  g_free (info);
-	  info = g_build_filename (dir, "MdmGreeterTheme.info", NULL);
+	  info = g_build_filename (dir, "GdmGreeterTheme.info", NULL);
   }
   if (g_access (info, R_OK) != 0)
     {

@@ -293,14 +293,14 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 circlesdir = $(datadir)/mdm/themes/circles
 circles_DATA = \
-	MdmGreeterTheme.desktop \
+	GdmGreeterTheme.desktop \
 	circles.xml \
 	background.svg \
 	flower.png  \
 	screenshot.png
 
 circles_in_files = \
-	MdmGreeterTheme.desktop.in
+	GdmGreeterTheme.desktop.in
 
 EXTRA_DIST = $(circles_DATA) $(circles_in_files)
 all: all-am
@@ -494,7 +494,7 @@ uninstall-am: uninstall-circlesDATA
 @INTLTOOL_DESKTOP_RULE@
 
 clean-local:
-	/bin/rm -f MdmGreeterTheme.desktop
+	/bin/rm -f GdmGreeterTheme.desktop
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
