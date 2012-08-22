@@ -6045,7 +6045,7 @@ Random from selected
 
 			  <child>
 			    <widget class="GtkCheckButton" id="global_face_dir_checkbutton">
-			      <property name="visible">True</property>
+			      <property name="visible">False</property>
 			      <property name="tooltip" translatable="yes">Systemwide directory for face files. The sysadmin can place icons for users here without touching their homedirs. Faces are named after their users' logins. The face images must be stored in gdk-pixbuf supported formats and they must be readable for the MDM user.</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">_Global face dir:</property>
