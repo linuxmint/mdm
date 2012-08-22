@@ -6025,7 +6025,7 @@ Random from selected
 
 			  <child>
 			    <widget class="GtkFileChooserButton" id="global_face_dir_filechooser">
-			      <property name="visible">True</property>
+			      <property name="visible">False</property>
 			      <property name="sensitive">False</property>
 			      <property name="title" translatable="yes">Select Logo Image</property>
 			      <property name="action">GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER</property>
