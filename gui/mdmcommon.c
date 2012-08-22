@@ -399,9 +399,9 @@ mdm_common_get_face (const char *filename,
 		theme = gtk_icon_theme_get_default ();
 		pixbuf = gtk_icon_theme_load_icon (theme, "stock_person", icon_size, 0, NULL);
 		if (! pixbuf)
-			pixbuf = gdk_pixbuf_new_from_file (fallback_filename, NULL);
+			pixbuf = gdk_pixbuf_new_from_file_at_scale (fallback_filename, 48, 48, FALSE, NULL);
 	} else {
-		pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+		pixbuf = gdk_pixbuf_new_from_file_at_scale (filename, 48, 48, FALSE, NULL);
 	}
 
 	if (pixbuf) {

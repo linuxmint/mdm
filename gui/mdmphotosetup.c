@@ -199,7 +199,7 @@ set_face_from_filename (const char *filename)
 
 	image = glade_xml_get_widget (xml, "face_image");
 
-	pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+	pixbuf = gdk_pixbuf_new_from_file_at_scale (filename, 48, 48, FALSE, NULL);
 	scaled = scale_pixbuf (pixbuf);
 	g_object_unref (pixbuf);
 	pixbuf = scaled;
