@@ -141,9 +141,14 @@ mdm_user_alloc (const gchar *logname,
 		gdk_pixbuf_loader_close (loader, NULL);
 
 		img = gdk_pixbuf_loader_get_pixbuf (loader);
-		if (img != NULL)
+		if (img != NULL) {
 			g_object_ref (G_OBJECT (img));
-
+			GdkPixbuf *img2;
+			img2 = gdk_pixbuf_scale_simple (img, 48, 48, GDK_INTERP_BILINEAR);
+			g_object_unref (img);
+			img = img2;		    
+		}
+				
 		g_object_unref (G_OBJECT (loader));
 
 		/* read the "done" bit, but don't check */
