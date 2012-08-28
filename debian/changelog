@@ -1,3 +1,11 @@
+mdm (1.0.5) maya; urgency=low
+
+  * 48px faces
+  * Improved userlist support
+  * Changed debian maintainers/uploaders fields
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 28 Aug 2012 15:35:13 +0100
+
 mdm (1.0.4) maya; urgency=low
 
   * Removed Debian branding from mdmLogin

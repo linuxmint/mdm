@@ -6,9 +6,6 @@ DEB_UPSTREAM_VERSION := $(shell echo $(DEB_NOEPOCH_VERSION) | sed 's/-[^-]*$$//'
 
 MAJOR_MINOR := $(shell echo $(DEB_UPSTREAM_VERSION) | sed -r 's/([0-9]+\.[0-9]+).*/\1/')
 
-include /usr/share/gnome-pkg-tools/1/rules/uploaders.mk
--include /usr/share/gnome-pkg-tools/1/rules/gnome-get-source.mk
-
 DEB_HOST_ARCH_OS = $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
 
 configure_flags += --disable-dependency-tracking \

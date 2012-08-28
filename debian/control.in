@@ -1,8 +1,7 @@
 Source: mdm
 Section: gnome
 Priority: optional
-Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
-Uploaders: @GNOME_TEAM@
+Maintainer: Clement Lefebvre <root@linuxmint.com>
 Build-Depends: libpam0g-dev,
                libdbus-glib-1-dev (>= 0.30),
                libglib2.0-dev (>= 2.12.0),
