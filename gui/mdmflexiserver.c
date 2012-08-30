@@ -367,32 +367,42 @@ is_program_in_path (const char *program)
 static void
 maybe_lock_screen (void)
 {
-	gboolean   use_gscreensaver = FALSE;
+	gboolean   use_xscreensaver = FALSE;		
+	gboolean   call_multiple_screensaver = FALSE;		
 	GError    *error            = NULL;
 	char      *command;
 	GdkScreen *screen;
-
-	if (is_program_in_path ("gnome-screensaver-command"))
-		use_gscreensaver = TRUE;
-	else if (! is_program_in_path ("xscreensaver-command"))
-		return;
-
-	if (use_gscreensaver) {
+	
+	screen = gdk_screen_get_default ();
+	
+	if (is_program_in_path ("gnome-screensaver-command") || is_program_in_path ("mate-screensaver-command")) {
+		command = g_strdup ("gnome-screensaver-command --lock || mate-screensaver-command --lock");
+		call_multiple_screensaver = TRUE;
+	}
+	if (is_program_in_path ("gnome-screensaver-command")) {
 		command = g_strdup ("gnome-screensaver-command --lock");
-	} else {
+	}
+	else if (is_program_in_path ("mate-screensaver-command")) {
+		command = g_strdup ("mate-screensaver-command --lock");
+	}
+	else if (is_program_in_path ("xscreensaver-command")) {
 		command = g_strdup ("xscreensaver-command -lock");
+		use_xscreensaver = TRUE;
+	}
+	else {		
+		return;	
 	}
 
-	screen = gdk_screen_get_default ();
-
 	if (! gdk_spawn_command_line_on_screen (screen, command, &error)) {
-		g_warning ("Cannot lock screen: %s", error->message);
+		if (! call_multiple_screensaver) {
+			g_warning ("Cannot lock screen: %s", error->message);
+		}
 		g_error_free (error);
 	}
 
 	g_free (command);
 
-	if (! use_gscreensaver) {
+	if (use_xscreensaver) {
 		command = g_strdup ("xscreensaver-command -throttle");
 		if (! gdk_spawn_command_line_on_screen (screen, command, &error)) {
 			g_warning ("Cannot disable screensaver engines: %s", error->message);
