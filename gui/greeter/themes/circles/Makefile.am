@@ -3,7 +3,6 @@ circles_DATA = \
 	GdmGreeterTheme.desktop \
 	circles.xml \
 	background.svg \
-	flower.png  \
 	screenshot.png
 
 circles_in_files = \
