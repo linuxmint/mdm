@@ -1,3 +1,10 @@
+mdm (1.0.6) maya; urgency=low
+
+  * Call mate-screensaver when appropriate
+  * Added switch user in gnome-screensaver
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 30 Aug 2012 13:55:09 +0100
+
 mdm (1.0.5) maya; urgency=low
 
   * 48px faces
