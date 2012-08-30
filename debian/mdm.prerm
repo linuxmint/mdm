@@ -59,6 +59,12 @@ if [ "$1" = "remove" ]; then
   fi
 fi
 
+
+if [ -L /usr/bin/gdmflexiserver ]; then
+  echo "Removing link /usr/bin/gdmflexiserver"
+  rm -f /usr/bin/gdmflexiserver
+fi
+
 #DEBHELPER#
 
 exit 0

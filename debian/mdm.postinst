@@ -84,6 +84,11 @@ if [ -x /etc/init.d/mdm ]; then
   invoke-rc.d mdm reload || true
 fi
 
+if [ ! -e /usr/bin/gdmflexiserver ]; then
+  echo "Linking /usr/bin/gdmflexiserver to /usr/bin/mdmflexiserver"
+  ln -s /usr/bin/mdmflexiserver /usr/bin/gdmflexiserver
+fi
+
 #DEBHELPER#
 
 exit 0

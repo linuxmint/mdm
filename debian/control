@@ -62,7 +62,9 @@ Provides: x-display-manager
 Conflicts: fast-user-switch-applet (<< 2.17.4),
            gnome-session (<< 2.19.2),
            gnome-panel (<< 2.19.2),
-           gnome-screensaver (<< 2.17.7)
+           gnome-screensaver (<< 2.17.7),
+           gdm,
+           gdm3
 Description: GNOME Display Manager
  mdm provides the equivalent of a "login:" prompt for X displays- it
  pops up a login window and starts an X session.
