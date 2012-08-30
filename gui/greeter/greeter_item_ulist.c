@@ -124,7 +124,7 @@ check_for_displays (void)
 	 * Might be nice to move this call into read_config() so that it happens
 	 * on the same socket call as reading the configuration.
 	 */
-	ret = mdmcomm_call_mdm (MDM_SUP_ATTACHED_SERVERS, auth_cookie, "2.2.4.0", 5);
+	ret = mdmcomm_call_mdm (MDM_SUP_ATTACHED_SERVERS, auth_cookie, "1.0.0.0", 5);
 	if (ve_string_empty (ret) || strncmp (ret, "OK ", 3) != 0) {
 		g_free (ret);
 		return;

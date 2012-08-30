@@ -547,7 +547,7 @@ check_for_users (void)
 	    get_cur_vt () < 0)
 		return;
 
-	ret = mdmcomm_call_mdm ("CONSOLE_SERVERS", auth_cookie, "2.2.4.0", 5);
+	ret = mdmcomm_call_mdm ("CONSOLE_SERVERS", auth_cookie, "1.0.0.0", 5);
 	if (ve_string_empty (ret) ||
 	    strncmp (ret, "OK ", 3) != 0) {
 		g_free (ret);
@@ -836,10 +836,10 @@ main (int argc, char *argv[])
 			 */
 			if (value == NULL)
 				ret = mdmcomm_call_mdm (send_command, auth_cookie,
-							"2.2.4.0", 5);
+							"1.0.0.0", 5);
 		} else {
 			ret = mdmcomm_call_mdm (send_command, auth_cookie,
-						"2.2.4.0", 5);
+						"1.0.0.0", 5);
 		}
 
 		/* At this point we are done using the socket, so close it */
@@ -946,7 +946,7 @@ main (int argc, char *argv[])
 		else
 			command = g_strdup_printf (MDM_SUP_FLEXI_XSERVER " %s",
 						   server);
-		version = "2.2.4.0";
+		version = "1.0.0.0";
 	}
 
 	ret = mdmcomm_call_mdm (command, auth_cookie, version, 5);

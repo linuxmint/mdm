@@ -88,7 +88,7 @@ main (int argc, char *argv[])
 
     myname  = basename (argv[0]);
     argv[0] = myname;
-    version = "2.8.0.0";
+    version = "1.0.0.0";
 
     g_type_init ();
 

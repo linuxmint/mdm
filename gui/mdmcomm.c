@@ -551,7 +551,7 @@ mdmcomm_get_auth_cookie (void)
 		XauDisposeAuth (xau);
 
 		cmd = g_strdup_printf (MDM_SUP_AUTH_LOCAL " %s", buffer);
-		ret = mdmcomm_call_mdm (cmd, NULL /* auth cookie */, "2.2.4.0", 5);
+		ret = mdmcomm_call_mdm (cmd, NULL /* auth cookie */, "1.0.0.0", 5);
 		g_free (cmd);
 		if (ret != NULL &&
 		    strcmp (ve_sure_string (ret), "OK") == 0) {
