@@ -2694,7 +2694,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=mdm
- VERSION=2.20.11
+ VERSION=1.0.6
 
 
 cat >>confdefs.h <<_ACEOF
