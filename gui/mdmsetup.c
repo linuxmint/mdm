@@ -277,7 +277,7 @@ update_greeters (void)
 
 	ret = mdmcomm_call_mdm (MDM_SUP_GREETERPIDS,
 				NULL /* auth_cookie */,
-				"2.3.90.2",
+				"1.0.0.0",
 				5);
 	if (ret == NULL)
 		return;
@@ -382,7 +382,7 @@ update_key (const char *key)
 					   key);
 		ret = mdmcomm_call_mdm (s,
 					NULL /* auth_cookie */,
-					"2.3.90.2",
+					"1.0.0.0",
 					5);
 		g_free (s);
 		g_free (ret);

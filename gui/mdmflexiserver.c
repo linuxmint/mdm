@@ -90,7 +90,7 @@ get_cur_vt (void)
 		return cur_vt;
 	}
 
-	ret = mdmcomm_call_mdm ("QUERY_VT", auth_cookie, "2.5.90.0", 5);
+	ret = mdmcomm_call_mdm ("QUERY_VT", auth_cookie, "1.0.0.0", 5);
 	if (ve_string_empty (ret) || strncmp (ret, "OK ", 3) != 0) {
 		goto out;
 	}
@@ -141,7 +141,7 @@ change_vt (int vt)
 	char *ret;
 
 	cmd = g_strdup_printf (MDM_SUP_SET_VT " %d", vt);
-	ret = mdmcomm_call_mdm (cmd, auth_cookie, "2.5.90.0", 5);
+	ret = mdmcomm_call_mdm (cmd, auth_cookie, "1.0.0.0", 5);
 	g_free (cmd);
 
 	if (ve_string_empty (ret) ||
@@ -911,7 +911,7 @@ main (int argc, char *argv[])
 					   cookie,
 					   XauFileName ());
 		g_free (cookie);
-		version = "2.3.90.4";
+		version = "1.0.0.0";
 		auth_cookie = NULL;
 	} else {
 
