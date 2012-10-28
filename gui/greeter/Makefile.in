@@ -394,6 +394,9 @@ mdmgreeter_LDADD = \
 	-lmdmwm			\
 	-lmdmcommon		\
 	-lmdmgreeter		\
+	-lX11			\
+	-lm			\
+	-lXau			\
 	$(top_builddir)/common/libmdmcommon.a \
 	$(GLIB_LIBS)		\
 	$(GOBJECT_LIBS)		\
