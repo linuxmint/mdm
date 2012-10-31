@@ -241,7 +241,7 @@
         
       <para>MDM recherche d'abord l'image de l'utilisateur dans <filename>~/.face</filename>. S'il ne trouve rien, il cherche <filename>~/.face.icon</filename>. S'il ne trouve toujours rien, il utilise la valeur définie pour « face/picture= » dans le fichier <filename>~/.gnome2/mdm</filename>. Finalement, il regarde encore <filename>~/.gnome2/photo</filename> et <filename>~/.gnome/photo</filename> qui sont obsolètes mais pris en charge pour des raisons de compatibilité descendante.</para>
 
-      <para>Si un utilisateur n'a pas défini d'image pour sa figure, MDM utilise l'icône « stock_person » définie dans le thème GTK+ actuel. Si aucune image n'est définie, il retourne à l'image définie dans l'option de configuration <filename>DefaultFace</filename>, correspondant généralement à <filename>&lt;share&gt;/pixmaps/nobody.png</filename>.</para>
+      <para>Si un utilisateur n'a pas défini d'image pour sa figure, MDM utilise l'icône « stock_person » définie dans le thème GTK+ actuel. Si aucune image n'est définie, il retourne à l'image définie dans l'option de configuration <filename>DefaultFace</filename>, correspondant généralement à <filename>&lt;share&gt;/pixmaps/mdm-nobody.png</filename>.</para>
       
       <para>Il faut savoir que le chargement et le redimensionnement des icônes de figures situées dans les dossiers personnels peut devenir une tâche très coûteuse en temps. Comme il n'est pas envisageable en pratique de charger des images de figures au moyen de NIS ou NFS, MDM n'essaye même pas de les charger si les dossiers personnels sont distants. De plus, MDM abandonne le chargement après une attente de 5 secondes et n'affiche alors que les utilisateurs dont il a réussi à obtenir l'image durant cet intervalle. L'option de configuration <filename>Include</filename> peut être utilisée pour définir un ensemble d'utilisateurs devant apparaître dans le navigateur de figures. Pour autant que cette liste d'utilisateurs soit de taille raisonnable, MDM ne devrait pas rencontrer de problème à accéder aux images des figures. Pour éviter d'éventuels problèmes, il est conseillé de placer les images de figures dans le répertoire défini dans l'option de configuration <filename>GlobalFaceDir</filename>.</para>
 
@@ -1858,7 +1858,7 @@ mdm:.mon.domaine
           <varlistentry>
             <term>DefaultHostImage</term>
             <listitem>
-              <synopsis>DefaultHostImage=&lt;share&gt;/pixmaps/nohost.png</synopsis>
+              <synopsis>DefaultHostImage=&lt;share&gt;/pixmaps/mdm-nohost.png</synopsis>
               <para>Nom de fichier de l'icône d'hôte par défaut. Cette image est affichée lorsqu'aucune icône n'est précisée pour un hôte spécifique. Le fichier doit être dans un format pris en charge par gdk-pixbuf et il doit être accessible en lecture par l'utilisateur MDM.</para>
             </listitem>
           </varlistentry>

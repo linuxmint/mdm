@@ -681,7 +681,7 @@
         "stock_person" icon defined in the current GTK+ theme.  If no
         such image is defined, it will fallback to the image specified in the
         <filename>DefaultFace</filename> configuration option, normally
-        <filename>&lt;share&gt;/pixmaps/nobody.png</filename>.
+        <filename>&lt;share&gt;/pixmaps/mdm-nobody.png</filename>.
       </para>
       
       <para>
@@ -4249,7 +4249,7 @@ mdm:.my.domain
           <varlistentry>
             <term>DefaultHostImage</term>
             <listitem>
-              <synopsis>DefaultHostImage=&lt;share&gt;/pixmaps/nohost.png</synopsis>
+              <synopsis>DefaultHostImage=&lt;share&gt;/pixmaps/mdm-nohost.png</synopsis>
               <para>
                 File name for the default host icon. This image will be
                 displayed if no icon is specified for a given host. The
