@@ -306,7 +306,7 @@ top_srcdir = @top_srcdir@
 SUBDIRS = \
 	16x16 24x24 32x32 48x48
 
-BITMAPS = mdm-foot-logo.png nobody.png nohost.png
+BITMAPS = mdm-foot-logo.png mdm-mdm-nobody.png mdm-mdm-nohost.png
 pixmap_DATA = $(BITMAPS)
 EXTRA_DIST = $(BITMAPS)
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
