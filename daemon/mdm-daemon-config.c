@@ -2685,6 +2685,30 @@ mdm_daemon_config_get_facefile_from_global (const char *username,
 	return NULL;
 }
 
+gchar *
+mdm_daemon_config_get_facefile_from_gnome_accounts_service (const char *username,
+                        guint       uid)
+{
+    char       *picfile = NULL;
+    const char *facedir;
+
+    facedir = mdm_daemon_config_get_value_string (MDM_KEY_GNOME_ACCOUNTS_SERVICE_FACE_DIR);
+
+    picfile = g_build_filename (facedir, username, NULL);
+
+    if (check_global_file (picfile, uid))
+        return picfile;
+
+    g_free (picfile);
+    picfile = mdm_make_filename (facedir, username, ".png");
+
+    if (check_global_file (picfile, uid))
+        return picfile;
+
+    g_free (picfile);
+    return NULL;
+}
+
 static gboolean
 is_prog_in_path (const char *prog)
 {
