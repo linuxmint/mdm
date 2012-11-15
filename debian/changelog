@@ -1,3 +1,11 @@
+mdm (1.0.7) nadia; urgency=low
+
+  * Removed flower from circles theme
+  * Fixed version checks
+  * Added support for GNOME 3 user faces
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 15 Nov 2012 12:10:59 +0000
+
 mdm (1.0.6) maya; urgency=low
 
   * Call mate-screensaver when appropriate
