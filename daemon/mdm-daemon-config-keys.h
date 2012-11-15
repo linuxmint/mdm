@@ -152,7 +152,7 @@ G_BEGIN_DECLS
 #define MDM_KEY_EXCLUDE "greeter/Exclude=bin,daemon,adm,lp,sync,shutdown,halt,mail,news,uucp,operator,nobody,mdm,postgres,pvm,rpm,nfsnobody,pcap"
 #define MDM_KEY_INCLUDE_ALL "greeter/IncludeAll=false"
 #define MDM_KEY_MINIMAL_UID "greeter/MinimalUID=100"
-#define MDM_KEY_DEFAULT_FACE "greeter/DefaultFace=" PIXMAPDIR "/mdm-nobody.png"
+#define MDM_KEY_DEFAULT_FACE "greeter/DefaultFace=" PIXMAPDIR "/nobody.png"
 #define MDM_KEY_GLOBAL_FACE_DIR "greeter/GlobalFaceDir=" DATADIR "/pixmaps/faces/"
 #define MDM_KEY_LOCALE_FILE "greeter/LocaleFile=" MDMLOCALEDIR "/locale.alias"
 #define MDM_KEY_LOGO "greeter/Logo=" PIXMAPDIR "/mdm-foot-logo.png"
@@ -201,7 +201,7 @@ G_BEGIN_DECLS
 #define MDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE "greeter/SoundOnLoginFailureFile="
 #define MDM_KEY_SOUND_PROGRAM "daemon/SoundProgram=" SOUND_PROGRAM
 #define MDM_KEY_SCAN_TIME "chooser/ScanTime=4"
-#define MDM_KEY_DEFAULT_HOST_IMG "chooser/DefaultHostImg=" PIXMAPDIR "/mdm-nohost.png"
+#define MDM_KEY_DEFAULT_HOST_IMG "chooser/DefaultHostImg=" PIXMAPDIR "/nohost.png"
 #define MDM_KEY_HOST_IMAGE_DIR "chooser/HostImageDir=" DATADIR "/hosts/"
 #define MDM_KEY_HOSTS "chooser/Hosts="
 #define MDM_KEY_MULTICAST "chooser/Multicast=false"

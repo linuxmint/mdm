@@ -392,7 +392,7 @@ msgid "MDM will first look for the user's face image in <filename>~/.face</filen
 msgstr ""
 
 #: C/mdm.xml:560(para)
-msgid "If a user has no defined face image, MDM will use the \"stock_person\" icon defined in the current GTK+ theme. If no such image is defined, it will fallback to the image specified in the <filename>DefaultFace</filename> configuration option, normally <filename>&lt;share&gt;/pixmaps/mdm-nobody.png</filename>."
+msgid "If a user has no defined face image, MDM will use the \"stock_person\" icon defined in the current GTK+ theme. If no such image is defined, it will fallback to the image specified in the <filename>DefaultFace</filename> configuration option, normally <filename>&lt;share&gt;/pixmaps/nobody.png</filename>."
 msgstr ""
 
 #: C/mdm.xml:568(para)
@@ -2972,8 +2972,8 @@ msgstr "DefaultHostImage"
 
 #: C/mdm.xml:3938(synopsis)
 #, no-wrap
-msgid "DefaultHostImage=&lt;share&gt;/pixmaps/mdm-nohost.png"
-msgstr "DefaultHostImage=&lt;share&gt;/pixmaps/mdm-nohost.png"
+msgid "DefaultHostImage=&lt;share&gt;/pixmaps/nohost.png"
+msgstr "DefaultHostImage=&lt;share&gt;/pixmaps/nohost.png"
 
 #: C/mdm.xml:3939(para)
 msgid "File name for the default host icon. This image will be displayed if no icon is specified for a given host. The file must be in a gdk-pixbuf supported format and it must be readable for the MDM user."

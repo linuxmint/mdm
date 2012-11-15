@@ -1103,14 +1103,14 @@ msgid ""
 "If a user has no defined face image, MDM will use the \"stock_person\" icon "
 "defined in the current GTK+ theme. If no such image is defined, it will "
 "fallback to the image specified in the <filename>DefaultFace</filename> "
-"configuration option, normally <filename>&lt;share&gt;/pixmaps/mdm-nobody.png</"
+"configuration option, normally <filename>&lt;share&gt;/pixmaps/nobody.png</"
 "filename>."
 msgstr ""
 "Si un utilisateur n'a pas défini d'image pour sa figure, MDM utilise l'icône "
 "« stock_person » définie dans le thème GTK+ actuel. Si aucune image n'est "
 "définie, il retourne à l'image définie dans l'option de configuration "
 "<filename>DefaultFace</filename>, correspondant généralement à <filename>&lt;"
-"share&gt;/pixmaps/mdm-nobody.png</filename>."
+"share&gt;/pixmaps/nobody.png</filename>."
 
 #: ../C/mdm.xml:614(para)
 msgid ""
@@ -6772,8 +6772,8 @@ msgstr "DefaultHostImage"
 
 #: ../C/mdm.xml:4162(synopsis)
 #, no-wrap
-msgid "DefaultHostImage=&lt;share&gt;/pixmaps/mdm-nohost.png"
-msgstr "DefaultHostImage=&lt;share&gt;/pixmaps/mdm-nohost.png"
+msgid "DefaultHostImage=&lt;share&gt;/pixmaps/nohost.png"
+msgstr "DefaultHostImage=&lt;share&gt;/pixmaps/nohost.png"
 
 #: ../C/mdm.xml:4163(para)
 msgid ""

@@ -235,7 +235,7 @@
         
       <para>MDM primero buscará la imagen de la cara del usuario en <filename>~/.face</filename>. Si no la encuentra, intentará con <filename>~/.face.icon</filename>. Si aún no la encuentra, usará el valor definido para "face/picture=" en el archivo <filename>~/.gnome2/mdm</filename>. Por último intentará con <filename>~/.gnome2/photo</filename> y <filename>~/.gnome/photo</filename> los cuales están obsoletos y se soportan por compatibilidad hacia atrás.</para>
 
-      <para>Si un usuario no tiene una imagen de rostro definida, MDM usará el icono "stock_person" definido en el tema GTK+ actual. Si dicha imagen no está definida, entonces usará la imagen especificada en la opción de configuración <filename>DefaultFace</filename> como resguardo, normalmente <filename>&lt;/share&gt;/pixmaps/mdm-nobody.png</filename>.</para>
+      <para>Si un usuario no tiene una imagen de rostro definida, MDM usará el icono "stock_person" definido en el tema GTK+ actual. Si dicha imagen no está definida, entonces usará la imagen especificada en la opción de configuración <filename>DefaultFace</filename> como resguardo, normalmente <filename>&lt;/share&gt;/pixmaps/nobody.png</filename>.</para>
       
       <para>Note que cargar y escalar los iconos de rostros situados en los directorios personales de los usuarios puede ser una tarea que consuma mucho tiempo. Debido a que no es práctico cargar imágenes sobre NIS o NFS, MDM no intenta cargar imágenes de rostros desde directorios personales remotos. Además, MDM parará de cargar imágenes de rostros después de 5 segundos de actividad y sólo mostrará los usuarios cuyas imágenes haya obtenido hasta entonces. La opción <filename>Include</filename> de <filename>mdm.conf</filename> puede usarse para especificar un conjunto de usuarios que deberían aparecer en el visor de rostros. Mientras los usuarios a incluir tengan un tamaño razonable, no debería haber ningún problema con MDM siendo incapaz de acceder a las imágenes de rostros. Para evitar estos problemas, se recomienda situar las imágenes de rostros en el directorio especificado por la opción de configuración <filename>GlobalFaceDir</filename>.</para>
 
@@ -1830,7 +1830,7 @@ Greeter=/usr/lib/mdmgreeter
           <varlistentry>
             <term>DefaultHostImage</term>
             <listitem>
-              <synopsis>DefaultHostImage=&lt;share&gt;/pixmaps/mdm-nohost.png</synopsis>
+              <synopsis>DefaultHostImage=&lt;share&gt;/pixmaps/nohost.png</synopsis>
               <para>El nombre del archivo para el icono de host predeterminado. Esta imagen debe mostrarse si no hay ningún icono especificado en un host dado. El archivo debe estar en un formato soportado por gdk-pixbuf y deben tener permiso de lectura para el usuario de MDM.</para>
             </listitem>
           </varlistentry>

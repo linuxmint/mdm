@@ -394,8 +394,8 @@ msgid "MDM will first look for the user's face image in <filename>~/.face</filen
 msgstr "MDM will first look for the user's face image in <filename>~/.face</filename>. If not found, it will try <filename>~/.face.icon</filename>. If still not found, it will use the value defined for \"face/picture=\" in the <filename>~/.gnome2/mdm</filename> file. Lastly, it will try <filename>~/.gnome2/photo</filename> and <filename>~/.gnome/photo</filename> which are deprecated and supported for backwards compatibility."
 
 #: C/mdm.xml:560(para)
-msgid "If a user has no defined face image, MDM will use the \"stock_person\" icon defined in the current GTK+ theme. If no such image is defined, it will fallback to the image specified in the <filename>DefaultFace</filename> configuration option, normally <filename>&lt;share&gt;/pixmaps/mdm-nobody.png</filename>."
-msgstr "If a user has no defined face image, MDM will use the \"stock_person\" icon defined in the current GTK+ theme. If no such image is defined, it will fallback to the image specified in the <filename>DefaultFace</filename> configuration option, normally <filename>&lt;share&gt;/pixmaps/mdm-nobody.png</filename>."
+msgid "If a user has no defined face image, MDM will use the \"stock_person\" icon defined in the current GTK+ theme. If no such image is defined, it will fallback to the image specified in the <filename>DefaultFace</filename> configuration option, normally <filename>&lt;share&gt;/pixmaps/nobody.png</filename>."
+msgstr "If a user has no defined face image, MDM will use the \"stock_person\" icon defined in the current GTK+ theme. If no such image is defined, it will fallback to the image specified in the <filename>DefaultFace</filename> configuration option, normally <filename>&lt;share&gt;/pixmaps/nobody.png</filename>."
 
 #: C/mdm.xml:568(para)
 msgid "Please note that loading and scaling face icons located in user home directories can be a very time-consuming task. Since it not practical to load images over NIS or NFS, MDM does not attempt to load face images from remote home directories. Furthermore, MDM will give up loading face images after 5 seconds of activity and will only display the users whose pictures it has gotten so far. The <filename>Include</filename> configuration option can be used to specify a set of users who should appear on the face browser. As long as the users to include is of a reasonable size, there should not be a problem with MDM being unable to access the face images. To work around such problems, it is recommended to place face images in the directory specified by the <filename>GlobalFaceDir</filename> configuration option."
@@ -2977,8 +2977,8 @@ msgstr "DefaultHostImage"
 
 #: C/mdm.xml:3938(synopsis)
 #, no-wrap
-msgid "DefaultHostImage=&lt;share&gt;/pixmaps/mdm-nohost.png"
-msgstr "DefaultHostImage=&lt;share&gt;/pixmaps/mdm-nohost.png"
+msgid "DefaultHostImage=&lt;share&gt;/pixmaps/nohost.png"
+msgstr "DefaultHostImage=&lt;share&gt;/pixmaps/nohost.png"
 
 #: C/mdm.xml:3939(para)
 msgid "File name for the default host icon. This image will be displayed if no icon is specified for a given host. The file must be in a gdk-pixbuf supported format and it must be readable for the MDM user."

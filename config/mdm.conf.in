@@ -384,7 +384,7 @@ GtkTheme=Clearlooks
 # greeter.
 Browser=true
 # The default picture in the browser.
-DefaultFace=@pixmapdir@/mdm-nobody.png
+DefaultFace=@pixmapdir@/nobody.png
 # User ID's less than the MinimalUID value will not be included in the face
 # browser or in the mdmselection list for Automatic/Timed login.  They will not
 # be displayed regardless of the settings for Include and Exclude.
@@ -541,7 +541,7 @@ PreFetchProgram=@MDMPREFETCHCMD@
 # or selects Run XDMCP chooser from the system menu
 [chooser]
 # Default image for hosts.
-#DefaultHostImg=@pixmapdir@/mdm-nohost.png
+#DefaultHostImg=@pixmapdir@/nohost.png
 # Directory with host images, they are named by the hosts: host or host.png.
 HostImageDir=@datadir@/hosts/
 # Time we scan for hosts (well only the time we tell the user we are scanning
