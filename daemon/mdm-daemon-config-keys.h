@@ -154,6 +154,7 @@ G_BEGIN_DECLS
 #define MDM_KEY_MINIMAL_UID "greeter/MinimalUID=100"
 #define MDM_KEY_DEFAULT_FACE "greeter/DefaultFace=" PIXMAPDIR "/nobody.png"
 #define MDM_KEY_GLOBAL_FACE_DIR "greeter/GlobalFaceDir=" DATADIR "/pixmaps/faces/"
+#define MDM_KEY_GNOME_ACCOUNTS_SERVICE_FACE_DIR "greeter/GnomeFaceDir=/var/lib/AccountsService/icons/"
 #define MDM_KEY_LOCALE_FILE "greeter/LocaleFile=" MDMLOCALEDIR "/locale.alias"
 #define MDM_KEY_LOGO "greeter/Logo=" PIXMAPDIR "/mdm-foot-logo.png"
 #define MDM_KEY_CHOOSER_BUTTON_LOGO "greeter/ChooserButtonLogo=" PIXMAPDIR "/mdm-foot-logo.png"
