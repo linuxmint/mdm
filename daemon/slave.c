@@ -1388,6 +1388,10 @@ plymouth_is_running (void)
         gboolean res;
         GError  *error;
 
+	if (!g_file_test("/bin/plymouth", G_FILE_TEST_EXISTS)) {
+		return FALSE;
+	}
+
         error = NULL;
         res = g_spawn_command_line_sync ("/bin/plymouth --ping",
                                          NULL, NULL, &status, &error);
@@ -1445,7 +1449,9 @@ mdm_slave_run (MdmDisplay *display)
 	d->dsp = NULL;
 	
 	if (plymouth_is_running ()) {
+		g_message("Plymouth is running, asking it to stop...");
 		plymouth_quit_without_transition ();
+		g_warning("Plymouth stopped");
 	}
 
 	/* if this is local display start a server if one doesn't
@@ -1470,7 +1476,11 @@ mdm_slave_run (MdmDisplay *display)
 				       "In the meantime this display will be\n"
 				       "disabled.  Please restart MDM when\n"
 				       "the problem is corrected.")));
-			plymouth_quit_without_transition ();
+			if (plymouth_is_running ()) {
+				g_message("Plymouth is running, asking it to stop...");
+				plymouth_quit_without_transition ();
+				g_warning("Plymouth stopped");
+			}
 			mdm_slave_quick_exit (DISPLAY_ABORT);
 		}
 		mdm_slave_send_num (MDM_SOP_XPID, d->servpid);
