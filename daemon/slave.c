@@ -1384,39 +1384,39 @@ static gboolean do_xfailed_on_xio_error = FALSE;
 static gboolean
 plymouth_is_running (void)
 {
-        int      status;
-        gboolean res;
-        GError  *error;
+	int      status;
+	gboolean res;
+	GError  *error;
 
 	if (!g_file_test("/bin/plymouth", G_FILE_TEST_EXISTS)) {
 		return FALSE;
 	}
 
-        error = NULL;
-        res = g_spawn_command_line_sync ("/bin/plymouth --ping",
-                                         NULL, NULL, &status, &error);
-        if (! res) {
-                g_debug ("Could not ping plymouth: %s", error->message);
-                g_error_free (error);
-                return FALSE;
-        }
+	error = NULL;
+	res = g_spawn_command_line_sync ("/bin/plymouth --ping",
+									 NULL, NULL, &status, &error);
+	if (! res) {
+		g_debug ("Could not ping plymouth: %s", error->message);
+		g_error_free (error);
+		return FALSE;
+	}
 
-        return WIFEXITED (status) && WEXITSTATUS (status) == 0;
+	return WIFEXITED (status) && WEXITSTATUS (status) == 0;
 }
 
 static void
 plymouth_quit_without_transition (void)
 {
-        gboolean res;
-        GError  *error;
+	gboolean res;
+	GError  *error;
 
-        error = NULL;
-        res = g_spawn_command_line_sync ("/bin/plymouth quit",
-                                         NULL, NULL, NULL, &error);
-        if (! res) {
-                g_warning ("Could not quit plymouth: %s", error->message);
-                g_error_free (error);
-        }
+	error = NULL;
+	res = g_spawn_command_line_sync ("/bin/plymouth quit",
+									 NULL, NULL, NULL, &error);
+	if (! res) {
+		g_warning ("Could not quit plymouth: %s", error->message);
+		g_error_free (error);
+	}
 }
 
 static void
@@ -1449,7 +1449,7 @@ mdm_slave_run (MdmDisplay *display)
 	d->dsp = NULL;
 	
 	if (plymouth_is_running ()) {
-		g_message("Plymouth is running, asking it to stop...");
+		g_warning("Plymouth is running, asking it to stop...");
 		plymouth_quit_without_transition ();
 		g_warning("Plymouth stopped");
 	}
@@ -1477,7 +1477,7 @@ mdm_slave_run (MdmDisplay *display)
 				       "disabled.  Please restart MDM when\n"
 				       "the problem is corrected.")));
 			if (plymouth_is_running ()) {
-				g_message("Plymouth is running, asking it to stop...");
+				g_warning("Plymouth is running, asking it to stop...");
 				plymouth_quit_without_transition ();
 				g_warning("Plymouth stopped");
 			}
