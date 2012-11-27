@@ -1,3 +1,9 @@
+mdm (1.0.8) nadia; urgency=low
+
+  * Asks plymouth to quit at startup (fixes Xorg randomly loading the wrong driver and user ending using llvmpipe)
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 27 Nov 2012 14:18:25 +0000
+
 mdm (1.0.7) nadia; urgency=low
 
   * Removed flower from circles theme
