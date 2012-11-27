@@ -1381,6 +1381,44 @@ mdm_slave_check_user_wants_to_log_in (const char *user)
 
 static gboolean do_xfailed_on_xio_error = FALSE;
 
+static gboolean
+plymouth_is_running (void)
+{
+	int      status;
+	gboolean res;
+	GError  *error;
+
+	if (!g_file_test("/bin/plymouth", G_FILE_TEST_EXISTS)) {
+		return FALSE;
+	}
+
+	error = NULL;
+	res = g_spawn_command_line_sync ("/bin/plymouth --ping",
+									 NULL, NULL, &status, &error);
+	if (! res) {
+		g_debug ("Could not ping plymouth: %s", error->message);
+		g_error_free (error);
+		return FALSE;
+	}
+
+	return WIFEXITED (status) && WEXITSTATUS (status) == 0;
+}
+
+static void
+plymouth_quit_without_transition (void)
+{
+	gboolean res;
+	GError  *error;
+
+	error = NULL;
+	res = g_spawn_command_line_sync ("/bin/plymouth quit",
+									 NULL, NULL, NULL, &error);
+	if (! res) {
+		g_warning ("Could not quit plymouth: %s", error->message);
+		g_error_free (error);
+	}
+}
+
 static void
 mdm_slave_run (MdmDisplay *display)
 {
@@ -1409,6 +1447,12 @@ mdm_slave_run (MdmDisplay *display)
 	 * nested display)
 	 */
 	d->dsp = NULL;
+	
+	if (plymouth_is_running ()) {
+		g_warning("Plymouth is running, asking it to stop...");
+		plymouth_quit_without_transition ();
+		g_warning("Plymouth stopped");
+	}
 
 	/* if this is local display start a server if one doesn't
 	 * exist */
@@ -1432,6 +1476,11 @@ mdm_slave_run (MdmDisplay *display)
 				       "In the meantime this display will be\n"
 				       "disabled.  Please restart MDM when\n"
 				       "the problem is corrected.")));
+			if (plymouth_is_running ()) {
+				g_warning("Plymouth is running, asking it to stop...");
+				plymouth_quit_without_transition ();
+				g_warning("Plymouth stopped");
+			}
 			mdm_slave_quick_exit (DISPLAY_ABORT);
 		}
 		mdm_slave_send_num (MDM_SOP_XPID, d->servpid);
