@@ -112,9 +112,7 @@ enum {
 	THEME_COLUMN_SCREENSHOT,
 	THEME_COLUMN_MARKUP,
 	THEME_COLUMN_NAME,
-	THEME_COLUMN_DESCRIPTION,
-	THEME_COLUMN_AUTHOR,
-	THEME_COLUMN_COPYRIGHT,
+	THEME_COLUMN_DESCRIPTION,	
 	THEME_NUM_COLUMNS
 };
 
@@ -4652,79 +4650,6 @@ gg_selection_changed (GtkTreeSelection *selection, gpointer data)
 		gtk_widget_set_sensitive (delete_button_remote, FALSE);
 	}
 	g_value_unset (&value);
-
-	gtk_tree_model_get_value (model, &iter,
-				  THEME_COLUMN_AUTHOR,
-				  &value);
-				  		  
-	if (!ve_string_empty (ve_sure_string (g_value_get_string (&value)))) { 
-		str = g_strconcat (ve_sure_string (g_value_get_string (&value)), NULL);
-	}
-	else {
-		str = g_strconcat (_("None"), NULL);
-	}
-
-	label = glade_xml_get_widget (xml, "gg_author_text_view");
-	label_remote = glade_xml_get_widget (xml, "gg_author_text_view_remote");
-
-	textview_set_buffer (GTK_TEXT_VIEW (label), "");
-	textview_set_buffer (GTK_TEXT_VIEW (label_remote), "");
-	
-	buffer_local = gtk_text_view_get_buffer (GTK_TEXT_VIEW (label));
-	buffer_remote = gtk_text_view_get_buffer (GTK_TEXT_VIEW (label_remote));
-	gtk_text_buffer_get_iter_at_offset (buffer_local, &iter_local, 0);
-	gtk_text_buffer_get_iter_at_offset (buffer_remote, &iter_remote, 0);
-
-	if (FirstPass == TRUE) {
-		gtk_text_buffer_create_tag (buffer_local, "small",
-		                            "scale", PANGO_SCALE_SMALL, NULL);
-		gtk_text_buffer_create_tag (buffer_remote, "small",
-		                            "scale", PANGO_SCALE_SMALL, NULL);
-	}
-	
-	gtk_text_buffer_insert_with_tags_by_name (buffer_local, &iter_local,
-	                                          str, -1, "small", NULL);	     
-	gtk_text_buffer_insert_with_tags_by_name (buffer_remote, &iter_remote,
-	                                          str, -1, "small", NULL);
-	g_value_unset (&value);
-	g_free (str);
-
-	gtk_tree_model_get_value (model, &iter,
-				  THEME_COLUMN_COPYRIGHT,
-				  &value);
-				  
-	label = glade_xml_get_widget (xml, "gg_copyright_text_view");
-	label_remote = glade_xml_get_widget (xml, "gg_copyright_text_view_remote");
-
-	textview_set_buffer (GTK_TEXT_VIEW (label), "");
-	textview_set_buffer (GTK_TEXT_VIEW (label_remote), "");
-	
-	buffer_local = gtk_text_view_get_buffer (GTK_TEXT_VIEW (label));
-	buffer_remote = gtk_text_view_get_buffer (GTK_TEXT_VIEW (label_remote));
-		
-	gtk_text_buffer_get_iter_at_offset (buffer_local, &iter_local, 0);
-	gtk_text_buffer_get_iter_at_offset (buffer_remote, &iter_remote, 0);	
-	if (FirstPass == TRUE) {	     
-		gtk_text_buffer_create_tag (buffer_local, "small",
-		                            "scale", PANGO_SCALE_SMALL, NULL);
-		gtk_text_buffer_create_tag (buffer_remote, "small",
-		                            "scale", PANGO_SCALE_SMALL, NULL);
-	}
-				  
-	if (!ve_string_empty (ve_sure_string (g_value_get_string (&value)))) { 
-		str = g_strconcat (ve_sure_string (g_value_get_string (&value)), NULL);
-	}
-	else {
-		str = g_strconcat (_("None"), NULL);
-	}
-
-	gtk_text_buffer_insert_with_tags_by_name (buffer_local, &iter_local,
-	                                          str, -1, "small", NULL);	     
-	gtk_text_buffer_insert_with_tags_by_name (buffer_remote, &iter_remote,
-	                                          str, -1, "small", NULL);
-	
-	FirstPass = FALSE;
-	g_value_unset (&value);
 }
 
 static GtkTreeIter *
@@ -4738,7 +4663,7 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 	gchar * real_selected_themes = NULL;
 	
 	while ((dent = readdir (dir)) != NULL) {
-		char *n, *file, *name, *desc, *author, *copyright, *ss;
+		char *n, *file, *name, *desc, *ss;
 		char *full;
 		GtkTreeIter iter;
 		gboolean sel_theme;
@@ -4795,10 +4720,8 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 			name = g_strdup (dent->d_name);
 		}
 
-		desc = author = copyright = ss = NULL;
-		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Description", &desc, NULL);
-		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Author", &author, NULL);
-		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Copyright", &copyright, NULL);
+		desc = ss = NULL;
+		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Description", &desc, NULL);		
 		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Screenshot", &ss, NULL);
 
 		g_key_file_free (theme_file);
@@ -4838,9 +4761,7 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 				    THEME_COLUMN_SCREENSHOT, pb,
 				    THEME_COLUMN_MARKUP, markup,
 				    THEME_COLUMN_NAME, name,
-				    THEME_COLUMN_DESCRIPTION, desc,
-				    THEME_COLUMN_AUTHOR, author,
-				    THEME_COLUMN_COPYRIGHT, copyright,
+				    THEME_COLUMN_DESCRIPTION, desc,				    
 				    -1);
 
 		if (select_item != NULL &&
@@ -4853,9 +4774,7 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 		g_free (file);
 		g_free (name);
 		g_free (markup);
-		g_free (desc);
-		g_free (author);
-		g_free (copyright);
+		g_free (desc);		
 		g_free (ss);
 		g_free (full);
 		g_free (n);
@@ -6768,9 +6687,7 @@ setup_local_themed_settings (void)
 				    GDK_TYPE_PIXBUF /* preview */,
 				    G_TYPE_STRING /* markup */,
 				    G_TYPE_STRING /* name */,
-				    G_TYPE_STRING /* desc */,
-				    G_TYPE_STRING /* author */,
-				    G_TYPE_STRING /* copyright */);
+				    G_TYPE_STRING /* desc */);
 
 	/* Register theme mode combobox */
 	g_object_set_data_full (G_OBJECT (mode_combobox), "key",
@@ -7962,11 +7879,7 @@ setup_gui (void)
 	glade_helper_tagify_label (xml, "local_menubar_label", "b");
 	glade_helper_tagify_label (xml, "local_welcome_message_label", "b");
 	glade_helper_tagify_label (xml, "label_welcome_note", "i");
-	glade_helper_tagify_label (xml, "label_welcome_note", "small");
-	glade_helper_tagify_label (xml, "gg_author_label", "b");
-	glade_helper_tagify_label (xml, "gg_author_label", "small");
-	glade_helper_tagify_label (xml, "gg_copyright_label", "b");
-	glade_helper_tagify_label (xml, "gg_copyright_label", "small");
+	glade_helper_tagify_label (xml, "label_welcome_note", "small");	
 	glade_helper_tagify_label (xml, "remote_plain_background_label", "b");
 	glade_helper_tagify_label (xml, "remote_behaviour_label", "b");
 	glade_helper_tagify_label (xml, "remote_logo_label", "b");
