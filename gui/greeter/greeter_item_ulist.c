@@ -73,12 +73,12 @@ void
 greeter_item_ulist_check_show_userlist (void)
 {
 	/*
-	 * If the browser feature isn't enabled or if there are no users,
+	 * If there are no users,
 	 * then hide the rectangle used to contain the userlist.  The
 	 * userlist-rect id allows a rectangle to be defined with alpha
 	 * behind the userlist that also goes away when the list is empty.
 	 */
-	if (num_users == 0 || !mdm_config_get_bool (MDM_KEY_BROWSER)) {
+	if (num_users == 0) {
 
 		GreeterItemInfo *urinfo = greeter_lookup_id ("userlist-rect");
 
@@ -314,9 +314,7 @@ greeter_generate_userlist (GtkWidget *tv, GreeterItemInfo *info)
 								       NULL);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (tv), column_two);
 
-		/* Only populate the user list if the browser is turned on */
-		if (mdm_config_get_bool (MDM_KEY_BROWSER))
-			greeter_populate_user_list (tm);
+		greeter_populate_user_list (tm);
 
 		list = gtk_tree_view_column_get_cell_renderers (column_one);
 		for (li = list; li != NULL; li = li->next) {

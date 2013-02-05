@@ -397,8 +397,7 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 
 	{ MDM_CONFIG_GROUP_GUI, "AllowGtkThemeChange", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_ALLOW_GTK_THEME_CHANGE },
 	{ MDM_CONFIG_GROUP_GUI, "GtkThemesToAllow", MDM_CONFIG_VALUE_STRING, "all", MDM_ID_GTK_THEMES_TO_ALLOW },
-
-	{ MDM_CONFIG_GROUP_GREETER, "Browser", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_BROWSER },
+	
 	{ MDM_CONFIG_GROUP_GREETER, "Include", MDM_CONFIG_VALUE_STRING, "", MDM_ID_INCLUDE },
 	{ MDM_CONFIG_GROUP_GREETER, "Exclude", MDM_CONFIG_VALUE_STRING, "bin,daemon,adm,lp,sync,shutdown,halt,mail,news,uucp,operator,nobody,mdm,postgres,pvm,rpm,nfsnobody,pcap", MDM_ID_EXCLUDE },
 	{ MDM_CONFIG_GROUP_GREETER, "IncludeAll", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_INCLUDE_ALL },
@@ -406,9 +405,7 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_GREETER, "DefaultFace", MDM_CONFIG_VALUE_STRING, PIXMAPDIR "/nobody.png", MDM_ID_DEFAULT_FACE },
 	{ MDM_CONFIG_GROUP_GREETER, "GlobalFaceDir", MDM_CONFIG_VALUE_STRING, DATADIR "/pixmaps/faces/", MDM_ID_GLOBAL_FACE_DIR },
     { MDM_CONFIG_GROUP_GREETER, "GnomeFaceDir", MDM_CONFIG_VALUE_STRING, "/var/lib/AccountsService/icons/", MDM_ID_GNOME_ACCOUNTS_SERVICE_FACE_DIR },
-	{ MDM_CONFIG_GROUP_GREETER, "LocaleFile", MDM_CONFIG_VALUE_STRING, MDMLOCALEDIR "/locale.alias", MDM_ID_LOCALE_FILE },
-	{ MDM_CONFIG_GROUP_GREETER, "Logo", MDM_CONFIG_VALUE_STRING, PIXMAPDIR "/mdm-foot-logo.png", MDM_ID_LOGO },
-	{ MDM_CONFIG_GROUP_GREETER, "ChooserButtonLogo", MDM_CONFIG_VALUE_STRING, PIXMAPDIR "/mdm-foot-logo.png", MDM_ID_CHOOSER_BUTTON_LOGO },
+	{ MDM_CONFIG_GROUP_GREETER, "LocaleFile", MDM_CONFIG_VALUE_STRING, MDMLOCALEDIR "/locale.alias", MDM_ID_LOCALE_FILE },	
 	{ MDM_CONFIG_GROUP_GREETER, "Quiver", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_QUIVER },
 	{ MDM_CONFIG_GROUP_GREETER, "SystemMenu", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_SYSTEM_MENU },
 	{ MDM_CONFIG_GROUP_DAEMON, "Configurator", MDM_CONFIG_VALUE_STRING, SBINDIR "/mdmsetup --disable-sound --disable-crash-dialog", MDM_ID_CONFIGURATOR },

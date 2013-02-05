@@ -75,7 +75,6 @@ gboolean MdmSuspendFound                    = FALSE;
 gboolean MdmHaltFound                       = FALSE;
 gboolean MdmRebootFound                     = FALSE;
 gboolean MdmAnyCustomCmdsFound              = FALSE;
-static gboolean browser_ok                  = TRUE;
 static gboolean disable_system_menu_buttons = FALSE;
 static gboolean MdmLockPosition             = FALSE;
 static gboolean MdmSetPosition              = FALSE;
@@ -98,8 +97,6 @@ enum {
 };
 
 static GtkWidget *login;
-static GtkWidget *logo_frame = NULL;
-static GtkWidget *logo_image = NULL;
 static GtkWidget *table = NULL;
 static GtkWidget *welcome;
 static GtkWidget *label;
@@ -1337,9 +1334,8 @@ process_operation (guchar       op_code,
 	/* somebody is trying to fool us this is the user that
 	 * wants to log in, and well, we are the gullible kind */
 	g_free (curuser);
-	curuser = g_strdup (args);
-	if (browser_ok && mdm_config_get_bool (MDM_KEY_BROWSER))
-		browser_set_user (curuser);
+	curuser = g_strdup (args);	
+    browser_set_user (curuser);
 	printf ("%c\n", STX);
 	fflush (stdout);
 	break;
@@ -1615,9 +1611,7 @@ process_operation (guchar       op_code,
 	gtk_widget_set_sensitive (entry, TRUE);
 	gtk_widget_set_sensitive (ok_button, FALSE);
 	gtk_widget_set_sensitive (start_again_button, FALSE);
-
-	if (browser_ok && mdm_config_get_bool (MDM_KEY_BROWSER))
-	    gtk_widget_set_sensitive (GTK_WIDGET (browser), TRUE);
+    gtk_widget_set_sensitive (GTK_WIDGET (browser), TRUE);
 
 	tmp = ve_locale_to_utf8 (args);
 	gtk_label_set_text (GTK_LABEL (msg), tmp);
@@ -2150,16 +2144,12 @@ static void
 mdm_login_gui_init (void)
 {
     GtkTreeSelection *selection;
-    GtkWidget *frame1, *frame2, *ebox;
+    GtkWidget *frame1, *frame2;
     GtkWidget *mbox, *menu, *menubar, *item;
     GtkWidget *stack, *hline1, *hline2, *handle;
     GtkWidget *bbox = NULL;
     GtkWidget /**help_button,*/ *button_box;
-    gint rows, i;
-    GdkPixbuf *pb;
-    GtkWidget *frame;
-    int lw, lh;
-    gboolean have_logo = FALSE;
+    gint i;        
     GtkWidget *thememenu;
     const gchar *theme_name;
     gchar *key_string = NULL;
@@ -2187,10 +2177,9 @@ mdm_login_gui_init (void)
 
     gtk_window_set_title (GTK_WINDOW (login), _("MDM Login"));
     /* connect for fingering */
-    if (browser_ok && mdm_config_get_bool (MDM_KEY_BROWSER))
-	    g_signal_connect (G_OBJECT (login), "event",
-			      G_CALLBACK (window_browser_event),
-			      NULL);
+    
+	g_signal_connect (G_OBJECT (login), "event",
+                    G_CALLBACK (window_browser_event), NULL);
 
     frame1 = gtk_frame_new (NULL);
     gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_OUT);
@@ -2376,12 +2365,7 @@ mdm_login_gui_init (void)
 
     update_clock (); 
 
-    if (browser_ok && mdm_config_get_bool (MDM_KEY_BROWSER))
-	rows = 2;
-    else
-	rows = 1;
-
-    table = gtk_table_new (rows, 2, FALSE);
+    table = gtk_table_new (1, 2, FALSE);
     gtk_widget_ref (table);
     g_object_set_data_full (G_OBJECT (login), "table", table,
 			    (GDestroyNotify) gtk_widget_unref);
@@ -2390,105 +2374,59 @@ mdm_login_gui_init (void)
     gtk_container_set_border_width (GTK_CONTAINER (table), 10);
     gtk_table_set_row_spacings (GTK_TABLE (table), 10);
     gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+    
+    int height;
+    GtkTreeViewColumn *column;
 
-    if (browser_ok && mdm_config_get_bool (MDM_KEY_BROWSER)) {
-	    int height;
-	    GtkTreeViewColumn *column;
+    browser = gtk_tree_view_new ();
+    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (browser), FALSE);
+    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (browser),
+                       FALSE);
+    gtk_tree_view_set_enable_search (GTK_TREE_VIEW (browser),
+                     FALSE);
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
+    gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
-	    browser = gtk_tree_view_new ();
-	    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (browser), FALSE);
-	    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (browser),
-					       FALSE);
-	    gtk_tree_view_set_enable_search (GTK_TREE_VIEW (browser),
-					     FALSE);
-	    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
-	    gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+    g_signal_connect (selection, "changed",
+              G_CALLBACK (user_selected),
+              NULL);
 
-	    g_signal_connect (selection, "changed",
-			      G_CALLBACK (user_selected),
-			      NULL);
+    g_signal_connect (browser, "button_release_event",
+              G_CALLBACK (browser_change_focus),
+              NULL);
 
-	    g_signal_connect (browser, "button_release_event",
-			      G_CALLBACK (browser_change_focus),
-			      NULL);
+    browser_model = (GtkTreeModel *)gtk_list_store_new (3,
+             GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING);
 
-	    browser_model = (GtkTreeModel *)gtk_list_store_new (3,
-			     GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING);
+    gtk_tree_view_set_model (GTK_TREE_VIEW (browser), browser_model);
+    column = gtk_tree_view_column_new_with_attributes
+        (_("Icon"),
+         gtk_cell_renderer_pixbuf_new (),
+         "pixbuf", GREETER_ULIST_ICON_COLUMN,
+         NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (browser), column);
+  
+    column = gtk_tree_view_column_new_with_attributes
+        (_("Username"),
+         gtk_cell_renderer_text_new (),
+         "markup", GREETER_ULIST_LABEL_COLUMN,
+         NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (browser), column);
+   
+    bbox = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (bbox),
+                     GTK_SHADOW_IN);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (bbox),
+                    GTK_POLICY_NEVER,
+                    GTK_POLICY_AUTOMATIC);
+    gtk_container_add (GTK_CONTAINER (bbox), browser);
 
-	    gtk_tree_view_set_model (GTK_TREE_VIEW (browser), browser_model);
-	    column = gtk_tree_view_column_new_with_attributes
-		    (_("Icon"),
-		     gtk_cell_renderer_pixbuf_new (),
-		     "pixbuf", GREETER_ULIST_ICON_COLUMN,
-		     NULL);
-	    gtk_tree_view_append_column (GTK_TREE_VIEW (browser), column);
-      
-	    column = gtk_tree_view_column_new_with_attributes
-		    (_("Username"),
-		     gtk_cell_renderer_text_new (),
-		     "markup", GREETER_ULIST_LABEL_COLUMN,
-		     NULL);
-	    gtk_tree_view_append_column (GTK_TREE_VIEW (browser), column);
+    height = size_of_users + 4 /* some padding */;
+    if (height > mdm_wm_screen.height * 0.25)
+        height = mdm_wm_screen.height * 0.25;
 
-	    bbox = gtk_scrolled_window_new (NULL, NULL);
-	    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (bbox),
-						 GTK_SHADOW_IN);
-	    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (bbox),
-					    GTK_POLICY_NEVER,
-					    GTK_POLICY_AUTOMATIC);
-	    gtk_container_add (GTK_CONTAINER (bbox), browser);
-	
-	    height = size_of_users + 4 /* some padding */;
-	    if (height > mdm_wm_screen.height * 0.25)
-		    height = mdm_wm_screen.height * 0.25;
-
-	    gtk_widget_set_size_request (GTK_WIDGET (bbox), -1, height);
-    }
-
-    if (mdm_config_get_string (MDM_KEY_LOGO) != NULL) {
-	    pb = gdk_pixbuf_new_from_file (mdm_config_get_string (MDM_KEY_LOGO), NULL);
-    } else {
-	    pb = NULL;
-    }
-
-    if (pb != NULL) {
-	    have_logo = TRUE;
-	    logo_image = gtk_image_new_from_pixbuf (pb);
-	    lw = gdk_pixbuf_get_width (pb);
-	    lh = gdk_pixbuf_get_height (pb);
-	    g_object_unref (G_OBJECT (pb));
-    } else {
-	    logo_image = gtk_image_new ();
-	    lw = lh = 100;
-    }
-
-    /* this will make the logo always left justified */
-    logo_frame = gtk_alignment_new (0, 0.10, 0, 0);
-    gtk_widget_show (logo_frame);
-
-    frame = gtk_frame_new (NULL);
-    gtk_widget_show (frame);
-    gtk_frame_set_shadow_type (GTK_FRAME (frame),
-			       GTK_SHADOW_IN);
-
-    ebox = gtk_event_box_new ();
-    gtk_widget_show (ebox);
-    gtk_container_add (GTK_CONTAINER (ebox), logo_image);
-    gtk_container_add (GTK_CONTAINER (frame), ebox);
-    gtk_container_add (GTK_CONTAINER (logo_frame), frame);
-
-    if (lw > mdm_wm_screen.width / 2)
-	    lw = mdm_wm_screen.width / 2;
-    else
-	    lw = -1;
-    if (lh > (2 * mdm_wm_screen.height) / 3)
-	    lh = (2 * mdm_wm_screen.height) / 3;
-    else
-	    lh = -1;
-    if (lw > -1 || lh > -1)
-	    gtk_widget_set_size_request (logo_image, lw, lh);
-    gtk_widget_show (GTK_WIDGET (logo_image));
-
+    gtk_widget_set_size_request (GTK_WIDGET (bbox), -1, height);    
+               
     stack = gtk_table_new (7, 1, FALSE);
     gtk_widget_ref (stack);
     g_object_set_data_full (G_OBJECT (login), "stack", stack,
@@ -2645,25 +2583,12 @@ mdm_login_gui_init (void)
 		      (GtkAttachOptions) (GTK_FILL), 10, 10);
 
     /* Put it nicely together */
-
-    if (bbox != NULL) {
-	    gtk_table_attach (GTK_TABLE (table), bbox, 0, 2, 0, 1,
-			      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-			      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-	    gtk_table_attach (GTK_TABLE (table), logo_frame, 0, 1, 1, 2,
-			      (GtkAttachOptions) (GTK_FILL),
-			      (GtkAttachOptions) (GTK_FILL), 0, 0);
-	    gtk_table_attach (GTK_TABLE (table), stack, 1, 2, 1, 2,
-			      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-			      (GtkAttachOptions) (GTK_FILL), 0, 0);
-    } else {
-	    gtk_table_attach (GTK_TABLE (table), logo_frame, 0, 1, 0, 1,
-			      (GtkAttachOptions) (0),
-			      (GtkAttachOptions) (GTK_FILL), 0, 0);
-	    gtk_table_attach (GTK_TABLE (table), stack, 1, 2, 0, 1,
-			      (GtkAttachOptions) (0),
-			      (GtkAttachOptions) (GTK_FILL), 0, 0);
-    }
+    gtk_table_attach (GTK_TABLE (table), bbox, 0, 1, 1, 2,
+              (GtkAttachOptions) (GTK_FILL),
+              (GtkAttachOptions) (GTK_FILL), 0, 0);
+    gtk_table_attach (GTK_TABLE (table), stack, 1, 2, 1, 2,
+              (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+              (GtkAttachOptions) (GTK_FILL), 0, 0);
     
     gtk_widget_grab_focus (entry);	
     gtk_window_set_focus (GTK_WINDOW (login), entry);	
@@ -2696,20 +2621,14 @@ mdm_login_gui_init (void)
 	    gtk_widget_set_sensitive (start_again_button, FALSE);
     }
 
-    gtk_widget_show_all (GTK_WIDGET (login));
-    if ( ! have_logo) {
-	    gtk_table_set_col_spacings (GTK_TABLE (table), 0);
-	    gtk_widget_hide (logo_frame);
-    }
+    gtk_widget_show_all (GTK_WIDGET (login));    
 
-    if (browser_ok && mdm_config_get_bool (MDM_KEY_BROWSER)) {
-	    /* Make sure userlist has no users selected */
-	    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
-	    gtk_tree_selection_unselect_all (selection);
-	    if (selected_user)
-		g_free (selected_user);
-	    selected_user = NULL;
-    }
+    /* Make sure userlist has no users selected */
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
+    gtk_tree_selection_unselect_all (selection);
+    if (selected_user)
+    g_free (selected_user);
+    selected_user = NULL;
 }
 
 static GdkPixbuf *
@@ -2869,8 +2788,7 @@ mdm_read_config (void)
 	mdm_config_get_string (MDM_KEY_INCLUDE);
 	mdm_config_get_string (MDM_KEY_INFO_MSG_FILE);
 	mdm_config_get_string (MDM_KEY_INFO_MSG_FONT);
-	mdm_config_get_string (MDM_KEY_LOCALE_FILE);
-	mdm_config_get_string (MDM_KEY_LOGO);
+	mdm_config_get_string (MDM_KEY_LOCALE_FILE);	
 	mdm_config_get_string (MDM_KEY_REBOOT);
 	mdm_config_get_string (MDM_KEY_REMOTE_WELCOME);
 	mdm_config_get_string (MDM_KEY_SESSION_DESKTOP_DIR);
@@ -2920,8 +2838,7 @@ mdm_read_config (void)
 	mdm_config_get_bool   (MDM_KEY_ALLOW_REMOTE_ROOT);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);
 	mdm_config_get_bool   (MDM_KEY_BACKGROUND_REMOTE_ONLY_COLOR);
-	mdm_config_get_bool   (MDM_KEY_BACKGROUND_SCALE_TO_FIT);
-	mdm_config_get_bool   (MDM_KEY_BROWSER);
+	mdm_config_get_bool   (MDM_KEY_BACKGROUND_SCALE_TO_FIT);	
 	mdm_config_get_bool   (MDM_KEY_CHOOSER_BUTTON);
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME);
@@ -3006,8 +2923,7 @@ mdm_reread_config (int sig, gpointer data)
 
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
-	    mdm_config_reload_bool   (MDM_KEY_ALLOW_REMOTE_ROOT) ||
-	    mdm_config_reload_bool   (MDM_KEY_BROWSER) ||
+	    mdm_config_reload_bool   (MDM_KEY_ALLOW_REMOTE_ROOT) ||	    
 	    mdm_config_reload_bool   (MDM_KEY_CHOOSER_BUTTON) ||
 	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_CIRCLES) ||
@@ -3091,53 +3007,7 @@ mdm_reread_config (int sig, gpointer data)
 	mdm_config_reload_string (MDM_KEY_SOUND_ON_LOGIN_FILE);
 	mdm_config_reload_string (MDM_KEY_USE_24_CLOCK);
 	update_clock ();
-
-	if (mdm_config_reload_string (MDM_KEY_LOGO)) {
-		GdkPixbuf *pb;
-		gboolean have_logo = FALSE;
-		gchar *mdmlogo;
-		int lw, lh;
-
-		mdmlogo = mdm_config_get_string (MDM_KEY_LOGO);
-
-		if (mdmlogo != NULL) {
-			pb = gdk_pixbuf_new_from_file (mdmlogo, NULL);
-		} else {
-			pb = NULL;
-		}
-
-		if (pb != NULL) {
-			have_logo = TRUE;
-			gtk_image_set_from_pixbuf (GTK_IMAGE (logo_image), pb);
-			lw = gdk_pixbuf_get_width (pb);
-			lh = gdk_pixbuf_get_height (pb);
-			g_object_unref (G_OBJECT (pb));
-		} else {
-			lw = lh = 100;
-		}
-
-		if (lw > mdm_wm_screen.width / 2)
-			lw = mdm_wm_screen.width / 2;
-		else
-			lw = -1;
-		if (lh > (2 * mdm_wm_screen.height) / 3)
-			lh = (2 * mdm_wm_screen.height) / 3;
-		else
-			lh = -1;
-		if (lw > -1 || lh > -1)
-			gtk_widget_set_size_request (logo_image, lw, lh);
-
-		if (have_logo) {
-			gtk_table_set_col_spacings (GTK_TABLE (table), 10);
-			gtk_widget_show (logo_frame);
-		} else {
-			gtk_table_set_col_spacings (GTK_TABLE (table), 0);
-			gtk_widget_hide (logo_frame);
-		}
-
-		resize = TRUE;
-	}
-
+	
 	if (mdm_config_reload_string (MDM_KEY_WELCOME) ||
             mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME) ||
             mdm_config_reload_string (MDM_KEY_REMOTE_WELCOME) ||
@@ -3361,31 +3231,22 @@ main (int argc, char *argv[])
 	    }
     }
 
-    if (browser_ok && mdm_config_get_bool (MDM_KEY_BROWSER)) {
-	    defface = mdm_common_get_face (NULL,
-					   mdm_config_get_string (MDM_KEY_DEFAULT_FACE),
-					   mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH),
-					   mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
+    defface = mdm_common_get_face (NULL,
+                   mdm_config_get_string (MDM_KEY_DEFAULT_FACE),
+                   mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH),
+                   mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
 
-	    if (! defface) {
-		    mdm_common_warning ("Could not open DefaultImage: %s.  Suspending face browser!",
-			    mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
-		    browser_ok = FALSE;
-	    } else  {
-		    mdm_users_init (&users, &users_string, NULL, defface,
-				    &size_of_users, login_is_local, !DOING_MDM_DEVELOPMENT);
-	    }
+    if (! defface) {
+        mdm_common_warning ("Could not open DefaultImage: %s.  Suspending face browser!",
+            mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
+    } else  {
+        mdm_users_init (&users, &users_string, NULL, defface,
+                &size_of_users, login_is_local, !DOING_MDM_DEVELOPMENT);
     }
-
-    /* Do not display face browser widget if no users */
-    if (!users)
-	browser_ok = FALSE;
 
     mdm_login_gui_init ();
 
-    if (browser_ok && mdm_config_get_bool (MDM_KEY_BROWSER)) {
 	mdm_login_browser_populate ();
-    }
 
     ve_signal_add (SIGHUP, mdm_reread_config, NULL);
 

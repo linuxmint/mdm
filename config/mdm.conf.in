@@ -375,14 +375,6 @@ GtkTheme=Clearlooks
 #PositionX=0
 #PositionY=0
 
-# Enable the Face browser.  Note that the Browser key is only used by the
-# standard login (mdmlogin) program.  The Face Browser is enabled in
-# the Graphical greeter by selecting a theme that includes the Face
-# Browser.  The other configuration values that
-# affect the Face Browser (MinimalUID, DefaultFace, Include, Exclude,
-# IncludeAll, GlobalFaceDir) are used by both the Standard and Themed
-# greeter.
-Browser=true
 # The default picture in the browser.
 DefaultFace=@pixmapdir@/nobody.png
 # User ID's less than the MinimalUID value will not be included in the face
@@ -413,10 +405,6 @@ IncludeAll=true
 # the one shipped with MDM and edit it.  It is not a standard locale.alias
 # file, although MDM will be able to read a standard locale.alias file as well.
 LocaleFile=/etc/mdm/locale.conf
-# Logo shown in the standard greeter.
-Logo=@pixmapdir@/mdmLogo.xpm
-# Logo shown on file chooser button in mdmsetup (do not modify this value).
-#ChooserButtonLogo=@pixmapdir@/mdm-foot-logo.png
 # The standard greeter should shake if a user entered the wrong username or
 # password.  Kind of cool looking
 #Quiver=true

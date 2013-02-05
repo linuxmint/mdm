@@ -926,8 +926,7 @@ mdm_read_config (void)
 	mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME);
-	mdm_config_get_bool   (MDM_KEY_ADD_GTK_MODULES);
-	mdm_config_get_bool   (MDM_KEY_BROWSER);
+	mdm_config_get_bool   (MDM_KEY_ADD_GTK_MODULES);	
 
 	/* Keys for custom commands */
 	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {		
@@ -1015,8 +1014,7 @@ greeter_reread_config (int sig, gpointer data)
 	    mdm_config_reload_bool   (MDM_KEY_SHOW_LAST_SESSION) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_REMOTE_ROOT) ||
-	    mdm_config_reload_bool   (MDM_KEY_ADD_GTK_MODULES) ||
-	    mdm_config_reload_bool   (MDM_KEY_BROWSER)) {
+	    mdm_config_reload_bool   (MDM_KEY_ADD_GTK_MODULES)) {
 
 		/* Set busy cursor */
 		mdm_common_setup_cursor (GDK_WATCH);

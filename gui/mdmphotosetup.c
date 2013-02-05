@@ -331,8 +331,7 @@ main (int argc, char *argv[])
 	GtkWidget  *dialog;
 	GtkWidget  *browse_button;
 	GtkWidget  *help_button;
-	GtkWidget  *face_image;
-	gboolean    face_browser;
+	GtkWidget  *face_image;	
 	char	   *greeter;
 	int	    max_size;
 
@@ -343,8 +342,7 @@ main (int argc, char *argv[])
 	photofile = g_build_filename (g_get_home_dir (), ".face", NULL);
 
 	/* Read config data in bulk */
-	mdmcomm_comm_bulk_start ();
-	face_browser = mdm_config_get_bool (MDM_KEY_BROWSER);
+	mdmcomm_comm_bulk_start ();	
 	max_size     = mdm_config_get_int (MDM_KEY_USER_MAX_FILE);
 	max_width    = mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH);
 	max_height   = mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT);

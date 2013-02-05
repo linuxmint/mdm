@@ -149,19 +149,15 @@ enum {
 };
 
 enum {
-	LOCAL_PLAIN,
-	LOCAL_PLAIN_WITH_FACE,
-	LOCAL_THEMED,
-	LOCAL_THEMED_WITH_FACE
+	LOCAL_PLAIN,	
+	LOCAL_THEMED	
 };
 
 enum {
 	REMOTE_DISABLED,
 	REMOTE_SAME_AS_LOCAL,
 	REMOTE_PLAIN = 2,
-	REMOTE_THEMED = 2,
-	REMOTE_PLAIN_WITH_FACE = 3,
-	REMOTE_THEMED_WITH_FACE = 3
+	REMOTE_THEMED = 2	
 };
 
 enum {
@@ -661,67 +657,6 @@ command_toggle_timeout (GtkWidget *toggle)
 	return FALSE;
 }
 
-static gboolean
-logo_toggle_timeout (GtkWidget *toggle)
-{
-	const char *key = g_object_get_data (G_OBJECT (toggle), "key");
-	GtkWidget  *chooserbutton;
-	gchar      *filename;
-
-	chooserbutton = glade_xml_get_widget (xml, "local_logo_image_chooserbutton");
-						
-	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooserbutton));
-	
- 	if ((GTK_TOGGLE_BUTTON (toggle)->active) == FALSE) {
-		mdm_setup_config_set_string (MDM_KEY_CHOOSER_BUTTON_LOGO, filename);	
-		mdm_setup_config_set_string (key, "");
-	}
-	else if (filename != NULL) {
-		mdm_setup_config_set_string (MDM_KEY_CHOOSER_BUTTON_LOGO, filename);
-		mdm_setup_config_set_string (key, filename);
-	}
-	update_greeters ();
-	g_free (filename);
-	return FALSE;
-}
-
-static void
-logo_toggle_toggled (GtkWidget *toggle, gpointer data)
-{
-	if (gtk_notebook_get_current_page (GTK_NOTEBOOK (setup_notebook)) == LOCAL_TAB) {
-
-		GtkWidget *checkbutton;
-		
-		checkbutton = glade_xml_get_widget (xml, "remote_logo_image_checkbutton");
-
-		g_signal_handlers_disconnect_by_func (checkbutton,
-		                                      (gpointer) logo_toggle_toggled,
-		                                      NULL);
-
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton),
-		                              GTK_TOGGLE_BUTTON (toggle)->active);
-
-		g_signal_connect (G_OBJECT (checkbutton), "toggled", 
-		                  G_CALLBACK (logo_toggle_toggled), NULL);
-	}
-	else {
-		GtkWidget *checkbutton;
-
-		checkbutton = glade_xml_get_widget (xml, "local_logo_image_checkbutton");
-
-		g_signal_handlers_disconnect_by_func (checkbutton,
-		                                      (gpointer) logo_toggle_toggled,
-		                                      NULL);
-
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton), 
-		                              GTK_TOGGLE_BUTTON (toggle)->active);	
-
-		g_signal_connect (G_OBJECT (checkbutton), "toggled", 
-		                  G_CALLBACK (logo_toggle_toggled), NULL);
-	}
-	run_timeout (toggle, 200, logo_toggle_timeout);
-}
-
 /* Forward declarations */
 static void
 setup_user_combobox_list (const char *name, const char *key);
@@ -1135,9 +1070,7 @@ update_remote_sensitivity (gboolean value)
 	GtkWidget *remote_background_color_hbox;
 	GtkWidget *remote_background_image_hhox;
 	GtkWidget *remote_background_image_checkbutton;
-	GtkWidget *remote_background_image_chooserbutton;
-	GtkWidget *remote_logo_image_checkbutton;
-	GtkWidget *remote_plain_logo_hbox;
+	GtkWidget *remote_background_image_chooserbutton;		
 	GtkWidget *remote_theme_background_hbox;
 	GtkWidget *remote_theme_mode_hbox;
 	GtkWidget *remote_theme_select_hbox;
@@ -1146,9 +1079,7 @@ update_remote_sensitivity (gboolean value)
 	remote_background_color_hbox = glade_xml_get_widget (xml, "remote_background_color_hbox");
 	remote_background_image_hhox = glade_xml_get_widget (xml, "remote_background_image_hhox");
 	remote_background_image_checkbutton = glade_xml_get_widget (xml, "remote_background_image_checkbutton");
-	remote_background_image_chooserbutton = glade_xml_get_widget (xml, "remote_background_image_chooserbutton");
-	remote_logo_image_checkbutton = glade_xml_get_widget (xml, "remote_logo_image_checkbutton");
-	remote_plain_logo_hbox = glade_xml_get_widget (xml, "remote_plain_logo_hbox");
+	remote_background_image_chooserbutton = glade_xml_get_widget (xml, "remote_background_image_chooserbutton");		
 	remote_theme_background_hbox = glade_xml_get_widget (xml, "remote_theme_background_hbox");
 	remote_theme_mode_hbox = glade_xml_get_widget (xml, "remote_theme_mode_hbox");
 	remote_theme_select_hbox = glade_xml_get_widget (xml, "remote_theme_select_hbox");
@@ -1157,9 +1088,7 @@ update_remote_sensitivity (gboolean value)
 	gtk_widget_set_sensitive (remote_background_color_hbox, value);
 	gtk_widget_set_sensitive (remote_background_image_hhox, value);
 	gtk_widget_set_sensitive (remote_background_image_checkbutton, value);
-	gtk_widget_set_sensitive (remote_background_image_chooserbutton, value);
-	gtk_widget_set_sensitive (remote_logo_image_checkbutton, value);
-	gtk_widget_set_sensitive (remote_plain_logo_hbox, value);
+	gtk_widget_set_sensitive (remote_background_image_chooserbutton, value);	
 	gtk_widget_set_sensitive (remote_theme_background_hbox, value);
 	gtk_widget_set_sensitive (remote_theme_mode_hbox, value);
 	gtk_widget_set_sensitive (remote_theme_select_hbox, value);
@@ -1198,17 +1127,11 @@ refresh_remote_tab (void)
 	if (mdm_config_get_bool (MDM_KEY_XDMCP) == FALSE) {
 				
 		if (local_style == LOCAL_PLAIN) {
-			gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Themed"));
+			gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Theme"));
 		}
-		else if (local_style == LOCAL_PLAIN_WITH_FACE) {
-			gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Themed with face browser"));
-		}
-		else if (local_style == LOCAL_THEMED) {
-			gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Plain"));
-		}
-		else { /* Themed with face browser */			
-			gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Plain with face browser"));
-		}
+		else {
+			gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("GTK"));
+		}		
 				
 		gtk_combo_box_set_active (GTK_COMBO_BOX (remote_greeter), REMOTE_DISABLED);
 		gtk_widget_set_sensitive (allowremoteroot, FALSE);
@@ -1218,18 +1141,12 @@ refresh_remote_tab (void)
 		gtk_widget_hide (welcome_message_vbox);
 		gtk_widget_hide (configure_xdmcp_vbox);
 	}
-	else {
-		gboolean use_browser = mdm_config_get_bool (MDM_KEY_BROWSER);
+	else {		
 		
-		if (local_style == LOCAL_PLAIN || local_style == LOCAL_PLAIN_WITH_FACE) {
+		if (local_style == LOCAL_PLAIN) {
 
-			if (use_browser == FALSE) {
-				gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Themed"));
-			}
-			else { 
-				gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Themed with face browser"));
-			}
-			
+			gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Theme"));
+						
 			if (strstr (remote_style, "/mdmlogin") != NULL) {
 				gtk_combo_box_set_active (GTK_COMBO_BOX (remote_greeter), REMOTE_SAME_AS_LOCAL);
 				update_remote_sensitivity (FALSE);
@@ -1243,13 +1160,8 @@ refresh_remote_tab (void)
 				gtk_widget_show (remote_themed_vbox);
 			}
 		}
-		else {
-			if (use_browser == FALSE) {
-				gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Plain"));
-			}
-			else {
-				gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("Plain with face browser"));
-			}
+		else {			
+			gtk_combo_box_append_text (GTK_COMBO_BOX (remote_greeter), _("GTK"));			
 
 			if (strstr (remote_style, "/mdmlogin") != NULL) {				
 				gtk_combo_box_set_active (GTK_COMBO_BOX (remote_greeter), REMOTE_PLAIN);
@@ -1328,38 +1240,24 @@ combobox_timeout (GtkWidget *combo_box)
 	if (strcmp (ve_sure_string (key), MDM_KEY_GREETER) == 0) {
 
 		gchar *old_key_val;
-		gchar *new_key_val;
-		gboolean browser_val;
+		gchar *new_key_val;		
 
 		old_key_val = mdm_config_get_string ((gchar *)key);
 		new_key_val = NULL;
 
-		if (selected == LOCAL_PLAIN_WITH_FACE) {		
-			new_key_val = g_strdup (LIBEXECDIR "/mdmlogin");
-			browser_val = TRUE;
-		} 
-		else if (selected == LOCAL_THEMED) {
-			new_key_val = g_strdup (LIBEXECDIR "/mdmgreeter");
-			browser_val = FALSE;
+		if (selected == LOCAL_THEMED) {
+			new_key_val = g_strdup (LIBEXECDIR "/mdmgreeter");			
 		}
-		else if (selected == LOCAL_THEMED_WITH_FACE) {
-			new_key_val = g_strdup (LIBEXECDIR "/mdmgreeter");
-			browser_val = TRUE;
-		}
-		else {  /* Plain style */
-			new_key_val = g_strdup (LIBEXECDIR "/mdmlogin");
-			browser_val = FALSE;
+		else {
+			new_key_val = g_strdup (LIBEXECDIR "/mdmlogin");			
 		}		
 		
 		if (new_key_val && 
 		    strcmp (ve_sure_string (old_key_val), ve_sure_string (new_key_val)) != 0) {	
 		    
-			mdm_setup_config_set_string (key, new_key_val);
-			mdm_setup_config_set_bool (MDM_KEY_BROWSER, browser_val);
+			mdm_setup_config_set_string (key, new_key_val);			
 		}
-		else {
-			mdm_setup_config_set_bool (MDM_KEY_BROWSER, browser_val);
-		}
+		
 		update_greeters ();
 		
 		refresh_remote_tab ();
@@ -1724,8 +1622,7 @@ combobox_changed (GtkWidget *combobox)
 
 		selected = gtk_combo_box_get_active (GTK_COMBO_BOX (combobox));
 
-		if (selected == LOCAL_THEMED ||
-		    selected == LOCAL_THEMED_WITH_FACE) {						
+		if (selected == LOCAL_THEMED) {						
 			gtk_widget_hide (local_plain_vbox);
 			gtk_widget_show (local_themed_vbox);
 		}
@@ -3431,25 +3328,7 @@ setup_greeter_toggle (const char *name,
 		g_signal_connect (G_OBJECT (toggle), "toggled",	G_CALLBACK (toggle_toggled_sensitivity_positive), file_chooser);		
 		g_signal_connect (G_OBJECT (toggle), "toggled",	G_CALLBACK (toggle_toggled_sensitivity_positive), play_button);
 	}
-	else if (strcmp ("local_logo_image_checkbutton", ve_sure_string (name)) == 0) {
-	
-		GtkWidget *file_chooser;
-		GtkWidget *file_chooser_remote;
-		GtkWidget *checkbutton;
 		
-		checkbutton = glade_xml_get_widget (xml, "remote_logo_image_checkbutton");
-
-		file_chooser = glade_xml_get_widget (xml, "local_logo_image_chooserbutton");
-
-		file_chooser_remote = glade_xml_get_widget (xml, "remote_logo_image_chooserbutton");
-
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton), val);
-		gtk_widget_set_sensitive (file_chooser, val);
-
-		g_signal_connect (G_OBJECT (toggle), "toggled",	G_CALLBACK (toggle_toggled_sensitivity_positive), file_chooser);		
-		g_signal_connect (G_OBJECT (toggle), "toggled",	G_CALLBACK (toggle_toggled_sensitivity_positive), file_chooser_remote);		
-		g_signal_connect (G_OBJECT (toggle), "toggled", G_CALLBACK (logo_toggle_toggled), NULL);
-	}	
 	g_signal_connect (G_OBJECT (toggle), "toggled",
 		G_CALLBACK (greeter_toggle_toggled), NULL);
 }
@@ -3980,9 +3859,7 @@ setup_greeter_combobox (const char *name,
 
 	/* Set initial state of local style combo box. */
 	if (strcmp (ve_sure_string (key), MDM_KEY_GREETER) == 0) {
-
-		gboolean val = mdm_config_get_bool (MDM_KEY_BROWSER);
-
+		
 		if (strstr (greetval, "/mdmlogin") != NULL) {
 	
 			GtkWidget *local_plain_vbox;
@@ -3990,12 +3867,8 @@ setup_greeter_combobox (const char *name,
 
 			local_plain_vbox = glade_xml_get_widget (xml, "local_plain_properties_vbox");
 			local_themed_vbox = glade_xml_get_widget (xml, "local_themed_properties_vbox");
-			if (val == FALSE) {
-				gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_PLAIN);
-			}
-			else {
-				gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_PLAIN_WITH_FACE);	
-			}
+			
+            gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_PLAIN);				
 
 			gtk_widget_show (local_plain_vbox);
 			gtk_widget_hide (local_themed_vbox);
@@ -4006,13 +3879,9 @@ setup_greeter_combobox (const char *name,
 
 			local_plain_vbox = glade_xml_get_widget (xml, "local_plain_properties_vbox");
 			local_themed_vbox = glade_xml_get_widget (xml, "local_themed_properties_vbox");
-			if (val == FALSE) {
-				gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_THEMED);
-			}
-			else {
-				gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_THEMED_WITH_FACE);
-			}
-
+			
+			gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_THEMED);
+			
 			gtk_widget_hide (local_plain_vbox);
 			gtk_widget_show (local_themed_vbox);
 		}
@@ -6884,59 +6753,6 @@ background_filechooser_response (GtkWidget *file_chooser, gpointer data)
 	g_free (filename);
 }
 
-static void
-logo_filechooser_response (GtkWidget *file_chooser, gpointer data)
-{
-	GtkWidget *image_toggle;
-	gchar *filename;
-	gchar *key;
-	gchar *value;
-	
-	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
-	key      = g_object_get_data (G_OBJECT (file_chooser), "key");	
-	value    = mdm_config_get_string (key);
-	
-	/*
-	 * File_name should never be NULL, but something about this GUI causes
-	 * this function to get called on startup and filename=NULL even
-	 * though we set the filename in hookup_*_background.  Resetting the
-	 * value to the default in this case seems to work around this.
-	 */
-	if (filename == NULL && !ve_string_empty (value))
-		filename = g_strdup (value);
-
-	if (filename == NULL) {
-		value    = mdm_config_get_string (MDM_KEY_CHOOSER_BUTTON_LOGO);
-		if (!ve_string_empty (value))
-			filename = g_strdup (value);
-	}
-
-	if (gtk_notebook_get_current_page (GTK_NOTEBOOK (setup_notebook)) == LOCAL_TAB) {
-		image_toggle = glade_xml_get_widget (xml, "remote_logo_image_checkbutton");
-	} else {
-		image_toggle = glade_xml_get_widget (xml, "remote_logo_image_checkbutton");
-	}
-
-	if (filename != NULL &&
-	   (strcmp (ve_sure_string (value), ve_sure_string (filename)) != 0)) {
-		gchar *old_filename;
-						      
-		old_filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
-
-		if (strcmp (old_filename, filename) != 0)
-			gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (file_chooser),
-						       filename);
-		g_free (old_filename);
-
-		if (GTK_TOGGLE_BUTTON (image_toggle)->active == TRUE) {
-			mdm_setup_config_set_string (key,
-    	                                      (char *)ve_sure_string (filename));
-			update_greeters ();
-		}
-	}
-	g_free (filename);
-}
-
 static GdkPixbuf *
 create_preview_pixbuf (gchar *uri) 
 {
@@ -7155,77 +6971,6 @@ hookup_plain_behaviour (void)
 }
 
 static void
-hookup_plain_logo (void)	
-{
-	/* Initialize and hookup callbacks for plain logo settings */
-	GtkFileFilter *filter;
-	GtkWidget *logo_checkbutton;
-	GtkWidget *logo_button;
-	GtkWidget *image_preview;
-	gchar *logo_filename;
-
-	logo_checkbutton = glade_xml_get_widget (xml, "local_logo_image_checkbutton");
-	logo_button = glade_xml_get_widget (xml, "local_logo_image_chooserbutton");
-
-	gtk_file_chooser_set_use_preview_label (GTK_FILE_CHOOSER (logo_button),
-					        FALSE);
-
-	filter = gtk_file_filter_new ();
-	gtk_file_filter_set_name (filter, _("Images"));
-	gtk_file_filter_add_pixbuf_formats (filter);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (logo_button), filter);
-
-	filter = gtk_file_filter_new ();
-	gtk_file_filter_set_name (filter, _("All Files"));
-	gtk_file_filter_add_pattern(filter, "*");
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (logo_button), filter);
-
-	logo_filename = mdm_config_get_string (MDM_KEY_LOGO);
-
-	if (ve_string_empty (logo_filename)) {
-		logo_filename = mdm_config_get_string (MDM_KEY_CHOOSER_BUTTON_LOGO);
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (logo_checkbutton), 
-		                              FALSE);
-		gtk_widget_set_sensitive (logo_button, FALSE);
-	}
-	else {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (logo_checkbutton), 
-		                              TRUE);
-		gtk_widget_set_sensitive (logo_button, TRUE);
-	}
-
-	if (ve_string_empty (logo_filename)) {
-		gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (logo_button),
-			PIXMAPDIR);
-	} else {
-		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (logo_button),
-			logo_filename);
-	}
-
-	image_preview = gtk_image_new ();
-	if (!ve_string_empty (logo_filename)) {
-		gtk_image_set_from_pixbuf (GTK_IMAGE (image_preview),
-			create_preview_pixbuf (logo_filename));
-	}
-	gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (logo_button), 
-	                                     image_preview);
-	gtk_widget_set_size_request (image_preview, 128, -1);  
-	gtk_widget_show (image_preview); 
-
-	g_object_set_data (G_OBJECT (logo_button), "key", MDM_KEY_LOGO);
-	g_object_set_data (G_OBJECT (logo_checkbutton), "key", MDM_KEY_LOGO);
-
-	g_signal_connect (G_OBJECT (logo_checkbutton), "toggled", 
-	                  G_CALLBACK (logo_toggle_toggled), NULL);
-	g_signal_connect (G_OBJECT (logo_checkbutton), "toggled",
-	                  G_CALLBACK (toggle_toggled_sensitivity_positive), logo_button);
-        g_signal_connect (G_OBJECT (logo_button), "selection-changed",
-                          G_CALLBACK (logo_filechooser_response), logo_button);
-        g_signal_connect (G_OBJECT (logo_button), "update-preview",
-                          G_CALLBACK (update_image_preview), NULL);
-}
-
-static void
 setup_plain_menubar (void)
 {
 	/* Initialize and hookup callbacks for plain menu bar settings */
@@ -7263,9 +7008,6 @@ setup_local_plain_settings (void)
 
 	/* Plain behaviour settings */
 	hookup_plain_behaviour ();
-
-	/* Plain logo settings */
-	hookup_plain_logo ();	
 	
 	/* Plain menu bar settings */
 	setup_plain_menubar ();
@@ -7606,78 +7348,6 @@ hookup_remote_plain_behaviour (void)
 }
 
 static void
-hookup_remote_plain_logo (void)	
-{
-	/* Initialize and hookup callbacks for plain logo settings */
-	GtkFileFilter *filter;
-	GtkWidget *logo_checkbutton;
-	GtkWidget *logo_button;
-	GtkWidget *image_preview;
-	gchar *logo_filename;
-
-	logo_checkbutton = glade_xml_get_widget (xml, "remote_logo_image_checkbutton");
-	logo_button = glade_xml_get_widget (xml, "remote_logo_image_chooserbutton");
-
-	gtk_file_chooser_set_use_preview_label (GTK_FILE_CHOOSER (logo_button),
-					        FALSE);
-
-	filter = gtk_file_filter_new ();
-	gtk_file_filter_set_name (filter, _("Images"));
-	gtk_file_filter_add_pixbuf_formats (filter);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (logo_button), filter);
-
-	filter = gtk_file_filter_new ();
-	gtk_file_filter_set_name (filter, _("All Files"));
-	gtk_file_filter_add_pattern(filter, "*");
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (logo_button), filter);
-
-	logo_filename = mdm_config_get_string (MDM_KEY_LOGO);
-
-	if (ve_string_empty (logo_filename)) {
-		logo_filename = mdm_config_get_string (MDM_KEY_CHOOSER_BUTTON_LOGO);
-
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (logo_checkbutton), 
-		                              FALSE);
-		gtk_widget_set_sensitive (logo_button, FALSE);
-	}
-	else {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (logo_checkbutton), 
-		                              TRUE);
-		gtk_widget_set_sensitive (logo_button, TRUE);
-	}
-		
-        if (ve_string_empty (logo_filename))
-                gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (logo_button),
-                        PIXMAPDIR);
-        else
-                gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (logo_button), logo_filename);
-
-	image_preview = gtk_image_new ();
-	if (!ve_string_empty (logo_filename)) {
-		gtk_image_set_from_pixbuf (GTK_IMAGE (image_preview),
-			create_preview_pixbuf (logo_filename));
-	}
-	gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (logo_button), 
-	                                     image_preview);
-	gtk_widget_set_size_request (image_preview, 128, -1);  
-	gtk_widget_show (image_preview); 
-
-	g_object_set_data (G_OBJECT (logo_button), "key",
-	                   MDM_KEY_LOGO);
-	g_object_set_data (G_OBJECT (logo_checkbutton), "key",
-	                   MDM_KEY_LOGO);
-
-	g_signal_connect (G_OBJECT (logo_checkbutton), "toggled", 
-	                  G_CALLBACK (logo_toggle_toggled), NULL);
-	g_signal_connect (G_OBJECT (logo_checkbutton), "toggled",
-	                  G_CALLBACK (toggle_toggled_sensitivity_positive), logo_button);
-        g_signal_connect (G_OBJECT (logo_button), "selection-changed",
-                          G_CALLBACK (logo_filechooser_response), logo_button);
-        g_signal_connect (G_OBJECT (logo_button), "update-preview",
-                          G_CALLBACK (update_image_preview), NULL);
-}
-
-static void
 setup_remote_plain_settings (void)
 {
 	GtkSizeGroup *size_group;
@@ -7700,10 +7370,7 @@ setup_remote_plain_settings (void)
 
 	/* Plain behaviour settings */
 	hookup_remote_plain_behaviour ();
-	
-	/* Plain logo settings */
-	hookup_remote_plain_logo ();
-
+		
 	/* Remote welcome message settings */				
 	setup_remote_welcome_message ();			
 }
@@ -7874,15 +7541,13 @@ setup_gui (void)
 	glade_helper_tagify_label (xml, "themes_label", "b");
 	glade_helper_tagify_label (xml, "sounds_label", "b");
 	glade_helper_tagify_label (xml, "local_background_label", "b");
-	glade_helper_tagify_label (xml, "local_behaviour_label", "b");	
-	glade_helper_tagify_label (xml, "local_logo_label", "b");
+	glade_helper_tagify_label (xml, "local_behaviour_label", "b");		
 	glade_helper_tagify_label (xml, "local_menubar_label", "b");
 	glade_helper_tagify_label (xml, "local_welcome_message_label", "b");
 	glade_helper_tagify_label (xml, "label_welcome_note", "i");
 	glade_helper_tagify_label (xml, "label_welcome_note", "small");	
 	glade_helper_tagify_label (xml, "remote_plain_background_label", "b");
-	glade_helper_tagify_label (xml, "remote_behaviour_label", "b");
-	glade_helper_tagify_label (xml, "remote_logo_label", "b");
+	glade_helper_tagify_label (xml, "remote_behaviour_label", "b");	
 	glade_helper_tagify_label (xml, "remote_welcome_message_label", "b");
 	glade_helper_tagify_label (xml, "label_welcomeremote_note", "i");
 	glade_helper_tagify_label (xml, "label_welcomeremote_note", "small");

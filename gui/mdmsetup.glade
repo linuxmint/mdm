@@ -1471,10 +1471,8 @@
                               <widget class="GtkComboBox" id="local_greeter">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="items" translatable="yes">Plain
-Plain with face browser
-Themed
-Themed with face browser</property>
+                                <property name="items" translatable="yes">GTK
+Theme</property>
                               </widget>
                               <packing>
                                 <property name="expand">True</property>
@@ -1945,97 +1943,6 @@ Themed with face browser</property>
                                     <property name="expand">False</property>
                                     <property name="fill">False</property>
                                     <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkVBox" id="local_plain_logo_vbox">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="spacing">6</property>
-                                    <child>
-                                      <widget class="GtkLabel" id="local_logo_label">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="xalign">0</property>
-                                        <property name="label" translatable="yes">Logo</property>
-                                        <property name="use_markup">True</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkHBox" id="hbox102">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <child>
-                                          <widget class="GtkLabel" id="label169">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="label">    </property>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                            <property name="position">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkHBox" id="hbox104">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="spacing">12</property>
-                                            <child>
-                                              <widget class="GtkCheckButton" id="local_logo_image_checkbutton">
-                                                <property name="label" translatable="yes">I_mage:</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="receives_default">False</property>
-                                                <property name="tooltip" translatable="yes">Image file to display in the logo box. The file must be in an gdk-pixbuf supported format and it must be readable by the MDM user. If no file is specified the logo feature is disabled.</property>
-                                                <property name="use_action_appearance">False</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="draw_indicator">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkFileChooserButton" id="local_logo_image_chooserbutton">
-                                                <property name="visible">True</property>
-                                                <property name="sensitive">False</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="title" translatable="yes">Select Logo Image</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">True</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">True</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">1</property>
                                   </packing>
                                 </child>
                               </widget>
@@ -3207,96 +3114,6 @@ Same as Local</property>
                                     <property name="position">0</property>
                                   </packing>
                                 </child>
-                                <child>
-                                  <widget class="GtkVBox" id="remote_plain_logo_vbox">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="spacing">6</property>
-                                    <child>
-                                      <widget class="GtkLabel" id="remote_logo_label">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="xalign">0</property>
-                                        <property name="label" translatable="yes">Logo</property>
-                                        <property name="use_markup">True</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkHBox" id="hbox122">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <child>
-                                          <widget class="GtkLabel" id="label193">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="label">    </property>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                            <property name="position">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkHBox" id="remote_plain_logo_hbox">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="spacing">12</property>
-                                            <child>
-                                              <widget class="GtkCheckButton" id="remote_logo_image_checkbutton">
-                                                <property name="label" translatable="yes">I_mage:</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="receives_default">False</property>
-                                                <property name="tooltip" translatable="yes">Image file to display in the logo box. The file must be in an gdk-pixbuf supported format and it must be readable by the MDM user. If no file is specified the logo feature is disabled.</property>
-                                                <property name="use_action_appearance">False</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="draw_indicator">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkFileChooserButton" id="remote_logo_image_chooserbutton">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="title" translatable="yes">Select Logo Image</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">True</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">True</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                  <packing>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
@@ -3906,6 +3723,7 @@ Random from selected
                     <property name="label" translatable="yes">Remote</property>
                   </widget>
                   <packing>
+                    <property name="position">1</property>
                     <property name="tab_fill">False</property>
                     <property name="type">tab</property>
                   </packing>
