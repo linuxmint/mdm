@@ -125,8 +125,6 @@ static gint size_of_users = 0;
 static gchar *curuser = NULL;
 static gchar *session = NULL;
 
-static gint dont_savelang = GTK_RESPONSE_YES;
-
 /* back_prog_timeout_event_id: event of the timer.
  * back_prog_watcher_event_id: event of the background program watcher.
  * back_prog_pid: 	       process ID of the background program.
@@ -641,24 +639,6 @@ within_rect (GdkRectangle *rect, int x, int y)
 		x <= rect->x + rect->width &&
 		y >= rect->y &&
 		y <= rect->y + rect->height;
-}
-
-/* switch to the xinerama screen where x,y are */
-static void
-set_screen_to_pos (int x, int y)
-{
-	if ( ! within_rect (&mdm_wm_screen, x, y)) {
-		int i;
-		/* If not within mdm_wm_screen boundaries,
-		 * maybe we want to switch xinerama
-		 * screen */
-		for (i = 0; i < mdm_wm_screens; i++) {
-			if (within_rect (&mdm_wm_allscreens[i], x, y)) {
-				mdm_wm_set_screen (i);
-				break;
-			}
-		}
-	}
 }
 
 static void
@@ -2024,7 +2004,7 @@ mdm_login_gui_init (void)
     GtkTreeSelection *selection;
     GtkWidget *frame1, *frame2;
     GtkWidget *mbox, *menu, *menubar, *item;
-    GtkWidget *stack, *hline1, *hline2, *handle;
+    GtkWidget *stack, *hline1, *hline2;
     GtkWidget *bbox = NULL;
     GtkWidget /**help_button,*/ *button_box;
     gint i;        
