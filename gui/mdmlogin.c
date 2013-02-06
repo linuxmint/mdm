@@ -76,10 +76,6 @@ gboolean MdmHaltFound                       = FALSE;
 gboolean MdmRebootFound                     = FALSE;
 gboolean MdmAnyCustomCmdsFound              = FALSE;
 static gboolean disable_system_menu_buttons = FALSE;
-static gboolean MdmLockPosition             = FALSE;
-static gboolean MdmSetPosition              = FALSE;
-static gint MdmPositionX;
-static gint MdmPositionY;
 
 #define GTK_KEY "gtk-2.0"
 
@@ -602,11 +598,8 @@ static guint set_pos_id = 0;
 static gboolean
 set_pos_idle (gpointer data)
 {
-	if (MdmSetPosition) {
-		set_screen_pos (login, MdmPositionX, MdmPositionY);
-	} else {
-		mdm_wm_center_window (GTK_WINDOW (login));
-	}
+	mdm_wm_center_window (GTK_WINDOW (login));
+	
 	set_pos_id = 0;
 	return FALSE;
 }
@@ -802,16 +795,12 @@ dance (gpointer data)
 
 static gboolean
 evil (const char *user)
-{
-	static gboolean old_lock;
-
+{	
 	if (dance_handler == 0 &&
 	    /* do not translate */
 	    strcmp (user, "Start Dancing") == 0) {
 		mdm_common_setup_cursor (GDK_UMBRELLA);
-		dance_handler = g_timeout_add (50, dance, NULL);
-		old_lock = MdmLockPosition;
-		MdmLockPosition = TRUE;
+		dance_handler = g_timeout_add (50, dance, NULL);		
 		gtk_entry_set_text (GTK_ENTRY (entry), "");
 		return TRUE;
 	} else if (dance_handler != 0 &&
@@ -819,8 +808,7 @@ evil (const char *user)
 		   strcmp (user, "Stop Dancing") == 0) {
 		mdm_common_setup_cursor (GDK_LEFT_PTR);
 		g_source_remove (dance_handler);
-		dance_handler = 0;
-		MdmLockPosition = old_lock;
+		dance_handler = 0;		
 		mdm_wm_center_window (GTK_WINDOW (login));
 		gtk_entry_set_text (GTK_ENTRY (entry), "");
 		return TRUE;
@@ -1862,102 +1850,12 @@ browser_change_focus (GtkWidget *widget, GdkEventButton *event, gpointer data)
     gtk_widget_grab_focus (entry);	
 }
 
-static gboolean
-mdm_login_handle_pressed (GtkWidget *widget, GdkEventButton *event)
-{
-    gint xp, yp;
-    GdkModifierType mask;
-    CursorOffset *p;
-    GdkCursor *fleur_cursor;
-
-    if (login == NULL ||
-	login->window == NULL ||
-	event->type != GDK_BUTTON_PRESS ||
-	MdmLockPosition)
-	    return FALSE;
-
-    gdk_window_raise (login->window);
-
-    p = g_new0 (CursorOffset, 1);
-    g_object_set_data_full (G_OBJECT (widget), "offset", p,
-			    (GDestroyNotify)g_free);
-    
-    gdk_window_get_pointer (login->window, &xp, &yp, &mask);
-    p->x = xp;
-    p->y = yp;
-
-    gtk_grab_add (widget);
-    fleur_cursor = gdk_cursor_new (GDK_FLEUR);
-    gdk_pointer_grab (widget->window, TRUE,
-		      GDK_BUTTON_RELEASE_MASK |
-		      GDK_BUTTON_MOTION_MASK |
-		      GDK_POINTER_MOTION_HINT_MASK,
-		      NULL,
-		      fleur_cursor,
-		      GDK_CURRENT_TIME);
-    gdk_cursor_unref (fleur_cursor);
-    gdk_flush ();
-    
-    return TRUE;
-}
-
-static gboolean
-mdm_login_handle_released (GtkWidget *widget, GdkEventButton *event)
-{
-	gtk_grab_remove (widget);
-	gdk_pointer_ungrab (GDK_CURRENT_TIME);
-
-	g_object_set_data (G_OBJECT (widget), "offset", NULL);
-
-	return TRUE;
-}
-
-
-static gboolean
-mdm_login_handle_motion (GtkWidget *widget, GdkEventMotion *event)
-{
-    int xp, yp;
-    CursorOffset *p;
-    GdkModifierType mask;
-
-    p = g_object_get_data (G_OBJECT (widget), "offset");
-
-    if (p == NULL)
-	    return FALSE;
-
-    gdk_window_get_pointer (gdk_get_default_root_window (), &xp, &yp, &mask);
-
-    set_screen_to_pos (xp, yp);
-
-    MdmSetPosition = TRUE;
-    MdmPositionX = xp - p->x;
-    MdmPositionY = yp - p->y;
-
-    if (MdmPositionX < 0)
-	    MdmPositionX = 0;
-    if (MdmPositionY < 0)
-	    MdmPositionY = 0;
-
-    set_screen_pos (GTK_WIDGET (login), MdmPositionX, MdmPositionY);
-
-    return TRUE;
-}
-
 static GtkWidget *
 create_handle (void)
 {
 	GtkWidget *hbox, *w;
 
-	title_box = gtk_event_box_new ();
-	g_signal_connect (G_OBJECT (title_box), "button_press_event",
-			  G_CALLBACK (mdm_login_handle_pressed),
-			  NULL);
-	g_signal_connect (G_OBJECT (title_box), "button_release_event",
-			  G_CALLBACK (mdm_login_handle_released),
-			  NULL);
-	g_signal_connect (G_OBJECT (title_box), "motion_notify_event",
-			  G_CALLBACK (mdm_login_handle_motion),
-			  NULL);
+	title_box = gtk_event_box_new ();	
 
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_container_add (GTK_CONTAINER (title_box), hbox);
@@ -2205,12 +2103,7 @@ mdm_login_gui_init (void)
 			    (GDestroyNotify) gtk_widget_unref);
     gtk_widget_show (mbox);
     gtk_container_add (GTK_CONTAINER (frame2), mbox);
-
-    if (mdm_config_get_bool (MDM_KEY_TITLE_BAR)) {
-	    handle = create_handle ();
-	    gtk_box_pack_start (GTK_BOX (mbox), handle, FALSE, FALSE, 0);
-    }
-
+    
     menubar = gtk_menu_bar_new ();
     gtk_widget_ref (GTK_WIDGET (menubar));
     gtk_box_pack_start (GTK_BOX (mbox), menubar, FALSE, FALSE, 0);
@@ -2598,12 +2491,7 @@ mdm_login_gui_init (void)
 		  "resizable", TRUE,
 		  NULL);
     
-    /* do it now, and we'll also do it later */
-    if (MdmSetPosition) {
-	    set_screen_pos (login, MdmPositionX, MdmPositionY);
-    } else {
-	    mdm_wm_center_window (GTK_WINDOW (login));
-    }
+    mdm_wm_center_window (GTK_WINDOW (login));    
 
     g_signal_connect (G_OBJECT (login), "focus_in_event", 
 		      G_CALLBACK (mdm_login_focus_in),
@@ -2854,16 +2742,11 @@ mdm_read_config (void)
 	mdm_config_get_bool   (MDM_KEY_SHOW_XTERM_FAILSAFE);
 	mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN);
 	mdm_config_get_bool   (MDM_KEY_SYSTEM_MENU);
-	mdm_config_get_bool   (MDM_KEY_TIMED_LOGIN_ENABLE);
-	mdm_config_get_bool   (MDM_KEY_TITLE_BAR);
+	mdm_config_get_bool   (MDM_KEY_TIMED_LOGIN_ENABLE);	
 	mdm_config_get_bool   (MDM_KEY_ADD_GTK_MODULES);
 
-	/* Keys not to include in reread_config */
-	mdm_config_get_bool   (MDM_KEY_LOCK_POSITION);
-	mdm_config_get_int    (MDM_KEY_POSITION_X);
-	mdm_config_get_int    (MDM_KEY_POSITION_Y);
-	mdm_config_get_string (MDM_KEY_PRE_FETCH_PROGRAM);
-	mdm_config_get_bool   (MDM_KEY_SET_POSITION);
+	/* Keys not to include in reread_config */	
+	mdm_config_get_string (MDM_KEY_PRE_FETCH_PROGRAM);	
 
 	mdmcomm_comm_bulk_stop ();
 }
@@ -2880,15 +2763,6 @@ mdm_reread_config (int sig, gpointer data)
 	mdmcomm_comm_bulk_start ();
 
 	/* reparse config stuff here.  At least the ones we care about */
-	/*
-	 * We don't want to reload MDM_KEY_POSITION_X, MDM_KEY_POSITION_Y
-	 * MDM_KEY_LOCK_POSITION, and MDM_KEY_SET_POSITION since we don't
-	 * want to move the window or lock its position just because the
-	 * config default changed.  It would be too confusing to have the
-	 * window location move around.  These changes can wait until the
-	 * next time mdmlogin is launched.
-	 */
-
 	/* FIXME: We should update these on the fly rather than just
          * restarting */
 	/* Also we may not need to check ALL those keys but just a few */
@@ -2936,8 +2810,7 @@ mdm_reread_config (int sig, gpointer data)
 	    mdm_config_reload_bool   (MDM_KEY_SHOW_LAST_SESSION) ||
 	    mdm_config_reload_bool   (MDM_KEY_SHOW_XTERM_FAILSAFE) ||
 	    mdm_config_reload_bool   (MDM_KEY_SYSTEM_MENU) ||
-	    mdm_config_reload_bool   (MDM_KEY_TIMED_LOGIN_ENABLE) ||
-	    mdm_config_reload_bool   (MDM_KEY_TITLE_BAR) ||
+	    mdm_config_reload_bool   (MDM_KEY_TIMED_LOGIN_ENABLE) ||	    
 	    mdm_config_reload_bool   (MDM_KEY_ADD_GTK_MODULES)) {
 
 		/* Set busy cursor */
@@ -3073,11 +2946,7 @@ main (int argc, char *argv[])
 
     /* Read all configuration at once, so the values get cached */
     mdm_read_config ();
-
-    MdmLockPosition = mdm_config_get_bool (MDM_KEY_LOCK_POSITION);
-    MdmSetPosition  = mdm_config_get_bool (MDM_KEY_SET_POSITION);
-    MdmPositionX    = mdm_config_get_int  (MDM_KEY_POSITION_X);
-    MdmPositionY    = mdm_config_get_int  (MDM_KEY_POSITION_Y);
+    
     setlocale (LC_ALL, "");
 
     mdm_wm_screen_init (mdm_config_get_int (MDM_KEY_XINERAMA_SCREEN));
@@ -3378,11 +3247,7 @@ main (int argc, char *argv[])
     gtk_widget_queue_resize (login);
     gtk_widget_show_now (login);
 
-    if (MdmSetPosition) {
-	    set_screen_pos (login, MdmPositionX, MdmPositionY);
-    } else {
-	    mdm_wm_center_window (GTK_WINDOW (login));
-    }
+    mdm_wm_center_window (GTK_WINDOW (login));    
 
     /* can it ever happen that it'd be NULL here ??? */
     if G_UNLIKELY (login->window != NULL) {

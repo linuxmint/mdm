@@ -1740,201 +1740,10 @@ Theme</property>
                                             <property name="position">0</property>
                                           </packing>
                                         </child>
-                                        <child>
-                                          <widget class="GtkHBox" id="hbox9934">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="spacing">12</property>
-                                            <child>
-                                              <widget class="GtkLabel" id="label507">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="label"> </property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkCheckButton" id="local_title_bar_checkbutton">
-                                                <property name="label" translatable="yes">Sh_ow title bar</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="receives_default">False</property>
-                                                <property name="tooltip" translatable="yes">Display the title bar in the greeter.</property>
-                                                <property name="use_action_appearance">False</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="draw_indicator">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkHBox" id="hbox9935">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="spacing">12</property>
-                                            <child>
-                                              <widget class="GtkLabel" id="label508">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="label">     </property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkCheckButton" id="local_lock_pos_checkbox">
-                                                <property name="label" translatable="yes">Loc_k position of the window</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="receives_default">False</property>
-                                                <property name="tooltip" translatable="yes">The position of the login window cannot be changed.</property>
-                                                <property name="use_action_appearance">False</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="draw_indicator">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">2</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkHBox" id="hbox9936">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="spacing">12</property>
-                                            <child>
-                                              <widget class="GtkLabel" id="label509">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="label"> </property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkCheckButton" id="local_set_pos_checkbox">
-                                                <property name="label" translatable="yes">Set positio_n of the window:</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="receives_default">False</property>
-                                                <property name="tooltip" translatable="yes">The position of the login window is determined by Position X / Position Y.</property>
-                                                <property name="use_action_appearance">False</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="draw_indicator">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkLabel" id="label510">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="xalign">0</property>
-                                                <property name="label" translatable="yes">_X coordinate</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="mnemonic_widget">local_posx_spinbutton</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">2</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkSpinButton" id="local_posx_spinbutton">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="tooltip" translatable="yes">The horizontal position of the login window.</property>
-                                                <property name="primary_icon_activatable">False</property>
-                                                <property name="secondary_icon_activatable">False</property>
-                                                <property name="primary_icon_sensitive">True</property>
-                                                <property name="secondary_icon_sensitive">True</property>
-                                                <property name="adjustment">1 0 100 1 10 0</property>
-                                                <property name="climb_rate">1</property>
-                                                <property name="numeric">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">3</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkLabel" id="label511">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="xalign">0</property>
-                                                <property name="label" translatable="yes">_Y coordinate</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="mnemonic_widget">local_posy_spinbutton</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">4</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkSpinButton" id="local_posy_spinbutton">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="tooltip" translatable="yes">The vertical position of the login window.</property>
-                                                <property name="primary_icon_activatable">False</property>
-                                                <property name="secondary_icon_activatable">False</property>
-                                                <property name="primary_icon_sensitive">True</property>
-                                                <property name="secondary_icon_sensitive">True</property>
-                                                <property name="adjustment">1 0 100 1 10 0</property>
-                                                <property name="climb_rate">1</property>
-                                                <property name="numeric">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">5</property>
-                                              </packing>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">3</property>
-                                          </packing>
-                                        </child>
                                       </widget>
                                       <packing>
-                                        <property name="expand">True</property>
-                                        <property name="fill">True</property>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
                                         <property name="position">4</property>
                                       </packing>
                                     </child>
@@ -2005,6 +1814,7 @@ Random from selected
                                     <child>
                                       <widget class="GtkScrolledWindow" id="local_theme_scrolled_window">
                                         <property name="width_request">350</property>
+                                        <property name="height_request">326</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="hscrollbar_policy">never</property>
@@ -2232,8 +2042,8 @@ Random from selected
                         </child>
                       </widget>
                       <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
@@ -2909,201 +2719,10 @@ Same as Local</property>
                                             <property name="position">0</property>
                                           </packing>
                                         </child>
-                                        <child>
-                                          <widget class="GtkHBox" id="hbox9938">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="spacing">12</property>
-                                            <child>
-                                              <widget class="GtkLabel" id="label513">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="label"> </property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkCheckButton" id="remote_title_bar_checkbutton">
-                                                <property name="label" translatable="yes">Sh_ow title bar</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="receives_default">False</property>
-                                                <property name="tooltip" translatable="yes">Display the title bar in the greeter.</property>
-                                                <property name="use_action_appearance">False</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="draw_indicator">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkHBox" id="hbox9939">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="spacing">12</property>
-                                            <child>
-                                              <widget class="GtkLabel" id="label514">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="label">     </property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkCheckButton" id="remote_lock_pos_checkbox">
-                                                <property name="label" translatable="yes">Loc_k position of the window</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="receives_default">False</property>
-                                                <property name="tooltip" translatable="yes">The position of the login window cannot be changed.</property>
-                                                <property name="use_action_appearance">False</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="draw_indicator">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">2</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkHBox" id="hbox9940">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="spacing">12</property>
-                                            <child>
-                                              <widget class="GtkLabel" id="label515">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="label"> </property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkCheckButton" id="remote_set_pos_checkbox">
-                                                <property name="label" translatable="yes">Set positio_n of the window:</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="receives_default">False</property>
-                                                <property name="tooltip" translatable="yes">The position of the login window is determined by Position X / Position Y.</property>
-                                                <property name="use_action_appearance">False</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="draw_indicator">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkLabel" id="label516">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="xalign">0</property>
-                                                <property name="label" translatable="yes">_X coordinate</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="mnemonic_widget">remote_posx_spinbutton</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">2</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkSpinButton" id="remote_posx_spinbutton">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="tooltip" translatable="yes">The horizontal position of the login window.</property>
-                                                <property name="primary_icon_activatable">False</property>
-                                                <property name="secondary_icon_activatable">False</property>
-                                                <property name="primary_icon_sensitive">True</property>
-                                                <property name="secondary_icon_sensitive">True</property>
-                                                <property name="adjustment">1 0 3000 1 10 0</property>
-                                                <property name="climb_rate">1</property>
-                                                <property name="numeric">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">3</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkLabel" id="label517">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="xalign">0</property>
-                                                <property name="label" translatable="yes">_Y coordinate</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="mnemonic_widget">remote_posy_spinbutton</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">4</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkSpinButton" id="remote_posy_spinbutton">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="tooltip" translatable="yes">The vertical position of the login window.</property>
-                                                <property name="primary_icon_activatable">False</property>
-                                                <property name="secondary_icon_activatable">False</property>
-                                                <property name="primary_icon_sensitive">True</property>
-                                                <property name="secondary_icon_sensitive">True</property>
-                                                <property name="adjustment">1 0 3000 1 10 0</property>
-                                                <property name="climb_rate">1</property>
-                                                <property name="numeric">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">5</property>
-                                              </packing>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">3</property>
-                                          </packing>
-                                        </child>
                                       </widget>
                                       <packing>
-                                        <property name="expand">True</property>
-                                        <property name="fill">True</property>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
                                         <property name="position">4</property>
                                       </packing>
                                     </child>
@@ -3179,6 +2798,7 @@ Random from selected
                                         <child>
                                           <widget class="GtkScrolledWindow" id="scrolledwindow13">
                                             <property name="width_request">350</property>
+                                            <property name="height_request">326</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="hscrollbar_policy">never</property>
@@ -3310,117 +2930,6 @@ Random from selected
                                                 <property name="position">1</property>
                                               </packing>
                                             </child>
-                                            <child>
-                                              <widget class="GtkVBox" id="vbox93">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="spacing">12</property>
-                                                <child>
-                                                  <widget class="GtkVBox" id="vbox94">
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">False</property>
-                                                    <property name="spacing">3</property>
-                                                    <child>
-                                                      <widget class="GtkLabel" id="label211">
-                                                        <property name="visible">True</property>
-                                                        <property name="can_focus">False</property>
-                                                        <property name="xalign">0</property>
-                                                        <property name="label" translatable="yes">Copyright:</property>
-                                                      </widget>
-                                                      <packing>
-                                                        <property name="expand">False</property>
-                                                        <property name="fill">False</property>
-                                                        <property name="position">0</property>
-                                                      </packing>
-                                                    </child>
-                                                    <child>
-                                                      <widget class="GtkScrolledWindow" id="scrolledwindow14">
-                                                        <property name="visible">True</property>
-                                                        <property name="can_focus">True</property>
-                                                        <property name="hscrollbar_policy">never</property>
-                                                        <property name="vscrollbar_policy">never</property>
-                                                        <child>
-                                                          <widget class="GtkTextView" id="gg_copyright_text_view_remote">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="editable">False</property>
-                                                            <property name="wrap_mode">word</property>
-                                                            <property name="cursor_visible">False</property>
-                                                          </widget>
-                                                        </child>
-                                                      </widget>
-                                                      <packing>
-                                                        <property name="expand">False</property>
-                                                        <property name="fill">False</property>
-                                                        <property name="position">1</property>
-                                                      </packing>
-                                                    </child>
-                                                  </widget>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="pack_type">end</property>
-                                                    <property name="position">0</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <widget class="GtkVBox" id="vbox95">
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">False</property>
-                                                    <property name="spacing">3</property>
-                                                    <child>
-                                                      <widget class="GtkLabel" id="label212">
-                                                        <property name="visible">True</property>
-                                                        <property name="can_focus">False</property>
-                                                        <property name="xalign">0</property>
-                                                        <property name="label" translatable="yes">Author:</property>
-                                                      </widget>
-                                                      <packing>
-                                                        <property name="expand">False</property>
-                                                        <property name="fill">False</property>
-                                                        <property name="position">0</property>
-                                                      </packing>
-                                                    </child>
-                                                    <child>
-                                                      <widget class="GtkScrolledWindow" id="scrolledwindow15">
-                                                        <property name="visible">True</property>
-                                                        <property name="can_focus">True</property>
-                                                        <property name="hscrollbar_policy">never</property>
-                                                        <property name="vscrollbar_policy">never</property>
-                                                        <child>
-                                                          <widget class="GtkTextView" id="gg_author_text_view_remote">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="editable">False</property>
-                                                            <property name="wrap_mode">word</property>
-                                                            <property name="cursor_visible">False</property>
-                                                          </widget>
-                                                        </child>
-                                                      </widget>
-                                                      <packing>
-                                                        <property name="expand">False</property>
-                                                        <property name="fill">False</property>
-                                                        <property name="position">1</property>
-                                                      </packing>
-                                                    </child>
-                                                  </widget>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="pack_type">end</property>
-                                                    <property name="position">1</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <placeholder/>
-                                                </child>
-                                              </widget>
-                                              <packing>
-                                                <property name="expand">True</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">2</property>
-                                              </packing>
-                                            </child>
                                           </widget>
                                           <packing>
                                             <property name="expand">False</property>
@@ -3517,15 +3026,15 @@ Random from selected
                             </child>
                           </widget>
                           <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
                       </widget>
                       <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
                         <property name="position">0</property>
                       </packing>
                     </child>

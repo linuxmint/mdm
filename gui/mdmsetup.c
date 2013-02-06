@@ -2113,67 +2113,6 @@ setup_notify_toggle (const char *name,
 		g_signal_connect (G_OBJECT (toggle), "toggled",
 		                  G_CALLBACK (toggle_toggled), toggle);		
 	}
-	else if (strcmp ("local_set_pos_checkbox", ve_sure_string (name)) == 0) {
-		
-		GtkWidget *posx;
-		GtkWidget *posy;
-
-		posx =  glade_xml_get_widget (xml, "local_posx_spinbutton");
-
-		posy =  glade_xml_get_widget (xml, "local_posy_spinbutton");
-
-		gtk_widget_set_sensitive (posx, val);
-		gtk_widget_set_sensitive (posy, val);
-
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled), toggle);	
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled_sensitivity_positive), posx);
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled_sensitivity_positive), posy);
-	}
-	else if (strcmp ("remote_set_pos_checkbox", ve_sure_string (name)) == 0) {
-		
-		GtkWidget *posx;
-		GtkWidget *posy;
-
-		posx =  glade_xml_get_widget (xml, "remote_posx_spinbutton");
-		posy =  glade_xml_get_widget (xml, "remote_posy_spinbutton");
-
-		gtk_widget_set_sensitive (posx, val);
-		gtk_widget_set_sensitive (posy, val);
-		
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled), toggle);	
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled_sensitivity_positive), posx);
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled_sensitivity_positive), posy);
-	}
-	else if (strcmp ("local_title_bar_checkbutton", ve_sure_string (name)) == 0) {
-		GtkWidget *lockpos;
-		
-		lockpos = glade_xml_get_widget (xml, "local_lock_pos_checkbox");
-
-		gtk_widget_set_sensitive (lockpos, val);
-		
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled), toggle);	
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled_sensitivity_positive), lockpos);
-	}
-	else if (strcmp ("remote_title_bar_checkbutton", ve_sure_string (name)) == 0) {
-		GtkWidget *lockpos;
-		
-		lockpos = glade_xml_get_widget (xml, "remote_lock_pos_checkbox");
-
-		gtk_widget_set_sensitive (lockpos, val);
-		
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled), toggle);	
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled_sensitivity_positive), lockpos);
-	}
 	else if (strcmp ("disallow_tcp", ve_sure_string (name)) == 0) {
 		GtkWidget *nfs_cookies;
 		
@@ -6951,23 +6890,7 @@ static void
 hookup_plain_behaviour (void)
 {
 	/* Setup qiver */
-	setup_notify_toggle ("local_quiver_checkbox", MDM_KEY_QUIVER);
-	
-	/* Setup show title bar */
-	setup_notify_toggle ("local_title_bar_checkbutton", MDM_KEY_TITLE_BAR);
-	
-	/* Setup lock position */
-	setup_notify_toggle ("local_lock_pos_checkbox", MDM_KEY_LOCK_POSITION);
-
-	/* Setup set position */
-	setup_notify_toggle ("local_set_pos_checkbox", MDM_KEY_SET_POSITION);
-
-	/* Setup positionX */
-	setup_intspin ("local_posx_spinbutton", MDM_KEY_POSITION_X);
-
-	/* Setup positionX */
-	setup_intspin ("local_posy_spinbutton", MDM_KEY_POSITION_Y);
-	
+	setup_notify_toggle ("local_quiver_checkbox", MDM_KEY_QUIVER);    
 }
 
 static void
@@ -7329,22 +7252,7 @@ static void
 hookup_remote_plain_behaviour (void)
 {
 	/* Setup qiver */
-	setup_notify_toggle ("remote_quiver_checkbox", MDM_KEY_QUIVER);
-	
-	/* Setup show title bar */
-	setup_notify_toggle ("remote_title_bar_checkbutton", MDM_KEY_TITLE_BAR);
-	
-	/* Setup lock position */
-	setup_notify_toggle ("remote_lock_pos_checkbox", MDM_KEY_LOCK_POSITION);
-
-	/* Setup set position */
-	setup_notify_toggle ("remote_set_pos_checkbox", MDM_KEY_SET_POSITION);
-
-	/* Setup positionX */
-	setup_intspin ("remote_posx_spinbutton", MDM_KEY_POSITION_X);
-
-	/* Setup positionX */
-	setup_intspin ("remote_posy_spinbutton", MDM_KEY_POSITION_Y);	
+	setup_notify_toggle ("remote_quiver_checkbox", MDM_KEY_QUIVER);    
 }
 
 static void

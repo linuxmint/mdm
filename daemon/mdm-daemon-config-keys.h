@@ -160,7 +160,6 @@ G_BEGIN_DECLS
 #define MDM_KEY_CONFIGURATOR "daemon/Configurator=" SBINDIR "/mdmsetup --disable-sound --disable-crash-dialog"
 #define MDM_KEY_CONFIG_AVAILABLE "greeter/ConfigAvailable=true"
 #define MDM_KEY_CHOOSER_BUTTON "greeter/ChooserButton=true"
-#define MDM_KEY_TITLE_BAR "greeter/TitleBar=true"
 #define MDM_KEY_DEFAULT_WELCOME "greeter/DefaultWelcome="
 #define MDM_KEY_DEFAULT_REMOTE_WELCOME "greeter/DefaultRemoteWelcome="
 #define MDM_KEY_WELCOME "greeter/Welcome=" MDM_DEFAULT_WELCOME_MSG
@@ -176,10 +175,6 @@ G_BEGIN_DECLS
 #define MDM_KEY_BACKGROUND_TYPE "greeter/BackgroundType=2"
 #define MDM_KEY_BACKGROUND_SCALE_TO_FIT "greeter/BackgroundScaleToFit=true"
 #define MDM_KEY_BACKGROUND_REMOTE_ONLY_COLOR "greeter/BackgroundRemoteOnlyColor=true"
-#define MDM_KEY_LOCK_POSITION "greeter/LockPosition=false"
-#define MDM_KEY_SET_POSITION "greeter/SetPosition=false"
-#define MDM_KEY_POSITION_X "greeter/PositionX=0"
-#define MDM_KEY_POSITION_Y "greeter/PositionY=0"
 #define MDM_KEY_USE_24_CLOCK "greeter/Use24Clock=auto"
 #define MDM_KEY_ENTRY_CIRCLES "greeter/UseCirclesInEntry=false"
 #define MDM_KEY_ENTRY_INVISIBLE "greeter/UseInvisibleInEntry=false"

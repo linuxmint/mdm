@@ -359,21 +359,6 @@ GtkTheme=Clearlooks
 #MaxIconHeight=128
 
 [greeter]
-# The following options for setting titlebar and setting window position are
-# only useful for the standard login (mdmlogin) and are not used by the
-# themed login (mdmgreeter).
-#
-# The standard login has a title bar that the user can move.
-#TitleBar=true
-# Don't allow user to move the standard login window.  Only makes sense if
-# TitleBar is on.
-#LockPosition=false
-# Set a position for the standard login window rather then just centering the
-# window.  If you enter negative values for the position it is taken as an
-# offset from the right or bottom edge.
-#SetPosition=false
-#PositionX=0
-#PositionY=0
 
 # The default picture in the browser.
 DefaultFace=@pixmapdir@/nobody.png
