@@ -48,6 +48,8 @@
 #include "mdm-socket-protocol.h"
 #include "mdm-daemon-config-keys.h"
 
+#include <webkit/webkit.h>
+
 /*
  * Set the DOING_MDM_DEVELOPMENT env variable if you aren't running
  * within the protocol
@@ -2293,9 +2295,22 @@ mdm_login_gui_init (void)
 		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 		      (GtkAttachOptions) (GTK_FILL), 0, 0);
 		      
-	//PUT THE WEBKIT STUFF HERE
-	
+	//PUT THE WEBKIT STUFF HERE	
+    // Create a browser instance
+    WebKitWebView *webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
 
+    // Create a scrollable area, and put the browser instance into it
+    GtkWidget *scrolledWindow = gtk_scrolled_window_new(NULL, NULL);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledWindow),
+            GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_container_add(GTK_CONTAINER(scrolledWindow), GTK_WIDGET(webView));
+    
+    // Load a web page into the browser instance
+    webkit_web_view_load_uri(webView, "http://www.webkitgtk.org/");
+
+	gtk_table_attach (GTK_TABLE (stack), scrolledWindow, 0, 1, 1, 2,
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+		      (GtkAttachOptions) (GTK_FILL), 0, 0);
 
     hline1 = gtk_hseparator_new ();
     gtk_widget_ref (hline1);

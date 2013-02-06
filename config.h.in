@@ -89,9 +89,6 @@
 /* Define to use SVR3.2 statfs to get filesystem type */
 #undef FSTYPE_USG_STATFS
 
-/* pid file */
-#undef MDM_PID_FILE
-
 /* Define to 1 if you have the `bind_textdomain_codeset' function. */
 #undef HAVE_BIND_TEXTDOMAIN_CODESET
 
@@ -275,6 +272,13 @@
 /* Define to 1 if you have the `_NSGetEnviron' function. */
 #undef HAVE__NSGETENVIRON
 
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LT_OBJDIR
+
+/* pid file */
+#undef MDM_PID_FILE
+
 /* Path to the nologin binary */
 #undef NOLOGIN
 
@@ -292,6 +296,9 @@
 
 /* Define to the one symbol short name of this package. */
 #undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION

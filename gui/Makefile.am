@@ -26,7 +26,8 @@ INCLUDES = \
 	-I$(top_srcdir)/daemon				\
 	-I$(top_srcdir)/common				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" 	\
-	$(GUI_CFLAGS)
+	$(GUI_CFLAGS) \
+	$(WEBKIT_CFLAGS) 
 
 #
 #	-DG_DISABLE_DEPRECATED				\
@@ -155,6 +156,7 @@ mdmwebkit_LDADD = \
 	libmdmcommon.a		\
 	libmdmgreeter.a		\
 	$(GUING_LIBS)		\
+	$(WEBKIT_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
 	$(GOBJECT_LIBS)		\
