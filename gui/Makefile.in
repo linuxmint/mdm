@@ -34,7 +34,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-libexec_PROGRAMS = @MDMCHOOSER@ mdmlogin$(EXEEXT)
+libexec_PROGRAMS = @MDMCHOOSER@ mdmlogin$(EXEEXT) mdmwebkit$(EXEEXT)
 sbin_PROGRAMS = mdmsetup$(EXEEXT)
 bin_PROGRAMS = mdmphotosetup$(EXEEXT) @MDMXNESTCHOOSER@ \
 	mdmflexiserver$(EXEEXT) mdmdynamic$(EXEEXT)
@@ -125,6 +125,16 @@ mdmlogin_DEPENDENCIES = $(am__DEPENDENCIES_1) libmdmwm.a \
 	$(top_builddir)/common/libmdmcommon.a $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
+am_mdmwebkit_OBJECTS = mdmwebkit.$(OBJEXT)
+mdmwebkit_OBJECTS = $(am_mdmwebkit_OBJECTS)
+mdmwebkit_DEPENDENCIES = $(am__DEPENDENCIES_1) libmdmwm.a \
+	libmdmcommon.a libmdmgreeter.a $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(top_builddir)/common/libmdmcommon.a $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 am_mdmphotosetup_OBJECTS = mdmphotosetup.$(OBJEXT)
 mdmphotosetup_OBJECTS = $(am_mdmphotosetup_OBJECTS)
 mdmphotosetup_DEPENDENCIES = libmdmcommon.a $(am__DEPENDENCIES_1) \
@@ -161,12 +171,12 @@ LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 SOURCES = $(libmdmcommon_a_SOURCES) $(libmdmgreeter_a_SOURCES) \
 	$(libmdmwm_a_SOURCES) $(mdmXnestchooser_SOURCES) \
 	$(mdmchooser_SOURCES) $(mdmdynamic_SOURCES) \
-	$(mdmflexiserver_SOURCES) $(mdmlogin_SOURCES) \
+	$(mdmflexiserver_SOURCES) $(mdmlogin_SOURCES) $(mdmwebkit_SOURCES) \
 	$(mdmphotosetup_SOURCES) $(mdmsetup_SOURCES)
 DIST_SOURCES = $(libmdmcommon_a_SOURCES) $(libmdmgreeter_a_SOURCES) \
 	$(libmdmwm_a_SOURCES) $(mdmXnestchooser_SOURCES) \
 	$(mdmchooser_SOURCES) $(mdmdynamic_SOURCES) \
-	$(mdmflexiserver_SOURCES) $(mdmlogin_SOURCES) \
+	$(mdmflexiserver_SOURCES) $(mdmlogin_SOURCES) $(mdmwebkit_SOURCES) \
 	$(mdmphotosetup_SOURCES) $(mdmsetup_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
@@ -509,6 +519,9 @@ mdmchooser_SOURCES = \
 mdmlogin_SOURCES = \
 	mdmlogin.c
 
+mdmwebkit_SOURCES = \
+	mdmwebkit.c
+	
 mdmsetup_SOURCES = \
 	mdmsession.c		\
 	mdmsession.h		\
@@ -537,6 +550,25 @@ mdmchooser_LDADD = \
 	$(NULL)
 
 mdmlogin_LDADD = \
+	$(EXTRA_GREETER_LIBS)	\
+	libmdmwm.a		\
+	libmdmcommon.a		\
+	libmdmgreeter.a		\
+	$(GUING_LIBS)		\
+	$(INTLLIBS)		\
+	$(GLIB_LIBS)		\
+	$(GOBJECT_LIBS)		\
+	$(GDK_LIBS)		\
+	$(PANGO_LIBS)		\
+	$(GDKPIXBUF_LIBS)	\
+	$(top_builddir)/common/libmdmcommon.a \
+	$(X_EXTRA_LIBS)		\
+	$(XINERAMA_LIBS)	\
+	$(X_LIBS)		\
+	-lX11			\
+	$(NULL)
+
+mdmwebkit_LDADD = \
 	$(EXTRA_GREETER_LIBS)	\
 	libmdmwm.a		\
 	libmdmcommon.a		\
@@ -815,6 +847,9 @@ mdmflexiserver$(EXEEXT): $(mdmflexiserver_OBJECTS) $(mdmflexiserver_DEPENDENCIES
 mdmlogin$(EXEEXT): $(mdmlogin_OBJECTS) $(mdmlogin_DEPENDENCIES) 
 	@rm -f mdmlogin$(EXEEXT)
 	$(LINK) $(mdmlogin_OBJECTS) $(mdmlogin_LDADD) $(LIBS)
+mdmwebkit$(EXEEXT): $(mdmwebkit_OBJECTS) $(mdmwebkit_DEPENDENCIES) 
+	@rm -f mdmwebkit$(EXEEXT)
+	$(LINK) $(mdmwebkit_OBJECTS) $(mdmwebkit_LDADD) $(LIBS)
 mdmphotosetup$(EXEEXT): $(mdmphotosetup_OBJECTS) $(mdmphotosetup_DEPENDENCIES) 
 	@rm -f mdmphotosetup$(EXEEXT)
 	$(LINK) $(mdmphotosetup_OBJECTS) $(mdmphotosetup_LDADD) $(LIBS)
@@ -838,6 +873,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmgreeter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmlanguages.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmlogin.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmwebkit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmphotosetup.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmsession.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mdmsetup-mdmsession.Po@am__quote@

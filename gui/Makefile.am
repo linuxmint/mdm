@@ -40,7 +40,8 @@ noinst_LIBRARIES = libmdmwm.a libmdmcommon.a libmdmgreeter.a
 
 libexec_PROGRAMS = \
 	@MDMCHOOSER@ 		\
-	mdmlogin
+	mdmlogin			\
+	mdmwebkit
 
 sbin_PROGRAMS = \
 	mdmsetup
@@ -99,6 +100,9 @@ mdmchooser_SOURCES = \
 mdmlogin_SOURCES = \
 	mdmlogin.c
 
+mdmwebkit_SOURCES = \
+	mdmwebkit.c
+
 mdmsetup_SOURCES = \
 	mdmsession.c		\
 	mdmsession.h		\
@@ -127,6 +131,25 @@ mdmchooser_LDADD = \
 	$(NULL)
 
 mdmlogin_LDADD = \
+	$(EXTRA_GREETER_LIBS)	\
+	libmdmwm.a		\
+	libmdmcommon.a		\
+	libmdmgreeter.a		\
+	$(GUING_LIBS)		\
+	$(INTLLIBS)		\
+	$(GLIB_LIBS)		\
+	$(GOBJECT_LIBS)		\
+	$(GDK_LIBS)		\
+	$(PANGO_LIBS)		\
+	$(GDKPIXBUF_LIBS)	\
+	$(top_builddir)/common/libmdmcommon.a \
+	$(X_EXTRA_LIBS)		\
+	$(XINERAMA_LIBS)	\
+	$(X_LIBS)		\
+	-lX11			\
+	$(NULL)
+
+mdmwebkit_LDADD = \
 	$(EXTRA_GREETER_LIBS)	\
 	libmdmwm.a		\
 	libmdmcommon.a		\
