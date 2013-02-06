@@ -2612,11 +2612,10 @@ setup_background (void)
 				add_color_to_pb (pb, &color);
 			}
 		}
-		if (mdm_config_get_bool (MDM_KEY_BACKGROUND_SCALE_TO_FIT)) {
-			GdkPixbuf *spb = render_scaled_back (pb);
-			g_object_unref (G_OBJECT (pb));
-			pb = spb;
-		}
+		
+		GdkPixbuf *spb = render_scaled_back (pb);
+		g_object_unref (G_OBJECT (pb));
+		pb = spb;		
 
 		/* paranoia */
 		if (pb != NULL) {
@@ -2723,9 +2722,7 @@ mdm_read_config (void)
 
 	mdm_config_get_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_REMOTE_ROOT);
-	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);
-	mdm_config_get_bool   (MDM_KEY_BACKGROUND_REMOTE_ONLY_COLOR);
-	mdm_config_get_bool   (MDM_KEY_BACKGROUND_SCALE_TO_FIT);	
+	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);	
 	mdm_config_get_bool   (MDM_KEY_CHOOSER_BUTTON);
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME);
@@ -2863,9 +2860,7 @@ mdm_reread_config (int sig, gpointer data)
 
 	if (mdm_config_reload_string (MDM_KEY_BACKGROUND_IMAGE) ||
 	    mdm_config_reload_string (MDM_KEY_BACKGROUND_COLOR) ||
-	    mdm_config_reload_int    (MDM_KEY_BACKGROUND_TYPE) ||
-	    mdm_config_reload_bool   (MDM_KEY_BACKGROUND_SCALE_TO_FIT) ||
-	    mdm_config_reload_bool   (MDM_KEY_BACKGROUND_REMOTE_ONLY_COLOR)) {
+	    mdm_config_reload_int    (MDM_KEY_BACKGROUND_TYPE)) {
 
 		mdm_kill_thingies ();
 		setup_background ();

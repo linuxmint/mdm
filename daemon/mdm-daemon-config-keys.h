@@ -172,8 +172,6 @@ G_BEGIN_DECLS
 #define MDM_KEY_BACKGROUND_IMAGE "greeter/BackgroundImage="
 #define MDM_KEY_BACKGROUND_COLOR "greeter/BackgroundColor=#000000"
 #define MDM_KEY_BACKGROUND_TYPE "greeter/BackgroundType=2"
-#define MDM_KEY_BACKGROUND_SCALE_TO_FIT "greeter/BackgroundScaleToFit=true"
-#define MDM_KEY_BACKGROUND_REMOTE_ONLY_COLOR "greeter/BackgroundRemoteOnlyColor=true"
 #define MDM_KEY_USE_24_CLOCK "greeter/Use24Clock=auto"
 #define MDM_KEY_ENTRY_CIRCLES "greeter/UseCirclesInEntry=false"
 #define MDM_KEY_ENTRY_INVISIBLE "greeter/UseInvisibleInEntry=false"

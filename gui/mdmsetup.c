@@ -1073,8 +1073,7 @@ update_remote_sensitivity (gboolean value)
 	GtkWidget *remote_background_image_chooserbutton;		
 	GtkWidget *remote_theme_background_hbox;
 	GtkWidget *remote_theme_mode_hbox;
-	GtkWidget *remote_theme_select_hbox;
-	GtkWidget *sg_scale_background_remote_hbox;
+	GtkWidget *remote_theme_select_hbox;	
 
 	remote_background_color_hbox = glade_xml_get_widget (xml, "remote_background_color_hbox");
 	remote_background_image_hhox = glade_xml_get_widget (xml, "remote_background_image_hhox");
@@ -1082,8 +1081,7 @@ update_remote_sensitivity (gboolean value)
 	remote_background_image_chooserbutton = glade_xml_get_widget (xml, "remote_background_image_chooserbutton");		
 	remote_theme_background_hbox = glade_xml_get_widget (xml, "remote_theme_background_hbox");
 	remote_theme_mode_hbox = glade_xml_get_widget (xml, "remote_theme_mode_hbox");
-	remote_theme_select_hbox = glade_xml_get_widget (xml, "remote_theme_select_hbox");
-	sg_scale_background_remote_hbox = glade_xml_get_widget (xml, "sg_scale_background_remote_hbox");
+	remote_theme_select_hbox = glade_xml_get_widget (xml, "remote_theme_select_hbox");	
 
 	gtk_widget_set_sensitive (remote_background_color_hbox, value);
 	gtk_widget_set_sensitive (remote_background_image_hhox, value);
@@ -1091,8 +1089,7 @@ update_remote_sensitivity (gboolean value)
 	gtk_widget_set_sensitive (remote_background_image_chooserbutton, value);	
 	gtk_widget_set_sensitive (remote_theme_background_hbox, value);
 	gtk_widget_set_sensitive (remote_theme_mode_hbox, value);
-	gtk_widget_set_sensitive (remote_theme_select_hbox, value);
-	gtk_widget_set_sensitive (sg_scale_background_remote_hbox, value);
+	gtk_widget_set_sensitive (remote_theme_select_hbox, value);	
 }
 
 static void
@@ -3060,27 +3057,7 @@ greeter_toggle_timeout (GtkWidget *toggle)
 	gboolean val = mdm_config_get_bool ((gchar *)key);
 
 	if ( ! bool_equal (val, GTK_TOGGLE_BUTTON (toggle)->active)) {
-	
-		if (strcmp (ve_sure_string (key), MDM_KEY_BACKGROUND_SCALE_TO_FIT) == 0) {
-	
-			if (gtk_notebook_get_current_page (GTK_NOTEBOOK (setup_notebook)) == LOCAL_TAB) {
-
-				GtkWidget *checkbutton;
-		
-				checkbutton = glade_xml_get_widget (xml, "sg_scale_background_remote");
-
-				gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton),
-				                              GTK_TOGGLE_BUTTON (toggle)->active);
-			}
-			else {
-				GtkWidget *checkbutton;
-			
-				checkbutton = glade_xml_get_widget (xml, "sg_scale_background");
-
-				gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbutton),
-				                              GTK_TOGGLE_BUTTON (toggle)->active);	
-			}
-		}
+        
 		mdm_setup_config_set_bool (key, GTK_TOGGLE_BUTTON (toggle)->active);
 		update_greeters ();
 
@@ -6765,25 +6742,17 @@ hookup_plain_background (void)
 	GtkWidget *color_radiobutton;
 	GtkWidget *color_colorbutton;
 	GtkWidget *image_radiobutton;
-	GtkWidget *image_filechooser;
-	GtkWidget *image_scale_to_fit;
+	GtkWidget *image_filechooser;	
 	GtkWidget *image_preview;
 	gchar *background_filename;
 
 	color_radiobutton = glade_xml_get_widget (xml, "local_background_color_checkbutton");
 	color_colorbutton = glade_xml_get_widget (xml, "local_background_colorbutton");
 	image_radiobutton = glade_xml_get_widget (xml, "local_background_image_checkbutton");
-	image_filechooser = glade_xml_get_widget (xml, "local_background_image_chooserbutton");
-	image_scale_to_fit = glade_xml_get_widget (xml, "sg_scale_background");
+	image_filechooser = glade_xml_get_widget (xml, "local_background_image_chooserbutton");	
 
 	setup_greeter_color ("local_background_colorbutton", 
 	                     MDM_KEY_BACKGROUND_COLOR);
-
-	setup_greeter_toggle ("sg_scale_background",
-			      MDM_KEY_BACKGROUND_SCALE_TO_FIT);
-
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_scale_to_fit), 
-	                              mdm_config_get_bool (MDM_KEY_BACKGROUND_SCALE_TO_FIT));
 	
         filter = gtk_file_filter_new ();
         gtk_file_filter_set_name (filter, _("Images"));
@@ -6810,8 +6779,7 @@ hookup_plain_background (void)
 		case BACKGROUND_IMAGE_AND_COLOR: {
 			/* Image & Color background type */
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_radiobutton), TRUE);
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), TRUE);
-			gtk_widget_set_sensitive (image_scale_to_fit, TRUE);
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), TRUE);			
 			gtk_widget_set_sensitive (image_filechooser, TRUE);
 			gtk_widget_set_sensitive (color_colorbutton, TRUE);
 			
@@ -6820,8 +6788,7 @@ hookup_plain_background (void)
 		case BACKGROUND_COLOR: {
 			/* Color background type */
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_radiobutton), FALSE);
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), TRUE);
-			gtk_widget_set_sensitive (image_scale_to_fit, FALSE);
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), TRUE);			
 			gtk_widget_set_sensitive (image_filechooser, FALSE);
 			gtk_widget_set_sensitive (color_colorbutton, TRUE);
 
@@ -6830,8 +6797,7 @@ hookup_plain_background (void)
 		case BACKGROUND_IMAGE: {
 			/* Image background type */
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_radiobutton), TRUE);
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), FALSE);
-			gtk_widget_set_sensitive (image_scale_to_fit, TRUE);
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), FALSE);			
 			gtk_widget_set_sensitive (image_filechooser, TRUE);
 			gtk_widget_set_sensitive (color_colorbutton, FALSE);
 			
@@ -6841,8 +6807,7 @@ hookup_plain_background (void)
 			/* No background type */
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_radiobutton), FALSE);
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), FALSE);
-			gtk_widget_set_sensitive (color_colorbutton, FALSE);
-			gtk_widget_set_sensitive (image_scale_to_fit, FALSE);
+			gtk_widget_set_sensitive (color_colorbutton, FALSE);			
 			gtk_widget_set_sensitive (image_filechooser, FALSE);
 		}
 	}
@@ -6866,9 +6831,7 @@ hookup_plain_background (void)
 	g_object_set_data (G_OBJECT (image_radiobutton), "key",
 	                   MDM_KEY_BACKGROUND_TYPE);
 	g_object_set_data (G_OBJECT (image_filechooser), "key",
-	                   MDM_KEY_BACKGROUND_IMAGE);			   
-	g_object_set_data (G_OBJECT (image_scale_to_fit), "key",
-	                   MDM_KEY_BACKGROUND_SCALE_TO_FIT);
+	                   MDM_KEY_BACKGROUND_IMAGE);			   	
 
 	g_signal_connect (G_OBJECT (color_radiobutton), "toggled",
 	                  G_CALLBACK (local_background_type_toggled), NULL);
@@ -6877,9 +6840,7 @@ hookup_plain_background (void)
 	g_signal_connect (G_OBJECT (image_radiobutton), "toggled",
 	                  G_CALLBACK (local_background_type_toggled), NULL);
 	g_signal_connect (G_OBJECT (image_radiobutton), "toggled",
-	                  G_CALLBACK (toggle_toggled_sensitivity_positive), image_filechooser);
-	g_signal_connect (G_OBJECT (image_radiobutton), "toggled",
-	                  G_CALLBACK (toggle_toggled_sensitivity_positive), image_scale_to_fit);
+	                  G_CALLBACK (toggle_toggled_sensitivity_positive), image_filechooser);	
         g_signal_connect (G_OBJECT (image_filechooser), "selection-changed",
                           G_CALLBACK (background_filechooser_response), image_filechooser);
         g_signal_connect (G_OBJECT (image_filechooser), "update-preview",
@@ -7114,28 +7075,18 @@ hookup_remote_plain_background (void)
 	GtkWidget *color_radiobutton;
 	GtkWidget *color_colorbutton;
 	GtkWidget *image_radiobutton;
-	GtkWidget *image_filechooser;
-	GtkWidget *image_scale_to_fit;
+	GtkWidget *image_filechooser;	
 	GtkWidget *image_preview;
 	gchar *background_filename;
 
 	color_radiobutton = glade_xml_get_widget (xml, "remote_background_color_checkbutton");
 	color_colorbutton = glade_xml_get_widget (xml, "remote_background_colorbutton");
 	image_radiobutton = glade_xml_get_widget (xml, "remote_background_image_checkbutton");
-	image_filechooser = glade_xml_get_widget (xml, "remote_background_image_chooserbutton");
-	image_scale_to_fit = glade_xml_get_widget (xml, "sg_scale_background_remote");
+	image_filechooser = glade_xml_get_widget (xml, "remote_background_image_chooserbutton");	
 
 	setup_greeter_color ("remote_background_colorbutton",
 	                     MDM_KEY_BACKGROUND_COLOR);
-
-	setup_greeter_toggle ("sg_scale_background_remote",
-			      MDM_KEY_BACKGROUND_SCALE_TO_FIT);
-
-	setup_greeter_toggle ("sg_remote_color_only",
-			      MDM_KEY_BACKGROUND_REMOTE_ONLY_COLOR);
-
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_scale_to_fit), 
-	                              mdm_config_get_bool (MDM_KEY_BACKGROUND_SCALE_TO_FIT));
+	
 	
         filter = gtk_file_filter_new ();
         gtk_file_filter_set_name (filter, _("Images"));
@@ -7162,8 +7113,7 @@ hookup_remote_plain_background (void)
 		case BACKGROUND_IMAGE_AND_COLOR:	{
 			/* Image & Color background type */
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_radiobutton), TRUE);
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), TRUE);
-			gtk_widget_set_sensitive (image_scale_to_fit, TRUE);
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), TRUE);			
 			gtk_widget_set_sensitive (image_filechooser, TRUE);
 			gtk_widget_set_sensitive (color_colorbutton, TRUE);
 			
@@ -7172,8 +7122,7 @@ hookup_remote_plain_background (void)
 		case BACKGROUND_COLOR: {
 			/* Color background type */
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_radiobutton), FALSE);
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), TRUE);
-			gtk_widget_set_sensitive (image_scale_to_fit, FALSE);
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), TRUE);			
 			gtk_widget_set_sensitive (image_filechooser, FALSE);
 			gtk_widget_set_sensitive (color_colorbutton, TRUE);
 
@@ -7182,8 +7131,7 @@ hookup_remote_plain_background (void)
 		case BACKGROUND_IMAGE: {
 			/* Image background type */
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_radiobutton), TRUE);
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), FALSE);
-			gtk_widget_set_sensitive (image_scale_to_fit, TRUE);
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), FALSE);			
 			gtk_widget_set_sensitive (image_filechooser, TRUE);
 			gtk_widget_set_sensitive (color_colorbutton, FALSE);
 			
@@ -7193,8 +7141,7 @@ hookup_remote_plain_background (void)
 			/* No background type */
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_radiobutton), FALSE);
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), FALSE);
-			gtk_widget_set_sensitive (color_colorbutton, FALSE);
-			gtk_widget_set_sensitive (image_scale_to_fit, FALSE);
+			gtk_widget_set_sensitive (color_colorbutton, FALSE);			
 			gtk_widget_set_sensitive (image_filechooser, FALSE);
 		}
 	}
@@ -7218,9 +7165,7 @@ hookup_remote_plain_background (void)
 	g_object_set_data (G_OBJECT (image_radiobutton), "key",
 	                   MDM_KEY_BACKGROUND_TYPE);
 	g_object_set_data (G_OBJECT (image_filechooser), "key",
-	                   MDM_KEY_BACKGROUND_IMAGE);			   
-	g_object_set_data (G_OBJECT (image_scale_to_fit), "key",
-	                   MDM_KEY_BACKGROUND_SCALE_TO_FIT);
+	                   MDM_KEY_BACKGROUND_IMAGE);			   	
 
 	g_signal_connect (G_OBJECT (color_radiobutton), "toggled",
 	                  G_CALLBACK (local_background_type_toggled), NULL);
@@ -7230,8 +7175,6 @@ hookup_remote_plain_background (void)
 	                  G_CALLBACK (local_background_type_toggled), NULL);
 	g_signal_connect (G_OBJECT (image_radiobutton), "toggled",
 	                  G_CALLBACK (toggle_toggled_sensitivity_positive), image_filechooser);
-	g_signal_connect (G_OBJECT (image_radiobutton), "toggled",
-	                  G_CALLBACK (toggle_toggled_sensitivity_positive), image_scale_to_fit);
         g_signal_connect (G_OBJECT (image_filechooser), "selection-changed",
                           G_CALLBACK (background_filechooser_response), image_filechooser);
         g_signal_connect (G_OBJECT (image_filechooser), "update-preview",
