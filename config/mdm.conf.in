@@ -390,9 +390,6 @@ IncludeAll=true
 # the one shipped with MDM and edit it.  It is not a standard locale.alias
 # file, although MDM will be able to read a standard locale.alias file as well.
 LocaleFile=/etc/mdm/locale.conf
-# The standard greeter should shake if a user entered the wrong username or
-# password.  Kind of cool looking
-#Quiver=true
 
 # The Actions menu (formerly system menu) is shown in the greeter, this is the
 # menu that contains reboot, shutdown, suspend, config and chooser.  None of

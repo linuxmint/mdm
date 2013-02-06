@@ -6887,13 +6887,6 @@ hookup_plain_background (void)
 }
 
 static void
-hookup_plain_behaviour (void)
-{
-	/* Setup qiver */
-	setup_notify_toggle ("local_quiver_checkbox", MDM_KEY_QUIVER);    
-}
-
-static void
 setup_plain_menubar (void)
 {
 	/* Initialize and hookup callbacks for plain menu bar settings */
@@ -6928,10 +6921,7 @@ setup_local_plain_settings (void)
 	
 	/* Plain background settings */
 	hookup_plain_background ();
-
-	/* Plain behaviour settings */
-	hookup_plain_behaviour ();
-	
+		
 	/* Plain menu bar settings */
 	setup_plain_menubar ();
 	
@@ -7249,13 +7239,6 @@ hookup_remote_plain_background (void)
 }
 
 static void
-hookup_remote_plain_behaviour (void)
-{
-	/* Setup qiver */
-	setup_notify_toggle ("remote_quiver_checkbox", MDM_KEY_QUIVER);    
-}
-
-static void
 setup_remote_plain_settings (void)
 {
 	GtkSizeGroup *size_group;
@@ -7274,10 +7257,7 @@ setup_remote_plain_settings (void)
 	                        MDM_KEY_REMOTE_GREETER);
 	
 	/* Plain background settings */
-	hookup_remote_plain_background ();
-
-	/* Plain behaviour settings */
-	hookup_remote_plain_behaviour ();
+	hookup_remote_plain_background ();	
 		
 	/* Remote welcome message settings */				
 	setup_remote_welcome_message ();			
@@ -7448,14 +7428,12 @@ setup_gui (void)
 	/* Markup glade labels */
 	glade_helper_tagify_label (xml, "themes_label", "b");
 	glade_helper_tagify_label (xml, "sounds_label", "b");
-	glade_helper_tagify_label (xml, "local_background_label", "b");
-	glade_helper_tagify_label (xml, "local_behaviour_label", "b");		
+	glade_helper_tagify_label (xml, "local_background_label", "b");	
 	glade_helper_tagify_label (xml, "local_menubar_label", "b");
 	glade_helper_tagify_label (xml, "local_welcome_message_label", "b");
 	glade_helper_tagify_label (xml, "label_welcome_note", "i");
 	glade_helper_tagify_label (xml, "label_welcome_note", "small");	
-	glade_helper_tagify_label (xml, "remote_plain_background_label", "b");
-	glade_helper_tagify_label (xml, "remote_behaviour_label", "b");	
+	glade_helper_tagify_label (xml, "remote_plain_background_label", "b");	
 	glade_helper_tagify_label (xml, "remote_welcome_message_label", "b");
 	glade_helper_tagify_label (xml, "label_welcomeremote_note", "i");
 	glade_helper_tagify_label (xml, "label_welcomeremote_note", "small");

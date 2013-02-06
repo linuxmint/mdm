@@ -1567,8 +1567,7 @@ process_operation (guchar       op_code,
 	break;
 
     case MDM_RESET:
-	if (mdm_config_get_bool (MDM_KEY_QUIVER) &&
-	    login->window != NULL &&
+	if (login->window != NULL &&
 	    icon_win == NULL &&
 	    GTK_WIDGET_VISIBLE (login)) {
 		Window lw = GDK_WINDOW_XWINDOW (login->window);
@@ -2733,8 +2732,7 @@ mdm_read_config (void)
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_ENTRY_CIRCLES);
 	mdm_config_get_bool   (MDM_KEY_ENTRY_INVISIBLE);
-	mdm_config_get_bool   (MDM_KEY_INCLUDE_ALL);
-	mdm_config_get_bool   (MDM_KEY_QUIVER);
+	mdm_config_get_bool   (MDM_KEY_INCLUDE_ALL);	
 	mdm_config_get_bool   (MDM_KEY_RUN_BACKGROUND_PROGRAM_ALWAYS);
 	mdm_config_get_bool   (MDM_KEY_RESTART_BACKGROUND_PROGRAM);
 	mdm_config_get_bool   (MDM_KEY_SHOW_GNOME_FAILSAFE);
@@ -2802,8 +2800,7 @@ mdm_reread_config (int sig, gpointer data)
 	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_CIRCLES) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_INVISIBLE) ||
-	    mdm_config_reload_bool   (MDM_KEY_INCLUDE_ALL) ||
-	    mdm_config_reload_bool   (MDM_KEY_QUIVER) ||
+	    mdm_config_reload_bool   (MDM_KEY_INCLUDE_ALL) ||	    
 	    mdm_config_reload_bool   (MDM_KEY_RESTART_BACKGROUND_PROGRAM) ||
 	    mdm_config_reload_bool   (MDM_KEY_RUN_BACKGROUND_PROGRAM_ALWAYS) ||
 	    mdm_config_reload_bool   (MDM_KEY_SHOW_GNOME_FAILSAFE) ||

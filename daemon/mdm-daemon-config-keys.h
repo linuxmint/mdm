@@ -155,7 +155,6 @@ G_BEGIN_DECLS
 #define MDM_KEY_GLOBAL_FACE_DIR "greeter/GlobalFaceDir=" DATADIR "/pixmaps/faces/"
 #define MDM_KEY_GNOME_ACCOUNTS_SERVICE_FACE_DIR "greeter/GnomeFaceDir=/var/lib/AccountsService/icons/"
 #define MDM_KEY_LOCALE_FILE "greeter/LocaleFile=" MDMLOCALEDIR "/locale.alias"
-#define MDM_KEY_QUIVER "greeter/Quiver=true"
 #define MDM_KEY_SYSTEM_MENU "greeter/SystemMenu=true"
 #define MDM_KEY_CONFIGURATOR "daemon/Configurator=" SBINDIR "/mdmsetup --disable-sound --disable-crash-dialog"
 #define MDM_KEY_CONFIG_AVAILABLE "greeter/ConfigAvailable=true"
