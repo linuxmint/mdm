@@ -1849,25 +1849,6 @@ browser_change_focus (GtkWidget *widget, GdkEventButton *event, gpointer data)
     gtk_widget_grab_focus (entry);	
 }
 
-static GtkWidget *
-create_handle (void)
-{
-	GtkWidget *hbox, *w;
-
-	title_box = gtk_event_box_new ();	
-
-	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (title_box), hbox);
-	w = gtk_label_new (_("MDM Desktop Manager"));
-	gtk_misc_set_padding (GTK_MISC (w), 4, 4);
-	gtk_box_pack_start (GTK_BOX (hbox), w,
-			    TRUE, TRUE, 4);
-	
-	gtk_widget_show_all (title_box);
-
-	return title_box;
-}
-
 static gboolean
 update_clock (void)
 {
