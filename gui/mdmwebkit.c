@@ -1984,6 +1984,13 @@ key_press_event (GtkWidget *widget, GdkEventKey *key, gpointer data)
   return FALSE;
 }
 
+gboolean on_message_from_webkit(WebKitWebView* view, WebKitWebFrame* frame, const gchar* message)
+{
+    fprintf(stdout, "ALERT: %s\n", message);
+    webkit_web_view_execute_script(view, "set_error('Wrong username or password')");
+    return TRUE;
+}
+
 static gchar * 
 str_replace(const char *string, const char *delimiter, const char *replacement)
 {
@@ -2313,11 +2320,7 @@ mdm_login_gui_init (void)
     // Create a browser instance
     WebKitWebView *webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
 
-    // Create a scrollable area, and put the browser instance into it
-    GtkWidget *scrolledWindow = gtk_scrolled_window_new(NULL, NULL);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledWindow),
-            GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_container_add(GTK_CONTAINER(scrolledWindow), GTK_WIDGET(webView));
+   
             
     char *html;
     gsize file_length;
@@ -2327,8 +2330,10 @@ mdm_login_gui_init (void)
     
     // Load a web page into the browser instance
     webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
+    
+    g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(on_message_from_webkit), 0);
 
-	gtk_table_attach (GTK_TABLE (stack), scrolledWindow, 0, 1, 1, 2,
+	gtk_table_attach (GTK_TABLE (stack), webView, 0, 1, 1, 2,
 		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 		      (GtkAttachOptions) (GTK_FILL), 0, 0);
 

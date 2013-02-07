@@ -1,26 +1,54 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>HTML5 Login - Hongkiat.com</title>
-	<link rel="stylesheet" href="normalize.css">
-	<link rel="stylesheet" href="style.css">
+<head>	
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+	<script>				
+		function send_login() {
+			try {			
+				var username = document.getElementById("username").value;
+				var password = document.getElementById("password").value;
+				alert("login: " + username + " " + password);
+			} 
+			catch (error) {
+				alert("error: " + error);
+			}
+			return false;
+		}
+		
+		function set_error(error) {
+			if (error == "") {
+				document.getElementById("error").style.display = 'none';
+			}
+			else {
+				document.getElementById("error").style.display = 'block';
+				document.getElementById("error").innerHTML = error;
+			}
+		}	
+		
+	</script>
+
 </head>
 <body>
-	<section class="loginform cf">
-		<form name="login" action="index_submit" method="get" accept-charset="utf-8">
-			<ul>
-				<li>
-					<label for="usermail">Email</label>
-					<input type="email" name="usermail" placeholder="yourname@email.com" required>
-				</li>
-				<li>
-					<label for="password">Password</label>
-					<input type="password" name="password" placeholder="password" required></li>
-				<li>
-					<input type="submit" value="Login">
-				</li>
-			</ul>
-		</form>
-	</section>
+	
+	<form onSubmit="return send_login();"> 
+		<fieldset>
+			<legend>Login</legend>
+			<label>Username</label>
+			<input type="text" placeholder="Type your username..." id="username">
+			<label>Password</label>
+			<input type="password" placeholder="Type your password..." id="password">		
+			<button type="submit" class="btn">Login</button>
+		</fieldset>
+    </form>
+	
+	<div id="error" class="alert alert-error">		
+	</div>
+	
 </body>
 </html>
+
+<script>
+	document.getElementById("error").style.display = 'none';
+</script>
+<script src="js/bootstrap.min.js"></script>
