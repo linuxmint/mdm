@@ -10,6 +10,7 @@ SUBDIRS = 			\
 	utils 			\
 	docs			\
 	data			\
+	files			\
 	$(NULL)
 
 # add these when help gets added back

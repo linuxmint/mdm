@@ -53,9 +53,10 @@ host_triplet = @host@
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(top_srcdir)/configure AUTHORS COPYING ChangeLog INSTALL NEWS \
-	TODO acconfig.h config.guess config.sub depcomp install-sh \
-	ltmain.sh missing mkinstalldirs
+	$(top_srcdir)/configure $(top_srcdir)/files/Makefile.in \
+	AUTHORS COPYING ChangeLog INSTALL NEWS TODO acconfig.h \
+	config.guess config.sub depcomp install-sh ltmain.sh missing \
+	mkinstalldirs
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gnome-doc-utils.m4 \
 	$(top_srcdir)/m4/intltool.m4 $(top_srcdir)/m4/libtool.m4 \
@@ -68,7 +69,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = files/Makefile
 CONFIG_CLEAN_VPATH_FILES =
 SOURCES =
 DIST_SOURCES =
@@ -396,6 +397,7 @@ SUBDIRS = \
 	utils 			\
 	docs			\
 	data			\
+	files			\
 	$(NULL)
 
 
@@ -471,6 +473,8 @@ $(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps) $(top_srcdir
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
+files/Makefile: $(top_builddir)/config.status $(top_srcdir)/files/Makefile.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:
 	-rm -f *.lo

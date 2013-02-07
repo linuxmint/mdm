@@ -1386,6 +1386,7 @@ config/mdmprefetchlist
 config/default.desktop.in
 config/gnome.desktop.in
 config/ssh.desktop.in
+files/Makefile
 ])
 
 dnl add back when help comes back

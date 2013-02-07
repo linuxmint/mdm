@@ -1984,6 +1984,20 @@ key_press_event (GtkWidget *widget, GdkEventKey *key, gpointer data)
   return FALSE;
 }
 
+static gchar * 
+str_replace(const char *string, const char *delimiter, const char *replacement)
+{
+	gchar **split;
+	gchar *ret;
+	g_return_val_if_fail(string      != NULL, NULL);
+	g_return_val_if_fail(delimiter   != NULL, NULL);
+	g_return_val_if_fail(replacement != NULL, NULL);
+	split = g_strsplit(string, delimiter, 0);
+	ret = g_strjoinv(replacement, split);
+	g_strfreev(split);
+	return ret;
+}
+
 static void
 mdm_login_gui_init (void)
 {
@@ -2304,9 +2318,15 @@ mdm_login_gui_init (void)
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledWindow),
             GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_container_add(GTK_CONTAINER(scrolledWindow), GTK_WIDGET(webView));
+            
+    char *html;
+    gsize file_length;
+    g_file_get_contents ("/usr/share/mdm/html-themes/mdm/index.html", &html, &file_length, NULL);    
+    
+    html = str_replace(html, "$hostname", "MyHostname");    
     
     // Load a web page into the browser instance
-    webkit_web_view_load_uri(webView, "http://www.webkitgtk.org/");
+    webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
 
 	gtk_table_attach (GTK_TABLE (stack), scrolledWindow, 0, 1, 1, 2,
 		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
