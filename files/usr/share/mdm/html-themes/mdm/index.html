@@ -2,66 +2,89 @@
 <html>
 <head>	
 	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">	
+	<link href="theme.css" rel="stylesheet" media="screen">			
 	
 	<script>	
 	
-		var mode = 0; // Used to know whether we're currently selecting a user or a password
-		var username = None; // Remember the selected username in this variable
+		var mode; // Used to know whether we're currently selecting a user or a password
+		var username = ""; // Remember the selected username in this variable
+		var label;
+		var entry;
+		var info_message;
+		var error_message;
 		
-		function send_login() {	
-			var label = document.getElementById("label");
-			var entry = document.getElementById("entry");
-			var value = document.getElementById("entry").value;
-			var info_message = document.getElementById("info_message");
+		function send_login() {			
 			if (mode == 0) {		
 				// Remember the username
-				username = value;
+				username = entry.value;
 				// Change the page to let the user type in a password
 				mode = 1;
 				info_message.innerHTML = "$enter_your_password_label";	
 				label.innerHTML = "$password_label";
 				entry.type = "password";
-				entry.value = "";				
+				entry.value = "";		
+				clear_errors();		
 			}
 			else {
 				// Send credentials to MDM
-				alert("LOGIN " + username + " " + value);
+				alert("LOGIN###" + username + "###" + entry.value);
 			}
 			return false;
 		}
 
 		// Called by MDM to show an error message
 		function show_error(error) {
-			document.getElementById("error_message").style.display = 'block';
-			document.getElementById("error_message").innerHTML = error;			
+			error_message.style.display = 'block';
+			error_message.innerHTML = error;			
 		}	
 		
 		// Called by MDM to clear error messages
 		function clear_errors() {
-			document.getElementById("error_message").style.display = 'none';
-			document.getElementById("error_message").innerHTML = "";
+			error_message.style.display = 'none';
+			error_message.innerHTML = "";
 		}
 
 		// Called by MDM when the page is finished loading
-		function init() {															
-			document.getElementById("error_message").style.display = 'none';
+		function init() {	
+			mode = 0;				
+			label = document.getElementById("label");
+			entry = document.getElementById("entry");			
+			info_message = document.getElementById("info_message");													
+			error_message = document.getElementById("error_message");
+			clear_errors();		
 		}	
+		
+		// Called by MDM when the page needs to be re-nitialized
+		function reinit() {			
+			mode = 0;			
+			info_message.innerHTML = "$enter_your_username_label";
+			label.innerHTML = "$username_label";
+			entry.type = "text";
+			entry.value = "";
+		}
+		
 	</script>
 	
 </head>
-<body>	
+<body>
+	
+	<div class="box">
 
-	<div id="info_message" class="alert">$enter_your_username_label</div>	
+		<p>Welcome to $hostname</p>
+				
+		<div id="info_message" class="alert alert-info">$enter_your_username_label</div>	
+		
+		<form class="form-inline" onSubmit="return send_login();">
+			<fieldset>			
+				<label class="muted" id="label">$username_label: </label>
+				<input type="text" class="input-medium" id="entry">
+				<button type="submit" class="btn btn-inverse">$ok_label</button>
+			</fieldset>
+		</form>
+		
+		<div id="error_message" class="alert alert-error"></div>	
 	
-	<form onSubmit="return send_login();">
-		<fieldset>			
-			<label id="label">$username_label</label>
-			<input type="text" id="entry">
-			<button type="submit" class="btn">$ok_label</button>
-		</fieldset>
-    </form>
-	
-	<div id="error_message" class="alert alert-error"></div>	
+	</div>	
 	
 </body>
 </html>

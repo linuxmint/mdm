@@ -56,7 +56,6 @@ GtkWidget *window;
 WebKitWebView *webView;
 
 gboolean MDM_IS_LOCAL          = FALSE;
-static gboolean ignore_buttons = FALSE;
 gboolean MdmHaltFound          = FALSE;
 gboolean MdmRebootFound        = FALSE;
 gboolean *MdmCustomCmdsFound   = NULL;
@@ -73,9 +72,19 @@ static gboolean first_prompt = TRUE;
 static void process_operation (guchar opcode, const gchar *args);
 
 gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gchar* message)
-{
-    fprintf(stdout, "ALERT: %s\n", message);
-    webkit_web_view_execute_script(view, g_strdup_printf("show_error('%s')", _("Wrong username or password")));
+{    
+    gchar ** message_parts = g_strsplit (message, "###", -1);
+    gchar * command = message_parts[0];
+    if (strcmp(command, "LOGIN") == 0) {
+		// Perform the login
+		
+		// If the username/password is incorrect	
+		webkit_web_view_execute_script(view, "reinit()");
+		webkit_web_view_execute_script(view, g_strdup_printf("show_error('%s')", _("Wrong username or password")));		
+	}
+	else {		
+		printf("Unknown command received from Webkit greeter: %s\n", command);
+	}    
     return TRUE;
 }
 
@@ -83,6 +92,9 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 {    
     webkit_web_view_execute_script(view, "init()");
     webkit_web_view_execute_script(view, "clear_errors()");   
+    mdm_common_login_sound (mdm_config_get_string (MDM_KEY_SOUND_PROGRAM),
+					mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE),
+					mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN));
 }
 
 static gchar * 
@@ -99,12 +111,6 @@ str_replace(const char *string, const char *delimiter, const char *replacement)
 	return ret;
 }
 
-
-void
-greeter_ignore_buttons (gboolean val)
-{
-   ignore_buttons = val;
-}
 
 static gboolean
 greeter_ctrl_handler (GIOChannel *source,
@@ -173,7 +179,7 @@ hig_dialog_new (GtkWindow      *parent,
 static void
 process_operation (guchar       op_code,
 		   const gchar *args)
-{
+{		
     GtkWidget *dlg;
     char *tmp;
     char *session;    
@@ -202,8 +208,6 @@ process_operation (guchar       op_code,
 
 	first_prompt = FALSE;
 
-	greeter_ignore_buttons (FALSE);
-
 	g_free (tmp);
 	break;
 
@@ -213,8 +217,7 @@ process_operation (guchar       op_code,
 	greeter_probably_login_prompt = FALSE;
 	
 	first_prompt = FALSE;
-
-	greeter_ignore_buttons (FALSE);
+	
 	g_free (tmp);
 
 	break;
@@ -342,8 +345,7 @@ process_operation (guchar       op_code,
 	first_prompt = TRUE;
 
 	printf ("%c\n", STX);
-	fflush (stdout);
-	greeter_ignore_buttons (FALSE);
+	fflush (stdout);	
 	break;
 
     case MDM_QUIT:
