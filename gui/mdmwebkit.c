@@ -1037,6 +1037,8 @@ main (int argc, char *argv[])
 	html = str_replace(html, "$cancel_label", _("Cancel"));
 	html = str_replace(html, "$enter_your_username_label", _("Please enter your username"));
 	html = str_replace(html, "$enter_your_password_label", _("Please enter your password"));
+	
+	html = str_replace(html, "$hostname", g_get_host_name());
 
 	// Load a web page into the browser instance
 	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
