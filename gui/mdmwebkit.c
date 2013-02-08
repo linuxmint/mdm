@@ -1984,11 +1984,17 @@ key_press_event (GtkWidget *widget, GdkEventKey *key, gpointer data)
   return FALSE;
 }
 
-gboolean on_message_from_webkit(WebKitWebView* view, WebKitWebFrame* frame, const gchar* message)
+gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gchar* message)
 {
     fprintf(stdout, "ALERT: %s\n", message);
-    webkit_web_view_execute_script(view, "set_error('Wrong username or password')");
+    webkit_web_view_execute_script(view, g_strdup_printf("show_error('%s')", _("Wrong username or password")));
     return TRUE;
+}
+
+void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
+{    
+    webkit_web_view_execute_script(view, "init()");
+    webkit_web_view_execute_script(view, "clear_errors()");   
 }
 
 static gchar * 
@@ -2326,12 +2332,19 @@ mdm_login_gui_init (void)
     gsize file_length;
     g_file_get_contents ("/usr/share/mdm/html-themes/mdm/index.html", &html, &file_length, NULL);    
     
-    html = str_replace(html, "$hostname", "MyHostname");    
+    html = str_replace(html, "$username_label", _("Username"));
+    html = str_replace(html, "$password_label", _("Password"));
+    html = str_replace(html, "$login_label", _("Login"));
+    html = str_replace(html, "$ok_label", _("OK"));
+    html = str_replace(html, "$cancel_label", _("Cancel"));
+    html = str_replace(html, "$enter_your_username_label", _("Please enter your username"));
+    html = str_replace(html, "$enter_your_password_label", _("Please enter your password"));
     
     // Load a web page into the browser instance
     webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
     
-    g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(on_message_from_webkit), 0);
+    g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(webkit_on_message), 0);
+    g_signal_connect(G_OBJECT(webView), "load-finished", G_CALLBACK(webkit_on_loaded), 0);
 
 	gtk_table_attach (GTK_TABLE (stack), webView, 0, 1, 1, 2,
 		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
