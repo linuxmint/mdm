@@ -35,6 +35,7 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+//#include <libgnomecanvas/libgnomecanvas.h>
 
 #include "mdm-common.h"
 #include "mdm-socket-protocol.h"
@@ -48,7 +49,23 @@
 #include "mdmsession.h"
 #include "mdmlanguages.h"
 
+//#include "greeter.h"
+//#include "greeter_configuration.h"
+//#include "greeter_parser.h"
+//#include "greeter_geometry.h"
+//#include "greeter_item_clock.h"
+//#include "greeter_item_pam.h"
+//#include "greeter_item_ulist.h"
+//#include "greeter_item_customlist.h"
+//#include "greeter_item_capslock.h"
+//#include "greeter_item_timed.h"
+//#include "greeter_events.h"
+//#include "greeter_session.h"
+//#include "greeter_system.h"
+
 #include <webkit/webkit.h>
+
+#define EXIT_SUCCESS 0
 
 gboolean DOING_MDM_DEVELOPMENT = FALSE;
 
@@ -56,6 +73,7 @@ GtkWidget *window;
 WebKitWebView *webView;
 
 gboolean MDM_IS_LOCAL          = FALSE;
+static gboolean ignore_buttons = FALSE;
 gboolean MdmHaltFound          = FALSE;
 gboolean MdmRebootFound        = FALSE;
 gboolean *MdmCustomCmdsFound   = NULL;
@@ -63,8 +81,14 @@ gboolean MdmAnyCustomCmdsFound = FALSE;
 gboolean MdmSuspendFound       = FALSE;
 gboolean MdmConfiguratorFound  = FALSE;
 
+/* FIXME: hack */
+//GreeterItemInfo *welcome_string_info = NULL;
+//GreeterItemInfo *root = NULL;
+
 extern gboolean session_dir_whacked_out;
 extern gint mdm_timed_delay;
+//extern GtkButton *gtk_ok_button;
+//extern GtkButton *gtk_start_again_button;
 
 gboolean greeter_probably_login_prompt = FALSE;
 static gboolean first_prompt = TRUE;
@@ -111,6 +135,12 @@ str_replace(const char *string, const char *delimiter, const char *replacement)
 	return ret;
 }
 
+/**void
+greeter_ignore_buttons (gboolean val)
+{
+   ignore_buttons = val;
+}
+*/
 
 static gboolean
 greeter_ctrl_handler (GIOChannel *source,
@@ -179,10 +209,12 @@ hig_dialog_new (GtkWindow      *parent,
 static void
 process_operation (guchar       op_code,
 		   const gchar *args)
-{		
+{
     GtkWidget *dlg;
     char *tmp;
-    char *session;    
+    char *session;
+    //GreeterItemInfo *conversation_info;
+    //static GnomeCanvasItem *disabled_cover = NULL;
     gint lookup_status = SESSION_LOOKUP_SUCCESS;
     gchar *firstmsg = NULL;
     gchar *secondmsg = NULL;
@@ -193,6 +225,8 @@ process_operation (guchar       op_code,
     case MDM_SETLOGIN:
 	/* somebody is trying to fool us this is the user that
 	 * wants to log in, and well, we are the gullible kind */
+	
+	//greeter_item_pam_set_user (args);
 	printf ("%c\n", STX);
 	fflush (stdout);
 	break;
@@ -204,10 +238,18 @@ process_operation (guchar       op_code,
 					mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE),
 					mdm_config_get_bool (MDM_KEY_SOUND_ON_LOGIN));
 		greeter_probably_login_prompt = TRUE;
-	}	
+	}
+	/**if (gtk_ok_button != NULL)
+                gtk_widget_set_sensitive (GTK_WIDGET (gtk_ok_button), FALSE);
 
+	if (gtk_start_again_button != NULL)
+                gtk_widget_set_sensitive (GTK_WIDGET (gtk_start_again_button), !first_prompt);
+	*/
 	first_prompt = FALSE;
 
+//	greeter_ignore_buttons (FALSE);
+
+	//greeter_item_pam_prompt (tmp, PW_ENTRY_SIZE, TRUE);
 	g_free (tmp);
 	break;
 
@@ -215,22 +257,32 @@ process_operation (guchar       op_code,
 	tmp = ve_locale_to_utf8 (args);
 
 	greeter_probably_login_prompt = FALSE;
-	
+
+	/**if (gtk_ok_button != NULL)
+                gtk_widget_set_sensitive (GTK_WIDGET (gtk_ok_button), FALSE);
+
+	if (gtk_start_again_button != NULL)
+                gtk_widget_set_sensitive (GTK_WIDGET (gtk_start_again_button), !first_prompt);
+	*/
 	first_prompt = FALSE;
-	
+
+//	greeter_ignore_buttons (FALSE);
+	//greeter_item_pam_prompt (tmp, PW_ENTRY_SIZE, FALSE);
 	g_free (tmp);
 
 	break;
 
     case MDM_MSG:
-	tmp = ve_locale_to_utf8 (args);	
+	tmp = ve_locale_to_utf8 (args);
+	//greeter_item_pam_message (tmp);
 	g_free (tmp);
 	printf ("%c\n", STX);
 	fflush (stdout);
 	break;
 
     case MDM_ERRBOX:
-	tmp = ve_locale_to_utf8 (args);	
+	tmp = ve_locale_to_utf8 (args);
+	//greeter_item_pam_error (tmp);
 	g_free (tmp);
 	
 	printf ("%c\n", STX);
@@ -327,7 +379,11 @@ process_operation (guchar       op_code,
 	fflush (stdout);
 	g_free (session);
 	break;
-    
+
+    case MDM_LANG:
+	mdm_lang_op_lang (args);
+	break;
+
     case MDM_SSESS:
 	if (mdm_get_save_session () == GTK_RESPONSE_NO)
 	  printf ("%cY\n", STX);
@@ -337,46 +393,119 @@ process_operation (guchar       op_code,
 	
 	break;
 
+    case MDM_SLANG:
+	mdm_lang_op_slang (args);
+	break;
+
+    case MDM_SETLANG:
+	mdm_lang_op_setlang (args);
+	break;
+
+    case MDM_ALWAYS_RESTART:
+	mdm_lang_op_always_restart (args);
+	break;
+
     case MDM_RESET:
 	/* fall thru to reset */
 
     case MDM_RESETOK:
-	
+
+	/**if (gtk_ok_button != NULL)
+                gtk_widget_set_sensitive (GTK_WIDGET (gtk_ok_button), FALSE);
+	if (gtk_start_again_button != NULL)
+                gtk_widget_set_sensitive (GTK_WIDGET (gtk_start_again_button), FALSE);
+	*/
 	first_prompt = TRUE;
 
+	/**conversation_info = greeter_lookup_id ("pam-conversation");
+	
+	if (conversation_info)
+	  {
+	    tmp = ve_locale_to_utf8 (args);
+	    g_object_set (G_OBJECT (conversation_info->item),
+			  "text", tmp,
+			  NULL);
+	    g_free (tmp);
+	  }
+	*/
 	printf ("%c\n", STX);
-	fflush (stdout);	
+	fflush (stdout);
+//	greeter_ignore_buttons (FALSE);
+        //greeter_item_ulist_enable ();
+
 	break;
 
     case MDM_QUIT:
-	gdk_flush ();
+	//greeter_item_timed_stop ();
 	
+	//greeter_item_pam_leftover_messages ();
+
+	gdk_flush ();
+
+	/**
+	 if (greeter_show_only_background (root)) {
+		GdkPixbuf *background;
+		int width, height;
+
+		gtk_window_get_size (GTK_WINDOW (window), &width, &height);
+		background = gdk_pixbuf_get_from_drawable (NULL, gtk_widget_get_root_window(window), NULL, 0, 0, 0, 0 ,width, height);
+		if (background) {
+			mdm_common_set_root_background (background);
+			g_object_unref (background);
+		}
+	}
+	*/
+
 	printf ("%c\n", STX);
 	fflush (stdout);
 
 	/* screw gtk_main_quit, we want to make sure we definately die */
-	_exit (0);
+	_exit (EXIT_SUCCESS);
 	break;
 
-    case MDM_STARTTIMER:	
+    case MDM_STARTTIMER:
+	//greeter_item_timed_start ();
+	
 	printf ("%c\n", STX);
 	fflush (stdout);
 	break;
 
     case MDM_STOPTIMER:
+	//greeter_item_timed_stop ();
+
 	printf ("%c\n", STX);
 	fflush (stdout);
 	break;
 
     case MDM_DISABLE:
-	gtk_widget_set_sensitive (window, FALSE);	
+	gtk_widget_set_sensitive (window, FALSE);
+
+	/**if (disabled_cover == NULL)
+	  {
+	    disabled_cover = gnome_canvas_item_new
+		    (gnome_canvas_root (GNOME_CANVAS (canvas)),
+		     GNOME_TYPE_CANVAS_RECT,
+		     "x1", 0.0,
+		     "y1", 0.0,
+		     "x2", (double)canvas->allocation.width,
+		     "y2", (double)canvas->allocation.height,
+		     "fill_color_rgba", (guint)0x00000088,
+		     NULL);
+	  }
+	*/
 	printf ("%c\n", STX);
 	fflush (stdout);
 	break;
 
     case MDM_ENABLE:
-	gtk_widget_set_sensitive (window, TRUE);	
+	gtk_widget_set_sensitive (window, TRUE);
 
+	/**if (disabled_cover != NULL)
+	  {
+	    gtk_object_destroy (GTK_OBJECT (disabled_cover));
+	    disabled_cover = NULL;
+	  }
+	*/
 	printf ("%c\n", STX);
 	fflush (stdout);
 	break;
@@ -413,9 +542,13 @@ process_operation (guchar       op_code,
 	printf ("%c\n", STX);
 	fflush (stdout);
 
-	_exit (0);
+	_exit (EXIT_SUCCESS);
 
-    case MDM_QUERY_CAPSLOCK:	
+    case MDM_QUERY_CAPSLOCK:
+	//if (greeter_is_capslock_on ())
+	//    printf ("%cY\n", STX);
+	//else
+	//    printf ("%c\n", STX);
 	fflush (stdout);
 
 	break;
@@ -444,6 +577,87 @@ key_press_event (GtkWidget *widget, GdkEventKey *key, gpointer data)
   
   return FALSE;
 }
+
+/*
+ * The buttons with these handlers never appear in the F10 menu,
+ * so they can make use of callback data.
+ */
+/**
+static void
+greeter_ok_handler (GreeterItemInfo *info,
+                    gpointer         user_data)
+{
+   if (ignore_buttons == FALSE)
+     {
+       GreeterItemInfo *entry_info = greeter_lookup_id ("user-pw-entry");
+       if (entry_info && entry_info->item &&
+           GNOME_IS_CANVAS_WIDGET (entry_info->item) &&
+           GTK_IS_ENTRY (GNOME_CANVAS_WIDGET (entry_info->item)->widget))
+         {
+           GtkWidget *entry;
+           entry = GNOME_CANVAS_WIDGET (entry_info->item)->widget;
+           greeter_ignore_buttons (TRUE);
+           greeter_item_pam_login (GTK_ENTRY (entry), entry_info);
+         }
+    }
+}
+*/
+
+/**
+static void
+greeter_cancel_handler (GreeterItemInfo *info,
+                        gpointer         user_data)
+{
+   if (ignore_buttons == FALSE)
+     {
+       greeter_item_ulist_unset_selected_user ();
+       greeter_item_ulist_disable ();
+       greeter_ignore_buttons (TRUE);
+       printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_CANCEL);
+       fflush (stdout);
+     }
+}
+*/
+
+/**
+static void
+greeter_language_handler (GreeterItemInfo *info,
+                          gpointer         user_data)
+{
+  mdm_lang_handler (user_data);
+}
+*/
+
+/** static void
+greeter_setup_items (void)
+{
+  greeter_item_clock_setup ();
+  greeter_item_pam_setup ();
+
+  // This will query the daemon for pictures through stdin/stdout! 
+  greeter_item_ulist_setup ();
+
+  greeter_item_capslock_setup (window);
+  greeter_item_timed_setup ();
+  greeter_item_register_action_callback ("ok_button",
+					 greeter_ok_handler,
+					 (gpointer) window);
+  greeter_item_register_action_callback ("cancel_button",
+					 greeter_cancel_handler,
+					 (gpointer) window);
+  greeter_item_register_action_callback ("language_button",
+					 greeter_language_handler,
+					 NULL);
+  greeter_item_register_action_callback ("disconnect_button",
+					 (ActionFunc)gtk_main_quit,
+					 NULL);
+  greeter_item_system_setup ();
+  greeter_item_session_setup ();
+
+  // Setup the custom widgets 
+  greeter_item_customlist_setup ();
+}
+*/
 
 enum {
 	RESPONSE_RESTART,
@@ -496,7 +710,7 @@ verify_mdm_version (void)
       gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);
     
-      return 0;
+      return EXIT_SUCCESS;
     }
   
   if (! DOING_MDM_DEVELOPMENT &&
@@ -604,6 +818,19 @@ verify_mdm_version (void)
     }
   
   return 0;
+}
+
+static void
+mdm_set_welcomemsg (void)
+{
+	//char *welcomemsg = mdm_common_get_welcomemsg ();
+
+	/**if (welcome_string_info->data.text.orig_text != NULL)
+		g_free (welcome_string_info->data.text.orig_text);
+
+	welcome_string_info->data.text.orig_text = welcomemsg;
+	greeter_item_update_text (welcome_string_info);
+	*/
 }
 
 /*
@@ -822,7 +1049,9 @@ greeter_reread_config (int sig, gpointer data)
 	    mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME) ||
 	    mdm_config_reload_string (MDM_KEY_REMOTE_WELCOME) ||
 	    mdm_config_reload_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME)) {
-		
+
+		mdm_set_welcomemsg ();
+
 		/* Set busy cursor */
 		mdm_common_setup_cursor (GDK_WATCH);
 
@@ -840,7 +1069,7 @@ greeter_reread_config (int sig, gpointer data)
 static void
 greeter_done (int sig)
 {
-    _exit (0);
+    _exit (EXIT_SUCCESS);
 }
 
 /* The reaping stuff */
@@ -868,6 +1097,60 @@ reap_flexiserver (gpointer data)
 	return TRUE;
 }
 
+static gboolean
+mdm_event (GSignalInvocationHint *ihint,
+           guint                n_param_values,
+           const GValue        *param_values,
+           gpointer             data)
+{
+        GdkEvent *event;
+
+        /* HAAAAAAAAAAAAAAAAACK */
+        /* Since the user has not logged in yet and may have left/right
+         * mouse buttons switched, we just translate every right mouse click
+         * to a left mouse click */
+        if (n_param_values != 2 ||
+            !G_VALUE_HOLDS (&param_values[1], GDK_TYPE_EVENT))
+          return FALSE;
+
+        event = g_value_get_boxed (&param_values[1]);
+        if ((event->type == GDK_BUTTON_PRESS ||
+             event->type == GDK_2BUTTON_PRESS ||
+             event->type == GDK_3BUTTON_PRESS ||
+             event->type == GDK_BUTTON_RELEASE)
+            && event->button.button == 3)
+                event->button.button = 1;
+
+        /* Support Ctrl-U for blanking the username/password entry */
+        if (event->type == GDK_KEY_PRESS &&
+            (event->key.state & GDK_CONTROL_MASK) &&
+            (event->key.keyval == GDK_u ||
+             event->key.keyval == GDK_U)) {
+
+		/**GreeterItemInfo *entry_info = greeter_lookup_id ("user-pw-entry");
+		if (entry_info && entry_info->item &&
+		    GNOME_IS_CANVAS_WIDGET (entry_info->item) &&
+		    GTK_IS_ENTRY (GNOME_CANVAS_WIDGET (entry_info->item)->widget))
+		{
+			GtkWidget *entry;
+			entry = GNOME_CANVAS_WIDGET (entry_info->item)->widget;
+			gtk_entry_set_text (GTK_ENTRY (entry), "");
+		}
+		*/
+	}
+
+        return TRUE;
+}
+
+/*
+ * This function does nothing for mdmlogin, but mdmgreeter does do extra
+ * work in this callback function.
+ */
+void
+lang_set_custom_callback (gchar *language)
+{
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -875,8 +1158,7 @@ main (int argc, char *argv[])
   struct sigaction hup;
   struct sigaction term;
   sigset_t mask;
-  GIOChannel *ctrlch;
-  GError *error;  
+  GIOChannel *ctrlch;  
   const char *mdm_gtk_theme;
   guint sid;
   int r;
@@ -945,7 +1227,8 @@ main (int argc, char *argv[])
     bg_color = mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
   }
   mdm_common_setup_background_color (bg_color);
-  //mdm_lang_initialize_model (mdm_config_get_string (MDM_KEY_LOCALE_FILE));
+  //greeter_session_init ();
+  mdm_lang_initialize_model (mdm_config_get_string (MDM_KEY_LOCALE_FILE));
 
   ve_signal_add (SIGHUP, greeter_reread_config, NULL);
 
@@ -995,7 +1278,7 @@ main (int argc, char *argv[])
 
   g_signal_connect (G_OBJECT (window), "key_press_event",
                     G_CALLBACK (key_press_event), NULL);
-
+  
   webView = WEBKIT_WEB_VIEW(webkit_web_view_new());  
   //GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (webView), GTK_CAN_FOCUS); 
   gtk_window_set_decorated (GTK_WINDOW (window), FALSE);
@@ -1003,6 +1286,26 @@ main (int argc, char *argv[])
 			       mdm_wm_screen.width, 
 			       mdm_wm_screen.height);
   gtk_container_add (GTK_CONTAINER (window), webView);
+  
+	char *html;
+	gsize file_length;
+	g_file_get_contents ("/usr/share/mdm/html-themes/mdm/index.html", &html, &file_length, NULL);    
+
+	html = str_replace(html, "$username_label", _("Username"));
+	html = str_replace(html, "$password_label", _("Password"));
+	html = str_replace(html, "$login_label", _("Login"));
+	html = str_replace(html, "$ok_label", _("OK"));
+	html = str_replace(html, "$cancel_label", _("Cancel"));
+	html = str_replace(html, "$enter_your_username_label", _("Please enter your username"));
+	html = str_replace(html, "$enter_your_password_label", _("Please enter your password"));
+
+	html = str_replace(html, "$hostname", g_get_host_name());
+
+	// Load a web page into the browser instance
+	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
+
+	g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(webkit_on_message), 0);
+	g_signal_connect(G_OBJECT(webView), "load-finished", G_CALLBACK(webkit_on_loaded), 0);
 
  /*
   * Initialize the value with the default value so the first time it
@@ -1025,27 +1328,11 @@ main (int argc, char *argv[])
 
 	  g_free (key_string);
   }
+     
+  //greeter_layout (root, GNOME_CANVAS (canvas));
   
-	char *html;
-	gsize file_length;
-	g_file_get_contents ("/usr/share/mdm/html-themes/mdm/index.html", &html, &file_length, NULL);    
+  //greeter_setup_items ();
 
-	html = str_replace(html, "$username_label", _("Username"));
-	html = str_replace(html, "$password_label", _("Password"));
-	html = str_replace(html, "$login_label", _("Login"));
-	html = str_replace(html, "$ok_label", _("OK"));
-	html = str_replace(html, "$cancel_label", _("Cancel"));
-	html = str_replace(html, "$enter_your_username_label", _("Please enter your username"));
-	html = str_replace(html, "$enter_your_password_label", _("Please enter your password"));
-	
-	html = str_replace(html, "$hostname", g_get_host_name());
-
-	// Load a web page into the browser instance
-	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
-
-	g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(webkit_on_message), 0);
-	g_signal_connect(G_OBJECT(webView), "load-finished", G_CALLBACK(webkit_on_loaded), 0);
-           
   if G_LIKELY (! DOING_MDM_DEVELOPMENT) {
     ctrlch = g_io_channel_unix_new (STDIN_FILENO);
     g_io_channel_set_encoding (ctrlch, NULL, NULL);
@@ -1065,7 +1352,11 @@ main (int argc, char *argv[])
   gtk_widget_show_all (window);
   gtk_window_move (GTK_WINDOW (window), mdm_wm_screen.x, mdm_wm_screen.y);
   gtk_widget_show_now (window);
-  
+
+  //greeter_item_ulist_unset_selected_user ();
+  //greeter_item_ulist_enable ();
+  //greeter_item_ulist_check_show_userlist ();
+
   /* can it ever happen that it'd be NULL here ??? */
   if G_UNLIKELY (window->window != NULL)
     {
@@ -1164,6 +1455,11 @@ main (int argc, char *argv[])
 
   sid = g_signal_lookup ("event",
                                GTK_TYPE_WIDGET);
+  g_signal_add_emission_hook (sid,
+                              0 /* detail */,
+                              mdm_event,
+                              NULL /* data */,
+                              NULL /* destroy_notify */);
 
   mdm_wm_restore_wm_order ();
 
