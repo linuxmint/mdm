@@ -248,6 +248,9 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 			_exit (DISPLAY_REBOOT);
 		}
 	}
+	else if (strcmp(command, "QUIT") == 0) {
+		gtk_main_quit();
+	}
 	else {		
 		printf("Unknown command received from Webkit greeter: %s\n", command);
 	}    
