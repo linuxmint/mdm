@@ -217,6 +217,37 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 		printf ("%c%s\n", STX, message_parts[1]);
 		fflush (stdout);		
 	}
+	else if (strcmp(command, "LANGUAGE") == 0) {
+		mdm_lang_handler (NULL);
+	}
+	else if (strcmp(command, "SHUTDOWN") == 0) {
+		if (mdm_wm_warn_dialog (
+			_("Are you sure you want to Shut Down the computer?"), "",
+			_("Shut _Down"), NULL, TRUE) == GTK_RESPONSE_YES) {
+
+			mdm_kill_thingies ();
+			_exit (DISPLAY_HALT);
+		}
+	}
+	else if (strcmp(command, "SUSPEND") == 0) {
+		if (mdm_wm_warn_dialog (
+			_("Are you sure you want to suspend the computer?"), "",
+			_("_Suspend"), NULL, TRUE) == GTK_RESPONSE_YES) {
+
+			/* suspend interruption */
+			printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_SUSPEND);
+			fflush (stdout);
+		}
+	}
+	else if (strcmp(command, "RESTART") == 0) {
+		if (mdm_wm_warn_dialog (
+			_("Are you sure you want to restart the computer?"), "",
+			_("_Restart"), NULL, TRUE) == GTK_RESPONSE_YES) {
+
+			mdm_kill_thingies ();
+			_exit (DISPLAY_REBOOT);
+		}
+	}
 	else {		
 		printf("Unknown command received from Webkit greeter: %s\n", command);
 	}    
@@ -574,7 +605,7 @@ delay_reaping (GSignalInvocationHint *ihint,
 	return TRUE;
 }      
 
-static void
+void
 mdm_kill_thingies (void)
 {
 	back_prog_stop ();
