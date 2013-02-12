@@ -24,21 +24,10 @@ body {
 	overflow:hidden;		
 }
 
-.user-box {	
-	color: #ffffff;
-	position: fixed;
-	top: 20%;
-	left: 50%;
-	margin-top: -100px;
-	margin-left: -200px;	
-	background-color:rgba(80,80,80,0.9);
-	border-radius:5px;
-	border:2px #3a3a3a solid;
-	padding:10px;	
-	height: 200px;
-	
-	font-size:13px;	
-	overflow:hidden;		
+.buttons {	
+	position: relative;
+	text-align: center;
+	margin-top: 10px;		
 }
 
 .user-picture {

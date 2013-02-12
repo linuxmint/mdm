@@ -1901,12 +1901,10 @@ mdm_login_browser_populate (void)
 	    label = g_strdup_printf ("<b>%s</b>\n%s",
 				     login,
 				     gecos);
-				     
-		gchar * user_face = g_strdup_printf("/home/%s/.face");
+				     		
 		gchar * args = g_strdup_printf("%s\", \"%s", login, gecos);
 		webkit_execute_script("mdm_add_user", args);
 		g_free (args);
-		g_free (user_face);
 
 	    g_free (login);
 	    g_free (gecos);
@@ -2140,16 +2138,19 @@ webkit_init (void) {
     char *html;
 	gsize file_length;
 	g_file_get_contents ("/usr/share/mdm/html-themes/mdm/index.html", &html, &file_length, NULL);    
-
-	html = str_replace(html, "$username_label", _("Username"));
-	html = str_replace(html, "$password_label", _("Password"));
+	
 	html = str_replace(html, "$login_label", _("Login"));
 	html = str_replace(html, "$ok_label", _("OK"));
 	html = str_replace(html, "$cancel_label", _("Cancel"));
 	html = str_replace(html, "$enter_your_username_label", _("Please enter your username"));
 	html = str_replace(html, "$enter_your_password_label", _("Please enter your password"));
-
 	html = str_replace(html, "$hostname", g_get_host_name());
+	
+	html = str_replace(html, "$shutdown", _("Shutdown"));
+	html = str_replace(html, "$suspend", _("Suspend"));
+	html = str_replace(html, "$quit", _("Quit"));
+	html = str_replace(html, "$restart", _("Restart"));
+	html = str_replace(html, "$selectlanguage", _("Select Language"));
 
 	// Load a web page into the browser instance
 	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");

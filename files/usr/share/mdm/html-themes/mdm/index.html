@@ -111,16 +111,8 @@
 	</script>
 	
 </head>
-<body>
-	
-	<a href="#" onClick="alert('LANGUAGE###');">Select Language...</a>
-	<a href="#" onClick="alert('SHUTDOWN###');">Shutdown...</a>
-	<a href="#" onClick="alert('SUSPEND###');">Suspend...</a>	
-	<a href="#" onClick="alert('RESTART###');">Restart...</a>	
-	<a href="#" onClick="alert('QUIT###');">Quit...</a>
-	
-	
-	
+<body>		
+    
 	<div class="box">
 		<div id="welcome_message"></div> <div id="clock"></div>
 									
@@ -135,8 +127,25 @@
 		</form>
 
 		<div id="message"></div>
-	
 	</div>	
+	
+	<div class="buttons">
+		<div class="btn-toolbar">
+			<div class="btn-group">
+				<a class="btn btn-small btn-alert" href="#" onClick="alert('LANGUAGE###');" title="$selectlanguage"><i class="icon-globe"></i></a>
+			</div>
+			<div class="btn-group">
+				<a class="btn btn-small" href="#" onClick="alert('SHUTDOWN###');" title="$shutdown"><i class="icon-off"></i></a>
+				<a class="btn btn-small" href="#" onClick="alert('SUSPEND###');" title="$suspend"><i class="icon-download-alt"></i></a>
+				<a class="btn btn-small" href="#" onClick="alert('RESTART###');" title="$restart"><i class="icon-refresh"></i></a>
+			</div>
+			<div class="btn-group">
+				<a class="btn btn-small" href="#" onClick="alert('QUIT###');" title="$quit"><i class="icon-ban-circle"></i></a>
+			</div>
+		</div>
+	</div>	
+	
+	
 	
 	
 	
