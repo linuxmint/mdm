@@ -6,83 +6,94 @@
 	
 	<script>	
 	
-		var mode; // Used to know whether we're currently selecting a user or a password
-		var username = ""; // Remember the selected username in this variable
-		var label;
-		var entry;
-		var info_message;
-		var error_message;
+		// Called by MDM to disable user input
+		function mdm_disable() {
+			document.getElementById("entry").value = "disabled";
+			document.getElementById("entry").disabled = "disabled";
+			document.getElementById("ok_button").disabled = "disabled";
+		}
 		
-		function send_login() {			
-			if (mode == 0) {		
-				// Remember the username
-				username = entry.value;
-				// Change the page to let the user type in a password
-				mode = 1;
-				info_message.innerHTML = "$enter_your_password_label";	
-				label.innerHTML = "$password_label";
-				entry.type = "password";
-				entry.value = "";		
-				clear_errors();		
+		// Called by MDM to enable user input
+		function mdm_enable() {
+			document.getElementById("entry").value = "false";
+			document.getElementById("entry").disabled = false;
+			document.getElementById("ok_button").disabled = false;
+		}
+		
+		// Called by MDM to set the welcome message
+		function set_welcome_message(message) {			
+			document.getElementById("welcome_message").innerHTML = message;
+		}
+		
+		// Called by MDM to update the clock
+		function set_clock(message) {			
+			document.getElementById("clock").innerHTML = message;
+		}
+		
+		// Called by MDM to allow the user to input a username		
+		function mdm_prompt(message) {	
+			mdm_enable();		
+			document.getElementById("label").innerHTML = message;
+			document.getElementById("entry").value = "";
+			document.getElementById("entry").type = "text";
+			document.getElementById("entry").focus();
+		}
+		
+		// Called by MDM to allow the user to input a password
+		function mdm_noecho(message) {	
+			mdm_enable();		
+			document.getElementById("label").innerHTML = message;
+			document.getElementById("entry").value = "";
+			document.getElementById("entry").type = "password";
+			document.getElementById("entry").focus();
+		}
+		
+		// Called by MDM to show a message (usually "Please enter your username")
+		function mdm_msg(message) {			
+			document.getElementById("message").innerHTML = message;			
+		}
+		
+		// Called by MDM to show an error		
+		function mdm_error(message) {						
+			if (message != "") {
+				document.getElementById("error").style.display = 'block';
 			}
 			else {
-				// Send credentials to MDM
-				alert("LOGIN###" + username + "###" + entry.value);
+				document.getElementById("error").style.display = 'none';
 			}
+			document.getElementById("error").innerHTML = message;
+		}		
+		
+		// Send user input to MDM
+		function send_login() {
+			alert("LOGIN###" + document.getElementById("entry").value);
+			mdm_disable(); // disabling a field makes its value inaccessible, so disable after sending the value (not before)
 			return false;
 		}
-
-		// Called by MDM to show an error message
-		function show_error(error) {
-			error_message.style.display = 'block';
-			error_message.innerHTML = error;			
-		}	
 		
-		// Called by MDM to clear error messages
-		function clear_errors() {
-			error_message.style.display = 'none';
-			error_message.innerHTML = "";
+		function init() {
+			document.getElementById("error").style.display = 'none';
 		}
-
-		// Called by MDM when the page is finished loading
-		function init() {	
-			mode = 0;				
-			label = document.getElementById("label");
-			entry = document.getElementById("entry");			
-			info_message = document.getElementById("info_message");													
-			error_message = document.getElementById("error_message");
-			clear_errors();		
-		}	
-		
-		// Called by MDM when the page needs to be re-nitialized
-		function reinit() {			
-			mode = 0;			
-			info_message.innerHTML = "$enter_your_username_label";
-			label.innerHTML = "$username_label";
-			entry.type = "text";
-			entry.value = "";
-		}
-		
+	
 	</script>
 	
 </head>
 <body>
 	
 	<div class="box">
-
-		<p>Welcome to $hostname</p>
-				
-		<div id="info_message" class="alert alert-info">$enter_your_username_label</div>	
+		<div id="welcome_message"></div> <div id="clock"></div>
+									
+		<div id="error" class="alert alert-error"></div>
 		
 		<form class="form-inline" onSubmit="return send_login();">
 			<fieldset>			
-				<label class="muted" id="label">$username_label: </label>
+				<label id="label"></label>
 				<input type="text" class="input-medium" id="entry">
-				<button type="submit" class="btn btn-inverse">$ok_label</button>
+				<button type="submit" class="btn btn-inverse" id="ok_button">$ok_label</button>
 			</fieldset>
 		</form>
-		
-		<div id="error_message" class="alert alert-error"></div>	
+
+		<div id="message"></div>
 	
 	</div>	
 	
