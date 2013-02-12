@@ -251,6 +251,10 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 	else if (strcmp(command, "QUIT") == 0) {
 		gtk_main_quit();
 	}
+	else if (strcmp(command, "USER") == 0) {
+		printf ("%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_SELECT_USER, message_parts[1]);
+        fflush (stdout);
+	}
 	else {		
 		printf("Unknown command received from Webkit greeter: %s\n", command);
 	}    
@@ -267,6 +271,8 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 					mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN));
 	mdm_set_welcomemsg ();
 	update_clock (); 
+	
+	mdm_login_browser_populate ();
 	
 	if G_LIKELY ( ! DOING_MDM_DEVELOPMENT) {
 	    ctrlch = g_io_channel_unix_new (STDIN_FILENO);
@@ -1878,7 +1884,7 @@ process_operation (guchar       op_code,
 }
 
 
-static void
+void
 mdm_login_browser_populate (void)
 {
     GList *li;
@@ -1895,6 +1901,12 @@ mdm_login_browser_populate (void)
 	    label = g_strdup_printf ("<b>%s</b>\n%s",
 				     login,
 				     gecos);
+				     
+		gchar * user_face = g_strdup_printf("/home/%s/.face");
+		gchar * args = g_strdup_printf("%s\", \"%s", login, gecos);
+		webkit_execute_script("mdm_add_user", args);
+		g_free (args);
+		g_free (user_face);
 
 	    g_free (login);
 	    g_free (gecos);
@@ -3199,8 +3211,7 @@ main (int argc, char *argv[])
 	webkit_init();
 			
     mdm_login_gui_init ();
-
-	mdm_login_browser_populate ();
+	
 
     ve_signal_add (SIGHUP, mdm_reread_config, NULL);
 

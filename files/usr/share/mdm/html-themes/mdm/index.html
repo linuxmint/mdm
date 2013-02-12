@@ -6,6 +6,8 @@
 	
 	<script>	
 	
+		var users = Array();
+	
 		// Called by MDM to disable user input
 		function mdm_disable() {
 			document.getElementById("entry").value = "disabled";
@@ -74,6 +76,37 @@
 		function init() {
 			document.getElementById("error").style.display = 'none';
 		}
+		
+		// Called by MDM to add a user to the list of users
+		function mdm_add_user(username, gecos) {
+								
+			var box = document.createElement('div');
+				box.setAttribute('class', "user-info");
+				
+			var link = document.createElement('a');	
+				link.setAttribute('href', "javascript:alert('USER###"+username+"')");
+				
+			var picture = document.createElement('img');
+				picture.setAttribute('class', "user-picture");
+				picture.setAttribute('src', "file:///home/"+username+"/.face");
+				picture.setAttribute('onerror', "this.src='file:///usr/share/pixmaps/nobody.png';");
+				
+			var realname_div = document.createElement('div');
+				realname_div.setAttribute('class', "usergecos");
+				realname_div.innerHTML = gecos;
+				
+			var username_div = document.createElement('div');
+				username_div.setAttribute('class', "username");
+				username_div.innerHTML = username;
+																																
+			box.appendChild(link);
+			link.appendChild(picture);														
+			link.appendChild(realname_div);			
+			link.appendChild(username_div);			
+				
+			var src = document.getElementById("users");
+			src.appendChild(box);
+		}			
 	
 	</script>
 	
@@ -85,6 +118,8 @@
 	<a href="#" onClick="alert('SUSPEND###');">Suspend...</a>	
 	<a href="#" onClick="alert('RESTART###');">Restart...</a>	
 	<a href="#" onClick="alert('QUIT###');">Quit...</a>
+	
+	
 	
 	<div class="box">
 		<div id="welcome_message"></div> <div id="clock"></div>
@@ -102,6 +137,13 @@
 		<div id="message"></div>
 	
 	</div>	
+	
+	
+	
+	<div id="users"></div>
+		
+		
+	
 	
 </body>
 </html>

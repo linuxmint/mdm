@@ -23,3 +23,53 @@ body {
 	font-size:13px;	
 	overflow:hidden;		
 }
+
+.user-box {	
+	color: #ffffff;
+	position: fixed;
+	top: 20%;
+	left: 50%;
+	margin-top: -100px;
+	margin-left: -200px;	
+	background-color:rgba(80,80,80,0.9);
+	border-radius:5px;
+	border:2px #3a3a3a solid;
+	padding:10px;	
+	height: 200px;
+	
+	font-size:13px;	
+	overflow:hidden;		
+}
+
+.user-picture {
+	border-radius: 5px;
+	border:2px rgba(80,80,80,0.5) solid;
+	width: 64px;
+	height: 64px;	
+	-webkit-transition: all .6s ease-in-out;
+}
+
+.user-info {		
+	margin-left: 50px;
+	margin-top: 10px;
+	text-shadow: 1px 1px 1px #000;	
+	
+}
+
+.user-info:hover img{
+	border:2px #ffffff solid;		
+	-webkit-transition: all .6s ease-in-out;
+}
+
+.username {
+	font-style: italic;	
+}
+
+.usergecos {
+	font-weight:bold;
+}
+
+a {color:#dedede;text-decoration:none;}      /* unvisited link */
+a:hover {color:#ffffff;text-decoration:none;}  /* mouse over link */
+
+
