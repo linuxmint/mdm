@@ -1436,7 +1436,7 @@ static void
 mdm_login_gui_init (void)
 {    
     GtkWidget *frame1, *frame2;
-    GtkWidget *mbox, *menu, *menubar, *item; 
+    GtkWidget *mbox, *item; 
     gint i;            
     const gchar *theme_name;
     gchar *key_string = NULL;
@@ -1492,17 +1492,8 @@ mdm_login_gui_init (void)
     gtk_widget_show (mbox);
     gtk_container_add (GTK_CONTAINER (frame2), mbox);
     
-    menubar = gtk_menu_bar_new ();
-    gtk_widget_ref (GTK_WIDGET (menubar));
-    gtk_box_pack_start (GTK_BOX (mbox), menubar, FALSE, FALSE, 0);
-
-    menu = gtk_menu_new ();
-    
-    sessmenu = gtk_menu_item_new_with_mnemonic (_("S_ession"));
-    gtk_menu_shell_append (GTK_MENU_SHELL (menubar), sessmenu);
-    gtk_menu_item_set_submenu (GTK_MENU_ITEM (sessmenu), menu);
-    gtk_widget_show (GTK_WIDGET (sessmenu));
-
+   
+   
     mdm_lang_initialize_model (mdm_config_get_string (MDM_KEY_LOCALE_FILE));    
 
                 	
