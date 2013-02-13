@@ -77,7 +77,6 @@ gboolean MdmSuspendFound                    = FALSE;
 gboolean MdmHaltFound                       = FALSE;
 gboolean MdmRebootFound                     = FALSE;
 gboolean MdmAnyCustomCmdsFound              = FALSE;
-static gboolean disable_system_menu_buttons = FALSE;
 
 #define GTK_KEY "gtk-2.0"
 
@@ -232,6 +231,10 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 	else if (strcmp(command, "QUIT") == 0) {
 		gtk_main_quit();
 	}
+	else if (strcmp(command, "XDMCP") == 0) {
+		mdm_kill_thingies ();
+		_exit (DISPLAY_RUN_CHOOSER);
+	}
 	else if (strcmp(command, "USER") == 0) {
 		printf ("%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_SELECT_USER, message_parts[1]);
         fflush (stdout);
@@ -254,6 +257,33 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 	update_clock (); 
 	
 	mdm_login_browser_populate ();
+	
+	if ( ve_string_empty (g_getenv ("MDM_IS_LOCAL")) || !mdm_config_get_bool (MDM_KEY_SYSTEM_MENU)) {
+		webkit_execute_script("mdm_hide_suspend", NULL);			
+		webkit_execute_script("mdm_hide_restart", NULL);			
+		webkit_execute_script("mdm_hide_shutdown", NULL);
+		webkit_execute_script("mdm_hide_quit", NULL);
+		webkit_execute_script("mdm_hide_xdmcp", NULL);
+    }
+	
+	if (!mdm_working_command_exists (mdm_config_get_string (MDM_KEY_SUSPEND)) ||
+	    !mdm_common_is_action_available ("SUSPEND")) {
+		webkit_execute_script("mdm_hide_suspend", NULL);
+	}
+	if (!mdm_working_command_exists (mdm_config_get_string (MDM_KEY_REBOOT)) ||
+	    !mdm_common_is_action_available ("REBOOT")) {
+		webkit_execute_script("mdm_hide_restart", NULL);
+	}	
+	if (!mdm_working_command_exists (mdm_config_get_string (MDM_KEY_HALT)) ||
+	    !mdm_common_is_action_available ("HALT")) {
+		webkit_execute_script("mdm_hide_shutdown", NULL);
+	}	
+	if (ve_string_empty (g_getenv ("MDM_FLEXI_SERVER")) && ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
+		webkit_execute_script("mdm_hide_quit", NULL);
+	}
+	if (!mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
+		webkit_execute_script("mdm_hide_xdmcp", NULL);
+	}
 	
 	if G_LIKELY ( ! DOING_MDM_DEVELOPMENT) {
 	    ctrlch = g_io_channel_unix_new (STDIN_FILENO);
@@ -661,79 +691,6 @@ typedef struct _CursorOffset {
 	int y;
 } CursorOffset;
 
-static void
-mdm_run_mdmconfig (GtkWidget *w, gpointer data)
-{	
-
-	/* we should be now fine for focusing new windows */
-	mdm_wm_focus_new_windows (TRUE);
-
-	/* configure interruption */
-	printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_CONFIGURE);
-	fflush (stdout);
-}
-
-static void
-mdm_login_restart_handler (void)
-{
-	if (mdm_wm_warn_dialog (
-	    _("Are you sure you want to restart the computer?"), "",
-	    _("_Restart"), NULL, TRUE) == GTK_RESPONSE_YES) {
-
-		mdm_kill_thingies ();
-		_exit (DISPLAY_REBOOT);
-	}
-}
-
-static void
-mdm_custom_cmd_handler (GtkWidget *widget, gpointer data)
-{	
-	if (data) {
-		int *cmd_id = (int*)data;
-		gchar * key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, *cmd_id);
-		if (mdm_wm_warn_dialog (
-			    mdm_config_get_string (key_string) , "", GTK_STOCK_OK, NULL, TRUE) == GTK_RESPONSE_YES) {
-			
-			printf ("%c%c%c%d\n", STX, BEL, MDM_INTERRUPT_CUSTOM_CMD, *cmd_id);
-			fflush (stdout);
-		}
-		
-		g_free (key_string);		
-	}
-}
-
-static void
-mdm_login_halt_handler (void)
-{
-	if (mdm_wm_warn_dialog (
-	    _("Are you sure you want to Shut Down the computer?"), "",
-	    _("Shut _Down"), NULL, TRUE) == GTK_RESPONSE_YES) {
-
-		mdm_kill_thingies ();
-		_exit (DISPLAY_HALT);
-	}
-}
-
-static void
-mdm_login_use_chooser_handler (void)
-{
-	mdm_kill_thingies ();
-	_exit (DISPLAY_RUN_CHOOSER);
-}
-
-static void
-mdm_login_suspend_handler (void)
-{
-	if (mdm_wm_warn_dialog (
-	    _("Are you sure you want to suspend the computer?"), "",
-	    _("_Suspend"), NULL, TRUE) == GTK_RESPONSE_YES) {
-
-		/* suspend interruption */
-		printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_SUSPEND);
-		fflush (stdout);
-	}
-}
-
 static void 
 mdm_login_session_handler (GtkWidget *widget) 
 {
@@ -827,34 +784,6 @@ mdm_login_session_init (GtkWidget *menu)
                     tmp = tmp->next;
             }
     }
-}
-
-
-static void 
-mdm_login_language_handler (GtkMenuItem *menu_item, gpointer user_data) 
-{
-    mdm_lang_handler (user_data);
-}
-
-
-static GtkWidget *
-mdm_login_language_menu_new (void)
-{
-    GtkWidget *menu;
-    GtkWidget *item;
-
-    mdm_lang_initialize_model (mdm_config_get_string (MDM_KEY_LOCALE_FILE));
-
-    menu = gtk_menu_new ();
-
-    item = gtk_menu_item_new_with_mnemonic (_("Select _Language..."));
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-    g_signal_connect (G_OBJECT (item), "activate", 
-		      G_CALLBACK (mdm_login_language_handler), 
-		      NULL);
-    gtk_widget_show (GTK_WIDGET (item));
-
-    return menu;
 }
 
 static gboolean
@@ -1487,6 +1416,7 @@ webkit_init (void) {
 	html = str_replace(html, "$quit", _("Quit"));
 	html = str_replace(html, "$restart", _("Restart"));
 	html = str_replace(html, "$selectlanguage", _("Select Language"));
+	html = str_replace(html, "$remoteloginviaxdmcp", _("Remote Login via XDMCP..."));
 	
 	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
 
@@ -1565,124 +1495,9 @@ mdm_login_gui_init (void)
     gtk_menu_item_set_submenu (GTK_MENU_ITEM (sessmenu), menu);
     gtk_widget_show (GTK_WIDGET (sessmenu));
 
-    menu = mdm_login_language_menu_new ();
-    if (menu != NULL) {
-	langmenu = gtk_menu_item_new_with_mnemonic (_("_Language"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menubar), langmenu);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (langmenu), menu);
-	gtk_widget_show (GTK_WIDGET (langmenu));
-    }
+    mdm_lang_initialize_model (mdm_config_get_string (MDM_KEY_LOCALE_FILE));    
 
-    if (disable_system_menu_buttons == FALSE &&
-        mdm_config_get_bool (MDM_KEY_SYSTEM_MENU)) {
-
-        gboolean got_anything = FALSE;
-
-	menu = gtk_menu_new ();
-
-	if (mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
-		item = gtk_menu_item_new_with_mnemonic (_("Remote Login via _XDMCP..."));
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (mdm_login_use_chooser_handler),
-				  NULL);
-		gtk_widget_show (item);
-		got_anything = TRUE;
-	}
-
-	/*
-	 * Disable Configuration if using accessibility (AddGtkModules) since
-	 * using it with accessibility causes a hang.
-	 */
-	if (mdm_config_get_bool (MDM_KEY_CONFIG_AVAILABLE) &&
-	    !mdm_config_get_bool (MDM_KEY_ADD_GTK_MODULES) &&
-	    bin_exists (mdm_config_get_string (MDM_KEY_CONFIGURATOR))) {
-		item = gtk_menu_item_new_with_mnemonic (_("_Configure Login Manager..."));
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (mdm_run_mdmconfig),
-				  NULL);
-		gtk_widget_show (item);
-		got_anything = TRUE;
-	}
-
-	if (mdm_working_command_exists (mdm_config_get_string (MDM_KEY_REBOOT)) &&
-	    mdm_common_is_action_available ("REBOOT")) {
-		item = gtk_menu_item_new_with_mnemonic (_("_Restart"));
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (mdm_login_restart_handler), 
-				  NULL);
-		gtk_widget_show (GTK_WIDGET (item));
-		got_anything = TRUE;
-	}
-	
-	if (mdm_working_command_exists (mdm_config_get_string (MDM_KEY_HALT)) &&
-	    mdm_common_is_action_available ("HALT")) {
-		item = gtk_menu_item_new_with_mnemonic (_("Shut _Down"));
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (mdm_login_halt_handler), 
-				  NULL);
-		gtk_widget_show (GTK_WIDGET (item));
-		got_anything = TRUE;
-	}
-
-	if (mdm_working_command_exists (mdm_config_get_string (MDM_KEY_SUSPEND)) &&
-	    mdm_common_is_action_available ("SUSPEND")) {
-		item = gtk_menu_item_new_with_mnemonic (_("_Suspend"));
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (mdm_login_suspend_handler), 
-				  NULL);
-		gtk_widget_show (GTK_WIDGET (item));
-		got_anything = TRUE;
-	}
-	
-	if (mdm_common_is_action_available ("CUSTOM_CMD")) {
-		for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {			
-			key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-			if (mdm_working_command_exists (mdm_config_get_string (key_string))) {
-				gint * cmd_index = g_new0(gint, 1);
-				*cmd_index = i;
-				key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
-				item = gtk_menu_item_new_with_mnemonic (mdm_config_get_string (key_string));
-				gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-				g_signal_connect (G_OBJECT (item), "activate",
-						  G_CALLBACK (mdm_custom_cmd_handler), 
-						  cmd_index);
-				gtk_widget_show (GTK_WIDGET (item));
-				got_anything = TRUE;			
-			}
-			g_free (key_string);
-		}
-	}
-
-	if (got_anything) {
-		item = gtk_menu_item_new_with_mnemonic (_("_Actions"));
-		gtk_menu_shell_append (GTK_MENU_SHELL (menubar), item);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
-		gtk_widget_show (GTK_WIDGET (item));
-	}
-    }
-
-    /* Add a quit/disconnect item when in xdmcp mode or flexi mode */
-    /* Do note that the order is important, we always want "Quit" for
-     * flexi, even if not local (non-local xnest).  and Disconnect
-     * only for xdmcp */
-    if ( ! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER"))) {
-	    item = gtk_menu_item_new_with_mnemonic (_("_Quit"));
-    } else if (ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
-	    item = gtk_menu_item_new_with_mnemonic (_("D_isconnect"));
-    } else {
-	    item = NULL;
-    }
-    if (item != NULL) {
-	    gtk_menu_shell_append (GTK_MENU_SHELL (menubar), item);
-	    gtk_widget_show (GTK_WIDGET (item));
-	    g_signal_connect (G_OBJECT (item), "activate",
-			      G_CALLBACK (gtk_main_quit), NULL);
-    }              	
+                	
      
     GtkWidget *scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -2120,9 +1935,6 @@ main (int argc, char *argv[])
     }
 
     gtk_init (&argc, &argv);
-
-    if (ve_string_empty (g_getenv ("MDM_IS_LOCAL")))
-	disable_system_menu_buttons = TRUE;
 
     mdm_common_log_init ();
     mdm_common_log_set_debug (mdm_config_get_bool (MDM_KEY_DEBUG));
