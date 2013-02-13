@@ -46,8 +46,7 @@ body {
 }
 
 .user-info:hover img{
-	border:2px #ffffff solid;		
-	-webkit-transition: all .6s ease-in-out;
+				
 }
 
 .username {
@@ -56,6 +55,24 @@ body {
 
 .usergecos {
 	font-weight:bold;
+}
+
+.highlight-border img{
+	-webkit-transition: all .6s ease-in-out;
+}
+
+.highlight-border:hover img{
+	-webkit-transition: all .6s ease-in-out;
+	border:2px #ffffff solid;
+}
+
+/*TILT*/
+.tilt img{
+  -webkit-transition: all 0.2s ease-in-out;     
+}
+ 
+.tilt:hover img{
+  -webkit-transform: rotate(-3deg);         
 }
 
 a {color:#dedede;text-decoration:none;}      /* unvisited link */
