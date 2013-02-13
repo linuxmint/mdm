@@ -55,6 +55,11 @@
 			document.getElementById("message").innerHTML = message;			
 		}
 		
+		// Called by MDM to show a timed login countdown
+		function mdm_timed(message) {			
+			document.getElementById("timed").innerHTML = message;			
+		}
+		
 		// Called by MDM to show an error		
 		function mdm_error(message) {						
 			if (message != "") {
@@ -127,6 +132,8 @@
 		</form>
 
 		<div id="message"></div>
+		
+		<div id="timed"></div>
 	</div>	
 	
 	<div class="buttons">

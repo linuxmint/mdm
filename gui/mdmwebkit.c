@@ -575,6 +575,7 @@ mdm_timer (gpointer data)
 		autologin_msg = mdm_common_expand_text (
 			_("User %u will login in %t"));
 		gtk_label_set_text (GTK_LABEL (auto_timed_msg), autologin_msg);
+		webkit_execute_script("mdm_timed", autologin_msg);
 		gtk_widget_show (GTK_WIDGET (auto_timed_msg));
 		g_free (autologin_msg);
 		login_window_resize (FALSE /* force */);
