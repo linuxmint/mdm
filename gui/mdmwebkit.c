@@ -99,26 +99,13 @@ static gboolean webkit_ready = FALSE;
 static gchar * mdm_msg = "";
 
 static GtkWidget *login;
-static GtkWidget *table = NULL;
-static GtkWidget *label;
-static GtkWidget *icon_button = NULL;
-static GtkWidget *title_box = NULL;
-static GtkWidget *entry;
-static GtkWidget *ok_button;
-static GtkWidget *start_again_button;
-static GtkWidget *msg;
-static GtkWidget *auto_timed_msg;
-static GtkWidget *err_box;
 static guint err_box_clear_handler = 0;
-static gboolean require_quarter = FALSE;
 static GtkWidget *icon_win = NULL;
 static GtkWidget *sessmenu;
 static GtkWidget *langmenu;
 
 static gboolean login_is_local = FALSE;
 
-static GtkWidget *browser;
-static GtkTreeModel *browser_model;
 static GdkPixbuf *defface;
 
 /* Eew. Loads of global vars. It's hard to be event controlled while maintaining state */
@@ -146,12 +133,6 @@ static gboolean back_prog_watching_events = FALSE;
 static gboolean back_prog_delayed = FALSE;
 
 static guint timed_handler_id = 0;
-
-#if FIXME
-static char *selected_browser_user = NULL;
-#endif
-static gboolean  selecting_user = TRUE;
-static gchar    *selected_user = NULL;
 
 extern GList *sessions;
 extern GHashTable *sessnames;
@@ -573,10 +554,8 @@ mdm_timer (gpointer data)
 		 * the greeter, we don't parse it through the enriched text.
 		 */
 		autologin_msg = mdm_common_expand_text (
-			_("User %u will login in %t"));
-		gtk_label_set_text (GTK_LABEL (auto_timed_msg), autologin_msg);
-		webkit_execute_script("mdm_timed", autologin_msg);
-		gtk_widget_show (GTK_WIDGET (auto_timed_msg));
+			_("User %u will login in %t"));		
+		webkit_execute_script("mdm_timed", autologin_msg);		
 		g_free (autologin_msg);
 		login_window_resize (FALSE /* force */);
 	}
@@ -635,75 +614,11 @@ reap_flexiserver (gpointer data)
 }
 
 
-static gboolean
-mdm_event (GSignalInvocationHint *ihint,
-	   guint		n_param_values,
-	   const GValue	       *param_values,
-	   gpointer		data)
-{
-	GdkEvent *event;
-
-	/* HAAAAAAAAAAAAAAAAACK */
-	/* Since the user has not logged in yet and may have left/right
-	 * mouse buttons switched, we just translate every right mouse click
-	 * to a left mouse click */
-	if (n_param_values != 2 ||
-	    !G_VALUE_HOLDS (&param_values[1], GDK_TYPE_EVENT))
-	  return FALSE;
-	
-	event = g_value_get_boxed (&param_values[1]);
-	if ((event->type == GDK_BUTTON_PRESS ||
-	     event->type == GDK_2BUTTON_PRESS ||
-	     event->type == GDK_3BUTTON_PRESS ||
-	     event->type == GDK_BUTTON_RELEASE)
-	    && event->button.button == 3)
-		event->button.button = 1;
-
-	/* Support Ctrl-U for blanking the username/password entry */
-	if (event->type == GDK_KEY_PRESS &&
-	    (event->key.state & GDK_CONTROL_MASK) &&
-	    (event->key.keyval == GDK_u ||
-	     event->key.keyval == GDK_U)) {
-
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
-	}
-
-	return TRUE;
-}      
-
 static void
 mdm_login_done (int sig)
 {
 	mdm_kill_thingies ();
 	_exit (EXIT_SUCCESS);
-}
-
-static void
-set_screen_pos (GtkWidget *widget, int x, int y)
-{
-	int width, height;
-
-	g_return_if_fail (widget != NULL);
-	g_return_if_fail (GTK_IS_WIDGET (widget));
-
-	gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
-
-	/* allow negative values, to be like standard X geometry ones */
-	if (x < 0)
-		x = mdm_wm_screen.width + x - width;
-	if (y < 0)
-		y = mdm_wm_screen.height + y - height;
-
-	if (x < mdm_wm_screen.x)
-		x = mdm_wm_screen.x;
-	if (y < mdm_wm_screen.y)
-		y = mdm_wm_screen.y;
-	if (x > mdm_wm_screen.x + mdm_wm_screen.width - width)
-		x = mdm_wm_screen.x + mdm_wm_screen.width - width;
-	if (y > mdm_wm_screen.y + mdm_wm_screen.height - height)
-		y = mdm_wm_screen.y + mdm_wm_screen.height - height;
-
-	gtk_window_move (GTK_WINDOW (widget), x, y);
 }
 
 static guint set_pos_id = 0;
@@ -746,25 +661,9 @@ typedef struct _CursorOffset {
 	int y;
 } CursorOffset;
 
-static gboolean
-within_rect (GdkRectangle *rect, int x, int y)
-{
-	return
-		x >= rect->x &&
-		x <= rect->x + rect->width &&
-		y >= rect->y &&
-		y <= rect->y + rect->height;
-}
-
 static void
 mdm_run_mdmconfig (GtkWidget *w, gpointer data)
-{
-	gtk_widget_set_sensitive (browser, FALSE);
-
-	/* Make sure to unselect the user */
-	if (selected_user != NULL)
-		g_free (selected_user);
-	selected_user = NULL;
+{	
 
 	/* we should be now fine for focusing new windows */
 	mdm_wm_focus_new_windows (TRUE);
@@ -835,201 +734,6 @@ mdm_login_suspend_handler (void)
 	}
 }
 
-static void
-mdm_theme_handler (GtkWidget *widget, gpointer data)
-{
-    const char *theme_name = (const char *)data;
-
-    printf ("%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_THEME, theme_name);
-  
-    fflush (stdout);
-
-    mdm_set_theme (theme_name);
-
-    login_window_resize (FALSE);
-    mdm_wm_center_window (GTK_WINDOW (login));
-}
-
-static int dance_handler = 0;
-
-static gboolean
-dance (gpointer data)
-{
-	static double t1 = 0.0, t2 = 0.0;
-	double xm, ym;
-	int x, y;
-	static int width = -1;
-	static int height = -1;
-
-	if (width == -1)
-		width = mdm_wm_screen.width;
-	if (height == -1)
-		height = mdm_wm_screen.height;
-
-	if (login == NULL ||
-	    login->window == NULL) {
-		dance_handler = 0;
-		return FALSE;
-	}
-
-	xm = cos (2.31 * t1);
-	ym = sin (1.03 * t2);
-
-	t1 += 0.03 + (rand () % 10) / 500.0;
-	t2 += 0.03 + (rand () % 10) / 500.0;
-
-	x = mdm_wm_screen.x + (width / 2) + (width / 5) * xm;
-	y = mdm_wm_screen.y + (height / 2) + (height / 5) * ym;
-
-	set_screen_pos (login,
-			x - login->allocation.width / 2,
-			y - login->allocation.height / 2);
-
-	return TRUE;
-}
-
-static gboolean
-evil (const char *user)
-{	
-	if (dance_handler == 0 &&
-	    /* do not translate */
-	    strcmp (user, "Start Dancing") == 0) {
-		mdm_common_setup_cursor (GDK_UMBRELLA);
-		dance_handler = g_timeout_add (50, dance, NULL);		
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
-		return TRUE;
-	} else if (dance_handler != 0 &&
-		   /* do not translate */
-		   strcmp (user, "Stop Dancing") == 0) {
-		mdm_common_setup_cursor (GDK_LEFT_PTR);
-		g_source_remove (dance_handler);
-		dance_handler = 0;		
-		mdm_wm_center_window (GTK_WINDOW (login));
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
-		return TRUE;
-				 /* do not translate */
-	} else if (strcmp (user, "Gimme Random Cursor") == 0) {
-		mdm_common_setup_cursor (((rand () >> 3) % (GDK_LAST_CURSOR/2)) * 2);
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
-		return TRUE;
-				 /* do not translate */
-	} else if (strcmp (user, "Require Quater") == 0 ||
-		   strcmp (user, "Require Quarter") == 0) {
-		/* btw, note that I misspelled quarter before and
-		 * thus this checks for Quater as well as Quarter to
-		 * keep compatibility which is obviously important for
-		 * something like this */
-		require_quarter = TRUE;
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
-static void
-mdm_login_enter (GtkWidget *entry)
-{
-	const char *login_string;
-	const char *str;
-	char *tmp;
-
-	if (entry == NULL)
-		return;
-
-	gtk_widget_set_sensitive (entry, FALSE);
-	gtk_widget_set_sensitive (ok_button, FALSE);
-	gtk_widget_set_sensitive (start_again_button, FALSE);
-
-	login_string = gtk_entry_get_text (GTK_ENTRY (entry));
-
-	str = gtk_label_get_text (GTK_LABEL (label));
-	if (str != NULL &&
-	    (strcmp (str, _("Username:")) == 0 ||
-	     strcmp (str, _("_Username:")) == 0) &&
-	    /* If in timed login mode, and if this is the login
-	     * entry.  Then an enter by itself is sort of like I want to
-	     * log in as the timed user, really.  */
-	    ve_string_empty (login_string) &&
-	    timed_handler_id != 0) {
-		/* timed interruption */
-		printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_TIMED_LOGIN);
-		fflush (stdout);
-		return;
-	}
-
-	if (str != NULL &&
-	    (strcmp (str, _("Username:")) == 0 ||
-	     strcmp (str, _("_Username:")) == 0) &&
-	    /* evilness */
-	    evil (login_string)) {
-		/* obviously being 100% reliable is not an issue for
-		   this test */
-		gtk_widget_set_sensitive (entry, TRUE);
-		gtk_widget_grab_focus (webView);	
-		gtk_window_set_focus (GTK_WINDOW (login), webView);	
-		return;
-	}
-
-	/* clear the err_box */
-	if (err_box_clear_handler > 0)
-		g_source_remove (err_box_clear_handler);
-	err_box_clear_handler = 0;
-	gtk_label_set_text (GTK_LABEL (err_box), "");
-	webkit_execute_script("mdm_error", "");
-
-	tmp = ve_locale_from_utf8 (gtk_entry_get_text (GTK_ENTRY (entry)));
-	printf ("%c%s\n", STX, tmp);
-	fflush (stdout);
-	g_free (tmp);
-}
-
-static void
-mdm_login_ok_button_press (GtkButton *button, GtkWidget *entry)
-{
-	mdm_login_enter (entry);
-}
-
-static void
-mdm_login_start_again_button_press (GtkButton *button, GtkWidget *entry)
-{
-	GtkTreeSelection *selection;
-
-	if (browser != NULL) {
-		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
-		gtk_tree_selection_unselect_all (selection);
-	}
-
-	if (selected_user != NULL)
-		g_free (selected_user);
-	selected_user = NULL;
-
-	printf ("%c%c%c\n", STX, BEL,
-		MDM_INTERRUPT_CANCEL);
-	fflush (stdout);
-}
-
-static gboolean
-mdm_login_focus_in (GtkWidget *widget, GdkEventFocus *event)
-{
-	if (title_box != NULL)
-		gtk_widget_set_state (title_box, GTK_STATE_SELECTED);
-
-	if (icon_button != NULL)
-		gtk_widget_set_state (icon_button, GTK_STATE_NORMAL);
-
-	return FALSE;
-}
-
-static gboolean
-mdm_login_focus_out (GtkWidget *widget, GdkEventFocus *event)
-{
-	if (title_box != NULL)
-		gtk_widget_set_state (title_box, GTK_STATE_NORMAL);
-
-	return FALSE;
-}
-
 static void 
 mdm_login_session_handler (GtkWidget *widget) 
 {
@@ -1039,7 +743,7 @@ mdm_login_session_handler (GtkWidget *widget)
 
     s = g_strdup_printf (_("%s session selected"), mdm_session_name (current_session));
 
-    gtk_label_set_text (GTK_LABEL (msg), s);
+    //gtk_label_set_text (GTK_LABEL (msg), s);
     g_free (s);
 
     login_window_resize (FALSE /* force */);
@@ -1154,154 +858,11 @@ mdm_login_language_menu_new (void)
 }
 
 static gboolean
-theme_allowed (const char *theme)
-{
-	gchar * themestoallow = mdm_config_get_string (MDM_KEY_GTK_THEMES_TO_ALLOW);
-	char **vec;
-	int i;
-
-	if (ve_string_empty (themestoallow) ||
-	    g_ascii_strcasecmp (themestoallow, "all") == 0)
-		return TRUE;
-
-	vec = g_strsplit (themestoallow, ",", 0);
-	if (vec == NULL || vec[0] == NULL)
-		return TRUE;
-
-	for (i = 0; vec[i] != NULL; i++) {
-		if (strcmp (vec[i], theme) == 0) {
-			g_strfreev (vec);
-			return TRUE;
-		}
-	}
-
-	g_strfreev (vec);
-	return FALSE;
-}
-
-static GSList *
-build_theme_list (void)
-{
-    DIR *dir;
-    struct dirent *de;
-    gchar *theme_dir;
-    GSList *theme_list = NULL;
-
-    theme_dir = gtk_rc_get_theme_dir ();
-    dir = opendir (theme_dir);
-
-    while ((de = readdir (dir))) {
-	char *name;
-	if (de->d_name[0] == '.')
-		continue;
-	if ( ! theme_allowed (de->d_name))
-		continue;
-	name = g_build_filename (theme_dir, de->d_name, GTK_KEY, NULL);
-	if (g_file_test (name, G_FILE_TEST_IS_DIR))
-		theme_list = g_slist_append (theme_list, g_strdup (de->d_name));
-	g_free (name);
-    }
-    g_free (theme_dir);
-    closedir (dir);
-
-    return theme_list;
-}
-
-static GtkWidget *
-mdm_login_theme_menu_new (void)
-{
-    GSList *theme_list;
-    GtkWidget *item;
-    GtkWidget *menu;
-    int num = 1;
-
-    if ( ! mdm_config_get_bool (MDM_KEY_ALLOW_GTK_THEME_CHANGE))
-	    return NULL;
-
-    menu = gtk_menu_new ();
-    
-    for (theme_list = build_theme_list ();
-	 theme_list != NULL;
-	 theme_list = theme_list->next) {
-        char *menu_item_name;
-        char *theme_name = theme_list->data;
-	theme_list->data = NULL;
-
-	if (num < 10)
-		menu_item_name = g_strdup_printf ("_%d. %s", num, _(theme_name));
-	else if ((num -10) + (int)'a' <= (int)'z')
-		menu_item_name = g_strdup_printf ("_%c. %s",
-						  (char)(num-10)+'a',
-						  _(theme_name));
-	else
-		menu_item_name = g_strdup (theme_name);
-	num++;
-
-	item = gtk_menu_item_new_with_mnemonic (menu_item_name);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	gtk_widget_show (GTK_WIDGET (item));
-	g_signal_connect (G_OBJECT (item), "activate",
-			  G_CALLBACK (mdm_theme_handler), theme_name);
-	g_free (menu_item_name);
-    }
-    g_slist_free (theme_list);
-    return menu;
-}
-
-static gboolean
 err_box_clear (gpointer data)
-{
-	if (err_box != NULL)
-		gtk_label_set_text (GTK_LABEL (err_box), "");
-		webkit_execute_script("mdm_error", "");
-
+{	
+	webkit_execute_script("mdm_error", "");
 	err_box_clear_handler = 0;
 	return FALSE;
-}
-
-static void
-browser_set_user (const char *user)
-{
-  gboolean old_selecting_user = selecting_user;
-  GtkTreeSelection *selection;
-  GtkTreeIter iter = {0};
-  GtkTreeModel *tm = NULL;
-
-  if (browser == NULL)
-    return;
-
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
-  gtk_tree_selection_unselect_all (selection);
-
-  if (ve_string_empty (user))
-    return;
-
-  selecting_user = FALSE;
-
-  tm = gtk_tree_view_get_model (GTK_TREE_VIEW (browser));
-
-  if (gtk_tree_model_get_iter_first (tm, &iter))
-    {
-      do
-        {
-          char *login;
-	  gtk_tree_model_get (tm, &iter, GREETER_ULIST_LOGIN_COLUMN,
-			      &login, -1);
-	  if (login != NULL && strcmp (user, login) == 0)
-	    {
-	      GtkTreePath *path = gtk_tree_model_get_path (tm, &iter);
-	      gtk_tree_selection_select_iter (selection, &iter);
-	      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (browser),
-					    path, NULL,
-					    FALSE, 0.0, 0.0);
-	      gtk_tree_path_free (path);
-	      break;
-	    }
-	  
-        }
-      while (gtk_tree_model_iter_next (tm, &iter));
-    }
-  selecting_user = old_selecting_user;
 }
 
 static Display *
@@ -1351,15 +912,6 @@ greeter_is_capslock_on (void)
       return FALSE;
 
   return (states.locked_mods & LockMask) != 0;
-}
-
-static void
-face_browser_select_user (gchar *login)
-{
-        printf ("%c%c%c%s\n", STX, BEL,
-                MDM_INTERRUPT_SELECT_USER, login);
-
-        fflush (stdout);
 }
 
 static gboolean
@@ -1420,7 +972,7 @@ process_operation (guchar       op_code,
 	 * wants to log in, and well, we are the gullible kind */
 	g_free (curuser);
 	curuser = g_strdup (args);	
-    browser_set_user (curuser);
+    // WEBKIT TODO: SELECT THE USER curuser IN THE WEBKIT USER LIST
 	printf ("%c\n", STX);
 	fflush (stdout);
 	break;
@@ -1430,29 +982,16 @@ process_operation (guchar       op_code,
 	if (tmp != NULL && strcmp (tmp, _("Username:")) == 0) {
 		mdm_common_login_sound (mdm_config_get_string (MDM_KEY_SOUND_PROGRAM),
 					mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE),
-					mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN));
-		gtk_label_set_text_with_mnemonic (GTK_LABEL (label), _("_Username:"));
+					mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN));		
 		webkit_execute_script("mdm_prompt", _("Username:"));
 	} else {
-		if (tmp != NULL)
-			gtk_label_set_text (GTK_LABEL (label), tmp);
+		if (tmp != NULL)			
 			webkit_execute_script("mdm_prompt", tmp);
 	}
 	g_free (tmp);
 
-	gtk_widget_set_sensitive (GTK_WIDGET (start_again_button), !first_prompt);
 	first_prompt = FALSE;
-
-	gtk_widget_show (GTK_WIDGET (label));
-	gtk_entry_set_text (GTK_ENTRY (entry), "");
-	gtk_entry_set_max_length (GTK_ENTRY (entry), PW_ENTRY_SIZE);
-	gtk_entry_set_visibility (GTK_ENTRY (entry), TRUE);
-	gtk_widget_set_sensitive (entry, TRUE);
-	gtk_widget_set_sensitive (ok_button, FALSE);
-	//gtk_widget_grab_focus (entry);	
-	//gtk_window_set_focus (GTK_WINDOW (login), entry);	
-	gtk_widget_show (entry);
-
+	
 	/* replace rather then append next message string */
 	replace_msg = TRUE;
 
@@ -1464,29 +1003,16 @@ process_operation (guchar       op_code,
 
     case MDM_NOECHO:
 	tmp = ve_locale_to_utf8 (args);
-	if (tmp != NULL && strcmp (tmp, _("Password:")) == 0) {
-		gtk_label_set_text_with_mnemonic (GTK_LABEL (label), _("_Password:"));
+	if (tmp != NULL && strcmp (tmp, _("Password:")) == 0) {		
 		webkit_execute_script("mdm_noecho", _("Password:"));
 	} else {
 		if (tmp != NULL)
-			gtk_label_set_text (GTK_LABEL (label), tmp);
 			webkit_execute_script("mdm_noecho", tmp);
 	}
 	g_free (tmp);
-
-	gtk_widget_set_sensitive (GTK_WIDGET (start_again_button), !first_prompt);
+	
 	first_prompt = FALSE;
-
-	gtk_widget_show (GTK_WIDGET (label));
-	gtk_entry_set_text (GTK_ENTRY (entry), "");
-	gtk_entry_set_max_length (GTK_ENTRY (entry), PW_ENTRY_SIZE);
-	gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
-	gtk_widget_set_sensitive (entry, TRUE);
-	gtk_widget_set_sensitive (ok_button, FALSE);
-	//gtk_widget_grab_focus (entry);	
-	//gtk_window_set_focus (GTK_WINDOW (login), entry);	
-	gtk_widget_show (entry);
-
+	
 	/* replace rather then append next message string */
 	replace_msg = TRUE;
 
@@ -1506,35 +1032,29 @@ process_operation (guchar       op_code,
 	if ( ! replace_msg &&
 	   /* empty message is for clearing */
 	   ! ve_string_empty (args)) {
-		const char *oldtext;
-		//oldtext = gtk_label_get_text (GTK_LABEL (msg));
+		const char *oldtext;		
 		oldtext = g_strdup (mdm_msg);
 		if ( ! ve_string_empty (oldtext)) {
 			char *newtext;
 			tmp = ve_locale_to_utf8 (args);
 			newtext = g_strdup_printf ("%s\n%s", oldtext, tmp);
 			g_free (tmp);
-			mdm_msg = g_strdup (newtext);
-			//gtk_label_set_text (GTK_LABEL (msg), newtext);
+			mdm_msg = g_strdup (newtext);	
 			g_free (newtext);
 		} else {
-			tmp = ve_locale_to_utf8 (args);
-			//gtk_label_set_text (GTK_LABEL (msg), tmp);
+			tmp = ve_locale_to_utf8 (args);			
 			mdm_msg = g_strdup (tmp);
 			g_free (tmp);
 		}
 	} else {
 		tmp = ve_locale_to_utf8 (args);
-		mdm_msg = g_strdup (tmp);
-		//gtk_label_set_text (GTK_LABEL (msg), tmp);
+		mdm_msg = g_strdup (tmp);		
 		g_free (tmp);
 	}
 	replace_msg = FALSE;
-	
-	gtk_label_set_text (GTK_LABEL (msg), mdm_msg);
+		
 	webkit_execute_script("mdm_msg", mdm_msg);
-
-	gtk_widget_show (GTK_WIDGET (msg));
+	
 	printf ("%c\n", STX);
 	fflush (stdout);
 
@@ -1543,8 +1063,7 @@ process_operation (guchar       op_code,
 	break;
 
     case MDM_ERRBOX:
-	tmp = ve_locale_to_utf8 (args);
-	gtk_label_set_text (GTK_LABEL (err_box), tmp);	
+	tmp = ve_locale_to_utf8 (args);	
 	webkit_execute_script("mdm_error", tmp);
 	
 	g_free (tmp);
@@ -1704,18 +1223,11 @@ process_operation (guchar       op_code,
 	}
 
 	first_prompt = TRUE;
-
-	gtk_widget_set_sensitive (entry, TRUE);
-	gtk_widget_set_sensitive (ok_button, FALSE);
-	gtk_widget_set_sensitive (start_again_button, FALSE);
-    gtk_widget_set_sensitive (GTK_WIDGET (browser), TRUE);
-
+	
 	tmp = ve_locale_to_utf8 (args);
-	mdm_msg = g_strdup (tmp);	
-	gtk_label_set_text (GTK_LABEL (msg), mdm_msg);
+	mdm_msg = g_strdup (tmp);		
 	webkit_execute_script("mdm_msg", mdm_msg);
-	g_free (tmp);
-	gtk_widget_show (GTK_WIDGET (msg));
+	g_free (tmp);	
 
 	printf ("%c\n", STX);
 	fflush (stdout);
@@ -1728,34 +1240,13 @@ process_operation (guchar       op_code,
 		g_source_remove (timed_handler_id);
 		timed_handler_id = 0;
 	}
-
-	if (require_quarter) {
-		/* we should be now fine for focusing new windows */
-		mdm_wm_focus_new_windows (TRUE);
-
-		dlg = hig_dialog_new (NULL /* parent */,
-				      GTK_DIALOG_MODAL /* flags */,
-				      GTK_MESSAGE_INFO,
-				      GTK_BUTTONS_OK,
-				      /* translators:  This is a nice and evil eggie text, translate
-				       * to your favourite currency */
-				      _("Please insert 25 cents "
-					"to log in."),
-				      "");
-		mdm_wm_center_window (GTK_WINDOW (dlg));
-
-		mdm_wm_no_login_focus_push ();
-		gtk_dialog_run (GTK_DIALOG (dlg));
-		gtk_widget_destroy (dlg);
-		mdm_wm_no_login_focus_pop ();
-	}
-
+	 
 	/* Hide the login window now */
 	gtk_widget_hide (login);
 
 	if (messages_to_give) {
 		const char *oldtext;
-		oldtext = gtk_label_get_text (GTK_LABEL (msg));
+		oldtext = g_strdup (mdm_msg);
 
 		if ( ! ve_string_empty (oldtext)) {
 			/* we should be now fine for focusing new windows */
@@ -1889,78 +1380,18 @@ void
 mdm_login_browser_populate (void)
 {
     GList *li;
-
     for (li = users; li != NULL; li = li->next) {
-	    MdmUser *usr = li->data;
-	    GtkTreeIter iter = {0};
-	    char *label;
+	    MdmUser *usr = li->data;	    	    
 	    char *login, *gecos;
-
 	    login = mdm_common_text_to_escaped_utf8 (usr->login);
-	    gecos = mdm_common_text_to_escaped_utf8 (usr->gecos);
-
-	    label = g_strdup_printf ("<b>%s</b>\n%s",
-				     login,
-				     gecos);
-				     		
+	    gecos = mdm_common_text_to_escaped_utf8 (usr->gecos);	    				   
 		gchar * args = g_strdup_printf("%s\", \"%s", login, gecos);
 		webkit_execute_script("mdm_add_user", args);
 		g_free (args);
-
 	    g_free (login);
-	    g_free (gecos);
-	    gtk_list_store_append (GTK_LIST_STORE (browser_model), &iter);
-	    gtk_list_store_set (GTK_LIST_STORE (browser_model), &iter,
-				GREETER_ULIST_ICON_COLUMN, usr->picture,
-				GREETER_ULIST_LOGIN_COLUMN, usr->login,
-				GREETER_ULIST_LABEL_COLUMN, label,
-				-1);
-	    g_free (label);
+	    g_free (gecos);	    	    
     }
     return;
-}
-
-static void
-user_selected (GtkTreeSelection *selection, gpointer data)
-{
-  GtkTreeModel *tm = NULL;
-  GtkTreeIter iter = {0};
-
-#ifdef FIXME
-  g_free (selected_browser_user);
-  selected_browser_user = NULL;
-#endif
-
-  if (gtk_tree_selection_get_selected (selection, &tm, &iter)) {
-	char *login = NULL;
-	gtk_tree_model_get (tm, &iter, GREETER_ULIST_LOGIN_COLUMN,
-			      &login, -1);
-	if (login != NULL) {
-		const char *str = gtk_label_get_text (GTK_LABEL (label));
-
-		if (selecting_user &&
-		    str != NULL &&
-		    (strcmp (str, _("Username:")) == 0 ||
-		     strcmp (str, _("_Username:")) == 0)) {
-			gtk_entry_set_text (GTK_ENTRY (entry), login);
-		}
-#ifdef FIXME
-		selected_browser_user = g_strdup (login);
-#endif
-		if (selecting_user) {
-			face_browser_select_user (login);
-			if (selected_user != NULL)
-				g_free (selected_user);
-			selected_user = g_strdup (login);
-  		}
-  	}
-  }
-}
-
-static void
-browser_change_focus (GtkWidget *widget, GdkEventButton *event, gpointer data)
-{
-    gtk_widget_grab_focus (entry);	
 }
 
 gboolean
@@ -2011,102 +1442,6 @@ bin_exists (const char *command)
 	}
 }
 
-static gboolean
-window_browser_event (GtkWidget *window, GdkEvent *event, gpointer data)
-{
-	switch (event->type) {
-		/* FIXME: Fix fingering cuz it's cool */
-#ifdef FIXME
-	case GDK_KEY_PRESS:
-		if ((event->key.state & GDK_CONTROL_MASK) &&
-		    (event->key.keyval == GDK_f ||
-		     event->key.keyval == GDK_F) &&
-		    selected_browser_user != NULL) {
-			GtkWidget *d, *less;
-			char *command;
-			d = gtk_dialog_new_with_buttons (_("Finger"),
-							 NULL /* parent */,
-							 0 /* flags */,
-							 GTK_STOCK_OK,
-							 GTK_RESPONSE_OK,
-							 NULL);
-			gtk_dialog_set_has_separator (GTK_DIALOG (d), FALSE);
-			less = gnome_less_new ();
-			gtk_widget_show (less);
-			gtk_box_pack_start (GTK_BOX (GTK_DIALOG (d)->vbox),
-					    less,
-					    TRUE,
-					    TRUE,
-					    0);
-
-			/* hack to make this be the size of a terminal */
-			gnome_less_set_fixed_font (GNOME_LESS (less), TRUE);
-			{
-				int i;
-				char buf[82];
-				GtkWidget *text = GTK_WIDGET (GNOME_LESS (less)->text);
-				GdkFont *font = GNOME_LESS (less)->font;
-				for (i = 0; i < 81; i++)
-					buf[i] = 'X';
-				buf[i] = '\0';
-				gtk_widget_set_size_request
-					(text,
-					 gdk_string_width (font, buf) + 30,
-					 gdk_string_height (font, buf)*24+30);
-			}
-
-			command = g_strconcat ("finger ",
-					       selected_browser_user,
-					       NULL);
-			gnome_less_show_command (GNOME_LESS (less), command);
-
-			gtk_widget_grab_focus (GTK_WIDGET (less));
-
-			gtk_window_set_modal (GTK_WINDOW (d), TRUE);
-			mdm_wm_center_window (GTK_WINDOW (d));
-
-			mdm_wm_no_login_focus_push ();
-			gtk_dialog_run (GTK_DIALOG (d));
-			gtk_widget_destroy (d);
-			mdm_wm_no_login_focus_pop ();
-		}
-		break;
-#endif
-	default:
-		break;
-	}
-
-	return FALSE;
-}
-
-static gboolean
-key_release_event (GtkWidget *entry, GdkEventKey *event, gpointer data)
-{
-	const char *login_string;
-
-	/*
-	 * Allow tab to trigger enter; but not <modifier>-tab
-	 */
-	if ((event->keyval == GDK_Tab ||
-	     event->keyval == GDK_KP_Tab) &&
-	    (event->state & (GDK_CONTROL_MASK|GDK_MOD1_MASK|GDK_SHIFT_MASK)) == 0) {
-		mdm_login_enter (entry);
-		return TRUE;
-	}
-
-	/*
-	 * Set ok button to sensitive only if there are characters in
-	 * the entry field
-	 */
-	login_string = gtk_entry_get_text (GTK_ENTRY (entry));
-        if (login_string != NULL && login_string[0] != '\0')
-		gtk_widget_set_sensitive (ok_button, TRUE);
-	else
-		gtk_widget_set_sensitive (ok_button, FALSE);
-
-	return FALSE;
-}
-
 void
 mdm_set_welcomemsg (void)
 {
@@ -2152,8 +1487,7 @@ webkit_init (void) {
 	html = str_replace(html, "$quit", _("Quit"));
 	html = str_replace(html, "$restart", _("Restart"));
 	html = str_replace(html, "$selectlanguage", _("Select Language"));
-
-	// Load a web page into the browser instance
+	
 	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
 
 	g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(webkit_on_message), 0);
@@ -2162,15 +1496,10 @@ webkit_init (void) {
 
 static void
 mdm_login_gui_init (void)
-{
-    GtkTreeSelection *selection;
+{    
     GtkWidget *frame1, *frame2;
-    GtkWidget *mbox, *menu, *menubar, *item;
-    GtkWidget *stack, *hline1, *hline2;
-    GtkWidget *bbox = NULL;
-    GtkWidget /**help_button,*/ *button_box;
-    gint i;        
-    GtkWidget *thememenu;
+    GtkWidget *mbox, *menu, *menubar, *item; 
+    gint i;            
     const gchar *theme_name;
     gchar *key_string = NULL;
 
@@ -2199,11 +1528,7 @@ mdm_login_gui_init (void)
                       G_CALLBACK (key_press_event), NULL);
 
     gtk_window_set_title (GTK_WINDOW (login), _("MDM Login"));
-    /* connect for fingering */
-    
-	g_signal_connect (G_OBJECT (login), "event",
-                    G_CALLBACK (window_browser_event), NULL);
-
+        	
     frame1 = gtk_frame_new (NULL);
     gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_OUT);
     gtk_container_set_border_width (GTK_CONTAINER (frame1), 0);
@@ -2341,14 +1666,6 @@ mdm_login_gui_init (void)
 	}
     }
 
-    menu = mdm_login_theme_menu_new ();
-    if (menu != NULL) {
-	thememenu = gtk_menu_item_new_with_mnemonic (_("_Theme"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menubar), thememenu);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (thememenu), menu);
-	gtk_widget_show (GTK_WIDGET (thememenu));
-    }
-
     /* Add a quit/disconnect item when in xdmcp mode or flexi mode */
     /* Do note that the order is important, we always want "Quit" for
      * flexi, even if not local (non-local xnest).  and Disconnect
@@ -2366,227 +1683,21 @@ mdm_login_gui_init (void)
 	    g_signal_connect (G_OBJECT (item), "activate",
 			      G_CALLBACK (gtk_main_quit), NULL);
     }              	
-
-    table = gtk_table_new (2, 2, FALSE);
-    gtk_widget_ref (table);
-    g_object_set_data_full (G_OBJECT (login), "table", table,
-			    (GDestroyNotify) gtk_widget_unref);
-    gtk_widget_show (table);
-    
+     
     GtkWidget *scrolled = gtk_scrolled_window_new (NULL, NULL);
-	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), GTK_POLICY_ALWAYS, GTK_POLICY_ALWAYS);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_box_pack_start (GTK_BOX (mbox), scrolled, TRUE, TRUE, 0);
-	gtk_container_add (GTK_CONTAINER (scrolled), webView);	
-        
-    gtk_box_pack_start (GTK_BOX (mbox), table, TRUE, TRUE, 0);
-    gtk_container_set_border_width (GTK_CONTAINER (table), 10);
-    gtk_table_set_row_spacings (GTK_TABLE (table), 10);
-    gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+	gtk_container_add (GTK_CONTAINER (scrolled), webView);	         
            
     int height;
-    GtkTreeViewColumn *column;
-
-    browser = gtk_tree_view_new ();
-    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (browser), FALSE);
-    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (browser),
-                       FALSE);
-    gtk_tree_view_set_enable_search (GTK_TREE_VIEW (browser),
-                     FALSE);
-    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
-    gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
-
-    g_signal_connect (selection, "changed",
-              G_CALLBACK (user_selected),
-              NULL);
-
-    g_signal_connect (browser, "button_release_event",
-              G_CALLBACK (browser_change_focus),
-              NULL);
-
-    browser_model = (GtkTreeModel *)gtk_list_store_new (3,
-             GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING);
-
-    gtk_tree_view_set_model (GTK_TREE_VIEW (browser), browser_model);
-    column = gtk_tree_view_column_new_with_attributes
-        (_("Icon"),
-         gtk_cell_renderer_pixbuf_new (),
-         "pixbuf", GREETER_ULIST_ICON_COLUMN,
-         NULL);
-    gtk_tree_view_append_column (GTK_TREE_VIEW (browser), column);
-  
-    column = gtk_tree_view_column_new_with_attributes
-        (_("Username"),
-         gtk_cell_renderer_text_new (),
-         "markup", GREETER_ULIST_LABEL_COLUMN,
-         NULL);
-    gtk_tree_view_append_column (GTK_TREE_VIEW (browser), column);
-   
-    bbox = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (bbox),
-                     GTK_SHADOW_IN);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (bbox),
-                    GTK_POLICY_NEVER,
-                    GTK_POLICY_AUTOMATIC);
-    gtk_container_add (GTK_CONTAINER (bbox), browser);
-
+    
     height = size_of_users + 4 /* some padding */;
     if (height > mdm_wm_screen.height * 0.25)
-        height = mdm_wm_screen.height * 0.25;
-
-    gtk_widget_set_size_request (GTK_WIDGET (bbox), -1, height);    
-               
-    stack = gtk_table_new (7, 1, FALSE);
-    gtk_widget_ref (stack);
-    g_object_set_data_full (G_OBJECT (login), "stack", stack,
-			    (GDestroyNotify) gtk_widget_unref);
-    gtk_widget_show (stack);
-        
-    /* Put in error box here */
-    err_box = gtk_label_new (NULL);
-    gtk_widget_set_name (err_box, "Error box");
-    g_signal_connect (G_OBJECT (err_box), "destroy",
-		      G_CALLBACK (gtk_widget_destroyed),
-		      &err_box);
-    gtk_label_set_line_wrap (GTK_LABEL (err_box), TRUE);
-    gtk_table_attach (GTK_TABLE (stack), err_box, 0, 1, 1, 2,
-		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-		      (GtkAttachOptions) (GTK_FILL), 0, 0);
-
-
-    hline1 = gtk_hseparator_new ();
-    gtk_widget_ref (hline1);
-    g_object_set_data_full (G_OBJECT (login), "hline1", hline1,
-			    (GDestroyNotify) gtk_widget_unref);
-    gtk_widget_show (hline1);
-    gtk_table_attach (GTK_TABLE (stack), hline1, 0, 1, 2, 3,
-		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-		      (GtkAttachOptions) (GTK_FILL), 0, 6);
-    
-    label = gtk_label_new_with_mnemonic (_("_Username:"));
-    gtk_widget_ref (label);
-    g_object_set_data_full (G_OBJECT (login), "label", label,
-			    (GDestroyNotify) gtk_widget_unref);
-    gtk_widget_show (label);
-    gtk_table_attach (GTK_TABLE (stack), label, 0, 1, 3, 4,
-		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-		      (GtkAttachOptions) (0), 0, 0);
-    gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-    gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-    gtk_misc_set_padding (GTK_MISC (label), 10, 5);
-    gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-    
-    entry = gtk_entry_new ();
-    /*
-     * Connect this on key release so we can make the OK button 
-     * sensitive based on whether the entry field has data.
-     */
-    g_signal_connect (G_OBJECT (entry), "key_release_event",
-		      G_CALLBACK (key_release_event), NULL);
-
-    if (mdm_config_get_bool (MDM_KEY_ENTRY_INVISIBLE))
-	    gtk_entry_set_invisible_char (GTK_ENTRY (entry), 0);
-    else if (mdm_config_get_bool (MDM_KEY_ENTRY_CIRCLES))
-	    gtk_entry_set_invisible_char (GTK_ENTRY (entry), 0x25cf);
-
-    gtk_entry_set_max_length (GTK_ENTRY (entry), PW_ENTRY_SIZE);
-    gtk_widget_set_size_request (entry, 250, -1);
-    gtk_widget_ref (entry);
-    g_object_set_data_full (G_OBJECT (login), "entry", entry,
-			    (GDestroyNotify) gtk_widget_unref);
-    gtk_entry_set_text (GTK_ENTRY (entry), "");
-    gtk_widget_show (entry);
-    gtk_table_attach (GTK_TABLE (stack), entry, 0, 1, 4, 5,
-		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-		      (GtkAttachOptions) (0), 10, 0);
-    g_signal_connect (G_OBJECT(entry), "activate", 
-		      G_CALLBACK (mdm_login_enter),
-		      NULL);
-
+        height = mdm_wm_screen.height * 0.25;    
+                                      
     /* cursor blinking is evil on remote displays, don't do it forever */
-    mdm_common_setup_blinking ();
-    mdm_common_setup_blinking_entry (entry);
-    
-    hline2 = gtk_hseparator_new ();
-    gtk_widget_ref (hline2);
-    g_object_set_data_full (G_OBJECT (login), "hline2", hline2,
-			    (GDestroyNotify) gtk_widget_unref);
-    gtk_widget_show (hline2);
-    gtk_table_attach (GTK_TABLE (stack), hline2, 0, 1, 5, 6,
-		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-		      (GtkAttachOptions) (GTK_FILL), 0, 10);
-
-    msg = gtk_label_new (NULL);
-    gtk_widget_set_name (msg, "Message");
-    gtk_label_set_line_wrap (GTK_LABEL (msg), TRUE);
-    gtk_label_set_justify (GTK_LABEL (msg), GTK_JUSTIFY_LEFT);
-    gtk_table_attach (GTK_TABLE (stack), msg, 0, 1, 6, 7,
-		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-		      (GtkAttachOptions) (GTK_FILL), 0, 10);
-
-    gtk_widget_ref (msg);
-    g_object_set_data_full (G_OBJECT (login), "msg", msg,
-			    (GDestroyNotify) gtk_widget_unref);
-    gtk_widget_show (msg);
-
-    auto_timed_msg = gtk_label_new ("");
-    gtk_widget_set_name (auto_timed_msg, "Message");
-    gtk_label_set_line_wrap (GTK_LABEL (auto_timed_msg), TRUE);
-    gtk_label_set_justify (GTK_LABEL (auto_timed_msg), GTK_JUSTIFY_LEFT);
-    gtk_table_attach (GTK_TABLE (stack), auto_timed_msg, 0, 1, 7, 8,
-		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-		      (GtkAttachOptions) (GTK_FILL), 0, 10);
-    gtk_widget_set_size_request (auto_timed_msg, -1, 15);
-    
-    gtk_widget_ref (auto_timed_msg);
-    gtk_widget_show (auto_timed_msg);
-
-    /* FIXME: No Documentation yet.... */
-    /*help_button = gtk_button_new_from_stock (GTK_STOCK_OK);
-    gtk_widget_show (help_button);*/
-
-    ok_button = gtk_button_new_from_stock (GTK_STOCK_OK);
-    gtk_widget_set_sensitive (ok_button, FALSE);
-    g_signal_connect (G_OBJECT (ok_button), "clicked",
-		      G_CALLBACK (mdm_login_ok_button_press),
-		      entry);
-    gtk_widget_show (ok_button);
-
-    start_again_button = gtk_button_new_with_mnemonic (_("_Start Again"));
-    g_signal_connect (G_OBJECT (start_again_button), "clicked",
-		      G_CALLBACK (mdm_login_start_again_button_press),
-		      entry);
-    gtk_widget_show (start_again_button);
-
-    button_box = gtk_hbutton_box_new ();
-    gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box),
-                               GTK_BUTTONBOX_END);
-    gtk_box_set_spacing (GTK_BOX (button_box), 10);
-
-#if 0
-    gtk_box_pack_end (GTK_BOX (button_box), GTK_WIDGET (help_button),
-                      FALSE, TRUE, 0);
-    gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (button_box), help_button, TRUE);
-#endif
-
-    gtk_box_pack_end (GTK_BOX (button_box), GTK_WIDGET (start_again_button),
-		      FALSE, TRUE, 0);
-    gtk_box_pack_end (GTK_BOX (button_box), GTK_WIDGET (ok_button),
-		      FALSE, TRUE, 0);
-    gtk_widget_show (button_box);
-    
-    gtk_table_attach (GTK_TABLE (stack), button_box, 0, 1, 8, 9,
-		      (GtkAttachOptions) (GTK_FILL),
-		      (GtkAttachOptions) (GTK_FILL), 10, 10);
-
-    /* Put it nicely together */
-    gtk_table_attach (GTK_TABLE (table), bbox, 0, 1, 1, 2,
-              (GtkAttachOptions) (GTK_FILL),
-              (GtkAttachOptions) (GTK_FILL), 0, 0);
-    gtk_table_attach (GTK_TABLE (table), stack, 1, 2, 1, 2,
-              (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-              (GtkAttachOptions) (GTK_FILL), 0, 0);
-              
-    
+    mdm_common_setup_blinking ();    
+                             
     gtk_widget_grab_focus (webView);	
     gtk_window_set_focus (GTK_WINDOW (login), webView);	
     g_object_set (G_OBJECT (login),
@@ -2597,31 +1708,8 @@ mdm_login_gui_init (void)
     
     mdm_wm_center_window (GTK_WINDOW (login));    
     
-
-    g_signal_connect (G_OBJECT (login), "focus_in_event", 
-		      G_CALLBACK (mdm_login_focus_in),
-		      NULL);
-    g_signal_connect (G_OBJECT (login), "focus_out_event", 
-		      G_CALLBACK (mdm_login_focus_out),
-		      NULL);
-
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
-
-    /* normally disable the prompt first */
-    if ( ! DOING_MDM_DEVELOPMENT) {
-	    gtk_widget_set_sensitive (entry, FALSE);
-	    gtk_widget_set_sensitive (ok_button, FALSE);
-	    gtk_widget_set_sensitive (start_again_button, FALSE);
-    }
-
     gtk_widget_show_all (GTK_WIDGET (login));    
-
-    /* Make sure userlist has no users selected */
-    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
-    gtk_tree_selection_unselect_all (selection);
-    if (selected_user)
-    g_free (selected_user);
-    selected_user = NULL;
+    
 }
 
 static GdkPixbuf *
@@ -3322,13 +2410,7 @@ main (int argc, char *argv[])
 	    g_timeout_add (60*1000, reap_flexiserver, NULL);
     }
 
-    sid = g_signal_lookup ("event",
-                           GTK_TYPE_WIDGET);
-    g_signal_add_emission_hook (sid,
-				0 /* detail */,
-				mdm_event,
-				NULL /* data */,
-				NULL /* destroy_notify */);
+    
 
     gtk_widget_queue_resize (login);
     gtk_widget_show_now (login);
