@@ -38,6 +38,14 @@ body {
 	-webkit-transition: all .6s ease-in-out;
 }
 
+.session-picture {
+	border-radius: 5px;
+	border:2px rgba(80,80,80,0.5) solid;
+	width: 24px;
+	height: 24px;	
+	margin-right: 5px;	
+}
+
 .user-info {		
 	margin-left: 50px;
 	margin-top: 10px;

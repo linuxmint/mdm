@@ -258,6 +258,8 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 	
 	mdm_login_browser_populate ();
 	
+	mdm_login_session_init ();
+	
 	if ( ve_string_empty (g_getenv ("MDM_IS_LOCAL")) || !mdm_config_get_bool (MDM_KEY_SYSTEM_MENU)) {
 		webkit_execute_script("mdm_hide_suspend", NULL);			
 		webkit_execute_script("mdm_hide_restart", NULL);			
@@ -706,8 +708,8 @@ mdm_login_session_handler (GtkWidget *widget)
     login_window_resize (FALSE /* force */);
 }
 
-static void 
-mdm_login_session_init (GtkWidget *menu)
+void 
+mdm_login_session_init ()
 {
     GSList *sessgrp = NULL;
     GList *tmp;
@@ -724,14 +726,14 @@ mdm_login_session_init (GtkWidget *menu)
 			       SESSION_NAME,
 			       LAST_SESSION);
             sessgrp = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
-            gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+           // gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
             g_signal_connect (G_OBJECT (item), "activate",
 			      G_CALLBACK (mdm_login_session_handler),
 			      NULL);
             gtk_widget_show (GTK_WIDGET (item));
             item = gtk_menu_item_new ();
             gtk_widget_set_sensitive (item, FALSE);
-            gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+            //gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
             gtk_widget_show (GTK_WIDGET (item));
     }
 
@@ -744,21 +746,22 @@ mdm_login_session_init (GtkWidget *menu)
 	    file = (char *) tmp->data;
 	    session = g_hash_table_lookup (sessnames, file);
 
-	    if (num < 10 && 
-	       (strcmp (file, MDM_SESSION_FAILSAFE_GNOME) != 0) &&
-	       (strcmp (file, MDM_SESSION_FAILSAFE_XTERM) != 0))
-		    label = g_strdup_printf ("_%d. %s", num, session->name);
-	    else
-		    label = g_strdup (session->name);
+	    //if (num < 10 && 
+	    //   (strcmp (file, MDM_SESSION_FAILSAFE_GNOME) != 0) &&
+	    //   (strcmp (file, MDM_SESSION_FAILSAFE_XTERM) != 0))
+		//    label = g_strdup_printf ("_%d. %s", num, session->name);
+	    //else
+			label = g_strdup (session->name);
 	    num++;
 
 	    item = gtk_radio_menu_item_new_with_mnemonic (sessgrp, label);
+	    webkit_execute_script("mdm_add_session", label);
 	    g_free (label);
 	    g_object_set_data_full (G_OBJECT (item), SESSION_NAME,
 		 g_strdup (file), (GDestroyNotify) g_free);
 
 	    sessgrp = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
-	    gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+	    //gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	    g_signal_connect (G_OBJECT (item), "activate",
 		G_CALLBACK (mdm_login_session_handler), NULL);
 	    gtk_widget_show (GTK_WIDGET (item));
@@ -1345,7 +1348,6 @@ update_clock (void)
 gboolean
 check_webkit (void)
 {
-	printf ("OK");
 	g_timeout_add (1000, (GSourceFunc)check_webkit, NULL);
 	return FALSE;
 }
@@ -1414,9 +1416,15 @@ webkit_init (void) {
 	html = str_replace(html, "$shutdown", _("Shutdown"));
 	html = str_replace(html, "$suspend", _("Suspend"));
 	html = str_replace(html, "$quit", _("Quit"));
-	html = str_replace(html, "$restart", _("Restart"));
-	html = str_replace(html, "$selectlanguage", _("Select Language"));
+	html = str_replace(html, "$restart", _("Restart"));	
 	html = str_replace(html, "$remoteloginviaxdmcp", _("Remote Login via XDMCP..."));
+	
+	html = str_replace(html, "$session", _("Session"));
+	html = str_replace(html, "$selectsession", _("Select a session"));
+	
+	html = str_replace(html, "$language", _("Language"));
+	html = str_replace(html, "$selectlanguage", _("Select a language"));
+	
 	
 	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
 
@@ -1489,7 +1497,7 @@ mdm_login_gui_init (void)
     gtk_box_pack_start (GTK_BOX (mbox), menubar, FALSE, FALSE, 0);
 
     menu = gtk_menu_new ();
-    mdm_login_session_init (menu);
+    
     sessmenu = gtk_menu_item_new_with_mnemonic (_("S_ession"));
     gtk_menu_shell_append (GTK_MENU_SHELL (menubar), sessmenu);
     gtk_menu_item_set_submenu (GTK_MENU_ITEM (sessmenu), menu);

@@ -3,7 +3,8 @@
 <head>	
 	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">	
 	<link href="theme.css" rel="stylesheet" media="screen">			
-	
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-1.9.1.min.js"></script>	
 	<script>	
 	
 		var users = Array();
@@ -83,7 +84,7 @@
 		}
 		
 		// Called by MDM to add a user to the list of users
-		function mdm_add_user(username, gecos) {
+		function mdm_add_user(username, gecos) {					
 								
 			var box = document.createElement('div');
 				box.setAttribute('class', "highlight-border tilt user-info");
@@ -111,6 +112,36 @@
 				
 			var src = document.getElementById("users");
 			src.appendChild(box);
+		}	
+		
+		// Called by MDM to add a session to the list of sessions
+		function mdm_add_session(session_name) {
+			
+			session_name = session_name.replace("Ubuntu", "Unity");
+			
+			var filename = session_name.toLowerCase();
+			filename = filename.replace(/ /g, "-");
+			filename = filename.replace(/\(/g, "");
+			filename = filename.replace(/\)/g, "");
+							
+			var li = document.createElement('li');			
+				
+			var link = document.createElement('a');	
+				link.setAttribute('href', "javascript:alert('SESSION###"+session_name+"')");
+				
+			var picture = document.createElement('img');
+				picture.setAttribute('class', "session-picture");
+				picture.setAttribute('src', "img/sessions/"+filename+".svg");
+				picture.setAttribute('onerror', "this.src='img/sessions/default.svg';");
+							
+			var name_div = document.createTextNode(session_name);				
+																																
+			li.appendChild(link);
+			link.appendChild(picture);
+			link.appendChild(name_div);
+				
+			var src = document.getElementById("sessions");
+			src.appendChild(li);
 		}		
 		
 		// Called by MDM if the SHUTDOWN command shouldn't appear in the greeter
@@ -163,8 +194,13 @@
 	
 	<div class="buttons">
 		<div class="btn-toolbar">
+			<div  align="left" class="btn-group">
+                <button class="btn btn-small dropdown-toggle" data-toggle="dropdown" title="$selectsession"><i class="icon-flag"> </i> $session <span class="caret"></span></button>
+                <ul class="dropdown-menu" id="sessions">                                                       
+                </ul>
+            </div>
 			<div class="btn-group">
-				<a class="btn btn-small btn-alert" href="#" onClick="alert('LANGUAGE###');" title="$selectlanguage"><i class="icon-globe"></i></a>
+				<a class="btn btn-small btn-alert" href="#" onClick="alert('LANGUAGE###');" title="$selectlanguage"><i class="icon-globe"> </i> $language</a>
 			</div>
 			<div class="btn-group">
 				<a class="btn btn-small" href="#" onClick="alert('SHUTDOWN###');" title="$shutdown" id="shutdown"><i class="icon-off"></i></a>
@@ -179,8 +215,7 @@
 			</div>
 		</div>
 	</div>	
-	
-	
+		
 	
 	
 	
