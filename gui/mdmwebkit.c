@@ -1442,9 +1442,7 @@ webkit_init (void) {
 
 static void
 mdm_login_gui_init (void)
-{    
-    GtkWidget *frame1, *frame2;
-    GtkWidget *mbox, *item; 
+{      
     gint i;            
     const gchar *theme_name;
     gchar *key_string = NULL;
@@ -1461,8 +1459,10 @@ mdm_login_gui_init (void)
     }
 
     login = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_decorated(login, TRUE);
-    gtk_window_set_default_size (login, 1200, 1200);
+    gtk_window_set_decorated (GTK_WINDOW (login), FALSE);
+    gtk_window_set_default_size (GTK_WINDOW (login), 
+			       mdm_wm_screen.width, 
+			       mdm_wm_screen.height);
     
     g_object_ref (login);
     g_object_set_data_full (G_OBJECT (login), "login", login,
@@ -1472,44 +1472,14 @@ mdm_login_gui_init (void)
 
     g_signal_connect (G_OBJECT (login), "key_press_event",
                       G_CALLBACK (key_press_event), NULL);
-
-    gtk_window_set_title (GTK_WINDOW (login), _("MDM Login"));
-        	
-    frame1 = gtk_frame_new (NULL);
-    gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_OUT);
-    gtk_container_set_border_width (GTK_CONTAINER (frame1), 0);
-    gtk_container_add (GTK_CONTAINER (login), frame1);
-    g_object_set_data_full (G_OBJECT (login), "frame1", frame1,
-			    (GDestroyNotify) gtk_widget_unref);
-    gtk_widget_ref (GTK_WIDGET (frame1));
-    gtk_widget_show (GTK_WIDGET (frame1));
-
-    frame2 = gtk_frame_new (NULL);
-    gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
-    gtk_container_set_border_width (GTK_CONTAINER (frame2), 2);
-    gtk_container_add (GTK_CONTAINER (frame1), frame2);
-    g_object_set_data_full (G_OBJECT (login), "frame2", frame2,
-			    (GDestroyNotify) gtk_widget_unref);
-    gtk_widget_ref (GTK_WIDGET (frame2));
-    gtk_widget_show (GTK_WIDGET (frame2));
-
-    mbox = gtk_vbox_new (FALSE, 0);
-    gtk_widget_ref (mbox);
-    g_object_set_data_full (G_OBJECT (login), "mbox", mbox,
-			    (GDestroyNotify) gtk_widget_unref);
-    gtk_widget_show (mbox);
-    gtk_container_add (GTK_CONTAINER (frame2), mbox);
-    
    
-   
-    mdm_lang_initialize_model (mdm_config_get_string (MDM_KEY_LOCALE_FILE));    
-
-                	
+    mdm_lang_initialize_model (mdm_config_get_string (MDM_KEY_LOCALE_FILE));                    	
      
     GtkWidget *scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_box_pack_start (GTK_BOX (mbox), scrolled, TRUE, TRUE, 0);
+	
 	gtk_container_add (GTK_CONTAINER (scrolled), webView);	         
+	gtk_container_add (GTK_CONTAINER (login), scrolled);
            
     int height;
     
