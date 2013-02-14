@@ -126,8 +126,6 @@ extern gint mdm_timed_delay;
 
 static gboolean first_prompt = TRUE;
 
-static void login_window_resize (gboolean force);
-
 static void process_operation (guchar op_code, const gchar *args);
 static gboolean mdm_login_ctrl_handler (GIOChannel *source, GIOCondition cond, gint fd);
 
@@ -324,7 +322,6 @@ mdm_timer (gpointer data)
 			_("User %u will login in %t"));		
 		webkit_execute_script("mdm_timed", autologin_msg);		
 		g_free (autologin_msg);
-		login_window_resize (FALSE /* force */);
 	}
 
 	mdm_timed_delay--;
@@ -378,56 +375,6 @@ static void
 mdm_login_done (int sig)
 {
 	_exit (EXIT_SUCCESS);
-}
-
-static guint set_pos_id = 0;
-
-static gboolean
-set_pos_idle (gpointer data)
-{
-	mdm_wm_center_window (GTK_WINDOW (login));
-	
-	set_pos_id = 0;
-	return FALSE;
-}
-
-static void
-login_window_resize (gboolean force)
-{
-	/* allow opt out if we don't really need
-	 * a resize */
-	if ( ! force) {
-		GtkRequisition req;
-		int width, height;
-
-		gtk_window_get_size (GTK_WINDOW (login), &width, &height);
-		gtk_widget_size_request (login, &req);
-
-		if (req.width <= width && req.height <= height)
-			return;
-	}
-
-	GTK_WINDOW (login)->need_default_size = TRUE;
-	gtk_container_check_resize (GTK_CONTAINER (login));
-
-	if (set_pos_id == 0)
-		set_pos_id = g_idle_add (set_pos_idle, NULL);
-}
-
-
-typedef struct _CursorOffset {
-	int x;
-	int y;
-} CursorOffset;
-
-static void 
-mdm_login_session_handler (GtkWidget *widget) 
-{
-    gchar *s;
-    current_session = g_object_get_data (G_OBJECT (widget), SESSION_NAME);
-    s = g_strdup_printf (_("%s session selected"), mdm_session_name (current_session));
-    g_free (s);
-    login_window_resize (FALSE /* force */);
 }
 
 void 
@@ -633,7 +580,6 @@ process_operation (guchar       op_code,
 	/* the user has seen messages */
 	messages_to_give = FALSE;
 
-	login_window_resize (FALSE /* force */);
 	break;
 
     case MDM_NOECHO:
@@ -654,7 +600,6 @@ process_operation (guchar       op_code,
 	/* the user has seen messages */
 	messages_to_give = FALSE;
 
-	login_window_resize (FALSE /* force */);
 	break;
 
     case MDM_MSG:
@@ -693,8 +638,6 @@ process_operation (guchar       op_code,
 	printf ("%c\n", STX);
 	fflush (stdout);
 
-	login_window_resize (FALSE /* force */);
-
 	break;
 
     case MDM_ERRBOX:
@@ -713,7 +656,6 @@ process_operation (guchar       op_code,
 	printf ("%c\n", STX);
 	fflush (stdout);
 
-	login_window_resize (FALSE /* force */);
 	break;
 
     case MDM_ERRDLG:
@@ -831,24 +773,6 @@ process_operation (guchar       op_code,
 	break;
 
     case MDM_RESET:
-	if (login->window != NULL &&
-	    icon_win == NULL &&
-	    GTK_WIDGET_VISIBLE (login)) {
-		Window lw = GDK_WINDOW_XWINDOW (login->window);
-
-		mdm_wm_get_window_pos (lw, &x, &y);
-
-		for (i = 32 ; i > 0 ; i = i/4) {
-			mdm_wm_move_window_now (lw, i+x, y);
-			usleep (200);
-			mdm_wm_move_window_now (lw, x, y);
-			usleep (200);
-			mdm_wm_move_window_now (lw, -i+x, y);
-			usleep (200);
-			mdm_wm_move_window_now (lw, x, y);
-			usleep (200);
-		}
-	}
 	/* fall thru to reset */
 
     case MDM_RESETOK:
@@ -867,7 +791,6 @@ process_operation (guchar       op_code,
 	printf ("%c\n", STX);
 	fflush (stdout);
 
-	login_window_resize (FALSE /* force */);
 	break;
 
     case MDM_QUIT:
@@ -1174,37 +1097,6 @@ mdm_login_gui_init (void)
     
 }
 
-static GdkPixbuf *
-render_scaled_back (const GdkPixbuf *pb)
-{
-	int i;
-	int width, height;
-
-	GdkPixbuf *back = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-					  gdk_pixbuf_get_has_alpha (pb),
-					  8,
-					  gdk_screen_width (),
-					  gdk_screen_height ());
-
-	width = gdk_pixbuf_get_width (pb);
-	height = gdk_pixbuf_get_height (pb);
-
-	for (i = 0; i < mdm_wm_screens; i++) {
-		gdk_pixbuf_scale (pb, back,
-				  mdm_wm_allscreens[i].x,
-				  mdm_wm_allscreens[i].y,
-				  mdm_wm_allscreens[i].width,
-				  mdm_wm_allscreens[i].height,
-				  mdm_wm_allscreens[i].x /* offset_x */,
-				  mdm_wm_allscreens[i].y /* offset_y */,
-				  (double) mdm_wm_allscreens[i].width / width,
-				  (double) mdm_wm_allscreens[i].height / height,
-				  GDK_INTERP_BILINEAR);
-	}
-
-	return back;
-}
-
 enum {
 	RESPONSE_RESTART,
 	RESPONSE_REBOOT,
@@ -1441,9 +1333,6 @@ mdm_reread_config (int sig, gpointer data)
 
 		mdm_set_welcomemsg ();
 	}
-
-	if (resize)
-		login_window_resize (TRUE /* force */);
 
 	mdmcomm_comm_bulk_stop ();
 
