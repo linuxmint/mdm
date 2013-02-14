@@ -200,6 +200,13 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 	else if (strcmp(command, "LANGUAGE") == 0) {
 		mdm_lang_handler (NULL);
 	}
+	else if (strcmp(command, "SESSION") == 0) {
+		gchar *s;
+		current_session = message_parts[2];
+		s = g_strdup_printf (_("%s session selected"), mdm_session_name (current_session));
+		webkit_execute_script("mdm_msg",  s);
+		g_free (s);
+	}
 	else if (strcmp(command, "SHUTDOWN") == 0) {
 		if (mdm_wm_warn_dialog (
 			_("Are you sure you want to Shut Down the computer?"), "",
@@ -755,7 +762,8 @@ mdm_login_session_init ()
 	    num++;
 
 	    item = gtk_radio_menu_item_new_with_mnemonic (sessgrp, label);
-	    webkit_execute_script("mdm_add_session", label);
+	    gchar * args = g_strdup_printf("%s\", \"%s", label, file);
+	    webkit_execute_script("mdm_add_session", args);
 	    g_free (label);
 	    g_object_set_data_full (G_OBJECT (item), SESSION_NAME,
 		 g_strdup (file), (GDestroyNotify) g_free);

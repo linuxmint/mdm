@@ -115,7 +115,7 @@
 		}	
 		
 		// Called by MDM to add a session to the list of sessions
-		function mdm_add_session(session_name) {
+		function mdm_add_session(session_name, session_file) {
 			
 			session_name = session_name.replace("Ubuntu", "Unity");
 			
@@ -127,7 +127,7 @@
 			var li = document.createElement('li');			
 				
 			var link = document.createElement('a');	
-				link.setAttribute('href', "javascript:alert('SESSION###"+session_name+"')");
+				link.setAttribute('href', "javascript:alert('SESSION###"+session_name+"###"+session_file+"')");
 				
 			var picture = document.createElement('img');
 				picture.setAttribute('class', "session-picture");
