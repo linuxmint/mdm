@@ -115,22 +115,6 @@ static gint size_of_users = 0;
 static gchar *curuser = NULL;
 static gchar *session = NULL;
 
-/* back_prog_timeout_event_id: event of the timer.
- * back_prog_watcher_event_id: event of the background program watcher.
- * back_prog_pid: 	       process ID of the background program.
- * back_prog_has_run:	       true if the background program has run
- *  			       at least once.
- * back_prog_watching_events:  true if we are watching for user events.
- * back_prog_delayed: 	       true if the execution of the program has
- *                             been delayed.
- */
-static gint back_prog_timeout_event_id = -1;
-static gint back_prog_watcher_event_id = -1;
-static gint back_prog_pid = -1;
-static gboolean back_prog_has_run = FALSE;
-static gboolean back_prog_watching_events = FALSE;
-static gboolean back_prog_delayed = FALSE;
-
 static guint timed_handler_id = 0;
 
 extern GList *sessions;
@@ -143,19 +127,6 @@ extern gint mdm_timed_delay;
 static gboolean first_prompt = TRUE;
 
 static void login_window_resize (gboolean force);
-
-/* Background program logic */
-static void back_prog_on_exit (GPid pid, gint status, gpointer data);
-static gboolean back_prog_on_timeout (gpointer data);
-static gboolean back_prog_delay_timeout (GSignalInvocationHint *ihint, 
-					 guint n_param_values, 
-					 const GValue *param_values, 
-					 gpointer data);
-static void back_prog_watch_events (void);
-static gchar * back_prog_get_path (void);
-static void back_prog_launch_after_timeout (void);
-static void back_prog_run (void);
-static void back_prog_stop (void);
 
 static void process_operation (guchar op_code, const gchar *args);
 static gboolean mdm_login_ctrl_handler (GIOChannel *source, GIOCondition cond, gint fd);
@@ -212,7 +183,6 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 			_("Are you sure you want to Shut Down the computer?"), "",
 			_("Shut _Down"), NULL, TRUE) == GTK_RESPONSE_YES) {
 
-			mdm_kill_thingies ();
 			_exit (DISPLAY_HALT);
 		}
 	}
@@ -231,7 +201,6 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 			_("Are you sure you want to restart the computer?"), "",
 			_("_Restart"), NULL, TRUE) == GTK_RESPONSE_YES) {
 
-			mdm_kill_thingies ();
 			_exit (DISPLAY_REBOOT);
 		}
 	}
@@ -239,7 +208,6 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 		gtk_main_quit();
 	}
 	else if (strcmp(command, "XDMCP") == 0) {
-		mdm_kill_thingies ();
 		_exit (DISPLAY_RUN_CHOOSER);
 	}
 	else if (strcmp(command, "USER") == 0) {
@@ -309,140 +277,6 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
     }
 }
 
-/* 
- * This function is called when the background program exits.
- * It will add a timer to restart the program after the
- * restart delay has elapsed, if this is enabled.
- */
-static void 
-back_prog_on_exit (GPid pid, gint status, gpointer data)
-{
-	g_assert (back_prog_timeout_event_id == -1);
-	
-	back_prog_watcher_event_id = -1;
-	back_prog_pid = -1;
-	
-	back_prog_launch_after_timeout ();
-}
-
-/* 
- * This function starts the background program (if any) when
- * the background program timer triggers, unless the execution
- * has been delayed.
- */
-static gboolean 
-back_prog_on_timeout (gpointer data)
-{
-	g_assert (back_prog_watcher_event_id == -1);
-	g_assert (back_prog_pid == -1);
-	
-	back_prog_timeout_event_id = -1;
-	
-	if (back_prog_delayed) {
-	 	back_prog_launch_after_timeout ();
-	} else {
-		back_prog_run ();
-	}
-	
-	return FALSE;
-}
-
-/*
- * This function is called to delay the execution of the background
- * program when the user is doing something (when we detect an event).
- */
-static gboolean
-back_prog_delay_timeout (GSignalInvocationHint *ihint,
-	       		 guint n_param_values,
-	       		 const GValue *param_values,
-	       		 gpointer data)
-{
-	back_prog_delayed = TRUE;
-	return TRUE;
-}
-
-/*
- * This function creates signal listeners to catch user events.
- * That allows us to avoid spawning the background program
- * when the user is doing something.
- */
-static void
-back_prog_watch_events (void)
-	{
-	guint sid;
-	
-	if (back_prog_watching_events)
-		return;
-	
-	back_prog_watching_events = TRUE;
-	
-	sid = g_signal_lookup ("activate", GTK_TYPE_MENU_ITEM);
-	g_signal_add_emission_hook (sid, 0, back_prog_delay_timeout, 
-				    NULL, NULL);
-
-	sid = g_signal_lookup ("key_release_event", GTK_TYPE_WIDGET);
-	g_signal_add_emission_hook (sid, 0, back_prog_delay_timeout, 
-				    NULL, NULL);
-
-	sid = g_signal_lookup ("button_press_event", GTK_TYPE_WIDGET);
-	g_signal_add_emission_hook (sid, 0, back_prog_delay_timeout, 
-				    NULL, NULL);
-	}
-
-/*
- * This function returns the path of the background program
- * if there is one. Otherwise, NULL is returned.
- */
-static gchar *
-back_prog_get_path (void)
-{
-	gchar *backprog = mdm_config_get_string (MDM_KEY_BACKGROUND_PROGRAM);
-
-	if ((mdm_config_get_int (MDM_KEY_BACKGROUND_TYPE) == MDM_BACKGROUND_NONE ||
-	     mdm_config_get_bool (MDM_KEY_RUN_BACKGROUND_PROGRAM_ALWAYS)) &&
-	    ! ve_string_empty (backprog)) {
-		return backprog;
-	} else 
-		return NULL;
-}
-
-/* 
- * This function creates a timer to start the background 
- * program after the requested delay (in seconds) has elapsed.
- */ 
-static void 
-back_prog_launch_after_timeout ()
-{
-	int timeout;
-	
-	g_assert (back_prog_timeout_event_id == -1);
-	g_assert (back_prog_watcher_event_id == -1);
-	g_assert (back_prog_pid == -1);
-	
-	/* No program to run. */
-	if (! back_prog_get_path ())
-		return;
-	
-	/* First time. */
-	if (! back_prog_has_run) {
-		timeout = mdm_config_get_int (MDM_KEY_BACKGROUND_PROGRAM_INITIAL_DELAY);
-		
-	/* Already run, but we are allowed to restart it. */
-	} else if (mdm_config_get_bool (MDM_KEY_RESTART_BACKGROUND_PROGRAM)) {
-		timeout = mdm_config_get_int (MDM_KEY_BACKGROUND_PROGRAM_RESTART_DELAY);
-	
-	/* Already run, but we are not allowed to restart it. */
-	} else {
-		return;
-	}
-	
-	back_prog_delayed = FALSE;
-	back_prog_watch_events ();
-	back_prog_timeout_event_id = g_timeout_add (timeout * 1000,
-						    back_prog_on_timeout,
-						    NULL);
-}
-
 static GtkWidget *
 hig_dialog_new (GtkWindow      *parent,
 		GtkDialogFlags flags,
@@ -467,112 +301,6 @@ hig_dialog_new (GtkWindow      *parent,
 	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 14);
 
   	return dialog;
-}
-
-/*
- * This function starts the background program (if any).
- */
-static void
-back_prog_run (void)
-{
-	GPid pid = -1;
-	GError *error = NULL;
-	gchar *command = NULL;
-	gchar **back_prog_argv = NULL;
-	
-	g_assert (back_prog_timeout_event_id == -1);
-	g_assert (back_prog_watcher_event_id == -1);
-	g_assert (back_prog_pid == -1);
-	
-	command = back_prog_get_path ();
-	if (! command)
-		return;
-
-        mdm_common_debug ("Running background program <%s>", command);
-	
-	/* Focus new windows. We want to give focus to the background program. */
-	mdm_wm_focus_new_windows (TRUE);
-
-	back_prog_argv = NULL;
-	g_shell_parse_argv (command, NULL, &back_prog_argv, NULL);
-
-	/* Don't reap child automatically: we want to catch the event. */
-	if (! g_spawn_async (".", 
-			     back_prog_argv, 
-			     NULL, 
-			     (GSpawnFlags) (G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD), 
-			     NULL, 
-			     NULL, 
-			     &pid, 
-			     &error)) {
-			    
-		GtkWidget *dialog;
-		gchar *msg;
-		
-                mdm_common_debug ("Cannot run background program %s : %s", command, error->message);
-		msg = g_strdup_printf (_("Cannot run command '%s': %s."),
-		                       command,
-		                       error->message);
-					    
-		dialog = hig_dialog_new (NULL,
-					 GTK_DIALOG_MODAL,
-					 GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_OK,
-					 _("Cannot start background application"),
-					 msg);
-		g_free (msg);
-		
-		gtk_widget_show_all (dialog);
-		mdm_wm_center_window (GTK_WINDOW (dialog));
-
-		gtk_dialog_run (GTK_DIALOG (dialog));
-		gtk_widget_destroy (dialog);
-		g_error_free (error);
-		g_strfreev (back_prog_argv);
-		
-		return;
-	}
-	
-	g_strfreev (back_prog_argv);
-	back_prog_watcher_event_id = g_child_watch_add (pid, 
-							back_prog_on_exit,
-							NULL);
-	back_prog_pid = pid;
-	back_prog_has_run = TRUE;
-}
-
-/*
- * This function stops the background program if it is running,
- * and removes any associated timer or watcher.
- */
-static void 
-back_prog_stop (void)
-{
-	if (back_prog_timeout_event_id != -1) {
-		GSource *source = g_main_context_find_source_by_id
-					(NULL, back_prog_timeout_event_id);
-		if (source != NULL)
-			g_source_destroy (source);
-			
-		back_prog_timeout_event_id = -1;
-	}
-	
-	if (back_prog_watcher_event_id != -1) {
-		GSource *source = g_main_context_find_source_by_id
-					(NULL, back_prog_watcher_event_id);
-		if (source != NULL)
-			g_source_destroy (source);
-			
-		back_prog_watcher_event_id = -1;
-	}
-	
-	if (back_prog_pid != -1) {		
-		if (kill (back_prog_pid, SIGTERM) == 0) {
-			waitpid (back_prog_pid, NULL, 0);
-		}
-
-		back_prog_pid = -1;
-	}
 }
 
 /*
@@ -633,12 +361,6 @@ delay_reaping (GSignalInvocationHint *ihint,
 	return TRUE;
 }      
 
-void
-mdm_kill_thingies (void)
-{
-	back_prog_stop ();
-}
-
 static gboolean
 reap_flexiserver (gpointer data)
 {
@@ -646,7 +368,6 @@ reap_flexiserver (gpointer data)
 
 	if (reapminutes > 0 &&
 	    ((time (NULL) - last_reap_delay) / 60) > reapminutes) {
-		mdm_kill_thingies ();
 		_exit (DISPLAY_REMANAGE);
 	}
 	return TRUE;
@@ -656,7 +377,6 @@ reap_flexiserver (gpointer data)
 static void
 mdm_login_done (int sig)
 {
-	mdm_kill_thingies ();
 	_exit (EXIT_SUCCESS);
 }
 
@@ -704,14 +424,9 @@ static void
 mdm_login_session_handler (GtkWidget *widget) 
 {
     gchar *s;
-
     current_session = g_object_get_data (G_OBJECT (widget), SESSION_NAME);
-
     s = g_strdup_printf (_("%s session selected"), mdm_session_name (current_session));
-
-    //gtk_label_set_text (GTK_LABEL (msg), s);
     g_free (s);
-
     login_window_resize (FALSE /* force */);
 }
 
@@ -719,29 +434,17 @@ void
 mdm_login_session_init ()
 {
     GSList *sessgrp = NULL;
-    GList *tmp;
-    GtkWidget *item;
+    GList *tmp;    
     int num = 1;
     char *label;
 
     current_session = NULL;
     
     if (mdm_config_get_bool (MDM_KEY_SHOW_LAST_SESSION)) {
-            current_session = LAST_SESSION;
-            item = gtk_radio_menu_item_new_with_mnemonic (NULL, _("_Last"));
-            g_object_set_data (G_OBJECT (item),
-			       SESSION_NAME,
-			       LAST_SESSION);
-            sessgrp = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
-           // gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-            g_signal_connect (G_OBJECT (item), "activate",
-			      G_CALLBACK (mdm_login_session_handler),
-			      NULL);
-            gtk_widget_show (GTK_WIDGET (item));
-            item = gtk_menu_item_new ();
-            gtk_widget_set_sensitive (item, FALSE);
-            //gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-            gtk_widget_show (GTK_WIDGET (item));
+            current_session = LAST_SESSION;            
+			gchar * args = g_strdup_printf("%s\", \"%s", _("Last"), LAST_SESSION);
+			webkit_execute_script("mdm_add_session", args);
+			g_free (args);            
     }
 
     mdm_session_list_init ();
@@ -760,19 +463,11 @@ mdm_login_session_init ()
 	    //else
 			label = g_strdup (session->name);
 	    num++;
-
-	    item = gtk_radio_menu_item_new_with_mnemonic (sessgrp, label);
+	    
 	    gchar * args = g_strdup_printf("%s\", \"%s", label, file);
 	    webkit_execute_script("mdm_add_session", args);
+	    g_free (args);
 	    g_free (label);
-	    g_object_set_data_full (G_OBJECT (item), SESSION_NAME,
-		 g_strdup (file), (GDestroyNotify) g_free);
-
-	    sessgrp = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
-	    //gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	    g_signal_connect (G_OBJECT (item), "activate",
-		G_CALLBACK (mdm_login_session_handler), NULL);
-	    gtk_widget_show (GTK_WIDGET (item));
     }
 
     /* Select the proper session */
@@ -1209,8 +904,6 @@ process_operation (guchar       op_code,
 		messages_to_give = FALSE;
 	}
 
-	mdm_kill_thingies ();
-
 	gdk_flush ();
 
 	printf ("%c\n", STX);
@@ -1290,8 +983,7 @@ process_operation (guchar       op_code,
 	mdm_common_setup_cursor (GDK_WATCH);
 
 	mdm_wm_save_wm_order ();
-
-	mdm_kill_thingies ();
+	
 	gdk_flush ();
 
 	printf ("%c\n", STX);
@@ -1309,7 +1001,6 @@ process_operation (guchar       op_code,
 	break;
 	
     default:
-	mdm_kill_thingies ();
 	mdm_common_fail_greeter ("Unexpected greeter command received: '%c'", op_code);
 	break;
     }
@@ -1358,27 +1049,6 @@ check_webkit (void)
 {
 	g_timeout_add (1000, (GSourceFunc)check_webkit, NULL);
 	return FALSE;
-}
-
-/* doesn't check for executability, just for existence */
-static gboolean
-bin_exists (const char *command)
-{
-	char *bin;
-
-	if (ve_string_empty (command))
-		return FALSE;
-
-	/* Note, check only for existence, not for executability */
-	bin = ve_first_word (command);
-	if (bin != NULL &&
-	    g_access (bin, F_OK) == 0) {
-		g_free (bin);
-		return TRUE;
-	} else {
-		g_free (bin);
-		return FALSE;
-	}
 }
 
 void
@@ -1533,90 +1203,6 @@ render_scaled_back (const GdkPixbuf *pb)
 	}
 
 	return back;
-}
-
-static void
-add_color_to_pb (GdkPixbuf *pb, GdkColor *color)
-{
-	int width = gdk_pixbuf_get_width (pb);
-	int height = gdk_pixbuf_get_height (pb);
-	int rowstride = gdk_pixbuf_get_rowstride (pb);
-	guchar *pixels = gdk_pixbuf_get_pixels (pb);
-	gboolean has_alpha = gdk_pixbuf_get_has_alpha (pb);
-	int i;
-	int cr = color->red >> 8;
-	int cg = color->green >> 8;
-	int cb = color->blue >> 8;
-
-	if ( ! has_alpha)
-		return;
-
-	for (i = 0; i < height; i++) {
-		int ii;
-		guchar *p = pixels + (rowstride * i);
-		for (ii = 0; ii < width; ii++) {
-			int r = p[0];
-			int g = p[1];
-			int b = p[2];
-			int a = p[3];
-
-			p[0] = (r * a + cr * (255 - a)) >> 8;
-			p[1] = (g * a + cg * (255 - a)) >> 8;
-			p[2] = (b * a + cb * (255 - a)) >> 8;
-			p[3] = 255;
-
-			p += 4;
-		}
-	}
-}
-
-/* setup background color/image */
-static void
-setup_background (void)
-{
-	GdkColor color;
-	GdkPixbuf *pb = NULL;
-	gchar *bg_color = mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
-	gchar *bg_image = mdm_config_get_string (MDM_KEY_BACKGROUND_IMAGE);
-	gint   bg_type  = mdm_config_get_int    (MDM_KEY_BACKGROUND_TYPE); 
-
-	if ((bg_type == MDM_BACKGROUND_IMAGE ||
-	     bg_type == MDM_BACKGROUND_IMAGE_AND_COLOR) &&
-	    ! ve_string_empty (bg_image))
-		pb = gdk_pixbuf_new_from_file (bg_image, NULL);
-
-	/* Load background image */
-	if (pb != NULL) {
-		if (gdk_pixbuf_get_has_alpha (pb)) {
-			if (bg_type == MDM_BACKGROUND_IMAGE_AND_COLOR) {
-				if (bg_color == NULL ||
-				    bg_color[0] == '\0' ||
-				    ! gdk_color_parse (bg_color,
-					       &color)) {
-					gdk_color_parse ("#000000", &color);
-				}
-				add_color_to_pb (pb, &color);
-			}
-		}
-		
-		GdkPixbuf *spb = render_scaled_back (pb);
-		g_object_unref (G_OBJECT (pb));
-		pb = spb;		
-
-		/* paranoia */
-		if (pb != NULL) {
-			mdm_common_set_root_background (pb);
-			g_object_unref (G_OBJECT (pb));
-		}
-	/* Load background color */
-	} else if (bg_type != MDM_BACKGROUND_NONE &&
-	           bg_type != MDM_BACKGROUND_IMAGE) {
-		mdm_common_setup_background_color (bg_color);
-	/* Load default background */
-	} else {
-		gchar *blank_color = g_strdup ("#000000");
-		mdm_common_setup_background_color (blank_color);
-	}
 }
 
 enum {
@@ -1797,7 +1383,6 @@ mdm_reread_config (int sig, gpointer data)
 		mdm_common_setup_cursor (GDK_WATCH);
 
 		mdm_wm_save_wm_order ();
-		mdm_kill_thingies ();
 		mdmcomm_comm_bulk_stop ();
 
 		_exit (DISPLAY_RESTARTGREETER);
@@ -1837,21 +1422,11 @@ mdm_reread_config (int sig, gpointer data)
 		mdm_common_setup_cursor (GDK_WATCH);
 
 		mdm_wm_save_wm_order ();
-		mdm_kill_thingies ();
 		mdmcomm_comm_bulk_stop ();
 
 		_exit (DISPLAY_RESTARTGREETER);
 		return TRUE;		
 	}
-
-	if (mdm_config_reload_string (MDM_KEY_BACKGROUND_IMAGE) ||
-	    mdm_config_reload_string (MDM_KEY_BACKGROUND_COLOR) ||
-	    mdm_config_reload_int    (MDM_KEY_BACKGROUND_TYPE)) {
-
-		mdm_kill_thingies ();
-		setup_background ();
-		back_prog_launch_after_timeout ();
-	}	
 
 	mdm_config_reload_string (MDM_KEY_SOUND_PROGRAM);
 	mdm_config_reload_bool   (MDM_KEY_SOUND_ON_LOGIN);
@@ -1893,6 +1468,7 @@ main (int argc, char *argv[])
     const char *mdm_version;
     const char *mdm_protocol_version;
     guint sid;
+    char *bg_color;
 
     if (g_getenv ("DOING_MDM_DEVELOPMENT") != NULL)
 	    DOING_MDM_DEVELOPMENT = TRUE;
@@ -1931,7 +1507,12 @@ main (int argc, char *argv[])
     /* Load the background as early as possible so MDM does not leave  */
     /* the background unfilled.   The cursor should be a watch already */
     /* but just in case */
-    setup_background ();
+    bg_color = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMED_COLOR);
+	/* If a graphical theme color does not exist fallback to the plain color */
+	if (ve_string_empty (bg_color)) {
+		bg_color = mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
+	}
+	mdm_common_setup_background_color (bg_color);
     mdm_common_setup_cursor (GDK_WATCH);
 
     if ( ! DOING_MDM_DEVELOPMENT &&
@@ -2073,7 +1654,7 @@ main (int argc, char *argv[])
 		    return DISPLAY_ABORT;
 	    }
     }
-
+    
     defface = mdm_common_get_face (NULL,
                    mdm_config_get_string (MDM_KEY_DEFAULT_FACE),
                    mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH),
@@ -2100,7 +1681,6 @@ main (int argc, char *argv[])
     sigaddset (&hup.sa_mask, SIGCHLD);
 
     if G_UNLIKELY (sigaction (SIGHUP, &hup, NULL) < 0) {
-	    mdm_kill_thingies ();
 	    mdm_common_fail_greeter (_("%s: Error setting up %s signal handler: %s"), "main",
 		"HUP", strerror (errno));
     }
@@ -2111,13 +1691,11 @@ main (int argc, char *argv[])
     sigaddset (&term.sa_mask, SIGCHLD);
 
     if G_UNLIKELY (sigaction (SIGINT, &term, NULL) < 0) {
-	    mdm_kill_thingies ();
 	    mdm_common_fail_greeter (_("%s: Error setting up %s signal handler: %s"), "main",
 		"INT", strerror (errno));
     }
 
     if G_UNLIKELY (sigaction (SIGTERM, &term, NULL) < 0) {
-	    mdm_kill_thingies ();
 	    mdm_common_fail_greeter (_("%s: Error setting up %s signal handler: %s"), "main",
 		"TERM", strerror (errno));
     }
@@ -2128,14 +1706,8 @@ main (int argc, char *argv[])
     sigaddset (&mask, SIGINT);
     
     if G_UNLIKELY (sigprocmask (SIG_UNBLOCK, &mask, NULL) == -1) {
-	    mdm_kill_thingies ();
 	    mdm_common_fail_greeter (_("Could not set signal mask!"));
     }
-
-    g_atexit (mdm_kill_thingies);
-    back_prog_launch_after_timeout ();
-
-    
 
     /* if in timed mode, delay timeout on keyboard or menu
      * activity */
@@ -2274,8 +1846,6 @@ main (int argc, char *argv[])
 
     mdm_common_pre_fetch_launch ();
     gtk_main ();
-
-    mdm_kill_thingies ();
 
     return EXIT_SUCCESS;
 }
