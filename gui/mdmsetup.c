@@ -150,7 +150,8 @@ enum {
 
 enum {
 	LOCAL_PLAIN,	
-	LOCAL_THEMED	
+	LOCAL_THEMED,
+	LOCAL_HTML	
 };
 
 enum {
@@ -1245,6 +1246,9 @@ combobox_timeout (GtkWidget *combo_box)
 		if (selected == LOCAL_THEMED) {
 			new_key_val = g_strdup (LIBEXECDIR "/mdmgreeter");			
 		}
+		else if (selected == LOCAL_HTML) {
+			new_key_val = g_strdup (LIBEXECDIR "/mdmwebkit");
+		}
 		else {
 			new_key_val = g_strdup (LIBEXECDIR "/mdmlogin");			
 		}		
@@ -1612,20 +1616,29 @@ combobox_changed (GtkWidget *combobox)
 
 		GtkWidget *local_plain_vbox;
 		GtkWidget *local_themed_vbox;
+		GtkWidget *local_html_vbox;
 		gint selected;
 		
 		local_plain_vbox = glade_xml_get_widget (xml, "local_plain_properties_vbox");
 		local_themed_vbox = glade_xml_get_widget (xml, "local_themed_properties_vbox");
+		local_html_vbox = glade_xml_get_widget (xml, "local_html_properties_vbox");
 
 		selected = gtk_combo_box_get_active (GTK_COMBO_BOX (combobox));
 
 		if (selected == LOCAL_THEMED) {						
-			gtk_widget_hide (local_plain_vbox);
+			gtk_widget_hide (local_plain_vbox);			
 			gtk_widget_show (local_themed_vbox);
+			gtk_widget_hide (local_html_vbox);
 		}
-		else {  /* Plain and Plain with face browser style */
+		else if (selected == LOCAL_HTML) {						
+			gtk_widget_hide (local_plain_vbox);			
+			gtk_widget_hide (local_themed_vbox);
+			gtk_widget_show (local_html_vbox);
+		}
+		else {  /* Plain */
 			gtk_widget_show (local_plain_vbox);
 			gtk_widget_hide (local_themed_vbox);
+			gtk_widget_hide (local_html_vbox);
 		}
 	}
 	else if (strcmp (ve_sure_string (key), MDM_KEY_REMOTE_GREETER) == 0) {
@@ -3775,32 +3788,32 @@ setup_greeter_combobox (const char *name,
 
 	/* Set initial state of local style combo box. */
 	if (strcmp (ve_sure_string (key), MDM_KEY_GREETER) == 0) {
+		GtkWidget *local_plain_vbox;
+		GtkWidget *local_themed_vbox;			
+		GtkWidget *local_html_vbox;
+
+		local_plain_vbox = glade_xml_get_widget (xml, "local_plain_properties_vbox");
+		local_themed_vbox = glade_xml_get_widget (xml, "local_themed_properties_vbox");
+		local_html_vbox = glade_xml_get_widget (xml, "local_html_properties_vbox");
 		
-		if (strstr (greetval, "/mdmlogin") != NULL) {
-	
-			GtkWidget *local_plain_vbox;
-			GtkWidget *local_themed_vbox;			
-
-			local_plain_vbox = glade_xml_get_widget (xml, "local_plain_properties_vbox");
-			local_themed_vbox = glade_xml_get_widget (xml, "local_themed_properties_vbox");
-			
-            gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_PLAIN);				
-
-			gtk_widget_show (local_plain_vbox);
-			gtk_widget_hide (local_themed_vbox);
-		}
-		else if (strstr (greetval, "/mdmgreeter") != NULL) {
-			GtkWidget *local_plain_vbox;
-			GtkWidget *local_themed_vbox;
-
-			local_plain_vbox = glade_xml_get_widget (xml, "local_plain_properties_vbox");
-			local_themed_vbox = glade_xml_get_widget (xml, "local_themed_properties_vbox");
-			
+		if (strstr (greetval, "/mdmgreeter") != NULL) {						
 			gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_THEMED);
-			
 			gtk_widget_hide (local_plain_vbox);
 			gtk_widget_show (local_themed_vbox);
+			gtk_widget_hide (local_html_vbox);
 		}
+		else if (strstr (greetval, "/mdmwebkit") != NULL) {			
+            gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_HTML);				
+			gtk_widget_hide (local_plain_vbox);
+			gtk_widget_hide (local_themed_vbox);
+			gtk_widget_show (local_html_vbox);
+		}
+		else {						
+			gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_PLAIN);			
+			gtk_widget_show (local_plain_vbox);
+			gtk_widget_hide (local_themed_vbox);
+			gtk_widget_hide (local_html_vbox);
+		}		
 	}
 	/* Set initial state of remote style combo box. */
 	else if (strcmp (ve_sure_string (key), MDM_KEY_REMOTE_GREETER) == 0) {

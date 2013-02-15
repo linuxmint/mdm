@@ -1472,7 +1472,8 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="items" translatable="yes">GTK
-Theme</property>
+Theme
+HTML</property>
                               </widget>
                               <packing>
                                 <property name="expand">True</property>
@@ -1923,6 +1924,20 @@ Random from selected
                                 <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkVBox" id="local_html_properties_vbox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </widget>
@@ -2769,6 +2784,20 @@ Random from selected
                                 <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkVBox" id="remote_html_properties_vbox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </widget>

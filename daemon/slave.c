@@ -3712,6 +3712,8 @@ session_child_run (struct passwd *pwent,
 		g_setenv ("MDM_GREETER_TYPE", "PLAIN", TRUE);
 	} else if (strstr (greeter, "mdmgreeter") != NULL) {
 		g_setenv ("MDM_GREETER_TYPE", "THEMED", TRUE);
+	} else if (strstr (greeter, "mdmwebkit") != NULL) {
+		g_setenv ("MDM_GREETER_TYPE", "HTML", TRUE);
 	} else {
 		/* huh? */
 		g_setenv ("MDM_GREETER_TYPE", "unknown", TRUE);
