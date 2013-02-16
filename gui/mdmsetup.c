@@ -63,7 +63,6 @@ static gint      MdmIconMaxHeight;
 static gint      MdmIconMaxWidth;
 static gboolean  MdmIncludeAll;
 static gboolean  MdmUserChangesUnsaved;
-static gboolean  MdmRandomFromSelectedChangesWarn;
 static gint      last_selected_command;
 
 /* set the DOING_MDM_DEVELOPMENT env variable if you want to
@@ -84,7 +83,6 @@ static GladeXML  *xml_commands;
 static GtkWidget *setup_notebook;
 static GList     *timeout_widgets = NULL;
 static gchar     *last_theme_installed = NULL;
-static char      *selected_themes = NULL;
 static char      *selected_theme  = NULL;
 static gchar     *config_file;
 static gchar     *custom_config_file;
@@ -105,8 +103,7 @@ enum {
 };
 
 enum {
-	THEME_COLUMN_SELECTED,
-	THEME_COLUMN_SELECTED_LIST,
+	THEME_COLUMN_SELECTED,	
 	THEME_COLUMN_DIR,
 	THEME_COLUMN_FILE,
 	THEME_COLUMN_SCREENSHOT,
@@ -119,11 +116,6 @@ enum {
 enum {
 	USERLIST_NAME,
 	USERLIST_NUM_COLUMNS
-};
-
-enum {
-	ONE_THEME,
-	RANDOM_THEME
 };
 
 enum {
@@ -1288,28 +1280,7 @@ combobox_timeout (GtkWidget *combo_box)
 			mdm_setup_config_set_string (key, new_val);
 		}
 		g_free (new_val);
-	} 
-	else if (strcmp (ve_sure_string (key), MDM_KEY_GRAPHICAL_THEME_RAND) == 0 ) {	
-	
-		/* Theme Combobox */
-		gboolean new_val;
-		gboolean old_val ;
-		
-		old_val = mdm_config_get_bool ((gchar *)key);
-
-		/* Choose to display radio or checkbox toggle column.
-		   We will only set this option to true if there is at least one
-		   item in the selected_themes list otherwise Random from selected
-		   will be disabled */
-		if (selected == RANDOM_THEME && !ve_string_empty (selected_themes))
-			new_val = TRUE;
-		else /* Default to one theme */
-			new_val = FALSE;
-
-		/* Update config */
-		if (new_val != old_val)
-			mdm_setup_config_set_bool (key, new_val);
-	}
+	} 	
 	/* Style combobox */
 	else if (strcmp (ve_sure_string (key), MDM_KEY_SERVER_CHOOSER) == 0) {
 		GtkWidget *mod_combobox;
@@ -1565,181 +1536,7 @@ combobox_changed (GtkWidget *combobox)
 			gtk_widget_hide (local_themed_vbox);
 			gtk_widget_hide (local_html_vbox);
 		}
-	}	
-	else if (strcmp (ve_sure_string (key), MDM_KEY_GRAPHICAL_THEME_RAND) == 0) {
-
-		GtkWidget *theme_list;
-		GtkWidget *theme_list_remote;
-		GtkWidget *delete_button;
-		GtkWidget *delete_button_remote;
-		GtkTreeViewColumn *radioColumn = NULL;
-		GtkTreeViewColumn *radioColumnRemote = NULL;
-		GtkTreeViewColumn *checkboxColumn = NULL;
-		GtkTreeViewColumn *checkboxColumnRemote = NULL;
-		GtkTreeSelection *selection;
-		GtkTreeIter iter;
-		gint selected;
-				
-		theme_list = glade_xml_get_widget (xml, "gg_theme_list");
-		theme_list_remote = glade_xml_get_widget (xml, "gg_theme_list_remote");
-		delete_button = glade_xml_get_widget (xml, "gg_delete_theme");
-		delete_button_remote = glade_xml_get_widget (xml, "gg_delete_theme_remote");
-
-		selected = gtk_combo_box_get_active (GTK_COMBO_BOX (combobox));
-
-		if (gtk_notebook_get_current_page (GTK_NOTEBOOK (setup_notebook)) == LOCAL_TAB) {
-			GtkWidget *mode_combobox;
-			
-			mode_combobox = glade_xml_get_widget (xml, "gg_mode_combobox_remote");
-			gtk_combo_box_set_active (GTK_COMBO_BOX (mode_combobox), selected);
-
-			if (mode_combobox != combobox) {
-				/* Display a warning when no themes are selected and the
-				   Random from selected option has been activated. 
-				   This is a bit of a HACK as combo_box handler is 
-				   called multiple times and we want this warning 
-				   to be displayed only once */
-				
-				if (selected == RANDOM_THEME && ve_string_empty (selected_themes)) {
-					GtkWidget *setup_dialog = glade_xml_get_widget(xml, "setup_dialog");
-					
-					GtkWidget *warn_dlg = hig_dialog_new (GTK_WINDOW (setup_dialog) /* parent */,
-									      GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT /* flags */,
-									      GTK_MESSAGE_WARNING,
-									      GTK_BUTTONS_OK,
-									      _("No themes selected!"),
-									      _("You need one or more themes selected for the "
-										"\"Random from selected\" option to be valid. "
-										"Failure to do so will force \"Selected only\" mode."));
-					gtk_dialog_run (GTK_DIALOG (warn_dlg));
-					gtk_widget_destroy (warn_dlg);
-					
-					MdmRandomFromSelectedChangesWarn = TRUE;
-				}
-				else if (selected == ONE_THEME)
-					MdmRandomFromSelectedChangesWarn = FALSE;
-			}
-		}
-		else {
-			GtkWidget *mode_combobox;
-			
-			mode_combobox = glade_xml_get_widget (xml, "gg_mode_combobox");
-			gtk_combo_box_set_active (GTK_COMBO_BOX (mode_combobox), selected);
-
-			if (mode_combobox != combobox) {
-				/* Display a warning when no themes are selected and the
-				   Random from selected option has been activated. 
-				   This is a bit of a HACK as combo_box handler is 
-				   called multiple times and we want this warning 
-				   to be displayed only once */
-				if (selected == RANDOM_THEME && ve_string_empty (selected_themes)) {
-					GtkWidget *setup_dialog = glade_xml_get_widget(xml, "setup_dialog");
-					
-					GtkWidget *warn_dlg = hig_dialog_new (GTK_WINDOW (setup_dialog) /* parent */,
-									      GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT /* flags */,
-									      GTK_MESSAGE_WARNING,
-									      GTK_BUTTONS_OK,
-									      _("No themes selected!"),
-									      _("You need one or more themes "
-										"selected for the \"Random from selected\" "
-										"option to be valid. Failure to do so will "
-										"force \"Selected only\" mode."));
-					gtk_dialog_run (GTK_DIALOG (warn_dlg));
-					gtk_widget_destroy (warn_dlg);
-					
-					MdmRandomFromSelectedChangesWarn = TRUE;
-				}
-				else if (selected == ONE_THEME) {
-					MdmRandomFromSelectedChangesWarn = FALSE;
-				}
-			}
-		}
-
-		radioColumn = gtk_tree_view_get_column (GTK_TREE_VIEW (theme_list),
-		                                        THEME_COLUMN_SELECTED);
-		radioColumnRemote = gtk_tree_view_get_column (GTK_TREE_VIEW (theme_list_remote),
-		                                              THEME_COLUMN_SELECTED);
-		checkboxColumn = gtk_tree_view_get_column (GTK_TREE_VIEW (theme_list),
-		                                           THEME_COLUMN_SELECTED_LIST);
-		checkboxColumnRemote = gtk_tree_view_get_column (GTK_TREE_VIEW (theme_list_remote),
-		                                                 THEME_COLUMN_SELECTED_LIST);
-				
-		/* Choose to display radio or checkbox toggle column */
-		if (selected == RANDOM_THEME) {
-			if (GTK_IS_TREE_VIEW_COLUMN (radioColumn)) 
-				gtk_tree_view_column_set_visible (radioColumn, FALSE);
-			if (GTK_IS_TREE_VIEW_COLUMN (radioColumnRemote))
-				gtk_tree_view_column_set_visible (radioColumnRemote, FALSE);
-			if (GTK_IS_TREE_VIEW_COLUMN (checkboxColumn))
-				gtk_tree_view_column_set_visible (checkboxColumn, TRUE);
-			if (GTK_IS_TREE_VIEW_COLUMN (checkboxColumnRemote))
-				gtk_tree_view_column_set_visible (checkboxColumnRemote, TRUE);
-		} else { /* Default to one theme */
-			if (GTK_IS_TREE_VIEW_COLUMN (radioColumn))
-				gtk_tree_view_column_set_visible (radioColumn, TRUE);
-			if (GTK_IS_TREE_VIEW_COLUMN (radioColumnRemote))
-				gtk_tree_view_column_set_visible (radioColumnRemote, TRUE);
-			if (GTK_IS_TREE_VIEW_COLUMN (checkboxColumn))
-				gtk_tree_view_column_set_visible (checkboxColumn, FALSE);
-			if (GTK_IS_TREE_VIEW_COLUMN (checkboxColumnRemote))
-				gtk_tree_view_column_set_visible (checkboxColumnRemote, FALSE);
-		}
-
-		/* Update delete button's sensitivity */
-		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (theme_list));
-		gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
-
-		if (!gtk_tree_selection_get_selected (selection, NULL, &iter)) {
-			gtk_widget_set_sensitive (delete_button, FALSE);
-			gtk_widget_set_sensitive (delete_button_remote, FALSE);
-		} 
-		else {
-			GValue value = {0, };
-			GtkTreeModel *model;
-			gboolean MdmGraphicalThemeRand;
-			
-			/* Determine if the theme selected is currently active */
-			model = gtk_tree_view_get_model (GTK_TREE_VIEW (theme_list));
-			
-			MdmGraphicalThemeRand = mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND);
-			if (MdmGraphicalThemeRand) {
-				gtk_tree_model_get_value (model, &iter,
-				                          THEME_COLUMN_SELECTED_LIST, &value);
-				
-				/* Make sure that the theme is not selected in the
-				   single theme mode */
-				if (!g_value_get_boolean (&value)) {
-					g_value_unset (&value);
-					gtk_tree_model_get_value (model, &iter,
-								  THEME_COLUMN_SELECTED, &value);
-				}
-			} else {
-				gtk_tree_model_get_value (model, &iter,
-				                          THEME_COLUMN_SELECTED, &value);
-				
-				/* We might have "Random from selected" option selected, but no
-				   active themes there hence defaulting to "Selected only" 
-				   Lets make this theme delete-able from "Random from selected"
-				   mode in this case */
-				if (g_value_get_boolean (&value) && selected == RANDOM_THEME) {	
-					g_value_unset (&value);
-					g_value_set_boolean (&value, FALSE);				    
-				}
-			}
-	
-    			if (g_value_get_boolean (&value)) {
-				/* Do not allow deleting of active themes */
-        			gtk_widget_set_sensitive (delete_button, FALSE);
-        			gtk_widget_set_sensitive (delete_button_remote, FALSE);
-		    	}
-			else {
-				gtk_widget_set_sensitive (delete_button, TRUE);
-				gtk_widget_set_sensitive (delete_button_remote, TRUE);
-			}
-
-			g_value_unset (&value);
-		}      			      
-	}
+	}		
 	else if (strcmp (ve_sure_string (key), MDM_KEY_SERVER_PREFIX) == 0 ) {
 		init_servers_combobox (gtk_combo_box_get_active (GTK_COMBO_BOX (combobox)));
 	}
@@ -4202,8 +3999,7 @@ gg_selection_changed (GtkTreeSelection *selection, gpointer data)
 	GtkTreeIter iter;
 	GtkTextBuffer *buffer_local, *buffer_remote;
 	GtkTextIter iter_local, iter_remote;
-	GValue value  = {0, };
-	gboolean MdmGraphicalThemeRand;
+	GValue value  = {0, };	
 	gchar *str;
 	gint selected = -1;
 
@@ -4219,8 +4015,7 @@ gg_selection_changed (GtkTreeSelection *selection, gpointer data)
 	/* Default to allow deleting of themes */
 	if (gtk_notebook_get_current_page (GTK_NOTEBOOK (setup_notebook)) == LOCAL_TAB) {
 	
-		GtkWidget *theme_list;
-		GtkWidget *local_combobox;
+		GtkWidget *theme_list;		
 		GtkTreeSelection *selection;
 		GtkTreeModel *model;
 		GtkTreePath *path;
@@ -4228,10 +4023,7 @@ gg_selection_changed (GtkTreeSelection *selection, gpointer data)
 		theme_list = glade_xml_get_widget (xml, "gg_theme_list_remote");
 		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (theme_list));
 		model = gtk_tree_view_get_model (GTK_TREE_VIEW (theme_list));
-
-		local_combobox = glade_xml_get_widget (xml, "gg_mode_combobox");
-		selected = gtk_combo_box_get_active (GTK_COMBO_BOX (local_combobox));
-
+		
 		if (model != NULL) {
 			path = gtk_tree_model_get_path (GTK_TREE_MODEL (model), &iter);					  
 			if (path != NULL) {
@@ -4268,23 +4060,9 @@ gg_selection_changed (GtkTreeSelection *selection, gpointer data)
 		gtk_widget_set_sensitive (delete_button, TRUE);
 		gtk_widget_set_sensitive (delete_button_remote, TRUE);
 	}
-	/* Determine if the theme selected is currently active */
-	MdmGraphicalThemeRand = mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND);
-	if (MdmGraphicalThemeRand) {
-		gtk_tree_model_get_value (model, &iter, THEME_COLUMN_SELECTED_LIST, &value);
-	} else {
-		gtk_tree_model_get_value (model, &iter, THEME_COLUMN_SELECTED, &value);
-
-		/* We might have "Random form selected" option selected, but no
-		   active themes there hence defaulting to "Selected only" 
-		   Lets make this theme delete-able from "Random from selected"
-		   mode in this case */
-		if (g_value_get_boolean (&value) && selected == RANDOM_THEME) {	
-			g_value_unset (&value);
-			g_value_set_boolean (&value, FALSE);		    	
-		}
-	}
-
+	/* Determine if the theme selected is currently active */	
+	gtk_tree_model_get_value (model, &iter, THEME_COLUMN_SELECTED, &value);
+	
 	/* Do not allow deleting of active themes */
 	if (g_value_get_boolean (&value)) {
 		gtk_widget_set_sensitive (delete_button, FALSE);
@@ -4300,8 +4078,7 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 	struct dirent *dent;
 	GtkTreeIter *select_iter = NULL;
 	GdkPixbuf *pb = NULL;
-	gchar *markup = NULL;
-	gchar * real_selected_themes = NULL;
+	gchar *markup = NULL;	
 	
 	while ((dent = readdir (dir)) != NULL) {
 		char *n, *file, *name, *desc, *ss;
@@ -4342,16 +4119,7 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 		else
 			sel_theme = FALSE;
 
-		if (selected_themes != NULL &&
-		    themes_list_contains (selected_themes, dent->d_name)) {
-			sel_themes = TRUE;
-			/* It might be the case that the config option RandomThemes that 
-			   do not longer exist in the theme dir. Here we rectifying that */
-			real_selected_themes = strings_list_add (real_selected_themes,
-								 dent->d_name, MDM_DELIMITER_THEMES);
-		}
-		else
-			sel_themes = FALSE;
+		sel_themes = FALSE;
 
 		theme_file = mdm_common_config_load (n, NULL);
 		name = NULL;
@@ -4395,8 +4163,7 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
                    desc ? desc : "(null)");
 		gtk_list_store_append (store, &iter);
 		gtk_list_store_set (store, &iter,
-				    THEME_COLUMN_SELECTED, sel_theme,
-				    THEME_COLUMN_SELECTED_LIST, sel_themes,
+				    THEME_COLUMN_SELECTED, sel_theme,			
 				    THEME_COLUMN_DIR, dent->d_name,
 				    THEME_COLUMN_FILE, file,
 				    THEME_COLUMN_SCREENSHOT, pb,
@@ -4419,11 +4186,7 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 		g_free (ss);
 		g_free (full);
 		g_free (n);
-	}
-
-	g_free (selected_themes);
-	selected_themes = g_strdup (real_selected_themes);
-	g_free (real_selected_themes);
+	}	
 
 	return select_iter;
 }
@@ -4431,16 +4194,10 @@ read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
 static gboolean
 greeter_theme_timeout (GtkWidget *toggle)
 {
-	char *theme;
-	char *themes;
+	char *theme;	
 
-	theme  = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);
-	themes = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMES);
-
-	/* If no checkbox themes selected */
-	if (selected_themes == NULL)
-		selected_themes = "";
-
+	theme  = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);	
+	
 	/* If themes have changed from the custom_config file, update it. */
 	if (strcmp (ve_sure_string (theme),
 		ve_sure_string (selected_theme)) != 0) {
@@ -4449,32 +4206,7 @@ greeter_theme_timeout (GtkWidget *toggle)
 			selected_theme);
 		update_greeters ();
 	}
-
-	if (strcmp (ve_sure_string (themes),
-		ve_sure_string (selected_themes)) != 0) {
-
-		mdm_setup_config_set_string (MDM_KEY_GRAPHICAL_THEMES,
-			selected_themes);
-
-		/* This should only be executed if we dealing with
-		   random theme setting. If no random themes are present and
-		   the random theme option was set to true we force it to be false.
-		   If there is at least one random theme selected and the random 
-		   theme option was false we force it to be true */		
-		if (ve_string_empty (selected_themes) && 
-		    mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND)) {
-			mdm_setup_config_set_bool (MDM_KEY_GRAPHICAL_THEME_RAND, FALSE);
-			MdmRandomFromSelectedChangesWarn = TRUE;
-			
-		} else if (!ve_string_empty (selected_themes) && 
-			   !mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND)) {
-			mdm_setup_config_set_bool (MDM_KEY_GRAPHICAL_THEME_RAND, TRUE);
-			MdmRandomFromSelectedChangesWarn = FALSE;
-		}
-	       
-		update_greeters ();
-	}
-
+	
 	return FALSE;
 }
 
@@ -4523,70 +4255,7 @@ selected_toggled (GtkCellRendererToggle *cell,
 
 			gtk_tree_path_next (path);
 		}
-	} else { /* Checkboxes */
-
-		/* Clear list of all selected themes */
-		g_free (selected_themes);
-		selected_themes = NULL;
-
-		/* Loop through all checkboxes */
-		while (gtk_tree_model_get_iter (model, &iter, path)) {
-			gboolean selected = FALSE;
-
-			/* If this checkbox was just toggled */
-			if (gtk_tree_path_compare (path, sel_path) == 0) {
-
-			gtk_tree_model_get (model, &selected_iter,
-					    THEME_COLUMN_DIR, &theme_name, -1);
-				if (gtk_cell_renderer_toggle_get_active (cell)) {
-					gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-						THEME_COLUMN_SELECTED_LIST,
-						FALSE, -1); /* Toggle OFF */
-					/* We will only make a theme delete-able if its not the
-					   selected theme from single the theme mode */
-					gtk_widget_set_sensitive (del_button, TRUE);
-					gtk_widget_set_sensitive (del_button_remote, TRUE);
-				} else {
-					gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-						THEME_COLUMN_SELECTED_LIST,
-						TRUE, -1); /* Toggle ON */
-					gtk_widget_set_sensitive (del_button, FALSE);
-					gtk_widget_set_sensitive (del_button_remote, FALSE);
-				}
-			}
-	
-			gtk_tree_model_get (model, &iter, THEME_COLUMN_SELECTED_LIST,
-				&selected, THEME_COLUMN_DIR, &theme_name, -1);
-	
-			if (selected)
-				selected_themes = strings_list_add (selected_themes,
-					theme_name, MDM_DELIMITER_THEMES);
-	
-			g_free (theme_name);
-			gtk_tree_path_next (path);
-		}
-
-		if (selected_themes == NULL)
-			selected_themes = g_strdup("");
-		
-		/* There are no themes selected atm in the Random form selected mode.
-		   We need to inform users that is the case */
-		if (ve_string_empty (selected_themes)) {
-			GtkWidget *setup_dialog = glade_xml_get_widget(xml, "setup_dialog");
-		
-			GtkWidget *dlg = hig_dialog_new (GTK_WINDOW (setup_dialog),
-							 GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-							 GTK_MESSAGE_WARNING,
-							 GTK_BUTTONS_OK,
-							 _("No themes selected!"),
-							 _("You need one or more themes selected for "
-							   "the \"Random from selected\" option to be "
-							   "valid. Failure to do so will force "
-							   "\"Selected only\" mode."));
-			gtk_dialog_run (GTK_DIALOG (dlg));
-			gtk_widget_destroy (dlg);
-		}
-	}
+	} 
 
 	gtk_tree_path_free (path);
 	gtk_tree_path_free (sel_path);
@@ -5171,7 +4840,6 @@ delete_theme (GtkWidget *button, gpointer data)
 	GValue value = {0, };
 	GtkWidget *dlg;
 	char *s;
-	gboolean MdmGraphicalThemeRand;
 	gboolean selected_warning = FALSE;
 	gint selected = -1;
 
@@ -5179,8 +4847,7 @@ delete_theme (GtkWidget *button, gpointer data)
 	theme_list = glade_xml_get_widget (xml, "gg_theme_list");
 	theme_list_remote = glade_xml_get_widget (xml, "gg_theme_list_remote");
 	del_button = glade_xml_get_widget (xml, "gg_delete_theme");
-	del_button_remote = glade_xml_get_widget (xml, "gg_delete_theme_remote");
-	local_combobox = glade_xml_get_widget (xml, "gg_mode_combobox");
+	del_button_remote = glade_xml_get_widget (xml, "gg_delete_theme_remote");	
 
 	if (gtk_notebook_get_current_page (GTK_NOTEBOOK (setup_notebook)) == LOCAL_TAB) {
 		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (theme_list));
@@ -5195,55 +4862,10 @@ delete_theme (GtkWidget *button, gpointer data)
 		return;
 	}
 
-	MdmGraphicalThemeRand = mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND);
-
-	if (MdmGraphicalThemeRand) {
-		gtk_tree_model_get_value (model, &iter,
-		                          THEME_COLUMN_SELECTED_LIST, &value);
-		
-		/* Make sure that the theme is not selected in the
-		   single theme mode */
-		if (!g_value_get_boolean (&value)) {
-			g_value_unset (&value);
-			gtk_tree_model_get_value (model, &iter,
-						  THEME_COLUMN_SELECTED, &value);
-			
-			if (g_value_get_boolean (&value))
-				selected_warning = TRUE;
-		}
-	}
-	else {
-		gtk_tree_model_get_value (model, &iter,
-		                          THEME_COLUMN_SELECTED,
-		                          &value);
-
-		/* We might have "Random form selected" option selected, but no
-		   active themes there hence defaulting to "Selected only" 
-		   Lets make this theme delete-able from "Random from selected"
-		   mode in this case */
-		selected = gtk_combo_box_get_active (GTK_COMBO_BOX (local_combobox));
-		
-		if (g_value_get_boolean (&value) && selected == RANDOM_THEME)
-			selected_warning = TRUE;
-	}
-	
-	/* The theme we trying to delete in "Random from selected"
-	   mode is currently in use in the "Selected only" mode 
-	   so lets warn the user about it */
-	if (selected_warning == TRUE) {
-		dlg = hig_dialog_new (GTK_WINDOW (setup_dialog) /* parent */,
-				      GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT /* flags */,
-				      GTK_MESSAGE_WARNING,
-				      GTK_BUTTONS_OK,
-				      _("Theme active in \"Selected only\" mode"),
-				      _("This theme cannot be deleted at this point. "
-					"If you wish to delete this theme switch to "
-					"\"Selected only\" mode, and deselect it by "
-					"choosing a different theme."));
-		gtk_dialog_run (GTK_DIALOG (dlg));
-		gtk_widget_destroy (dlg);			    
-	}
-
+	gtk_tree_model_get_value (model, &iter,
+							  THEME_COLUMN_SELECTED,
+							  &value);
+						
 	/* Do not allow deleting of selected theme */
 	if (g_value_get_boolean (&value)) {
 		/* should never get here since the button shuld not be
@@ -6269,8 +5891,7 @@ theme_list_equal_func (GtkTreeModel * model,
 
 static void
 setup_local_themed_settings (void)
-{
-	gboolean MdmGraphicalThemeRand;
+{	
 	DIR *dir;
 	GtkListStore *store;
 	GtkCellRenderer *renderer;
@@ -6285,8 +5906,7 @@ setup_local_themed_settings (void)
 	
 	GtkWidget *theme_list = glade_xml_get_widget (xml, "gg_theme_list");
 	GtkWidget *button = glade_xml_get_widget (xml, "gg_install_new_theme");
-	GtkWidget *del_button = glade_xml_get_widget (xml, "gg_delete_theme");
-	GtkWidget *mode_combobox = glade_xml_get_widget (xml, "gg_mode_combobox");
+	GtkWidget *del_button = glade_xml_get_widget (xml, "gg_delete_theme");	
 
 	style_label = glade_xml_get_widget (xml, "local_stylelabel");
 	theme_label = glade_xml_get_widget (xml, "local_theme_label");
@@ -6306,8 +5926,7 @@ setup_local_themed_settings (void)
 
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (theme_list), TRUE);
 
-	selected_theme  = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);
-	selected_themes = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMES);
+	selected_theme  = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);	
 
 	/* FIXME: If a theme directory contains the string MDM_DELIMITER_THEMES
 		  in the name, then this theme won't work when trying to load as it
@@ -6316,38 +5935,24 @@ setup_local_themed_settings (void)
 		  character for it, but I'm not sure if directories can have the
 		  slash (/) character in them, so I just made MDM_DELIMITER_THEMES
 		  equal to "/:" instead. */
-
-	MdmGraphicalThemeRand = mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND);
-
+	
 	/* create list store */
 	store = gtk_list_store_new (THEME_NUM_COLUMNS,
-				    G_TYPE_BOOLEAN /* selected theme */,
-				    G_TYPE_BOOLEAN /* selected themes */,
+				    G_TYPE_BOOLEAN /* selected theme */,				  
 				    G_TYPE_STRING /* dir */,
 				    G_TYPE_STRING /* file */,
 				    GDK_TYPE_PIXBUF /* preview */,
 				    G_TYPE_STRING /* markup */,
 				    G_TYPE_STRING /* name */,
 				    G_TYPE_STRING /* desc */);
-
-	/* Register theme mode combobox */
-	g_object_set_data_full (G_OBJECT (mode_combobox), "key",
-		g_strdup (MDM_KEY_GRAPHICAL_THEME_RAND),
-		(GDestroyNotify) g_free);
-
-	/* Signals */
-	g_signal_connect (mode_combobox, "changed",
-		G_CALLBACK (combobox_changed), NULL);
-
+		
 	g_signal_connect (button, "clicked",
 			  G_CALLBACK (install_new_theme), store);
 	g_signal_connect (del_button, "clicked",
 			  G_CALLBACK (delete_theme), store);
 
 	/* Init controls */
-	gtk_widget_set_sensitive (del_button, FALSE);
-	gtk_combo_box_set_active (GTK_COMBO_BOX (mode_combobox),
-		MdmGraphicalThemeRand);
+	gtk_widget_set_sensitive (del_button, FALSE);	
 
 	/* Read all Themes from directory and store in tree */
 	dir = opendir (theme_dir);
@@ -6371,21 +5976,8 @@ setup_local_themed_settings (void)
 	gtk_tree_view_column_set_attributes (column, renderer,
 		"active", THEME_COLUMN_SELECTED, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (theme_list), column);
-	gtk_tree_view_column_set_visible(column, !MdmGraphicalThemeRand);
-
-	/* The checkbox toggle column */
-	column = gtk_tree_view_column_new ();
-	renderer = gtk_cell_renderer_toggle_new ();
-	gtk_cell_renderer_toggle_set_radio (GTK_CELL_RENDERER_TOGGLE (renderer),
-		FALSE);
-	g_signal_connect (G_OBJECT (renderer), "toggled",
-		G_CALLBACK (selected_toggled), store);
-	gtk_tree_view_column_pack_start (column, renderer, FALSE);
-	gtk_tree_view_column_set_attributes (column, renderer, "active",
-		THEME_COLUMN_SELECTED_LIST, NULL);
-	gtk_tree_view_append_column (GTK_TREE_VIEW (theme_list), column);
-	gtk_tree_view_column_set_visible(column, MdmGraphicalThemeRand);
-
+	gtk_tree_view_column_set_visible(column, TRUE);
+	
 	/* The preview column */
 	column   = gtk_tree_view_column_new ();
 	renderer = gtk_cell_renderer_pixbuf_new ();
@@ -7099,29 +6691,6 @@ static void
 apply_user_changes (GObject *object, gint arg1, gpointer user_data)
 {
 	GtkWidget *dialog = user_data;
-
-
-	/* This is pretty ugly but it is probable
-	   that both events can occur simultaneously.
-	   Then we display two dialogs - one after the other. 
-	   Lets hope that although probable this scenario 
-	   does not araise very often */	
-	if (MdmRandomFromSelectedChangesWarn == TRUE) {
-		
-		GtkWidget *prompt;
-		
-		prompt = hig_dialog_new (GTK_WINDOW (dialog),
-					 GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-					 GTK_MESSAGE_WARNING,
-					 GTK_BUTTONS_OK,
-					 _("Random theme mode change"),
-					 _("Since no themes were selected in random theme mode"
-					   " switching back to single theme mode."));
-		
-		gtk_dialog_run (GTK_DIALOG (prompt));
-		gtk_widget_destroy (prompt);	
-		
-	}
 	
 	if (MdmUserChangesUnsaved == TRUE) {
 

@@ -100,59 +100,6 @@ greeter_ignore_buttons (gboolean val)
 
 static char *get_theme_file (const char *in, char **theme_dir);
 
-/* If in random theme mode then grab a random theme from those selected.
- * If a theme doesn't exist, try  the rest of the list from the randomly chosen
- * position for one that does.
- */
-static char *
-get_random_theme ()
-{
-    char **vec;
-    char *themes_list;
-    char *theme = NULL;
-    char *dir;
-    int size;
-    int chosen;
-    int i;
-
-    themes_list = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMES);
-
-    if (ve_string_empty (themes_list))
-        return NULL;
-
-    vec = g_strsplit (themes_list, MDM_DELIMITER_THEMES, -1);
-    if (vec == NULL)
-        return NULL;
-
-	/* Get Number of elements in vector */
-    for (size = 0; vec[size] != NULL; size++) {}
-
-	/* Get Random Theme from list */
-	srand ( time(NULL) );
-	chosen = rand() % size;
-
-	/* Find a theme that exists */
-	for (i = 0; i < size; i++) {
-		int j;
-		char *file;
-
-		j = (i + chosen >= size) ? i+chosen-size : i+chosen;
-		file = get_theme_file( vec[j], &dir );
-
-		g_free(file);
-		if (g_file_test(dir, G_FILE_TEST_IS_DIR)) {
-		    g_free(dir);
-			theme = g_strdup (vec[j]);
-			break;
-		}
-	    g_free(dir);
-	}
-
-    g_strfreev (vec);
-
-    return theme;
-}
-
 static gboolean
 greeter_ctrl_handler (GIOChannel *source,
 		      GIOCondition cond,
@@ -877,7 +824,6 @@ mdm_read_config (void)
 	 * not have to keep the socket open.
 	 */
 	mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);
-	mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMES);
 	mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME_DIR);
 	mdm_config_get_string (MDM_KEY_GTKRC);
 	mdm_config_get_string (MDM_KEY_GTK_THEME);
@@ -919,7 +865,6 @@ mdm_read_config (void)
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
 	mdm_config_get_bool   (MDM_KEY_CHOOSER_BUTTON);
 	mdm_config_get_bool   (MDM_KEY_TIMED_LOGIN_ENABLE);
-	mdm_config_get_bool   (MDM_KEY_GRAPHICAL_THEME_RAND);
 	mdm_config_get_bool   (MDM_KEY_SHOW_LAST_SESSION);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_REMOTE_ROOT);
@@ -971,8 +916,7 @@ greeter_reread_config (int sig, gpointer data)
 	/* FIXME: The following is evil, we should update on the fly rather
 	 * then just restarting */
 	/* Also we may not need to check ALL those keys but just a few */
-	if (mdm_config_reload_string (MDM_KEY_GRAPHICAL_THEME) ||
-	    mdm_config_reload_string (MDM_KEY_GRAPHICAL_THEMES) ||
+	if (mdm_config_reload_string (MDM_KEY_GRAPHICAL_THEME) ||	    
 	    mdm_config_reload_string (MDM_KEY_GRAPHICAL_THEME_DIR) ||
 	    mdm_config_reload_string (MDM_KEY_GTKRC) ||
 	    mdm_config_reload_string (MDM_KEY_GTK_THEME) ||
@@ -1010,7 +954,6 @@ greeter_reread_config (int sig, gpointer data)
 	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
 	    mdm_config_reload_bool   (MDM_KEY_CHOOSER_BUTTON) ||
 	    mdm_config_reload_bool   (MDM_KEY_TIMED_LOGIN_ENABLE) ||
-	    mdm_config_reload_bool   (MDM_KEY_GRAPHICAL_THEME_RAND) ||
 	    mdm_config_reload_bool   (MDM_KEY_SHOW_LAST_SESSION) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_REMOTE_ROOT) ||
@@ -1397,9 +1340,7 @@ main (int argc, char *argv[])
   }
   
   if (g_getenv ("MDM_THEME") != NULL)
-     mdm_graphical_theme = g_strdup (g_getenv ("MDM_THEME"));
-  else if (mdm_config_get_bool (MDM_KEY_GRAPHICAL_THEME_RAND))
-     mdm_graphical_theme = get_random_theme ();
+     mdm_graphical_theme = g_strdup (g_getenv ("MDM_THEME"));  
   else
      mdm_graphical_theme = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);
 
