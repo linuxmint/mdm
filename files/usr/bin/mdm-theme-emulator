@@ -20,7 +20,7 @@ class MenuToolButton(Gtk.ToolButton):
     def onClicked(self, widget):
         x, y, w, h = self.getScreenCoordinates()
         self.menu.popup(None, None, lambda menu, data: (x, y+h, True), None, 1, 0)
-                
+
     def getScreenCoordinates(self):
         parent = self.get_parent_window()
         x, y = parent.get_root_origin()
@@ -32,7 +32,176 @@ class MenuToolButton(Gtk.ToolButton):
                 y + (extents.height-h)-(extents.width-w)/2 + allocation.y,
                 allocation.width,
                 allocation.height)
-                
+
+class ThemeWebView(WebKit.WebView):
+    def __init__(self):
+        WebKit.WebView.__init__ (self)
+        
+        # Disable context-menu
+        settings = self.get_settings()
+        settings.set_property('enable-default-context-menu', False)
+        self.set_settings(settings)
+
+        #  Intercept navigation and resource requests (allow only "file:" uris)
+        self.connect("navigation-requested", self.onNavigationRequest);
+        self.connect("resource-request-starting", self.onResourceRequestStarting);
+
+    def onNavigationRequest(self, view, frame, networkRequest):
+        uri = networkRequest.get_uri()
+        if not uri.startswith("file:"):
+            return 1
+        return 0
+
+    def onResourceRequestStarting(self, view, frame, resource, networkRequest, userdata):
+        uri = networkRequest.get_uri()
+        if not uri.startswith("file:"):
+            networkRequest.set_uri("about:blank")
+
+class ThemeToolbar(Gtk.Toolbar):
+    def __init__(self, emulator):
+        Gtk.Toolbar.__init__ (self)
+        self.set_style(Gtk.ToolbarStyle.TEXT)
+
+        self.sensitiveItems = []
+        
+        # Open
+        button = Gtk.ToolButton(Gtk.STOCK_OPEN)
+        button.connect('clicked', emulator.onOpenClicked)
+        self.add(button)
+
+        # Refresh
+        button = Gtk.ToolButton(Gtk.STOCK_REFRESH)
+        button.connect('clicked', emulator.onRefreshClicked)
+        self.sensitiveItems.append(button)
+        self.add(button)
+
+        # En/Disable
+        self.disableButton = Gtk.ToolButton(Gtk.STOCK_YES)
+        self.disableButton.set_label("Disable")
+        self.disableButton.connect('clicked', emulator.onEnableDisableClicked)
+        self.sensitiveItems.append(self.disableButton)
+        self.add(self.disableButton)
+
+        self.add(Gtk.SeparatorToolItem())
+
+        # Resolution
+        name_store = Gtk.ListStore(str)
+        name_store.append(["1920x1080"])
+        name_store.append(["1024x768"])
+        name_store.append(["800x600"])
+        name_store.append(["640x480"])
+
+        self.resolutionCombo = Gtk.ComboBox.new_with_model_and_entry(name_store)
+        self.resolutionCombo.set_entry_text_column(0)
+        self.resolutionCombo.connect('changed', emulator.onResolutionChanged)
+        entry = self.resolutionCombo.get_child()
+        entry.connect("key-press-event", emulator.onResolutionKeyPress)
+        entry.set_text("800x600")
+        self.sensitiveItems.append(self.resolutionCombo)
+        item = Gtk.ToolItem()
+        item.add(self.resolutionCombo)
+        self.add(item)
+
+        self.add(Gtk.SeparatorToolItem())
+
+        # Add menu button
+        button = self.createAddMenuButton(emulator)
+        self.sensitiveItems.append(button)
+        self.add(button)
+
+        # Set menu button
+        button = self.createSetMenuButton(emulator)
+        self.sensitiveItems.append(button)
+        self.add(button)
+
+        # Hide menu button
+        button = self.createHideMenuButton(emulator)
+        self.sensitiveItems.append(button)
+        self.add(button)
+
+
+    def createMenuItem(self, text, callback, *params):
+        item = Gtk.MenuItem(text)
+        item.connect("activate", callback, *params)
+        return item
+        
+    def createAddMenuButton(self, emulator):
+        menu = Gtk.Menu()
+        menu.append(self.createMenuItem('Dummies', emulator.onAddDummiesClicked))
+        menu.append(self.createMenuItem('User', emulator.onAddUserClicked))
+        menu.append(self.createMenuItem('Session', emulator.onAddSessionClicked))
+        menu.show_all()
+
+        button = MenuToolButton(u"Add \u25BE")
+        button.set_popup(menu)
+
+        return button
+
+    def createSetMenuButton(self, emulator):
+        menu = Gtk.Menu()
+        menu.append(self.createMenuItem('Welcome Message', emulator.onMenuJavascriptCallPrompt, "set_welcome_message"))
+        menu.append(self.createMenuItem('Message', emulator.onMenuJavascriptCallPrompt, "mdm_msg"))
+        menu.append(self.createMenuItem('Error Message', emulator.onMenuJavascriptCallPrompt, "mdm_error"))
+        menu.append(self.createMenuItem('Timed Message', emulator.onMenuJavascriptCallPrompt, "mdm_timed"))
+        menu.show_all()
+
+        button = MenuToolButton(u"Set \u25BE")
+        button.set_popup(menu)
+
+        return button
+
+    def createHideMenuButton(self, emulator):
+        menu = Gtk.Menu()
+        menu.append(self.createMenuItem('Shutdown', emulator.onMenuJavascriptCall, "mdm_hide_shutdown"))
+        menu.append(self.createMenuItem('Suspend', emulator.onMenuJavascriptCall, "mdm_hide_suspend"))
+        menu.append(self.createMenuItem('Restart', emulator.onMenuJavascriptCall, "mdm_hide_restart"))
+        menu.append(self.createMenuItem('Quit', emulator.onMenuJavascriptCall, "mdm_hide_quit"))
+        menu.append(self.createMenuItem('XDMCP', emulator.onMenuJavascriptCall, "mdm_hide_xdmcp"))
+        menu.show_all()
+
+        button = MenuToolButton(u"Hide \u25BE")
+        button.set_popup(menu)
+
+        return button
+
+class MultiPromptDialog(Gtk.Dialog):
+    def __init__(self, parent, title, okLabel, *labels):
+        Gtk.Dialog.__init__ (self, title, parent,
+                              Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT)
+                              
+        self.add_button(okLabel, Gtk.ResponseType.OK)
+        self.add_button("Cancel", Gtk.ResponseType.CANCEL)
+        self.set_title(title)
+
+        dialogBox = self.get_content_area()
+
+        vbox = Gtk.VBox()
+
+        self.entries = []
+        for label in labels:
+            entry = Gtk.Entry()
+            label = Gtk.Label(label)
+            label.set_alignment(0, 0)
+            vbox.add(label)
+            vbox.add(entry)
+            self.entries.append(entry)
+
+        dialogBox.pack_end(vbox, False, False, 0)
+
+        self.connect("key-press-event", self.onKeyPress)
+        self.show_all()
+        
+    def onKeyPress(self, widget, event):
+        if event.keyval == Gdk.KEY_Return:
+            self.response(Gtk.ResponseType.OK)
+
+    def getTexts(self):
+        result = []
+        for entry in self.entries:
+            result.append(entry.get_text())
+
+        return result
+        
 class ThemeEmulator:
     def closeApplication(self, widget):
         Gtk.main_quit()
@@ -41,21 +210,17 @@ class ThemeEmulator:
         self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
         self.window.connect("destroy", self.closeApplication)
         self.window.set_title("MDM Theme Emulator")
-        
+
         self.userName = None
-        
-        self.sensitiveItems = []
-        self.toolbar = self.createToolbar()
-        for item in self.sensitiveItems:
+
+        self.toolbar = ThemeToolbar(self)
+        for item in self.toolbar.sensitiveItems:
             item.set_sensitive(False)
 
         self.scrolledWindow = Gtk.ScrolledWindow()
         self.scrolledWindow.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        
-        self.webView = WebKit.WebView()
-        settings = self.webView.get_settings()
-        settings.set_property('enable-default-context-menu', False)
-        self.webView.set_settings(settings)
+
+        self.webView = ThemeWebView()
 
         self.scrolledWindow.add(self.webView)
         self.scrolledWindow.show()
@@ -69,11 +234,9 @@ class ThemeEmulator:
         self.window.add(vbox)
         self.window.show_all()
         self.setResolution(800, 600)
-        
-        self.webView.connect("load-finished", self.loadFinished)
+
+        self.webView.connect("load-finished", self.onLoadFinished)
         self.webView.connect("script-alert", self.onAlert)
-        self.webView.connect("navigation-requested", self.navigationRequest);
-        self.webView.connect("resource-request-starting", self.resourceRequestStarting);
         self.setStatus("Initialized")
 
         self.isFullscreen = False
@@ -82,206 +245,13 @@ class ThemeEmulator:
         self.window.connect('window-state-event', self.onWindowStateChange)
         self.window.connect('motion-notify-event', self.onMotion)
         self.window.connect("key-press-event", self.onWindowKeyPress)
-        
-        GObject.timeout_add(1000, self.updateTime, None)
-        
-        
-    def resourceRequestStarting(self, view, frame, resource, networkRequest, userdata):
-        uri = networkRequest.get_uri()
-        if not uri.startswith("file:"):
-            networkRequest.set_uri("about:blank")
-        
-    def navigationRequest(self, view, frame, networkRequest):
-        uri = networkRequest.get_uri()
-        if not uri.startswith("file:"):
-            return 1
-        return 0
-    
-    def setTime(self):
-        self.callJavascriptMethod("set_clock", time.strftime("%a %b %d, %H:%M"))
-        
-    def updateTime(self, *args):
-        if self.isLoaded:
-            self.setTime()
 
-        time_til_next_min = 60 - datetime.datetime.now().second;
-        if time_til_next_min < 0:
-            time_til_next_min = 0
+        GObject.timeout_add(1000, self.onClockUpdate, None)
 
-        GObject.timeout_add(time_til_next_min*1000, self.updateTime, None)
-        return False
+    def callJavascriptMethod(self, method, *arguments):
+        jsonData = json.dumps(arguments)
+        self.webView.execute_script(method + ".apply(null, " + jsonData + ");");
 
-    def onWindowStateChange(self, window, event):
-        self.isFullscreen = bool(Gdk.WindowState.FULLSCREEN & event.new_window_state)
-        if self.isLoaded:
-            self.resolutionCombo.set_sensitive(self.isFullscreen == False)
-        if self.isFullscreen:
-            self.toolbar.hide()
-            self.statusLabel.hide()
-        else:
-            self.toolbar.show()
-            self.statusLabel.show()
-
-    def onMotion(self, window, event):
-        if self.isFullscreen:
-            if event.y < 2:
-                self.toolbar.show()
-            else:
-                self.toolbar.hide()
-            
-            width, height = self.window.get_size()
-            if event.y > height-2:
-                self.statusLabel.show()
-            else:
-                self.statusLabel.hide()
-        
-    def onWindowKeyPress(self, widget, event):
-        if event.keyval == Gdk.KEY_F11:
-            if self.isFullscreen:
-                self.window.unfullscreen()
-            else:
-                self.window.fullscreen()
-        elif event.keyval == Gdk.KEY_Escape and self.isFullscreen:
-            self.window.unfullscreen()
-                
-    def setStatus(self, string):
-        self.statusLabel.set_text(string)
-        
-    def createToolbar(self):
-        toolbar = Gtk.Toolbar()
-        toolbar.set_style(Gtk.ToolbarStyle.TEXT)
-        
-        # Open
-        button = Gtk.ToolButton(Gtk.STOCK_OPEN)
-        button.connect('clicked', self.openFile)
-        toolbar.add(button)
-        
-        # Refresh
-        button = Gtk.ToolButton(Gtk.STOCK_REFRESH)
-        button.connect('clicked', self.refresh)
-        self.sensitiveItems.append(button)
-        toolbar.add(button)
-        
-        # En/Disable
-        self.disableButton = Gtk.ToolButton(Gtk.STOCK_YES)
-        self.disableButton.set_label("Disable")
-        self.disableButton.connect('clicked', self.enableDisable)
-        self.sensitiveItems.append(self.disableButton)
-        toolbar.add(self.disableButton)
-        
-        toolbar.add(Gtk.SeparatorToolItem())
-        
-        # Resolution
-        name_store = Gtk.ListStore(str)
-        name_store.append(["1920x1080"])
-        name_store.append(["1024x768"])
-        name_store.append(["800x600"])
-        name_store.append(["640x480"])
-        
-        self.resolutionCombo = Gtk.ComboBox.new_with_model_and_entry(name_store)
-        self.resolutionCombo.set_entry_text_column(0)
-        self.resolutionCombo.connect('changed', self.resolutionChanged)
-        entry = self.resolutionCombo.get_child()
-        entry.connect("key-press-event", self.onResolutionKeyPress)
-        entry.set_text("800x600")
-        self.sensitiveItems.append(self.resolutionCombo)
-        item = Gtk.ToolItem()
-        item.add(self.resolutionCombo)
-        toolbar.add(item)
-        
-        toolbar.add(Gtk.SeparatorToolItem())
-        
-        # Add menu button
-        button = self.createAddMenuButton()
-        self.sensitiveItems.append(button)
-        toolbar.add(button)
-        
-        # Set menu button
-        button = self.createSetMenuButton()
-        self.sensitiveItems.append(button)
-        toolbar.add(button)
-        
-        # Hide menu button
-        button = self.createHideMenuButton()
-        self.sensitiveItems.append(button)
-        toolbar.add(button)
-        
-        return toolbar
-        
-    def createAddMenuButton(self):
-        menu = Gtk.Menu()
-        menu.append(self.createMenuItem('Dummies', self.addDummies))
-        menu.append(self.createMenuItem('User', self.addUser))
-        menu.append(self.createMenuItem('Session', self.addSession))
-        menu.show_all()
-
-        button = MenuToolButton(u"Add \u25BE")
-        button.set_popup(menu)
-        
-        return button
-        
-    def createSetMenuButton(self):
-        menu = Gtk.Menu()
-        menu.append(self.createMenuItem('Welcome Message', self.onMenuJavascriptCallPrompt, "set_welcome_message"))
-        menu.append(self.createMenuItem('Message', self.onMenuJavascriptCallPrompt, "mdm_msg"))
-        menu.append(self.createMenuItem('Error Message', self.onMenuJavascriptCallPrompt, "mdm_error"))
-        menu.append(self.createMenuItem('Timed Message', self.onMenuJavascriptCallPrompt, "mdm_timed"))
-        menu.show_all()
-
-        button = MenuToolButton(u"Set \u25BE")
-        button.set_popup(menu)
-        
-        return button
-        
-    def createHideMenuButton(self):
-        menu = Gtk.Menu()
-        menu.append(self.createMenuItem('Shutdown', self.onMenuJavascriptCall, "mdm_hide_shutdown"))
-        menu.append(self.createMenuItem('Suspend', self.onMenuJavascriptCall, "mdm_hide_suspend"))
-        menu.append(self.createMenuItem('Restart', self.onMenuJavascriptCall, "mdm_hide_restart"))
-        menu.append(self.createMenuItem('Quit', self.onMenuJavascriptCall, "mdm_hide_quit"))
-        menu.append(self.createMenuItem('XDMCP', self.onMenuJavascriptCall, "mdm_hide_xdmcp"))
-        menu.show_all()
-
-        button = MenuToolButton(u"Hide \u25BE")
-        button.set_popup(menu)
-        
-        return button
-
-    def onMenuJavascriptCallPrompt(self, widget, name):
-        text = self.dialogAskFor("Please supply a message", "Set", "Please enter a message for %s:" % widget.get_label())
-        if text:
-            self.callJavascriptMethod(name, text)
-        
-    def onMenuJavascriptCall(self, widget, name):
-        self.callJavascriptMethod(name)
-    
-    def createMenuItem(self, text, callback, *params):
-        item = Gtk.MenuItem(text)
-        item.connect("activate", callback, *params)
-        return item
-        
-    def enableDisable(self, widget):
-        self.setEnabled(self.isEnabled == False)
-    
-    def setEnabled(self, enable):
-        if self.isEnabled != enable:
-            self.isEnabled = enable
-            if enable:
-                self.disableButton.set_label("Disable")
-                self.callJavascriptMethod("mdm_enable")
-            else:
-                self.disableButton.set_label("Enable")
-                self.callJavascriptMethod("mdm_disable")
-        
-    
-    def resolutionChanged(self, widget):
-        if widget.get_active_iter():
-            self.setResolutionFromString(widget.get_child().get_text())
-        
-    def onResolutionKeyPress(self, widget, event):
-        if event.keyval == Gdk.KEY_Return:
-            self.setResolutionFromString(widget.get_text())
-            
     def setResolutionFromString(self, string):
         data = string.split('x')
         if len(data) == 2:
@@ -295,22 +265,111 @@ class ThemeEmulator:
         self.window.unmaximize()
         self.scrolledWindow.set_size_request(width, height)
         self.window.resize(100,100) # force resize to minimum size
-        
-    def refresh(self, widget):
+
+    def setEnabled(self, enable):
+        if self.isEnabled != enable:
+            self.isEnabled = enable
+            if enable:
+                self.toolbar.disableButton.set_label("Disable")
+                self.callJavascriptMethod("mdm_enable")
+            else:
+                self.toolbar.disableButton.set_label("Enable")
+                self.callJavascriptMethod("mdm_disable")
+
+    def setTime(self):
+        self.callJavascriptMethod("set_clock", time.strftime("%a %b %d, %H:%M"))
+
+    def setStatus(self, string):
+        self.statusLabel.set_text(string)
+
+    def multiPromptDialog(self, title, okLabel, *labels):
+        dialog = MultiPromptDialog(self.window, title, okLabel, *labels)
+        response = dialog.run()
+
+        if response == Gtk.ResponseType.OK:
+            result = dialog.getTexts()
+
+        dialog.destroy()
+        return result
+
+    def onClockUpdate(self, *args):
+        if self.isLoaded:
+            self.setTime()
+
+        time_til_next_min = 60 - datetime.datetime.now().second;
+        if time_til_next_min < 0:
+            time_til_next_min = 0
+
+        GObject.timeout_add(time_til_next_min*1000, self.onClockUpdate, None)
+        return False
+
+    def onWindowStateChange(self, window, event):
+        self.isFullscreen = bool(Gdk.WindowState.FULLSCREEN & event.new_window_state)
+        if self.isLoaded:
+            self.toolbar.resolutionCombo.set_sensitive(self.isFullscreen == False)
+        if self.isFullscreen:
+            self.toolbar.hide()
+            self.statusLabel.hide()
+        else:
+            self.toolbar.show()
+            self.statusLabel.show()
+
+    def onMotion(self, window, event):
+        if self.isFullscreen:
+            if event.y < 2:
+                self.toolbar.show()
+            else:
+                self.toolbar.hide()
+
+            width, height = self.window.get_size()
+            if event.y > height-2:
+                self.statusLabel.show()
+            else:
+                self.statusLabel.hide()
+
+    def onWindowKeyPress(self, widget, event):
+        if event.keyval == Gdk.KEY_F11:
+            if self.isFullscreen:
+                self.window.unfullscreen()
+            else:
+                self.window.fullscreen()
+        elif event.keyval == Gdk.KEY_Escape and self.isFullscreen:
+            self.window.unfullscreen()
+
+    def onMenuJavascriptCallPrompt(self, widget, name):
+        text = self.multiPromptDialog("Please supply a message", "Set", "Please enter a message for %s:" % widget.get_label())
+        if text:
+            self.callJavascriptMethod(name, text)
+
+    def onMenuJavascriptCall(self, widget, name):
+        self.callJavascriptMethod(name)
+
+    def onEnableDisableClicked(self, widget):
+        self.setEnabled(self.isEnabled == False)
+
+    def onResolutionChanged(self, widget):
+        if widget.get_active_iter():
+            self.setResolutionFromString(widget.get_child().get_text())
+
+    def onResolutionKeyPress(self, widget, event):
+        if event.keyval == Gdk.KEY_Return:
+            self.setResolutionFromString(widget.get_text())
+
+    def onRefreshClicked(self, widget):
         self.userName = None
         self.webView.reload()
         self.setStatus("Reloading")
-        
-    def addDummies(self, widget):
+
+    def onAddDummiesClicked(self, widget):
         self.callJavascriptMethod("mdm_add_user", "Jake", "What's this ?")
         self.callJavascriptMethod("mdm_add_user", "Elwood", "What'?")
         self.callJavascriptMethod("mdm_add_session", "Cinnamon", "cinnamon.desktop")
         self.callJavascriptMethod("mdm_add_session", "Mate", "mate.desktop")
         self.callJavascriptMethod("mdm_add_session", "Gnome", "gnome3.desktop")
         self.setStatus("Added 2 dummy users and 3 dummy sessions")
-        
-    def addSession(self, widget):
-        data = self.dialogAskFor("Add a new Session", "Add", "Please enter a session name:", "Please enter a desktop filename:")
+
+    def onAddSessionClicked(self, widget):
+        data = self.multiPromptDialog("Add a new Session", "Add", "Please enter a session name:", "Please enter a desktop filename:")
         if data:
             name, filename = data
             if name != "" and filename != "":
@@ -318,9 +377,9 @@ class ThemeEmulator:
                 self.setStatus("Added session: %s / %s" % (name, filename))
             else:
                 self.setStatus("Add session failed due to empty field")
-        
-    def addUser(self, widget):
-        data = self.dialogAskFor("Add a new User", "Add", "Please enter a user name:", "Please enter gecos:")
+
+    def onAddUserClicked(self, widget):
+        data = self.multiPromptDialog("Add a new User", "Add", "Please enter a user name:", "Please enter gecos:")
         if data:
             name, gecos = data
             if name != "" and gecos != "":
@@ -328,44 +387,8 @@ class ThemeEmulator:
                 self.setStatus("Added user: %s / %s" % (name, gecos))
             else:
                 self.setStatus("Add user failed due to empty field")
-        
-    def dialogAskFor(self, title, okLabel, *labels):
-        message = "test"
-        dialogWindow = Gtk.Dialog(title, self.window,
-                              Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT)
-                              
-        dialogWindow.add_button(okLabel, Gtk.ResponseType.OK)
-        dialogWindow.add_button("Cancel", Gtk.ResponseType.CANCEL)
-        dialogWindow.set_title(title)
 
-        dialogBox = dialogWindow.get_content_area()
-        
-        vbox = Gtk.VBox()
-            
-        entries = []
-        for label in labels:
-            entry = Gtk.Entry()
-            label = Gtk.Label(label)
-            label.set_alignment(0, 0)
-            vbox.add(label)
-            vbox.add(entry)
-            entries.append(entry)
-        
-        dialogBox.pack_end(vbox, False, False, 0)
-
-        dialogWindow.show_all()
-        response = dialogWindow.run()
-        
-        result = None
-        if response == Gtk.ResponseType.OK:
-            result = []
-            for entry in entries:
-                result.append(entry.get_text())
-            
-        dialogWindow.destroy()
-        return result
-        
-    def openFile(self, widget):
+    def onOpenClicked(self, widget):
         dialog = Gtk.FileChooserDialog("Please select an mdm theme", self.window,
             Gtk.FileChooserAction.OPEN,
             (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
@@ -380,22 +403,23 @@ class ThemeEmulator:
         if response == Gtk.ResponseType.OK:
             self.filename = dialog.get_filename()
             self.setStatus("Loading file: " + self.filename)
-            self.webView.open(self.filename) 
+            self.webView.open(self.filename)
 
         dialog.destroy()
-        
-    def loadFinished(self, *args):
+
+    def onLoadFinished(self, *args):
         self.isLoaded = True
         self.setEnabled(True)
         self.userName = None
-        if self.sensitiveItems:
-            for item in self.sensitiveItems:
+        if self.toolbar.sensitiveItems:
+            for item in self.toolbar.sensitiveItems:
                 item.set_sensitive(True)
+            self.toolbar.sensitiveItems = None
 
         self.callJavascriptMethod("set_welcome_message", "Welcome to the MDM Theme Emulator")
         self.callJavascriptMethod("mdm_msg", "Please enter your username")
         self.setTime()
-        
+
         self.setStatus("Load finished: " + self.filename)
         
     def onAlert(self, view, frame, message):
@@ -434,13 +458,9 @@ class ThemeEmulator:
                 self.setStatus('Unrecognized action: ' + action)
             return 1
         
-    def callJavascriptMethod(self, method, *arguments):
-        jsonData = json.dumps(arguments)
-        self.webView.execute_script(method + ".apply(null, " + jsonData + ");");
-
 def main():
     Gtk.main()
-    return 0       
+    return 0
 
 if __name__ == "__main__":
     ThemeEmulator()
