@@ -49,7 +49,9 @@ Depends: ${shlibs:Depends},
          gnome-session | x-session-manager | x-window-manager | x-terminal-emulator,
          gksu (>= 1.0.7),
          lsb-base (>= 3.2-14),
-         librsvg2-common
+         librsvg2-common,
+         gir1.2-webkit-3.0,
+         gir1.2-gtk-3.0
 Recommends: whiptail | dialog,
             zenity,
             mdm-themes,
