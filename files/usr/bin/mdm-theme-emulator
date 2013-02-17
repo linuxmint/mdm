@@ -170,6 +170,7 @@ class ThemeEmulator:
             self.setStatus("Wrong resolution format: " + string)
 
     def setResolution(self, width, height):
+        self.window.unmaximize()
         self.sw.set_size_request(width, height)
         self.window.resize(100,100) # force resize to minimum size
         
