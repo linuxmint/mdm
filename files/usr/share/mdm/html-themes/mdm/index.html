@@ -74,8 +74,10 @@
 						
 		// Send user input to MDM
 		function send_login() {
-			alert("LOGIN###" + document.getElementById("entry").value);
-			mdm_disable(); // disabling a field makes its value inaccessible, so disable after sending the value (not before)
+			// read the value before we disable the field, as it will be changed to "disabled"
+			var value = document.getElementById("entry").value;
+			mdm_disable(); 
+			alert("LOGIN###" + value);
 			return false;
 		}
 		
