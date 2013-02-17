@@ -6,6 +6,7 @@ gi.require_version('WebKit', '3.0')
 from gi.repository import Gio, Gtk, Gdk, GObject, WebKit
 import json
 import time
+import datetime
 
 class MenuToolButton(Gtk.ToolButton):
     def __init__(self, text):
@@ -71,6 +72,8 @@ class ThemeEmulator:
         
         self.webView.connect("load-finished", self.loadFinished)
         self.webView.connect("script-alert", self.onAlert)
+        self.webView.connect("navigation-requested", self.navigationRequest);
+        self.webView.connect("resource-request-starting", self.resourceRequestStarting);
         self.setStatus("Initialized")
 
         self.isFullscreen = False
@@ -82,10 +85,31 @@ class ThemeEmulator:
         
         GObject.timeout_add(1000, self.updateTime, None)
         
+        
+    def resourceRequestStarting(self, view, frame, resource, networkRequest, userdata):
+        uri = networkRequest.get_uri()
+        if not uri.startswith("file:"):
+            networkRequest.set_uri("about:blank")
+        
+    def navigationRequest(self, view, frame, networkRequest):
+        uri = networkRequest.get_uri()
+        if not uri.startswith("file:"):
+            return 1
+        return 0
+    
+    def setTime(self):
+        self.callJavascriptMethod("set_clock", time.strftime("%a %b %d, %H:%M"))
+        
     def updateTime(self, *args):
         if self.isLoaded:
-            self.callJavascriptMethod("set_clock", time.strftime("%H:%M:%S"))
-        return True
+            self.setTime()
+
+        time_til_next_min = 60 - datetime.datetime.now().second;
+        if time_til_next_min < 0:
+            time_til_next_min = 0
+
+        GObject.timeout_add(time_til_next_min*1000, self.updateTime, None)
+        return False
 
     def onWindowStateChange(self, window, event):
         self.isFullscreen = bool(Gdk.WindowState.FULLSCREEN & event.new_window_state)
@@ -370,6 +394,7 @@ class ThemeEmulator:
 
         self.callJavascriptMethod("set_welcome_message", "Welcome to the MDM Theme Emulator")
         self.callJavascriptMethod("mdm_msg", "Please enter your username")
+        self.setTime()
         
         self.setStatus("Load finished: " + self.filename)
         
