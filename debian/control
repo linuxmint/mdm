@@ -51,7 +51,8 @@ Depends: ${shlibs:Depends},
          lsb-base (>= 3.2-14),
          librsvg2-common,
          gir1.2-webkit-3.0,
-         gir1.2-gtk-3.0
+         gir1.2-gtk-3.0,
+         python
 Recommends: whiptail | dialog,
             zenity,
             mdm-themes,
