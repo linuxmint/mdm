@@ -40,6 +40,7 @@
 #include <X11/XKBlib.h>
 
 #include <glib/gi18n.h>
+#include <json-glib/json-glib.h>
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -226,6 +227,7 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
     mdm_common_login_sound (mdm_config_get_string (MDM_KEY_SOUND_PROGRAM),
 					mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE),
 					mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN));
+	mdm_set_translations();
 	mdm_set_welcomemsg ();
 	update_clock (); 
 	
@@ -974,6 +976,55 @@ check_webkit (void)
 	return FALSE;
 }
 
+void json_builder_set_string(JsonBuilder *builder, gchar *name, gchar *value) {
+	json_builder_set_member_name (builder, name);
+	json_builder_add_string_value (builder, value);
+}
+
+void
+mdm_set_translations (void)
+{
+	JsonBuilder *builder = json_builder_new ();
+
+	json_builder_begin_object (builder);
+
+	json_builder_set_string(builder, "login_label", _("Login"));
+	json_builder_set_string(builder, "ok_label", _("OK"));
+	json_builder_set_string(builder, "cancel_label", _("Cancel"));
+	json_builder_set_string(builder, "enter_your_username_label", _("Please enter your username"));
+	json_builder_set_string(builder, "enter_your_password_label", _("Please enter your password"));
+	json_builder_set_string(builder, "hostname", g_get_host_name());
+
+	json_builder_set_string(builder, "shutdown", _("Shutdown"));
+	json_builder_set_string(builder, "suspend", _("Suspend"));
+	json_builder_set_string(builder, "quit", _("Quit"));
+	json_builder_set_string(builder, "restart", _("Restart"));	
+	json_builder_set_string(builder, "remoteloginviaxdmcp", _("Remote Login via XDMCP..."));
+
+	json_builder_set_string(builder, "session", _("Session"));
+	json_builder_set_string(builder, "selectsession", _("Select a session"));
+
+	json_builder_set_string(builder, "language", _("Language"));
+	json_builder_set_string(builder, "selectlanguage", _("Select a language"));
+
+	json_builder_end_object (builder);
+
+	JsonGenerator *gen = json_generator_new ();
+	JsonNode * root = json_builder_get_root (builder);
+	json_generator_set_root (gen, root);
+	gchar *str = json_generator_to_data (generator, NULL);
+
+	json_node_free (root);
+	g_object_unref (generator);
+	g_object_unref (builder);
+	greeting = mdm_common_expand_text (welcomemsg);
+        
+        gchar * tmp = g_strdup_printf("mdm_set_translations(%s)", function, str);
+        webkit_web_view_execute_script(webView, tmp);		
+        g_free (tmp);
+	g_free (str);
+}
+
 void
 mdm_set_welcomemsg (void)
 {
@@ -1002,32 +1053,8 @@ key_press_event (GtkWidget *widget, GdkEventKey *key, gpointer data)
 static void 
 webkit_init (void) {
 	webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
-    
-    char *html;
-	gsize file_length;
-	g_file_get_contents ("/usr/share/mdm/html-themes/mdm/index.html", &html, &file_length, NULL);    
 	
-	html = str_replace(html, "$login_label", _("Login"));
-	html = str_replace(html, "$ok_label", _("OK"));
-	html = str_replace(html, "$cancel_label", _("Cancel"));
-	html = str_replace(html, "$enter_your_username_label", _("Please enter your username"));
-	html = str_replace(html, "$enter_your_password_label", _("Please enter your password"));
-	html = str_replace(html, "$hostname", g_get_host_name());
-	
-	html = str_replace(html, "$shutdown", _("Shutdown"));
-	html = str_replace(html, "$suspend", _("Suspend"));
-	html = str_replace(html, "$quit", _("Quit"));
-	html = str_replace(html, "$restart", _("Restart"));	
-	html = str_replace(html, "$remoteloginviaxdmcp", _("Remote Login via XDMCP..."));
-	
-	html = str_replace(html, "$session", _("Session"));
-	html = str_replace(html, "$selectsession", _("Select a session"));
-	
-	html = str_replace(html, "$language", _("Language"));
-	html = str_replace(html, "$selectlanguage", _("Select a language"));
-	
-	
-	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
+	webkit_web_view_open(webView, "/usr/share/mdm/html-themes/mdm/index.html");
 
 	g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(webkit_on_message), 0);
 	g_signal_connect(G_OBJECT(webView), "load-finished", G_CALLBACK(webkit_on_loaded), 0);
@@ -1331,6 +1358,7 @@ mdm_reread_config (int sig, gpointer data)
             mdm_config_reload_string (MDM_KEY_REMOTE_WELCOME) ||
             mdm_config_reload_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME)) {
 
+		mdm_set_translations ();
 		mdm_set_welcomemsg ();
 	}
 

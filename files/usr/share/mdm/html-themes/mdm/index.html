@@ -23,6 +23,20 @@
 			document.getElementById("ok_button").disabled = false;
 		}
 		
+		// Called by MDM to set the translations
+		function mdm_set_translations(translations) {
+			document.getElementById("ok_button").innerText = translations["ok_label"];
+			document.getElementById("selectsession").title = translations["selectsession"];
+			document.getElementById("session").innerText = translations["session"];
+			document.getElementById("selectlanguage").title = translations["selectlanguage"];
+			document.getElementById("language").innerText = translations["language"];
+			document.getElementById("shutdown").title = translations["shutdown"];
+			document.getElementById("suspend").title = translations["suspend"];
+			document.getElementById("restart").title = translations["restart"];
+			document.getElementById("quit").title = translations["quit"];
+			document.getElementById("xdmcp").title = translations["remoteloginviaxdmcp"];
+		}
+		
 		// Called by MDM to set the welcome message
 		function set_welcome_message(message) {			
 			document.getElementById("welcome_message").innerHTML = message;
@@ -197,12 +211,13 @@
 	<div class="buttons">
 		<div class="btn-toolbar">
 			<div  align="left" class="btn-group">
-                <button class="btn btn-small dropdown-toggle" data-toggle="dropdown" title="$selectsession"><i class="icon-flag"> </i> $session <span class="caret"></span></button>
+            
+                <button class="btn btn-small dropdown-toggle" data-toggle="dropdown" title="$selectsession" id="selectsession"><i class="icon-flag"> </i> <span id="session">$session</span> <span class="caret"></span></button>
                 <ul class="dropdown-menu" id="sessions">                                                       
                 </ul>
             </div>
 			<div class="btn-group">
-				<a class="btn btn-small btn-alert" href="#" onClick="alert('LANGUAGE###');" title="$selectlanguage"><i class="icon-globe"> </i> $language</a>
+				<a class="btn btn-small btn-alert" href="#" onClick="alert('LANGUAGE###');" title="$selectlanguage" id="selectlanguage"><i class="icon-globe"> </i> <span id="language">$language</span></a>
 			</div>
 			<div class="btn-group">
 				<a class="btn btn-small" href="#" onClick="alert('SHUTDOWN###');" title="$shutdown" id="shutdown"><i class="icon-off"></i></a>
