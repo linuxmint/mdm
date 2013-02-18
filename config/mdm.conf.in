@@ -462,14 +462,13 @@ GraphicalThemedColor=#000000
 #UseInvisibleInEntry=false
 
 # These two keys are for the themed greeter (mdmgreeter).  Circles is the
-# standard shipped theme.  If you want MDM to select a random theme from a
-# list then provide a list that is delimited by /: to the GraphicalThemes
-# key and set GraphicalThemeRand to true.  Otherwise use GraphicalTheme
-# and specify just one theme.
+# standard shipped theme.
 GraphicalTheme=circles
-#GraphicalThemes=circles
 GraphicalThemeDir=@datadir@/mdm/themes/
-GraphicalThemeRand=false
+
+# This one is for the HTML Webkit greeter
+HTMLTheme=mdm
+
 
 # If InfoMsgFile points to a file, the greeter will display the contents of the
 # file in a modal dialog box before the user is allowed to log in.

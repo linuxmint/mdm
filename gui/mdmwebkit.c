@@ -273,6 +273,8 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 			    NULL);
 	    g_io_channel_unref (ctrlch);
     }
+    
+    gtk_widget_show_all (GTK_WIDGET (login));    
 }
 
 static GtkWidget *
@@ -1001,11 +1003,50 @@ key_press_event (GtkWidget *widget, GdkEventKey *key, gpointer data)
 
 static void 
 webkit_init (void) {
-	webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
-    
-    char *html;
+	
+	GError *error;
+	char *html;
 	gsize file_length;
-	g_file_get_contents ("/usr/share/mdm/html-themes/mdm/index.html", &html, &file_length, NULL);    
+	gchar * theme_name = mdm_config_get_string (MDM_KEY_HTML_THEME);
+	gchar * theme_dir = g_strdup_printf("file:///usr/share/mdm/html-themes/%s/", theme_name);
+	gchar * theme_filename = g_strdup_printf("/usr/share/mdm/html-themes/%s/index.html", theme_name);			  
+			
+	if (!g_file_get_contents (theme_filename, &html, &file_length, error)) {    
+		GtkWidget *dialog;
+		char *s;
+		char *tmp;
+
+		mdm_wm_init (0);
+		mdm_wm_focus_new_windows (TRUE);
+
+		tmp = ve_filename_to_utf8 (ve_sure_string (theme_name));
+		s = g_strdup_printf (_("There was an error loading the theme %s"), tmp);
+		g_free (tmp);
+		dialog = hig_dialog_new (NULL /* parent */,
+								 GTK_DIALOG_MODAL /* flags */,
+								 GTK_MESSAGE_ERROR,
+								 GTK_BUTTONS_OK,
+								 s,
+								 (error && error->message) ? error->message : "");
+		g_free (s);
+
+		gtk_widget_show_all (dialog);
+		mdm_wm_center_window (GTK_WINDOW (dialog));
+
+		mdm_common_setup_cursor (GDK_LEFT_PTR);
+
+		gtk_dialog_run (GTK_DIALOG (dialog));
+		gtk_widget_destroy (dialog);
+		
+		g_free (theme_name);
+		g_free (theme_dir);
+		g_free (theme_filename);
+		theme_name = "mdm";
+		theme_dir = g_strdup_printf("file:///usr/share/mdm/html-themes/%s/", theme_name);
+		theme_filename = g_strdup_printf("/usr/share/mdm/html-themes/%s/index.html", theme_name);
+		g_file_get_contents (theme_filename, &html, &file_length, NULL);
+			
+	}
 	
 	html = str_replace(html, "$login_label", _("Login"));
 	html = str_replace(html, "$ok_label", _("OK"));
@@ -1025,9 +1066,9 @@ webkit_init (void) {
 	
 	html = str_replace(html, "$language", _("Language"));
 	html = str_replace(html, "$selectlanguage", _("Select a language"));
-	
-	
-	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", "file:///usr/share/mdm/html-themes/mdm/");
+		
+	webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
+	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", theme_dir);
 
 	g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(webkit_on_message), 0);
 	g_signal_connect(G_OBJECT(webView), "load-finished", G_CALLBACK(webkit_on_loaded), 0);
@@ -1093,7 +1134,7 @@ mdm_login_gui_init (void)
     
     mdm_wm_center_window (GTK_WINDOW (login));    
     
-    gtk_widget_show_all (GTK_WIDGET (login));    
+    
     
 }
 
@@ -1124,6 +1165,7 @@ mdm_read_config (void)
 	 * Read all the keys at once and close sockets connection so we do
 	 * not have to keep the socket open. 
 	 */
+	mdm_config_get_string (MDM_KEY_HTML_THEME);
 	mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
 	mdm_config_get_string (MDM_KEY_BACKGROUND_IMAGE);
 	mdm_config_get_string (MDM_KEY_BACKGROUND_PROGRAM);
@@ -1227,6 +1269,7 @@ mdm_reread_config (int sig, gpointer data)
 	/* Also we may not need to check ALL those keys but just a few */
 
 	if (mdm_config_reload_string (MDM_KEY_BACKGROUND_PROGRAM) ||
+	    mdm_config_get_string (MDM_KEY_HTML_THEME) || 
 	    mdm_config_reload_string (MDM_KEY_CONFIGURATOR) ||
 	    mdm_config_reload_string (MDM_KEY_DEFAULT_FACE) ||
 	    mdm_config_reload_string (MDM_KEY_DEFAULT_SESSION) ||
