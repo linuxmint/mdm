@@ -1066,6 +1066,8 @@ webkit_init (void) {
 	
 	html = str_replace(html, "$language", _("Language"));
 	html = str_replace(html, "$selectlanguage", _("Select a language"));
+	
+	html = str_replace(html, "$locale", g_strdup (setlocale (LC_MESSAGES, NULL)));
 		
 	webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
 	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", theme_dir);
