@@ -1659,9 +1659,6 @@ HTML</property>
                                 <property name="can_focus">False</property>
                                 <property name="spacing">6</property>
                                 <child>
-                                  <placeholder/>
-                                </child>
-                                <child>
                                   <widget class="GtkHBox" id="hbox92">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
@@ -1812,7 +1809,7 @@ HTML</property>
                                   <packing>
                                     <property name="expand">True</property>
                                     <property name="fill">True</property>
-                                    <property name="position">1</property>
+                                    <property name="position">0</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -1878,7 +1875,7 @@ HTML</property>
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">False</property>
-                                    <property name="position">2</property>
+                                    <property name="position">1</property>
                                   </packing>
                                 </child>
                               </widget>
@@ -1893,7 +1890,158 @@ HTML</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <child>
-                                  <placeholder/>
+                                  <widget class="GtkHBox" id="hbox1">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="spacing">12</property>
+                                    <child>
+                                      <widget class="GtkScrolledWindow" id="local_theme_scrolled_window1">
+                                        <property name="width_request">350</property>
+                                        <property name="height_request">326</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="hscrollbar_policy">never</property>
+                                        <property name="vscrollbar_policy">automatic</property>
+                                        <property name="shadow_type">in</property>
+                                        <child>
+                                          <widget class="GtkTreeView" id="gg_html_theme_list">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="headers_visible">False</property>
+                                          </widget>
+                                        </child>
+                                      </widget>
+                                      <packing>
+                                        <property name="expand">True</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkVBox" id="vbox1">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="spacing">6</property>
+                                        <child>
+                                          <widget class="GtkButton" id="gg_install_new_html_theme">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">True</property>
+                                            <property name="use_action_appearance">False</property>
+                                            <child>
+                                              <widget class="GtkAlignment" id="alignment1">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="xscale">0</property>
+                                                <property name="yscale">0</property>
+                                                <child>
+                                                  <widget class="GtkHBox" id="hbox2">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="spacing">2</property>
+                                                    <child>
+                                                      <widget class="GtkImage" id="image3">
+                                                        <property name="visible">True</property>
+                                                        <property name="can_focus">False</property>
+                                                        <property name="stock">gtk-add</property>
+                                                      </widget>
+                                                      <packing>
+                                                        <property name="expand">False</property>
+                                                        <property name="fill">False</property>
+                                                        <property name="position">0</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <widget class="GtkLabel" id="label1">
+                                                        <property name="visible">True</property>
+                                                        <property name="can_focus">False</property>
+                                                        <property name="label" translatable="yes">_Add...</property>
+                                                        <property name="use_underline">True</property>
+                                                      </widget>
+                                                      <packing>
+                                                        <property name="expand">False</property>
+                                                        <property name="fill">False</property>
+                                                        <property name="position">1</property>
+                                                      </packing>
+                                                    </child>
+                                                  </widget>
+                                                </child>
+                                              </widget>
+                                            </child>
+                                          </widget>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <widget class="GtkButton" id="gg_delete_html_theme">
+                                            <property name="visible">True</property>
+                                            <property name="sensitive">False</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">True</property>
+                                            <property name="use_action_appearance">False</property>
+                                            <child>
+                                              <widget class="GtkAlignment" id="alignment2">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="xscale">0</property>
+                                                <property name="yscale">0</property>
+                                                <child>
+                                                  <widget class="GtkHBox" id="hbox3">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="spacing">2</property>
+                                                    <child>
+                                                      <widget class="GtkImage" id="image4">
+                                                        <property name="visible">True</property>
+                                                        <property name="can_focus">False</property>
+                                                        <property name="stock">gtk-remove</property>
+                                                      </widget>
+                                                      <packing>
+                                                        <property name="expand">False</property>
+                                                        <property name="fill">False</property>
+                                                        <property name="position">0</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <widget class="GtkLabel" id="LocalThemeRemoveButtonLabel1">
+                                                        <property name="visible">True</property>
+                                                        <property name="can_focus">False</property>
+                                                        <property name="label" translatable="yes">_Remove...</property>
+                                                        <property name="use_underline">True</property>
+                                                      </widget>
+                                                      <packing>
+                                                        <property name="expand">False</property>
+                                                        <property name="fill">False</property>
+                                                        <property name="position">1</property>
+                                                      </packing>
+                                                    </child>
+                                                  </widget>
+                                                </child>
+                                              </widget>
+                                            </child>
+                                          </widget>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </widget>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
                                 </child>
                               </widget>
                               <packing>
@@ -3608,7 +3756,6 @@ no</property>
                                             <property name="xalign">0</property>
                                             <property name="label" translatable="yes">Permissions</property>
                                             <property name="use_underline">True</property>
-                                            <property name="mnemonic_widget">gg_mode_combobox</property>
                                           </widget>
                                           <packing>
                                             <property name="expand">False</property>
