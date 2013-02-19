@@ -1,3 +1,11 @@
+mdm (1.1.1) olivia; urgency=low
+
+  * UI improvements in mdmsetup
+  * Simpler options regarding greeters
+  * New Webkit greeter
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 19 Feb 2013 12:12:42 +0000
+
 mdm (1.0.8) nadia; urgency=low
 
   * Asks plymouth to quit at startup (fixes Xorg randomly loading the wrong driver and user ending using llvmpipe)
