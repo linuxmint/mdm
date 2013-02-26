@@ -499,77 +499,8 @@ slave_waitpid (MdmWaitPid *wp)
 
 	mdm_debug ("slave_waitpid: waiting on %d", (int)wp->pid);
 
-	if G_UNLIKELY (slave_waitpid_r < 0) {
-		mdm_error ("slave_waitpid: no pipe, trying to wing it");
-
-		/* This is a real stupid fallback for a real stupid case */
-		while (wp->pid > 1) {
-			struct timeval tv;
-			/* Wait 5 seconds. */
-			tv.tv_sec = 5;
-			tv.tv_usec = 0;
-			select (0, NULL, NULL, NULL, min_time_to_wait (&tv));
-			/* don't want to use sleep since we're using alarm
-			   for pinging */
-
-			/* try to touch an fb auth file */
-			try_to_touch_fb_userauth ();
-
-			if (d->session_output_fd >= 0)
-				run_session_output (FALSE /* read_until_eof */);
-			if (d->chooser_output_fd >= 0)
-				run_chooser_output ();
-			check_notifies_now ();
-		}
-		check_notifies_now ();
-	} else {
-		gboolean read_session_output = TRUE;
-
-		do {
-			char buf[1];
-			fd_set rfds;
-			int ret;
-			struct timeval tv;
-			int maxfd;
-
-			FD_ZERO (&rfds);
-			FD_SET (slave_waitpid_r, &rfds);
-			if (read_session_output &&
-			    d->session_output_fd >= 0)
-				FD_SET (d->session_output_fd, &rfds);
-			if (d->chooser_output_fd >= 0)
-				FD_SET (d->chooser_output_fd, &rfds);
-
-			/* unset time */
-			tv.tv_sec = 0;
-			tv.tv_usec = 0;
-			maxfd = MAX (slave_waitpid_r, d->session_output_fd);
-			maxfd = MAX (maxfd, d->chooser_output_fd);
-
-			ret = select (maxfd + 1, &rfds, NULL, NULL, min_time_to_wait (&tv));
-
-			/* try to touch an fb auth file */
-			try_to_touch_fb_userauth ();
-
-			if (ret > 0) {
-			       	if (FD_ISSET (slave_waitpid_r, &rfds)) {
-					VE_IGNORE_EINTR (read (slave_waitpid_r, buf, 1));
-				}
-				if (d->session_output_fd >= 0 &&
-				    FD_ISSET (d->session_output_fd, &rfds)) {
-					run_session_output (FALSE /* read_until_eof */);
-				}
-				if (d->chooser_output_fd >= 0 &&
-				    FD_ISSET (d->chooser_output_fd, &rfds)) {
-					run_chooser_output ();
-				}
-			} else if (errno == EBADF) {
-				read_session_output = FALSE;
-			}
-			check_notifies_now ();
-		} while (wp->pid > 1);
-		check_notifies_now ();
-	}
+	int * status;
+	waitpid (wp->pid, status, 0);
 
 	mdm_sigchld_block_push ();
 
