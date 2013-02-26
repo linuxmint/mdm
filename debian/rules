@@ -44,7 +44,7 @@ patch-stamp:
 configure: configure-stamp
 configure-stamp: patch-stamp
 	dh_testdir
-	./configure $(configure_flags) CFLAGS="$(CFLAGS)"
+	./autogen.sh $(configure_flags) CFLAGS="$(CFLAGS)"
 	touch configure-stamp
 
 build: build-stamp
