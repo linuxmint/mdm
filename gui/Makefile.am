@@ -172,6 +172,8 @@ mdmwebkit_LDADD = \
 	$(XINERAMA_LIBS)	\
 	$(X_LIBS)		\
 	-lX11			\
+	-lXau			\
+	-lm				\
 	$(NULL)
 
 # LIBGNOMEUI should be removed from mdmsetup at some point.
