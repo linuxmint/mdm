@@ -129,6 +129,8 @@ mdmchooser_LDADD = \
 	$(X_LIBS)		\
 	$(XDMCP_LIBS)		\
 	-lX11			\
+	-lXau			\
+	-lm				\
 	$(NULL)
 
 mdmlogin_LDADD = \
@@ -148,6 +150,8 @@ mdmlogin_LDADD = \
 	$(XINERAMA_LIBS)	\
 	$(X_LIBS)		\
 	-lX11			\
+	-lXau			\
+	-lm				\
 	$(NULL)
 
 mdmwebkit_LDADD = \
@@ -206,6 +210,8 @@ mdmphotosetup_LDADD = \
 	$(EXTRA_SOCKET_LIB)	\
 	$(EXTRA_NSL_LIB)	\
 	-lX11			\
+	-lXau			\
+	-lm				\
 	$(top_builddir)/common/libmdmcommon.a \
 	$(NULL)
 
