@@ -1,3 +1,10 @@
+mdm (1.1.2) olivia; urgency=low
+
+  * Cleaner build
+  * waitpid instead of select for slave to detect the death of the greeter
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 26 Feb 2013 14:21:50 +0000
+
 mdm (1.1.1) olivia; urgency=low
 
   * UI improvements in mdmsetup
