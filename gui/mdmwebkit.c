@@ -1070,6 +1070,7 @@ webkit_init (void) {
 	html = str_replace(html, "$locale", g_strdup (setlocale (LC_MESSAGES, NULL)));
 		
 	webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
+	webkit_web_view_set_transparent (webView, TRUE);
 	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", theme_dir);
 
 	g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(webkit_on_message), 0);
