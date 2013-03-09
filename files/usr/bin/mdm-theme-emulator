@@ -7,7 +7,6 @@ from gi.repository import Gio, Gtk, Gdk, GObject, WebKit
 import json
 import time
 import datetime
-import gettext
 import sys
 
 class MenuToolButton(Gtk.ToolButton):
@@ -291,29 +290,6 @@ class ThemeEmulator:
     def setStatus(self, string):
         self.statusLabel.set_text(string)
 
-    def setTranslations(self):
-        translations = {
-            "login_label": _("Login"),
-            "ok_label": _("OK"),
-            "cancel_label": _("Cancel"),
-            "enter_your_username_label": _("Please enter your username"),
-            "enter_your_password_label": _("Please enter your password"),
-            "hostname": "the hostname", # fixme
-
-            "shutdown": _("Shutdown"),
-            "suspend": _("Suspend"),
-            "quit": _("Quit"),
-            "restart": _("Restart"),	
-            "remoteloginviaxdmcp": _("Remote Login via XDMCP..."),
-
-            "session": _("Session"),
-            "selectsession": _("Select a session"),
-
-            "language": _("Language"),
-            "selectlanguage": _("Select a language")
-        }
-        self.callJavascriptMethod("mdm_set_translations", translations)
-        
     def multiPromptDialog(self, title, okLabel, *labels):
         dialog = MultiPromptDialog(self.window, title, okLabel, *labels)
         response = dialog.run()
@@ -450,7 +426,6 @@ class ThemeEmulator:
                 item.set_sensitive(True)
             self.toolbar.sensitiveItems = None
 
-        self.setTranslations()
         self.callJavascriptMethod("set_welcome_message", "Welcome to the MDM Theme Emulator")
         self.callJavascriptMethod("mdm_msg", "Please enter your username")
         self.setTime()
@@ -498,6 +473,5 @@ def main():
     return 0
 
 if __name__ == "__main__":
-    gettext.install("mdm", "/usr/share/locale")
     ThemeEmulator()
     main()
