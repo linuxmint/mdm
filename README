@@ -1,5 +1,5 @@
 
-		    MDM - GNOME DISPLAY MANAGER
+		    MDM - MDM DISPLAY MANAGER
 
  -----------------------------------------------------------
  Note: For instructions how to install read README.install |
@@ -79,14 +79,13 @@ mdmsetup:
 
 Availability:
 
-   ftp://ftp.gnome.org/pub/GNOME/sources/mdm/
+   https://github.com/linuxmint/mdm/tags
 
 Reporting Bugs:
 
-  Please submit bug reports, enhancement requests, and patches to
-  the "mdm" category at:
+  Please submit bug reports, enhancement requests, and patches at:
 
-     http://bugzilla.gnome.org/
+     https://github.com/linuxmint/mdm/issues
 
   When reporting bugs you should first turn on debugging on the
   "Security" tab of mdmsetup or editing custom.conf as described in
@@ -108,26 +107,6 @@ Installation:
 
 Contact:
 
-  The MDM mail list is mdm-list@gnome.org.  Archives can be found here:
-
-   http://mail.gnome.org/archives/
+  #linuxmint-dev on irc.spotchat.org
 
 Martin, George, and then Brian
-
--------------------------------------------------------------------------
-Note:
-
-Originally I started maintaining mdm2 because Martin didn't yet finish mdm3 and
-was in general busy and we needed a working MDM for 1.4.  The move to mdm3 is
-very unlikely to happen now that mdm3 has been pretty dead for quite
-a while.  
-
--George <jirka@5z.com>
--------------------------------------------------------------------------
-Note:
-
-From 01/2005 I have been acting as MDM maintainer.
-
--Brian Cameron <Brian.Cameron@Sun.Com>
--------------------------------------------------------------------------
-

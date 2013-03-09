@@ -1,3 +1,24 @@
+mdm (1.1.3) olivia; urgency=low
+
+  * Transparent backgound in webkit greeter
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 27 Feb 2013 11:18:18 +0000
+
+mdm (1.1.2) olivia; urgency=low
+
+  * Cleaner build
+  * waitpid instead of select for slave to detect the death of the greeter
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 26 Feb 2013 14:21:50 +0000
+
+mdm (1.1.1) olivia; urgency=low
+
+  * UI improvements in mdmsetup
+  * Simpler options regarding greeters
+  * New Webkit greeter
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 19 Feb 2013 12:12:42 +0000
+
 mdm (1.0.8) nadia; urgency=low
 
   * Asks plymouth to quit at startup (fixes Xorg randomly loading the wrong driver and user ending using llvmpipe)
