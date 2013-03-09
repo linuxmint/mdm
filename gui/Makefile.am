@@ -27,6 +27,7 @@ INCLUDES = \
 	-I$(top_srcdir)/common				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" 	\
 	$(GUI_CFLAGS) \
+	$(JSON_CFLAGS)  \
 	$(WEBKIT_CFLAGS) 
 
 #
@@ -163,6 +164,7 @@ mdmwebkit_LDADD = \
 	$(WEBKIT_LIBS)		\
 	$(INTLLIBS)		\
 	$(GLIB_LIBS)		\
+	$(JSON_LIBS)		\
 	$(GOBJECT_LIBS)		\
 	$(GDK_LIBS)		\
 	$(PANGO_LIBS)		\

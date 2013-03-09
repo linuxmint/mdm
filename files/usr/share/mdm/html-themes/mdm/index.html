@@ -23,6 +23,31 @@
 			document.getElementById("ok_button").disabled = false;
 		}
 		
+		// Called by MDM to set the translations
+		function mdm_set_translations(translations) {
+			var items = document.getElementsByTagName("*");
+			for (var i = items.length; i--;) {
+				var item = items[i];
+				var nodes = item.childNodes;
+				for(var j=nodes.length; j--;) {
+					if(nodes[j].nodeType == 3)
+						nodes[j].textContent = replaceTranslations(nodes[j].textContent, translations);
+				}
+				if(item.nodeType == 1) {
+					if(item.title && item.title != "")
+						item.title = replaceTranslations(item.title, translations);
+					if(item.alt && item.alt != "")
+						item.alt = replaceTranslations(item.alt, translations);
+                                }
+			}
+		}
+
+		function replaceTranslations(text, translations) {
+			for(var key in translations)
+				text = text.replace('$'+key, translations[key]);
+			return text;
+		}
+		
 		// Called by MDM to set the welcome message
 		function set_welcome_message(message) {			
 			document.getElementById("welcome_message").innerHTML = message;
