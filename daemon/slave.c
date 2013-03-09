@@ -441,9 +441,9 @@ min_time_to_wait (struct timeval *tv)
 			tv->tv_sec = sec_to_wait;
 	}
 	if (TIME_UNSET_P (tv))
-		return NULL;
-	else
-		return tv;
+		return NULL;    
+	else 
+		return tv;    
 }
 
 static void
@@ -526,6 +526,7 @@ slave_waitpid (MdmWaitPid *wp)
 		gboolean read_session_output = TRUE;
 
 		do {
+            mdm_debug ("slave_waitpid: start loop");
 			char buf[1];
 			fd_set rfds;
 			int ret;
@@ -535,22 +536,49 @@ slave_waitpid (MdmWaitPid *wp)
 			FD_ZERO (&rfds);
 			FD_SET (slave_waitpid_r, &rfds);
 			if (read_session_output &&
-			    d->session_output_fd >= 0)
+			    d->session_output_fd >= 0) {
 				FD_SET (d->session_output_fd, &rfds);
-			if (d->chooser_output_fd >= 0)
+                mdm_debug ("slave_waitpid: no session");
+            }
+			if (d->chooser_output_fd >= 0) {
 				FD_SET (d->chooser_output_fd, &rfds);
+                mdm_debug ("slave_waitpid: no chooser");
+            }
 
 			/* unset time */
 			tv.tv_sec = 0;
 			tv.tv_usec = 0;
 			maxfd = MAX (slave_waitpid_r, d->session_output_fd);
 			maxfd = MAX (maxfd, d->chooser_output_fd);
+            
+            if (maxfd == slave_waitpid_r) {
+                mdm_debug ("slave_waitpid: maxfd = slave_waitpid_r, using waitpid instead of select");
+                int * status;
+                waitpid (wp->pid, status, 0);
+                break;
+            }   
 
-			ret = select (maxfd + 1, &rfds, NULL, NULL, min_time_to_wait (&tv));
+            struct timeval * timetowait = min_time_to_wait (&tv);
+
+            mdm_debug ("slave_waitpid: ret = %d", (int) ret);
+            if (timetowait != NULL) {
+                mdm_debug ("slave_waitpid: timetowait = %d, %d", (int) timetowait->tv_sec, (int) timetowait->tv_usec);
+            }
+            else {
+                mdm_debug ("slave_waitpid: timetowait = NULL");
+            }
+            mdm_debug ("slave_waitpid: slave_waitpid_r = %d", (int) slave_waitpid_r);
+            mdm_debug ("slave_waitpid: d->session_output_fd = %d", (int) d->session_output_fd);
+            mdm_debug ("slave_waitpid: d->chooser_output_fd = %d", (int) d->chooser_output_fd);
+            mdm_debug ("slave_waitpid: MAX = %d", (int) maxfd);                
+
+			ret = select (maxfd + 1, &rfds, NULL, NULL, timetowait);
+
+            mdm_debug ("slave_waitpid: ret = %d", (int) ret);
 
 			/* try to touch an fb auth file */
 			try_to_touch_fb_userauth ();
-
+                                    
 			if (ret > 0) {
 			       	if (FD_ISSET (slave_waitpid_r, &rfds)) {
 					VE_IGNORE_EINTR (read (slave_waitpid_r, buf, 1));
@@ -565,7 +593,15 @@ slave_waitpid (MdmWaitPid *wp)
 				}
 			} else if (errno == EBADF) {
 				read_session_output = FALSE;
-			}
+                mdm_debug ("slave_waitpid: errno = EBADF");
+			} else if (errno == EINTR) {				
+                mdm_debug ("slave_waitpid: errno = EINTR");            
+            } else if (errno == EINVAL) {				
+                mdm_debug ("slave_waitpid: errno = EINVAL");
+            }
+            else {
+                mdm_debug ("slave_waitpid: errno = unknown error");
+            }
 			check_notifies_now ();
 		} while (wp->pid > 1);
 		check_notifies_now ();
