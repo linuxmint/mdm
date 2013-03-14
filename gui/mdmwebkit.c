@@ -129,6 +129,56 @@ static gboolean first_prompt = TRUE;
 static void process_operation (guchar op_code, const gchar *args);
 static gboolean mdm_login_ctrl_handler (GIOChannel *source, GIOCondition cond, gint fd);
 
+static GHashTable *displays_hash = NULL;
+
+static void
+check_for_displays (void)
+{
+	char  *ret;
+	char **vec;
+	char  *auth_cookie = NULL;
+	int    i;
+
+	/*
+	 * Might be nice to move this call into read_config() so that it happens
+	 * on the same socket call as reading the configuration.
+	 */
+	ret = mdmcomm_call_mdm (MDM_SUP_ATTACHED_SERVERS, auth_cookie, "1.0.0.0", 5);
+	if (ve_string_empty (ret) || strncmp (ret, "OK ", 3) != 0) {
+		g_free (ret);
+		return;
+	}
+
+	vec = g_strsplit (&ret[3], ";", -1);
+	g_free (ret);
+	if (vec == NULL)
+		return;
+
+	if (displays_hash == NULL)
+		displays_hash = g_hash_table_new_full (g_str_hash,
+						       g_str_equal,
+						       g_free,
+						       g_free);
+
+	for (i = 0; vec[i] != NULL; i++) {
+		char **rvec;
+
+		rvec = g_strsplit (vec[i], ",", -1);
+		if (mdm_vector_len (rvec) != 3) {
+			g_strfreev (rvec);
+			continue;
+		}
+
+		g_hash_table_insert (displays_hash,
+				     g_strdup (rvec[1]),
+				     g_strdup (rvec[0]));
+
+		g_strfreev (rvec);
+	}
+
+	g_strfreev (vec);
+}
+
 static gchar * 
 str_replace(const char *string, const char *delimiter, const char *replacement)
 {
@@ -935,18 +985,30 @@ process_operation (guchar       op_code,
 void
 mdm_login_browser_populate (void)
 {
-    GList *li;
+	check_for_displays ();
+
+    GList *li;	
     for (li = users; li != NULL; li = li->next) {
 	    MdmUser *usr = li->data;	    	    
-	    char *login, *gecos;
+	    char *login, *gecos, *status;
 	    login = mdm_common_text_to_escaped_utf8 (usr->login);
 	    gecos = mdm_common_text_to_escaped_utf8 (usr->gecos);	    				   
-		gchar * args = g_strdup_printf("%s\", \"%s", login, gecos);
+	    if (g_hash_table_lookup (displays_hash, usr->login)) {
+	    	status = _("Already logged in");
+		}
+		else {
+			status = "";
+		}
+		gchar * args = g_strdup_printf("%s\", \"%s\", \"%s", login, gecos, status);
 		webkit_execute_script("mdm_add_user", args);
 		g_free (args);
 	    g_free (login);
 	    g_free (gecos);	    	    
     }
+    
+    /* we are done with the hash */
+	g_hash_table_destroy (displays_hash);
+	displays_hash = NULL;
     return;
 }
 

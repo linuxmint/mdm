@@ -371,8 +371,8 @@ class ThemeEmulator:
         self.setStatus("Reloading")
 
     def onAddDummiesClicked(self, widget):
-        self.callJavascriptMethod("mdm_add_user", "Jake", "What's this ?")
-        self.callJavascriptMethod("mdm_add_user", "Elwood", "What'?")
+        self.callJavascriptMethod("mdm_add_user", "dummy", "John Dummy", "Already logged in")
+        self.callJavascriptMethod("mdm_add_user", "joe", "Joe User", "")
         self.callJavascriptMethod("mdm_add_session", "Cinnamon", "cinnamon.desktop")
         self.callJavascriptMethod("mdm_add_session", "Mate", "mate.desktop")
         self.callJavascriptMethod("mdm_add_session", "Gnome", "gnome3.desktop")
@@ -393,7 +393,7 @@ class ThemeEmulator:
         if data:
             name, gecos = data
             if name != "" and gecos != "":
-                self.callJavascriptMethod("mdm_add_user", name, gecos)
+                self.callJavascriptMethod("mdm_add_user", name, gecos, "true")
                 self.setStatus("Added user: %s / %s" % (name, gecos))
             else:
                 self.setStatus("Add user failed due to empty field")

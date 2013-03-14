@@ -86,7 +86,7 @@
 		}
 		
 		// Called by MDM to add a user to the list of users
-		function mdm_add_user(username, gecos) {					
+		function mdm_add_user(username, gecos, status) {
 								
 			var box = document.createElement('div');
 				box.setAttribute('class', "highlight-border tilt user-info");
@@ -106,11 +106,21 @@
 			var username_div = document.createElement('div');
 				username_div.setAttribute('class', "username");
 				username_div.innerHTML = username;
+
+			if (status != "") {
+				var userstatus_div = document.createElement('div');
+				userstatus_div.setAttribute('class', "userstatus");
+				userstatus_div.innerHTML = status;
+			}
 																																
 			box.appendChild(link);
 			link.appendChild(picture);														
 			link.appendChild(realname_div);			
 			link.appendChild(username_div);			
+			
+			if (status != "") {
+				link.appendChild(userstatus_div);	
+			}
 				
 			var src = document.getElementById("users");
 			src.appendChild(box);

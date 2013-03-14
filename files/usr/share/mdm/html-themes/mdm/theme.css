@@ -65,6 +65,11 @@ body {
 	font-weight:bold;
 }
 
+.userstatus {
+	font-style: italic;
+	font-size: 10px;	
+}
+
 .highlight-border img{
 	-webkit-transition: all .6s ease-in-out;
 }
