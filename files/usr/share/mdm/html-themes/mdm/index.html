@@ -139,7 +139,7 @@
 			var li = document.createElement('li');			
 				
 			var link = document.createElement('a');	
-				link.setAttribute('href', "javascript:alert('SESSION###"+session_name+"###"+session_file+"')");
+				link.setAttribute('href', "javascript:alert('SESSION###"+session_name+"###"+session_file+"');select_session('"+session_name+"','"+session_file+"');");
 				
 			var picture = document.createElement('img');
 				picture.setAttribute('class', "session-picture");
@@ -155,6 +155,15 @@
 			var src = document.getElementById("sessions");
 			src.appendChild(li);
 		}	
+
+		function select_session(session_name, session_file) {
+			var filename = session_name.toLowerCase();
+			filename = filename.replace(/ /g, "-");
+			filename = filename.replace(/\(/g, "");
+			filename = filename.replace(/\)/g, "");
+			document.getElementById("current_session_picture").src = "img/sessions/"+filename+".svg";
+			document.getElementById("current_session_picture").title = session_name;
+		}
 
 		// Called by MDM to add a language to the list of languages
 		function mdm_add_language(language_name, language_code) {
@@ -247,7 +256,7 @@
 	<div class="buttons">
 		<div class="btn-toolbar">
 			<div  align="left" class="btn-group">
-                <button class="btn btn-small dropdown-toggle" data-toggle="dropdown" title="$selectsession"><i class="icon-flag"> </i> $session <span class="caret"></span></button>
+                <button class="btn btn-small dropdown-toggle" data-toggle="dropdown" title="$selectsession"> <img src="img/sessions/default.svg" title="$defaultsession" width=16 height=16 id="current_session_picture"/> <span class="caret"></span></button>
                 <ul class="dropdown-menu" id="sessions">                                                       
                 </ul>
             </div>

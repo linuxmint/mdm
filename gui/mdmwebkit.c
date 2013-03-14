@@ -223,11 +223,11 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 		g_free (language);
 	}
 	else if (strcmp(command, "SESSION") == 0) {
-		gchar *s;
+		//gchar *s;
 		current_session = message_parts[2];
-		s = g_strdup_printf (_("%s session selected"), mdm_session_name (current_session));
-		webkit_execute_script("mdm_msg",  s);
-		g_free (s);
+		//s = g_strdup_printf (_("%s session selected"), mdm_session_name (current_session));
+		//webkit_execute_script("mdm_msg",  s);
+		//g_free (s);
 	}	
 	else if (strcmp(command, "SHUTDOWN") == 0) {
 		if (mdm_wm_warn_dialog (
@@ -1224,6 +1224,7 @@ webkit_init (void) {
 	
 	html = str_replace(html, "$session", _("Session"));
 	html = str_replace(html, "$selectsession", _("Select a session"));
+	html = str_replace(html, "$defaultsession", _("Default session"));
 	
 	html = str_replace(html, "$language", _("Language"));
 	html = str_replace(html, "$selectlanguage", _("Select a language"));
