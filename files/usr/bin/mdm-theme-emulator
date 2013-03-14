@@ -434,6 +434,7 @@ class ThemeEmulator:
         self.callJavascriptMethod("set_welcome_message", "Welcome to the MDM Theme Emulator")
         self.callJavascriptMethod("mdm_msg", "Please enter your username")
         self.callJavascriptMethod("mdm_set_current_language", "English (USA)", "en_US.UTF-8")
+        self.callJavascriptMethod("mdm_prompt", "Username: ")
         self.setTime()
 
         self.setStatus("Load finished: " + self.filename)
@@ -451,7 +452,7 @@ class ThemeEmulator:
                     self.setStatus("Logged in as %s, with password %s" % (self.userName, param))
                     self.userName = None
                     self.callJavascriptMethod("mdm_error", "Can't log in in emulator")
-                    self.callJavascriptMethod("mdm_prompt", '')
+                    self.callJavascriptMethod("mdm_prompt", 'Username:')
                 else:
                     self.userName = param
                     self.setStatus("Entered user: " + param)
