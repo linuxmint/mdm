@@ -154,7 +154,47 @@
 				
 			var src = document.getElementById("sessions");
 			src.appendChild(li);
-		}		
+		}	
+
+		// Called by MDM to add a language to the list of languages
+		function mdm_add_language(language_name, language_code) {
+
+			var filename = language_code.toLowerCase();
+			filename = filename.replace(".utf-8", "");
+			bits = filename.split("_");
+			if (bits.length == 2) {
+				filename = bits[1];																	
+			}
+			var li = document.createElement('li');			
+				
+			var link = document.createElement('a');	
+				link.setAttribute('href', "javascript:alert('LANGUAGE###"+language_code+"')");
+
+			var picture = document.createElement('img');
+				picture.setAttribute('class', "language-picture");
+				picture.setAttribute('src', "img/languages/"+filename+".png");
+				picture.setAttribute('onerror', "this.src='img/languages/generic.png';");
+											
+			var name_div = document.createTextNode(language_name);				
+																																
+			li.appendChild(link);	
+			link.appendChild(picture);		
+			link.appendChild(name_div);
+				
+			var src = document.getElementById("languages");
+			src.appendChild(li);
+		}	
+
+		function mdm_set_current_language(language_name, language_code)	{
+			var filename = language_code.toLowerCase();
+			filename = filename.replace(".utf-8", "");
+			bits = filename.split("_");
+			if (bits.length == 2) {
+				filename = bits[1];																	
+			}
+			document.getElementById("current_language_flag").src = "img/languages/"+filename+".png";			
+			document.getElementById("current_language_flag").title = language_name;
+		}
 		
 		// Called by MDM if the SHUTDOWN command shouldn't appear in the greeter
 		function mdm_hide_shutdown() {
@@ -199,7 +239,7 @@
 			</fieldset>
 		</form>
 
-		<div id="message"></div>
+		<div id="message"></div>		
 		
 		<div id="timed"></div>
 	</div>	
@@ -211,9 +251,11 @@
                 <ul class="dropdown-menu" id="sessions">                                                       
                 </ul>
             </div>
-			<div class="btn-group">
-				<a class="btn btn-small btn-alert" href="#" onClick="alert('LANGUAGE###');" title="$selectlanguage"><i class="icon-globe"> </i> $language</a>
-			</div>
+            <div  align="left" class="btn-group">
+                <button class="btn btn-small dropdown-toggle" data-toggle="dropdown" title="$selectlanguage"> <img src="img/languages/generic.png" id="current_language_flag"/> <span class="caret"></span></button>
+                <ul class="dropdown-menu" id="languages">                                                       
+                </ul>
+            </div>			
 			<div class="btn-group">
 				<a class="btn btn-small" href="#" onClick="alert('SHUTDOWN###');" title="$shutdown" id="shutdown"><i class="icon-off"></i></a>
 				<a class="btn btn-small" href="#" onClick="alert('SUSPEND###');" title="$suspend" id="suspend"><i class="icon-download-alt"></i></a>

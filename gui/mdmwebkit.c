@@ -215,9 +215,12 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
     if (strcmp(command, "LOGIN") == 0) {		
 		printf ("%c%s\n", STX, message_parts[1]);
 		fflush (stdout);		
-	}
+	}	
 	else if (strcmp(command, "LANGUAGE") == 0) {
-		mdm_lang_handler (NULL);
+		gchar *language = message_parts[1];
+		printf ("%c%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_SELECT_LANG, 1, language);
+		fflush (stdout);		
+		g_free (language);
 	}
 	else if (strcmp(command, "SESSION") == 0) {
 		gchar *s;
@@ -225,7 +228,7 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 		s = g_strdup_printf (_("%s session selected"), mdm_session_name (current_session));
 		webkit_execute_script("mdm_msg",  s);
 		g_free (s);
-	}
+	}	
 	else if (strcmp(command, "SHUTDOWN") == 0) {
 		if (mdm_wm_warn_dialog (
 			_("Are you sure you want to Shut Down the computer?"), "",
@@ -280,7 +283,7 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 	update_clock (); 
 	
 	mdm_login_browser_populate ();
-	
+	mdm_login_lang_init (mdm_config_get_string (MDM_KEY_LOCALE_FILE));  
 	mdm_login_session_init ();
 	
 	if ( ve_string_empty (g_getenv ("MDM_IS_LOCAL")) || !mdm_config_get_bool (MDM_KEY_SYSTEM_MENU)) {
@@ -309,6 +312,35 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 	if (!mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
 		webkit_execute_script("mdm_hide_xdmcp", NULL);
 	}
+
+	char * current_lang = g_getenv("LANG");
+	if (current_lang) {	
+		char *name;
+		char *untranslated;
+		if (mdm_common_locale_is_displayable (current_lang)) {
+			name = mdm_lang_name (current_lang,
+			    FALSE /* never_encoding */,
+			    TRUE /* no_group */,
+			    FALSE /* untranslated */,
+			    FALSE /* markup */);
+
+			untranslated = mdm_lang_untranslated_name (current_lang,
+						 TRUE /* markup */);
+
+			if (untranslated != NULL) {
+				gchar * args = g_strdup_printf("%s\", \"%s", untranslated, current_lang);
+				webkit_execute_script("mdm_set_current_language", args);
+				g_free (args);
+			}
+			else {
+				gchar * args = g_strdup_printf("%s\", \"%s", name, current_lang);
+				webkit_execute_script("mdm_set_current_language", args);
+				g_free (args);
+			}	 	
+		}
+		g_free (name);
+		g_free (untranslated);
+	}	
 	
 	if G_LIKELY ( ! DOING_MDM_DEVELOPMENT) {
 	    ctrlch = g_io_channel_unix_new (STDIN_FILENO);
@@ -489,6 +521,70 @@ mdm_login_session_init ()
                     tmp = tmp->next;
             }
     }
+}
+
+void
+mdm_login_lang_init (gchar * locale_file)
+{
+  GList *list, *li;
+
+  list = mdm_lang_read_locale_file (locale_file);
+
+
+
+  /*gtk_list_store_append (lang_model, &iter);
+  gtk_list_store_set (lang_model, &iter,
+		      TRANSLATED_NAME_COLUMN, _("Last language"),
+		      UNTRANSLATED_NAME_COLUMN, NULL,
+		      LOCALE_COLUMN, LAST_LANGUAGE,
+		      -1);
+
+  gtk_list_store_append (lang_model, &iter);
+  gtk_list_store_set (lang_model, &iter,
+		      TRANSLATED_NAME_COLUMN, _("System Default"),
+		      UNTRANSLATED_NAME_COLUMN, NULL,
+		      LOCALE_COLUMN, DEFAULT_LANGUAGE,
+		      -1);
+		      */
+
+  for (li = list; li != NULL; li = li->next)
+    {
+      char *lang = li->data;
+      char *name;
+      char *untranslated;
+
+      li->data = NULL;
+
+      if (!mdm_common_locale_is_displayable (lang)) {
+        g_free (lang);
+        continue;
+      }
+
+      name = mdm_lang_name (lang,
+			    FALSE /* never_encoding */,
+			    TRUE /* no_group */,
+			    FALSE /* untranslated */,
+			    FALSE /* markup */);
+
+      untranslated = mdm_lang_untranslated_name (lang,
+						 TRUE /* markup */);
+
+      	if (untranslated != NULL) {
+			gchar * args = g_strdup_printf("%s\", \"%s", untranslated, lang);
+	  		webkit_execute_script("mdm_add_language", args);
+	  		g_free (args);
+      	}
+      	else {
+			gchar * args = g_strdup_printf("%s\", \"%s", name, lang);
+	  		webkit_execute_script("mdm_add_language", args);
+	  		g_free (args);
+      	}	  
+     
+      g_free (name);
+      g_free (untranslated);
+      g_free (lang);
+    }
+  g_list_free (list);
 }
 
 static gboolean
@@ -817,7 +913,10 @@ process_operation (guchar       op_code,
 	break;
 
     case MDM_SETLANG:
-	mdm_lang_op_setlang (args);
+		//mdm_lang_op_setlang (args);
+    	webkit_execute_script("mdm_set_current_language", args);
+		printf ("%c\n", STX);
+  		fflush (stdout);
 	break;
 
     case MDM_ALWAYS_RESTART:
@@ -1005,7 +1104,7 @@ mdm_login_browser_populate (void)
 	    g_free (login);
 	    g_free (gecos);	    	    
     }
-    
+
     /* we are done with the hash */
 	g_hash_table_destroy (displays_hash);
 	displays_hash = NULL;
@@ -1177,8 +1276,7 @@ mdm_login_gui_init (void)
 
     g_signal_connect (G_OBJECT (login), "key_press_event",
                       G_CALLBACK (key_press_event), NULL);
-   
-    mdm_lang_initialize_model (mdm_config_get_string (MDM_KEY_LOCALE_FILE));                    	
+                         
      
     GtkWidget *scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);

@@ -376,7 +376,12 @@ class ThemeEmulator:
         self.callJavascriptMethod("mdm_add_session", "Cinnamon", "cinnamon.desktop")
         self.callJavascriptMethod("mdm_add_session", "Mate", "mate.desktop")
         self.callJavascriptMethod("mdm_add_session", "Gnome", "gnome3.desktop")
-        self.setStatus("Added 2 dummy users and 3 dummy sessions")
+        self.callJavascriptMethod("mdm_add_language", "English (USA)", "en_US.UTF-8")
+        self.callJavascriptMethod("mdm_add_language", "Chinese (China)", "zh_CN.UTF-8")
+        self.callJavascriptMethod("mdm_add_language", "Spanish (Argentina)", "es_AR.UTF-8")
+        self.callJavascriptMethod("mdm_add_language", "French (France)", "fr_FR.UTF-8")
+        self.callJavascriptMethod("mdm_add_language", "Dummy (DummyLand)", "du_DU")        
+        self.setStatus("Added 2 dummy users, 5 dummy languages and 3 dummy sessions")
 
     def onAddSessionClicked(self, widget):
         data = self.multiPromptDialog("Add a new Session", "Add", "Please enter a session name:", "Please enter a desktop filename:")
@@ -428,6 +433,7 @@ class ThemeEmulator:
 
         self.callJavascriptMethod("set_welcome_message", "Welcome to the MDM Theme Emulator")
         self.callJavascriptMethod("mdm_msg", "Please enter your username")
+        self.callJavascriptMethod("mdm_set_current_language", "English (USA)", "en_US.UTF-8")
         self.setTime()
 
         self.setStatus("Load finished: " + self.filename)
@@ -453,7 +459,7 @@ class ThemeEmulator:
             elif action == "SESSION":
                 self.setStatus("Session: " + param)
             elif action == "LANGUAGE":
-                self.setStatus("Language")
+                self.setStatus("Language: " + param)
             elif action == "SHUTDOWN":
                 self.setStatus("Shutdown")
             elif action == "SUSPEND":
