@@ -355,8 +355,6 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 			    NULL);
 	    g_io_channel_unref (ctrlch);
     }
-    
-    gtk_widget_show_all (GTK_WIDGET (login));    
 }
 
 static GtkWidget *
@@ -1876,6 +1874,9 @@ main (int argc, char *argv[])
     
 
     gtk_widget_queue_resize (login);
+
+    gtk_widget_show_all (GTK_WIDGET (login));
+
     gtk_widget_show_now (login);
 
     mdm_wm_center_window (GTK_WINDOW (login));    
