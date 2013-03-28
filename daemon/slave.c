@@ -2392,6 +2392,117 @@ mdm_slave_wait_for_login (void)
 
 }
 
+static void
+maybe_update_home_facefile (const char *homedir,
+                            const char *username,
+                            guint       uid,
+                            guint       gid)
+{
+    gchar *as_picpath, *home_picpath;
+    GError *error;
+
+    as_picpath = mdm_daemon_config_get_facefile_from_gnome_accounts_service (username, uid);
+    if (as_picpath == NULL) {
+        const char *facedir = mdm_daemon_config_get_value_string (MDM_KEY_GNOME_ACCOUNTS_SERVICE_FACE_DIR);
+        as_picpath = g_build_filename (facedir, username, NULL);
+    }
+
+    home_picpath = mdm_daemon_config_get_facefile_from_home (homedir, uid);
+    if (home_picpath == NULL) {
+        home_picpath = g_build_filename (homedir, ".face", NULL);
+    }
+
+    GFile *as_picfile = g_file_new_for_path (as_picpath);
+    GFile *home_picfile = g_file_new_for_path (home_picpath);
+
+    if (g_file_query_exists (as_picfile, NULL) && !g_file_query_exists (home_picfile, NULL)) {
+        error = NULL;
+        if (!g_file_copy (as_picfile,
+                          home_picfile,
+                          G_FILE_COPY_TARGET_DEFAULT_PERMS,
+                          NULL,
+                          NULL,
+                          NULL,
+                          &error)) {
+            g_warning ("failed to copy account pic to .face file: %s", error->message);
+            g_error_free (error);
+        }
+    } else if (g_file_query_exists (home_picfile, NULL) && !g_file_query_exists (as_picfile, NULL)) {
+        seteuid (0);
+        setegid (0);
+        error = NULL;
+        if (!g_file_copy (home_picfile,
+                     as_picfile,
+                     G_FILE_COPY_TARGET_DEFAULT_PERMS,
+                     NULL,
+                     NULL,
+                     NULL,
+                     &error)) {
+            g_warning ("failed to copy .face file to account pic: %s", error->message);
+            g_error_free (error);
+        }
+        seteuid (uid);
+        setegid (gid);
+    } else {
+        error = NULL;
+        GFileInfo *as_info = g_file_query_info (as_picfile,
+                                                "*",
+                                                G_FILE_QUERY_INFO_NONE,
+                                                NULL,
+                                                &error);
+        if (!as_info) {
+            g_warning ("failed to get file info for accountService pic file: %s", error->message);
+            g_error_free (error);
+        }
+        error = NULL;
+        GFileInfo *home_info = g_file_query_info (home_picfile,
+                                                  "*",
+                                                  G_FILE_QUERY_INFO_NONE,
+                                                  NULL,
+                                                  &error);
+        if (!home_info) {
+            g_warning ("failed to get file info for accountService pic file: %s", error->message);
+            g_error_free (error);
+        }
+        guint64 as_time = g_file_info_get_attribute_uint64 (as_info, G_FILE_ATTRIBUTE_TIME_MODIFIED);
+        guint64 home_time = g_file_info_get_attribute_uint64 (home_info, G_FILE_ATTRIBUTE_TIME_MODIFIED);
+        error = NULL;
+        if (as_time > home_time) {
+            if (!g_file_copy (as_picfile,
+                         home_picfile,
+                         G_FILE_COPY_TARGET_DEFAULT_PERMS | G_FILE_COPY_OVERWRITE,
+                         NULL,
+                         NULL,
+                         NULL,
+                         &error)) {
+                g_warning ("failed to update accountService pic file from .face: %s", error->message);
+                g_error_free (error);
+            }
+        } else if (home_time > as_time) {
+            seteuid (0);
+            setegid (0);
+            if (!g_file_copy (home_picfile,
+                         as_picfile,
+                         G_FILE_COPY_TARGET_DEFAULT_PERMS | G_FILE_COPY_OVERWRITE,
+                         NULL,
+                         NULL,
+                         NULL,
+                         &error)) {
+                g_warning ("failed to update .face file from accountService pic file: %s", error->message);
+                g_error_free (error);
+            }
+            seteuid (uid);
+            setegid (gid);
+        }
+    }
+
+    g_free (as_picpath);
+    g_free (home_picpath);
+    g_object_unref (as_picfile);
+    g_object_unref (home_picfile);
+
+}
+
 /* This is VERY evil! */
 static void
 run_pictures (void)
@@ -2432,6 +2543,8 @@ run_pictures (void)
 			mdm_slave_greeter_ctl_no_ret (MDM_READPIC, "");
 			continue;
 		}
+
+        maybe_update_home_facefile (pwent->pw_dir, pwent->pw_name, pwent->pw_uid, pwent->pw_gid);
 
 		picfile = mdm_daemon_config_get_facefile_from_home (pwent->pw_dir, pwent->pw_uid);
 
