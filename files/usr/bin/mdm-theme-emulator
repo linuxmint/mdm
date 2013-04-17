@@ -41,6 +41,10 @@ class ThemeWebView(WebKit.WebView):
         # Disable context-menu
         settings = self.get_settings()
         settings.set_property('enable-default-context-menu', False)
+        settings.set_property("enable-scripts", True)
+        settings.set_property("enable-webgl", True)
+        settings.set_property("enable-universal-access-from-file-uris", True)
+        settings.set_property("enable-developer-extras", True)
         self.set_settings(settings)
 
         #  Intercept navigation and resource requests (allow only "file:" uris)

@@ -1235,6 +1235,10 @@ webkit_init (void) {
 	
 	WebKitWebSettings *settings = webkit_web_settings_new ();
 	g_object_set (G_OBJECT(settings), "enable-default-context-menu", FALSE, NULL);	
+	g_object_set (G_OBJECT(settings), "enable-scripts", TRUE, NULL);	
+	g_object_set (G_OBJECT(settings), "enable-webgl", TRUE, NULL);	
+	g_object_set (G_OBJECT(settings), "enable-universal-access-from-file-uris", TRUE, NULL);	
+	g_object_set (G_OBJECT(settings), "enable-developer-extras", TRUE, NULL);	
 	
 	webkit_web_view_set_settings (WEBKIT_WEB_VIEW(webView), settings);	
 	webkit_web_view_set_transparent (webView, TRUE);
