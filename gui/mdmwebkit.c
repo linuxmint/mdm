@@ -232,7 +232,7 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 	else if (strcmp(command, "LANGUAGE") == 0) {
 		gchar *language = message_parts[1];
 		printf ("%c%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_SELECT_LANG, 1, language);
-		fflush (stdout);		
+		fflush (stdout);
 		g_free (language);
 	}
 	else if (strcmp(command, "SESSION") == 0) {
@@ -919,7 +919,9 @@ process_operation (guchar       op_code,
 	break;
 
     case MDM_LANG:
-	mdm_lang_op_lang (args);
+		//mdm_lang_op_lang (args);
+		printf ("%c%s\n", STX, g_getenv("LANG"));
+  		fflush (stdout);
 	break;
 
     case MDM_SSESS:
@@ -932,7 +934,9 @@ process_operation (guchar       op_code,
 	break;
 
     case MDM_SLANG:
-	mdm_lang_op_slang (args);
+		//mdm_lang_op_slang (args);
+    	printf ("%c\n", STX);
+		fflush (stdout);
 	break;
 
     case MDM_SETLANG:
