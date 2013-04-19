@@ -255,6 +255,16 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 			_exit (DISPLAY_REBOOT);
 		}
 	}
+	else if (strcmp(command, "FORCE-SHUTDOWN") == 0) {
+		_exit (DISPLAY_HALT);
+	}
+	else if (strcmp(command, "FORCE-SUSPEND") == 0) {
+		printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_SUSPEND);
+		fflush (stdout);
+	}
+	else if (strcmp(command, "FORCE-RESTART") == 0) {
+		_exit (DISPLAY_REBOOT);		
+	}
 	else if (strcmp(command, "QUIT") == 0) {
 		gtk_main_quit();
 	}
