@@ -1240,6 +1240,7 @@ webkit_init (void) {
 	html = str_replace(html, "$selectlanguage", _("Select a language"));
 
 	html = str_replace(html, "$areyousuretoquit", _("Are you sure you want to quit?"));
+	html = str_replace(html, "$close", _("Close"));
 	
 	html = str_replace(html, "$locale", g_strdup (setlocale (LC_MESSAGES, NULL)));
 		
