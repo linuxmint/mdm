@@ -22,6 +22,7 @@ debian/tmp/usr/share/mdm/html-themes
 debian/tmp/usr/share/mdm/defaults.conf
 debian/tmp/usr/share/mdm/BuiltInSessions
 debian/tmp/usr/share/mdm/*.glade
+debian/tmp/usr/share/mdm/locale
 debian/tmp/usr/share/gnome/help/mdm
 debian/tmp/usr/share/icons/hicolor
 debian/tmp/usr/share/locale
