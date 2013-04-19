@@ -186,10 +186,23 @@ str_replace(const char *string, const char *delimiter, const char *replacement)
 	gchar *ret;
 	g_return_val_if_fail(string      != NULL, NULL);
 	g_return_val_if_fail(delimiter   != NULL, NULL);
-	g_return_val_if_fail(replacement != NULL, NULL);
+	g_return_val_if_fail(replacement != NULL, NULL);	
+
 	split = g_strsplit(string, delimiter, 0);
 	ret = g_strjoinv(replacement, split);
 	g_strfreev(split);
+	return ret;
+}
+
+static char * 
+html_encode(const char *string)
+{	
+	char * ret;	
+	ret = str_replace(string, "'", "&#39");
+	ret = str_replace(ret, "\"", "&#34");
+	ret = str_replace(ret, ";", "&#59");
+	ret = str_replace(ret, "<", "&#60");
+	ret = str_replace(ret, ">", "&#62");
 	return ret;
 }
 
@@ -1219,28 +1232,28 @@ webkit_init (void) {
 			
 	}
 	
-	html = str_replace(html, "$login_label", _("Login"));
-	html = str_replace(html, "$ok_label", _("OK"));
-	html = str_replace(html, "$cancel_label", _("Cancel"));
-	html = str_replace(html, "$enter_your_username_label", _("Please enter your username"));
-	html = str_replace(html, "$enter_your_password_label", _("Please enter your password"));
+	html = str_replace(html, "$login_label", html_encode(_("Login")));
+	html = str_replace(html, "$ok_label", html_encode(_("OK")));
+	html = str_replace(html, "$cancel_label", html_encode(_("Cancel")));
+	html = str_replace(html, "$enter_your_username_label", html_encode(_("Please enter your username")));
+	html = str_replace(html, "$enter_your_password_label", html_encode(_("Please enter your password")));
 	html = str_replace(html, "$hostname", g_get_host_name());
 	
-	html = str_replace(html, "$shutdown", _("Shutdown"));
-	html = str_replace(html, "$suspend", _("Suspend"));
-	html = str_replace(html, "$quit", _("Quit"));
-	html = str_replace(html, "$restart", _("Restart"));	
-	html = str_replace(html, "$remoteloginviaxdmcp", _("Remote Login via XDMCP..."));
+	html = str_replace(html, "$shutdown", html_encode(_("Shutdown")));
+	html = str_replace(html, "$suspend", html_encode(_("Suspend")));
+	html = str_replace(html, "$quit", html_encode(_("Quit")));
+	html = str_replace(html, "$restart", html_encode(_("Restart")));	
+	html = str_replace(html, "$remoteloginviaxdmcp", html_encode(_("Remote Login via XDMCP...")));
 	
-	html = str_replace(html, "$session", _("Session"));
-	html = str_replace(html, "$selectsession", _("Select a session"));
-	html = str_replace(html, "$defaultsession", _("Default session"));
+	html = str_replace(html, "$session", html_encode(_("Session")));
+	html = str_replace(html, "$selectsession", html_encode(_("Select a session")));
+	html = str_replace(html, "$defaultsession", html_encode(_("Default session")));
 	
-	html = str_replace(html, "$language", _("Language"));
-	html = str_replace(html, "$selectlanguage", _("Select a language"));
+	html = str_replace(html, "$language", html_encode(_("Language")));
+	html = str_replace(html, "$selectlanguage", html_encode(_("Select a language")));
 
-	html = str_replace(html, "$areyousuretoquit", _("Are you sure you want to quit?"));
-	html = str_replace(html, "$close", _("Close"));
+	html = str_replace(html, "$areyousuretoquit", html_encode(_("Are you sure you want to quit?")));
+	html = str_replace(html, "$close", html_encode(_("Close")));
 	
 	html = str_replace(html, "$locale", g_strdup (setlocale (LC_MESSAGES, NULL)));
 		
@@ -1592,9 +1605,9 @@ main (int argc, char *argv[])
     if (g_getenv ("DOING_MDM_DEVELOPMENT") != NULL)
 	    DOING_MDM_DEVELOPMENT = TRUE;
 
-    bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
-    bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-    textdomain (GETTEXT_PACKAGE);
+    bindtextdomain ("mdm", "/usr/share/mdm/locale/");
+    bind_textdomain_codeset ("mdm", "UTF-8");
+    textdomain ("mdm");
 
     /*
      * mdm_common_atspi_launch () needs gdk initialized.

@@ -1,0 +1,240 @@
+# German translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-04-19 12:16+0100\n"
+"PO-Revision-Date: 2013-04-19 12:00+0000\n"
+"Last-Translator: Phillip Sz <Unknown>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-04-19 12:07+0000\n"
+"X-Generator: Launchpad (build 16567)\n"
+
+#: gui/mdmwebkit.c:247
+msgid "Are you sure you want to Shut Down the computer?"
+msgstr "Sind Sie sicher, dass Sie den Rechner ausschalten möchten?"
+
+#: gui/mdmwebkit.c:248
+msgid "Shut _Down"
+msgstr "_Ausschalten"
+
+#: gui/mdmwebkit.c:255
+msgid "Are you sure you want to suspend the computer?"
+msgstr ""
+"Sind Sie sicher, dass Sie den Rechner in Bereitschaft versetzen möchten?"
+
+#: gui/mdmwebkit.c:256
+msgid "_Suspend"
+msgstr "_Bereitschaft"
+
+#: gui/mdmwebkit.c:265
+msgid "Are you sure you want to restart the computer?"
+msgstr "Sind Sie sicher, dass Sie den Rechner neu starten möchten?"
+
+#: gui/mdmwebkit.c:266
+msgid "_Restart"
+msgstr "Neu sta_rten"
+
+#: gui/mdmwebkit.c:429
+msgid "User %u will login in %t"
+msgstr "Benutzer %u wird in %t angemeldet"
+
+#: gui/mdmwebkit.c:499
+msgid "Last"
+msgstr "Letzter"
+
+#: gui/mdmwebkit.c:735 gui/mdmwebkit.c:739
+msgid "Username:"
+msgstr "Benutzername :"
+
+#: gui/mdmwebkit.c:758 gui/mdmwebkit.c:759
+msgid "Password:"
+msgstr "Passwort :"
+
+#: gui/mdmwebkit.c:862 gui/mdmwebkit.c:876
+#, c-format
+msgid "Do you wish to make %s the default for future sessions?"
+msgstr "Möchten Sie %s zur Vorgabe für künftige Sitzungen machen?"
+
+#: gui/mdmwebkit.c:865
+#, c-format
+msgid "Your preferred session type %s is not installed on this computer."
+msgstr ""
+"Ihr bevorzugter Sitzungstyp %s ist auf diesem Rechner nicht installiert."
+
+#: gui/mdmwebkit.c:869
+msgid "Just _Log In"
+msgstr "_Nur anmelden"
+
+#: gui/mdmwebkit.c:869 gui/mdmwebkit.c:885
+msgid "Make _Default"
+msgstr "Zur _Vorgabe machen"
+
+#: gui/mdmwebkit.c:879
+#, c-format
+msgid "You have chosen %s for this session, but your default setting is %s."
+msgstr "Sie haben für diese Sitzung %s gewählt, Ihre Vorgabe ist jedoch %s."
+
+#: gui/mdmwebkit.c:885
+msgid "Just For _This Session"
+msgstr "Nur für _diese Sitzung"
+
+#: gui/mdmwebkit.c:892
+#, c-format
+msgid "You have chosen %s for this session"
+msgstr "Sie haben %s für diese Sitzung gewählt"
+
+#: gui/mdmwebkit.c:895
+#, c-format
+msgid ""
+"If you wish to make %s the default for future sessions, run the 'switchdesk' "
+"utility (System->Desktop Switching Tool from the panel menu)."
+msgstr ""
+"Falls Sie %s zur Vorgabe für künftige Sitzungen\n"
+"machen wollen, verwenden Sie das Werkzeug »switchdesk« (System->Desktop-"
+"Wechselwerkzeug aus dem Panel-Menü)."
+
+#: gui/mdmwebkit.c:1119
+msgid "Already logged in"
+msgstr "Bereits angemeldet"
+
+#: gui/mdmwebkit.c:1207
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Beim Laden des Themas %s ist ein Fehler aufgetreten"
+
+#: gui/mdmwebkit.c:1235
+msgid "Login"
+msgstr "Anmelden"
+
+#: gui/mdmwebkit.c:1236
+msgid "OK"
+msgstr "OK"
+
+#: gui/mdmwebkit.c:1237
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: gui/mdmwebkit.c:1238
+msgid "Please enter your username"
+msgstr ""
+"Bitte geben Sie Ihren\n"
+"Benutzernamen ein"
+
+#: gui/mdmwebkit.c:1239
+msgid "Please enter your password"
+msgstr "Bitte geben Sie Ihr Passwort ein"
+
+#: gui/mdmwebkit.c:1242
+msgid "Shutdown"
+msgstr "Herunterfahren"
+
+#: gui/mdmwebkit.c:1243
+msgid "Suspend"
+msgstr "Bereitschaft"
+
+#: gui/mdmwebkit.c:1244
+msgid "Quit"
+msgstr "Verlassen"
+
+#: gui/mdmwebkit.c:1245 gui/mdmwebkit.c:1713
+msgid "Restart"
+msgstr "Neustarten"
+
+#: gui/mdmwebkit.c:1246
+msgid "Remote Login via XDMCP..."
+msgstr "Fern-Anmelden über XDMCP ..."
+
+#: gui/mdmwebkit.c:1248
+msgid "Session"
+msgstr "Sitzung"
+
+#: gui/mdmwebkit.c:1249
+msgid "Select a session"
+msgstr "Wählen Sie eine Sitzung"
+
+#: gui/mdmwebkit.c:1250
+msgid "Default session"
+msgstr "Standardsitzung"
+
+#: gui/mdmwebkit.c:1252
+msgid "Language"
+msgstr "Sprache"
+
+#: gui/mdmwebkit.c:1253
+msgid "Select a language"
+msgstr "Wählen Sie eine Sprache aus"
+
+#: gui/mdmwebkit.c:1255
+msgid "Are you sure you want to quit?"
+msgstr "Sind Sie sich sicher, dass Sie beenden wollen?"
+
+#: gui/mdmwebkit.c:1256
+msgid "Close"
+msgstr "Beenden"
+
+#: gui/mdmwebkit.c:1664 gui/mdmwebkit.c:1698
+#, c-format
+msgid ""
+"The greeter version (%s) does not match the daemon version. You have "
+"probably just upgraded MDM. Please restart the MDM daemon or the computer."
+msgstr ""
+
+#: gui/mdmwebkit.c:1674 gui/mdmwebkit.c:1708 gui/mdmwebkit.c:1756
+msgid "Cannot start the greeter"
+msgstr "Der Begrüßer konnte nicht gestartet werden"
+
+#: gui/mdmwebkit.c:1746
+#, c-format
+msgid ""
+"The greeter version (%s) does not match the daemon version (%s).  You have "
+"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
+msgstr ""
+
+#: gui/mdmwebkit.c:1761
+msgid "Restart MDM"
+msgstr "Starte MDM neu"
+
+#: gui/mdmwebkit.c:1763
+msgid "Restart computer"
+msgstr "Rechner neu starten"
+
+#: gui/mdmwebkit.c:1816 gui/mdmwebkit.c:1826 gui/mdmwebkit.c:1831
+#, c-format
+msgid "%s: Error setting up %s signal handler: %s"
+msgstr "%s: Fehler beim Einrichten des Signalhandlers %s: %s"
+
+#: gui/mdmwebkit.c:1841
+msgid "Could not set signal mask!"
+msgstr "Signalmaske konnte nicht gesetzt werden!"
+
+#: gui/mdmwebkit.c:1932
+msgid "Session directory is missing"
+msgstr "Sitzungsverzeichnis fehlt"
+
+#: gui/mdmwebkit.c:1933
+msgid ""
+"Your session directory is missing or empty!  There are two available "
+"sessions you can use, but you should log in and correct the MDM "
+"configuration."
+msgstr ""
+
+#: gui/mdmwebkit.c:1956
+msgid "Configuration is not correct"
+msgstr "Konfiguration ist nicht fehlerfrei"
+
+#: gui/mdmwebkit.c:1957
+msgid ""
+"The configuration file contains an invalid command line for the login "
+"dialog, so running the default command.  Please fix your configuration."
+msgstr ""
+"Die Konfigurationsdatei enthält eine ungültige Befehlszeile für den "
+"Anmeldedialog, daher wurde der Vorgabebefehl ausgeführt. Bitte korrigieren "
+"Sie Ihre Konfiguration."
