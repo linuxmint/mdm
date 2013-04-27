@@ -256,10 +256,9 @@ mdm_start_first_unborn_local (int delay)
 			 * before starting */
 			d->sleep_before_run = delay;
 
-			/* only the first static display has
+			/* all static displays have
 			 * timed login going on */
-			if (mdm_first_login)
-				d->timed_login_ok = TRUE;
+			d->timed_login_ok = TRUE;
 
 			svr = mdm_server_resolve (d);
 
