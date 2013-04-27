@@ -595,7 +595,11 @@ slave_waitpid (MdmWaitPid *wp)
 				read_session_output = FALSE;
                 mdm_debug ("slave_waitpid: errno = EBADF");
 			} else if (errno == EINTR) {				
-                mdm_debug ("slave_waitpid: errno = EINTR");            
+                mdm_debug ("slave_waitpid: errno = EINTR");   
+                mdm_debug ("slave_waitpid: Likely in the presence of a Zombie child process, calling waitpid on it!");
+                int * status;
+                waitpid (wp->pid, status, 0);
+                break;
             } else if (errno == EINVAL) {				
                 mdm_debug ("slave_waitpid: errno = EINVAL");
             }
