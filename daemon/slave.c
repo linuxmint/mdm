@@ -2134,8 +2134,7 @@ restart_the_greeter (void)
 static gboolean
 play_login_sound (const char *sound_file)
 {
-	const char *soundprogram = mdm_daemon_config_get_value_string (MDM_KEY_SOUND_PROGRAM);
-	pid_t pid;
+	const char *soundprogram = mdm_daemon_config_get_value_string (MDM_KEY_SOUND_PROGRAM);	
 
 	if (ve_string_empty (soundprogram) ||
 	    ve_string_empty (sound_file) ||
@@ -2143,28 +2142,10 @@ play_login_sound (const char *sound_file)
 	    g_access (sound_file, F_OK) != 0)
 		return FALSE;
 
-	mdm_sigchld_block_push ();
-	mdm_sigterm_block_push ();
-
-	mdm_debug ("Forking sound program: %s", soundprogram);
-
-	pid = fork ();
-	if (pid == 0)
-		mdm_unset_signals ();
-
-	mdm_sigterm_block_pop ();
-	mdm_sigchld_block_pop ();
-
-	if (pid == 0) {
-		setsid ();
-		seteuid (0);
-		setegid (0);
-		execl (soundprogram,
-		       soundprogram,
-		       sound_file,
-		       NULL);
-		_exit (0);
-	}
+	mdm_debug ("play_login_sound: Launching %s", soundprogram);	
+	char * command = g_strdup_printf ("%s \"%s\" &", soundprogram, sound_file);
+	mdm_debug ("play_login_sound: Executing %s", command);
+	system(command);    
 
 	return TRUE;
 }
