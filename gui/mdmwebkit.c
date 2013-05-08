@@ -1298,6 +1298,13 @@ mdm_login_gui_init (void)
     }
 
     login = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    
+	GdkColor color;
+    color.red = 0;
+    color.green = 0;
+    color.blue = 0;    
+    gtk_widget_modify_bg(login, GTK_STATE_NORMAL, &color);
+
     gtk_window_set_decorated (GTK_WINDOW (login), FALSE);
     gtk_window_set_default_size (GTK_WINDOW (login), 
 			       mdm_wm_screen.width, 
