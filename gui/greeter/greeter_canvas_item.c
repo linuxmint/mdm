@@ -463,6 +463,9 @@ greeter_item_create_canvas_item (GreeterItemInfo *item)
     entry = gtk_entry_new ();
     gtk_widget_set_name (entry, "user-pw-entry");
     gtk_entry_set_has_frame (GTK_ENTRY (entry), FALSE);
+    if (item->background != NULL && item->background == TRUE) {
+    	gtk_entry_set_has_frame (GTK_ENTRY (entry), TRUE);
+    }
 
     if (mdm_config_get_bool (MDM_KEY_ENTRY_INVISIBLE))
       gtk_entry_set_invisible_char (GTK_ENTRY (entry), 0);
