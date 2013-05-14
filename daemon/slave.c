@@ -2335,6 +2335,10 @@ mdm_slave_wait_for_login (void)
 		}
 
 		if (login_user == NULL) {
+
+			mdm_debug("mdm_slave_wait_for_login: invoking mdm_slave_child_handler(SIGCHLD)...");
+			mdm_slave_child_handler(SIGCHLD);
+
 			const char *failuresound = mdm_daemon_config_get_value_string (MDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE);
 
 			mdm_debug ("mdm_slave_wait_for_login: No login/Bad login");
@@ -5421,6 +5425,9 @@ mdm_slave_alrm_handler (int sig)
 void
 mdm_slave_child_handler (int sig)
 {
+
+	mdm_debug("mdm_slave_child_handler: Handling children...");
+
 	gint status;
 	pid_t pid;
 	uid_t old;
