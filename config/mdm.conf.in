@@ -176,7 +176,7 @@ StandardXServer=@X_SERVER@
 # And after how many minutes should we reap the flexible server if there is no
 # activity and no one logged on.  Set to 0 to turn off the reaping.  Does not
 # affect nested flexiservers.
-#FlexiReapDelayMinutes=5
+#FlexiReapDelayMinutes=0
 
 # The X nest command.
 # Examples of valid commands (assuming installed to /usr/X11/bin:

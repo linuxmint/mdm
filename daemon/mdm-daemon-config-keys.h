@@ -89,7 +89,7 @@ G_BEGIN_DECLS
 #define MDM_KEY_TIMED_LOGIN_ENABLE "daemon/TimedLoginEnable=false"
 #define MDM_KEY_TIMED_LOGIN "daemon/TimedLogin="
 #define MDM_KEY_TIMED_LOGIN_DELAY "daemon/TimedLoginDelay=30"
-#define MDM_KEY_FLEXI_REAP_DELAY_MINUTES "daemon/FlexiReapDelayMinutes=5"
+#define MDM_KEY_FLEXI_REAP_DELAY_MINUTES "daemon/FlexiReapDelayMinutes=0"
 #define MDM_KEY_STANDARD_XSERVER "daemon/StandardXServer=" X_SERVER
 #define MDM_KEY_FLEXIBLE_XSERVERS "daemon/FlexibleXServers=5"
 #define MDM_KEY_DYNAMIC_XSERVERS "daemon/DynamicXServers=false"
