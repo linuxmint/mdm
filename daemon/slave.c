@@ -552,9 +552,8 @@ slave_waitpid (MdmWaitPid *wp)
 			maxfd = MAX (maxfd, d->chooser_output_fd);
             
             if (maxfd == slave_waitpid_r) {
-                mdm_debug ("slave_waitpid: maxfd = slave_waitpid_r, using waitpid instead of select");
-                int * status;
-                waitpid (wp->pid, status, 0);
+                mdm_debug ("slave_waitpid: maxfd = slave_waitpid_r, invoking mdm_slave_child_handler(SIGCHLD)");
+                mdm_slave_child_handler(SIGCHLD);
                 break;
             }   
 
@@ -596,9 +595,8 @@ slave_waitpid (MdmWaitPid *wp)
                 mdm_debug ("slave_waitpid: errno = EBADF");
 			} else if (errno == EINTR) {				
                 mdm_debug ("slave_waitpid: errno = EINTR");   
-                mdm_debug ("slave_waitpid: Likely in the presence of a Zombie child process, calling waitpid on it!");
-                int * status;
-                waitpid (wp->pid, status, 0);
+                mdm_debug ("slave_waitpid: Likely in the presence of a Zombie child process, invoking mdm_slave_child_handler(SIGCHLD)");
+                mdm_slave_child_handler(SIGCHLD);
                 break;
             } else if (errno == EINVAL) {				
                 mdm_debug ("slave_waitpid: errno = EINVAL");
