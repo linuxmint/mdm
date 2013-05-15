@@ -157,6 +157,10 @@ static gboolean session_started        = FALSE;
 static gboolean greeter_disabled       = FALSE;
 static gboolean greeter_no_focus       = FALSE;
 
+static gboolean os_doesnt_send_sigchld  = FALSE; /* Used as a flag to know if the OS doesn't send us 
+													SIGCHLD signals when our children die... this is 
+													the case in Ubuntu 13.04 / Mint 15 for instance */
+
 #ifdef __sun
 /*
  * On Solaris uid_t and gid_t are unsigned ints, so you cannot
@@ -551,11 +555,13 @@ slave_waitpid (MdmWaitPid *wp)
 			maxfd = MAX (slave_waitpid_r, d->session_output_fd);
 			maxfd = MAX (maxfd, d->chooser_output_fd);
             
-            if (maxfd == slave_waitpid_r) {
-                mdm_debug ("slave_waitpid: maxfd = slave_waitpid_r, invoking mdm_slave_child_handler(SIGCHLD)");
-                mdm_slave_child_handler(SIGCHLD);
-                break;
-            }   
+            if (os_doesnt_send_sigchld) {
+	            if (maxfd == slave_waitpid_r) {
+	                mdm_debug ("slave_waitpid: maxfd = slave_waitpid_r, invoking mdm_slave_child_handler(SIGCHLD)");
+	                mdm_slave_child_handler(SIGCHLD);
+	                break;
+	            }   
+	        }
 
             struct timeval * timetowait = min_time_to_wait (&tv);
 
@@ -595,8 +601,10 @@ slave_waitpid (MdmWaitPid *wp)
                 mdm_debug ("slave_waitpid: errno = EBADF");
 			} else if (errno == EINTR) {				
                 mdm_debug ("slave_waitpid: errno = EINTR");   
-                mdm_debug ("slave_waitpid: Likely in the presence of a Zombie child process, invoking mdm_slave_child_handler(SIGCHLD)");
-                mdm_slave_child_handler(SIGCHLD);
+                if (os_doesnt_send_sigchld) {
+                	mdm_debug ("slave_waitpid: Likely in the presence of a Zombie child process, invoking mdm_slave_child_handler(SIGCHLD)");
+                	mdm_slave_child_handler(SIGCHLD);
+                }
                 break;
             } else if (errno == EINVAL) {				
                 mdm_debug ("slave_waitpid: errno = EINVAL");
@@ -819,6 +827,35 @@ get_runlevel (void)
 void
 mdm_slave_start (MdmDisplay *display)
 {
+	/* check the LSB to know whether or not the OS sends up SIGCHLD signals */
+	gchar *contents = NULL;
+	gboolean ret;
+	gchar *codename = NULL;
+	gchar **split = NULL;
+	int i;
+
+	ret = g_file_get_contents ("/etc/lsb-release", &contents, NULL, NULL);
+	if (ret) {					
+		split = g_strsplit (contents, "\n", -1);
+		for (i=0; split[i] != NULL; i++) {
+			if (g_str_has_prefix (split[i], "DISTRIB_CODENAME=")) {
+				codename = g_ascii_strdown (&split[i][17], -1);
+				mdm_debug("mdm_slave_start: Found LSB codename: %s", codename);
+				if (
+						(strcmp (codename, "olivia") == 0) ||
+						(strcmp (codename, "raring") == 0) 
+					) {
+					mdm_debug("mdm_slave_start: LSB codename recognized, setting 'os_doesnt_send_sigchld' to TRUE");
+					os_doesnt_send_sigchld = TRUE;
+				}
+			}
+		}
+	}
+
+	g_strfreev (split);	
+	g_free (codename);
+	g_free (contents);	
+
 	time_t first_time;
 	int death_count;
 	struct sigaction alrm, term, child, usr2;
@@ -1459,7 +1496,7 @@ plymouth_quit_without_transition (void)
 
 static void
 mdm_slave_run (MdmDisplay *display)
-{
+{	
 	gint openretries = 0;
 	gint maxtries = 0;
 	gint pinginterval = mdm_daemon_config_get_value_int (MDM_KEY_PING_INTERVAL);
@@ -2334,8 +2371,10 @@ mdm_slave_wait_for_login (void)
 
 		if (login_user == NULL) {
 
-			mdm_debug("mdm_slave_wait_for_login: invoking mdm_slave_child_handler(SIGCHLD)...");
-			mdm_slave_child_handler(SIGCHLD);
+			if (os_doesnt_send_sigchld) {
+				mdm_debug("mdm_slave_wait_for_login: invoking mdm_slave_child_handler(SIGCHLD)...");
+				mdm_slave_child_handler(SIGCHLD);
+			}
 
 			const char *failuresound = mdm_daemon_config_get_value_string (MDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE);
 
