@@ -574,31 +574,26 @@ deal_with_x_crashes (MdmDisplay *d)
 static gboolean
 try_command (const char *command)
 {
-	GError  *error;
 	gboolean res;
 	int      status;
 
 	mdm_debug ("Running %s", command);
 
-	error = NULL;
-	res = g_spawn_command_line_sync (command, NULL, NULL, &status, &error);
-	if (error != NULL) {
-		mdm_debug ("Command failed %s: %s", command, error->message);
-		g_error_free (error);		
-	}
-	else {
-		if (WIFEXITED (status)) {
-			if (WEXITSTATUS (status) != 0) {
-				mdm_error ("Command '%s' exited with status %u", command, WEXITSTATUS (status));
-				res = FALSE;
-			}
-		}
-		else if (WIFSIGNALED (status)) {
-			mdm_error ("Command '%s' was killed by signal '%s'", command, g_strsignal (WTERMSIG (status)));
+	res = TRUE;
+	
+	status = system (command);
+	
+	if (WIFEXITED (status)) {
+		if (WEXITSTATUS (status) != 0) {
+			mdm_error ("Command '%s' exited with status %u", command, WEXITSTATUS (status));
 			res = FALSE;
 		}
 	}
-
+	else if (WIFSIGNALED (status)) {
+		mdm_error ("Command '%s' was killed by signal '%s'", command, g_strsignal (WTERMSIG (status)));
+		res = FALSE;
+	}
+	
 	return res;
 }
 
