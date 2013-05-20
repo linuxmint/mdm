@@ -1,0 +1,66 @@
+# mdm - MDM Display Manager
+#
+# The display manager service manages the X servers running on the
+# system, providing login and auto-login services
+
+description     "MDM Display Manager"
+author          "Linux Mint <root@linuxmint.com>"
+
+start on ((filesystem
+           and runlevel [!06]
+           and started dbus
+           and (drm-device-added card0 PRIMARY_DEVICE_FOR_DISPLAY=1
+                or stopped udev-fallback-graphics))
+          or runlevel PREVLEVEL=S)
+
+stop on runlevel [016]
+
+emits login-session-start
+emits desktop-session-start
+emits desktop-shutdown
+
+script
+    if [ -n "$UPSTART_EVENTS" ]
+    then
+        # Check kernel command-line for inhibitors, unless we are being called
+        # manually
+        for ARG in $(cat /proc/cmdline); do
+            if [ "$ARG" = "text" ]; then
+          		plymouth quit || : 
+                          stop
+          		exit 0
+            fi
+        done
+
+    	if [ -f /etc/X11/default-display-manager ]; then
+    	    [ "$(cat /etc/X11/default-display-manager 2>/dev/null)" = "/usr/sbin/mdm" ] || { stop; exit 0; }
+    	else
+    	    type lightdm >/dev/null 2>&1 && { stop; exit 0; } || true
+    	fi
+
+        if [ "$RUNLEVEL" = S -o "$RUNLEVEL" = 1 ]
+        then
+            # Single-user mode
+            plymouth quit || :
+            exit 0
+        fi
+    fi
+
+    test -f /etc/profile && . /etc/profile
+
+    if [ -r /etc/default/locale ]; then
+        . /etc/default/locale
+        export LANG LANGUAGE LC_MESSAGES LC_ALL
+    elif [ -r /etc/environment ]; then
+        . /etc/environment
+        export LANG LANGUAGE LC_MESSAGES LC_ALL
+    fi    
+    
+    exec mdm
+end script
+
+post-stop script
+	if [ "$UPSTART_STOP_EVENTS" = runlevel ]; then
+		initctl emit desktop-shutdown
+	fi
+end script
