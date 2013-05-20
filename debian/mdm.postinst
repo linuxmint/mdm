@@ -81,7 +81,7 @@ fi
 
 if [ -x /etc/init.d/mdm ]; then
   update-rc.d mdm defaults $S $K >/dev/null 2>&1
-  invoke-rc.d mdm reload || true
+  #invoke-rc.d mdm reload || true
 fi
 
 if [ ! -e /usr/bin/gdmflexiserver ]; then
