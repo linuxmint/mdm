@@ -19,7 +19,8 @@ configure_flags += --disable-dependency-tracking \
 		--disable-scrollkeeper \
 		--enable-ipv6=yes \
 		--with-prefetch=yes \
-		--enable-secureremote=yes
+		--enable-secureremote=yes \
+		--enable-compile-warnings=no
 
 ifeq (linux,$(DEB_HOST_ARCH_OS))
 	configure_flags += --with-selinux
