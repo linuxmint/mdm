@@ -1519,7 +1519,7 @@
 
 	* daemon/mdm-socket-protocol.h: Change location of .mdm_socket file
 	  from /tmp to /var/run.  Fixes bug #331059.  This interface change
-	  also required changing gnome-session, gnome-panel, and the
+	  also required changing cinnamon-session, gnome-panel, and the
 	  Fast-User-Switch Applet (FUSA).  I understand all these programs
 	  have been updated already in the unstable branch.  Patch by
 	  Lo\357c Minier.
@@ -1544,7 +1544,7 @@
 2007-05-11  Brian Cameron  <brian.cameron@sun.com>
 
 	* config/Xsession.in:  Remove failsafe logic since it is no longer
-	  used.  The gnome-session-start function in slave.c starts the xterm
+	  used.  The cinnamon-session-start function in slave.c starts the xterm
 	  directly.  But when that change was made, this cruft was not removed.
 
 2007-05-11  Brian Cameron  <brian.cameron@sun.com>
@@ -1557,7 +1557,7 @@
 	  processes (such as the session, scripts, and AT programs) need to
 	  separate themselves from the service so that if any subprocess
 	  core-dumps it doesn't cause a MDM restart.  I also cleaned up the
-	  logic in gnome-session-start a lot by using a GString and appending
+	  logic in cinnamon-session-start a lot by using a GString and appending
 	  the command to it.  This makes things cleaner since the command is
 	  affected by ctrun and Trusted Solaris.  The previous approach of
 	  setting argv directly was a mess.  This makes this function far more
@@ -7464,7 +7464,7 @@ Wed May 26 17:34:51 2004  George Lebl <jirka@5z.com>
 	* daemon/slave.c: Ensure proper .ICEauthority permissions, this
 	  may fail on NFS, but who cares, there if it breaks it's beyond
 	  our fixage anyway.  Should alleviate problems from #137345, though
-	  that bug is really in libice usage and gnome-session.  libice is
+	  that bug is really in libice usage and cinnamon-session.  libice is
 	  incredibly evil.
 
 	* utils/mdmtranslate.c: fix with the forte compiler, patch from
@@ -8374,7 +8374,7 @@ Mon Sep 22 15:35:23 2003  George Lebl <jirka@5z.com>
 
 Mon Sep 22 15:19:21 2003  George Lebl <jirka@5z.com>
 
-	* config/gnome.desktop.in: add TryExec=gnome-session
+	* config/gnome.desktop.in: add TryExec=cinnamon-session
 
 Mon Sep 22 15:16:05 2003  George Lebl <jirka@5z.com>
 
@@ -11358,7 +11358,7 @@ Tue Jul 23 12:20:26 2002  George Lebl <jirka@5z.com>
 Tue Jul 23 11:20:56 2002  George Lebl <jirka@5z.com>
 
 	* config/gnomerc.in, config/Makefile.am, config/Xsesssion.in,
-	  config/Gnome.in:  prefer the gnome-session in PATH, fix some
+	  config/Gnome.in:  prefer the cinnamon-session in PATH, fix some
 	  startup stuff add gnome-volume-control init to gnomerc,
 	  whack the redhat specific setup, and copy parts of the redhat's
 	  Xsession file to our own and if switchdesk is installed make
@@ -14512,7 +14512,7 @@ Wed May 30 04:00:33 2001  George Lebl <jirka@5z.com>
 
 Wed May 30 02:13:53 2001  George Lebl <jirka@5z.com>
 
-	* daemon/slave.c: run gnome-session with --failsafe in failsafe
+	* daemon/slave.c: run cinnamon-session with --failsafe in failsafe
 	  gnome mode
 
 Tue May 29 15:47:16 2001  George Lebl <jirka@5z.com>

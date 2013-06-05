@@ -1176,9 +1176,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
-"%s: kommandoen gnome-session ikke fundet til en fejlsikret GNOME-session, "
+"%s: kommandoen cinnamon-session ikke fundet til en fejlsikret GNOME-session, "
 "prøver xterm"
 
 #: ../daemon/slave.c:3904
@@ -5133,9 +5133,9 @@ msgstr "Godkendelsesfejl!\n"
 #~ msgstr "%s: Kan ikke skaffe lokaladresser!"
 
 #~ msgid ""
-#~ "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+#~ "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 #~ msgstr ""
-#~ "%s: gnome-session ikke fundet til en fejlsikret GNOME-session; prøver "
+#~ "%s: cinnamon-session ikke fundet til en fejlsikret GNOME-session; prøver "
 #~ "xterm"
 
 #~ msgid ""

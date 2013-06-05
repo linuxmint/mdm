@@ -338,7 +338,7 @@ mdm (2.20.5-2) unstable; urgency=low
 
   * Xsession: set the USERXSESSIONRC variable. Thanks to Yves-Alexis 
     Perez. Closes: #458549.
-  * control.in: depend on gnome-session | x-session-manager | ...
+  * control.in: depend on cinnamon-session | x-session-manager | ...
     Closes: #478497.
   * mdm.init: stop providing x-display-manager, to prevent installation 
     failure together with another display manager. The parallel 
@@ -471,7 +471,7 @@ mdm (2.20.0-2) unstable; urgency=high
 
   * Re-add bug ids and references to patch 64_vt-auto-allocation-fix.
   * Clean whitespace in control.
-  * Conflict with fast-user-switch-applet (<< 2.17.4), gnome-session (<<
+  * Conflict with fast-user-switch-applet (<< 2.17.4), cinnamon-session (<<
     2.19.2), gnome-screensaver (<< 2.17.7) for the MDM socket path transition.
 
  -- Loic Minier <lool@dooz.org>  Sat, 06 Oct 2007 20:02:06 +0200
@@ -735,7 +735,7 @@ mdm (2.18.1-1) unstable; urgency=low
   * New patch, 46_kde-substitude-uid, add X-KDE-SubstituteUID=true to the
     mdmsetup desktop file to hide the entry for non-admin users in KDE.
   * Disabling patch 66_socket-in-var-run-for-fhs for now as it requires
-    changes in gnome-session, gnome-panel, and fast-switch-user-applet at the
+    changes in cinnamon-session, gnome-panel, and fast-switch-user-applet at the
     same time; thanks Sébastien Bacher.
   * Split patches:
     . 42_pam-and-timed-login into 42_timed-login and 68_pam-authinfo-unavail.
@@ -947,7 +947,7 @@ mdm (2.4.4.7-1) unstable; urgency=low
 
   * New upstream release (closes: #190390, #220492)
   * Don't run update-rc.d if the init script isn't executable (closes: #213188)
-  * Use default gnome-session purge-delay (closes: #221448)
+  * Use default cinnamon-session purge-delay (closes: #221448)
   * Add mdmflexiserver(1) manpage (closes: #149396)
   * Recommend whiptail | dialog, as the shell script works without
     them.  (closes: #228295)
@@ -968,7 +968,7 @@ mdm (2.4.4.7-1) unstable; urgency=low
     should be on the session list, all that's needed is those programs to supply
     desktop files for /usr/share/xsessions (closes: #84396)
   * Don't always specify the charset when setting locales (closes: #213496)
-  * Don't ship the gnome.desktop session file; gnome-session will.
+  * Don't ship the gnome.desktop session file; cinnamon-session will.
   * Add |'d dependency on possible session programs, so at least one will
     be installed.
 
@@ -1341,7 +1341,7 @@ mdm (2.0-0.beta4.1) unstable; urgency=low
     wdm. Closes: #46378
   * Corrected the priority number for init.d scripts K99 -> K01.
     Closes: #46379
-  * Recommends gnome-session ...
+  * Recommends cinnamon-session ...
   * Bug closed by previous NMU :
     closes: #33471, #35672, #36284, #37780, #38034, #38343, #39433, #39703
     closes: #40293, #40308, #41157, #42440, #42493, #42636, #43095, #43667

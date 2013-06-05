@@ -1322,9 +1322,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3901
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
-"%s: ফেইল-সেফ GNOME সেশানের জন্য gnome-session পাওয়া যায়নি, xterm ব্যবহার করা "
+"%s: ফেইল-সেফ GNOME সেশানের জন্য cinnamon-session পাওয়া যায়নি, xterm ব্যবহার করা "
 "হচ্ছে"
 
 #: ../daemon/slave.c:3906

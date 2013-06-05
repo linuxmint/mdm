@@ -1154,8 +1154,8 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s: ફેઈલસેફ જીનોમ સત્ર માટે gnome-session મળ્યું નહિં, xterm નો પ્રયાસ કરી રહ્યા છીએ"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s: ફેઈલસેફ જીનોમ સત્ર માટે cinnamon-session મળ્યું નહિં, xterm નો પ્રયાસ કરી રહ્યા છીએ"
 
 #: ../daemon/slave.c:3904
 msgid ""
@@ -2854,7 +2854,7 @@ msgstr "વપરાશકર્તા %u એ %t માં પ્રવેશસ
 msgid "Are you sure you want to restart the computer?"
 msgstr "શું તમે ખરેખર કમ્પ્યૂટર ફરીથી બુટ કરવા માંગો છો?"
 
-# gnome-session/session-properties.c:173
+# cinnamon-session/session-properties.c:173
 #: ../gui/mdmlogin.c:697 ../gui/mdmlogin.c:2279
 #: ../gui/greeter/greeter_parser.c:364 ../gui/greeter/greeter_system.c:81
 #: ../gui/greeter/greeter_system.c:217
@@ -3005,7 +3005,7 @@ msgstr ""
 msgid "Cannot start the greeter"
 msgstr "આવકારનાર શરુ થઇ શકશે નહિ"
 
-# gnome-session/session-properties.c:173
+# cinnamon-session/session-properties.c:173
 #: ../gui/mdmlogin.c:3287
 msgid "Restart"
 msgstr "ફરીથી શરુ કરો"
@@ -3019,7 +3019,7 @@ msgstr ""
 "આવકારનાર આવૃત્તિ (%s) ડિમન આવૃત્તિ (%s) સાથે બંધબેસતી નથી.  કદાચ તમે હમણાં જ MDM "
 "સુધાર્યું છે.  મહેરબાની કરીને MDM ડિમન અથવા કમ્પ્યૂટર ફરીથી શરૂ કરો."
 
-# gnome-session/session-properties.c:173
+# cinnamon-session/session-properties.c:173
 #: ../gui/mdmlogin.c:3335 ../gui/greeter/greeter.c:813
 msgid "Restart MDM"
 msgstr "MDM ફરીથી શરુ કરો"
@@ -4519,7 +4519,7 @@ msgstr "સેકન્ડો"
 msgid "Too many users to list here..."
 msgstr "યાદી માટે અહીં ધણાબધા વપરાશકર્તાઓ છે..."
 
-# gnome-session/session-properties.c:173
+# cinnamon-session/session-properties.c:173
 #: ../gui/greeter/greeter.c:764 ../gui/greeter/greeter.c:815
 msgid "Restart Machine"
 msgstr "મશીન પુનઃશરૂ કરો"

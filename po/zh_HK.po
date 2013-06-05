@@ -1082,8 +1082,8 @@ msgstr "找不到或無法執行基本的作業階段命令稿，改用“GNOME 
 #. yaikes
 #: ../daemon/slave.c:3662
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s：執行“GNOME 安全模式”時找不到 gnome-session，改用 xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s：執行“GNOME 安全模式”時找不到 cinnamon-session，改用 xterm"
 
 #: ../daemon/slave.c:3667
 msgid ""
@@ -1101,8 +1101,8 @@ msgstr "這是“GNOME 安全模式”作業階段。你將會進入 GNOME 的�
 #. yaikes
 #: ../daemon/slave.c:3686
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
-msgstr "%s：執行“GNOME 安全模式”時找不到 gnome-session，改用 xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
+msgstr "%s：執行“GNOME 安全模式”時找不到 cinnamon-session，改用 xterm"
 
 #: ../daemon/slave.c:3691
 msgid ""

@@ -1336,7 +1336,7 @@ msgstr "बेस सत्र स्क्रिप्ट नहीं मि�
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr "%s: फेलसेफ गनोम सत्र हेतु गनोम सत्र नहीं मिला, एक्स-टर्म चलाने की कोशिश"
 
 #: ../daemon/slave.c:3904
@@ -3148,7 +3148,7 @@ msgstr "%u उपयोक्ता %t में लॉगिन करेगा
 msgid "Are you sure you want to restart the computer?"
 msgstr "क्या आप सुनिश्चित हैं कि आप कंप्यूटर रीबूट करना चाहते हैं?"
 
-# gnome-session/session-properties.c:173
+# cinnamon-session/session-properties.c:173
 #: ../gui/mdmlogin.c:697 ../gui/mdmlogin.c:2249
 #: ../gui/greeter/greeter_parser.c:364 ../gui/greeter/greeter_system.c:81
 #: ../gui/greeter/greeter_system.c:217
@@ -3303,7 +3303,7 @@ msgstr ""
 msgid "Cannot start the greeter"
 msgstr "स्वागतकर्ता को प्रारंभ नहीं कर सका"
 
-# gnome-session/session-properties.c:173
+# cinnamon-session/session-properties.c:173
 #: ../gui/mdmlogin.c:3259
 msgid "Restart"
 msgstr "पुनः प्रारंभ करें"
@@ -3317,7 +3317,7 @@ msgstr ""
 "स्वागतकर्ता संस्करण ( %s ) डेमन संस्करण (%s) से मेल नहीं खाता.  शायद आपने जीडीएम को अभी "
 "ही अद्यतन किया है. कृपया जीडीएम डेमन या कम्प्यूटर को पुनः प्रारंभ करें."
 
-# gnome-session/session-properties.c:173
+# cinnamon-session/session-properties.c:173
 #: ../gui/mdmlogin.c:3307 ../gui/greeter/greeter.c:805
 msgid "Restart MDM"
 msgstr "MDM पुनः प्रारंभ करें"

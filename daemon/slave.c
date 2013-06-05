@@ -4099,10 +4099,10 @@ session_child_run (struct passwd *pwent,
 			g_string_append (fullexec, "/usr/bin/tsoljdslabel ");
 #endif
 
-		test_exec = find_prog ("gnome-session");
+		test_exec = find_prog ("cinnamon-session");
 		if G_UNLIKELY (test_exec == NULL) {
 			/* yaikes */
-			mdm_error (_("%s: gnome-session not found for a failsafe GNOME session, trying xterm"),
+			mdm_error (_("%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"),
 				   "session_child_run");
 			session = MDM_SESSION_FAILSAFE_XTERM;
 			mdm_errorgui_error_box
@@ -4125,7 +4125,7 @@ session_child_run (struct passwd *pwent,
 	}
 
 	/* This is an if and not an else, we could have done a fall-through
-	 * to here in the above code if we can't find gnome-session */
+	 * to here in the above code if we can't find cinnamon-session */
 	if (strcmp (session, MDM_SESSION_FAILSAFE_XTERM) == 0) {
 		gchar *test_exec;
 		gchar *geometry = g_strdup_printf (" -geometry 80x24-%d-%d",
@@ -5122,7 +5122,7 @@ mdm_slave_session_start (void)
 			  "can fix this problem.");
 
 		/* FIXME: perhaps do some checking to display a better error,
-		 * such as gnome-session missing and such things. */
+		 * such as cinnamon-session missing and such things. */
 		mdm_debug ("Session less than 10 seconds!");
 		msg_string = g_strdup_printf ("type=%d$$error_msg=%s$$details_label=%s$$details_file=%s$$uid=%d$$gid=%d",
 					      GTK_MESSAGE_WARNING,error_msg, 

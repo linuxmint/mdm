@@ -1336,9 +1336,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3722
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
-"%s: gnome-session није пронађен за покретање безбедне Гном сесије, покушава "
+"%s: cinnamon-session није пронађен за покретање безбедне Гном сесије, покушава "
 "xterm"
 
 #: ../daemon/slave.c:3727
@@ -1362,9 +1362,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3746
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 msgstr ""
-"%s: gnome-session није пронађен за покретање безбедне Гном сесије, покушава "
+"%s: cinnamon-session није пронађен за покретање безбедне Гном сесије, покушава "
 "xterm"
 
 #: ../daemon/slave.c:3751

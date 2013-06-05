@@ -1116,8 +1116,8 @@ msgstr "ไม่พบหรือไม่สามารถเรียกส
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s: ไม่พบ gnome-session ซึ่งวาระ failsafe GNOME ต้องใช้ จะลอง xterm แทน"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s: ไม่พบ cinnamon-session ซึ่งวาระ failsafe GNOME ต้องใช้ จะลอง xterm แทน"
 
 #: ../daemon/slave.c:3904
 msgid ""
@@ -4948,8 +4948,8 @@ msgstr "การอนุญาตสิทธิ์ล้มเหลว!\n"
 #~ msgstr "%s: ไม่สามารถหาที่อยู่ของเครื่องนี้ได้!"
 
 #~ msgid ""
-#~ "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
-#~ msgstr "%s: ไม่พบ gnome-session ซึ่งวาระ failsafe GNOME ต้องใช้ จะลอง xterm แทน"
+#~ "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
+#~ msgstr "%s: ไม่พบ cinnamon-session ซึ่งวาระ failsafe GNOME ต้องใช้ จะลอง xterm แทน"
 
 #~ msgid ""
 #~ "Could not find the GNOME installation.  Running the \"Failsafe xterm\" "

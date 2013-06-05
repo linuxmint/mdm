@@ -1202,9 +1202,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3901
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
-"%s: программа gnome-session не найдена для защищённого от сбоев сеанса "
+"%s: программа cinnamon-session не найдена для защищённого от сбоев сеанса "
 "GNOME, попытка запуска сеанса xterm"
 
 #: ../daemon/slave.c:3906

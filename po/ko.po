@@ -1156,9 +1156,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3900
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
-"%s: gnome-session에서 안전 모드 그놈 세션을 찾을 수 없습니다; xterm으로 시도"
+"%s: cinnamon-session에서 안전 모드 그놈 세션을 찾을 수 없습니다; xterm으로 시도"
 "합니다"
 
 #: ../daemon/slave.c:3905
