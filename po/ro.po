@@ -1200,9 +1200,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3901
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
-"%s: nu s-a găsit gnome-session pentru o sesiune GNOME minimală, se va "
+"%s: nu s-a găsit cinnamon-session pentru o sesiune GNOME minimală, se va "
 "utiliza Xterm"
 
 #: ../daemon/slave.c:3906
@@ -5117,9 +5117,9 @@ msgstr "Autentificare nereușită!\n"
 #~ msgstr "%s: Nu s-au putut obține adresele locale!"
 
 #~ msgid ""
-#~ "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+#~ "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 #~ msgstr ""
-#~ "%s: nu s-a găsit gnome-session pentru o sesiune GNOME minimală, se va "
+#~ "%s: nu s-a găsit cinnamon-session pentru o sesiune GNOME minimală, se va "
 #~ "utiliza Xterm"
 
 #~ msgid ""

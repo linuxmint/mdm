@@ -1100,8 +1100,8 @@ msgstr "找不到或无法运行基本会话脚本。将为您尝试 GNOME 安�
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s：无法为安全模式 GNOME 会话找到 gnome-session，尝试 xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s：无法为安全模式 GNOME 会话找到 cinnamon-session，尝试 xterm"
 
 #: ../daemon/slave.c:3904
 msgid ""
@@ -4868,8 +4868,8 @@ msgstr "认证失败！\n"
 #~ msgstr "%s：无法获取本地地址！"
 
 #~ msgid ""
-#~ "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
-#~ msgstr "%s：无法为安全模式 GNOME 会话找到 gnome-session ；尝试 xterm"
+#~ "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
+#~ msgstr "%s：无法为安全模式 GNOME 会话找到 cinnamon-session ；尝试 xterm"
 
 #~ msgid ""
 #~ "Could not find the GNOME installation.  Running the \"Failsafe xterm\" "

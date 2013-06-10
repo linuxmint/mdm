@@ -1312,7 +1312,7 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3901
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
 "%s: தோல்வி பாதுகாப்பு க்நோம் அமர்வுக்காக, க்நோம்-அமர்வு கிடைக்கவில்லை. எக்ஸ்டெர்ம் ஐ "
 "முயற்சிக்கிறது"

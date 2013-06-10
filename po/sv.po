@@ -1021,8 +1021,8 @@ msgstr "Kan inte hitta eller köra bassessionsskriptet. Kör den felsäkra GNOME
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s: gnome-session hittades inte för en felsäker GNOME-session, försöker med xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s: cinnamon-session hittades inte för en felsäker GNOME-session, försöker med xterm"
 
 #: ../daemon/slave.c:3904
 msgid "Could not find the GNOME installation, will try running the \"Failsafe xterm\" session."
@@ -4556,9 +4556,9 @@ msgstr "Autentiseringsfel!\n"
 #~ "placerar muspekaren över dem. För att komma ut ur detta läge skriver du "
 #~ "\"exit\" i fönstret i det översta vänstra hörnet"
 #~ msgid ""
-#~ "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+#~ "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 #~ msgstr ""
-#~ "%s: gnome-session hittades inte för en felsäker GNOME-session; försöker "
+#~ "%s: cinnamon-session hittades inte för en felsäker GNOME-session; försöker "
 #~ "med xterm"
 #~ msgid ""
 #~ "Could not find the GNOME installation.  Running the \"Failsafe xterm\" "

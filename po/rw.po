@@ -1128,7 +1128,7 @@ msgstr "Gushaka Cyangwa Gukoresha SHINGIRO Umukoro IYANDIKA Umukoro kugirango"
 #. yaikes
 #: daemon/slave.c:3684
 #, fuzzy, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 msgstr "%s:Umukoro OYA Byabonetse kugirango a Umukoro"
 
 #: daemon/slave.c:3689

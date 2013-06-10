@@ -1019,8 +1019,8 @@ msgstr "لا يمكن ايجاد أو تشغيل النص الشفري الأس�
 #. yaikes
 #: ../daemon/slave.c:3900
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s:  لم يوجد gnome-session لجلسة جنوم آمنة من الفشل، سأحاول xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s:  لم يوجد cinnamon-session لجلسة جنوم آمنة من الفشل، سأحاول xterm"
 
 #: ../daemon/slave.c:3905
 msgid "Could not find the GNOME installation, will try running the \"Failsafe xterm\" session."
@@ -4468,8 +4468,8 @@ msgstr "فشل التحقق!\n"
 #~ msgid "command failed %s: %d"
 #~ msgstr "فشل الأمر %s: %Id"
 #~ msgid ""
-#~ "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
-#~ msgstr "%s:  لم يوجد gnome-session لجلسة جنوم آمنة من الفشل، سأحاول xterm"
+#~ "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
+#~ msgstr "%s:  لم يوجد cinnamon-session لجلسة جنوم آمنة من الفشل، سأحاول xterm"
 #~ msgid ""
 #~ "Could not find the GNOME installation.  Running the \"Failsafe xterm\" "
 #~ "session instead."

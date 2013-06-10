@@ -584,7 +584,7 @@ Interface Changes:
 
 - The location of the .mdm_socket file has been moved from /tmp to 
   /var/run.  This interface change has been coordinated with 
-  gnome-session, gnome-panel, and the Fast-User-Switch Applet (FUSA).
+  cinnamon-session, gnome-panel, and the Fast-User-Switch Applet (FUSA).
   This is a more sensible place for MDM to store its sockets file.
   (Lo\357c Minier)
 
@@ -3022,7 +3022,7 @@ Other Changes:
   better then displaying garbage in cjk and similar.  "fixes" #135387
 
 - Ensure proper ~/.ICEauthority permissions to fix broken cases such
-  as gnome-session vs. suid root apps that create root owned ~/.ICEauthority,
+  as cinnamon-session vs. suid root apps that create root owned ~/.ICEauthority,
   "fixes" #137345
 
 - We no longer use `which' command which is horribly broken on some horribly
@@ -3955,7 +3955,7 @@ Major changes in 2.4.4.x since 2.4.1.x:
   (Michael Blandford)
 
 - On Linux detect the runlevel and try to detect the user having run shutdown
-  (from say gnome-session) and if so suspend the slave operation for 30
+  (from say cinnamon-session) and if so suspend the slave operation for 30
   seconds and wait what happens.  Most likely we'll get whacked.
 
 - Fix typos and change some strings, #106207, #105923, #56654 among others
