@@ -1165,9 +1165,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
-"%s: GNOME onarım oturumu için gnome-session bulunamadı, xterm deneniyor"
+"%s: GNOME onarım oturumu için cinnamon-session bulunamadı, xterm deneniyor"
 
 #: ../daemon/slave.c:3904
 msgid ""

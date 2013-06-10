@@ -1201,7 +1201,7 @@ msgstr "პოვნა ან გაშვებულია GNOME."
 #: ../daemon/slave.c:3580
 #, c-format
 #, fuzzy
-msgid "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 msgstr "წმ არა a GNOME"
 
 #: ../daemon/slave.c:3585

@@ -1020,8 +1020,8 @@ msgstr "Ni mogoče najti ali zagnati osnovne skripte seje. Zaganjanje varne seje
 #. yaikes
 #: ../daemon/slave.c:3927
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s: gnome-session ukaz za varno sejo ni mogoče najti, poskus z xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s: cinnamon-session ukaz za varno sejo ni mogoče najti, poskus z xterm"
 
 #: ../daemon/slave.c:3932
 msgid "Could not find the GNOME installation, will try running the \"Failsafe xterm\" session."

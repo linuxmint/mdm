@@ -1305,8 +1305,8 @@ msgstr "ബെയിസ് Xsession സ്ക്രിപ്റ്റ് ലഭ�
 #. yaikes
 #: ../daemon/slave.c:3890
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s: GNOME ഫെയില്‍സെയ്ഫ് സെഷനുളള gnome-session ലഭ്യമായില്ല, അതിനാല്‍ xterm-ന് ശ്രമിക്കുന്നു"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s: GNOME ഫെയില്‍സെയ്ഫ് സെഷനുളള cinnamon-session ലഭ്യമായില്ല, അതിനാല്‍ xterm-ന് ശ്രമിക്കുന്നു"
 
 #: ../daemon/slave.c:3895
 msgid ""

@@ -1346,9 +1346,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3751
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
-"%s: Tsy hita ny gnome-session ilaina amin'ny session failsafe'ny GNOME. "
+"%s: Tsy hita ny cinnamon-session ilaina amin'ny session failsafe'ny GNOME. "
 "Manandrana mampiasa ny xterm"
 
 #: ../daemon/slave.c:3756
@@ -1372,9 +1372,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3775
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 msgstr ""
-"%s: Tsy hita ny gnome-session ilain'ny session failsafe'ny GNOME. Manandrana "
+"%s: Tsy hita ny cinnamon-session ilain'ny session failsafe'ny GNOME. Manandrana "
 "mampiasa ny xterm"
 
 #: ../daemon/slave.c:3780

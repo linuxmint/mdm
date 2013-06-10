@@ -1173,7 +1173,7 @@ msgstr ""
 #. yaikes
 #: daemon/slave.c:3690
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
 "%s: inhlanganiso-yegnome ayitholakali kumkhawulo wephutha lenhlanganiso "
 "yeGNOME, ngizama umkhawulo X"

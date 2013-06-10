@@ -1203,9 +1203,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
-"%s: no s'ha trobat el gnome-session per a una sessió GNOME a prova de "
+"%s: no s'ha trobat el cinnamon-session per a una sessió GNOME a prova de "
 "fallades, es provarà amb l'xterm"
 
 #: ../daemon/slave.c:3904
@@ -5178,9 +5178,9 @@ msgstr "Ha fallat l'autenticació\n"
 #~ msgstr "%s: no es poden obtenir les adreces locals."
 
 #~ msgid ""
-#~ "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+#~ "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 #~ msgstr ""
-#~ "%s: no es troba el gnome-session per a una sessió GNOME a prova de "
+#~ "%s: no es troba el cinnamon-session per a una sessió GNOME a prova de "
 #~ "fallades, s'està provant amb l'xterm."
 
 #~ msgid ""

@@ -52,7 +52,7 @@ of the GNOME desktop began talking to the mdm daemon, so that one could
 reboot or shutdown without having to return to the mdm login screen.  These
 programs didn't support this option, and would have needed changes to do so.
 With mdm 2.13.0.10, the patch broke and would need a lot of debugging to get
-working again, and other programs talking to the daemon (gnome-session) would
+working again, and other programs talking to the daemon (cinnamon-session) would
 still have to be patched to support the option, or mdm patched to ignore
 them when they don't do authentication.  If anyone really wants this
 functionality back, I suggest working with upstream so it can be integrated

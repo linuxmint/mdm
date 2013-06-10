@@ -1280,7 +1280,7 @@ msgstr "आधार सत्र स्क्रिप्ट फेला प�
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr "%s: failsafe GNOME सत्रका लागि जिनोम-सत्र फेला परेन, xterm को प्रयास गर्दै"
 
 #: ../daemon/slave.c:3904

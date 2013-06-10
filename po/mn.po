@@ -1036,8 +1036,8 @@ msgstr "Үндсэн Xsession ажлын скрипт олдсонгүй. ГНО
 #. yaikes
 #: daemon/slave.c:3648
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s: gnome-session хамгаалалттай ГНОМЕ-суулт олсонгүй, xterm -р оролдоно уу."
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s: cinnamon-session хамгаалалттай ГНОМЕ-суулт олсонгүй, xterm -р оролдоно уу."
 
 #: daemon/slave.c:3653
 msgid "Could not find the GNOME installation, will try running the \"Failsafe xterm\" session."

@@ -1040,7 +1040,7 @@ msgstr "E ka se hwetše goba go diriša motheo wa sengwalwa sa lenaneo, go tla l
 #. yaikes
 #: daemon/slave.c:3690
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr "%s: lenaneo la gnome ga se la hwetšwa bakeng sa lenaneo la sešireletši sa go palelwa la GNOME, leka kgokagano ya dithapo ya x"
 
 #: daemon/slave.c:3695

@@ -1014,8 +1014,8 @@ msgstr "Nie można odnaleźć lub uruchomić podstawowego skryptu sesji. Zostani
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s: Nie odnaleziono gnome-session potrzebnego w sesji awaryjnej GNOME; próba uruchomienia xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s: Nie odnaleziono cinnamon-session potrzebnego w sesji awaryjnej GNOME; próba uruchomienia xterm"
 
 #: ../daemon/slave.c:3904
 msgid "Could not find the GNOME installation, will try running the \"Failsafe xterm\" session."
@@ -4523,9 +4523,9 @@ msgstr "Błąd uwierzytelniania.\n"
 #~ msgid "%s: Cannot get local addresses!"
 #~ msgstr "%s: Nie można pobrać lokalnego adresu!"
 #~ msgid ""
-#~ "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+#~ "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 #~ msgstr ""
-#~ "%s: Nie odnaleziono programu gnome-session, potrzebnego w sesji awaryjnej "
+#~ "%s: Nie odnaleziono programu cinnamon-session, potrzebnego w sesji awaryjnej "
 #~ "GNOME; próba uruchomienia xterm"
 #~ msgid ""
 #~ "Could not find the GNOME installation.  Running the \"Failsafe xterm\" "

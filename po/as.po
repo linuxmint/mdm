@@ -1166,9 +1166,9 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3663
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
 msgstr ""
-"%s: ফেইল-সেফ GNOME অধিবেশনেৰ বাবে gnome-session পাওয়া যায়নি, xterm ব্যবহাৰ কৰা "
+"%s: ফেইল-সেফ GNOME অধিবেশনেৰ বাবে cinnamon-session পাওয়া যায়নি, xterm ব্যবহাৰ কৰা "
 "হচ্ছে"
 
 #: ../daemon/slave.c:3668
@@ -1192,8 +1192,8 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3687
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
-msgstr "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
+msgstr "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 
 #: ../daemon/slave.c:3692
 msgid ""

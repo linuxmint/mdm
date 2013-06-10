@@ -1167,8 +1167,8 @@ msgstr ""
 #. yaikes
 #: ../daemon/slave.c:3899
 #, c-format
-msgid "%s: gnome-session not found for a failsafe GNOME session, trying xterm"
-msgstr "%s: gnome-session nenájdený pre záchrannú reláciu GNOME; skúšam xterm"
+msgid "%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"
+msgstr "%s: cinnamon-session nenájdený pre záchrannú reláciu GNOME; skúšam xterm"
 
 #: ../daemon/slave.c:3904
 msgid ""
@@ -5083,9 +5083,9 @@ msgstr "Overenie zlyhalo!\n"
 #~ msgstr "%s: Nepodarilo sa získať lokálne adresy!"
 
 #~ msgid ""
-#~ "%s: gnome-session not found for a failsafe GNOME session; trying xterm"
+#~ "%s: cinnamon-session not found for a failsafe GNOME session; trying xterm"
 #~ msgstr ""
-#~ "%s: gnome-session nenájdený pre záchranné sedenie GNOME; skúšam xterm"
+#~ "%s: cinnamon-session nenájdený pre záchranné sedenie GNOME; skúšam xterm"
 
 #~ msgid ""
 #~ "Could not find the GNOME installation.  Running the \"Failsafe xterm\" "
