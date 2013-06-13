@@ -389,6 +389,9 @@ maybe_lock_screen (void)
 		command = g_strdup ("xscreensaver-command -lock");
 		use_xscreensaver = TRUE;
 	}
+     else if( access( "/usr/lib/kde4/libexec/kscreenlocker_greet", X_OK ) != -1 ) { 
+          command = g_strdup ("/usr/lib/kde4/libexec/kscreenlocker_greet");
+     }	
 	else {		
 		return;	
 	}
