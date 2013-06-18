@@ -2057,7 +2057,7 @@ msgid "_Add"
 msgstr "_ச சேர்க்கவும்"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
+msgid "MDM (MDM Display Manager) is not running."
 msgstr "ஜிடிஎம் (க்நோம் காட்சி மேலாளர்) ஓடவில்லை."
 
 #: ../gui/mdmcomm.c:630
@@ -2071,7 +2071,7 @@ msgstr ""
 "துவக்க உங்கள் கணினி வடிவமைக்கப்பட வேண்டும்."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:839
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "ஜிடிஎம்யுடன் தொடர்பு கொள்ள முடியவில்லை (க்நோம் காட்சி மேலாளர்)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:841
@@ -2330,7 +2330,7 @@ msgid "Standard server"
 msgstr "நிரந்தரமான சேவையகம்"
 
 #: ../gui/mdmflexiserver.c:774
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr "பிழை: ஜிடிஎம் (க்நோம் காட்சி மேலாளர்) ஓடவில்லை."
 
 #: ../gui/mdmflexiserver.c:775

@@ -30,7 +30,7 @@ msgid "2007-01"
 msgstr "2007-01"
 
 #: C/mdm.xml:23(para)
-msgid "MDM is the GNOME Display Manager, a graphical login program."
+msgid "MDM is the MDM Display Manager, a graphical login program."
 msgstr "MDM es el Gestor de entrada de GNOME, un programa gráfico de entrada."
 
 #: C/mdm.xml:30(firstname)
@@ -228,7 +228,7 @@ msgstr ""
 
 #: C/mdm.xml:71(releaseinfo) C/mdm.xml:80(para)
 msgid ""
-"This manual describes version 2.20.4 of the GNOME Display Manager. It was "
+"This manual describes version 2.20.4 of the MDM Display Manager. It was "
 "last updated on 03/10/2008."
 msgstr ""
 "Este manual describe la versión 2.20.4 del Gestor de entrada de GNOME. Se "

@@ -1930,8 +1930,8 @@ msgid "_Add"
 msgstr "_Добавить"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (Менеджер дисплеев среды GNOME) не запущен."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (Менеджер дисплеев среды) не запущен."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1945,9 +1945,9 @@ msgstr ""
 "запустить MDM вашего системного администратора."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr ""
-"Не удалось связаться с демоном MDM (Менеджер дисплеев среды GNOME), "
+"Не удалось связаться с демоном MDM (Менеджер дисплеев среды), "
 "возможно, "
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
@@ -2207,8 +2207,8 @@ msgid "Standard server"
 msgstr "Стандартный сервер"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Ошибка: MDM (Менеджер дисплеев среды GNOME) не запущен."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Ошибка: MDM (Менеджер дисплеев среды) не запущен."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

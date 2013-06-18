@@ -1900,8 +1900,8 @@ msgid "_Add"
 msgstr "_Adicionar"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (O Gestor de Ecrãs GNOME) não está em execução."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (O Gestor de Ecrãs) não está em execução."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1915,8 +1915,8 @@ msgstr ""
 "utilizar o MDM."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Incapaz de comunicar com o MDM (O Gestor de Sessões do GNOME)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Incapaz de comunicar com o MDM (O Gestor de Sessões)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2177,8 +2177,8 @@ msgid "Standard server"
 msgstr "Servidor standard"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Erro: MDM (O Gestor de Ecrãs GNOME) não está em execução."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Erro: MDM (O Gestor de Ecrãs) não está em execução."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."
@@ -5877,8 +5877,8 @@ msgstr "Falha na autenticação!\n"
 #~ msgstr "Pedido SET_LOGOUT_ACTION recusado: Não autenticado"
 
 #~ msgid ""
-#~ "A graphical application for configuring the GNOME Display Manager (MDM)"
-#~ msgstr "Uma aplicação gráfica para configurar o Gestor de Ecrãs GNOME (MDM)"
+#~ "A graphical application for configuring the MDM Display Manager (MDM)"
+#~ msgstr "Uma aplicação gráfica para configurar o Gestor de Ecrãs (MDM)"
 
 #~ msgid "Flexible server request denied: Not authenticated"
 #~ msgstr "Pedido de servidor flexível recusado: Não autenticado"

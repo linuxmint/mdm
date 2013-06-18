@@ -1779,7 +1779,7 @@ msgid "_Add"
 msgstr "_הוסף"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
+msgid "MDM (MDM Display Manager) is not running."
 msgstr ""
 
 #: ../gui/mdmcomm.c:630
@@ -1789,7 +1789,7 @@ msgid ""
 "Manager), CDE login (dtlogin), or xdm. If you wish to use this feature, then "
 "your system will need to be configured to use MDM instead."
 msgstr ""
-"<b>MDM (The GNOME Display Manager) אינו מופעל.</b>\n"
+"<b>MDM (The MDM Display Manager) אינו מופעל.</b>\n"
 "\n"
 "יכול להיות כי אתה משתמש במנהל תצוגה אחר, כגון KDM (מנהל התצוגה של KDE או "
 "xdm).\n"
@@ -1797,7 +1797,7 @@ msgstr ""
 "ממנהל המערכת שלך להפעיל את MDM."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:839
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr ""
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:841
@@ -2048,7 +2048,7 @@ msgid "Standard server"
 msgstr "שרת רגיל"
 
 #: ../gui/mdmflexiserver.c:774
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr ""
 
 #: ../gui/mdmflexiserver.c:775
@@ -5071,8 +5071,8 @@ msgstr "Authentication failure!\n"
 #~ msgstr "האם ברצונך באמת להסיר את ערכת הנושא '%s' מהמערכת?"
 
 #~ msgid ""
-#~ "A graphical application for configuring the GNOME Display Manager (MDM)"
-#~ msgstr "יישום גרפי להגדרות מנהל התצוגה של GNOME (MDM)"
+#~ "A graphical application for configuring the MDM Display Manager (MDM)"
+#~ msgstr "יישום גרפי להגדרות מנהל התצוגה של  (MDM)"
 
 #~ msgid "Last"
 #~ msgstr "אחרון"

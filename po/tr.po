@@ -1878,8 +1878,8 @@ msgid "_Add"
 msgstr "_Ekle"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (GNOME Görüntü Yöneticisi) çalışmıyor."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (Görüntü Yöneticisi) çalışmıyor."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1893,8 +1893,8 @@ msgstr ""
 "gerekir."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "MDM (GNOME Görüntü Yöneticisi) ile iletişim kurulamadı."
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "MDM (Görüntü Yöneticisi) ile iletişim kurulamadı."
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2153,8 +2153,8 @@ msgid "Standard server"
 msgstr "Standart sunucu"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Hata: MDM (GNOME Görüntü Yöneticisi) çalışmıyor."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Hata: MDM (Görüntü Yöneticisi) çalışmıyor."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."
@@ -5369,7 +5369,7 @@ msgstr "Kimlik denetimi başarısız!\n"
 #~ msgstr "'%s' temasını gerçekten sistemden silmek istiyor musunuz?"
 
 #~ msgid "Configure the login screen (MDM Display Manager)"
-#~ msgstr "Giriş yöneticisini ekranını yapılandır (Gnome Görüntü Yöneticisi)"
+#~ msgstr "Giriş yöneticisini ekranını yapılandır (Görüntü Yöneticisi)"
 
 #~ msgid ""
 #~ "The greeter version (%s) does not match the daemon version.\n"
@@ -5485,5 +5485,5 @@ msgstr "Kimlik denetimi başarısız!\n"
 #~ msgstr "SET_LOGOUT_ACTION isteği reddedildi: Kimlik doğrulanmamış"
 
 #~ msgid ""
-#~ "A graphical application for configuring the GNOME Display Manager (MDM)"
-#~ msgstr "GNOME Görüntü Yöneticisini (MDM) yapılandırmak için bir araç"
+#~ "A graphical application for configuring the MDM Display Manager (MDM)"
+#~ msgstr "Görüntü Yöneticisini (MDM) yapılandırmak için bir araç"

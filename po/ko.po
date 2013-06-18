@@ -1866,7 +1866,7 @@ msgid "_Add"
 msgstr "더하기(_A)"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
+msgid "MDM (MDM Display Manager) is not running."
 msgstr "MDM(그놈 디스플레이 관리자)을 실행하지 않았습니다."
 
 #: ../gui/mdmcomm.c:630
@@ -1880,7 +1880,7 @@ msgstr ""
 "스템 관리자에게 MDM을 시작해달라고 요청하십시오."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "MDM(그놈 디스플레이 관리자)와 통신할 수 없습니다"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
@@ -2137,7 +2137,7 @@ msgid "Standard server"
 msgstr "표준 서버"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr "오류: MDM(그놈 디스플레이 관리자)을 실행하지 않았습니다."
 
 #: ../gui/mdmflexiserver.c:773

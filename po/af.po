@@ -2051,8 +2051,8 @@ msgstr ""
 
 #. markup
 #: gui/mdmcomm.c:405 gui/mdmphotosetup.c:70
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "MDM (Die GNOME Display Manager) loop nie."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "MDM (Die MDM Display Manager) loop nie."
 
 #: gui/mdmcomm.c:408 gui/mdmphotosetup.c:73
 msgid ""
@@ -2072,8 +2072,8 @@ msgstr ""
 
 #. markup
 #: gui/mdmcomm.c:433 gui/mdmflexiserver.c:697
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Kan nie met MDM (Die GNOME Display Manager) kommunikeer nie"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Kan nie met MDM (Die MDM Display Manager) kommunikeer nie"
 
 #: gui/mdmcomm.c:436 gui/mdmflexiserver.c:700
 msgid "Perhaps you have an old version of MDM running."
@@ -3627,9 +3627,9 @@ msgstr "Jy moet die super-gebruiker (stam) wees om MDM te konfigureer."
 
 #. EOF
 #: gui/mdmsetup.desktop.in.h:1
-msgid "A graphical application for configuring the GNOME Display Manager (MDM)"
+msgid "A graphical application for configuring the MDM Display Manager (MDM)"
 msgstr ""
-"n Grafiese toepassing om die GNOME-beeldbestuurder (MDM) te konfigureer"
+"n Grafiese toepassing om die MDM-beeldbestuurder (MDM) te konfigureer"
 
 #: gui/greeter/greeter.c:629 gui/greeter/greeter.c:660
 #, c-format

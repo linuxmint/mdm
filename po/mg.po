@@ -2279,8 +2279,8 @@ msgid "_Add"
 msgstr "_Ampidiro"
 
 #: ../gui/mdmcomm.c:619
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "Tsy mandeha ny MDM (Ny mpandrindra seho an'ny GNOME)."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "Tsy mandeha ny MDM (Ny mpandrindra seho an'ny MDM)."
 
 #: ../gui/mdmcomm.c:621
 msgid ""
@@ -2294,8 +2294,8 @@ msgstr ""
 "rafitrao izy."
 
 #: ../gui/mdmcomm.c:645 ../gui/mdmflexiserver.c:787
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Tsy afaka mifandray amin'ny MDM (Ny mpandrindra seho an'ny GNOME)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Tsy afaka mifandray amin'ny MDM (Ny mpandrindra seho an'ny MDM)"
 
 #: ../gui/mdmcomm.c:647 ../gui/mdmflexiserver.c:789
 msgid "Perhaps you have an old version of MDM running."

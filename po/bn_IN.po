@@ -2068,8 +2068,8 @@ msgid "_Add"
 msgstr "যোগ করুন (_A)"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (GNOME Display Manager) বর্তমানে চলছে না।"
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (MDM Display Manager) বর্তমানে চলছে না।"
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -2081,8 +2081,8 @@ msgstr ""
 "Manager), CDE login (dtlogin) অথবা xdm ব্যবহার করছেন। এই বৈশিষ্ট্য ব্যবহারের জন্য আপনার সিস্টেমে MDM-র প্রয়োগ কনফিগার করা আবশ্যক।"
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:839
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "MDM'র (GNOME Display Manager) সাথে সংযোগ করতে ব্যর্থ"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "MDM'র (MDM Display Manager) সাথে সংযোগ করতে ব্যর্থ"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:841
 msgid "Perhaps you have an old version of MDM running."
@@ -2339,8 +2339,8 @@ msgid "Standard server"
 msgstr "প্রমিত সার্ভার"
 
 #: ../gui/mdmflexiserver.c:774
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "ত্রুটি: MDM (GNOME Display Manager) বর্তমানে চলছে না।"
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "ত্রুটি: MDM (MDM Display Manager) বর্তমানে চলছে না।"
 
 #: ../gui/mdmflexiserver.c:775
 msgid "You might be using a different display manager."

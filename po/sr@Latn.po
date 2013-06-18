@@ -2260,8 +2260,8 @@ msgid "_Add"
 msgstr "_Dodaj"
 
 #: ../gui/mdmcomm.c:619
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "MDM (Gnomov upravnik ekrana) nije pokrenut."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "MDM (upravnik ekrana) nije pokrenut."
 
 #: ../gui/mdmcomm.c:621
 msgid ""
@@ -2275,8 +2275,8 @@ msgstr ""
 "to zatražite od vašeg administratora sistema."
 
 #: ../gui/mdmcomm.c:645 ../gui/mdmflexiserver.c:787
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Ne može da se sporazume sa MDM-om (Gnomovim upravnikom ekrana)."
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Ne može da se sporazume sa MDM-om (upravnikom ekrana)."
 
 #: ../gui/mdmcomm.c:647 ../gui/mdmflexiserver.c:789
 msgid "Perhaps you have an old version of MDM running."
@@ -5916,8 +5916,8 @@ msgstr "Previše preusmeravanja za lokalitet; možda se radi o beskonačnoj petl
 #~ msgstr "SET_LOGOUT_ACTION zahtev je odbijen: niste identifikovani"
 
 #~ msgid ""
-#~ "A graphical application for configuring the GNOME Display Manager (MDM)"
-#~ msgstr "Grafička aplikacija za podešavanje Menadžera ekrana za GNOM (MDM)"
+#~ "A graphical application for configuring the MDM Display Manager (MDM)"
+#~ msgstr "Grafička aplikacija za podešavanje Menadžera ekrana (MDM)"
 
 #~ msgid "Flexible server request denied: Not authenticated"
 #~ msgstr "Odbijen je zahtev za flesksibilnim serverom: Niste autentifikovani"

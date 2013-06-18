@@ -1903,8 +1903,8 @@ msgid "_Add"
 msgstr "_Tilføj"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (logind-programmet til GNOME) kører ikke."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (logind-programmet) kører ikke."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1918,8 +1918,8 @@ msgstr ""
 "benytte MDM i stedet."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Kan ikke kommunikere med MDM (logind-programmet til GNOME)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Kan ikke kommunikere med MDM (logind-programmet)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2180,8 +2180,8 @@ msgid "Standard server"
 msgstr "Forvalgt server"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Fejl: MDM (logind-programmet til GNOME) kører ikke."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Fejl: MDM (logind-programmet) kører ikke."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."
@@ -5720,9 +5720,9 @@ msgstr "Godkendelsesfejl!\n"
 #~ msgstr "Forespørgsel \"sæt logud-handling\" afvist: Ikke godkendt"
 
 #~ msgid ""
-#~ "A graphical application for configuring the GNOME Display Manager (MDM)"
+#~ "A graphical application for configuring the MDM Display Manager (MDM)"
 #~ msgstr ""
-#~ "Et grafisk program til at konfigurere logind-programmet til GNOME (MDM)"
+#~ "Et grafisk program til at konfigurere logind-programmet (MDM)"
 
 #~ msgid "Flexible server request denied: Not authenticated"
 #~ msgstr "Fleksibel serverforespørgsel afvist: Ikke godkendt"

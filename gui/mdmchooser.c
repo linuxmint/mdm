@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * MDM - The GNOME Display Manager
+ * MDM - The MDM Display Manager
  * Copyright (C) 1998, 1999, 2000 Martin K, Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify

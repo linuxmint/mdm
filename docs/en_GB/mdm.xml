@@ -18,7 +18,7 @@
     </revhistory>
 
     <abstract role="description">
-      <para>MDM is the GNOME Display Manager, a graphical login program.</para>
+      <para>MDM is the MDM Display Manager, a graphical login program.</para>
     </abstract>
 
     <authorgroup>
@@ -81,7 +81,7 @@
 
 
     <releaseinfo>
-       This manual describes version 2.20.4 of the GNOME Display Manager.
+       This manual describes version 2.20.4 of the MDM Display Manager.
        It was last updated on 03/10/2008.
     </releaseinfo>  
   </articleinfo>
@@ -90,7 +90,7 @@
     <title>Terms and Conventions Used in This Manual</title>
 
     <para>
-      This manual describes version 2.20.4 of the GNOME Display Manager.
+      This manual describes version 2.20.4 of the MDM Display Manager.
       It was last updated on 03/10/2008.
     </para>  
 

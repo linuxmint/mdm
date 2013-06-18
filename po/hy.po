@@ -1845,7 +1845,7 @@ msgid "_Add"
 msgstr ""
 
 #: ../gui/mdmcomm.c:590
-msgid "MDM (The GNOME Display Manager) is not running."
+msgid "MDM (The MDM Display Manager) is not running."
 msgstr ""
 
 #: ../gui/mdmcomm.c:592
@@ -1856,7 +1856,7 @@ msgid ""
 msgstr ""
 
 #: ../gui/mdmcomm.c:616 ../gui/mdmflexiserver.c:784
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr ""
 
 #: ../gui/mdmcomm.c:618 ../gui/mdmflexiserver.c:786
@@ -3060,7 +3060,7 @@ msgstr ""
 
 #. EOF
 #: ../gui/mdmsetup.desktop.in.h:1
-msgid "Configure the login window (GNOME Display Manager)"
+msgid "Configure the login window (MDM Display Manager)"
 msgstr ""
 
 #: ../gui/mdmsetup.desktop.in.h:2

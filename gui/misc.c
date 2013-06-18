@@ -1,4 +1,4 @@
-/* MDM - The GNOME Display Manager - misc functions
+/* MDM - The MDM Display Manager - misc functions
  * Copyright (C) 1998, 1999, 2000 Martin K, Petersen <mkp@mkp.net>
  *
  * This program is free software; you can redistribute it and/or modify

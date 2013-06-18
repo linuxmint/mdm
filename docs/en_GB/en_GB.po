@@ -54,8 +54,8 @@ msgid "2007-01"
 msgstr "2007-01"
 
 #: C/mdm.xml:21(para)
-msgid "MDM is the GNOME Display Manager, a graphical login program."
-msgstr "MDM is the GNOME Display Manager, a graphical login program."
+msgid "MDM is the MDM Display Manager, a graphical login program."
+msgstr "MDM is the MDM Display Manager, a graphical login program."
 
 #: C/mdm.xml:28(firstname)
 msgid "Martin"
@@ -150,8 +150,8 @@ msgstr "Sun Microsystems, Inc."
 
 #: C/mdm.xml:69(releaseinfo)
 #: C/mdm.xml:78(para)
-msgid "This manual describes version 2.17.7 of the GNOME Display Manager. It was last updated on 02/12/2007."
-msgstr "This manual describes version 2.17.7 of the GNOME Display Manager. It was last updated on the 12th February 2007."
+msgid "This manual describes version 2.17.7 of the MDM Display Manager. It was last updated on 02/12/2007."
+msgstr "This manual describes version 2.17.7 of the MDM Display Manager. It was last updated on the 12th February 2007."
 
 #: C/mdm.xml:76(title)
 msgid "Terms and Conventions Used in This Manual"

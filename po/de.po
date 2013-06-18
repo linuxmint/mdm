@@ -1947,8 +1947,8 @@ msgid "_Add"
 msgstr "_Hinzufügen"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (der GNOME-Display-Manager) läuft nicht."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (der Display-Manager) läuft nicht."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1962,9 +1962,9 @@ msgstr ""
 "anstelle dessen genutzt wird."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr ""
-"Es konnte nicht mit MDM (GNOME-Display-Manager, dem GNOME-Anzeigemanager) "
+"Es konnte nicht mit MDM (dem Anzeigemanager) "
 "kommuniziert werden"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
@@ -2240,8 +2240,8 @@ msgid "Standard server"
 msgstr "Standard-Server"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Fehler: MDM (der GNOME Display-Manager) läuft nicht."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Fehler: MDM (der Display-Manager) läuft nicht."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

@@ -2050,8 +2050,8 @@ msgstr ""
 
 #. markup
 #: gui/mdmcomm.c:405 gui/mdmphotosetup.c:70
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "MDM (Кіраўнік уваходу GNOME) не выконваецца."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "MDM (Кіраўнік уваходу MDM) не выконваецца."
 
 #: gui/mdmcomm.c:408 gui/mdmphotosetup.c:73
 msgid ""
@@ -2069,8 +2069,8 @@ msgstr ""
 
 #. markup
 #: gui/mdmcomm.c:433 gui/mdmflexiserver.c:697
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Немагчыма працаваць з MDM (Кіраўнік дысплэяю асяродьдзя GNOME)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Немагчыма працаваць з MDM (Кіраўнік дысплэяю асяродьдзя MDM)"
 
 #: gui/mdmcomm.c:436 gui/mdmflexiserver.c:700
 msgid "Perhaps you have an old version of MDM running."
@@ -3603,8 +3603,8 @@ msgstr "Вы мусіце быць адміністратарам (root), каб
 
 #. EOF
 #: gui/mdmsetup.desktop.in.h:1
-msgid "A graphical application for configuring the GNOME Display Manager (MDM)"
-msgstr "Графічнае дастасаваньне для канфігураваньня GNOME мэнаджару дэсплэя (MDM)"
+msgid "A graphical application for configuring the MDM Display Manager (MDM)"
+msgstr "Графічнае дастасаваньне для канфігураваньня MDM мэнаджару дэсплэя (MDM)"
 
 #: gui/greeter/greeter.c:629 gui/greeter/greeter.c:660
 #, c-format
@@ -4129,7 +4129,7 @@ msgstr "Зашмат узроўняў мянушак для мясцовасьц
 #~ "mdm_signals_init: Памылка пад час заданьня апрацоўшчыку сыгналу TERM"
 
 #~ msgid ""
-#~ "<b>MDM (The GNOME Display Manager) is not running.</b>\n"
+#~ "<b>MDM (The MDM Display Manager) is not running.</b>\n"
 #~ "\n"
 #~ "You might in fact be using a different display manager, such as KDM (KDE "
 #~ "Display Manager or xdm).\n"
@@ -5031,11 +5031,11 @@ msgstr "Зашмат узроўняў мянушак для мясцовасьц
 #~ msgstr "(C) 2001 Lee Mallabone"
 
 #~ msgid ""
-#~ "Configure the GNOME Display Manager.\n"
+#~ "Configure the MDM Display Manager.\n"
 #~ "Please submit any bugs or feature requests at http://bugzilla.gnome.org "
 #~ "under the `mdm' product."
 #~ msgstr ""
-#~ "Настройка Диспетчера дисплея GNOME.\n"
+#~ "Настройка Диспетчера дисплея MDM.\n"
 #~ "Сообщайте о любых ошибках и желательных возможностях по адресу http://"
 #~ "bugzilla.gnome.org в разделе \"mdm\"."
 

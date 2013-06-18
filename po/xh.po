@@ -2109,8 +2109,8 @@ msgstr ""
 
 #. markup
 #: ../gui/mdmcomm.c:405 ../gui/mdmphotosetup.c:70
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "i-MDM (uMphathi weSikrini se-GNOME) ayiqhubeki."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "i-MDM (uMphathi weSikrini) ayiqhubeki."
 
 #: ../gui/mdmcomm.c:408 ../gui/mdmphotosetup.c:73
 msgid ""
@@ -2130,8 +2130,8 @@ msgstr ""
 
 #. markup
 #: ../gui/mdmcomm.c:433 ../gui/mdmflexiserver.c:697
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Ayinakunxulumana ne-MDM (uMphathi weSikrini se-GNOME)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Ayinakunxulumana ne-MDM (uMphathi weSikrini)"
 
 #: ../gui/mdmcomm.c:436 ../gui/mdmflexiserver.c:700
 msgid "Perhaps you have an old version of MDM running."
@@ -4103,6 +4103,6 @@ msgstr ""
 #~ msgstr "Isicelo soKu MISELA_PHUMA_ISENZO saliwe: Asiqinisekiswanga"
 
 #~ msgid ""
-#~ "A graphical application for configuring the GNOME Display Manager (MDM)"
+#~ "A graphical application for configuring the MDM Display Manager (MDM)"
 #~ msgstr ""
-#~ "Inkqubo yekhompyutha yegrafu yokumisela i-GNOME Display Manager (MDM)"
+#~ "Inkqubo yekhompyutha yegrafu yokumisela i-MDM Display Manager (MDM)"

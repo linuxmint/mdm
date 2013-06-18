@@ -1,6 +1,6 @@
 =head1 NAME
 
-mdmlogin - GNOME Display Manager greeting window
+mdmlogin - MDM Display Manager greeting window
 
 =head1 SYNOPSIS
 

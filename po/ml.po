@@ -2046,8 +2046,8 @@ msgid "_Add"
 msgstr "ചേര്‍ക്കുക (_A)"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (GNOME ഡിസ്പ്ളെ മാനാജര്‍) പ്രവര്‍ത്തിക്കുന്നില്ല."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (ഡിസ്പ്ളെ മാനാജര്‍) പ്രവര്‍ത്തിക്കുന്നില്ല."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -2059,8 +2059,8 @@ msgstr ""
 "മറ്റേതെങ്കിലും ഡിസ്പ്ളെ മാനേജര്‍ ആകാം നിങ്ങള്‍ ഉപയോഗിക്കുന്നത്. നിങ്ങള്‍ക്ക് ഈ സവിശേഷത ഉപയോഗിക്കണമെങ്കില്‍, നിങ്ങളുടെ സിസ്റ്റമില്‍ MDM ക്റമികരിച്ചിട്ടുണ്ടാവണം."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:839
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "MDM ആയി ആശയവിനിമയം ചെയ്യുവാന്‍ സാധ്യമല്ല (GNOME ഡിസ്പ്ളെ മാനാജര്‍)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "MDM ആയി ആശയവിനിമയം ചെയ്യുവാന്‍ സാധ്യമല്ല (ഡിസ്പ്ളെ മാനാജര്‍)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:841
 msgid "Perhaps you have an old version of MDM running."
@@ -2319,8 +2319,8 @@ msgid "Standard server"
 msgstr "സ്റ്റാന്‍ഡേര്‍ഡ് സര്‍വര്‍"
 
 #: ../gui/mdmflexiserver.c:774
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "പിശക്:MDM (GNOME ഡിസ്പ്ളെ മാനാജര്‍) പ്രവര്‍ത്തിക്കുന്നില്ല."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "പിശക്:MDM (ഡിസ്പ്ളെ മാനാജര്‍) പ്രവര്‍ത്തിക്കുന്നില്ല."
 
 #: ../gui/mdmflexiserver.c:775
 msgid "You might be using a different display manager."

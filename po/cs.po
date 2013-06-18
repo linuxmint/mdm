@@ -1890,8 +1890,8 @@ msgid "_Add"
 msgstr "_Přidat"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (správce obrazovky GNOME) neběží."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (správce obrazovky MDM) neběží."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1904,8 +1904,8 @@ msgstr ""
 "nastavit tak, aby byl použit MDM."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Nelze komunikovat s MDM (správcem obrazovky GNOME)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Nelze komunikovat s MDM (správcem obrazovky MDM)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2166,8 +2166,8 @@ msgid "Standard server"
 msgstr "Standardní server"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Chyba: MDM (správce obrazovky GNOME) neběží."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Chyba: MDM (správce obrazovky MDM) neběží."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

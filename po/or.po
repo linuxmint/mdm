@@ -2027,7 +2027,7 @@ msgid "_Add"
 msgstr "ଯୋଗ କରନ୍ତୁ (_A)"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
+msgid "MDM (MDM Display Manager) is not running."
 msgstr "ଜି.ଡି.ଏମ. (ନୋମ ପ୍ରଦର୍ଶନ ପରିଚାଳକ) ଚାଲୁନାହିଁ।"
 
 #: ../gui/mdmcomm.c:630
@@ -2038,7 +2038,7 @@ msgid ""
 msgstr ""
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:844
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "ଜି.ଡି.ଏମ. (ନୋମ ପ୍ରଦର୍ଶନ ପରିଚାଳକ) ସହିତ ସମ୍ବାଦ ବିନିମୟ କରିପାରିବ ନାହିଁ"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:846
@@ -2290,7 +2290,7 @@ msgid "Standard server"
 msgstr "ମାନକ ସେବକ"
 
 #: ../gui/mdmflexiserver.c:779
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr "ତୃଟି: ଜି.ଡି.ଏମ. (ନୋମ ପ୍ରଦର୍ଶନ ପରିଚାଳକ) ଚାଲୁନାହିଁ।"
 
 #: ../gui/mdmflexiserver.c:780

@@ -1962,7 +1962,7 @@ msgid "_Add"
 msgstr "_చేర్చు"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
+msgid "MDM (MDM Display Manager) is not running."
 msgstr "జిడియం (గ్నోమ్ ప్రదర్శన అభికర్త) నడుచుటలేదు."
 
 #: ../gui/mdmcomm.c:630
@@ -1973,7 +1973,7 @@ msgid ""
 msgstr ""
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:839
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "జిడియం తో తెలియజేయలేము (గ్నోమ్ ప్రదర్శన అభికర్త)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:841
@@ -2228,7 +2228,7 @@ msgid "Standard server"
 msgstr "ప్రమాణమైన సేవిక"
 
 #: ../gui/mdmflexiserver.c:774
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr "దోషము: జిడియం (గ్నోమ్ ప్రదర్శన నిర్వాహకి) నడుచుటలేదు."
 
 #: ../gui/mdmflexiserver.c:775

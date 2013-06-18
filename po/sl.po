@@ -1677,8 +1677,8 @@ msgid "_Add"
 msgstr "_Dodaj"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (Upravljalnika zaslona GNOME) ne teče."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (Upravljalnika zaslona) ne teče."
 
 #: ../gui/mdmcomm.c:630
 msgid "You might be using a different display manager, such as KDM (KDE Display Manager), CDE login (dtlogin), or xdm. If you wish to use this feature, then your system will need to be configured to use MDM instead."
@@ -1686,8 +1686,8 @@ msgstr "Morda uporabljate drugega upravitelja zaslona, kot npr. KDM (Upravljalni
 
 #: ../gui/mdmcomm.c:653
 #: ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Ni mogoče komunicirati z MDM (Upravljalnikom zaslona GNOME)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Ni mogoče komunicirati z MDM (Upravljalnikom zaslona)"
 
 #: ../gui/mdmcomm.c:655
 #: ../gui/mdmflexiserver.c:848
@@ -1934,8 +1934,8 @@ msgid "Standard server"
 msgstr "Običajen strežnik"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Napaka: MDM (Upravljalnika zaslona GNOME) ne teče."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Napaka: MDM (Upravljalnika zaslona) ne teče."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

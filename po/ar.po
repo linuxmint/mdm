@@ -1676,7 +1676,7 @@ msgid "_Add"
 msgstr "أ_ضِف"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
+msgid "MDM (MDM Display Manager) is not running."
 msgstr "م‌ع‌ج (مدير عرض جنوم) لا يعمل."
 
 #: ../gui/mdmcomm.c:630
@@ -1685,7 +1685,7 @@ msgstr "أنت ربما تستخدم مدير عرض آخر، مثل م‌ع‌�
 
 #: ../gui/mdmcomm.c:653
 #: ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "لا أستطيع الإتصال بم‌ع‌ج (مدير عرض جنوم)"
 
 #: ../gui/mdmcomm.c:655
@@ -1933,7 +1933,7 @@ msgid "Standard server"
 msgstr "الخادم القياسي"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr "خطأ: م‌ع‌ج (مدير عرض جنوم) لا يعمل."
 
 #: ../gui/mdmflexiserver.c:773

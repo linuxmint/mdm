@@ -2091,7 +2091,7 @@ msgstr "जोड़ें (_A)"
 
 #  markup
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
+msgid "MDM (MDM Display Manager) is not running."
 msgstr "जीडीएम (गनोम डिस्प्ले प्रबंधक) नहीं चल रहा है."
 
 #: ../gui/mdmcomm.c:630
@@ -2106,7 +2106,7 @@ msgstr ""
 
 #  markup
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:839
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "जीडीएम (गनोम डिस्प्ले प्रबंधक) से संचार नहीं कर सका."
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:841
@@ -2368,7 +2368,7 @@ msgstr "मानक सर्वर"
 
 #  markup
 #: ../gui/mdmflexiserver.c:774
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr "त्रुटि: जीडीएम (गनोम डिस्प्ले प्रबंधक) नहीं चल रहा है."
 
 #  markup

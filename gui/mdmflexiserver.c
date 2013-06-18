@@ -782,7 +782,7 @@ main (int argc, char *argv[])
 
 	if (send_command != NULL) {
 		if ( ! mdmcomm_check (FALSE)) {
-			mdm_common_error (_("Error: MDM (GNOME Display Manager) is not running."));
+			mdm_common_error (_("Error: MDM (MDM Display Manager) is not running."));
 			mdm_common_error (_("You might be using a different display manager."));
 			return 1;
 		}
@@ -857,7 +857,7 @@ main (int argc, char *argv[])
 						 GTK_MESSAGE_ERROR,
 						 GTK_BUTTONS_OK,
 						 _("Cannot communicate with MDM "
-						   "(The GNOME Display Manager)"),
+						   "(The MDM Display Manager)"),
 						 _("Perhaps you have an old version "
 						   "of MDM running."));
 			gtk_widget_show_all (dialog);

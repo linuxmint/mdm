@@ -2063,8 +2063,8 @@ msgid "_Add"
 msgstr "যোগ কৰক (_A)"
 
 #: ../gui/mdmcomm.c:619
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "GNOME ডিসপ্লে মেনেজাৰ."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "MDM ডিসপ্লে মেনেজাৰ."
 
 #: ../gui/mdmcomm.c:621
 msgid ""
@@ -2074,8 +2074,8 @@ msgid ""
 msgstr "ডিসপ্লে মেনেজাৰ."
 
 #: ../gui/mdmcomm.c:645 ../gui/mdmflexiserver.c:787
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "MDM'ৰ (GNOME Display Manager) সাথে সংযোগ কৰোঁতে ব্যৰ্থ"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "MDM'ৰ (MDM Display Manager) সাথে সংযোগ কৰোঁতে ব্যৰ্থ"
 
 #: ../gui/mdmcomm.c:647 ../gui/mdmflexiserver.c:789
 msgid "Perhaps you have an old version of MDM running."
@@ -3320,8 +3320,8 @@ msgstr "MDM বিন্যাস কৰাৰ বাবে root পৰিচয়
 
 #. EOF
 #: ../gui/mdmsetup.desktop.in.in.h:1
-msgid "Configure the login window (GNOME Display Manager)"
-msgstr "GNOME ডিসপ্লে মেনেজাৰ"
+msgid "Configure the login window (MDM Display Manager)"
+msgstr "MDM ডিসপ্লে মেনেজাৰ"
 
 #: ../gui/mdmsetup.desktop.in.in.h:2
 msgid "Login Window"

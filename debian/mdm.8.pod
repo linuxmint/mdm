@@ -1,6 +1,6 @@
 =head1 NAME
 
-mdm - GNOME Display Manager
+mdm - MDM Display Manager
 
 =head1 SYNOPSIS
 

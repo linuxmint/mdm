@@ -2026,7 +2026,7 @@ msgid "_Add"
 msgstr "ਸ਼ਾਮਲ(_A)"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
+msgid "MDM (MDM Display Manager) is not running."
 msgstr "MDM (ਗਨੋਮ ਡਿਸਪਲੇਅ ਮੈਨੇਜਰ) ਚੱਲ ਨਹੀਂ ਰਿਹਾ ਹੈ।"
 
 #: ../gui/mdmcomm.c:630
@@ -2040,7 +2040,7 @@ msgstr ""
 "ਆਪ MDM ਸ਼ੁਰੂ ਕਰੋ ਜਾਂ ਆਪਣੇ ਸਿਸਟਮ ਪਰਸ਼ਾਸਕ ਨੂੰ MDM ਸ਼ੁਰੂ ਕਰਨ ਬਾਰੇ ਪੁੱਛੋ।"
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:839
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "MDM ਨਾਲ ਸੰਪਰਕ ਨਹੀਂ ਕਰ ਸਕਿਆ (ਗਨੋਮ ਡਿਸਪਲੇਅ ਮੈਨੇਜਰ)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:841
@@ -2296,7 +2296,7 @@ msgid "Standard server"
 msgstr "ਸਟੈਂਡਰਡ ਸਰਵਰ"
 
 #: ../gui/mdmflexiserver.c:774
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr "ਗਲਤੀ: MDM (ਗਨੋਮ ਡਿਸਪਲੇਅ ਮੈਨੇਜਰ) ਚੱਲ ਨਹੀਂ ਰਿਹਾ ਹੈ।"
 
 #: ../gui/mdmflexiserver.c:775

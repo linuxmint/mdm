@@ -1671,7 +1671,7 @@ msgid "_Add"
 msgstr "ཁ་སྐོང་རྐྱབས།  (_A)"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
+msgid "MDM (MDM Display Manager) is not running."
 msgstr "ཇི་ཌི་ཨེམ་ (ཇི་ནོམ་བཀྲམ་སྟོན་འཛིན་སྐྱོང་པ) གཡོག་བཀོལ་མི་བཏུབ་པས།"
 
 #: ../gui/mdmcomm.c:630
@@ -1680,7 +1680,7 @@ msgstr "ཁྱོད་ཀྱིས་ངོ་མ་ལུ་ བཀྲམ་�
 
 #: ../gui/mdmcomm.c:653
 #: ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "ཇི་ཌི་ཨེམ་དང་གཅིག་ཁར་ བརྒྱུད་འབྲེལ་འབད་མ་ཚུགས། (ཇི་ནོམ་བཀྲམ་སྟོན་འཛིན་སྐྱོང་པ་)"
 
 #: ../gui/mdmcomm.c:655
@@ -1926,7 +1926,7 @@ msgid "Standard server"
 msgstr "ཚད་ལྡན་སར་བར།"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr " འཛོལ་བ :ཇི་ཌི་ཨེམ་ (ཇི་ནོམ་ བཀྲམ་སྟོན་ འཛིན་སྐྱོང་པ) གཡོག་བཀོལ་མི་བཏུབ་པས།"
 
 #: ../gui/mdmflexiserver.c:773

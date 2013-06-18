@@ -2042,8 +2042,8 @@ msgid "_Add"
 msgstr "ಸೇರಿಸು(_A)"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (GNOME ಪ್ರದರ್ಶನ ವ್ಯವಸ್ಥಾಪಕ) ವು ಚಲಾಯಿತವಾಗುತ್ತಿಲ್ಲ."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (ಪ್ರದರ್ಶನ ವ್ಯವಸ್ಥಾಪಕ) ವು ಚಲಾಯಿತವಾಗುತ್ತಿಲ್ಲ."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -2056,8 +2056,8 @@ msgstr ""
 "ನಿಮ್ಮ ಗಣಕವು MDM ಅನ್ನು ಉಪಯೋಗಿಸುವಂತೆ ಸಂರಚಿಸಬೇಕು."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:839
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "MDM ನೊಂದಿಗೆ (GNOME ಪ್ರದರ್ಶನ ವ್ಯವಸ್ಥಾಪಕ) ಸಂವಹಿಸಲಾಗಿಲ್ಲ"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "MDM ನೊಂದಿಗೆ (ಪ್ರದರ್ಶನ ವ್ಯವಸ್ಥಾಪಕ) ಸಂವಹಿಸಲಾಗಿಲ್ಲ"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:841
 msgid "Perhaps you have an old version of MDM running."
@@ -2316,8 +2316,8 @@ msgid "Standard server"
 msgstr "ರೂಢಿಯ ಪರಿಚಾರಕ"
 
 #: ../gui/mdmflexiserver.c:774
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "ದೋಷ: MDM (GNOME ಪ್ರದರ್ಶನ ವ್ಯವಸ್ಥಾಪಕ) ಚಲಾಯಿತವಾಗುತ್ತಿಲ್ಲ."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "ದೋಷ: MDM (ಪ್ರದರ್ಶನ ವ್ಯವಸ್ಥಾಪಕ) ಚಲಾಯಿತವಾಗುತ್ತಿಲ್ಲ."
 
 #: ../gui/mdmflexiserver.c:775
 msgid "You might be using a different display manager."

@@ -1954,8 +1954,8 @@ msgstr "_Gehitu"
 
 #
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (GNOMEren pantaila-kudeatzailea) ez da exekutatzen ari."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (pantaila-kudeatzailea) ez da exekutatzen ari."
 
 #
 #: ../gui/mdmcomm.c:630
@@ -1970,8 +1970,8 @@ msgstr ""
 "administratzaileari abiarazteko."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Ezin da MDMrekin komunikatu (GNOME pantaila-kudeatzailea)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Ezin da MDMrekin komunikatu (pantaila-kudeatzailea)"
 
 #
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
@@ -2236,8 +2236,8 @@ msgstr "Zerbitzari estandarra"
 
 #
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Errorea: MDM (GNOMEren pantaila-kudeatzailea) ez da exekutatzen ari."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Errorea: MDM (pantaila-kudeatzailea) ez da exekutatzen ari."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

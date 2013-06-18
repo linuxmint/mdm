@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * MDM - The GNOME Display Manager
+ * MDM - The MDM Display Manager
  * Copyright (c) 2001 Queen of England
  *    
  * MDMXnestChooser - run X nest with a chooser using xdmcp

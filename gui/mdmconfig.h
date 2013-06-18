@@ -1,5 +1,5 @@
 /*
- *  MDM - THe GNOME Display Manager
+ *  MDM - THe MDM Display Manager
  *  Copyright (C) 2001 Queen of England, (c)2002 George Lebl
  *
  *  MDMcommunication routines

@@ -1810,8 +1810,8 @@ msgid "_Add"
 msgstr "เพิ่_ม"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (GNOME Display Manager) ไม่ได้ทำงานอยู่"
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (MDM Display Manager) ไม่ได้ทำงานอยู่"
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1823,8 +1823,8 @@ msgstr ""
 "login (dtlogin) หรือ xdm อยู่ ถ้าคุณต้องการใช้คุณสมบัตินี้ คุณต้องตั้งค่าระบบของคุณให้ใช้ MDM แทน"
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "ไม่สามารถติดต่อสื่อสารกับ MDM (GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "ไม่สามารถติดต่อสื่อสารกับ MDM (MDM Display Manager)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2078,8 +2078,8 @@ msgid "Standard server"
 msgstr "เซิร์ฟเวอร์มาตรฐาน"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "ข้อผิดพลาด: MDM (GNOME Display Manager) ไม่ได้ทำงานอยู่"
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "ข้อผิดพลาด: MDM (MDM Display Manager) ไม่ได้ทำงานอยู่"
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."
@@ -5645,8 +5645,8 @@ msgstr "การอนุญาตสิทธิ์ล้มเหลว!\n"
 #~ msgstr "การร้องขอการตั้งค่าการออกจากระบบถูกปฏิเสธ: ไม่มีสิทธิ์อนุญาต"
 
 #~ msgid ""
-#~ "A graphical application for configuring the GNOME Display Manager (MDM)"
-#~ msgstr "โปรแกรมแบบกราฟิกสำหรับการกำหนดค่าโปรแกรมจัดการดิสเพลย์ของ GNOME (MDM)"
+#~ "A graphical application for configuring the MDM Display Manager (MDM)"
+#~ msgstr "โปรแกรมแบบกราฟิกสำหรับการกำหนดค่าโปรแกรมจัดการดิสเพลย์ของ (MDM)"
 
 #~ msgid "A-M|English (British)"
 #~ msgstr "A-M|English (British)"

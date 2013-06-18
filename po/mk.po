@@ -1904,8 +1904,8 @@ msgid "_Add"
 msgstr "_Додаj"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "Не се извршува MDM (GNOME Display Manager)."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "Не се извршува MDM (MDM Display Manager)."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1918,8 +1918,8 @@ msgstr ""
 "Вашиот систем треба да се конфигурира за користење на MDM."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Не можам да воспоставам врска со MDM (GNOME Display Menager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Не можам да воспоставам врска со MDM (MDM Display Manager)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2180,8 +2180,8 @@ msgid "Standard server"
 msgstr "Стандарден сервер"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Грешка: MDM (The GNOME Display Manager) не се извршува."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Грешка: MDM (The MDM Display Manager) не се извршува."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

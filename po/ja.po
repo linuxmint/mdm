@@ -1908,8 +1908,8 @@ msgid "_Add"
 msgstr "追加(_A)"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (GNOME ディスプレイ・マネージャ) を起動していません"
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (ディスプレイ・マネージャ) を起動していません"
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1922,8 +1922,8 @@ msgstr ""
 "る場合は MDM を使用するようシステムを設定しておく必要があります。"
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "MDM (GNOME ディスプレイ・マネージャ) と通信することができません"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "MDM (ディスプレイ・マネージャ) と通信することができません"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2184,8 +2184,8 @@ msgid "Standard server"
 msgstr "標準のサーバ"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "エラー: MDM (GNOME ディスプレイ・マネージャ) を起動していません"
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "エラー: MDM (ディスプレイ・マネージャ) を起動していません"
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

@@ -2105,7 +2105,7 @@ msgid "_Add"
 msgstr "T_ambah"
 
 #: ../gui/mdmcomm.c:619
-msgid "MDM (The GNOME Display Manager) is not running."
+msgid "MDM (The MDM Display Manager) is not running."
 msgstr "MDM (MDM Display Manager) tidak jalan"
 
 #: ../gui/mdmcomm.c:621
@@ -2120,7 +2120,7 @@ msgstr ""
 "menjalankannya."
 
 #: ../gui/mdmcomm.c:645 ../gui/mdmflexiserver.c:785
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "Tidak dapat berkomunikasi dengan MDM (MDM Display Manager)"
 
 #: ../gui/mdmcomm.c:647 ../gui/mdmflexiserver.c:787
@@ -3373,8 +3373,8 @@ msgstr "Anda harus menjadi root untuk mengkonfigurasi MDM."
 
 #. EOF
 #: ../gui/mdmsetup.desktop.in.in.h:1
-msgid "Configure the login window (GNOME Display Manager)"
-msgstr "Konfigurasikan layar login (Pengelola Tampilan GNOME)"
+msgid "Configure the login window (MDM Display Manager)"
+msgstr "Konfigurasikan layar login (Pengelola Tampilan)"
 
 #: ../gui/mdmsetup.desktop.in.in.h:2
 msgid "Login Window"
@@ -4732,8 +4732,8 @@ msgstr ""
 #~ msgstr "Permintaan SET_LOGOUT_ACTION ditolak: Tidak terotentikasi"
 
 #~ msgid ""
-#~ "A graphical application for configuring the GNOME Display Manager (MDM)"
-#~ msgstr "Aplikasi grafik untuk mengkonfigurasi GNOME Display Manager (MDM)"
+#~ "A graphical application for configuring the MDM Display Manager (MDM)"
+#~ msgstr "Aplikasi grafik untuk mengkonfigurasi MDM Display Manager (MDM)"
 
 #~ msgid "%s: Can't find the mdm user (%s). Trying 'nobody'!"
 #~ msgstr ""

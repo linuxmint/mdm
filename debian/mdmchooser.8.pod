@@ -1,6 +1,6 @@
 =head1 NAME
 
-mdmchooser - GNOME Display Manager host chooser window
+mdmchooser - MDM Display Manager host chooser window
 
 =head1 SYNOPSIS
 

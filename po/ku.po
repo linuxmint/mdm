@@ -2025,8 +2025,8 @@ msgid "_Add"
 msgstr "_Lê zêde bike"
 
 #: ../gui/mdmcomm.c:619
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "GMD (Menajerê Dîmenê yê GNOME) naxebite."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "GMD (Menajerê Dîmenê) naxebite."
 
 #: ../gui/mdmcomm.c:621
 msgid "You might in fact be using a different display manager, such as KDM (KDE Display Manager) or xdm. If you still wish to use this feature, either start MDM yourself or ask your system administrator to start MDM."
@@ -2034,7 +2034,7 @@ msgstr ""
 
 #: ../gui/mdmcomm.c:645
 #: ../gui/mdmflexiserver.c:787
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr ""
 
 #: ../gui/mdmcomm.c:647

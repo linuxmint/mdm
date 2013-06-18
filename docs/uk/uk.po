@@ -42,7 +42,7 @@ msgid "MDM Display Manager Reference Manual"
 msgstr "Посібник з менеджера дисплїв середовища Gnome"
 
 #: ../C/mdm.xml:14(para)
-msgid "MDM is the GNOME Display Manager, a graphical login program."
+msgid "MDM is the MDM Display Manager, a graphical login program."
 msgstr "MDM - менеджер дисплеїв GNOME, графічна програма входу у сеанс."
 
 #: ../C/mdm.xml:21(firstname)
@@ -138,7 +138,7 @@ msgstr "Sun Microsystems, Inc."
 
 #: ../C/mdm.xml:62(releaseinfo)
 #: ../C/mdm.xml:71(para)
-msgid "This manual describes version 2.13.0.8 of the GNOME Display Manager. It was last updated on 02/13/2006."
+msgid "This manual describes version 2.13.0.8 of the MDM Display Manager. It was last updated on 02/13/2006."
 msgstr "У посібнику описується менеджер дисплеїв середовища Gnome версії 2.13.0.8. Останній раз оновлювався 02/13/2006."
 
 #: ../C/mdm.xml:69(title)

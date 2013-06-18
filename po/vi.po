@@ -1901,8 +1901,8 @@ msgid "_Add"
 msgstr "Thê_m"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (Bộ quản lý trình bày GNOME) chưa chạy."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (Bộ quản lý trình bày MDM) chưa chạy."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1915,8 +1915,8 @@ msgstr ""
 "cần phải cấu hình hệ thống để sử dụng MDM thay thế."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Không liên lạc được với MDM (Bộ quản lý trình bày GNOME)."
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Không liên lạc được với MDM (Bộ quản lý trình bày MDM)."
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2175,8 +2175,8 @@ msgid "Standard server"
 msgstr "Trinh hỗ trợ X chuẩn"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Lỗi: MDM (Bộ quản lý trình bày GNOME) chưa chạy."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Lỗi: MDM (Bộ quản lý trình bày MDM) chưa chạy."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

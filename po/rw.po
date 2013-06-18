@@ -2037,7 +2037,7 @@ msgstr "Verisiyo OYA BIHUYE Verisiyo Ongera utangire Cyangwa"
 #. markup
 #: gui/mdmcomm.c:405 gui/mdmphotosetup.c:76
 #, fuzzy
-msgid "MDM (The GNOME Display Manager) is not running."
+msgid "MDM (The MDM Display Manager) is not running."
 msgstr "ni OYA"
 
 #: gui/mdmcomm.c:408 gui/mdmphotosetup.c:79
@@ -2059,7 +2059,7 @@ msgstr ""
 #. markup
 #: gui/mdmcomm.c:433 gui/mdmflexiserver.c:697
 #, fuzzy
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "Na:"
 
 #: gui/mdmcomm.c:436 gui/mdmflexiserver.c:700
@@ -3938,7 +3938,7 @@ msgstr "Imizi Kuri Kugena Imiterere"
 #. EOF
 #: gui/mdmsetup.desktop.in.h:1
 #, fuzzy
-msgid "Configure the login screen (GNOME Display Manager)"
+msgid "Configure the login screen (MDM Display Manager)"
 msgstr "i Ifashayinjira Mugaragaza"
 
 #: gui/mdmsetup.glade.h:25

@@ -1875,7 +1875,7 @@ msgid "_Add"
 msgstr "එක් කරන්න (_A)"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
+msgid "MDM (MDM Display Manager) is not running."
 msgstr ""
 
 #: ../gui/mdmcomm.c:630
@@ -1886,7 +1886,7 @@ msgid ""
 msgstr ""
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:844
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr ""
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:846
@@ -2134,7 +2134,7 @@ msgid "Standard server"
 msgstr "සම්මත සේවාදායකය"
 
 #: ../gui/mdmflexiserver.c:779
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr ""
 
 #: ../gui/mdmflexiserver.c:780

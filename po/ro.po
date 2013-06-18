@@ -1923,8 +1923,8 @@ msgid "_Add"
 msgstr "A_daugă"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (administratorul de ecrane GNOME) nu este pornit."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (administratorul de ecrane) nu este pornit."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1937,8 +1937,8 @@ msgstr ""
 "să utilizați această facilitate, va trebui să utilizați MDM implicit."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Nu s-a putut comunica cu MDM (administratorul de ecrane GNOME)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Nu s-a putut comunica cu MDM (administratorul de ecrane)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2200,8 +2200,8 @@ msgid "Standard server"
 msgstr "Server standard"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Eroare: MDM (administratorul de ecrane GNOME) nu este pornit."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Eroare: MDM (administratorul de ecrane) nu este pornit."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

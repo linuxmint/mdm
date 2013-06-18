@@ -2043,8 +2043,8 @@ msgstr ""
 
 #. markup
 #: gui/mdmcomm.c:405 gui/mdmphotosetup.c:70
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "MDM (Umphathi Siboniso se-GNOME) asisebenzi."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "MDM (Umphathi Siboniso) asisebenzi."
 
 #: gui/mdmcomm.c:408 gui/mdmphotosetup.c:73
 msgid ""
@@ -2064,8 +2064,8 @@ msgstr ""
 
 #. markup
 #: gui/mdmcomm.c:433 gui/mdmflexiserver.c:697
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Ngakhoni ukuzwana neMDM ( Mphathi Siboniso weGNOME)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Ngakhoni ukuzwana neMDM ( Mphathi Siboniso)"
 
 #: gui/mdmcomm.c:436 gui/mdmflexiserver.c:700
 msgid "Perhaps you have an old version of MDM running."
@@ -3652,8 +3652,8 @@ msgstr "Kufanele ube ngumsebenzisi omkhulu (impande) ukulinganisa iMDM."
 
 #. EOF
 #: gui/mdmsetup.desktop.in.h:1
-msgid "A graphical application for configuring the GNOME Display Manager (MDM)"
-msgstr "Isisebenziso esiqhamile sokulinganisa iGNOME Mphathi Siboniso (MDM)"
+msgid "A graphical application for configuring the MDM Display Manager (MDM)"
+msgstr "Isisebenziso esiqhamile sokulinganisa Mphathi Siboniso (MDM)"
 
 #: gui/greeter/greeter.c:638 gui/greeter/greeter.c:669
 #, c-format

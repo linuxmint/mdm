@@ -1740,7 +1740,7 @@ msgid ""
 msgstr ""
 
 #: gui/mdmcomm.c:392 gui/mdmphotosetup.c:66
-msgid "MDM (The GNOME Display Manager) is not running."
+msgid "MDM (The MDM Display Manager) is not running."
 msgstr ""
 
 #: gui/mdmcomm.c:395 gui/mdmphotosetup.c:69
@@ -1756,7 +1756,7 @@ msgid ""
 msgstr ""
 
 #: gui/mdmcomm.c:416 gui/mdmflexiserver.c:253
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr ""
 
 #: gui/mdmcomm.c:419 gui/mdmflexiserver.c:256
@@ -3095,8 +3095,8 @@ msgstr ""
 
 #. EOF
 #: gui/mdmsetup.desktop.in.h:1
-msgid "A graphical application for configuring the GNOME Display Manager (MDM)"
-msgstr "On programe grafike po-z apontyî li manaedjeu di håynaedje GNOME (MDM)"
+msgid "A graphical application for configuring the MDM Display Manager (MDM)"
+msgstr "On programe grafike po-z apontyî li manaedjeu di håynaedje (MDM)"
 
 #: gui/greeter/greeter.c:619 gui/greeter/greeter.c:649
 #, c-format

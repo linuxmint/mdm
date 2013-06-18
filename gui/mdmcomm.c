@@ -625,7 +625,7 @@ mdmcomm_check (gboolean show_dialog)
                                                  GTK_DIALOG_MODAL /* flags */,
                                                  GTK_MESSAGE_WARNING,
                                                  GTK_BUTTONS_OK,
-                                                 _("MDM (GNOME Display Manager) is not "
+                                                 _("MDM (MDM Display Manager) is not "
                                                    "running."),
                                                  _("You might be using a different display "
                                                    "manager, such as KDM (KDE Display "
@@ -651,7 +651,7 @@ mdmcomm_check (gboolean show_dialog)
                                                  GTK_MESSAGE_WARNING,
                                                  GTK_BUTTONS_OK,
                                                  _("Cannot communicate with MDM "
-                                                   "(The GNOME Display Manager)"),
+                                                   "(The MDM Display Manager)"),
                                                  _("Perhaps you have an old version "
                                                    "of MDM running."));
 			gtk_widget_show_all (dialog);

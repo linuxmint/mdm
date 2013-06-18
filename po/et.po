@@ -1,5 +1,5 @@
 # GNOME Kuvahalduri (MDM) eesti keele tõlge.
-# Estonian translation of MDM (The GNOME Display Manager).
+# Estonian translation of MDM (The MDM Display Manager).
 #
 # Copyright (C) 1999, 2002, 2003, 2005, 2006 Free Software Foundation, Inc.
 # Copyright (C) 2007 The GNOME Project.
@@ -1844,8 +1844,8 @@ msgid "_Add"
 msgstr "_Lisa"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (GNOME Kuvahaldur) ei tööta."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (Kuvahaldur) ei tööta."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1858,8 +1858,8 @@ msgstr ""
 "tuleb süsteem seadistada kasutama MDM-i."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "GNOME Kuvahalduriga (MDM) pole võimalik suhelda"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "MDM Kuvahalduriga (MDM) pole võimalik suhelda"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2116,8 +2116,8 @@ msgid "Standard server"
 msgstr "Standardserver"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Viga: MDM (GNOME Kuvahaldur) ei tööta."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Viga: MDM (MDM Kuvahaldur) ei tööta."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

@@ -1840,8 +1840,8 @@ msgstr ""
 "uslužni program MDM-a ili ponovno pokrenite računalo."
 
 #: gui/mdmcomm.c:405 gui/mdmphotosetup.c:70
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "MDM (GNOME-ov upravitelj ekrana) nije pokrenut."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "MDM (upravitelj ekrana) nije pokrenut."
 
 #: gui/mdmcomm.c:408 gui/mdmphotosetup.c:73
 msgid ""
@@ -1858,8 +1858,8 @@ msgstr ""
 "ili tražite od vašeg administratora sustava da pokrene MDM."
 
 #: gui/mdmcomm.c:433 gui/mdmflexiserver.c:697
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Ne mogu komunicirati sa MDM-om (Gnomovim upraviteljem zaslona)."
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Ne mogu komunicirati sa MDM-om (upraviteljem zaslona)."
 
 #: gui/mdmcomm.c:436 gui/mdmflexiserver.c:700
 msgid "Perhaps you have an old version of MDM running."
@@ -3354,8 +3354,8 @@ msgstr "Morate biti superkorisnik (root) kako biste podesili MDM."
 
 #. EOF
 #: gui/mdmsetup.desktop.in.h:1
-msgid "A graphical application for configuring the GNOME Display Manager (MDM)"
-msgstr "Grafička aplikacija za namještanje upravitelja zaslona GNOME  (MDM)"
+msgid "A graphical application for configuring the MDM Display Manager (MDM)"
+msgstr "Grafička aplikacija za namještanje upravitelja zaslona (MDM)"
 
 #: gui/greeter/greeter.c:629 gui/greeter/greeter.c:660
 msgid ""

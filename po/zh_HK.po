@@ -1943,8 +1943,8 @@ msgid "_Add"
 msgstr "加入(_A)"
 
 #: ../gui/mdmcomm.c:619
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "MDM（GNOME 登入管理員）並未執行。"
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "MDM（登入管理員）並未執行。"
 
 #: ../gui/mdmcomm.c:621
 msgid ""
@@ -1954,8 +1954,8 @@ msgid ""
 msgstr "你可能會想要使用不同的顯示管理程式，例如 KDM (KDE 顯示管理程式)或 xdm。如果你想使用此項功能，請自行啟動 MDM 或要求系統管理員啟動 MDM。"
 
 #: ../gui/mdmcomm.c:645 ../gui/mdmflexiserver.c:785
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "無法與 MDM（GNOME 登入管理員）溝通"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "無法與 MDM（登入管理員）溝通"
 
 #: ../gui/mdmcomm.c:647 ../gui/mdmflexiserver.c:787
 msgid "Perhaps you have an old version of MDM running."
@@ -3172,8 +3172,8 @@ msgstr "你必須是以 root 的身分來設置 MDM。"
 
 #. EOF
 #: ../gui/mdmsetup.desktop.in.in.h:1
-msgid "Configure the login window (GNOME Display Manager)"
-msgstr "設置登入畫面（GNOME 登入管理員）"
+msgid "Configure the login window (MDM Display Manager)"
+msgstr "設置登入畫面（登入管理員）"
 
 #: ../gui/mdmsetup.desktop.in.in.h:2
 msgid "Login Window"

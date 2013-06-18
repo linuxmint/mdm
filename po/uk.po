@@ -1899,8 +1899,8 @@ msgid "_Add"
 msgstr "Д_одати"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (Менеджер дисплеїв середовища Гном) не запущений."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (Менеджер дисплеїв середовища) не запущений."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1913,8 +1913,8 @@ msgstr ""
 "функціональність, натомість у вашій системі треба налаштувати MDM."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Не вдається з'єднатись з MDM (Менеджер дисплеїв середовища Гном)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Не вдається з'єднатись з MDM (Менеджер дисплеїв середовища)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2173,8 +2173,8 @@ msgid "Standard server"
 msgstr "Стандартний сервер"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Помилка: MDM (Менеджер дисплеїв середовища Гном) не запущений."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Помилка: MDM (Менеджер дисплеїв середовища) не запущений."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

@@ -1680,8 +1680,8 @@ msgid "_Add"
 msgstr "_Lägg till"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (GNOME:s displayhanterare) är inte igång."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (displayhanterare) är inte igång."
 
 #: ../gui/mdmcomm.c:630
 msgid "You might be using a different display manager, such as KDM (KDE Display Manager), CDE login (dtlogin), or xdm. If you wish to use this feature, then your system will need to be configured to use MDM instead."
@@ -1689,8 +1689,8 @@ msgstr "Du kanske i själva verket använder en annan displayhanterare som till 
 
 #: ../gui/mdmcomm.c:653
 #: ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Kan inte kommunicera med MDM (GNOME:s displayhanterare)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Kan inte kommunicera med MDM (displayhanterare)"
 
 #: ../gui/mdmcomm.c:655
 #: ../gui/mdmflexiserver.c:848
@@ -1935,8 +1935,8 @@ msgid "Standard server"
 msgstr "Standardserver"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Fel: MDM (GNOME:s displayhanterare) är inte igång."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Fel: MDM (displayhanterare) är inte igång."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

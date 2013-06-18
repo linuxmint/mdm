@@ -2012,8 +2012,8 @@ msgid "_Add"
 msgstr "थप्नुहोस्"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (GNOME प्रदर्शन प्रबन्धक) चलिरहेको छैन ।"
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (प्रदर्शन प्रबन्धक) चलिरहेको छैन ।"
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -2023,7 +2023,7 @@ msgid ""
 msgstr "तपाईँले फरक प्रदर्शन प्रबन्धक जस्तै केडीएम (केडीई प्रदर्शन प्रबन्धक), सीडीई लगइन (dtlogin), वा xdm प्रयोग गरिरहेको हुन सक्दछ । यदि तपाईँ यो सुविधा प्रयोग गर्न चाहानुहुन्छ भने सट्टामा MDM प्रयोग गर्न तपाईँको प्रणाली कन्फिगर गरिएको हुन आवश्यक हुनेछ ।"
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:839
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
 msgstr "MDM (जीनोम प्रदर्शन प्रबन्धक)सँग सञ्चार गर्न सकिँदैनएन"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:841
@@ -2281,7 +2281,7 @@ msgid "Standard server"
 msgstr "मानक सर्भर"
 
 #: ../gui/mdmflexiserver.c:774
-msgid "Error: MDM (GNOME Display Manager) is not running."
+msgid "Error: MDM (MDM Display Manager) is not running."
 msgstr "त्रुटि: जीडीएम (जीनोम प्रदर्शन प्रबन्धक) चलिरहेको छैन ।"
 
 #: ../gui/mdmflexiserver.c:775

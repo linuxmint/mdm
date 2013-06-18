@@ -2133,8 +2133,8 @@ msgid "_Add"
 msgstr "_Ychwanegu"
 
 #: ../gui/mdmcomm.c:619
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "Nid yw MDM (Rheolydd Dangosydd GNOME) yn rhedeg."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "Nid yw MDM (Rheolydd Dangosydd MDM) yn rhedeg."
 
 #: ../gui/mdmcomm.c:621
 msgid ""
@@ -2148,8 +2148,8 @@ msgstr ""
 "weinyddwr eich system gychwyn MDM."
 
 #: ../gui/mdmcomm.c:645 ../gui/mdmflexiserver.c:787
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Ni ellir cyfathrebu efo MDM (Rheolydd Dangosydd GNOME)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Ni ellir cyfathrebu efo MDM (Rheolydd Dangosydd MDM)"
 
 #: ../gui/mdmcomm.c:647 ../gui/mdmflexiserver.c:789
 msgid "Perhaps you have an old version of MDM running."
@@ -3415,8 +3415,8 @@ msgstr "Rhaid i chi fod yn uwch ddefnyddiwr (root) i gyflunio MDM."
 
 #. EOF
 #: ../gui/mdmsetup.desktop.in.in.h:1
-msgid "Configure the login window (GNOME Display Manager)"
-msgstr "Cyflunio'r ffenestr mewngofnodi (Rheolwr Dangoswyr GNOME)"
+msgid "Configure the login window (MDM Display Manager)"
+msgstr "Cyflunio'r ffenestr mewngofnodi (Rheolwr Dangoswyr MDM)"
 
 #: ../gui/mdmsetup.desktop.in.in.h:2
 msgid "Login Window"

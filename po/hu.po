@@ -1910,8 +1910,8 @@ msgid "_Add"
 msgstr "Hozzá_adás"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "A MDM (a GNOME bejelentkezéskezelője) nem fut."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "A MDM (bejelentkezéskezelője) nem fut."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1925,8 +1925,8 @@ msgstr ""
 "kérje meg erre a rendszergazdát."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Nem lehet kommunikálni a MDM-mel (a GNOME bejelentkezéskezelőjével)"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Nem lehet kommunikálni a MDM-mel (bejelentkezéskezelőjével)"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2186,8 +2186,8 @@ msgid "Standard server"
 msgstr "Szabványos kiszolgáló"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Hiba: A MDM (a GNOME bejelentkezéskezelője) nem fut."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Hiba: A MDM (bejelentkezéskezelője) nem fut."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

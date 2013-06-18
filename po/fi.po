@@ -1899,8 +1899,8 @@ msgid "_Add"
 msgstr "_Lisää"
 
 #: ../gui/mdmcomm.c:628
-msgid "MDM (GNOME Display Manager) is not running."
-msgstr "MDM (Gnomen kirjautumisohjelma) ei ole käynnissä."
+msgid "MDM (MDM Display Manager) is not running."
+msgstr "MDM (kirjautumisohjelma) ei ole käynnissä."
 
 #: ../gui/mdmcomm.c:630
 msgid ""
@@ -1914,8 +1914,8 @@ msgstr ""
 "toisen ohjelman sijasta."
 
 #: ../gui/mdmcomm.c:653 ../gui/mdmflexiserver.c:846
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "Kommunikointi MDM:n (Gnomen kirjautumisohjelman) kanssa ei onnistu"
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "Kommunikointi MDM:n (kirjautumisohjelman) kanssa ei onnistu"
 
 #: ../gui/mdmcomm.c:655 ../gui/mdmflexiserver.c:848
 msgid "Perhaps you have an old version of MDM running."
@@ -2177,8 +2177,8 @@ msgid "Standard server"
 msgstr "Vakiopalvelin"
 
 #: ../gui/mdmflexiserver.c:772
-msgid "Error: MDM (GNOME Display Manager) is not running."
-msgstr "Virhe: MDM (Gnomen kirjautumisohjelma) ei ole käynnissä."
+msgid "Error: MDM (MDM Display Manager) is not running."
+msgstr "Virhe: MDM (kirjautumisohjelma) ei ole käynnissä."
 
 #: ../gui/mdmflexiserver.c:773
 msgid "You might be using a different display manager."

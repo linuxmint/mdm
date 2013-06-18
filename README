@@ -1,17 +1,6 @@
 
 		    MDM - MDM DISPLAY MANAGER
 
- -----------------------------------------------------------
- Note: For instructions how to install read README.install |
- -----------------------------------------------------------
- | For documentation see the MDM project website:
- | http://www.gnome.org/projects/mdm/
- | Or use the GNOME help browser under GNOME|System.
- | The XML documentation is in docs/ and is in DocBook/XML
- | format so you can use docbook2html or docbook2pdf to
- | convert it.
- -----------------------------------------------------------
-
 The MDM Display Manager (MDM) is a display manager that
 implements all significant features required for managing
 local and remote displays.   For full information about 
@@ -61,7 +50,13 @@ mdmlogin:
 
 mdmgreeter:
 
- o Themable with many themes at http://art.gnome.org/
+ o Themable with many themes at http://gnome-look.org/
+ o Xinerama support
+ o Face browser (if supported by the theme)
+
+mdmwebkit:
+
+ o Themable with many HTML themes
  o Xinerama support
  o Face browser (if supported by the theme)
 
@@ -109,4 +104,3 @@ Contact:
 
   #linuxmint-dev on irc.spotchat.org
 
-Martin, George, and then Brian

@@ -1938,8 +1938,8 @@ msgstr "Сонгогчийн хувилбар (%s) хэвтүүлийн хуви
 #. markup
 #: gui/mdmcomm.c:405
 #: gui/mdmphotosetup.c:70
-msgid "MDM (The GNOME Display Manager) is not running."
-msgstr "MDM (The ГНОМЕ Display Manager) ажиллаагүй байна."
+msgid "MDM (The MDM Display Manager) is not running."
+msgstr "MDM (The MDM Display Manager) ажиллаагүй байна."
 
 #: gui/mdmcomm.c:408
 #: gui/mdmphotosetup.c:73
@@ -1954,8 +1954,8 @@ msgstr "Хэрвээ та энийг ашиглахыг хүссээр байв�
 #. markup
 #: gui/mdmcomm.c:433
 #: gui/mdmflexiserver.c:697
-msgid "Cannot communicate with MDM (The GNOME Display Manager)"
-msgstr "MDM  (The GNOME Display Manager) холбогдоогүй байна."
+msgid "Cannot communicate with MDM (The MDM Display Manager)"
+msgstr "MDM  (The MDM Display Manager) холбогдоогүй байна."
 
 #: gui/mdmcomm.c:436
 #: gui/mdmflexiserver.c:700
@@ -3553,8 +3553,8 @@ msgstr "Та MDM-ийг тохируулгыг өөрчлөхийн тулд с�
 
 #. EOF
 #: gui/mdmsetup.desktop.in.h:1
-msgid "A graphical application for configuring the GNOME Display Manager (MDM)"
-msgstr "ГНОМЕ-ийн дэлгэцийн менежер(MDM)-ийн тохируулга хийх зориулалт бүхий график дүрслэлийн программ"
+msgid "A graphical application for configuring the MDM Display Manager (MDM)"
+msgstr "MDM-ийн дэлгэцийн менежер(MDM)-ийн тохируулга хийх зориулалт бүхий график дүрслэлийн программ"
 
 #: gui/greeter/greeter.c:629
 #: gui/greeter/greeter.c:660
