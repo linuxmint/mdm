@@ -3796,6 +3796,7 @@ session_child_run (struct passwd *pwent,
 	/* Set this for the PreSession script */
 	/* compatibility */
 	g_setenv ("MDMSESSION", session, TRUE);
+	g_setenv ("GDMSESSION", session, TRUE);
 
 	g_setenv ("DESKTOP_SESSION", session, TRUE);
 
@@ -3851,6 +3852,7 @@ session_child_run (struct passwd *pwent,
 #endif
 	g_setenv ("PWD", home_dir, TRUE);
 	g_setenv ("MDMSESSION", session, TRUE);
+	g_setenv ("GDMSESSION", session, TRUE);
 	g_setenv ("DESKTOP_SESSION", session, TRUE);
 	g_setenv ("SHELL", pwent->pw_shell, TRUE);
 
