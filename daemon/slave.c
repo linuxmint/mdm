@@ -3858,17 +3858,23 @@ session_child_run (struct passwd *pwent,
 
 	if (d->type == TYPE_STATIC) {
 		g_setenv ("MDM_XSERVER_LOCATION", "local", TRUE);
+		g_setenv ("GDM_XSERVER_LOCATION", "local", TRUE);
 	} else if (d->type == TYPE_XDMCP) {
 		g_setenv ("MDM_XSERVER_LOCATION", "xdmcp", TRUE);
+		g_setenv ("GDM_XSERVER_LOCATION", "xdmcp", TRUE);
 	} else if (d->type == TYPE_FLEXI) {
 		g_setenv ("MDM_XSERVER_LOCATION", "flexi", TRUE);
+		g_setenv ("GDM_XSERVER_LOCATION", "flexi", TRUE);
 	} else if (d->type == TYPE_FLEXI_XNEST) {
 		g_setenv ("MDM_XSERVER_LOCATION", "flexi-xnest", TRUE);
+		g_setenv ("GDM_XSERVER_LOCATION", "flexi-xnest", TRUE);
 	} else if (d->type == TYPE_XDMCP_PROXY) {
 		g_setenv ("MDM_XSERVER_LOCATION", "xdmcp-proxy", TRUE);
+		g_setenv ("GDM_XSERVER_LOCATION", "xdmcp-proxy", TRUE);
 	} else {
 		/* huh? */
 		g_setenv ("MDM_XSERVER_LOCATION", "unknown", TRUE);
+		g_setenv ("GDM_XSERVER_LOCATION", "unknown", TRUE);
 	}
 
 	if (gnome_session != NULL)
