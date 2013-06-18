@@ -181,7 +181,7 @@
  * all to be grabbed in one pull.
  */
 #define MDM_SUP_MAX_MESSAGES 80
-#define MDM_SUP_SOCKET "/var/run/mdm_socket"
+#define MDM_SUP_SOCKET "/var/run/gdm_socket"
 
 /*
  * The user socket protocol.  Each command is given on a separate line
