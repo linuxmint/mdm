@@ -35,21 +35,21 @@
 #include "mdm-config.h"
 
 struct _MdmConfig
-{
-	char            *mandatory_filename;
+{	
 	char            *default_filename;
+	char            *distro_filename;
 	char            *custom_filename;
-
-	gboolean         mandatory_loaded;
+	
 	gboolean         default_loaded;
+	gboolean         distro_loaded;
 	gboolean         custom_loaded;
-
-	GKeyFile        *mandatory_key_file;
+	
 	GKeyFile        *default_key_file;
+	GKeyFile        *distro_key_file;
 	GKeyFile        *custom_key_file;
-
-	time_t           mandatory_mtime;
+	
 	time_t           default_mtime;
+	time_t           distro_mtime;
 	time_t           custom_mtime;
 
 	GPtrArray       *entries;
@@ -611,20 +611,20 @@ mdm_config_free (MdmConfig *config)
 	 * to NULL, so if this function is called again, we
 	 * do not try to free the same data structures again.
 	 */
-	e    = config->entries;
-	mkf  = config->mandatory_key_file;
+	e    = config->entries;	
 	dkf  = config->default_key_file;
+	mkf  = config->distro_key_file;
 	ckf  = config->custom_key_file;
 	hash = config->value_hash;
 
-	config->entries            = NULL;
-	config->mandatory_key_file = NULL;
+	config->entries            = NULL;	
 	config->default_key_file   = NULL;
+	config->distro_key_file    = NULL;
 	config->custom_key_file    = NULL;
 	config->value_hash         = NULL;
-
-	g_free (config->mandatory_filename);
+	
 	g_free (config->default_filename);
+	g_free (config->distro_filename);
 	g_free (config->custom_filename);
 
 	g_slice_free (MdmConfig, config);
@@ -668,9 +668,9 @@ mdm_config_get_server_groups (MdmConfig *config)
 	int              i;
 	
 	server_groups = g_ptr_array_new ();
-
-	if (config->mandatory_key_file != NULL) {
-		groups = g_key_file_get_groups (config->mandatory_key_file, &len);
+	
+	if (config->default_key_file != NULL) {
+		groups = g_key_file_get_groups (config->default_key_file, &len);
 
 		for (i = 0; i < len; i++)
 		{
@@ -681,8 +681,8 @@ mdm_config_get_server_groups (MdmConfig *config)
 		g_strfreev (groups);
 	}
 
-	if (config->default_key_file != NULL) {
-		groups = g_key_file_get_groups (config->default_key_file, &len);
+	if (config->distro_key_file != NULL) {
+		groups = g_key_file_get_groups (config->distro_key_file, &len);
 
 		for (i = 0; i < len; i++)
 		{
@@ -797,16 +797,6 @@ mdm_config_set_validate_func (MdmConfig       *config,
 }
 
 void
-mdm_config_set_mandatory_file (MdmConfig  *config,
-			       const char *name)
-{
-	g_return_if_fail (config != NULL);
-
-	g_free (config->mandatory_filename);
-	config->mandatory_filename = g_strdup (name);
-}
-
-void
 mdm_config_set_default_file (MdmConfig  *config,
 			     const char *name)
 {
@@ -814,6 +804,16 @@ mdm_config_set_default_file (MdmConfig  *config,
 
 	g_free (config->default_filename);
 	config->default_filename = g_strdup (name);
+}
+
+void
+mdm_config_set_distro_file (MdmConfig  *config,
+			       const char *name)
+{
+	g_return_if_fail (config != NULL);
+
+	g_free (config->distro_filename);
+	config->distro_filename = g_strdup (name);
 }
 
 void
@@ -944,13 +944,13 @@ load_value_entry (MdmConfig            *config,
 	value = NULL;
 
 	/* Look for the first occurence of the key in:
-	   mandatory file, custom file, default file, or built-in-default
+	   custom file, distro file, default file, or built-in-default
 	 */
-
-	if (config->mandatory_filename != NULL) {
-		source = MDM_CONFIG_SOURCE_MANDATORY;
+	
+	if (config->custom_filename != NULL) {
+		source = MDM_CONFIG_SOURCE_CUSTOM;
 		res = key_file_get_value (config,
-					  config->mandatory_key_file,
+					  config->custom_key_file,
 					  entry->group,
 					  entry->key,
 					  entry->type,
@@ -959,10 +959,10 @@ load_value_entry (MdmConfig            *config,
 			goto done;
 		}
 	}
-	if (config->custom_filename != NULL) {
-		source = MDM_CONFIG_SOURCE_CUSTOM;
+	if (config->distro_filename != NULL) {
+		source = MDM_CONFIG_SOURCE_DISTRO;
 		res = key_file_get_value (config,
-					  config->custom_key_file,
+					  config->distro_key_file,
 					  entry->group,
 					  entry->key,
 					  entry->type,
@@ -1147,14 +1147,14 @@ mdm_config_get_keys_for_group (MdmConfig  *config,
 	gsize       len;
 	GPtrArray  *array;
 
-	hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-
-	if (config->mandatory_filename != NULL) {
-		add_keys_to_hash (config->mandatory_key_file, group, hash);
-	}
+	hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);	
 
 	if (config->default_filename != NULL) {
 		add_keys_to_hash (config->default_key_file, group, hash);
+	}
+
+	if (config->distro_filename != NULL) {
+		add_keys_to_hash (config->distro_key_file, group, hash);
 	}
 
 	if (config->custom_filename != NULL) {
@@ -1251,15 +1251,15 @@ mdm_config_load (MdmConfig *config,
 		 GError   **error)
 {
 	g_return_val_if_fail (config != NULL, FALSE);
-
-	config->mandatory_loaded = load_backend (config,
-						 config->mandatory_filename,
-						 &config->mandatory_key_file,
-						 &config->mandatory_mtime);
+	
 	config->default_loaded = load_backend (config,
 					       config->default_filename,
 					       &config->default_key_file,
 					       &config->default_mtime);
+	config->distro_loaded = load_backend (config,
+						 config->distro_filename,
+						 &config->distro_key_file,
+						 &config->distro_mtime);
 	config->custom_loaded = load_backend (config,
 					      config->custom_filename,
 					      &config->custom_key_file,

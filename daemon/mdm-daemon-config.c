@@ -1803,8 +1803,8 @@ source_to_name (MdmConfigSourceType source)
         case MDM_CONFIG_SOURCE_DEFAULT:
                 name = "default";
                 break;
-        case MDM_CONFIG_SOURCE_MANDATORY:
-                name = "mandatory";
+        case MDM_CONFIG_SOURCE_DISTRO:
+                name = "distro";
                 break;
         case MDM_CONFIG_SOURCE_CUSTOM:
                 name = "custom";
@@ -2138,6 +2138,7 @@ mdm_daemon_load_config_file (MdmConfig **load_config)
 	mdm_config_set_validate_func (*load_config, validate_cb, NULL);
 	mdm_config_add_static_entries (*load_config, mdm_daemon_config_entries);
 	mdm_config_set_default_file (*load_config, default_config_file);
+	mdm_config_set_distro_file (*load_config, "/usr/share/mdm/distro.conf");
 	mdm_config_set_custom_file (*load_config, custom_config_file);
 
 	/* load the data files */

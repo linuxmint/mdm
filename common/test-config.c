@@ -45,8 +45,8 @@ source_to_name (MdmConfigSourceType source)
         case MDM_CONFIG_SOURCE_DEFAULT:
                 name = "default";
                 break;
-        case MDM_CONFIG_SOURCE_MANDATORY:
-                name = "mandatory";
+        case MDM_CONFIG_SOURCE_DISTRO:
+                name = "distro";
                 break;
         case MDM_CONFIG_SOURCE_CUSTOM:
                 name = "custom";

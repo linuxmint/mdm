@@ -39,7 +39,7 @@ typedef enum {
 
 typedef enum {
         MDM_CONFIG_SOURCE_INVALID,
-        MDM_CONFIG_SOURCE_MANDATORY,
+        MDM_CONFIG_SOURCE_DISTRO,
         MDM_CONFIG_SOURCE_DEFAULT,
         MDM_CONFIG_SOURCE_CUSTOM,
         MDM_CONFIG_SOURCE_BUILT_IN,
@@ -94,7 +94,7 @@ void                   mdm_config_set_notify_func        (MdmConfig       *confi
 							  gpointer         data);
 void                   mdm_config_set_default_file       (MdmConfig       *config,
 							  const char      *name);
-void                   mdm_config_set_mandatory_file     (MdmConfig       *config,
+void                   mdm_config_set_distro_file     (MdmConfig       *config,
 							  const char      *name);
 void                   mdm_config_set_custom_file        (MdmConfig       *config,
 							  const char      *name);
