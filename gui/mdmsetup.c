@@ -375,80 +375,34 @@ update_key (const char *key)
 
 static void
 mdm_setup_config_set_bool (const char *key, gboolean val)
-{
-	GKeyFile *cfg;
-	GKeyFile *custom_cfg;
-        gboolean defaultval;
-
-        cfg = mdm_common_config_load (config_file, NULL);
-	custom_cfg = mdm_common_config_load (custom_config_file, NULL);
-	mdm_common_config_get_boolean (cfg, key, &defaultval, NULL);
-
-        if (val == defaultval) {
-		mdm_common_config_remove_key (custom_cfg, key, NULL);
-	} else {
-		mdm_common_config_set_boolean (custom_cfg, key, val);
-	}
-
-	mdm_common_config_save (custom_cfg, custom_config_file, NULL);
-
-	g_key_file_free (cfg);
+{	
+	GKeyFile *custom_cfg;        
+	custom_cfg = mdm_common_config_load (custom_config_file, NULL);	    
+	mdm_common_config_set_boolean (custom_cfg, key, val);
+	mdm_common_config_save (custom_cfg, custom_config_file, NULL);	
 	g_key_file_free (custom_cfg);
-
 	update_key (key);
 }
 
 static void
 mdm_setup_config_set_int (const char *key, int val)
 {
-	GKeyFile *cfg;
-	GKeyFile *custom_cfg;
-        int       defaultval;
-
-        cfg = mdm_common_config_load (config_file, NULL);
-	custom_cfg = mdm_common_config_load (custom_config_file, NULL);
-	mdm_common_config_get_int (cfg, key, &defaultval, NULL);
-
-	if (val == defaultval) {
-		mdm_common_config_remove_key (custom_cfg, key, NULL);
-	} else {
-		mdm_common_config_set_int (custom_cfg, key, val);
-	}
-
+	GKeyFile *custom_cfg;        
+	custom_cfg = mdm_common_config_load (custom_config_file, NULL);	
+	mdm_common_config_set_int (custom_cfg, key, val);	
 	mdm_common_config_save (custom_cfg, custom_config_file, NULL);
-
-	g_key_file_free (cfg);
 	g_key_file_free (custom_cfg);
-
 	update_key (key);
 }
 
 static void
 mdm_setup_config_set_string (const char *key, gchar *val)
-{
-	GKeyFile *cfg;
+{	
 	GKeyFile *custom_cfg;
-        char     *defaultval;
-
-        cfg = mdm_common_config_load (config_file, NULL);
-	custom_cfg = mdm_common_config_load (custom_config_file, NULL);
-	mdm_common_config_get_string (cfg, key, &defaultval, NULL);
-
-	if (defaultval != NULL &&
-	    strcmp (ve_sure_string (val), ve_sure_string (defaultval)) == 0) {
-		mdm_common_config_remove_key (custom_cfg, key, NULL);
-	} else {
-		mdm_common_config_set_string (custom_cfg, key, val);
-	}
-
-	if (defaultval)
-		g_free (defaultval);
-
+ 	custom_cfg = mdm_common_config_load (custom_config_file, NULL);	
+	mdm_common_config_set_string (custom_cfg, key, val);
 	mdm_common_config_save (custom_cfg, custom_config_file, NULL);
-
-	g_key_file_free (cfg);
 	g_key_file_free (custom_cfg);
-
 	update_key (key);
 }
 
