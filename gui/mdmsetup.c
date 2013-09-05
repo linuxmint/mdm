@@ -124,7 +124,6 @@ enum {
 	LOCAL_TAB,
 	REMOTE_TAB,
 	GENERAL_TAB,
-    ACCESSIBILITY_TAB,
 	SECURITY_TAB,
 	USERS_TAB
 };
@@ -2813,49 +2812,7 @@ setup_greeter_toggle (const char *name,
 			G_CALLBACK (list_selection_toggled), fb_includeremove);
 		g_signal_connect (G_OBJECT (toggle), "toggled",	
 			G_CALLBACK (sensitive_entry_toggled), fb_includelabel);
-	}
-	else if (strcmp ("acc_sound_ready", ve_sure_string (name)) == 0) {
-	
-		GtkWidget *file_chooser;
-		GtkWidget *play_button;
-		
-		file_chooser = glade_xml_get_widget (xml, "acc_sound_ready_button");
-		play_button = glade_xml_get_widget (xml, "acc_soundtest_ready_button");
-
-		gtk_widget_set_sensitive (file_chooser, val);
-		gtk_widget_set_sensitive (play_button, val);
-		
-		g_signal_connect (G_OBJECT (toggle), "toggled",	G_CALLBACK (toggle_toggled_sensitivity_positive), file_chooser);		
-		g_signal_connect (G_OBJECT (toggle), "toggled",	G_CALLBACK (toggle_toggled_sensitivity_positive), play_button);
-	}
-	else if (strcmp ("acc_sound_success", ve_sure_string (name)) == 0) {
-	
-		GtkWidget *file_chooser;
-		GtkWidget *play_button;
-		
-		file_chooser = glade_xml_get_widget (xml, "acc_sound_success_button");
-		play_button = glade_xml_get_widget (xml, "acc_soundtest_success_button");
-
-		gtk_widget_set_sensitive (file_chooser, val);
-		gtk_widget_set_sensitive (play_button, val);
-		
-		g_signal_connect (G_OBJECT (toggle), "toggled",	G_CALLBACK (toggle_toggled_sensitivity_positive), file_chooser);		
-		g_signal_connect (G_OBJECT (toggle), "toggled",	G_CALLBACK (toggle_toggled_sensitivity_positive), play_button);
-	}
-	else if (strcmp ("acc_sound_failure", ve_sure_string (name)) == 0) {
-	
-		GtkWidget *file_chooser;
-		GtkWidget *play_button;
-		
-		file_chooser = glade_xml_get_widget (xml, "acc_sound_failure_button");
-		play_button = glade_xml_get_widget (xml, "acc_soundtest_failure_button");
-
-		gtk_widget_set_sensitive (file_chooser, val);
-		gtk_widget_set_sensitive (play_button, val);
-		
-		g_signal_connect (G_OBJECT (toggle), "toggled",	G_CALLBACK (toggle_toggled_sensitivity_positive), file_chooser);		
-		g_signal_connect (G_OBJECT (toggle), "toggled",	G_CALLBACK (toggle_toggled_sensitivity_positive), play_button);
-	}
+	}	
 		
 	g_signal_connect (G_OBJECT (toggle), "toggled",
 		G_CALLBACK (greeter_toggle_toggled), NULL);
@@ -3440,114 +3397,6 @@ setup_xdmcp_support (void)
 
 }
 
-static gboolean
-module_compare (const char *mod1, const char *mod2)
-{
-	char *base1;
-	char *base2;
-	char *p;
-	gboolean ret;
-
-	/* first cannonify the names */
-	base1 = g_path_get_basename (mod1);
-	base2 = g_path_get_basename (mod2);
-	if (strncmp (ve_sure_string (base1), "lib", 3) == 0)
-		strcpy (base1, &base1[3]);
-	if (strncmp (ve_sure_string (base2), "lib", 3) == 0)
-		strcpy (base2, &base2[3]);
-	p = strstr (base1, ".so");
-	if (p != NULL)
-		*p = '\0';
-	p = strstr (base2, ".so");
-	if (p != NULL)
-		*p = '\0';
-
-	ret = (strcmp (ve_sure_string (base1), ve_sure_string (base2)) == 0);
-
-	g_free (base1);
-	g_free (base2);
-
-	return ret;
-}
-
-static gboolean
-modules_list_contains (const char *modules_list, const char *module)
-{
-	char **vec;
-	int i;
-
-	if (ve_string_empty (modules_list))
-		return FALSE;
-
-	vec = g_strsplit (modules_list, ":", -1);
-	if (vec == NULL)
-		return FALSE;
-
-	for (i = 0; vec[i] != NULL; i++) {
-		if (module_compare (vec[i], module)) {
-			g_strfreev (vec);
-			return TRUE;
-		}
-	}
-
-	g_strfreev (vec);
-	return FALSE;
-}
-
-static gboolean
-themes_list_contains (const char *themes_list, const char *theme)
-{
-	char **vec;
-	int i;
-
-	if (ve_string_empty (themes_list))
-		return FALSE;
-
-	vec = g_strsplit (themes_list, MDM_DELIMITER_THEMES, -1);
-	if (vec == NULL)
-		return FALSE;
-
-	for (i = 0; vec[i] != NULL; i++) {
-		if (strcmp (ve_sure_string (vec[i]), ve_sure_string (theme)) == 0) {
-			g_strfreev (vec);
-			return TRUE;
-		}
-	}
-
-	g_strfreev (vec);
-	return FALSE;
-}
-
-static char *
-modules_list_remove (char *modules_list, const char *module)
-{
-	char **vec;
-	GString *str;
-	char *sep = "";
-	int i;
-
-	if (ve_string_empty (modules_list))
-		return g_strdup ("");
-
-	vec = g_strsplit (modules_list, ":", -1);
-	if (vec == NULL)
-		return g_strdup ("");
-
-	str = g_string_new (NULL);
-
-	for (i = 0; vec[i] != NULL; i++) {
-		if ( ! module_compare (vec[i], module)) {
-			g_string_append (str, sep);
-			sep = ":";
-			g_string_append (str, vec[i]);
-		}
-	}
-
-	g_strfreev (vec);
-
-	return g_string_free (str, FALSE);
-}
-
 /* This function concatenates *string onto *strings_list with the addition
    of *sep as a deliminator inbetween the strings_list and string, then
    returns a copy of the new strings_list. */
@@ -3593,94 +3442,6 @@ strings_list_remove (char *strings_list, const char *string, const char *sep)
     g_string_free (msg, TRUE);
     g_free (strings_list);
     return n;
-}
-
-static void
-acc_modules_toggled (GtkWidget *toggle, gpointer data)
-{
-	gboolean add_gtk_modules = mdm_config_get_bool (MDM_KEY_ADD_GTK_MODULES);
-	char *modules_list       = g_strdup (mdm_config_get_string (MDM_KEY_GTK_MODULES_LIST));
-
-	/* first whack the modules from the list */
-	modules_list = modules_list_remove (modules_list, "gail");
-	modules_list = modules_list_remove (modules_list, "atk-bridge");
-	modules_list = modules_list_remove (modules_list, "dwellmouselistener");
-	modules_list = modules_list_remove (modules_list, "keymouselistener");
-
-	if (GTK_TOGGLE_BUTTON (toggle)->active) {
-		if ( ! add_gtk_modules) {
-			g_free (modules_list);
-			modules_list = NULL;
-		}
-
-		modules_list = strings_list_add (modules_list, "gail",
-			MDM_DELIMITER_MODULES);
-		modules_list = strings_list_add (modules_list, "atk-bridge",
-			MDM_DELIMITER_MODULES);
-		modules_list = strings_list_add (modules_list,
-			LIBDIR "/gtk-2.0/modules/libkeymouselistener",
-			MDM_DELIMITER_MODULES);
-		modules_list = strings_list_add (modules_list,
-			LIBDIR "/gtk-2.0/modules/libdwellmouselistener",
-			MDM_DELIMITER_MODULES);
-		add_gtk_modules = TRUE;
-	}
-
-	if (ve_string_empty (modules_list))
-		add_gtk_modules = FALSE;
-
-	mdm_setup_config_set_string (MDM_KEY_GTK_MODULES_LIST,
-	                      ve_sure_string (modules_list));
-	mdm_setup_config_set_bool (MDM_KEY_ADD_GTK_MODULES,
-	                    add_gtk_modules);
-
-	g_free (modules_list);
-}
-
-static void
-test_sound (GtkWidget *button, gpointer data)
-{
-	GtkWidget *acc_sound_file_chooser = data;
-	gchar *filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (acc_sound_file_chooser));
-	const char *argv[3];
-
-	if ((filename == NULL) || g_access (filename, R_OK) != 0 ||
-	    ve_string_empty (MdmSoundProgram))
-	       return;
-
-	argv[0] = MdmSoundProgram;
-	argv[1] = filename;
-	argv[2] = NULL;
-
-	g_spawn_async ("/" /* working directory */,
-		       (char **)argv,
-		       NULL /* envp */,
-		       0    /* flags */,
-		       NULL /* child setup */,
-		       NULL /* user data */,
-		       NULL /* child pid */,
-		       NULL /* error */);
-
-	g_free (filename);
-}
-
-static void
-sound_response (GtkWidget *file_chooser, gpointer data)
-{
-	gchar *filename;
-	gchar *sound_key;
-	gchar *value;
-		
-	filename  = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
-	sound_key = g_object_get_data (G_OBJECT (file_chooser), "key");	
-	value     = mdm_config_get_string (sound_key);
-	
-	if (strcmp (ve_sure_string (value), ve_sure_string (filename)) != 0) {
-		mdm_setup_config_set_string (sound_key,
-			(char *)ve_sure_string (filename));
-		update_greeters ();
-	}
-	g_free (filename);
 }
 
 static void
@@ -3772,147 +3533,6 @@ setup_users_tab (void)
 	g_signal_connect (G_OBJECT (global_face_dir_checkbox), "toggled",
 			  G_CALLBACK (toggle_toggled_sensitivity_positive), global_face_dir_filechooser);				
 	g_free (filename);
-}
-
-static void
-setup_accessibility_tab (void)
-{
-	GtkWidget *enable_accessible_login;				     
-	GtkWidget *access_sound_ready_file_chooser;
-	GtkWidget *access_sound_ready_play_button;
-	GtkWidget *access_sound_success_file_chooser;
-	GtkWidget *access_sound_success_play_button;
-	GtkWidget *access_sound_failure_file_chooser;
-	GtkWidget *access_sound_failure_play_button;				      
-	GtkFileFilter *all_sounds_filter;
-	GtkFileFilter *all_files_filter;
-	gboolean add_gtk_modules;
-	gchar *mdm_key_sound_ready;
-	gchar *mdm_key_sound_success;
-	gchar *mdm_key_sound_failure;
-	gchar *modules_list;
-	gchar *value;
-	
-	enable_accessible_login = glade_xml_get_widget (xml, "acc_modules");
-
-	access_sound_ready_file_chooser = glade_xml_get_widget (xml, "acc_sound_ready_button");
-
-	access_sound_ready_play_button = glade_xml_get_widget (xml, "acc_soundtest_ready_button");
-
-	access_sound_success_file_chooser = glade_xml_get_widget (xml, "acc_sound_success_button");
-
-	access_sound_success_play_button = glade_xml_get_widget (xml, "acc_soundtest_success_button");
-
-	access_sound_failure_file_chooser = glade_xml_get_widget (xml, "acc_sound_failure_button");
-
-	access_sound_failure_play_button = glade_xml_get_widget (xml, "acc_soundtest_failure_button");
-
-	setup_greeter_toggle ("acc_theme",
-	                      MDM_KEY_ALLOW_GTK_THEME_CHANGE);
-	setup_greeter_toggle ("acc_sound_ready", 
-	                      MDM_KEY_SOUND_ON_LOGIN);
-	setup_greeter_toggle ("acc_sound_success",
-	                      MDM_KEY_SOUND_ON_LOGIN_SUCCESS);
-	setup_greeter_toggle ("acc_sound_failure",
-	                      MDM_KEY_SOUND_ON_LOGIN_FAILURE);
-
-	add_gtk_modules = mdm_config_get_bool (MDM_KEY_ADD_GTK_MODULES);
-	modules_list    = mdm_config_get_string (MDM_KEY_GTK_MODULES_LIST);
-
-	if (!(add_gtk_modules &&
-	    modules_list_contains (modules_list, "gail") &&
-	    modules_list_contains (modules_list, "atk-bridge") &&
-	    modules_list_contains (modules_list, "dwellmouselistener") &&
-	    modules_list_contains (modules_list, "keymouselistener"))) {
-	    
-  		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (enable_accessible_login),
-					      FALSE);
-	}
-	else {
-	 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (enable_accessible_login),
-					      TRUE);
-	}
-	
-	all_sounds_filter = gtk_file_filter_new ();
-	gtk_file_filter_set_name (all_sounds_filter, _("Sounds"));
-	gtk_file_filter_add_mime_type (all_sounds_filter, "audio/x-wav");
-	gtk_file_filter_add_mime_type (all_sounds_filter, "application/ogg");
-
-	all_files_filter = gtk_file_filter_new ();
-	gtk_file_filter_set_name (all_files_filter, _("All Files"));
-	gtk_file_filter_add_pattern(all_files_filter, "*");
-
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (access_sound_ready_file_chooser), all_sounds_filter);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (access_sound_ready_file_chooser), all_files_filter);
-
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (access_sound_success_file_chooser), all_sounds_filter);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (access_sound_success_file_chooser), all_files_filter);
-	
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (access_sound_failure_file_chooser), all_sounds_filter);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (access_sound_failure_file_chooser), all_files_filter);
-		
-	value = mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE);
-
-	if (value != NULL && *value != '\0') {
-		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (access_sound_ready_file_chooser), 
-		                               value);
-	}
-	else {
-		gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (access_sound_ready_file_chooser),
-		                                     DATADIR"/sounds");
-	}
-
-	value = mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_SUCCESS_FILE);
-
-	if (value != NULL && *value != '\0') {
-		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (access_sound_success_file_chooser),
-		                               value);
-	}
-	else {
-		gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (access_sound_success_file_chooser),
-		                                     DATADIR"/sounds");
-	}
-	
-	value = mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE);
-
-	if (value != NULL && *value != '\0') {
-		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (access_sound_failure_file_chooser),
-		                               value);
-	} 
-	else {
-		gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (access_sound_failure_file_chooser),
-		                                     DATADIR"/sounds");
-	}
-	
-	mdm_key_sound_ready = g_strdup (MDM_KEY_SOUND_ON_LOGIN_FILE);
-	
-	g_object_set_data (G_OBJECT (access_sound_ready_file_chooser), "key",
-	                   mdm_key_sound_ready);
-	
-	mdm_key_sound_success = g_strdup (MDM_KEY_SOUND_ON_LOGIN_SUCCESS_FILE);
-
-	g_object_set_data (G_OBJECT (access_sound_success_file_chooser), "key",
-	                   mdm_key_sound_success);
-	
-	mdm_key_sound_failure = g_strdup (MDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE);
-
-	g_object_set_data (G_OBJECT (access_sound_failure_file_chooser), "key",
-	                   mdm_key_sound_failure);
-
-	g_signal_connect (G_OBJECT (enable_accessible_login), "toggled",
-			  G_CALLBACK (acc_modules_toggled), NULL);			  			  
-	g_signal_connect (G_OBJECT (access_sound_ready_play_button), "clicked",
-			  G_CALLBACK (test_sound), access_sound_ready_file_chooser);
-	g_signal_connect (G_OBJECT (access_sound_success_play_button), "clicked",
-			  G_CALLBACK (test_sound), access_sound_success_file_chooser);
-	g_signal_connect (G_OBJECT (access_sound_failure_play_button), "clicked",
-			  G_CALLBACK (test_sound), access_sound_failure_file_chooser);
-	g_signal_connect (G_OBJECT (access_sound_ready_file_chooser), "selection-changed", 
-	                  G_CALLBACK (sound_response), access_sound_ready_file_chooser);
-	g_signal_connect (G_OBJECT (access_sound_success_file_chooser), "selection-changed", 
-	                  G_CALLBACK (sound_response), access_sound_success_file_chooser);
-	g_signal_connect (G_OBJECT (access_sound_failure_file_chooser), "selection-changed", 
-	                  G_CALLBACK (sound_response), access_sound_failure_file_chooser);
 }
 
 static char *
@@ -7181,7 +6801,6 @@ setup_gui (void)
 
 	/* Markup glade labels */
 	glade_helper_tagify_label (xml, "themes_label", "b");
-	glade_helper_tagify_label (xml, "sounds_label", "b");
 	glade_helper_tagify_label (xml, "local_background_label", "b");	
 	glade_helper_tagify_label (xml, "local_menubar_label", "b");
 	glade_helper_tagify_label (xml, "local_welcome_message_label", "b");
@@ -7200,7 +6819,6 @@ setup_gui (void)
 	setup_general_tab ();
 	setup_local_tab (); 
 	setup_remote_tab ();
- 	setup_accessibility_tab (); 
 	setup_security_tab ();
 	setup_users_tab ();
 	refresh_remote_tab();
