@@ -208,16 +208,16 @@ html_encode(const char *string)
 
 void webkit_execute_script(const gchar * function, const gchar * arguments) 
 {
-	if (webkit_ready) {		
-		if (arguments == NULL) {
-			webkit_web_view_execute_script(webView, function);
+	if (webkit_ready) {
+		gchar * tmp;
+		if (arguments == NULL) {			
+			tmp = g_strdup_printf("%s()", function);			
 		}
 		else {
-			gchar * tmp;
-			tmp = g_strdup_printf("%s(\"%s\")", function, str_replace(arguments, "\n", ""));
-			webkit_web_view_execute_script(webView, tmp);		
-			g_free (tmp);
-		}				
+			tmp = g_strdup_printf("%s(\"%s\")", function, str_replace(arguments, "\n", ""));							
+		}
+		webkit_web_view_execute_script(webView, tmp);
+		g_free (tmp);
 	}
 }
 
@@ -364,6 +364,8 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 		g_free (name);
 		g_free (untranslated);
 	}	
+
+	webkit_execute_script("mdm_ready", NULL);
 	
 	if G_LIKELY ( ! DOING_MDM_DEVELOPMENT) {
 	    ctrlch = g_io_channel_unix_new (STDIN_FILENO);
@@ -379,6 +381,8 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 	    g_io_channel_unref (ctrlch);
     }
     
+	
+
     gtk_widget_show_all (GTK_WIDGET (login));    
 }
 
@@ -1269,7 +1273,7 @@ webkit_init (void) {
   	 	/* Read the output a line at a time - output it. */
   	 	char line[1035];
   		while (fgets(line, sizeof(line)-1, fp) != NULL) {
-    		username = g_strchomp(line));
+    		username = g_strchomp(line);
 			break;
   		}
   		pclose(fp);  		
