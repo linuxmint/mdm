@@ -1260,6 +1260,23 @@ webkit_init (void) {
 	html = str_replace(html, "$close", html_encode(_("Close")));
 	
 	html = str_replace(html, "$locale", g_strdup (setlocale (LC_MESSAGES, NULL)));
+
+	FILE *fp;
+  	int status;
+  	char * username = NULL;
+	fp = popen("ck-history --last | head -1 | awk {'print $1;'}", "r");
+  	if (fp != NULL) { 	
+  	 	/* Read the output a line at a time - output it. */
+  	 	char line[1035];
+  		while (fgets(line, sizeof(line)-1, fp) != NULL) {
+    		username = g_strchomp(line));
+			break;
+  		}
+  		pclose(fp);  		
+  	}
+  	if (username != NULL) {
+  		html = str_replace(html, "$preselected_username", username);
+  	}
 		
 	webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
 	
