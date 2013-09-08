@@ -48,14 +48,10 @@ sbin_PROGRAMS = \
 	mdmsetup
 
 bin_PROGRAMS = \
-	mdmphotosetup 		\
 	@MDMXNESTCHOOSER@	\
 	mdmflexiserver      \
 	mdmdynamic
 EXTRA_PROGRAMS = mdmchooser mdmXnestchooser
-
-mdmphotosetup_SOURCES = \
-	mdmphotosetup.c	
 
 mdmXnestchooser_SOURCES = \
 	mdmXnestchooser.c
@@ -200,23 +196,6 @@ mdmsetup_LDADD = \
 	-lX11			\
 	$(NULL)
 
-mdmphotosetup_LDADD = \
-	libmdmcommon.a		\
-	$(GUI_LIBS)		\
-	$(INTLLIBS)		\
-	$(GLIB_LIBS)		\
-	$(GOBJECT_LIBS)		\
-	$(GDK_LIBS)		\
-	$(GDKPIXBUF_LIBS)	\
-	$(INTLLIBS)		\
-	$(EXTRA_SOCKET_LIB)	\
-	$(EXTRA_NSL_LIB)	\
-	-lX11			\
-	-lXau			\
-	-lm				\
-	$(top_builddir)/common/libmdmcommon.a \
-	$(NULL)
-
 mdmXnestchooser_LDADD = \
 	libmdmcommon.a		\
 	$(GUI_LIBS)		\
@@ -262,11 +241,6 @@ mdmdynamic_LDADD = 		\
 	-lXau			\
 	$(NULL)
 
-Settingsdir = $(datadir)/mdm/applications
-Settings_files = mdmphotosetup.desktop
-Settings_in_files = mdmphotosetup.desktop.in
-Settings_DATA = $(Settings_files)
-
 Systemdir = $(datadir)/mdm/applications
 System_files = \
 	mdmsetup.desktop	\
@@ -278,7 +252,7 @@ System_in_files = \
 	mdmflexiserver-xnest.desktop.in.in
 System_DATA = $(System_files)
 
-CLEANFILES = mdmsetup.desktop mdmsetup.desktop.in mdmflexiserver.desktop mdmflexiserver-xnest.desktop mdmflexiserver-xnest.desktop.in mdmphotosetup.desktop
+CLEANFILES = mdmsetup.desktop mdmsetup.desktop.in mdmflexiserver.desktop mdmflexiserver-xnest.desktop mdmflexiserver-xnest.desktop.in
 
 mdmsetup.desktop.in: $(srcdir)/mdmsetup.desktop.in.in
 	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/mdmsetup.desktop.in.in \
@@ -287,7 +261,7 @@ mdmsetup.desktop.in: $(srcdir)/mdmsetup.desktop.in.in
 @INTLTOOL_DESKTOP_RULE@
 
 Gladedir = $(datadir)/mdm
-Glade_DATA = mdmsetup.glade mdmchooser.glade mdmphotosetup.glade
+Glade_DATA = mdmsetup.glade mdmchooser.glade
 
 install-data-local:
 	-test -z "$(DESTDIR)$(bindir)/mdmXnest" || rm -f $(DESTDIR)$(bindir)/mdmXnest
@@ -296,10 +270,8 @@ install-data-local:
 EXTRA_DIST = \
 	$(Glade_DATA)		\
 	$(System_DATA)		\
-	$(System_in_files)	\
-	$(Settings_DATA)	\
-	$(Settings_in_files)
+	$(System_in_files)
 
 clean-local:
-	rm -f $(System_files) $(Settings_files)
+	rm -f $(System_files)
 
