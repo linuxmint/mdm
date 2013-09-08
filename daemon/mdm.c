@@ -1554,7 +1554,7 @@ main (int argc, char *argv[])
 
 	g_type_init ();
 
-	ctx = g_option_context_new (_("- The GNOME login manager"));
+	ctx = g_option_context_new (_("- The MDM login manager"));
 	g_option_context_add_main_entries (ctx, options, _("main options"));
 
 	/* preprocess the arguments to support the xdm style -nodaemon
