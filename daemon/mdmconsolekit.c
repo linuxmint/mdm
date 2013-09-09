@@ -76,38 +76,6 @@ add_param_int (DBusMessageIter *iter_struct,
 }
 
 static void
-add_param_boolean (DBusMessageIter *iter_struct,
-		   const char      *key,
-		   gboolean         value)
-{
-	DBusMessageIter iter_struct_entry;
-	DBusMessageIter iter_var;
-
-	dbus_message_iter_open_container (iter_struct,
-					  DBUS_TYPE_STRUCT,
-					  NULL,
-					  &iter_struct_entry);
-
-	dbus_message_iter_append_basic (&iter_struct_entry,
-					DBUS_TYPE_STRING,
-					&key);
-
-	dbus_message_iter_open_container (&iter_struct_entry,
-					  DBUS_TYPE_VARIANT,
-					  DBUS_TYPE_BOOLEAN_AS_STRING,
-					  &iter_var);
-
-	dbus_message_iter_append_basic (&iter_var,
-					DBUS_TYPE_BOOLEAN,
-					&value);
-
-	dbus_message_iter_close_container (&iter_struct_entry,
-					   &iter_var);
-
-	dbus_message_iter_close_container (iter_struct, &iter_struct_entry);
-}
-
-static void
 add_param_string (DBusMessageIter *iter_struct,
 		  const char      *key,
 		  const char      *value)

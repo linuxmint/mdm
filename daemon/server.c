@@ -129,12 +129,6 @@ ignore_xerror_handler (Display *disp, XErrorEvent *evt)
 	return 0;
 }
 
-static int
-jumpback_xioerror_handler (Display *disp)
-{
-	Longjmp (reinitjmp, 1);
-}
-
 #ifdef HAVE_FBCONSOLE
 #define FBCONSOLE "/usr/openwin/bin/fbconsole"
 
@@ -775,26 +769,6 @@ rotate_logs (const char *dname)
 	g_free (fname2);
 	g_free (fname1);
 	g_free (fname);
-}
-
-static void
-mdm_server_add_xserver_args (MdmDisplay *d, char **argv)
-{
-	int count;
-	char **args;
-	int len;
-	int i;
-
-	len = mdm_vector_len (argv);
-	g_shell_parse_argv (d->xserver_session_args, &count, &args, NULL);
-	argv = g_renew (char *, argv, len + count + 1);
-
-	for (i=0; i < count;i++) {
-		argv[len++] = g_strdup(args[i]);
-	}
-
-	argv[len] = NULL;
-	g_strfreev (args);
 }
 
 MdmXserver *

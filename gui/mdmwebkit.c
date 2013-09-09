@@ -615,38 +615,8 @@ err_box_clear (gpointer data)
 	return FALSE;
 }
 
-static Display *
-get_parent_display (void)
-{
-  static gboolean tested = FALSE;
-  static Display *dsp = NULL;
-
-  if (tested)
-    return dsp;
-
-  tested = TRUE;
-
-  if (g_getenv ("MDM_PARENT_DISPLAY") != NULL)
-    {
-      char *old_xauth = g_strdup (g_getenv ("XAUTHORITY"));
-      if (g_getenv ("MDM_PARENT_XAUTHORITY") != NULL)
-        {
-	  g_setenv ("XAUTHORITY",
-		     g_getenv ("MDM_PARENT_XAUTHORITY"), TRUE);
-	}
-      dsp = XOpenDisplay (g_getenv ("MDM_PARENT_DISPLAY"));
-      if (old_xauth != NULL)
-        g_setenv ("XAUTHORITY", old_xauth, TRUE);
-      else
-        g_unsetenv ("XAUTHORITY");
-      g_free (old_xauth);
-    }
-
-  return dsp;
-}
-
 static gboolean
-greeter_is_capslock_on (void)
+greeter_is_capslock_on (void) 
 {
   XkbStateRec states;
   Display *dsp;

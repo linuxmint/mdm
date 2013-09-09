@@ -1287,21 +1287,6 @@ check_servauthdir (const char  *auth_path,
 	}
 }
 
-static gboolean
-have_display_for_number (int number)
-{
-	GSList *l;
-
-	for (l = displays; l != NULL; l = l->next) {
-		MdmDisplay *disp = l->data;
-		if (disp->dispnum == number) {
-			return TRUE;
-		}
-	}
-
-	return FALSE;
-}
-
 static void
 mdm_daemon_config_load_displays (MdmConfig *config)
 {

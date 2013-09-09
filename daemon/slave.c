@@ -1132,46 +1132,6 @@ mdm_slave_whack_greeter (void)
 	mdm_slave_send_num (MDM_SOP_GREETPID, 0);
 }
 
-static void
-wait_for_display_to_die (Display    *display,
-			 const char *display_name)
-{
-	fd_set rfds;
-	int    fd;
-
-	mdm_debug ("wait_for_display_to_die: waiting for display '%s' to die",
-		   display_name);
-
-	fd = ConnectionNumber (display);
-
-	FD_ZERO (&rfds);
-	FD_SET (fd, &rfds);
-
-	while (1) {
-		char           buf[256];
-		struct timeval tv;
-		int            n;
-
-		tv.tv_sec  = 5;
-		tv.tv_usec = 0;
-
-		n = select (fd + 1, &rfds, NULL, NULL, &tv);
-		if (G_LIKELY (n == 0)) {
-			XSync (display, True);
-		} else if (n > 0) {
-			VE_IGNORE_EINTR (n = read (fd, buf, sizeof (buf)));
-			if (n <= 0)
-				break;
-		} else if (errno != EINTR) {
-			break;
-		}
-
-		FD_CLR (fd, &rfds);
-	}
-
-	mdm_debug ("wait_for_display_to_die: '%s' dead", display_name);
-}
-
 static int
 ask_migrate (const char *migrate_to)
 {

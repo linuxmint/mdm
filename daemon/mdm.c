@@ -2690,84 +2690,6 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 	}
 }
 
-/* extract second word and the rest of the string */
-static void
-extract_dispname_uid_xauthfile_cookie (const char *msg,
-				       char **dispname,
-				       uid_t *uid,
-				       char **xauthfile,
-				       char **cookie)
-{
-	const char *p;
-	int i;
-	char *pp;
-
-	*dispname = NULL;
-	*xauthfile = NULL;
-	*cookie = NULL;
-
-	/* Get dispname */
-	p = strchr (msg, ' ');
-	if (p == NULL)
-		return;
-
-	while (*p == ' ')
-		p++;
-
-	*dispname = g_strdup (p);
-	pp = strchr (*dispname, ' ');
-	if (pp != NULL)
-		*pp = '\0';
-
-	/* Get uid */
-	p = strchr (p, ' ');
-	if (p == NULL) {
-		*dispname = NULL;
-		g_free (*dispname);
-		return;
-	}
-	while (*p == ' ')
-		p++;
-
-	if (sscanf (p, "%d", &i) != 1) {
-		*dispname = NULL;
-		g_free (*dispname);
-		return;
-	}
-	*uid = i;
-
-	/* Get cookie */
-	p = strchr (p, ' ');
-	if (p == NULL) {
-		*dispname = NULL;
-		g_free (*dispname);
-		return;
-	}
-	while (*p == ' ')
-		p++;
-
-	*cookie = g_strdup (p);
-	pp = strchr (*cookie, ' ');
-	if (pp != NULL)
-		*pp = '\0';
-
-	/* Get xauthfile */
-	p = strchr (p, ' ');
-	if (p == NULL) {
-		*cookie = NULL;
-		g_free (*cookie);
-		*dispname = NULL;
-		g_free (*dispname);
-		return;
-	}
-
-	while (*p == ' ')
-		p++;
-
-	*xauthfile = g_strstrip (g_strdup (p));
-
-}
-
 static void
 close_conn (gpointer data)
 {
@@ -2778,23 +2700,6 @@ close_conn (gpointer data)
 		disp->socket_conn = NULL;
 		mdm_display_unmanage (disp);
 	}
-}
-
-static MdmDisplay *
-find_display (const char *name)
-{
-	GSList *li;
-	GSList *displays;
-
-	displays = mdm_daemon_config_get_display_list ();
-
-	for (li = displays; li != NULL; li = li->next) {
-		MdmDisplay *disp = li->data;
-		if (disp->name != NULL &&
-		    strcmp (disp->name, name) == 0)
-			return disp;
-	}
-	return NULL;
 }
 
 static char *
@@ -2841,58 +2746,6 @@ dehex_cookie (const char *cookie, int *len)
 	}
 	*len = i;
 	return bcookie;
-}
-
-/* This runs as the user who owns the file */
-static gboolean
-check_cookie (const gchar *file, const gchar *disp, const gchar *cookie)
-{
-	Xauth *xa;
-	gchar *number;
-	gchar *bcookie;
-	int cookielen;
-	gboolean ret = FALSE;
-	int cnt = 0;
-
-	FILE *fp = fopen (file, "r");
-	if (fp == NULL)
-		return FALSE;
-
-	number = extract_dispnum (disp);
-	if (number == NULL)
-		return FALSE;
-	bcookie = dehex_cookie (cookie, &cookielen);
-	if (bcookie == NULL) {
-		g_free (number);
-		return FALSE;
-	}
-
-	while ((xa = XauReadAuth (fp)) != NULL) {
-		if (xa->number_length == strlen (number) &&
-		    strncmp (xa->number, number, xa->number_length) == 0 &&
-		    xa->name_length == strlen ("MIT-MAGIC-COOKIE-1") &&
-		    strncmp (xa->name, "MIT-MAGIC-COOKIE-1",
-			     xa->name_length) == 0 &&
-		    xa->data_length == cookielen &&
-		    memcmp (xa->data, bcookie, cookielen) == 0) {
-			XauDisposeAuth (xa);
-			ret = TRUE;
-			break;
-		}
-		XauDisposeAuth (xa);
-
-		/* just being ultra anal */
-		cnt++;
-		if (cnt > 500)
-			break;
-	}
-
-	g_free (number);
-	g_free (bcookie);
-
-	VE_IGNORE_EINTR (fclose (fp));
-
-	return ret;
 }
 
 static void

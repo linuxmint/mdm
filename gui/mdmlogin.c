@@ -631,16 +631,6 @@ typedef struct _CursorOffset {
 	int y;
 } CursorOffset;
 
-static gboolean
-within_rect (GdkRectangle *rect, int x, int y)
-{
-	return
-		x >= rect->x &&
-		x <= rect->x + rect->width &&
-		y >= rect->y &&
-		y <= rect->y + rect->height;
-}
-
 static void
 mdm_run_mdmconfig (GtkWidget *w, gpointer data)
 {

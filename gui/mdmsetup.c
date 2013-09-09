@@ -3257,13 +3257,6 @@ get_theme_dir (void)
 	return theme_dir;
 }
 
-static void
-textview_set_buffer (GtkTextView *view, const char *text)
-{
-	GtkTextBuffer *buffer = gtk_text_view_get_buffer (view);
-	gtk_text_buffer_set_text (buffer, text, -1);
-}
-
 /* Sets up the preview section of Themed Greeter page
    after a theme has been selected */
 static void
