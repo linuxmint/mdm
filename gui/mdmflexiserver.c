@@ -823,8 +823,7 @@ main (int argc, char *argv[])
 			gchar *value = NULL;
 			const char *key = &send_command[strlen (MDM_SUP_GET_CONFIG " ")];
 
-			if (is_key (MDM_KEY_WELCOME, key) ||
-			    is_key (MDM_KEY_REMOTE_WELCOME, key)) {
+			if (is_key (MDM_KEY_WELCOME, key)) {
 				value = mdm_config_get_translated_string ((gchar *)key);
 				if (value != NULL) {
 					ret = g_strdup_printf ("OK %s", value);

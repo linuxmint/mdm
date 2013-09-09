@@ -83,20 +83,16 @@ mdm_display_alloc (gint id, const gchar *command, const gchar *device)
     d->greetpid = 0;
     d->name = g_strdup_printf (":%d", id);
     d->windowpath = NULL;    
-    memset (&(d->addr), 0, sizeof (d->addr));
     d->dispnum = id;
     d->servpid = 0;
     d->servstat = SERVER_DEAD;
     d->sesspid = 0;
     d->slavepid = 0;
     d->type = TYPE_STATIC;
-    d->sessionid = 0;
-    d->acctime = 0;
     d->dsp = NULL;
     d->screenx = 0; /* xinerama offset */
     d->screeny = 0;
 
-    d->handled = TRUE;
     d->tcp_disallowed = FALSE;
 
     d->priority = 0;
@@ -686,22 +682,12 @@ mdm_display_dispose (MdmDisplay *d)
     g_free (d->windowpath);
     d->windowpath = NULL;
 
-    g_free (d->addrs);
-    d->addrs = NULL;
-    d->addr_count = 0;
-
     g_free (d->authfile);
     d->authfile = NULL;
 
     g_free (d->authfile_mdm);
     d->authfile_mdm = NULL;    
-
-    if (d->parent_temp_auth_file != NULL) {
-	    VE_IGNORE_EINTR (g_unlink (d->parent_temp_auth_file));
-    }
-    g_free (d->parent_temp_auth_file);
-    d->parent_temp_auth_file = NULL;
-
+    
     if (d->auths) {
 	    mdm_auth_free_auth_list (d->auths);
 	    d->auths = NULL;
@@ -728,18 +714,8 @@ mdm_display_dispose (MdmDisplay *d)
     d->cookie = NULL;
 
     g_free (d->bcookie);
-    d->bcookie = NULL;
-
-    if (d->indirect_id > 0)
-	    mdm_choose_indirect_dispose_empty_id (d->indirect_id);
-    d->indirect_id = 0;
-
-    g_free (d->parent_disp);
-    d->parent_disp = NULL;
-
-    g_free (d->parent_auth_file);
-    d->parent_auth_file = NULL;
-
+    d->bcookie = NULL;   
+    
     g_free (d->login);
     d->login = NULL;
 

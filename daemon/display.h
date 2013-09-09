@@ -124,8 +124,6 @@ struct _MdmDisplay
 	char *xsession_errors_filename; /* if NULL then there is no .xsession-errors
 					   file */
 
-	guint indirect_id;
-
 	gboolean is_emergency_server;
 	gboolean failsafe_xserver;
 

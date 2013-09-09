@@ -701,13 +701,6 @@ mdm_login_halt_handler (void)
 }
 
 static void
-mdm_login_use_chooser_handler (void)
-{
-	mdm_kill_thingies ();
-	_exit (DISPLAY_RUN_CHOOSER);
-}
-
-static void
 mdm_login_suspend_handler (void)
 {
 	if (mdm_wm_warn_dialog (
@@ -2297,7 +2290,7 @@ mdm_login_gui_init (void)
 		      G_CALLBACK (mdm_login_enter),
 		      NULL);
 
-    /* cursor blinking is evil on remote displays, don't do it forever */
+    /* cursor blinking is evil on displays, don't do it forever */
     mdm_common_setup_blinking ();
     mdm_common_setup_blinking_entry (entry);
     
@@ -2575,7 +2568,6 @@ mdm_read_config (void)
 	mdm_config_get_string (MDM_KEY_INFO_MSG_FONT);
 	mdm_config_get_string (MDM_KEY_LOCALE_FILE);	
 	mdm_config_get_string (MDM_KEY_REBOOT);
-	mdm_config_get_string (MDM_KEY_REMOTE_WELCOME);
 	mdm_config_get_string (MDM_KEY_SESSION_DESKTOP_DIR);
 	mdm_config_get_string (MDM_KEY_SOUND_PROGRAM);
 	mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE);
@@ -2620,11 +2612,8 @@ mdm_read_config (void)
 	mdm_config_get_int    (MDM_KEY_XINERAMA_SCREEN);
 
 	mdm_config_get_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE);
-	mdm_config_get_bool   (MDM_KEY_ALLOW_REMOTE_ROOT);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);	
-	mdm_config_get_bool   (MDM_KEY_CHOOSER_BUTTON);
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
-	mdm_config_get_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_ENTRY_CIRCLES);
 	mdm_config_get_bool   (MDM_KEY_ENTRY_INVISIBLE);
@@ -2691,8 +2680,6 @@ mdm_reread_config (int sig, gpointer data)
 
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
-	    mdm_config_reload_bool   (MDM_KEY_ALLOW_REMOTE_ROOT) ||	    
-	    mdm_config_reload_bool   (MDM_KEY_CHOOSER_BUTTON) ||
 	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_CIRCLES) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_INVISIBLE) ||
@@ -2773,9 +2760,7 @@ mdm_reread_config (int sig, gpointer data)
 	update_clock ();
 	
 	if (mdm_config_reload_string (MDM_KEY_WELCOME) ||
-            mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME) ||
-            mdm_config_reload_string (MDM_KEY_REMOTE_WELCOME) ||
-            mdm_config_reload_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME)) {
+            mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME)) {
 
 		mdm_set_welcomemsg ();
 	}
@@ -3096,7 +3081,7 @@ main (int argc, char *argv[])
 
     /* if a flexiserver, reap self after some time */
     if (mdm_config_get_int (MDM_KEY_FLEXI_REAP_DELAY_MINUTES) > 0 &&
-	! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER")) {
+	! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER"))) {
 	    sid = g_signal_lookup ("activate",
 				   GTK_TYPE_MENU_ITEM);
 	    g_signal_add_emission_hook (sid,

@@ -59,24 +59,6 @@ pid_t	mdm_fork_extra (void);
 void	mdm_wait_for_extra (pid_t pid, int *status);
 
 const GList * mdm_address_peek_local_list (void);
-gboolean      mdm_address_is_local        (struct sockaddr_storage *sa);
-
-typedef struct {
-	gboolean not_found; /* hostname below set to fallback,
-			       as gethostbyaddr/name failed */
-	char *hostname; /* never a bogus dot, if
-			   invalid/unknown, then set to the
-			   ip address in string form */
-
-	struct sockaddr_storage *addrs;
-	int addr_count;
-} MdmHostent;
-
-MdmHostent * mdm_gethostbyname (const char *name);
-
-MdmHostent *mdm_gethostbyaddr (struct sockaddr_storage *ia);
-MdmHostent * mdm_hostent_copy (MdmHostent *he);
-void mdm_hostent_free (MdmHostent *he);
 
 gboolean mdm_setup_gids (const char *login, gid_t gid);
 

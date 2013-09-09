@@ -846,9 +846,8 @@ mdm_read_config (void)
 	mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE);
 	mdm_config_get_string (MDM_KEY_USE_24_CLOCK);
 	mdm_config_get_string (MDM_KEY_WELCOME);
-	mdm_config_get_string (MDM_KEY_REMOTE_WELCOME);
-        mdm_config_get_string (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
-        mdm_config_get_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU);
+    mdm_config_get_string (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
+    mdm_config_get_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU);
 
 	mdm_config_get_int    (MDM_KEY_XINERAMA_SCREEN);
 	mdm_config_get_int    (MDM_KEY_TIMED_LOGIN_DELAY);
@@ -863,14 +862,11 @@ mdm_read_config (void)
 	mdm_config_get_bool   (MDM_KEY_INCLUDE_ALL);
 	mdm_config_get_bool   (MDM_KEY_SYSTEM_MENU);
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
-	mdm_config_get_bool   (MDM_KEY_CHOOSER_BUTTON);
 	mdm_config_get_bool   (MDM_KEY_TIMED_LOGIN_ENABLE);
 	mdm_config_get_bool   (MDM_KEY_SHOW_LAST_SESSION);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);
-	mdm_config_get_bool   (MDM_KEY_ALLOW_REMOTE_ROOT);
 	mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
-	mdm_config_get_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_ADD_GTK_MODULES);	
 
 	/* Keys for custom commands */
@@ -952,11 +948,9 @@ greeter_reread_config (int sig, gpointer data)
 	    mdm_config_reload_bool   (MDM_KEY_INCLUDE_ALL) ||
 	    mdm_config_reload_bool   (MDM_KEY_SYSTEM_MENU) ||
 	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
-	    mdm_config_reload_bool   (MDM_KEY_CHOOSER_BUTTON) ||
 	    mdm_config_reload_bool   (MDM_KEY_TIMED_LOGIN_ENABLE) ||
 	    mdm_config_reload_bool   (MDM_KEY_SHOW_LAST_SESSION) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
-	    mdm_config_reload_bool   (MDM_KEY_ALLOW_REMOTE_ROOT) ||
 	    mdm_config_reload_bool   (MDM_KEY_ADD_GTK_MODULES)) {
 
 		/* Set busy cursor */
@@ -1011,9 +1005,7 @@ greeter_reread_config (int sig, gpointer data)
 	mdm_config_reload_string (MDM_KEY_USE_24_CLOCK);
 
 	if (mdm_config_reload_string (MDM_KEY_WELCOME) ||
-	    mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME) ||
-	    mdm_config_reload_string (MDM_KEY_REMOTE_WELCOME) ||
-	    mdm_config_reload_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME)) {
+	    mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME)) {
 
 		mdm_set_welcomemsg ();
 

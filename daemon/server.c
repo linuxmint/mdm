@@ -187,13 +187,7 @@ mdm_server_stop (MdmDisplay *disp)
     if (disp->dsp != NULL) {	    
 	    XCloseDisplay (disp->dsp);
 	    disp->dsp = NULL;
-    }
-
-    /* Kill our parent connection if one existed */
-    if (disp->parent_dsp != NULL) {	    
-	    XCloseDisplay (disp->parent_dsp);
-	    disp->parent_dsp = NULL;
-    }
+    }   
 
     if (disp->servpid <= 0)
 	    return;
@@ -250,7 +244,6 @@ mdm_server_stop (MdmDisplay *disp)
     d->fbconsolepid = 0;
 #endif
 
-    mdm_slave_whack_temp_auth_file ();
 }
 
 static gboolean
@@ -286,39 +279,6 @@ busy_ask_user (MdmDisplay *disp)
 	    /* Well we'll just try another display number */
 	    return TRUE;
     }
-}
-
-/* Checks only output, no XFree86 v4 logfile */
-static gboolean
-display_parent_no_connect (MdmDisplay *disp)
-{
-	char *logname = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_LOG_DIR), d->name, ".log");
-	FILE *fp;
-	char buf[256];
-	char *getsret;
-
-	VE_IGNORE_EINTR (fp = fopen (logname, "r"));
-	g_free (logname);
-
-	if (fp == NULL)
-		return FALSE;
-
-	for (;;) {
-		VE_IGNORE_EINTR (getsret = fgets (buf, sizeof (buf), fp));
-		if (getsret == NULL) {
-			VE_IGNORE_EINTR (fclose (fp));
-			return FALSE;
-		}
-		/* Note: this is probably XFree86 specific, and perhaps even
-		 * version 3 specific (I don't have xfree v4 to test this),
-		 * of course additions are welcome to make this more robust */
-		if (strstr (buf, "Unable to open display \"") == buf) {
-			mdm_error (_("Display '%s' cannot be opened by nested display"),
-				   ve_sure_string (disp->parent_disp));
-			VE_IGNORE_EINTR (fclose (fp));
-			return TRUE;
-		}
-	}
 }
 
 static gboolean
@@ -654,7 +614,6 @@ mdm_server_start (MdmDisplay *disp,
 
     g_free (vtarg);
 
-    /* we can now use d->handled since that's set up above */
     do_server_wait (d);
 
     /* If we were holding a vt open for the server, close it now as it has
@@ -948,14 +907,7 @@ mdm_server_resolve_command_line (MdmDisplay *disp,
 				argc += svr_argc;
 			}
 
-			if (resolve_flags) {
-				/* Setup the handled function */
-				disp->handled = svr->handled;
-				/* never make use_chooser FALSE,
-				   it may have been set temporarily for
-				   us by the master */
-				if (svr->chooser)
-					disp->use_chooser = TRUE;
+			if (resolve_flags) {									
 				disp->priority = svr->priority;
 			}
 		}
@@ -989,20 +941,7 @@ mdm_server_resolve_command_line (MdmDisplay *disp,
 	if (disp->authfile != NULL) {
 		argv[len++] = g_strdup ("-auth");
 		argv[len++] = g_strdup (disp->authfile);
-	}
-
-	if (resolve_flags && disp->chosen_hostname) {
-		/* this display is NOT handled */
-		disp->handled = FALSE;
-		/* never ever ever use chooser here */
-		disp->use_chooser = FALSE;
-		disp->priority = MDM_PRIO_DEFAULT;
-		/* run just one session */
-		argv[len++] = g_strdup ("-terminate");
-		argv[len++] = g_strdup ("-query");
-		argv[len++] = g_strdup (disp->chosen_hostname);
-		query_in_arglist = TRUE;
-	}
+	}	
 
 	if (resolve_flags && mdm_daemon_config_get_value_bool (MDM_KEY_DISALLOW_TCP) && ! query_in_arglist) {
 		argv[len++] = g_strdup ("-nolisten");

@@ -161,32 +161,22 @@ gboolean
 greeter_item_is_visible (GreeterItemInfo *info)
 {
   static gboolean checked = FALSE;
-  static gboolean MDM_IS_LOCAL = FALSE;
   static gboolean MDM_FLEXI_SERVER = FALSE;
   gboolean sysmenu = FALSE;	
   gint i = 0;
 
   if ( ! checked)
-    {
-      if (g_getenv ("MDM_IS_LOCAL") != NULL)
-	MDM_IS_LOCAL = TRUE;
+    {     
       if (g_getenv ("MDM_FLEXI_SERVER") != NULL)
-	MDM_FLEXI_SERVER = TRUE;
-    }
+	       MDM_FLEXI_SERVER = TRUE;
+      }
 
-  if (MDM_IS_LOCAL && ! MDM_FLEXI_SERVER &&
+  if (! MDM_FLEXI_SERVER &&
       ! (info->show_modes & GREETER_ITEM_SHOW_CONSOLE_FIXED))
     return FALSE;
-  if (MDM_IS_LOCAL && MDM_FLEXI_SERVER &&
+  if (MDM_FLEXI_SERVER &&
       ! (info->show_modes & GREETER_ITEM_SHOW_CONSOLE_FLEXI))
-    return FALSE;
-  if ( ! MDM_IS_LOCAL && MDM_FLEXI_SERVER &&
-       ! (info->show_modes & GREETER_ITEM_SHOW_REMOTE_FLEXI))
-    return FALSE;
-  if ( ! MDM_IS_LOCAL && ! MDM_FLEXI_SERVER &&
-       ! (info->show_modes & GREETER_ITEM_SHOW_REMOTE))
-    return FALSE;
-
+    return FALSE;  
   if ((mdm_wm_screen.width < info->minimum_required_screen_width) ||
       (mdm_wm_screen.height < info->minimum_required_screen_height))
     return FALSE;
@@ -203,12 +193,7 @@ greeter_item_is_visible (GreeterItemInfo *info)
         ! MdmConfiguratorFound) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "config") == 0))
-	  return FALSE;
-
-  if (( ! mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON) || ! sysmenu) &&
-      (info->show_type != NULL &&
-       strcmp (info->show_type, "chooser") == 0))
-	  return FALSE;
+	  return FALSE;  
 
   if ( ! sysmenu && info->show_type != NULL &&
       strcmp (info->show_type, "system") == 0)

@@ -814,8 +814,6 @@ lookup_notify_key (MdmConfig  *config,
 		nkey = g_strdup (MDM_NOTIFY_SYSTEM_MENU);
 	else if (is_key (keystring, MDM_KEY_CONFIG_AVAILABLE))
 		nkey = g_strdup (MDM_NOTIFY_CONFIG_AVAILABLE);
-	else if (is_key (keystring, MDM_KEY_CHOOSER_BUTTON))
-		nkey = g_strdup (MDM_NOTIFY_CHOOSER_BUTTON);
 	else if (is_key (keystring, MDM_KEY_DISALLOW_TCP))
 		nkey = g_strdup (MDM_NOTIFY_DISALLOW_TCP);
 	else if (is_key (keystring, MDM_KEY_ADD_GTK_MODULES))
@@ -1769,7 +1767,6 @@ notify_cb (MdmConfig          *config,
         case MDM_ID_ALLOW_ROOT:
         case MDM_ID_SYSTEM_MENU:
         case MDM_ID_CONFIG_AVAILABLE:
-        case MDM_ID_CHOOSER_BUTTON:
         case MDM_ID_DISALLOW_TCP:
         case MDM_ID_ADD_GTK_MODULES:
         case MDM_ID_TIMED_LOGIN_ENABLE:

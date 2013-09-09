@@ -352,26 +352,7 @@ get_local_auths (MdmDisplay *d)
 	if ( ! d->tcp_disallowed)
 		local_addys = mdm_address_peek_local_list ();
 
-	mdm_debug ("get_local_auths: Setting up network access");
-
-	/* Network access: Write out an authentication entry for each of
-	 * this host's official addresses */
-	for (i = 0; i < d->addr_count; i++) {
-		struct sockaddr_storage *sa;
-
-		sa = &d->addrs[i];
-		if (mdm_address_equal (sa, &d->addr)) {
-			continue;
-		}
-
-		if (! add_auth_entry_for_addr (d, &auths, sa)) {
-			goto get_local_auth_error;
-		}
-
-		if (mdm_address_is_loopback (sa)) {
-			added_lo = TRUE;
-		}
-	}
+	mdm_debug ("get_local_auths: Setting up network access");	
 
 	/* Network access: Write out an authentication entry for each of
 	 * this host's local addresses if any */

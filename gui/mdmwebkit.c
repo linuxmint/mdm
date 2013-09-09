@@ -1446,7 +1446,6 @@ mdm_read_config (void)
 
 	mdm_config_get_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);	
-	mdm_config_get_bool   (MDM_KEY_CHOOSER_BUTTON);
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_ENTRY_CIRCLES);

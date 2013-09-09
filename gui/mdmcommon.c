@@ -612,44 +612,19 @@ mdm_common_set_root_background (GdkPixbuf *pb)
 gchar *
 mdm_common_get_welcomemsg (void)
 {
-        gchar *welcomemsg;
+    gchar *welcomemsg;
 	gchar *tempstr;
-
-	/*
-	 * Translate the welcome msg in the client program since it is running
-	 * as the user and therefore has the appropriate language environment
-	 * set.  If the user wants to use the default remote welcome msg as the
-         * local welcome msg (or vice versa), then also translate.
-	 */
-        if (ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
-                if (mdm_config_get_bool (MDM_KEY_DEFAULT_REMOTE_WELCOME))
-                        welcomemsg = g_strdup (_(MDM_DEFAULT_REMOTE_WELCOME_MSG));
-                else {
-			tempstr = mdm_config_get_translated_string (MDM_KEY_REMOTE_WELCOME);
-
-			if (tempstr == NULL ||
-			    strcmp (ve_sure_string (tempstr), MDM_DEFAULT_REMOTE_WELCOME_MSG) == 0)
-				welcomemsg = g_strdup (_(MDM_DEFAULT_REMOTE_WELCOME_MSG));
-			else if (strcmp (ve_sure_string (tempstr), MDM_DEFAULT_WELCOME_MSG) == 0)
-		        	welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
-			else
-				welcomemsg = g_strdup (tempstr);
-		}
-        } else {
-                if (mdm_config_get_bool (MDM_KEY_DEFAULT_WELCOME))
-                        welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
-                else {
-                        tempstr = mdm_config_get_translated_string (MDM_KEY_WELCOME);
-
-			if (tempstr == NULL ||
-			    strcmp (ve_sure_string (tempstr), MDM_DEFAULT_WELCOME_MSG) == 0)
-				welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
-			else if (strcmp (ve_sure_string (tempstr), MDM_DEFAULT_REMOTE_WELCOME_MSG) == 0)
-	        		welcomemsg = g_strdup (_(MDM_DEFAULT_REMOTE_WELCOME_MSG));
-			else
-       				welcomemsg = g_strdup (tempstr);
-		}
-        }
+	        
+	if (mdm_config_get_bool (MDM_KEY_DEFAULT_WELCOME)) {
+	    welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
+	}
+	else {
+	    tempstr = mdm_config_get_translated_string (MDM_KEY_WELCOME);
+		if (tempstr == NULL || strcmp (ve_sure_string (tempstr), MDM_DEFAULT_WELCOME_MSG) == 0)
+			welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));		
+		else
+			welcomemsg = g_strdup (tempstr);
+	}
 
 	return welcomemsg;
 }

@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-/* This is the mdm slave process. mdmslave runs the chooser, greeter
+/* This is the mdm slave process. mdmslave runs the greeter
  * and the user's session scripts. */
 
 #include "config.h"
@@ -101,7 +101,6 @@
 #include "filecheck.h"
 #include "auth.h"
 #include "server.h"
-#include "choose.h"
 #include "getvt.h"
 #include "errorgui.h"
 #include "cookie.h"
@@ -210,11 +209,9 @@ static gint   mdm_slave_xioerror_handler (Display *disp);
 static void   mdm_slave_run (MdmDisplay *display);
 static void   mdm_slave_wait_for_login (void);
 static void   mdm_slave_greeter (void);
-static void   mdm_slave_chooser (void);
 static void   mdm_slave_session_start (void);
 static void   mdm_slave_session_stop (gboolean run_post_session,
 					gboolean no_shutdown_check);
-static void   mdm_slave_alrm_handler (int sig);
 static void   mdm_slave_term_handler (int sig);
 static void   mdm_slave_usr2_handler (int sig);
 static void   mdm_slave_quick_exit (gint status);
@@ -398,24 +395,6 @@ run_session_output (gboolean read_until_eof)
 	NEVER_FAILS_root_set_euid_egid (old, oldg);
 }
 
-static void
-run_chooser_output (void)
-{
-	char *bf;
-
-	if G_UNLIKELY (d->chooser_output_fd < 0)
-		return;
-
-	/* the fd is non-blocking */
-	do {
-		bf = mdm_fdgets (d->chooser_output_fd);
-		if (bf != NULL) {
-			g_free (d->chooser_last_line);
-			d->chooser_last_line = bf;
-		}
-	} while (bf != NULL);
-}
-
 #define TIME_UNSET_P(tv) ((tv)->tv_sec == 0 && (tv)->tv_usec == 0)
 
 /* Try to touch an authfb auth file every 12 hours.  That way if it's
@@ -506,17 +485,13 @@ slave_waitpid (MdmWaitPid *wp)
 			/* Wait 5 seconds. */
 			tv.tv_sec = 5;
 			tv.tv_usec = 0;
-			select (0, NULL, NULL, NULL, min_time_to_wait (&tv));
-			/* don't want to use sleep since we're using alarm
-			   for pinging */
+			select (0, NULL, NULL, NULL, min_time_to_wait (&tv));			
 
 			/* try to touch an fb auth file */
 			try_to_touch_fb_userauth ();
 
 			if (d->session_output_fd >= 0)
-				run_session_output (FALSE /* read_until_eof */);
-			if (d->chooser_output_fd >= 0)
-				run_chooser_output ();
+				run_session_output (FALSE /* read_until_eof */);			
 			check_notifies_now ();
 		}
 		check_notifies_now ();
@@ -537,17 +512,12 @@ slave_waitpid (MdmWaitPid *wp)
 			    d->session_output_fd >= 0) {
 				FD_SET (d->session_output_fd, &rfds);
                 mdm_debug ("slave_waitpid: no session");
-            }
-			if (d->chooser_output_fd >= 0) {
-				FD_SET (d->chooser_output_fd, &rfds);
-                mdm_debug ("slave_waitpid: no chooser");
-            }
+            }			
 
 			/* unset time */
 			tv.tv_sec = 0;
 			tv.tv_usec = 0;
 			maxfd = MAX (slave_waitpid_r, d->session_output_fd);
-			maxfd = MAX (maxfd, d->chooser_output_fd);
             
             struct timeval * timetowait = min_time_to_wait (&tv);
 
@@ -560,7 +530,6 @@ slave_waitpid (MdmWaitPid *wp)
             }
             mdm_debug ("slave_waitpid: slave_waitpid_r = %d", (int) slave_waitpid_r);
             mdm_debug ("slave_waitpid: d->session_output_fd = %d", (int) d->session_output_fd);
-            mdm_debug ("slave_waitpid: d->chooser_output_fd = %d", (int) d->chooser_output_fd);
             mdm_debug ("slave_waitpid: MAX = %d", (int) maxfd);                
 
 			ret = select (maxfd + 1, &rfds, NULL, NULL, timetowait);
@@ -577,11 +546,7 @@ slave_waitpid (MdmWaitPid *wp)
 				if (d->session_output_fd >= 0 &&
 				    FD_ISSET (d->session_output_fd, &rfds)) {
 					run_session_output (FALSE /* read_until_eof */);
-				}
-				if (d->chooser_output_fd >= 0 &&
-				    FD_ISSET (d->chooser_output_fd, &rfds)) {
-					run_chooser_output ();
-				}
+				}				
 			} else if (errno == EBADF) {
 				read_session_output = FALSE;
                 mdm_debug ("slave_waitpid: errno = EBADF");
@@ -815,7 +780,6 @@ mdm_slave_start (MdmDisplay *display)
 	struct sigaction xfsz;
 #endif /* SIGXFSZ */
 	sigset_t mask;
-	int pinginterval = mdm_daemon_config_get_value_int (MDM_KEY_PING_INTERVAL);
 
 	/*
 	 * Set d global to display before setting signal handlers,
@@ -1166,8 +1130,6 @@ mdm_slave_whack_greeter (void)
 	whack_greeter_fds ();
 
 	mdm_slave_send_num (MDM_SOP_GREETPID, 0);
-
-	mdm_slave_whack_temp_auth_file ();
 }
 
 static void
@@ -1381,7 +1343,6 @@ mdm_slave_run (MdmDisplay *display)
 {	
 	gint openretries = 0;
 	gint maxtries = 0;
-	gint pinginterval = mdm_daemon_config_get_value_int (MDM_KEY_PING_INTERVAL);
 
 	mdm_reset_locale ();
 
@@ -1504,9 +1465,7 @@ mdm_slave_run (MdmDisplay *display)
 		/* Wait 1 second. */
 		tv.tv_sec = 1;
 		tv.tv_usec = 0;
-		select (0, NULL, NULL, NULL, &tv);
-		/* don't want to use sleep since we're using alarm
-		   for pinging */
+		select (0, NULL, NULL, NULL, &tv);		
 		check_notifies_now ();
 	}
 
@@ -2967,9 +2926,7 @@ mdm_slave_send (const char *str, gboolean wait_for_ack)
 				/* Wait 1 second. */
 				tv.tv_sec = 1;
 				tv.tv_usec = 0;
-				select (0, NULL, NULL, NULL, &tv);
-				/* don't want to use sleep since we're using alarm
-				   for pinging */
+				select (0, NULL, NULL, NULL, &tv);				
 			}
 		}
 	}
@@ -3034,192 +2991,6 @@ mdm_slave_send_string (const char *opcode, const char *str)
 	mdm_slave_send (msg, TRUE);
 
 	g_free (msg);
-}
-
-static void
-mdm_slave_chooser (void)
-{
-	gint p[2];
-	struct passwd *pwent;
-	pid_t pid;
-	MdmWaitPid *wp;
-	const char *defaultpath;
-	const char *mdmuser;
-	const char *moduleslist;
-
-	mdm_debug ("mdm_slave_chooser: Running chooser on %s", d->name);
-
-	/* Open a pipe for chooser communications */
-	if G_UNLIKELY (pipe (p) < 0)
-		mdm_slave_exit (DISPLAY_REMANAGE, _("%s: Can't init pipe to mdmchooser"), "mdm_slave_chooser");
-
-	/* Run the init script. mdmslave suspends until script has terminated */
-	mdm_slave_exec_script (d, mdm_daemon_config_get_value_string (MDM_KEY_DISPLAY_INIT_DIR),
-			       NULL, NULL, FALSE /* pass_stdout */);
-
-	mdm_debug ("Forking chooser process: %s", mdm_daemon_config_get_value_string (MDM_KEY_CHOOSER));
-
-	/* Fork. Parent is mdmslave, child is greeter process. */
-	mdm_sigchld_block_push ();
-	mdm_sigterm_block_push ();
-	pid = d->chooserpid = fork ();
-	if (pid == 0)
-		mdm_unset_signals ();
-	mdm_sigterm_block_pop ();
-	mdm_sigchld_block_pop ();
-
-	switch (pid) {
-
-	case 0:
-		setsid ();
-
-		mdm_unset_signals ();
-
-		/* Plumbing */
-		VE_IGNORE_EINTR (close (p[0]));
-
-		if (p[1] != STDOUT_FILENO)
-			VE_IGNORE_EINTR (dup2 (p[1], STDOUT_FILENO));
-
-		mdm_log_shutdown ();
-
-		VE_IGNORE_EINTR (close (0));
-		mdm_close_all_descriptors (2 /* from */, slave_fifo_pipe_fd /* except */, d->slave_notify_fd /* except2 */);
-
-		mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
-		mdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
-
-		mdm_log_init ();
-
-		if G_UNLIKELY (setgid (mdm_daemon_config_get_mdmgid ()) < 0)
-			mdm_child_exit (DISPLAY_ABORT,
-					_("%s: Couldn't set groupid to %d"),
-					"mdm_slave_chooser",
-					mdm_daemon_config_get_mdmgid ());
-
-		mdmuser = mdm_daemon_config_get_value_string (MDM_KEY_USER);
-		if G_UNLIKELY (initgroups (mdmuser, mdm_daemon_config_get_mdmgid ()) < 0)
-			mdm_child_exit (DISPLAY_ABORT,
-					_("%s: initgroups () failed for %s"),
-					"mdm_slave_chooser",
-					mdmuser ? mdmuser : "(null)");
-
-		if G_UNLIKELY (setuid (mdm_daemon_config_get_mdmuid ()) < 0)
-			mdm_child_exit (DISPLAY_ABORT,
-					_("%s: Couldn't set userid to %d"),
-					"mdm_slave_chooser",
-					mdm_daemon_config_get_mdmuid ());
-
-		mdm_restoreenv ();
-		mdm_reset_locale ();
-
-		g_setenv ("XAUTHORITY", MDM_AUTHFILE (d), TRUE);
-		g_setenv ("DISPLAY", d->name, TRUE);
-		if (d->windowpath)
-			g_setenv ("WINDOWPATH", d->windowpath, TRUE);
-
-		g_setenv ("LOGNAME", mdmuser, TRUE);
-		g_setenv ("USER", mdmuser, TRUE);
-		g_setenv ("USERNAME", mdmuser, TRUE);
-
-		g_setenv ("MDM_VERSION", VERSION, TRUE);
-
-		pwent = getpwnam (mdmuser);
-		if G_LIKELY (pwent != NULL) {
-			/* Note that usually this doesn't exist */
-			if (g_file_test (pwent->pw_dir, G_FILE_TEST_EXISTS))
-				g_setenv ("HOME", pwent->pw_dir, TRUE);
-			else
-				g_setenv ("HOME",
-					  ve_sure_string (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR)),
-					  TRUE); /* Hack */
-			g_setenv ("SHELL", pwent->pw_shell, TRUE);
-		} else {
-			g_setenv ("HOME",
-				  ve_sure_string (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR)),
-				  TRUE); /* Hack */
-			g_setenv ("SHELL", "/bin/sh", TRUE);
-		}
-
-		defaultpath = mdm_daemon_config_get_value_string (MDM_KEY_PATH);
-		if (ve_string_empty (g_getenv ("PATH"))) {
-			g_setenv ("PATH", defaultpath, TRUE);
-		} else if ( ! ve_string_empty (defaultpath)) {
-			gchar *temp_string = g_strconcat (g_getenv ("PATH"),
-							  ":", defaultpath, NULL);
-			g_setenv ("PATH", temp_string, TRUE);
-			g_free (temp_string);
-		}
-		g_setenv ("RUNNING_UNDER_MDM", "true", TRUE);
-		if ( ! ve_string_empty (d->theme_name))
-			g_setenv ("MDM_GTK_THEME", d->theme_name, TRUE);
-
-		moduleslist = mdm_daemon_config_get_value_string (MDM_KEY_GTK_MODULES_LIST);
-		if (mdm_daemon_config_get_value_bool (MDM_KEY_ADD_GTK_MODULES) &&
-		    ! ve_string_empty (moduleslist)) {
-			char *modules = g_strdup_printf ("--gtk-module=%s", moduleslist);
-			exec_command (mdm_daemon_config_get_value_string (MDM_KEY_CHOOSER), modules);
-		}
-
-		exec_command (mdm_daemon_config_get_value_string (MDM_KEY_CHOOSER), NULL);
-
-		mdm_errorgui_error_box (d,
-			       GTK_MESSAGE_ERROR,
-			       _("Cannot start the chooser application. "
-				 "You will probably not be able to log in.  "
-				 "Please contact the system administrator."));
-
-		mdm_child_exit (DISPLAY_REMANAGE,
-				_("%s: Error starting chooser on display %s"),
-				"mdm_slave_chooser",
-				d->name ? d->name : "(null)");
-
-	case -1:
-		mdm_slave_exit (DISPLAY_REMANAGE, _("%s: Can't fork mdmchooser process"), "mdm_slave_chooser");
-
-	default:
-		mdm_debug ("mdm_slave_chooser: Chooser on pid %d", d->chooserpid);
-		mdm_slave_send_num (MDM_SOP_CHOOSERPID, d->chooserpid);
-
-		VE_IGNORE_EINTR (close (p[1]));
-
-		g_free (d->chooser_last_line);
-		d->chooser_last_line = NULL;
-		d->chooser_output_fd = p[0];
-		/* make the output read fd non-blocking */
-		fcntl (d->chooser_output_fd, F_SETFL, O_NONBLOCK);
-
-		/* wait for the chooser to die */
-
-		mdm_sigchld_block_push ();
-		wp = slave_waitpid_setpid (d->chooserpid);
-		mdm_sigchld_block_pop ();
-
-		slave_waitpid (wp);
-
-		d->chooserpid = 0;
-		mdm_slave_send_num (MDM_SOP_CHOOSERPID, 0);
-
-		/* Note: Nothing affecting the chooser needs update
-		 * from notifies, plus we are exitting right now */
-
-		run_chooser_output ();
-		VE_IGNORE_EINTR (close (d->chooser_output_fd));
-		d->chooser_output_fd = -1;
-
-		if (d->chooser_last_line != NULL) {
-			char *host = d->chooser_last_line;
-			d->chooser_last_line = NULL;
-			
-			mdm_debug ("Sending locally chosen host %s", host);
-			mdm_slave_send_string (MDM_SOP_CHOSEN_LOCAL, host);
-			mdm_slave_quick_exit (DISPLAY_REMANAGE);
-		
-		}
-
-		mdm_slave_quick_exit (DISPLAY_REMANAGE);
-		break;
-	}
 }
 
 gboolean
@@ -5000,9 +4771,7 @@ mdm_slave_session_stop (gboolean run_post_session,
 				/* Wait 30 seconds. */
 				tv.tv_sec = 30;
 				tv.tv_usec = 0;
-				select (0, NULL, NULL, NULL, &tv);
-				/* don't want to use sleep since we're using alarm
-				   for pinging */
+				select (0, NULL, NULL, NULL, &tv);				
 			}
 			/* hmm, didn't get TERM, weird */
 		}
@@ -5058,46 +4827,6 @@ mdm_slave_term_handler (int sig)
 
 	/* never reached */
 	mdm_in_signal--;
-}
-
-/* called on alarms to ping */
-static void
-mdm_slave_alrm_handler (int sig)
-{
-	static gboolean in_ping = FALSE;
-
-	if G_UNLIKELY (already_in_slave_start_jmp)
-		return;
-
-	mdm_in_signal++;
-
-	if G_UNLIKELY (d->dsp == NULL) {
-		mdm_in_signal --;
-		/* huh? */
-		return;
-	}
-
-	if G_UNLIKELY (in_ping) {
-		need_to_quit_after_session_stop = TRUE;
-		exit_code_to_use = DISPLAY_REMANAGE;
-
-		if (session_started) {
-			SIGNAL_EXIT_WITH_JMP (d, JMP_SESSION_STOP_AND_QUIT);
-		} else {
-			SIGNAL_EXIT_WITH_JMP (d, JMP_JUST_QUIT_QUICKLY);
-		}
-	}
-
-	in_ping = TRUE;
-
-	/* schedule next alarm */
-	alarm (mdm_daemon_config_get_value_int (MDM_KEY_PING_INTERVAL));
-
-	XSync (d->dsp, True);
-
-	in_ping = FALSE;
-
-	mdm_in_signal --;
 }
 
 /* Called on every SIGCHLD */
@@ -5165,7 +4894,6 @@ mdm_slave_child_handler (int sig)
 			     WEXITSTATUS (status) == DISPLAY_REBOOT ||
 			     WEXITSTATUS (status) == DISPLAY_HALT ||
 			     WEXITSTATUS (status) == DISPLAY_SUSPEND ||
-			     WEXITSTATUS (status) == DISPLAY_RUN_CHOOSER ||
 			     WEXITSTATUS (status) == DISPLAY_RESTARTMDM ||
 			     WEXITSTATUS (status) == DISPLAY_GREETERFAILED)) {
 				exit_code_to_use = WEXITSTATUS (status);
@@ -5192,15 +4920,12 @@ mdm_slave_child_handler (int sig)
 				d->last_sess_status = WEXITSTATUS (status);
 			else
 				d->last_sess_status = -1;
-		} else if (pid != 0 && pid == d->chooserpid) {
-			d->chooserpid = 0;
 		} else if (pid != 0 && pid == d->servpid) {
 			if (d->servstat == SERVER_RUNNING)
 				mdm_server_whack_lockfile (d);
 			d->servstat = SERVER_DEAD;
 			d->servpid = 0;
 			mdm_server_wipe_cookies (d);
-			mdm_slave_whack_temp_auth_file ();
 
 			mdm_slave_send_num (MDM_SOP_XPID, 0);
 
@@ -5212,10 +4937,6 @@ mdm_slave_child_handler (int sig)
 			if (d->greetpid > 1) {
 				mdm_slave_send_num (MDM_SOP_GREETPID, 0);
 				kill (d->greetpid, SIGTERM);
-			}
-			if (d->chooserpid > 1) {
-				mdm_slave_send_num (MDM_SOP_CHOOSERPID, 0);
-				kill (d->chooserpid, SIGTERM);
 			}
 
 			/* just in case we restart again wait at least
@@ -5595,11 +5316,7 @@ mdm_slave_quick_exit (gint status)
 		if (d->greetpid > 1)
 			kill (d->greetpid, SIGTERM);
 		d->greetpid = 0;
-
-		if (d->chooserpid > 1)
-			kill (d->chooserpid, SIGTERM);
-		d->chooserpid = 0;
-
+		
 		if (d->sesspid > 1)
 			kill (-(d->sesspid), SIGTERM);
 		d->sesspid = 0;
@@ -5653,23 +5370,6 @@ mdm_child_exit (gint status, const gchar *format, ...)
 	g_free (s);
 
 	_exit (status);
-}
-
-void
-mdm_slave_whack_temp_auth_file (void)
-{
-	uid_t old;
-
-	old = geteuid ();
-	if (old != 0)
-		seteuid (0);
-	if (d->parent_temp_auth_file != NULL) {
-		VE_IGNORE_EINTR (g_unlink (d->parent_temp_auth_file));
-	}
-	g_free (d->parent_temp_auth_file);
-	d->parent_temp_auth_file = NULL;
-	if (old != 0)
-		seteuid (old);
 }
 
 static gint
@@ -5810,7 +5510,6 @@ mdm_slave_exec_script (MdmDisplay *d,
 		_exit (EXIT_SUCCESS);
 
 	case -1:
-		mdm_slave_whack_temp_auth_file ();
 		g_free (script);
 		g_error (_("%s: Can't fork script process!"), "mdm_slave_exec_script");
 
@@ -5821,7 +5520,6 @@ mdm_slave_exec_script (MdmDisplay *d,
 
 	default:
 		mdm_wait_for_extra (extra_process, &status);
-		mdm_slave_whack_temp_auth_file ();
 		g_free (script);
 
 		setgid (save_gid);
@@ -5990,10 +5688,6 @@ mdm_slave_handle_notify (const char *msg)
 			kill (d->greetpid, SIGHUP);
 	} else if (sscanf (msg, MDM_NOTIFY_CONFIG_AVAILABLE " %d", &val) == 1) {
 		mdm_daemon_config_set_value_bool (MDM_KEY_CONFIG_AVAILABLE, val);
-		if (d->greetpid > 1)
-			kill (d->greetpid, SIGHUP);
-	} else if (sscanf (msg, MDM_NOTIFY_CHOOSER_BUTTON " %d", &val) == 1) {
-		mdm_daemon_config_set_value_bool (MDM_KEY_CHOOSER_BUTTON, val);
 		if (d->greetpid > 1)
 			kill (d->greetpid, SIGHUP);
 	} else if (sscanf (msg, MDM_NOTIFY_RETRY_DELAY " %d", &val) == 1) {

@@ -40,7 +40,6 @@ INCLUDES = \
 noinst_LIBRARIES = libmdmwm.a libmdmcommon.a libmdmgreeter.a
 
 libexec_PROGRAMS = \
-	@MDMCHOOSER@ 		\
 	mdmlogin			\
 	mdmwebkit
 
@@ -50,7 +49,6 @@ sbin_PROGRAMS = \
 bin_PROGRAMS = \	
 	mdmflexiserver      \
 	mdmdynamic
-EXTRA_PROGRAMS = mdmchooser
 
 mdmflexiserver_SOURCES = \
 	mdmflexiserver.c
@@ -84,12 +82,6 @@ libmdmcommon_a_SOURCES = \
 	mdmcommon.h		\
 	$(NULL)
 
-mdmchooser_SOURCES = \
-	mdmchooser.c		\
-	misc.c			\
-	misc.h			\
-	$(NULL)
-
 mdmlogin_SOURCES = \
 	mdmlogin.c
 
@@ -102,27 +94,6 @@ mdmsetup_SOURCES = \
 	mdmuser.c		\
 	mdmuser.h		\
 	mdmsetup.c
-
-mdmchooser_LDFLAGS = -export-dynamic
-mdmchooser_LDADD = \
-	$(EXTRA_CHOOSER_LIBS)	\
-	libmdmwm.a		\
-	libmdmcommon.a		\
-	$(GUIGLADE_LIBS)	\
-	$(INTLLIBS)		\
-	$(GLIB_LIBS)		\
-	$(GOBJECT_LIBS)		\
-	$(PANGO_LIBS)		\
-	$(GDK_LIBS)		\
-	$(GDKPIXBUF_LIBS)	\
-	$(top_builddir)/common/libmdmcommon.a \
-	$(X_EXTRA_LIBS)		\
-	$(XINERAMA_LIBS)	\
-	$(X_LIBS)		\
-	-lX11			\
-	-lXau			\
-	-lm				\
-	$(NULL)
 
 mdmlogin_LDADD = \
 	$(EXTRA_GREETER_LIBS)	\
@@ -239,7 +210,7 @@ mdmsetup.desktop.in: $(srcdir)/mdmsetup.desktop.in.in
 @INTLTOOL_DESKTOP_RULE@
 
 Gladedir = $(datadir)/mdm
-Glade_DATA = mdmsetup.glade mdmchooser.glade
+Glade_DATA = mdmsetup.glade
 
 EXTRA_DIST = \
 	$(Glade_DATA)		\

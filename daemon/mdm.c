@@ -916,7 +916,6 @@ mdm_cleanup_children (void)
 		 * display will be dead very soon, and we don't want it
 		 * to take the indirect display with it
 		 */
-		d->indirect_id = 0;
 		status = DISPLAY_REMANAGE;
 	}
 
@@ -1934,10 +1933,7 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 		}
 	}
 
-	if (strncmp (msg, MDM_SOP_CHOSEN " ",
-		     strlen (MDM_SOP_CHOSEN " ")) == 0) {
-		mdm_choose_data (msg);
-	} else if (strncmp (msg, MDM_SOP_CHOSEN_LOCAL " ",
+	if (strncmp (msg, MDM_SOP_CHOSEN_LOCAL " ",
 		            strlen (MDM_SOP_CHOSEN_LOCAL " ")) == 0) {
 		MdmDisplay *d;
 		long slave_pid;

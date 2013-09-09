@@ -146,8 +146,7 @@ enum {
 };
 
 enum {
-	XSERVER_LAUNCH_GREETER,
-	XSERVER_LAUNCH_CHOOSER
+	XSERVER_LAUNCH_GREETER
 };
 
 enum {
@@ -960,8 +959,7 @@ void init_servers_combobox (int index)
 	GtkWidget *mod_combobox;
 	GtkWidget *name_entry;
 	GtkWidget *command_entry;
-	GtkWidget *style_combobox;
-	GtkWidget *handled_checkbutton;
+	GtkWidget *style_combobox;	
 	GtkWidget *flexible_checkbutton;
 	GtkWidget *priority_spinbutton;
 	GtkListStore *store;
@@ -970,8 +968,7 @@ void init_servers_combobox (int index)
 	mod_combobox = glade_xml_get_widget (xml_xservers, "xserver_mod_combobox");
 	name_entry = glade_xml_get_widget (xml_xservers, "xserver_name_entry");
 	command_entry = glade_xml_get_widget (xml_xservers, "xserver_command_entry");
-	style_combobox = glade_xml_get_widget (xml_xservers, "xserver_style_combobox");
-	handled_checkbutton = glade_xml_get_widget (xml_xservers, "xserver_handled_checkbutton");
+	style_combobox = glade_xml_get_widget (xml_xservers, "xserver_style_combobox");	
 	flexible_checkbutton = glade_xml_get_widget (xml_xservers, "xserver_flexible_checkbutton");
 	priority_spinbutton = glade_xml_get_widget(xml_xservers, "xserv_priority_spinbutton");
 
@@ -988,17 +985,10 @@ void init_servers_combobox (int index)
 	gtk_entry_set_text (GTK_ENTRY (name_entry), xserver->name);
 	gtk_entry_set_text (GTK_ENTRY (command_entry), xserver->command);
 
-	if (!xserver->chooser) {
-		gtk_combo_box_set_active (GTK_COMBO_BOX (style_combobox), XSERVER_LAUNCH_GREETER);
-	}
-	else {
-		gtk_combo_box_set_active (GTK_COMBO_BOX (style_combobox), XSERVER_LAUNCH_CHOOSER);
-	}
+	gtk_combo_box_set_active (GTK_COMBO_BOX (style_combobox), XSERVER_LAUNCH_GREETER);	
 	
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (priority_spinbutton), 
-				   xserver->priority);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (handled_checkbutton),
-	                              xserver->handled);
+				   xserver->priority);	
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flexible_checkbutton),
 	                              xserver->flexible);
 
@@ -1026,15 +1016,7 @@ update_xserver (gchar *section, MdmXserver *svr)
 
 	key = g_strconcat (real_section, "/" MDM_KEY_SERVER_COMMAND, NULL);
 	mdm_common_config_set_string (custom_cfg, key, svr->command);
-	g_free (key);
-
-	key = g_strconcat (real_section, "/", MDM_KEY_SERVER_CHOOSER, NULL);
-	mdm_common_config_set_boolean (custom_cfg, key, svr->chooser);
-	g_free (key);
-
-	key = g_strconcat (real_section, "/" MDM_KEY_SERVER_HANDLED, NULL);
-	mdm_common_config_set_boolean (custom_cfg, key, svr->handled);
-	g_free (key);
+	g_free (key);	
 
 	key = g_strconcat (real_section, "/" MDM_KEY_SERVER_FLEXIBLE, NULL);
 	mdm_common_config_set_boolean (custom_cfg, key, svr->flexible);
@@ -1152,38 +1134,7 @@ combobox_timeout (GtkWidget *combo_box)
 			mdm_setup_config_set_string (key, new_val);
 		}
 		g_free (new_val);
-	} 	
-	/* Style combobox */
-	else if (strcmp (ve_sure_string (key), MDM_KEY_SERVER_CHOOSER) == 0) {
-		GtkWidget *mod_combobox;
-		GtkWidget *style_combobox;
-		GSList *li;
-		gchar *section;
-		gboolean val_old, val_new;
-
-		mod_combobox    = glade_xml_get_widget (xml_xservers, "xserver_mod_combobox");
-		style_combobox  = glade_xml_get_widget (xml_xservers, "xserver_style_combobox");
-
-		/* Get xserver section to update */
-		section = gtk_combo_box_get_active_text (GTK_COMBO_BOX (mod_combobox));
-
-		for (li = xservers; li != NULL; li = li->next) {
-			MdmXserver *svr = li->data;
-			if (strcmp (ve_sure_string (svr->id), ve_sure_string (section)) == 0) {
-
-				val_old = svr->chooser;
-				val_new = (gtk_combo_box_get_active (GTK_COMBO_BOX (style_combobox)) != 0);
-
-				/* Update this servers configuration */
-				if (! bool_equal (val_old, val_new)) {
-					svr->chooser = val_new;
-					update_xserver (section, svr);
-				}
-				break;
-			}
-		}
-		g_free (section);
-	}
+	} 		
 	/* Use 24 clock combobox */
 	else if (strcmp (ve_sure_string (key), MDM_KEY_USE_24_CLOCK) == 0) {		
 		gchar *val;		
@@ -1542,20 +1493,16 @@ setup_notify_toggle (const char *name,
 	if (strcmp (ve_sure_string (name), "sysmenu") == 0) {
 	
 		GtkWidget *config_available;
-		GtkWidget *chooser_button;
 		
 		config_available = glade_xml_get_widget (xml, "config_available");
-		chooser_button = glade_xml_get_widget (xml, "chooser_button");
 
 		gtk_widget_set_sensitive (config_available, val);
-		gtk_widget_set_sensitive (chooser_button, val);
 		
 		g_signal_connect (G_OBJECT (toggle), "toggled",
 		                  G_CALLBACK (toggle_toggled), toggle);	
 		g_signal_connect (G_OBJECT (toggle), "toggled",
 		                  G_CALLBACK (toggle_toggled_sensitivity_positive), config_available);
-		g_signal_connect (G_OBJECT (toggle), "toggled",
-		                  G_CALLBACK (toggle_toggled_sensitivity_positive), chooser_button);
+
 	}
 	else if (strcmp ("autologin", ve_sure_string (name)) == 0) {
 
@@ -4916,9 +4863,6 @@ xserver_toggle_timeout (GtkWidget *toggle)
 		if (strcmp (ve_sure_string (svr->id), ve_sure_string (section)) == 0) {
 
 			if (strcmp (ve_sure_string (key),
-                            ve_sure_string (MDM_KEY_SERVER_HANDLED)) == 0) {
-				val = svr->handled;
-			} else if (strcmp (ve_sure_string (key),
                                    ve_sure_string (MDM_KEY_SERVER_FLEXIBLE)) == 0) {
 				val = svr->flexible;
 			}
@@ -4928,9 +4872,6 @@ xserver_toggle_timeout (GtkWidget *toggle)
 				gboolean new_val = GTK_TOGGLE_BUTTON (toggle)->active;
 
 				if (strcmp (ve_sure_string (key),
-                                    ve_sure_string (MDM_KEY_SERVER_HANDLED)) == 0)
-					svr->handled = new_val;
-				else if (strcmp (ve_sure_string (key),
                                          ve_sure_string (MDM_KEY_SERVER_FLEXIBLE)) == 0)
 					svr->flexible = new_val;
 
@@ -5249,7 +5190,6 @@ xserver_create (gpointer data)
 	/* Init Widgets */
 	GtkWidget *frame, *modify_combobox;
 	GtkWidget *name_entry, *command_entry;
-	GtkWidget *handled_check, *flexible_check;
 	GtkWidget *greeter_radio, *chooser_radio;
 	GtkWidget *create_button, *delete_button;
 	GtkWidget *priority_spinbutton;
@@ -5259,7 +5199,6 @@ xserver_create (gpointer data)
 	name_entry      = glade_xml_get_widget (xml, "xserver_name_entry");
 	command_entry   = glade_xml_get_widget (xml, "xserver_command_entry");
 	priority_spinbutton = glade_xml_get_widget(xml, "xserv_priority_spinbutton");
-	handled_check   = glade_xml_get_widget (xml, "xserver_handled_checkbutton");
 	flexible_check  = glade_xml_get_widget (xml, "xserver_flexible_checkbutton");
 	greeter_radio   = glade_xml_get_widget (xml, "xserver_greeter_radiobutton");
 	chooser_radio   = glade_xml_get_widget (xml, "xserver_chooser_radiobutton");
@@ -5288,11 +5227,7 @@ xserver_create (gpointer data)
 		gtk_editable_select_region (GTK_EDITABLE (name_entry), 0, -1);
 		gtk_entry_set_text (GTK_ENTRY (command_entry), X_SERVER);
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (greeter_radio),
-		                              TRUE);
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (chooser_radio),
-		                              FALSE);
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (handled_check),
-		                              TRUE);
+		                              TRUE);		
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flexible_check),
 		                              FALSE);
 
@@ -5367,7 +5302,6 @@ setup_xserver_support (GladeXML *xml_xservers)
 	GtkWidget *command_entry;
 	GtkWidget *priority_spinbutton;
 	GtkWidget *name_entry;
-	GtkWidget *handled_check;
 	GtkWidget *flexible_check;
 	GtkWidget *create_button;
 	GtkWidget *delete_button;
@@ -5391,7 +5325,6 @@ setup_xserver_support (GladeXML *xml_xservers)
 	name_entry      = glade_xml_get_widget (xml_xservers, "xserver_name_entry");
 	command_entry   = glade_xml_get_widget (xml_xservers, "xserver_command_entry");
 	priority_spinbutton = glade_xml_get_widget(xml_xservers, "xserv_priority_spinbutton");
-	handled_check   = glade_xml_get_widget (xml_xservers, "xserver_handled_checkbutton");
 	flexible_check  = glade_xml_get_widget (xml_xservers, "xserver_flexible_checkbutton");
 	style_combobox  = glade_xml_get_widget (xml_xservers, "xserver_style_combobox");
 	servers_combobox = glade_xml_get_widget (xml_xservers, "xserver_mod_combobox");
@@ -5448,14 +5381,8 @@ setup_xserver_support (GladeXML *xml_xservers)
 	g_object_set_data_full (G_OBJECT (command_entry), "key",
 	                        g_strdup (MDM_KEY_SERVER_COMMAND),
 	                        (GDestroyNotify) g_free);
-	g_object_set_data_full (G_OBJECT (handled_check), "key",
-	                        g_strdup (MDM_KEY_SERVER_HANDLED),
-	                        (GDestroyNotify) g_free);
 	g_object_set_data_full (G_OBJECT (flexible_check), "key",
 	                        g_strdup (MDM_KEY_SERVER_FLEXIBLE),
-	                        (GDestroyNotify) g_free);
-	g_object_set_data_full (G_OBJECT (style_combobox), "key",
-	                        g_strdup (MDM_KEY_SERVER_CHOOSER),
 	                        (GDestroyNotify) g_free);
 	g_object_set_data_full (G_OBJECT (priority_spinbutton), "key",
 				g_strdup (MDM_KEY_SERVER_PRIORITY),
@@ -5465,8 +5392,6 @@ setup_xserver_support (GladeXML *xml_xservers)
 	                  G_CALLBACK (xserver_entry_changed),NULL);
     	g_signal_connect (G_OBJECT (command_entry), "changed",
 	                  G_CALLBACK (xserver_entry_changed), NULL);
-	g_signal_connect (G_OBJECT (handled_check), "toggled",
-	                  G_CALLBACK (xserver_toggle_toggled), NULL);
 	g_signal_connect (G_OBJECT (flexible_check), "toggled",
 	                  G_CALLBACK (xserver_toggle_toggled), NULL);
 	g_signal_connect (G_OBJECT (servers_combobox), "changed",
@@ -6295,7 +6220,6 @@ setup_plain_menubar (void)
 	/* Initialize and hookup callbacks for plain menu bar settings */
 	setup_notify_toggle ("sysmenu", MDM_KEY_SYSTEM_MENU);
 	setup_notify_toggle ("config_available", MDM_KEY_CONFIG_AVAILABLE);
-	setup_notify_toggle ("chooser_button", MDM_KEY_CHOOSER_BUTTON);
 }
 
 
