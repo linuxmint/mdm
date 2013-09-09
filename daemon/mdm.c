@@ -2702,52 +2702,6 @@ close_conn (gpointer data)
 	}
 }
 
-static char *
-extract_dispnum (const char *addy)
-{
-	int num;
-	char *p;
-
-	mdm_assert (addy != NULL);
-
-	p = strchr (addy, ':');
-	if (p == NULL)
-		return NULL;
-
-	/* Whee! handles DECnet even if we don't do that */
-	while (*p == ':')
-		p++;
-
-	if (sscanf (p, "%d", &num) != 1)
-		return NULL;
-
-	return g_strdup_printf ("%d", num);
-}
-
-static char *
-dehex_cookie (const char *cookie, int *len)
-{
-	/* it should be +1 really, but I'm paranoid */
-	char *bcookie = g_new0 (char, (strlen (cookie) / 2) + 2);
-	int i;
-	const char *p;
-
-	*len = 0;
-
-	for (i = 0, p = cookie;
-	     *p != '\0' && *(p+1) != '\0';
-	     i++, p += 2) {
-		unsigned int num;
-		if (sscanf (p, "%02x", &num) != 1) {
-			g_free (bcookie);
-			return NULL;
-		}
-		bcookie[i] = num;
-	}
-	*len = i;
-	return bcookie;
-}
-
 static void
 handle_flexi_server (MdmConnection *conn,
 		     int            type,
