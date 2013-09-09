@@ -2630,10 +2630,7 @@ mdm_slave_greeter (void)
 
 		g_setenv ("LOGNAME", mdmuser, TRUE);
 		g_setenv ("USER", mdmuser, TRUE);
-		g_setenv ("USERNAME", mdmuser, TRUE);
-		g_setenv ("MDM_GREETER_PROTOCOL_VERSION",
-			  MDM_GREETER_PROTOCOL_VERSION, TRUE);
-		g_setenv ("MDM_VERSION", VERSION, TRUE);
+		g_setenv ("USERNAME", mdmuser, TRUE);		
 
 		pwent = getpwnam (mdmuser);
 		if G_LIKELY (pwent != NULL) {

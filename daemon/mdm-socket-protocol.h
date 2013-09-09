@@ -32,10 +32,6 @@
  * daemon<->greeter communications
  */
 
-/* This will change if there are incompatible
- * protocol changes */
-#define MDM_GREETER_PROTOCOL_VERSION "3"
-
 #define MDM_MSG        'D'
 #define MDM_NOECHO     'U'
 #define MDM_PROMPT     'N'
