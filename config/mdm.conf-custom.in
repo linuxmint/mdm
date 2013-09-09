@@ -56,13 +56,9 @@
 
 [security]
 
-[xdmcp]
-
 [gui]
 
 [greeter]
-
-[chooser]
 
 [debug]
 
