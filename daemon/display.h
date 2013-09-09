@@ -34,22 +34,9 @@ typedef struct _MdmDisplay MdmDisplay;
 #include "mdm.h" /* for MDM_CUSTOM_COMMAND_MAX */
 
 #define TYPE_STATIC 1		/* X server defined in MDM configuration */
-#define TYPE_XDMCP 2		/* Remote display/Xserver */
-#define TYPE_FLEXI 3		/* Local Flexi X server */
-#define TYPE_FLEXI_XNEST 4	/* Local Flexi Nested server */
-#define TYPE_XDMCP_PROXY 5	/* Proxy X server for XDMCP */
+#define TYPE_FLEXI 2		/* Local Flexi X server */
 
-#define SERVER_IS_LOCAL(d) ((d)->type == TYPE_STATIC || \
-			    (d)->type == TYPE_FLEXI || \
-			    (d)->type == TYPE_FLEXI_XNEST || \
-			    (d)->type == TYPE_XDMCP_PROXY)
-#define SERVER_IS_FLEXI(d) ((d)->type == TYPE_FLEXI || \
-			    (d)->type == TYPE_FLEXI_XNEST || \
-			    (d)->type == TYPE_XDMCP_PROXY)
-#define SERVER_IS_PROXY(d) ((d)->type == TYPE_FLEXI_XNEST || \
-			    (d)->type == TYPE_XDMCP_PROXY)
-#define SERVER_IS_XDMCP(d) ((d)->type == TYPE_XDMCP || \
-			    (d)->type == TYPE_XDMCP_PROXY)
+#define SERVER_IS_FLEXI(d) ((d)->type == TYPE_FLEXI)
 
 /* Use this to get the right authfile name */
 #define MDM_AUTHFILE(display) \
@@ -75,7 +62,6 @@ struct _MdmDisplay
 	Display *dsp;
 
 	gchar *name;     /* value of DISPLAY */
-	gchar *hostname; /* remote hostname */
 
 	char *windowpath; /* path to server "window" */
 
@@ -85,9 +71,6 @@ struct _MdmDisplay
 	gboolean logged_in; /* TRUE if someone is logged in */
 	char *login;
 
-	gboolean attached;  /* Display is physically attached to the machine. */
-
-	gboolean handled;
 	gboolean tcp_disallowed;
 	int priority;
 
@@ -141,13 +124,6 @@ struct _MdmDisplay
 	char *xsession_errors_filename; /* if NULL then there is no .xsession-errors
 					   file */
 
-	/* chooser stuff */
-	pid_t chooserpid;
-	gboolean use_chooser; /* run chooser instead of greeter */
-	gchar *chosen_hostname; /* locally chosen hostname if not NULL,
-				   "-query chosen_hostname" is appened to server command line */
-	int chooser_output_fd; /* from the chooser */
-	char *chooser_last_line;
 	guint indirect_id;
 
 	gboolean is_emergency_server;
@@ -162,22 +138,7 @@ struct _MdmDisplay
 	gchar *device_name;
 
 	/* Only set in the main daemon as that's the only place that cares */
-	MdmLogoutAction logout_action;
-
-	/* XDMCP TYPE */
-
-	time_t acctime;
-
-	int xdmcp_dispnum;
-	CARD32 sessionid;
-
-	struct sockaddr_storage addr;
-	struct sockaddr_storage *addrs; /* array of addresses */
-	int addr_count; /* number of addresses in array */
-	/* Note that the above may in fact be empty even though
-	   addr is set, these are just extra addresses
-	   (it could also contain addr for all we know) */
-
+	MdmLogoutAction logout_action;	
 
 	/* ALL LOCAL TYPE (static, flexi) */
 
@@ -189,7 +150,6 @@ struct _MdmDisplay
 	time_t starttime;
 	/* order in the Xservers file for sessreg, -1 if unset yet */
 	int x_servers_order;
-
 
 	/* STATIC TYPE */
 
@@ -205,20 +165,6 @@ struct _MdmDisplay
 	uid_t server_uid;
 	MdmConnection *socket_conn;
 
-
-	/* PROXY/Parented TYPE (flexi-xnest or xdmcp proxy) */
-
-	char *parent_disp;
-	Display *parent_dsp;
-
-
-	/* XDMCP PROXY TYPE */
-
-	char *parent_auth_file;
-
-
-	/* FLEXI XNEST TYPE */
-	char *parent_temp_auth_file;
 };
 
 MdmDisplay *mdm_display_alloc    (gint id, const gchar *command, const gchar *device);

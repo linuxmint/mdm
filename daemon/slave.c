@@ -226,8 +226,6 @@ static gint   mdm_slave_exec_script (MdmDisplay *d, const gchar *dir,
 static gchar *mdm_slave_parse_enriched_login (MdmDisplay *d, const gchar *s);
 static void   mdm_slave_handle_usr2_message (void);
 static void   mdm_slave_handle_notify (const char *msg);
-static void   create_temp_auth_file (void);
-static void   set_xnest_parent_stuff (void);
 static void   check_notifies_now (void);
 static void   restart_the_greeter (void);
 
@@ -847,9 +845,7 @@ mdm_slave_start (MdmDisplay *display)
 	sigaddset (&mask, SIGCHLD);
 	sigaddset (&mask, SIGUSR2);
 	sigaddset (&mask, SIGUSR1); /* normally we ignore USR1 */
-	if ( ! SERVER_IS_LOCAL (display) && pinginterval > 0) {
-		sigaddset (&mask, SIGALRM);
-	}
+	
 	/* must set signal mask before the Setjmp as it will be
 	   restored, and we're only interested in catching the above signals */
 	sigprocmask (SIG_UNBLOCK, &mask, NULL);
@@ -875,20 +871,7 @@ mdm_slave_start (MdmDisplay *display)
 		term_quit ();
 		/* huh? should never get here */
 		_exit (DISPLAY_REMANAGE);
-	}
-
-	if ( ! SERVER_IS_LOCAL (display) && pinginterval > 0) {
-		/* Handle a ALRM signals from our ping alarms */
-		alrm.sa_handler = mdm_slave_alrm_handler;
-		alrm.sa_flags = SA_RESTART | SA_NODEFER;
-		sigemptyset (&alrm.sa_mask);
-		sigaddset (&alrm.sa_mask, SIGALRM);
-
-		if G_UNLIKELY (sigaction (SIGALRM, &alrm, NULL) < 0)
-			mdm_slave_exit (DISPLAY_ABORT,
-					_("%s: Error setting up %s signal handler: %s"),
-					"mdm_slave_start", "ALRM", strerror (errno));
-	}
+	}	
 
 	/* Handle a INT/TERM signals from mdm master */
 	term.sa_handler = mdm_slave_term_handler;
@@ -947,9 +930,8 @@ mdm_slave_start (MdmDisplay *display)
 		mdm_debug ("mdm_slave_start: Loop Thingie");
 		mdm_slave_run (display);
 
-		/* remote and flexi only run once */
-		if (display->type != TYPE_STATIC ||
-		    ! parent_exists ()) {
+		/* flexi only run once */
+		if (display->type != TYPE_STATIC || ! parent_exists ()) {
 			mdm_server_stop (display);
 			mdm_slave_send_num (MDM_SOP_XPID, 0);
 			mdm_slave_quick_exit (DISPLAY_REMANAGE);
@@ -1329,80 +1311,51 @@ mdm_slave_check_user_wants_to_log_in (const char *user)
 	if ( ! loggedin)
 		return TRUE;
 
-	if (d->type != TYPE_XDMCP_PROXY) {
-		int r;
+	
+	int r;
 
-		r = ask_migrate (migrate_to);
+	r = ask_migrate (migrate_to);
 
-		if (r <= 0) {
-			g_free (migrate_to);
-			return TRUE;
-		}
-
-		/*
-		 * migrate_to should never be NULL here, since
-		 * ask_migrate will always return 0 or 1 if migrate_to
-		 * is NULL.
-		 */
-		if (migrate_to == NULL ||
-		    (migrate_to != NULL && r == 2)) {
-			g_free (migrate_to);
-			return FALSE;
-		}
-
-		/* Must be that r == 1, that is return to previous login */
-
-		if (d->type == TYPE_FLEXI) {
-			mdm_slave_whack_greeter ();
-			mdm_server_stop (d);
-			mdm_slave_send_num (MDM_SOP_XPID, 0);
-
-			/* wait for a few seconds to avoid any vt changing race
-			 */
-			mdm_sleep_no_signal (1);
-		}
-
-#ifdef WITH_CONSOLE_KIT
-		unlock_ck_session (user, migrate_to);
-#endif
-		mdm_slave_send_string (MDM_SOP_MIGRATE, migrate_to);
+	if (r <= 0) {
 		g_free (migrate_to);
+		return TRUE;
+	}
 
-		if (d->type == TYPE_FLEXI) {
-			/* we are no longer needed so just die.
-			   REMANAGE == ABORT here really */
-			mdm_slave_quick_exit (DISPLAY_REMANAGE);
-		}
-	} else {
-		Display *parent_dsp;
-
-		if (migrate_to == NULL)
-			return TRUE;
-
-		mdm_slave_send_string (MDM_SOP_MIGRATE, migrate_to);
+	/*
+	 * migrate_to should never be NULL here, since
+	 * ask_migrate will always return 0 or 1 if migrate_to
+	 * is NULL.
+	 */
+	if (migrate_to == NULL ||
+	    (migrate_to != NULL && r == 2)) {
 		g_free (migrate_to);
+		return FALSE;
+	}
 
-		/*
-		 * We must stay running and hold open our connection to the
-		 * parent display because with XDMCP the Xserver resets when
-		 * the initial X client closes its connection (rather than
-		 * when *all* X clients have closed their connection)
-		 */
+	/* Must be that r == 1, that is return to previous login */
 
+	if (d->type == TYPE_FLEXI) {
 		mdm_slave_whack_greeter ();
-
-		parent_dsp = d->parent_dsp;
-		d->parent_dsp = NULL;
 		mdm_server_stop (d);
-
 		mdm_slave_send_num (MDM_SOP_XPID, 0);
 
-		mdm_debug ("Slave not exiting in order to hold open the connection to the parent display");
-
-		wait_for_display_to_die (d->parent_dsp, d->parent_disp);
-
-		mdm_slave_quick_exit (DISPLAY_ABORT);
+		/* wait for a few seconds to avoid any vt changing race
+		 */
+		mdm_sleep_no_signal (1);
 	}
+
+#ifdef WITH_CONSOLE_KIT
+	unlock_ck_session (user, migrate_to);
+#endif
+	mdm_slave_send_string (MDM_SOP_MIGRATE, migrate_to);
+	g_free (migrate_to);
+
+	if (d->type == TYPE_FLEXI) {
+		/* we are no longer needed so just die.
+		   REMANAGE == ABORT here really */
+		mdm_slave_quick_exit (DISPLAY_REMANAGE);
+	}
+	
 
 	/* abort this login attempt */
 	return FALSE;
@@ -1460,8 +1413,7 @@ mdm_slave_run (MdmDisplay *display)
 
 	/* if this is local display start a server if one doesn't
 	 * exist */
-	if (SERVER_IS_LOCAL (d) &&
-	    d->servpid <= 0) {
+	if (d->servpid <= 0) {
 		if G_UNLIKELY ( ! mdm_server_start (d,
 						    TRUE /* try_again_if_busy */,
 						    FALSE /* treat_as_flexi */,
@@ -1491,36 +1443,29 @@ mdm_slave_run (MdmDisplay *display)
 
 		check_notifies_now ();
 	}
-
-	/* We can use d->handled from now on on this display,
-	 * since the lookup was done in server start */
-
+	
 	g_setenv ("DISPLAY", d->name, TRUE);
 	if (d->windowpath)
 		g_setenv ("WINDOWPATH", d->windowpath, TRUE);
 	g_unsetenv ("XAUTHORITY"); /* just in case it's set */
 
 	mdm_auth_set_local_auth (d);
+	
+	const char *automaticlogin = mdm_daemon_config_get_value_string (MDM_KEY_AUTOMATIC_LOGIN);
+	const char *timedlogin     = mdm_daemon_config_get_value_string (MDM_KEY_TIMED_LOGIN);
 
-	if (d->handled) {
-		/* Now the display name and hostname is final */
+	if (mdm_daemon_config_get_value_bool (MDM_KEY_AUTOMATIC_LOGIN_ENABLE) &&
+	    ! ve_string_empty (automaticlogin)) {
+		g_free (ParsedAutomaticLogin);
+		ParsedAutomaticLogin = mdm_slave_parse_enriched_login (display,
+								       automaticlogin);
+	}
 
-		const char *automaticlogin = mdm_daemon_config_get_value_string (MDM_KEY_AUTOMATIC_LOGIN);
-		const char *timedlogin     = mdm_daemon_config_get_value_string (MDM_KEY_TIMED_LOGIN);
-
-		if (mdm_daemon_config_get_value_bool (MDM_KEY_AUTOMATIC_LOGIN_ENABLE) &&
-		    ! ve_string_empty (automaticlogin)) {
-			g_free (ParsedAutomaticLogin);
-			ParsedAutomaticLogin = mdm_slave_parse_enriched_login (display,
-									       automaticlogin);
-		}
-
-		if (mdm_daemon_config_get_value_bool (MDM_KEY_TIMED_LOGIN_ENABLE) &&
-		    ! ve_string_empty (timedlogin)) {
-			g_free (ParsedTimedLogin);
-			ParsedTimedLogin = mdm_slave_parse_enriched_login (display,
-									   timedlogin);
-		}
+	if (mdm_daemon_config_get_value_bool (MDM_KEY_TIMED_LOGIN_ENABLE) &&
+	    ! ve_string_empty (timedlogin)) {
+		g_free (ParsedTimedLogin);
+		ParsedTimedLogin = mdm_slave_parse_enriched_login (display,
+								   timedlogin);
 	}
 
 	/* X error handlers to avoid the default one (i.e. exit (1)) */
@@ -1535,15 +1480,11 @@ mdm_slave_run (MdmDisplay *display)
 
 	/* if local then the the server should be ready for openning, so
 	 * don't try so long before killing it and trying again */
-	if (SERVER_IS_LOCAL (d))
-		maxtries = 2;
-	else
-		maxtries = 10;
-
-	while (d->handled &&
-	       openretries < maxtries &&
+	maxtries = 2;
+	
+	while (openretries < maxtries &&
 	       d->dsp == NULL &&
-	       ( ! SERVER_IS_LOCAL (d) || d->servpid > 1)) {
+	       ( d->servpid > 1)) {
 
 		mdm_sigchld_block_push ();
 		d->dsp = XOpenDisplay (d->name);
@@ -1578,21 +1519,14 @@ mdm_slave_run (MdmDisplay *display)
 		XFreeCursor (d->dsp, xcursor);
 		XSync (d->dsp, False);
 	}
-
-	/* Just a race avoiding sleep, probably not necessary though,
-	 * but doesn't hurt anything */
-	if ( ! d->handled)
-		mdm_sleep_no_signal (1);
-
-	if (SERVER_IS_LOCAL (d)) {
-		mdm_slave_send (MDM_SOP_START_NEXT_LOCAL, FALSE);
-	}
+	
+	mdm_slave_send (MDM_SOP_START_NEXT_LOCAL, FALSE);	
 
 	check_notifies_now ();
 
 	/* something may have gone wrong, try xfailed, if local (non-flexi),
 	 * the toplevel loop of death will handle us */ 
-	if G_UNLIKELY (d->handled && d->dsp == NULL) {
+	if G_UNLIKELY (d->dsp == NULL) {
 		if (d->type == TYPE_STATIC)
 			mdm_slave_quick_exit (DISPLAY_XFAILED);
 		else
@@ -1602,20 +1536,13 @@ mdm_slave_run (MdmDisplay *display)
 	/* OK from now on it's really the user whacking us most likely,
 	 * we have already started up well */
 	do_xfailed_on_xio_error = FALSE;
-
-	/* If XDMCP setup pinging */
-	if ( ! SERVER_IS_LOCAL (d) && pinginterval > 0) {
-		alarm (pinginterval);
-	}
-
+	
 	/* checkout xinerama */
-	if (d->handled)
-		mdm_screen_init (d);
+	mdm_screen_init (d);
 
 #ifdef HAVE_TSOL
 	/* Check out Solaris Trusted Xserver extension */
-	if (d->handled)
-		mdm_tsol_init (d);
+	mdm_tsol_init (d);
 #endif
 
 	/*
@@ -1631,20 +1558,9 @@ mdm_slave_run (MdmDisplay *display)
 
 	/* check log stuff for the server, this is done here
 	 * because it's really a race */
-	if (SERVER_IS_LOCAL (d))
-		mdm_server_checklog (d);
+	mdm_server_checklog (d);
 
-	if ( ! d->handled) {
-		/* yay, we now wait for the server to die */
-		while (d->servpid > 0) {
-			pause ();
-		}
-		mdm_slave_quick_exit (DISPLAY_REMANAGE);
-	} else if (d->use_chooser) {
-		/* this usually doesn't return */
-		mdm_slave_chooser ();  /* Run the chooser */
-		return;
-	} else if (d->type == TYPE_STATIC &&
+	if (d->type == TYPE_STATIC &&
 		   mdm_first_login &&
 		   ! ve_string_empty (ParsedAutomaticLogin) &&
 		   strcmp (ParsedAutomaticLogin, mdm_root_user ()) != 0) {
@@ -1726,10 +1642,7 @@ mdm_slave_run (MdmDisplay *display)
 		 * so no need to reinit the server nor rebake cookies
 		 * nor such nonsense */
 	} while (greet);
-
-	/* If XDMCP stop pinging */
-	if ( ! SERVER_IS_LOCAL (d))
-		alarm (0);
+	
 }
 
 /* A hack really, this will wait around until the first mapped window
@@ -2306,7 +2219,7 @@ mdm_slave_wait_for_login (void)
 			mdm_slave_greeter_ctl_no_ret (MDM_RESET, "");
 
 			/* Play sounds if specified for a failed login */
-			if (d->attached && failuresound &&
+			if (failuresound &&
 			    mdm_daemon_config_get_value_bool (MDM_KEY_SOUND_ON_LOGIN_FAILURE) &&
 			    ! play_login_sound (failuresound)) {
 				mdm_error (_("Login sound requested on non-local display or the play "
@@ -2330,7 +2243,6 @@ mdm_slave_wait_for_login (void)
 	/* Play sounds if specified for a successful login */
 	if (login_user != NULL && successsound &&
 	    mdm_daemon_config_get_value_bool (MDM_KEY_SOUND_ON_LOGIN_SUCCESS) &&
-	    d->attached &&
 	    ! play_login_sound (successsound)) {
 		mdm_error (_("Login sound requested on non-local display or the play software "
 			     "cannot be run or the sound does not exist."));
@@ -2618,116 +2530,6 @@ run_pictures (void)
 	g_free (response); /* not reached */
 }
 
-/* hakish, copy file (owned by fromuid) to a temp file owned by touid */
-static char *
-copy_auth_file (uid_t fromuid, uid_t touid, const char *file)
-{
-	uid_t old = geteuid ();
-	gid_t oldg = getegid ();
-	char *name;
-	int authfd;
-	int fromfd;
-	int bytes;
-	char buf[2048];
-	int cnt;
-
-	NEVER_FAILS_seteuid (0);
-	NEVER_FAILS_setegid (mdm_daemon_config_get_mdmgid ());
-
-	if G_UNLIKELY (seteuid (fromuid) != 0) {
-		NEVER_FAILS_root_set_euid_egid (old, oldg);
-		return NULL;
-	}
-
-	if ( ! mdm_auth_file_check ("copy_auth_file", fromuid,
-				    file, FALSE /* absentok */, NULL)) {
-		NEVER_FAILS_root_set_euid_egid (old, oldg);
-		return NULL;
-	}
-
-	do {
-		errno = 0;
-		fromfd = open (file, O_RDONLY
-#ifdef O_NOCTTY
-			       |O_NOCTTY
-#endif
-#ifdef O_NOFOLLOW
-			       |O_NOFOLLOW
-#endif
-			       );
-	} while G_UNLIKELY (errno == EINTR);
-
-	if G_UNLIKELY (fromfd < 0) {
-		NEVER_FAILS_root_set_euid_egid (old, oldg);
-		return NULL;
-	}
-
-	NEVER_FAILS_root_set_euid_egid (0, 0);
-
-	name = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR),
-				  d->name, ".XnestAuth");
-
-	VE_IGNORE_EINTR (g_unlink (name));
-	VE_IGNORE_EINTR (authfd = open (name, O_EXCL|O_TRUNC|O_WRONLY|O_CREAT, 0600));
-
-	if G_UNLIKELY (authfd < 0) {
-		VE_IGNORE_EINTR (close (fromfd));
-		NEVER_FAILS_root_set_euid_egid (old, oldg);
-		g_free (name);
-		return NULL;
-	}
-
-	VE_IGNORE_EINTR (fchown (authfd, touid, -1));
-
-	cnt = 0;
-	for (;;) {
-		int written, n;
-		VE_IGNORE_EINTR (bytes = read (fromfd, buf, sizeof (buf)));
-
-		/* EOF */
-		if (bytes == 0)
-			break;
-
-		if G_UNLIKELY (bytes < 0) {
-			/* Error reading */
-			mdm_error ("Error reading %s: %s", file, strerror (errno));
-			VE_IGNORE_EINTR (close (fromfd));
-			VE_IGNORE_EINTR (close (authfd));
-			NEVER_FAILS_root_set_euid_egid (old, oldg);
-			g_free (name);
-			return NULL;
-		}
-
-		written = 0;
-		do {
-			VE_IGNORE_EINTR (n = write (authfd, &buf[written], bytes-written));
-			if G_UNLIKELY (n < 0) {
-				/* Error writing */
-				mdm_error ("Error writing %s: %s", name, strerror (errno));
-				VE_IGNORE_EINTR (close (fromfd));
-				VE_IGNORE_EINTR (close (authfd));
-				NEVER_FAILS_root_set_euid_egid (old, oldg);
-				g_free (name);
-				return NULL;
-			}
-			written += n;
-		} while (written < bytes);
-
-		cnt = cnt + written;
-		/* this should never occur (we check above)
-		   but we're paranoid) */
-		if G_UNLIKELY (cnt > mdm_daemon_config_get_value_int (MDM_KEY_USER_MAX_FILE))
-			return NULL;
-	}
-
-	VE_IGNORE_EINTR (close (fromfd));
-	VE_IGNORE_EINTR (close (authfd));
-
-	NEVER_FAILS_root_set_euid_egid (old, oldg);
-
-	return name;
-}
-
 static void
 exec_command (const char *command, const char *extra_arg)
 {
@@ -2784,14 +2586,8 @@ mdm_slave_greeter (void)
 		mdm_slave_exit (DISPLAY_REMANAGE, _("%s: Can't init pipe to mdmgreeter"),
 				"mdm_slave_greeter");
 	}
-
-	/* hackish ain't it */
-	create_temp_auth_file ();
-
-	if (d->attached)
-		command = mdm_daemon_config_get_value_string (MDM_KEY_GREETER);
-	else
-		command = mdm_daemon_config_get_value_string (MDM_KEY_REMOTE_GREETER);
+		
+	command = mdm_daemon_config_get_value_string (MDM_KEY_GREETER);	
 
 #ifdef __sun
 	/*
@@ -2871,10 +2667,7 @@ mdm_slave_greeter (void)
 		g_setenv ("XAUTHORITY", MDM_AUTHFILE (d), TRUE);
 		g_setenv ("DISPLAY", d->name, TRUE);
 		if (d->windowpath)
-			g_setenv ("WINDOWPATH", d->windowpath, TRUE);
-
-		/* hackish ain't it */
-		set_xnest_parent_stuff ();
+			g_setenv ("WINDOWPATH", d->windowpath, TRUE);	
 
 		g_setenv ("LOGNAME", mdmuser, TRUE);
 		g_setenv ("USER", mdmuser, TRUE);
@@ -2916,16 +2709,7 @@ mdm_slave_greeter (void)
 
 		if (mdm_daemon_config_get_value_bool (MDM_KEY_DEBUG_GESTURES)) {
 			g_setenv ("MDM_DEBUG_GESTURES", "true", TRUE);
-		}
-
-		/* Note that this is just informative, the slave will not listen to
-		 * the greeter even if it does something it shouldn't on a non-local
-		 * display so it's not a security risk */
-		if (d->attached) {
-			g_setenv ("MDM_IS_LOCAL", "yes", TRUE);
-		} else {
-			g_unsetenv ("MDM_IS_LOCAL");
-		}
+		}		
 
 		/* this is again informal only, if the greeter does time out it will
 		 * not actually login a user if it's not enabled for this display */
@@ -2948,8 +2732,7 @@ mdm_slave_greeter (void)
 			mdm_errorgui_error_box (d,
 						GTK_MESSAGE_ERROR,
 						_("No servers were defined in the "
-						  "configuration file and XDMCP was "
-						  "disabled.  This can only be a "
+						  "configuration file. This can only be a "
 						  "configuration error.  MDM has started "
 						  "a single server for you.  You should "
 						  "log in and fix the configuration.  "
@@ -3254,37 +3037,6 @@ mdm_slave_send_string (const char *opcode, const char *str)
 }
 
 static void
-send_chosen_host (MdmDisplay *disp,
-		  const char *hostname)
-{
-	MdmHostent *hostent;
-	struct sockaddr_storage ss;
-	char *str = NULL;
-	char *host;
-
-	hostent = mdm_gethostbyname (hostname);
-
-	if G_UNLIKELY (hostent->addrs == NULL) {
-		mdm_error ("Cannot get address of host '%s'", hostname);
-		mdm_hostent_free (hostent);
-		return;
-	}
-
-	/* take first address */
-	memcpy (&ss, &hostent->addrs[0], sizeof (struct sockaddr_storage));
-
-	mdm_address_get_info (&ss, &host, NULL);
-	mdm_hostent_free (hostent);
-
-	mdm_debug ("Sending chosen host address (%s) %s", hostname, host);
-	str = g_strdup_printf ("%s %d %s", MDM_SOP_CHOSEN, disp->indirect_id, host);
-	mdm_slave_send (str, FALSE);
-
-	g_free (str);
-}
-
-
-static void
 mdm_slave_chooser (void)
 {
 	gint p[2];
@@ -3458,15 +3210,11 @@ mdm_slave_chooser (void)
 		if (d->chooser_last_line != NULL) {
 			char *host = d->chooser_last_line;
 			d->chooser_last_line = NULL;
-
-			if (SERVER_IS_XDMCP (d)) {
-				send_chosen_host (d, host);
-				mdm_slave_quick_exit (DISPLAY_CHOSEN);
-			} else {
-				mdm_debug ("Sending locally chosen host %s", host);
-				mdm_slave_send_string (MDM_SOP_CHOSEN_LOCAL, host);
-				mdm_slave_quick_exit (DISPLAY_REMANAGE);
-			}
+			
+			mdm_debug ("Sending locally chosen host %s", host);
+			mdm_slave_send_string (MDM_SOP_CHOSEN_LOCAL, host);
+			mdm_slave_quick_exit (DISPLAY_REMANAGE);
+		
 		}
 
 		mdm_slave_quick_exit (DISPLAY_REMANAGE);
@@ -3802,11 +3550,7 @@ session_child_run (struct passwd *pwent,
 
 	/* Determine default greeter type so the PreSession */
 	/* script can set the appropriate background color. */
-	if (d->attached) {
-		greeter = mdm_daemon_config_get_value_string (MDM_KEY_GREETER);
-	} else {
-		greeter = mdm_daemon_config_get_value_string (MDM_KEY_REMOTE_GREETER);
-	}
+	greeter = mdm_daemon_config_get_value_string (MDM_KEY_GREETER);	
 
 	if (strstr (greeter, "mdmlogin") != NULL) {
 		g_setenv ("MDM_GREETER_TYPE", "PLAIN", TRUE);
@@ -3858,19 +3602,10 @@ session_child_run (struct passwd *pwent,
 
 	if (d->type == TYPE_STATIC) {
 		g_setenv ("MDM_XSERVER_LOCATION", "local", TRUE);
-		g_setenv ("GDM_XSERVER_LOCATION", "local", TRUE);
-	} else if (d->type == TYPE_XDMCP) {
-		g_setenv ("MDM_XSERVER_LOCATION", "xdmcp", TRUE);
-		g_setenv ("GDM_XSERVER_LOCATION", "xdmcp", TRUE);
+		g_setenv ("GDM_XSERVER_LOCATION", "local", TRUE);	
 	} else if (d->type == TYPE_FLEXI) {
 		g_setenv ("MDM_XSERVER_LOCATION", "flexi", TRUE);
-		g_setenv ("GDM_XSERVER_LOCATION", "flexi", TRUE);
-	} else if (d->type == TYPE_FLEXI_XNEST) {
-		g_setenv ("MDM_XSERVER_LOCATION", "flexi-xnest", TRUE);
-		g_setenv ("GDM_XSERVER_LOCATION", "flexi-xnest", TRUE);
-	} else if (d->type == TYPE_XDMCP_PROXY) {
-		g_setenv ("MDM_XSERVER_LOCATION", "xdmcp-proxy", TRUE);
-		g_setenv ("GDM_XSERVER_LOCATION", "xdmcp-proxy", TRUE);
+		g_setenv ("GDM_XSERVER_LOCATION", "flexi", TRUE);	
 	} else {
 		/* huh? */
 		g_setenv ("MDM_XSERVER_LOCATION", "unknown", TRUE);
@@ -4303,11 +4038,7 @@ mdm_slave_parse_enriched_string (MdmDisplay *d, const gchar *s)
 			cmd = s[1];
 			s++;
 
-			switch (cmd) {
-
-			case 'h':
-				g_string_append (str, d->hostname);
-				break;
+			switch (cmd) {		
 
 			case 'd':
 				g_string_append (str, d->name);
@@ -4341,7 +4072,7 @@ mdm_slave_update_pseudo_device (MdmDisplay *d, const char *device_in)
 		return NULL;
 	}
 
-	/* Parse the string, changing %d to display or %h to hostname, etc. */
+	/* Parse the string, changing %d to display, etc. */
 	str = mdm_slave_parse_enriched_string (d, device_in);
 	device = g_strdup (str->str);
 	g_string_free (str, TRUE);
@@ -4383,40 +4114,27 @@ gchar *
 mdm_slave_get_display_device (MdmDisplay *d)
 {
 	gchar *device_name = NULL;
+	
+	if (d->vtnum != -1)
+		device_name = mdm_get_vt_device (d->vtnum);
 
-	if (d->attached) {
-		if (d->vtnum != -1)
-			device_name = mdm_get_vt_device (d->vtnum);
+	/*
+	 * Default to the value in the MDM configuration for the
+	 * display number.  Allow pseudo devices.
+	 */
+	if (device_name == NULL && d->device_name != NULL) {
+		device_name = mdm_slave_update_pseudo_device (d,
+			d->device_name);
+	}
 
-		/*
-		 * Default to the value in the MDM configuration for the
-		 * display number.  Allow pseudo devices.
-		 */
-		if (device_name == NULL && d->device_name != NULL) {
+	/* If not VT, then use default local value from configuration */
+	if (device_name == NULL) {
+		const char *dev_local =
+			mdm_daemon_config_get_value_string (MDM_KEY_UTMP_LINE_ATTACHED);
+
+		if (dev_local != NULL) {
 			device_name = mdm_slave_update_pseudo_device (d,
-				d->device_name);
-		}
-
-		/* If not VT, then use default local value from configuration */
-		if (device_name == NULL) {
-			const char *dev_local =
-				mdm_daemon_config_get_value_string (MDM_KEY_UTMP_LINE_ATTACHED);
-
-			if (dev_local != NULL) {
-				device_name = mdm_slave_update_pseudo_device (d,
-					dev_local);
-			}
-		}
-	} else {
-		/*
-		 * If a remote display, then use default remote value from
-		 * configuration
-		 */
-		const char *dev_remote =
-			mdm_daemon_config_get_value_string (MDM_KEY_UTMP_LINE_REMOTE);
-		if (dev_remote != NULL) {
-			device_name = mdm_slave_update_pseudo_device (d,
-				dev_remote);
+				dev_local);
 		}
 	}
 
@@ -4532,16 +4250,8 @@ mdm_slave_write_utmp_wtmp_record (MdmDisplay *d,
 	       (int) sizeof (record.ut_line),
 	       record.ut_line);
 
-#if defined(HAVE_UT_UT_HOST)
-	host = NULL;
-	if (! d->attached && g_str_has_prefix (d->name, ":")) {
-		host = g_strdup_printf ("%s%s",
-					d->hostname,
-					d->name);
-	} else {
-		host = g_strdup (d->name);
-	}
-
+#if defined(HAVE_UT_UT_HOST)	
+	host = g_strdup (d->name);	
 	if (host) {
 		strncpy (record.ut_host, host, sizeof (record.ut_host));
 		g_free (host);
@@ -5702,8 +5412,7 @@ check_for_interruption (const char *msg)
 			 * it is allowed for this display (it's only allowed
 			 * for the first local display) and if it's set up
 			 * correctly */
-			if ((d->attached || mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_REMOTE_AUTOLOGIN))
-                            && d->timed_login_ok &&
+			if (d->timed_login_ok &&
 			    ! ve_string_empty (ParsedTimedLogin) &&
                             strcmp (ParsedTimedLogin, mdm_root_user ()) != 0 &&
 			    mdm_daemon_config_get_value_int (MDM_KEY_TIMED_LOGIN_DELAY) > 0) {
@@ -5711,16 +5420,14 @@ check_for_interruption (const char *msg)
 			}
 			break;
 		case MDM_INTERRUPT_CONFIGURE:
-			if (d->attached &&
-			    mdm_daemon_config_get_value_bool_per_display (MDM_KEY_CONFIG_AVAILABLE, d->name) &&
+			if (mdm_daemon_config_get_value_bool_per_display (MDM_KEY_CONFIG_AVAILABLE, d->name) &&
 			    mdm_daemon_config_get_value_bool_per_display (MDM_KEY_SYSTEM_MENU, d->name) &&
 			    ! ve_string_empty (mdm_daemon_config_get_value_string (MDM_KEY_CONFIGURATOR))) {
 				do_configurator = TRUE;
 			}
 			break;
 		case MDM_INTERRUPT_SUSPEND:
-			if (d->attached &&
-			    mdm_daemon_config_get_value_bool_per_display (MDM_KEY_SYSTEM_MENU, d->name) &&
+			if (mdm_daemon_config_get_value_bool_per_display (MDM_KEY_SYSTEM_MENU, d->name) &&
 			    ! ve_string_empty (mdm_daemon_config_get_value_string_array (MDM_KEY_SUSPEND))) {
 			    	gchar *msg = g_strdup_printf ("%s %ld", 
 							      MDM_SOP_SUSPEND_MACHINE,
@@ -5730,11 +5437,10 @@ check_for_interruption (const char *msg)
 				g_free (msg);
 			}
 			/* Not interrupted, continue reading input,
-			 * just proxy this to the master server */
+			 * just send this to the master server */
 			return TRUE;
 		case MDM_INTERRUPT_LOGIN_SOUND:
-			if (d->attached &&
-			    ! play_login_sound (mdm_daemon_config_get_value_string (MDM_KEY_SOUND_ON_LOGIN_FILE))) {
+			if (! play_login_sound (mdm_daemon_config_get_value_string (MDM_KEY_SOUND_ON_LOGIN_FILE))) {
 				mdm_error (_("Login sound requested on non-local display or the play software "
 					     "cannot be run or the sound does not exist"));
 			}
@@ -5746,8 +5452,7 @@ check_for_interruption (const char *msg)
 			do_cancel = TRUE;
 			break;
 		case MDM_INTERRUPT_CUSTOM_CMD:
-			if (d->attached &&
-			    ! ve_string_empty (&msg[2])) {
+			if (! ve_string_empty (&msg[2])) {
 				gchar *message = g_strdup_printf ("%s %ld %s", 
 								  MDM_SOP_CUSTOM_CMD,
 								  (long)getpid (), &msg[2]);
@@ -5796,7 +5501,7 @@ check_for_interruption (const char *msg)
 		}
 
 		/* this was an interruption, if it wasn't
-		 * handled then the user will just get an error as if he
+		 * treated then the user will just get an error as if he
 		 * entered an invalid login or passward.  Seriously BEL
 		 * cannot be part of a login/password really */
 		interrupted = TRUE;
@@ -5967,36 +5672,6 @@ mdm_slave_whack_temp_auth_file (void)
 		seteuid (old);
 }
 
-static void
-create_temp_auth_file (void)
-{
-	if (d->type == TYPE_FLEXI_XNEST &&
-	    d->parent_auth_file != NULL) {
-		if (d->parent_temp_auth_file != NULL) {
-			VE_IGNORE_EINTR (g_unlink (d->parent_temp_auth_file));
-		}
-		g_free (d->parent_temp_auth_file);
-		d->parent_temp_auth_file =
-			copy_auth_file (d->server_uid,
-					mdm_daemon_config_get_mdmuid (),
-					d->parent_auth_file);
-	}
-}
-
-static void
-set_xnest_parent_stuff (void)
-{
-	if (d->type == TYPE_FLEXI_XNEST) {
-		g_setenv ("MDM_PARENT_DISPLAY", d->parent_disp, TRUE);
-		if (d->parent_temp_auth_file != NULL) {
-			g_setenv ("MDM_PARENT_XAUTHORITY",
-				  d->parent_temp_auth_file, TRUE);
-			g_free (d->parent_temp_auth_file);
-			d->parent_temp_auth_file = NULL;
-		}
-	}
-}
-
 static gint
 mdm_slave_exec_script (MdmDisplay *d,
 		       const gchar *dir,
@@ -6019,23 +5694,7 @@ mdm_slave_exec_script (MdmDisplay *d,
 	if (g_access (script, R_OK|X_OK) != 0) {
 		g_free (script);
 		script = NULL;
-	}
-	if (script == NULL &&
-	    ! ve_string_empty (d->hostname)) {
-		script = g_build_filename (dir, d->hostname, NULL);
-		if (g_access (script, R_OK|X_OK) != 0) {
-			g_free (script);
-			script = NULL;
-		}
-	}
-	if (script == NULL &&
-	    SERVER_IS_XDMCP (d)) {
-		script = g_build_filename (dir, "XDMCP", NULL);
-		if (g_access (script, R_OK|X_OK) != 0) {
-			g_free (script);
-			script = NULL;
-		}
-	}
+	}	
 	if (script == NULL &&
 	    SERVER_IS_FLEXI (d)) {
 		script = g_build_filename (dir, "Flexi", NULL);
@@ -6065,8 +5724,6 @@ mdm_slave_exec_script (MdmDisplay *d,
 	save_gid  = getgid ();
 	setegid (0);
 	setgid (0);
-
-	create_temp_auth_file ();
 
 	mdm_debug ("Forking extra process: %s", script);
 
@@ -6124,15 +5781,11 @@ mdm_slave_exec_script (MdmDisplay *d,
 			g_setenv ("SHELL", "/bin/sh", TRUE);
 		}
 
-		set_xnest_parent_stuff ();
-
 		/* some env for use with the Pre and Post scripts */
 		x_servers_file = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR),
 						    d->name, ".Xservers");
 		g_setenv ("X_SERVERS", x_servers_file, TRUE);
-		g_free (x_servers_file);
-		if (SERVER_IS_XDMCP (d))
-			g_setenv ("REMOTE_HOST", d->hostname, TRUE);
+		g_free (x_servers_file);		
 
 		/* Runs as root */
 		if (MDM_AUTHFILE (d) != NULL)
@@ -6221,7 +5874,7 @@ mdm_slave_parse_enriched_login (MdmDisplay *d, const gchar *s)
 
 	str = mdm_slave_parse_enriched_string (d, s);
 
-	/* Sometimes it is not convenient to use the display or hostname as
+	/* Sometimes it is not convenient to use the display as
 	   user name. A script may be used to generate the automatic/timed
 	   login name based on the display/host by ending the name with the
 	   pipe symbol '|'. */
@@ -6260,8 +5913,7 @@ mdm_slave_parse_enriched_login (MdmDisplay *d, const gchar *s)
 				g_setenv ("DISPLAY", d->name, TRUE);
 				if (d->windowpath)
 					g_setenv ("WINDOWPATH", d->windowpath, TRUE);
-				if (SERVER_IS_XDMCP (d))
-					g_setenv ("REMOTE_HOST", d->hostname, TRUE);
+				
 				g_setenv ("PATH", mdm_daemon_config_get_value_string (MDM_KEY_ROOT_PATH), TRUE);
 				g_setenv ("SHELL", "/bin/sh", TRUE);
 				g_setenv ("RUNNING_UNDER_MDM", "true", TRUE);
@@ -6332,10 +5984,6 @@ mdm_slave_handle_notify (const char *msg)
 
 	if (sscanf (msg, MDM_NOTIFY_ALLOW_ROOT " %d", &val) == 1) {
 		mdm_daemon_config_set_value_bool (MDM_KEY_ALLOW_ROOT, val);
-	} else if (sscanf (msg, MDM_NOTIFY_ALLOW_REMOTE_ROOT " %d", &val) == 1) {
-		mdm_daemon_config_set_value_bool (MDM_KEY_ALLOW_REMOTE_ROOT, val);
-	} else if (sscanf (msg, MDM_NOTIFY_ALLOW_REMOTE_AUTOLOGIN " %d", &val) == 1) {
-		mdm_daemon_config_set_value_bool (MDM_KEY_ALLOW_REMOTE_AUTOLOGIN, val);
 	} else if (sscanf (msg, MDM_NOTIFY_SYSTEM_MENU " %d", &val) == 1) {
 		mdm_daemon_config_set_value_bool (MDM_KEY_SYSTEM_MENU, val);
 		if (d->greetpid > 1)
@@ -6356,19 +6004,17 @@ mdm_slave_handle_notify (const char *msg)
 	} else if (strncmp (msg, MDM_NOTIFY_GREETER " ",
 			    strlen (MDM_NOTIFY_GREETER) + 1) == 0) {
 		mdm_daemon_config_set_value_string (MDM_KEY_GREETER, ((gchar *)&msg[strlen (MDM_NOTIFY_GREETER) + 1]));
-
-		if (d->attached) {
-			do_restart_greeter = TRUE;
-			if (restart_greeter_now) {
-				; /* will get restarted later */
-			} else if (d->type == TYPE_STATIC) {
-				/* FIXME: can't handle flexi servers like this
-				 * without going all cranky */
-				if ( ! d->logged_in) {
-					mdm_slave_quick_exit (DISPLAY_REMANAGE);
-				} else {
-					remanage_asap = TRUE;
-				}
+		
+		do_restart_greeter = TRUE;
+		if (restart_greeter_now) {
+			; /* will get restarted later */
+		} else if (d->type == TYPE_STATIC) {
+			/* FIXME: can't handle flexi servers like this
+			 * without going all cranky */
+			if ( ! d->logged_in) {
+				mdm_slave_quick_exit (DISPLAY_REMANAGE);
+			} else {
+				remanage_asap = TRUE;
 			}
 		}
 	} else if (strncmp (msg, MDM_NOTIFY_CUSTOM_CMD_TEMPLATE,
@@ -6380,30 +6026,10 @@ mdm_slave_handle_notify (const char *msg)
 			mdm_daemon_config_set_value_string (key_string, ((gchar *)&msg[strlen (MDM_NOTIFY_CUSTOM_CMD_TEMPLATE) + 2]));
 			g_free(key_string);
 
-			if (d->attached) {
-				do_restart_greeter = TRUE;
-				if (restart_greeter_now) {
-					; /* will get restarted later */
-				} else if (d->type == TYPE_STATIC) {
-					/* FIXME: can't handle flexi servers like this
-					 * without going all cranky */
-					if ( ! d->logged_in) {
-						mdm_slave_quick_exit (DISPLAY_REMANAGE);
-					} else {
-						remanage_asap = TRUE;
-					}
-				}
-			}
-		}
-	} else if (strncmp (msg, MDM_NOTIFY_REMOTE_GREETER " ",
-			    strlen (MDM_NOTIFY_REMOTE_GREETER) + 1) == 0) {
-		mdm_daemon_config_set_value_string (MDM_KEY_REMOTE_GREETER,
-						    (gchar *)(&msg[strlen (MDM_NOTIFY_REMOTE_GREETER) + 1]));
-		if ( ! d->attached) {
 			do_restart_greeter = TRUE;
 			if (restart_greeter_now) {
 				; /* will get restarted later */
-			} else if (d->type == TYPE_XDMCP) {
+			} else if (d->type == TYPE_STATIC) {
 				/* FIXME: can't handle flexi servers like this
 				 * without going all cranky */
 				if ( ! d->logged_in) {
@@ -6422,7 +6048,7 @@ mdm_slave_handle_notify (const char *msg)
 		do_restart_greeter = TRUE;
 		/* FIXME: this is fairly nasty, we should handle this nicer   */
 		/* FIXME: can't handle flexi servers without going all cranky */
-		if (d->type == TYPE_STATIC || d->type == TYPE_XDMCP) {
+		if (d->type == TYPE_STATIC) {
 			if ( ! d->logged_in) {
 				mdm_slave_quick_exit (DISPLAY_REMANAGE);
 			} else {

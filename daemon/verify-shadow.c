@@ -117,7 +117,7 @@ mdm_verify_user (MdmDisplay *d,
 	gint reEnter, ret;
 #endif
 
-	if (d->attached && d->timed_login_ok)
+	if (d->timed_login_ok)
 		mdm_slave_greeter_ctl_no_ret (MDM_STARTTIMER, "");
 
 	if (username == NULL) {
@@ -135,8 +135,7 @@ mdm_verify_user (MdmDisplay *d,
 				selected_user = NULL;
 			} else {
 				/* some other interruption */
-				if (d->attached)
-					mdm_slave_greeter_ctl_no_ret (MDM_STOPTIMER, "");
+				mdm_slave_greeter_ctl_no_ret (MDM_STOPTIMER, "");
 				g_free (login);
 				return NULL;
 			}
@@ -186,8 +185,7 @@ mdm_verify_user (MdmDisplay *d,
 		if (passwd == NULL)
 			passwd = g_strdup ("");
 		if (mdm_slave_greeter_check_interruption ()) {
-			if (d->attached)
-				mdm_slave_greeter_ctl_no_ret (MDM_STOPTIMER, "");
+			mdm_slave_greeter_ctl_no_ret (MDM_STOPTIMER, "");
 			g_free (login);
 			g_free (passwd);
 			g_free (ppasswd);
@@ -195,8 +193,7 @@ mdm_verify_user (MdmDisplay *d,
 		}
 	}
 
-	if (d->attached)
-		mdm_slave_greeter_ctl_no_ret (MDM_STOPTIMER, "");
+	mdm_slave_greeter_ctl_no_ret (MDM_STOPTIMER, "");
 
 	if (pwent == NULL) {
 		mdm_sleep_no_signal (mdm_daemon_config_get_value_int (MDM_KEY_RETRY_DELAY));
@@ -224,9 +221,7 @@ mdm_verify_user (MdmDisplay *d,
 		return NULL;
 	}
 
-	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_ROOT) ||
-	    ( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_REMOTE_ROOT) &&
-              ! d->attached)) && pwent->pw_uid == 0) {
+	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_ROOT)) && pwent->pw_uid == 0) {
 
 		mdm_debug ("Root login disallowed on display '%s'", d->name);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,

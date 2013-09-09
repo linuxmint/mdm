@@ -31,9 +31,6 @@ struct _MdmXserver
 	char *name;
 	char *command;
 	gboolean flexible;
-	gboolean choosable; /* not implemented yet */
-	gboolean chooser; /* instead of greeter, run chooser */
-	gboolean handled;
 	int priority;
 };
 

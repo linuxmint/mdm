@@ -67,15 +67,13 @@ display_add_error (MdmDisplay *d)
 		mdm_error (_("%s: Could not write new authorization entry.  "
 			     "Possibly out of diskspace"),
 			   "add_auth_entry");
-	if (d->attached) {
-		char *s = g_strdup_printf
-			(C_(N_("MDM could not write a new authorization "
-			       "entry to disk.  Possibly out of diskspace.%s%s")),
-			 errno != 0 ? "  Error: " : "",
-			 errno != 0 ? strerror (errno) : "");
-		mdm_text_message_dialog (s);
-		g_free (s);
-	}
+	char *s = g_strdup_printf
+		(C_(N_("MDM could not write a new authorization "
+		       "entry to disk.  Possibly out of diskspace.%s%s")),
+		 errno != 0 ? "  Error: " : "",
+		 errno != 0 ? strerror (errno) : "");
+	mdm_text_message_dialog (s);
+	g_free (s);
 }
 
 static gboolean
@@ -166,7 +164,7 @@ add_auth_entry (MdmDisplay *d,
  * mdm_auth_secure_display:
  * @d: Pointer to a MdmDisplay struct
  * 
- * Create authentication cookies for local and remote displays.
+ * Create authentication cookies for local displays.
  *
  * Returns TRUE on success and FALSE on error.
  */
@@ -258,7 +256,7 @@ mdm_auth_secure_display (MdmDisplay *d)
 	/* If this is a local display the struct hasn't changed and we
 	 * have to eat up old authentication cookies before baking new
 	 * ones... */
-	if (SERVER_IS_LOCAL (d) && d->auths) {
+	if (d->auths) {
 		mdm_auth_free_auth_list (d->auths);
 		d->auths = NULL;
 
@@ -269,18 +267,7 @@ mdm_auth_secure_display (MdmDisplay *d)
 	}
 
 	/* Create new random cookie */
-	mdm_cookie_generate (&d->cookie, &d->bcookie);
-
-	/* reget local host if local as it may have changed */
-	if (SERVER_IS_LOCAL (d)) {
-		char hostname[1024];
-
-		hostname[1023] = '\0';
-		if G_LIKELY (gethostname (hostname, 1023) == 0) {
-			g_free (d->hostname);
-			d->hostname = g_strdup (hostname);
-		}
-	}
+	mdm_cookie_generate (&d->cookie, &d->bcookie);	
 
 	if ( ! add_auth_entry (d, &(d->auths), af, af_mdm, FamilyWild, NULL, 0))
 		return FALSE;
@@ -353,84 +340,19 @@ get_local_auths (MdmDisplay *d)
 	if G_UNLIKELY (!d)
 		return NULL;
 
-	if (SERVER_IS_LOCAL (d)) {
-		char hostname[1024];
+	mdm_debug ("get_local_auths: Setting up socket access");
+	const char *localhost = "localhost.localdomain";
 
-		/* reget local host if local as it may have changed */
-		hostname[1023] = '\0';
-		if G_LIKELY (gethostname (hostname, 1023) == 0) {
-			g_free (d->hostname);
-			d->hostname = g_strdup (hostname);
-		}
-		if ( ! d->tcp_disallowed)
-			local_addys = mdm_address_peek_local_list ();
-
-		is_local = TRUE;
-	} else  {
-		is_local = FALSE;
-
-		if (mdm_address_is_local (&(d->addr))) {
-			is_local = TRUE;
-		}
-
-		for (i = 0; ! is_local && i < d->addr_count; i++) {
-			if (mdm_address_is_local (&d->addrs[i])) {
-				is_local = TRUE;
-				break;
-			}
-		}
+	if ( ! add_auth_entry (d, &auths, NULL, NULL, FamilyLocal,
+			       localhost,
+			       strlen (localhost))) {
+		goto get_local_auth_error;
 	}
 
-	/* Local access also in case the host is very local */
-	if (is_local) {
-		mdm_debug ("get_local_auths: Setting up socket access");
-
-		if ( ! add_auth_entry (d, &auths, NULL, NULL, FamilyLocal,
-				       d->hostname, strlen (d->hostname)))
-			goto get_local_auth_error;
-
-		/* local machine but not local if you get my meaning, add
-		 * the host gotten by gethostname as well if it's different
-		 * since the above is probably localhost */
-		if ( ! SERVER_IS_LOCAL (d)) {
-			char hostname[1024];
-
-			hostname[1023] = '\0';
-			if (gethostname (hostname, 1023) == 0 &&
-			    strcmp (hostname, d->hostname) != 0) {
-				if ( ! add_auth_entry (d, &auths, NULL, NULL, FamilyLocal,
-						       hostname,
-						       strlen (hostname)))
-					goto get_local_auth_error;
-			}
-		} else {
-			/* local machine, perhaps we haven't added
-			 * localhost.localdomain to socket access */
-			const char *localhost = "localhost.localdomain";
-			if (strcmp (localhost, d->hostname) != 0) {
-				if ( ! add_auth_entry (d, &auths, NULL, NULL, FamilyLocal,
-						       localhost,
-						       strlen (localhost))) {
-					goto get_local_auth_error;
-				}
-			}
-		}
-	}
+	if ( ! d->tcp_disallowed)
+		local_addys = mdm_address_peek_local_list ();
 
 	mdm_debug ("get_local_auths: Setting up network access");
-
-	if ( ! SERVER_IS_LOCAL (d)) {
-		/* we should write out an entry for d->addr since
-		   possibly it is not in d->addrs */
-
-		if (! add_auth_entry_for_addr (d, &auths, &d->addr)) {
-			goto get_local_auth_error;
-		}
-
-		if (mdm_address_is_loopback (&(d->addr))) {
-			added_lo = TRUE;
-		}
-	}
 
 	/* Network access: Write out an authentication entry for each of
 	 * this host's official addresses */
@@ -468,8 +390,8 @@ get_local_auths (MdmDisplay *d)
 		}
 	}
 
-	/* If local server, then add loopback */
-	if (SERVER_IS_LOCAL (d) && ! added_lo && ! d->tcp_disallowed) {
+	/* add loopback */
+	if (! added_lo && ! d->tcp_disallowed) {
 		if (! add_auth_entry (d, &auths, NULL, NULL, FamilyInternet,
 		      lo, sizeof (struct in_addr))) {
 			goto get_local_auth_error;

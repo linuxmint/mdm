@@ -45,7 +45,6 @@
 #include "mdm.h"
 #include "server.h"
 #include "misc.h"
-#include "xdmcp.h"
 #include "display.h"
 #include "auth.h"
 #include "slave.h"
@@ -67,7 +66,6 @@
 static void mdm_server_spawn (MdmDisplay *d, const char *vtarg);
 static void mdm_server_usr1_handler (gint);
 static void mdm_server_child_handler (gint);
-static char * get_font_path (const char *display);
 
 /* Global vars */
 static int server_signal_pipe[2];
@@ -186,19 +184,13 @@ mdm_server_stop (MdmDisplay *disp)
 	return;
 
     /* Kill our connection if one existed */
-    if (disp->dsp != NULL) {
-	    /* on XDMCP servers first kill everything in sight */
-	    if (disp->type == TYPE_XDMCP)
-		    mdm_server_whack_clients (disp->dsp);
+    if (disp->dsp != NULL) {	    
 	    XCloseDisplay (disp->dsp);
 	    disp->dsp = NULL;
     }
 
     /* Kill our parent connection if one existed */
-    if (disp->parent_dsp != NULL) {
-	    /* on XDMCP servers first kill everything in sight */
-	    if (disp->type == TYPE_XDMCP_PROXY)
-		    mdm_server_whack_clients (disp->parent_dsp);
+    if (disp->parent_dsp != NULL) {	    
 	    XCloseDisplay (disp->parent_dsp);
 	    disp->parent_dsp = NULL;
     }
@@ -483,11 +475,7 @@ do_server_wait (MdmDisplay *d)
 {
     /* Wait for X server to send ready signal */
     if (d->servstat == SERVER_PENDING) {
-	    if (d->server_uid != 0 && ! d->handled && ! d->chosen_hostname) {
-		    /* FIXME: If not handled, we just don't know, so
-		     * just wait a few seconds and hope things just work,
-		     * fortunately there is no such case yet and probably
-		     * never will, but just for code anality's sake */
+	    if (d->server_uid != 0) {		    
 		    mdm_sleep_no_signal (mdm_daemon_config_get_value_int(MDM_KEY_XSERVER_TIMEOUT));
 	    } else if (d->server_uid != 0) {
 		    int i;
@@ -592,45 +580,6 @@ do_server_wait (MdmDisplay *d)
     }
 }
 
-/* We keep a connection (parent_dsp) open with the parent X server
- * before running a proxy on it to prevent the X server resetting
- * as we open and close other connections.
- * Note that XDMCP servers, by default, reset when the seed X
- * connection closes whereas usually the X server only quits when
- * all X connections have closed.
- */
-static gboolean
-connect_to_parent (MdmDisplay *d)
-{
-	int maxtries;
-	int openretries;
-
-	mdm_debug ("mdm_server_start: Connecting to parent display \'%s\'",
-		   d->parent_disp);
-
-	d->parent_dsp = NULL;
-
-	maxtries = SERVER_IS_XDMCP (d) ? 10 : 2;
-
-	openretries = 0;
-	while (openretries < maxtries &&
-	       d->parent_dsp == NULL) {
-		d->parent_dsp = XOpenDisplay (d->parent_disp);
-
-		if G_UNLIKELY (d->parent_dsp == NULL) {
-			mdm_debug ("mdm_server_start: Sleeping %d on a retry", 1+openretries*2);
-			mdm_sleep_no_signal (1+openretries*2);
-			openretries++;
-		}
-	}
-
-	if (d->parent_dsp == NULL)
-		mdm_error (_("%s: failed to connect to parent display \'%s\'"),
-			   "mdm_server_start", d->parent_disp);
-
-	return d->parent_dsp != NULL;
-}
-
 /**
  * mdm_server_start:
  * @disp: Pointer to a MdmDisplay structure
@@ -680,11 +629,7 @@ mdm_server_start (MdmDisplay *disp,
 
 	    mdm_slave_send_num (MDM_SOP_DISP_NUM, flexi_disp);
     }
-
-    if (d->type == TYPE_XDMCP_PROXY &&
-	! connect_to_parent (d))
-	    return FALSE;
-
+    
     mdm_debug ("mdm_server_start: %s", d->name);
 
     /* Create new cookie */
@@ -751,14 +696,7 @@ mdm_server_start (MdmDisplay *disp,
 	    return TRUE;
     default:
 	    break;
-    }
-
-    if (SERVER_IS_PROXY (disp) &&
-	display_parent_no_connect (disp)) {
-	    mdm_slave_send_num (MDM_SOP_FLEXI_ERR,
-				5 /* proxy can't connect */);
-	    _exit (DISPLAY_REMANAGE);
-    }
+    }    
 
     /* if this was a busy fail, that is, there is already
      * a server on that display, we'll display an error and after
@@ -1138,13 +1076,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 				         &argv);
     if (rc == FALSE)
        return;
-
-    /* Do not support additional session arguments with Xnest. */
-    if (d->type != TYPE_FLEXI_XNEST) {
-	    if (d->xserver_session_args)
-		    mdm_server_add_xserver_args (d, argv);
-    }
-
+    
     command = g_strjoinv (" ", argv);
 
     /* Fork into two processes. Parent remains the mdm process. Child
@@ -1228,50 +1160,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 	 * can control the X server */
 	sigemptyset (&mask);
 	sigprocmask (SIG_SETMASK, &mask, NULL);
-
-	if (SERVER_IS_PROXY (d)) {
-		gboolean add_display = TRUE;
-
-		g_unsetenv ("DISPLAY");
-		if (d->parent_auth_file != NULL)
-			g_setenv ("XAUTHORITY", d->parent_auth_file, TRUE);
-		else
-			g_unsetenv ("XAUTHORITY");
-
-		if (d->type == TYPE_FLEXI_XNEST) {
-			char *font_path = NULL;
-			/* Add -fp with the current font path, but only if not
-			 * already among the arguments */
-			if (strstr (command, "-fp") == NULL)
-				font_path = get_font_path (d->parent_disp);
-			if (font_path != NULL) {
-				argv = g_renew (char *, argv, argc + 2);
-				argv[argc++] = "-fp";
-				argv[argc++] = font_path;
-				command = g_strconcat (command, " -fp ",
-						       font_path, NULL);
-			}
-			add_display = FALSE;
-		}
-
-		/*
-		 * Set the DISPLAY environment variable when calling
-		 * nested server since some Xnest commands like Xephyr 
-		 * do not support the -display argument.
-		 */
-		if (add_display == TRUE) {
-			argv = g_renew (char *, argv, argc + 3);
-			argv[argc++] = "-display";
-			argv[argc++] = d->parent_disp;
-			argv[argc++] = NULL;
-			command = g_strconcat (command, " -display ",
-				       d->parent_disp, NULL);
-		} else {
-			argv = g_renew (char *, argv, argc + 1);
-			argv[argc++] = NULL;
-			g_setenv ("DISPLAY", d->parent_disp, TRUE);
-		}
-	}
+	
 
 	if (argv[0] == NULL) {
 		mdm_error (_("%s: Empty server command for display %s"),
@@ -1473,64 +1362,6 @@ mdm_server_whack_clients (Display *dsp)
 
 	XSync (dsp, False);
 	XSetErrorHandler (old_xerror_handler);
-}
-
-static char *
-get_font_path (const char *display)
-{
-	Display *disp;
-	char **font_path;
-	int n_fonts;
-	int i;
-	GString *gs;
-
-	disp = XOpenDisplay (display);
-	if (disp == NULL)
-		return NULL;
-
-	font_path = XGetFontPath (disp, &n_fonts);
-	if (font_path == NULL) {
-		XCloseDisplay (disp);
-		return NULL;
-	}
-
-	gs = g_string_new (NULL);
-	for (i = 0; i < n_fonts; i++) {
-		if (i != 0)
-			g_string_append_c (gs, ',');
-
-	        if (mdm_daemon_config_get_value_bool (MDM_KEY_XNEST_UNSCALED_FONT_PATH) == TRUE)
-			g_string_append (gs, font_path[i]);
-		else {
-			gchar *unscaled_ptr = NULL;
-
-			/*
-			 * When using Xsun Xnest, it doesn't support the
-			 * ":unscaled" suffix in fontpath entries, so strip it.
-			 */
-			unscaled_ptr = g_strrstr (font_path[i], ":unscaled");
-			if (unscaled_ptr != NULL) {
-				gchar *temp_string;
-
-				temp_string = g_strndup (font_path[i],
-					strlen (font_path[i]) -
-					strlen (":unscaled"));
-
-mdm_debug ("font_path[i] is %s, temp_string is %s", font_path[i], temp_string);
-				g_string_append (gs, temp_string);
-				g_free (temp_string);
-			} else {
-mdm_debug ("font_path[i] is %s", font_path[i]);
-				g_string_append (gs, font_path[i]);
-			}
-		}
-	}
-
-	XFreeFontPath (font_path);
-
-	XCloseDisplay (disp);
-
-	return g_string_free (gs, FALSE);
 }
 
 /* EOF */

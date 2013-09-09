@@ -66,12 +66,7 @@ greeter_is_capslock_on (void)
   XkbStateRec states;
   Display *dsp;
 
-  /* HACK! incredible hack, if this is set we get
-   * indicator state from the parent display, since we must be inside an
-   * Xnest */
-  dsp = get_parent_display ();
-  if (dsp == NULL)
-    dsp = GDK_DISPLAY ();
+  dsp = GDK_DISPLAY ();
 
   if (XkbGetState (dsp, XkbUseCoreKbd, &states) != Success)
       return FALSE;

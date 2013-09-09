@@ -71,7 +71,7 @@
 #ifdef HAVE_LIBAUDIT
 #include <libaudit.h>
 #else
-#define log_to_audit_system(l,h,d,s)	do { ; } while (0)
+#define log_to_audit_system(l,d,s)	do { ; } while (0)
 #endif
 
 /* Evil, but this way these things are passed to the child session */
@@ -167,8 +167,7 @@ audit_success_login (int pw_change, struct passwd *pwent)
  *
  *	Entry	did_setcred == FALSE, process audit context is not established.
  *			       TRUE, process audit context established.
- *		d = display structure, d->attached non 0 if local,
- *			d->hostname used if remote.
+ *		d = display structure,
  *		pw_change == PW_FALSE, if no password change requested.
  *			     PW_TRUE, if successful password change audit
  *				      required.
@@ -204,25 +203,17 @@ audit_fail_login (MdmDisplay *d, int pw_change, struct passwd *pwent,
 				"adt_start_session (ADT_login, ADT_FAILURE): %m");
 			return;
 		}
+		
+		gchar *device_name = mdm_slave_get_display_device (d);
 
-		if (d->attached) {
-			gchar *device_name = mdm_slave_get_display_device (d);
+		/* login from the local host */
+		if (adt_load_ttyname (device_name, &tid) != 0) {
 
-			/* login from the local host */
-			if (adt_load_ttyname (device_name, &tid) != 0) {
-
-				syslog (LOG_AUTH | LOG_ALERT,
-					"adt_loadhostname (localhost): %m");
-			g_free (device_name);
-			}
-		} else {
-			/* login from a remote host */
-			if (adt_load_hostname (d->hostname, &tid) != 0) {
-
-				syslog (LOG_AUTH | LOG_ALERT,
-					"adt_loadhostname (%s): %m", d->hostname);
-			}
+			syslog (LOG_AUTH | LOG_ALERT,
+				"adt_loadhostname (localhost): %m");
+		g_free (device_name);
 		}
+		
 
 		if (adt_set_user (ah,
 				  pwent ? pwent->pw_uid : ADT_NO_ATTRIB,
@@ -330,108 +321,6 @@ audit_logout (void)
 	(void) adt_end_session (adt_ah);
 }
 #endif	/* HAVE_ADT */
-
-#ifdef __sun
-void
-solaris_xserver_cred (char *login, MdmDisplay *d, struct passwd *pwent)
-{
-    	struct stat statbuf;
-        struct group *gr;
-	gid_t  groups[NGROUPS_UMAX];
-	char *home, *disp, *tmp, pipe[MAXPATHLEN], info[MAXPATHLEN];
-	int displayNumber = 0;
-	int retval, fd, i, nb;
-	int ngroups;
-
-	if (!d->attached)
-		return;
-
-	if (g_access (pwent->pw_dir, F_OK) != 0) {
-		mdm_debug ("solaris_xserver_cred: no HOME dir access\n");
-		return;
-	}
-
-	/*
-	 * Handshake with server. Make sure it created a pipe.
-	 * Open and write.
-	 */
-        if ((tmp = strstr (d->name, ":")) != NULL) {
-		tmp++;
-                displayNumber = atoi (tmp);
-	}
-
-        sprintf (pipe, "%s/%d", MDM_SDTLOGIN_DIR, displayNumber);
-
-        if (g_stat (MDM_SDTLOGIN_DIR, &statbuf) == 0) {
-		if (! statbuf.st_mode & S_IFDIR) {
-			mdm_debug ("solaris_xserver_cred: %s is not a directory\n",
-				   MDM_SDTLOGIN_DIR);
-			return;
-		}
-	}
-	else {
-		mdm_debug ("solaris_xserver_cred: %s does not exist\n", MDM_SDTLOGIN_DIR);
-		return;
-	}
-
-	fd = open (pipe, O_RDWR);
-	g_unlink (pipe);
-
-	if (fd < 0) {
-		mdm_debug ("solaris_xserver_cred: could not open %s\n", pipe);
-		return;
-	}
-        if (fstat (fd, &statbuf) == 0 ) {
-		if ( ! statbuf.st_mode & S_IFIFO) {
-			close (fd);
-			mdm_debug ("solaris_xserver_cred: %s is not a pipe\n", pipe);
-			return;
-		}
-	} else {
-		close (fd);
-		mdm_debug ("solaris_xserver_cred: %s does not exist\n", pipe);
-		return;
-	}
-
-	sprintf (info, "GID=\"%d\"; ", pwent->pw_gid);
-	nb = write (fd, info, strlen (info));
-        mdm_debug ("solaris_xserver_cred: %s\n", info);
-
-	if (initgroups (login, pwent->pw_gid) == -1) {
-		ngroups = 0;
-	} else {
-		ngroups = getgroups (NGROUPS_UMAX, groups);
-	}
-
-        for (i=0; i < ngroups; i++) {
-		sprintf (info, "G_LIST_ID=\"%u\" ", groups[i]);
-		nb = write (fd, info, strlen (info));
-		mdm_debug ("solaris_xserver_cred: %s\n", info);
-	}
-
-	if (ngroups > 0) {
-		sprintf (info, ";");
-		write (fd, info, strlen (info));
-	}
-
-        sprintf (info, " HOME=\"%s\" ", pwent->pw_dir);
-	nb = write (fd, info, strlen (info));
-        mdm_debug ("solaris_xserver_cred: %s\n", info);
-
-        sprintf (info, " UID=\"%d\" EOF=\"\";", pwent->pw_uid);
-	nb = write (fd, info, strlen (info));
-        mdm_debug ("solaris_xserver_cred: %s\n", info);
-
-	/*
-	 * Handshake with server. Make sure it read the pipe.
-	 *
-	 * Close file descriptor.
-	 */
- 	close (fd);
-
-	return;
-}
-#endif
 
 void
 mdm_verify_select_user (const char *user)
@@ -808,19 +697,7 @@ create_pamh (MdmDisplay *d,
 		}
 #ifdef __sun
 	}
-#endif
-
-	if ( ! d->attached) {
-		/* Only set RHOST if host is remote */
-		/* From the host of the display */
-		if ((*pamerr = pam_set_item (pamh, PAM_RHOST,
-					     d->hostname)) != PAM_SUCCESS) {
-			if (mdm_slave_action_pending ())
-				mdm_error (_("Can't set PAM_RHOST=%s"),
-					   d->hostname);
-			return FALSE;
-		}
-	}
+#endif	
 
 	return TRUE;
 }
@@ -828,7 +705,6 @@ create_pamh (MdmDisplay *d,
 /**
  * log_to_audit_system:
  * @login: Name of user
- * @hostname: Name of host machine
  * @tty: Name of display 
  * @success: 1 for success, 0 for failure
  *
@@ -845,7 +721,6 @@ create_pamh (MdmDisplay *d,
 #ifdef HAVE_LIBAUDIT
 static void 
 log_to_audit_system(const char *login,
-		    const char *hostname,
 		    const char *tty,
 		    gboolean success)
 {
@@ -863,11 +738,11 @@ log_to_audit_system(const char *login,
 	if (pw) {
 		snprintf (buf, sizeof (buf), "uid=%d", pw->pw_uid);
 		audit_log_user_message (audit_fd, AUDIT_USER_LOGIN,
-				        buf, hostname, NULL, tty, (int)success);
+				        buf, NULL, NULL, tty, (int)success);
 	} else {
 		snprintf (buf, sizeof (buf), "acct=%s", login);
 		audit_log_user_message (audit_fd, AUDIT_USER_LOGIN,
-				        buf, hostname, NULL, tty, (int)success);
+				        buf, NULL, NULL, tty, (int)success);
 	}
 	close (audit_fd);
 }
@@ -900,7 +775,6 @@ mdm_verify_user (MdmDisplay *d,
 	gboolean credentials_set = FALSE;
 	gboolean error_msg_given = FALSE;
 	gboolean started_timer   = FALSE;
-	gboolean allow_remote    = TRUE;
 
 #ifdef HAVE_ADT
 	int pw_change = PW_FALSE;   /* if got to trying to change password */
@@ -921,9 +795,7 @@ mdm_verify_user (MdmDisplay *d,
 		mdm_slave_greeter_ctl_no_ret (MDM_SETLOGIN, login);
 	} else {
 		/* start the timer for timed logins */
-		if ( ! ve_string_empty (mdm_daemon_config_get_value_string (MDM_KEY_TIMED_LOGIN)) &&
-		    d->timed_login_ok && (d->attached ||
-		    mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_REMOTE_AUTOLOGIN))) {
+		if ( ! ve_string_empty (mdm_daemon_config_get_value_string (MDM_KEY_TIMED_LOGIN)) && d->timed_login_ok) {
 			mdm_slave_greeter_ctl_no_ret (MDM_STARTTIMER, "");
 			started_timer = TRUE;
 		}
@@ -1101,19 +973,12 @@ mdm_verify_user (MdmDisplay *d,
 	}
 
 	/* Check if user is root and is allowed to log in */
-	consoleonly = mdm_read_default ("CONSOLE=");
-	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_REMOTE_ROOT)) ||
-            ((consoleonly != NULL) &&
-	     (g_ascii_strcasecmp (consoleonly, "/dev/console") == 0))) {
-		allow_remote = FALSE;
-	}
+	consoleonly = mdm_read_default ("CONSOLE=");	
 
 	pwent = getpwnam (login);
-	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_ROOT) ||
-            ( ! d->attached && allow_remote == FALSE)) &&
+	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_ROOT)) &&
             (pwent != NULL && pwent->pw_uid == 0)) {
-		mdm_error (_("Root login disallowed on display '%s'"),
-			   d->name);
+		mdm_error (_("Root login disallowed on display '%s'"), d->name);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 					      _("\nThe system administrator "
 						"is not allowed to login "
@@ -1199,10 +1064,6 @@ mdm_verify_user (MdmDisplay *d,
 
 	did_setcred = TRUE;
 
-#ifdef __sun
-	solaris_xserver_cred (login, d, pwent);
-#endif
-
 	/* Set credentials */
 	pamerr = pam_setcred (pamh, PAM_ESTABLISH_CRED);
 	if (pamerr != PAM_SUCCESS) {
@@ -1233,21 +1094,19 @@ mdm_verify_user (MdmDisplay *d,
 	cur_mdm_disp = NULL;
 
 #ifdef  HAVE_LOGINDEVPERM
-	if (d->attached && d->type != TYPE_FLEXI_XNEST) {
-		gchar *device_name = mdm_slave_get_display_device (d);
-		/*
-		 * Only do logindevperm processing if /dev/console or
-		 * a device associated with a VT
-		 */
-		if (device_name != NULL &&
-		   (strncmp (device_name, "/dev/vt/", strlen ("/dev/vt/")) == 0 ||
-		    strcmp  (device_name, "/dev/console") == 0)) {
-			mdm_debug ("Logindevperm login for device %s", device_name);
+	gchar *device_name = mdm_slave_get_display_device (d);
+	/*
+	 * Only do logindevperm processing if /dev/console or
+	 * a device associated with a VT
+	 */
+	if (device_name != NULL &&
+	   (strncmp (device_name, "/dev/vt/", strlen ("/dev/vt/")) == 0 ||
+	    strcmp  (device_name, "/dev/console") == 0)) {
+		mdm_debug ("Logindevperm login for device %s", device_name);
 
-			(void) di_devperm_login (device_name, pwent->pw_uid,
-						 pwent->pw_gid, NULL);
-			g_free (device_name);
-		}
+		(void) di_devperm_login (device_name, pwent->pw_uid,
+					 pwent->pw_gid, NULL);
+		g_free (device_name);
 	}
 #endif	/* HAVE_LOGINDEVPERM */
 
@@ -1259,7 +1118,7 @@ mdm_verify_user (MdmDisplay *d,
 	 * Login succeeded.
 	 * This function is a no-op if libaudit is not present.
 	 */
-	log_to_audit_system(login, d->hostname, d->name, AU_SUCCESS);
+	log_to_audit_system(login, d->name, AU_SUCCESS);
 
 	return login;
 
@@ -1285,7 +1144,7 @@ mdm_verify_user (MdmDisplay *d,
 	 * Log the failed login attempt.
 	 * This function is a no-op if libaudit is not present.
 	 */
-	log_to_audit_system(login, d->hostname, d->name, AU_FAILED);
+	log_to_audit_system(login, d->name, AU_FAILED);
 
 	/* The verbose authentication is turned on, output the error
 	 * message from the PAM subsystem */
@@ -1529,10 +1388,6 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 
 	did_setcred = TRUE;
 
-#ifdef __sun
-	solaris_xserver_cred ((char *)login, d, pwent);
-#endif
-
 	/* Set credentials */
 	pamerr = pam_setcred (pamh, PAM_ESTABLISH_CRED);
 	if (pamerr != PAM_SUCCESS) {
@@ -1568,20 +1423,19 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 	extra_standalone_message = NULL;
 
 #ifdef  HAVE_LOGINDEVPERM
-	if (d->attached && d->type != TYPE_FLEXI_XNEST) {
-		gchar *device_name = mdm_slave_get_display_device (d);
-		/*
-		 * Only do logindevperm processing if /dev/console or
-		 * a device associated with a VT
-		 */
-		if (device_name != NULL &&
-		   (strncmp (device_name, "/dev/vt/", strlen ("/dev/vt/")) == 0 ||
-		    strcmp  (device_name, "/dev/console") == 0)) {
-			mdm_debug ("Logindevperm login for device %s", device_name);
-			(void) di_devperm_login (device_name, pwent->pw_uid,
-						 pwent->pw_gid, NULL);
-			g_free (device_name);
-		}
+	
+	gchar *device_name = mdm_slave_get_display_device (d);
+	/*
+	 * Only do logindevperm processing if /dev/console or
+	 * a device associated with a VT
+	 */
+	if (device_name != NULL &&
+	   (strncmp (device_name, "/dev/vt/", strlen ("/dev/vt/")) == 0 ||
+	    strcmp  (device_name, "/dev/console") == 0)) {
+		mdm_debug ("Logindevperm login for device %s", device_name);
+		(void) di_devperm_login (device_name, pwent->pw_uid,
+					 pwent->pw_gid, NULL);
+		g_free (device_name);
 	}
 #endif	/* HAVE_LOGINDEVPERM */
 
@@ -1593,7 +1447,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 	 * Login succeeded.
 	 * This function is a no-op if libaudit is not present
 	 */
-	log_to_audit_system(login, d->hostname, d->name, AU_SUCCESS);
+	log_to_audit_system(login, d->name, AU_SUCCESS);
 
 	return TRUE;
 
@@ -1614,7 +1468,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 	 * Log the failed login attempt.
 	 * This function is a no-op if libaudit is not present
 	 */
-	log_to_audit_system(login, d->hostname, d->name, AU_FAILED);
+	log_to_audit_system(login, d->name, AU_FAILED);
 
 	did_setcred = FALSE;
 	opened_session = FALSE;
@@ -1704,8 +1558,7 @@ mdm_verify_cleanup (MdmDisplay *d)
 		pam_end (tmp_pamh, pamerr);
 
 #ifdef  HAVE_LOGINDEVPERM
-		if (old_opened_session && old_did_setcred &&
-		    d->attached && d->type != TYPE_FLEXI_XNEST) {
+		if (old_opened_session && old_did_setcred) {
 			gchar *device_name = mdm_slave_get_display_device (d);
 			/*
 			 * Only do logindevperm processing if /dev/console or

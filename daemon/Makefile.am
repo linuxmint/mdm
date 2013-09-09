@@ -52,10 +52,6 @@ mdm_binary_SOURCES = \
 	auth.h \
 	cookie.c \
 	cookie.h \
-	xdmcp.c \
-	xdmcp.h \
-	choose.c \
-	choose.h \
 	filecheck.c \
 	filecheck.h \
 	md5.c \
@@ -70,20 +66,10 @@ mdm_binary_SOURCES = \
 	getvt.h	\
 	$(NULL)
 
-XDMCP_SOURCES =			\
-	mdm-xdmcp-manager.c	\
-	mdm-xdmcp-manager.h	\
-	$(NULL)
-
-if XDMCP_SUPPORT
-mdm_binary_SOURCES += $(XDMCP_SOURCES)
-endif
-
 EXTRA_mdm_binary_SOURCES = 	\
 	verify-pam.c		\
 	verify-crypt.c		\
-	verify-shadow.c		\
-	$(XDMCP_SOURCES)	\
+	verify-shadow.c     \
 	$(NULL)
 
 CONSOLE_KIT_SOURCES = 		\
@@ -108,7 +94,6 @@ mdm_binary_LDADD = \
 	$(top_builddir)/common/libmdmcommon.a	\
 	$(X_LIBS)				\
 	$(XINERAMA_LIBS)			\
-	$(XDMCP_LIBS)				\
 	$(LIBWRAP_LIBS)				\
 	-lXau					\
 	-lX11					\

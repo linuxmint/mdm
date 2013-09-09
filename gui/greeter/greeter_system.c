@@ -175,19 +175,7 @@ greeter_system_append_system_menu (GtkWidget *menu)
 	/* should never be allowed by the UI */
 	if ( ! mdm_config_get_bool (MDM_KEY_SYSTEM_MENU) ||
 	    ve_string_empty (g_getenv ("MDM_IS_LOCAL")))
-		return;
-
-	if (mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
-		w = gtk_image_menu_item_new_with_mnemonic (_("Remote Login via _XDMCP..."));
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w),
-			gtk_image_new_from_icon_name ("preferences-desktop-remote-desktop", GTK_ICON_SIZE_MENU));
-
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), w);
-		gtk_widget_show (GTK_WIDGET (w));
-		g_signal_connect (G_OBJECT (w), "activate",
-				  G_CALLBACK (greeter_chooser_handler),
-				  NULL);
-	}
+		return;	
 
 	/*
 	 * Disable Configuration if using accessibility (AddGtkModules) since
@@ -419,26 +407,7 @@ greeter_system_handler (GreeterItemInfo *info,
 			      suspend_radio,
 			      FALSE, FALSE, 4);
 	  gtk_widget_show (suspend_radio);
-  }
-
-  if (mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
-	  if (group_radio != NULL)
-		  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (group_radio));
-	  chooser_radio = gtk_radio_button_new_with_mnemonic (radio_group,
-							     _("Run _XDMCP chooser"));
-	  group_radio = chooser_radio;
-	  gtk_tooltips_set_tip (tooltips, GTK_WIDGET (chooser_radio),
-				_("Run an XDMCP chooser which will allow "
-				  "you to log into available remote "
-				  "computers, if there are any."),
-				NULL);
-	  g_signal_connect (G_OBJECT(chooser_radio), "button_press_event",
-			    G_CALLBACK(radio_button_press_event), NULL);
-	  gtk_box_pack_start (GTK_BOX (vbox),
-			      chooser_radio,
-			      FALSE, FALSE, 4);
-	  gtk_widget_show (chooser_radio);
-  }
+  }  
 
   /*
    * Disable Configuration if using accessibility (AddGtkModules) since

@@ -77,7 +77,6 @@ static gboolean  mdm_running           = FALSE;
 static GladeXML  *xml;
 static GladeXML  *xml_add_users;
 static GladeXML  *xml_add_xservers;
-static GladeXML  *xml_xdmcp;
 static GladeXML  *xml_xservers;
 static GladeXML  *xml_commands;
 static GtkWidget *setup_notebook;
@@ -122,7 +121,6 @@ enum {
 
 enum {
 	LOCAL_TAB,
-	REMOTE_TAB,
 	GENERAL_TAB,
 	SECURITY_TAB,
 	USERS_TAB
@@ -1007,87 +1005,6 @@ void init_servers_combobox (int index)
 	xserver_update_delete_sensitivity ();
 }
 
-static void 
-enable_xdmcp_checkbox_toggled (GtkWidget * widget)
-{
-	GtkWidget *configure_xdmcp_vbox;
-	GtkWidget *welcome_message_vbox;	
-
-	configure_xdmcp_vbox = glade_xml_get_widget (xml, "remote_configure_xdmcp_vbox");
-	welcome_message_vbox = glade_xml_get_widget (xml, "remote_welcome_message_vbox");
-
-	if (GTK_TOGGLE_BUTTON (widget)->active == FALSE) {
-		GtkWidget *allowremoteauto;
-		GtkWidget *allowremoteroot;
-
-		allowremoteauto = glade_xml_get_widget (xml, "allowremoteauto");
-		allowremoteroot = glade_xml_get_widget (xml, "allowremoteroot");
-
-		gtk_widget_set_sensitive (allowremoteauto, FALSE);
-		gtk_widget_set_sensitive (allowremoteroot, FALSE);
-		
-		gtk_widget_hide (welcome_message_vbox);
-		gtk_widget_hide (configure_xdmcp_vbox);
-		
-		mdm_setup_config_set_bool (MDM_KEY_XDMCP, FALSE);
-	}
-	else {
-		GtkWidget *timedlogin;
-		GtkWidget *allowremoteauto;
-		GtkWidget *allowremoteroot;
-
-		timedlogin = glade_xml_get_widget (xml, "timedlogin");
-		allowremoteauto = glade_xml_get_widget (xml, "allowremoteauto");
-		allowremoteroot = glade_xml_get_widget (xml, "allowremoteroot");
-
-		gtk_widget_set_sensitive (allowremoteauto, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (timedlogin)));
-		gtk_widget_set_sensitive (allowremoteroot, TRUE);
-		
-		gtk_widget_show (welcome_message_vbox);
-		gtk_widget_show (configure_xdmcp_vbox);	
-		
-		mdm_setup_config_set_bool (MDM_KEY_XDMCP, TRUE);				
-	}
-	
-	update_greeters ();	
-}
-
-static void
-refresh_remote_tab (void)
-{	
-	GtkWidget *enable_xdmcp_checkbox;
-	GtkWidget *configure_xdmcp_vbox;
-	GtkWidget *welcome_message_vbox;
-	GtkWidget *allowremoteroot;
-	GtkWidget *allowremoteauto;
-	
-	enable_xdmcp_checkbox = glade_xml_get_widget (xml, "enable_xdmcp_checkbox");	
-	configure_xdmcp_vbox = glade_xml_get_widget (xml, "remote_configure_xdmcp_vbox");
-	welcome_message_vbox = glade_xml_get_widget (xml, "remote_welcome_message_vbox");
-	allowremoteroot = glade_xml_get_widget (xml, "allowremoteroot");
-	allowremoteauto = glade_xml_get_widget (xml, "allowremoteauto");
-	
-	gtk_button_set_label (GTK_BUTTON (enable_xdmcp_checkbox), _("Enable remote logins via XDMCP"));
-	
-	if (mdm_config_get_bool (MDM_KEY_XDMCP) == FALSE) {									
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (enable_xdmcp_checkbox), FALSE);
-		gtk_widget_set_sensitive (allowremoteroot, FALSE);
-		gtk_widget_set_sensitive (allowremoteauto, FALSE);		
-		gtk_widget_hide (welcome_message_vbox);
-		gtk_widget_hide (configure_xdmcp_vbox);
-	}
-	else {							
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (enable_xdmcp_checkbox), TRUE);
-		gtk_widget_set_sensitive (allowremoteauto, TRUE);
-		gtk_widget_set_sensitive (allowremoteroot, TRUE);
-		gtk_widget_show (welcome_message_vbox);
-		gtk_widget_show (configure_xdmcp_vbox);
-	}
-		                 
-	g_signal_connect (G_OBJECT (enable_xdmcp_checkbox), "toggled",
-	                  G_CALLBACK (enable_xdmcp_checkbox_toggled), enable_xdmcp_checkbox);	
-}
-
 /*
  * We probably should check the server definition in the defaults.conf file
  * and just erase the section if the values are the same, like we do for the
@@ -1607,17 +1524,6 @@ toggle_toggled_sensitivity_negative (GtkWidget *toggle, GtkWidget *depend)
 }
 
 static void
-timedlogin_allow_remote_toggled (GtkWidget *toggle, GtkWidget *depend)
-{
-	if (mdm_config_get_bool (MDM_KEY_XDMCP) == TRUE) {
-		gtk_widget_set_sensitive (depend, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)));
-	}
-	else {
-		gtk_widget_set_sensitive (depend, FALSE);
-	}		
-}
-
-static void
 setup_notify_toggle (const char *name,
 		     const char *key)
 {
@@ -1678,27 +1584,18 @@ setup_notify_toggle (const char *name,
 		GtkWidget *timedlogin_seconds_label;
 		GtkWidget *timedlogin_seconds_spin_button;
 		GtkWidget *timedlogin_seconds_units;
-		GtkWidget *timedlogin_allow_remote;
 		
 		timedlogin_label = glade_xml_get_widget (xml, "timed_login_label");
 		timedlogin_combo = glade_xml_get_widget (xml, "timedlogin_combo");
 		timedlogin_seconds_label = glade_xml_get_widget (xml, "timedlogin_seconds_label");
 		timedlogin_seconds_spin_button = glade_xml_get_widget (xml,"timedlogin_seconds");
 		timedlogin_seconds_units = glade_xml_get_widget (xml,"timedlogin_seconds_units");
-		timedlogin_allow_remote = glade_xml_get_widget (xml, "allowremoteauto");
 
 		gtk_widget_set_sensitive (timedlogin_label, val);
 		gtk_widget_set_sensitive (timedlogin_combo, val);
 		gtk_widget_set_sensitive (timedlogin_seconds_label, val);
 		gtk_widget_set_sensitive (timedlogin_seconds_spin_button, val);
-		gtk_widget_set_sensitive (timedlogin_seconds_units, val);
-
-		if (mdm_config_get_bool (MDM_KEY_XDMCP) == FALSE) {
-			gtk_widget_set_sensitive (timedlogin_allow_remote, FALSE);
-		}
-		else {
-			gtk_widget_set_sensitive (timedlogin_allow_remote, val);		
-		}
+		gtk_widget_set_sensitive (timedlogin_seconds_units, val);		
 
 		g_signal_connect (G_OBJECT (toggle), "toggled",
 		                  G_CALLBACK (toggle_toggled), toggle);
@@ -1712,8 +1609,6 @@ setup_notify_toggle (const char *name,
 		                  G_CALLBACK (toggle_toggled_sensitivity_positive), timedlogin_seconds_spin_button);
 		g_signal_connect (G_OBJECT (toggle), "toggled",	
 		                  G_CALLBACK (toggle_toggled_sensitivity_positive), timedlogin_seconds_units);
-		g_signal_connect (G_OBJECT (toggle), "toggled",	
-		                  G_CALLBACK (timedlogin_allow_remote_toggled), timedlogin_allow_remote);
 	}
 	else if (strcmp ("hide_vis_feedback_passwd_checkbox", ve_sure_string (name)) == 0) {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), val);
@@ -1845,29 +1740,6 @@ setup_commands_notify_toggle (const char *name,
 		          G_CALLBACK (command_toggle_toggled), NULL);
 }
 
-#ifdef HAVE_LIBXDMCP
-static void
-setup_xdmcp_notify_toggle (const char *name,
-                           const char *key)
-{
-	GtkWidget *toggle;
-	gboolean val;
-
-	toggle = glade_xml_get_widget (xml_xdmcp, name);
-
-	val = mdm_config_get_bool ((gchar *)key);
-
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), val);
-
-	g_object_set_data_full (G_OBJECT (toggle),
-	                        "key", g_strdup (key),
-	                        (GDestroyNotify) g_free);
-
-	g_signal_connect (G_OBJECT (toggle), "toggled",
-		          G_CALLBACK (toggle_toggled), NULL);
-}
-#endif
-
 static void
 root_not_allowed (GtkWidget *combo_box)
 {
@@ -1993,27 +1865,6 @@ setup_intspin (const char *name,
 	g_signal_connect (G_OBJECT (spin), "value_changed",
 			  G_CALLBACK (intspin_changed), NULL);
 }
-
-#ifdef HAVE_LIBXDMCP
-static void
-setup_xdmcp_intspin (const char *name,
-	             const char *key)
-{
-	GtkWidget *spin;
-	int val = mdm_config_get_int ((gchar *)key);
-
-	spin = glade_xml_get_widget (xml_xdmcp, name);
-
-	g_object_set_data_full (G_OBJECT (spin),
-				"key", g_strdup (key),
-				(GDestroyNotify) g_free);
-
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (spin), val);
-
-	g_signal_connect (G_OBJECT (spin), "value_changed",
-			  G_CALLBACK (intspin_changed), NULL);
-}
-#endif
 
 static GtkListStore *
 setup_include_exclude (GtkWidget *treeview, const char *key)
@@ -2708,28 +2559,14 @@ local_background_type_toggle_timeout (GtkWidget *toggle)
 {
 	GtkWidget *color_radiobutton;
 	GtkWidget *image_radiobutton;
-	GtkWidget *color_remote_radiobutton;
-	GtkWidget *image_remote_radiobutton;
 	gboolean image_value;
 	gboolean color_value;
 
 	image_radiobutton = glade_xml_get_widget (xml, "local_background_image_checkbutton");
 	color_radiobutton = glade_xml_get_widget (xml, "local_background_color_checkbutton");
-	image_remote_radiobutton = glade_xml_get_widget (xml, "remote_background_image_checkbutton");
-	color_remote_radiobutton = glade_xml_get_widget (xml, "remote_background_color_checkbutton");
 
-	if (gtk_notebook_get_current_page (GTK_NOTEBOOK (setup_notebook)) == LOCAL_TAB) {
-		image_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (image_radiobutton));
-		color_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (color_radiobutton));
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_remote_radiobutton), image_value);
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_remote_radiobutton), color_value);
-	}
-	else { 
-		image_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (image_remote_radiobutton));
-		color_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (color_remote_radiobutton));
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_radiobutton), image_value);
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (color_radiobutton), color_value);
-	}
+	image_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (image_radiobutton));
+	color_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (color_radiobutton));		
 		
 	if (image_value == TRUE && color_value == TRUE) {		
 		/* Image & color */
@@ -2779,16 +2616,6 @@ setup_greeter_toggle (const char *name,
 
 		g_signal_connect (G_OBJECT (toggle), "toggled",	
 			G_CALLBACK (sensitive_entry_toggled), welcome);
-
-	} else if (strcmp ("sg_defaultwelcomeremote", ve_sure_string (name)) == 0) {
-		GtkWidget *welcomeremote = glade_xml_get_widget (xml, "welcomeremote");
-		GtkWidget *customremote = glade_xml_get_widget (xml, "sg_customwelcomeremote");
-
-		gtk_widget_set_sensitive (welcomeremote, !val);
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (customremote), !val);
-
-		g_signal_connect (G_OBJECT (toggle), "toggled",	
-			G_CALLBACK (sensitive_entry_toggled), welcomeremote);
 	
 	} else if (strcmp ("fb_allusers", ve_sure_string (name)) == 0) {
 
@@ -2825,29 +2652,7 @@ greeter_color_timeout (GtkWidget *picker)
 	GdkColor color_val;
 	char *val, *color;
 
-	gtk_color_button_get_color (GTK_COLOR_BUTTON (picker), &color_val);
-	
-	if (gtk_notebook_get_current_page (GTK_NOTEBOOK (setup_notebook)) == LOCAL_TAB) {
-
-		GtkWidget *colorbutton;
-		
-		if (strcmp (MDM_KEY_GRAPHICAL_THEMED_COLOR, ve_sure_string (key)) == 0) {
-			colorbutton = glade_xml_get_widget (xml, "remote_background_theme_colorbutton");
-		} else {
-			colorbutton = glade_xml_get_widget (xml, "remote_background_colorbutton");
-		}
-		gtk_color_button_set_color (GTK_COLOR_BUTTON (colorbutton), &color_val);
-	}
-	else {
-		GtkWidget *colorbutton;
-
-		if (strcmp (MDM_KEY_GRAPHICAL_THEMED_COLOR, ve_sure_string (key)) == 0) {
-			colorbutton = glade_xml_get_widget (xml, "local_background_theme_colorbutton");
-		} else {
-			colorbutton = glade_xml_get_widget (xml, "local_background_colorbutton");
-		}
-		gtk_color_button_set_color (GTK_COLOR_BUTTON (colorbutton), &color_val);
-	}
+	gtk_color_button_get_color (GTK_COLOR_BUTTON (picker), &color_val);	
 	
 	color = g_strdup_printf ("#%02x%02x%02x",
 	                         (guint16)color_val.red / 256, 
@@ -3106,39 +2911,6 @@ setup_greeter_untranslate_entry (const char *name,
 	g_free (val);
 }
 
-#ifdef HAVE_LIBXDMCP
-static void
-xdmcp_button_clicked (void)
-{
-	static GtkWidget *dialog = NULL;
-
-	if (dialog == NULL) {
-
-		GtkWidget *parent;
-
-		xml_xdmcp = glade_xml_new (MDM_GLADE_DIR "/mdmsetup.glade", "xdmcp_dialog", NULL);
-
-		parent = glade_xml_get_widget (xml, "setup_dialog");
-		dialog = glade_xml_get_widget (xml_xdmcp, "xdmcp_dialog");
-
-		gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
-		gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
-
-		setup_xdmcp_notify_toggle ("honour_indirect", MDM_KEY_INDIRECT);
-		setup_xdmcp_intspin ("udpport", MDM_KEY_UDP_PORT);
-		setup_xdmcp_intspin ("maxpending", MDM_KEY_MAX_PENDING);
-		setup_xdmcp_intspin ("maxpendingindirect", MDM_KEY_MAX_INDIRECT);
-		setup_xdmcp_intspin ("maxremotesessions", MDM_KEY_MAX_SESSIONS);
-		setup_xdmcp_intspin ("maxwait", MDM_KEY_MAX_WAIT);
-		setup_xdmcp_intspin ("maxwaitindirect", MDM_KEY_MAX_WAIT_INDIRECT);
-		setup_xdmcp_intspin ("displaysperhost", MDM_KEY_DISPLAYS_PER_HOST);
-		setup_xdmcp_intspin ("pinginterval", MDM_KEY_PING_INTERVAL);
-	}
-	gtk_dialog_run (GTK_DIALOG (dialog));
-	gtk_widget_hide (dialog);
-}
-#endif
-
 static void
 apply_command_changes (GObject *object, gint response, gpointer command_data)
 {
@@ -3379,22 +3151,6 @@ setup_greeter_combobox (const char *name,
 	                  G_CALLBACK (combobox_changed), NULL);
 
 	g_free (greetval);
-}
-
-static void
-setup_xdmcp_support (void)
-{
-	GtkWidget *xdmcp_button;
-
-	xdmcp_button = glade_xml_get_widget (xml, "xdmcp_configbutton");
-#ifndef HAVE_LIBXDMCP
-	/* HAVE_LIBXDMCP */
-	gtk_widget_set_sensitive (xdmcp_button, FALSE);
-#else
-	/* HAVE_LIBXDMCP */
-	gtk_widget_set_sensitive (xdmcp_button, TRUE);
-#endif
-
 }
 
 /* This function concatenates *string onto *strings_list with the addition
@@ -5799,13 +5555,9 @@ setup_security_tab (void)
 {
 	GtkWidget *checkbox;
 	GtkWidget *label;
-	GtkWidget *XDMCPbutton;
 
 	/* Setup Local administrator login setttings */
 	setup_notify_toggle ("allowroot", MDM_KEY_ALLOW_ROOT);
-
-	/* Setup Remote administrator login setttings */
-	setup_notify_toggle ("allowremoteroot", MDM_KEY_ALLOW_REMOTE_ROOT);
 
 	/* Setup Enable debug message to system log */
 	setup_notify_toggle ("enable_debug", MDM_KEY_DEBUG);
@@ -5840,9 +5592,6 @@ setup_security_tab (void)
 	setup_intspin ("timedlogin_seconds", MDM_KEY_TIMED_LOGIN_DELAY);
 	setup_notify_toggle ("timedlogin", MDM_KEY_TIMED_LOGIN_ENABLE);
 
-	/* Setup Allow remote timed logins */
-	setup_notify_toggle ("allowremoteauto", MDM_KEY_ALLOW_REMOTE_AUTOLOGIN);
-
 	/* Setup check dir owner */
 	setup_notify_toggle ("check_dir_owner_checkbutton", MDM_KEY_CHECK_DIR_OWNER);	
 	
@@ -5853,12 +5602,6 @@ setup_security_tab (void)
 	
 	/* Setup MinimalUID */
 	setup_intspin ("minimal_uid_spinbutton", MDM_KEY_MINIMAL_UID);
-
-	/* Setup Configure XDMCP button */
-	XDMCPbutton = glade_xml_get_widget (xml, "config_xserverbutton");
-	setup_xdmcp_support ();
-	g_signal_connect (G_OBJECT (XDMCPbutton), "clicked",
-	                  G_CALLBACK (xserver_button_clicked), NULL);
 }
 
 static GList *
@@ -6565,14 +6308,6 @@ setup_local_welcome_message (void)
 }
 
 static void
-setup_remote_welcome_message (void)	
-{
-	/* Initialize and hookup callbacks for local welcome message settings */ 
-	setup_greeter_toggle ("sg_defaultwelcomeremote", MDM_KEY_DEFAULT_REMOTE_WELCOME);
- 	setup_greeter_untranslate_entry ("welcomeremote", MDM_KEY_REMOTE_WELCOME);
-}
-
-static void
 setup_local_plain_settings (void)
 {
 	/* Style setting */
@@ -6767,22 +6502,6 @@ setup_local_tab (void)
 	setup_local_html_themed_settings();
 }
 
-static void
-setup_remote_tab (void)
-{
-	GtkWidget *xdmcp_button;
-
-	xdmcp_button = glade_xml_get_widget (xml, "xdmcp_configbutton");
-
-#ifndef HAVE_LIBXDMCP
-	gtk_widget_set_sensitive (xdmcp_button, FALSE);
-#else
-	g_signal_connect (G_OBJECT (xdmcp_button), "clicked",
-	                  G_CALLBACK (xdmcp_button_clicked), NULL);
-#endif	
-}
-
-
 static GtkWidget *
 setup_gui (void)
 {
@@ -6806,9 +6525,6 @@ setup_gui (void)
 	glade_helper_tagify_label (xml, "local_welcome_message_label", "b");
 	glade_helper_tagify_label (xml, "label_welcome_note", "i");
 	glade_helper_tagify_label (xml, "label_welcome_note", "small");		
-	glade_helper_tagify_label (xml, "remote_welcome_message_label", "b");
-	glade_helper_tagify_label (xml, "label_welcomeremote_note", "i");
-	glade_helper_tagify_label (xml, "label_welcomeremote_note", "small");
 	glade_helper_tagify_label (xml, "autologin", "b");
 	glade_helper_tagify_label (xml, "timedlogin", "b");
 	glade_helper_tagify_label (xml, "security_label", "b");
@@ -6818,10 +6534,8 @@ setup_gui (void)
 	/* Setup preference tabs */
 	setup_general_tab ();
 	setup_local_tab (); 
-	setup_remote_tab ();
 	setup_security_tab ();
 	setup_users_tab ();
-	refresh_remote_tab();
 
 	return (dialog);
 }

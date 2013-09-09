@@ -43,9 +43,7 @@
 
 enum {
 	DISPLAY_UNBORN /* Not yet started */,
-	DISPLAY_ALIVE /* Yay! we're alive (non-XDMCP) */,
-	XDMCP_PENDING /* Pending XDMCP display */,
-	XDMCP_MANAGED /* Managed XDMCP display */,
+	DISPLAY_ALIVE /* Yay! we're alive */,	
 	DISPLAY_DEAD /* Left for dead */,
 	DISPLAY_CONFIG /* in process of being configured */
 };

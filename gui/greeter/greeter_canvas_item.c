@@ -181,16 +181,11 @@ make_menubar (void)
 
 	greeter_system_append_system_menu (menu);
 
-	/* Add a quit/disconnect item when in xdmcp mode or flexi mode */
+	/* Add a quit/disconnect item when flexi mode */
 	/* Do note that the order is important, we always want "Quit" for
-	 * flexi, even if not local (non-local xnest).  and Disconnect
-	 * only for xdmcp */
+	 * flexi. */
 	if ( ! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER"))) {
 		w = gtk_image_menu_item_new_with_mnemonic (_("_Quit"));
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w), 
-			gtk_image_new_from_icon_name ("system-log-out", GTK_ICON_SIZE_MENU));
-	} else if (ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
-		w = gtk_image_menu_item_new_with_mnemonic (_("D_isconnect"));
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w), 
 			gtk_image_new_from_icon_name ("system-log-out", GTK_ICON_SIZE_MENU));
 	} else {

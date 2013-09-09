@@ -280,10 +280,7 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 	}
 	else if (strcmp(command, "QUIT") == 0) {
 		gtk_main_quit();
-	}
-	else if (strcmp(command, "XDMCP") == 0) {
-		_exit (DISPLAY_RUN_CHOOSER);
-	}
+	}	
 	else if (strcmp(command, "USER") == 0) {
 		printf ("%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_SELECT_USER, message_parts[1]);
         fflush (stdout);
@@ -314,7 +311,6 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 		webkit_execute_script("mdm_hide_restart", NULL);			
 		webkit_execute_script("mdm_hide_shutdown", NULL);
 		webkit_execute_script("mdm_hide_quit", NULL);
-		webkit_execute_script("mdm_hide_xdmcp", NULL);
     }
 	
 	if (!mdm_working_command_exists (mdm_config_get_string (MDM_KEY_SUSPEND)) ||
@@ -331,10 +327,7 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 	}	
 	if (ve_string_empty (g_getenv ("MDM_FLEXI_SERVER")) && ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
 		webkit_execute_script("mdm_hide_quit", NULL);
-	}
-	if (!mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
-		webkit_execute_script("mdm_hide_xdmcp", NULL);
-	}
+	}	
 
 	char * current_lang = g_getenv("LANG");
 	if (current_lang) {	
@@ -658,12 +651,7 @@ greeter_is_capslock_on (void)
   XkbStateRec states;
   Display *dsp;
 
-  /* HACK! incredible hack, if MDM_PARENT_DISPLAY is set we get
-   * indicator state from the parent display, since we must be inside an
-   * Xnest */
-  dsp = get_parent_display ();
-  if (dsp == NULL)
-    dsp = GDK_DISPLAY ();
+  dsp = GDK_DISPLAY ();
 
   if (XkbGetState (dsp, XkbUseCoreKbd, &states) != Success)
       return FALSE;
@@ -1251,7 +1239,6 @@ webkit_init (void) {
 	html = str_replace(html, "$suspend", html_encode(_("Suspend")));
 	html = str_replace(html, "$quit", html_encode(_("Quit")));
 	html = str_replace(html, "$restart", html_encode(_("Restart")));	
-	html = str_replace(html, "$remoteloginviaxdmcp", html_encode(_("Remote Login via XDMCP...")));
 	
 	html = str_replace(html, "$session", html_encode(_("Session")));
 	html = str_replace(html, "$selectsession", html_encode(_("Select a session")));
@@ -1414,7 +1401,6 @@ mdm_read_config (void)
 	mdm_config_get_string (MDM_KEY_INFO_MSG_FONT);
 	mdm_config_get_string (MDM_KEY_LOCALE_FILE);	
 	mdm_config_get_string (MDM_KEY_REBOOT);
-	mdm_config_get_string (MDM_KEY_REMOTE_WELCOME);
 	mdm_config_get_string (MDM_KEY_SESSION_DESKTOP_DIR);
 	mdm_config_get_string (MDM_KEY_SOUND_PROGRAM);
 	mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE);
@@ -1459,11 +1445,9 @@ mdm_read_config (void)
 	mdm_config_get_int    (MDM_KEY_XINERAMA_SCREEN);
 
 	mdm_config_get_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE);
-	mdm_config_get_bool   (MDM_KEY_ALLOW_REMOTE_ROOT);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);	
 	mdm_config_get_bool   (MDM_KEY_CHOOSER_BUTTON);
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
-	mdm_config_get_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_ENTRY_CIRCLES);
 	mdm_config_get_bool   (MDM_KEY_ENTRY_INVISIBLE);
@@ -1531,8 +1515,6 @@ mdm_reread_config (int sig, gpointer data)
 
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
-	    mdm_config_reload_bool   (MDM_KEY_ALLOW_REMOTE_ROOT) ||	    
-	    mdm_config_reload_bool   (MDM_KEY_CHOOSER_BUTTON) ||
 	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_CIRCLES) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_INVISIBLE) ||
@@ -1602,9 +1584,7 @@ mdm_reread_config (int sig, gpointer data)
 	update_clock ();
 	
 	if (mdm_config_reload_string (MDM_KEY_WELCOME) ||
-            mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME) ||
-            mdm_config_reload_string (MDM_KEY_REMOTE_WELCOME) ||
-            mdm_config_reload_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME)) {
+            mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME)) {
 
 		mdm_set_welcomemsg ();
 	}
@@ -1904,9 +1884,7 @@ main (int argc, char *argv[])
 
     /* if a flexiserver, reap self after some time */
     if (mdm_config_get_int (MDM_KEY_FLEXI_REAP_DELAY_MINUTES) > 0 &&
-	! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER")) &&
-	/* but don't reap Xnest flexis */
-	ve_string_empty (g_getenv ("MDM_PARENT_DISPLAY"))) {
+	! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER"))) {
 	    sid = g_signal_lookup ("activate",
 				   GTK_TYPE_MENU_ITEM);
 	    g_signal_add_emission_hook (sid,

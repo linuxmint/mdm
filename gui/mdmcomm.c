@@ -523,9 +523,7 @@ mdmcomm_get_auth_cookie (void)
 		char buffer[40 /* 2*16 == 32, so 40 is enough */];
 
 		/* Only Family local things are considered, all console
-		 * logins DO have this family (and even some local xdmcp
-		 * logins, though those will not pass by mdm itself of
-		 * course) */
+		 * logins DO have this family */
 		if (xau->family != FamilyLocal ||
 		    xau->number_length != strlen (number) ||
 		    strncmp (xau->number, number, xau->number_length) != 0 ||
@@ -665,7 +663,7 @@ mdmcomm_check (gboolean show_dialog)
 }
 
 const char *
-mdmcomm_get_error_message (const char *ret, gboolean use_xnest)
+mdmcomm_get_error_message (const char *ret)
 {
 	/* These need a bit more refinement */
 	if (ret == NULL) {
@@ -688,13 +686,7 @@ mdmcomm_get_error_message (const char *ret, gboolean use_xnest)
 			 "current X server.  You may be missing an "
 			 "X authorization file.");
 	} else if (strncmp (ret, "ERROR 6 ", strlen ("ERROR 6 ")) == 0) {
-		if (use_xnest)
-			return _("The nested X server is not available, "
-				 "or MDM is badly configured.\n"
-				 "Please install the Xnest package in "
-				 "order to use the nested login.");
-		else
-			return _("The X server is not available. "
+		return _("The X server is not available. "
 				 "MDM may be misconfigured.");
 	} else if (strncmp (ret, "ERROR 7 ", strlen ("ERROR 7 ")) == 0) {
 		return _("Trying to set an unknown logout action, or trying "

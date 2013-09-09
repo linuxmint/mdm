@@ -448,10 +448,6 @@ open_ck_session (struct passwd *pwent,
 
 	add_param_int (&iter_struct, "user", pwent->pw_uid);
 	add_param_string (&iter_struct, "x11-display", d->name);
-	add_param_boolean (&iter_struct, "is-local", d->attached);
-	if (! d->attached) {
-		add_param_string (&iter_struct, "remote-host-name", d->hostname);
-	}
 
 	if (d->vt > 0) {
 		char *device;

@@ -260,36 +260,6 @@ mdm_config_get_xservers (gboolean flexible)
 			svr->flexible = FALSE;
 		g_free (temp);
 
-		temp = mdm_config_get_xserver_details (*sec, "CHOOSABLE");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		} else if (g_strncasecmp (temp, "true", 4) == 0)
-			svr->choosable = TRUE;
-		else
-			svr->choosable = FALSE;
-		g_free (temp);
-
-		temp = mdm_config_get_xserver_details (*sec, "HANDLED");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		} else if (g_strncasecmp (temp, "true", 4) == 0)
-			svr->handled = TRUE;
-		else
-			svr->handled = FALSE;
-		g_free (temp);
-
-		temp = mdm_config_get_xserver_details (*sec, "CHOOSER");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		} else if (g_strncasecmp (temp, "true", 4) == 0)
-			svr->chooser = TRUE;
-		else
-			svr->chooser = FALSE;
-		g_free (temp);
-
 		temp = mdm_config_get_xserver_details (*sec, "PRIORITY");
 		if (temp == NULL) {
 			g_free (svr);

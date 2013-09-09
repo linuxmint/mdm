@@ -43,7 +43,6 @@
 #include "display.h"
 #include "slave.h"
 #include "misc.h"
-#include "choose.h"
 #include "auth.h"
 #include "mdm-net.h"
 
@@ -69,13 +68,8 @@ extern gint flexi_servers;
 MdmDisplay *
 mdm_display_alloc (gint id, const gchar *command, const gchar *device)
 {
-    gchar hostname[1024];
     MdmDisplay *d;
-
-    hostname[1023] = '\0';
-    if (gethostname (hostname, 1023) == -1)
-            strcpy (hostname, "localhost.localdomain");
-
+  
     d = g_new0 (MdmDisplay, 1);
 
     d->logout_action = MDM_LOGOUT_ACTION_NONE;
@@ -88,9 +82,7 @@ mdm_display_alloc (gint id, const gchar *command, const gchar *device)
     d->dispstat = DISPLAY_UNBORN;
     d->greetpid = 0;
     d->name = g_strdup_printf (":%d", id);
-    d->hostname = g_strdup (hostname);
-    d->windowpath = NULL;
-    /* Not really used for not XDMCP */
+    d->windowpath = NULL;    
     memset (&(d->addr), 0, sizeof (d->addr));
     d->dispnum = id;
     d->servpid = 0;
@@ -98,7 +90,6 @@ mdm_display_alloc (gint id, const gchar *command, const gchar *device)
     d->sesspid = 0;
     d->slavepid = 0;
     d->type = TYPE_STATIC;
-    d->attached = TRUE;
     d->sessionid = 0;
     d->acctime = 0;
     d->dsp = NULL;
@@ -133,9 +124,6 @@ mdm_display_alloc (gint id, const gchar *command, const gchar *device)
     d->xsession_errors_bytes = 0;
     d->xsession_errors_fd = -1;
     d->session_output_fd = -1;
-
-    d->chooser_output_fd = -1;
-    d->chooser_last_line = NULL;
 
     d->theme_name = NULL;
 
@@ -313,10 +301,7 @@ wait_again:
 		    d->sesspid = 0;
 		    if (d->greetpid > 1)
 			    kill (-(d->greetpid), SIGTERM);
-		    d->greetpid = 0;
-		    if (d->chooserpid > 1)
-			    kill (-(d->chooserpid), SIGTERM);
-		    d->chooserpid = 0;
+		    d->greetpid = 0;		    		    
 		    if (d->servpid > 1)
 			    kill (d->servpid, SIGTERM);
 		    d->servpid = 0;
@@ -589,19 +574,8 @@ mdm_display_manage (MdmDisplay *d)
     contracts_post_fork_parent ((pid > 0));
 #endif
 
-    /* invalidate chosen hostname */
-    g_free (d->chosen_hostname);
-    d->chosen_hostname = NULL;
-
-    /* use_chooser can only be temporary, if you want it permanent you set it
-       up in the server definition with "chooser=true" and it will get set up
-       during server command line resolution */
-    d->use_chooser = FALSE;
-
-    if (SERVER_IS_LOCAL (d)) {
-	    d->dispstat = DISPLAY_ALIVE;
-    }
-
+    d->dispstat = DISPLAY_ALIVE;
+    
     /* reset sleep to 1, to sleep just in case (avoids X server races) */
     d->sleep_before_run = 1;
 
@@ -709,12 +683,6 @@ mdm_display_dispose (MdmDisplay *d)
 	d->name = NULL;
     }
     
-    g_free (d->chosen_hostname);
-    d->chosen_hostname = NULL;
-
-    g_free (d->hostname);
-    d->hostname = NULL;
-
     g_free (d->windowpath);
     d->windowpath = NULL;
 
@@ -726,15 +694,7 @@ mdm_display_dispose (MdmDisplay *d)
     d->authfile = NULL;
 
     g_free (d->authfile_mdm);
-    d->authfile_mdm = NULL;
-
-    if (d->type == TYPE_XDMCP_PROXY) {
-	    if (d->parent_auth_file != NULL) {
-		    VE_IGNORE_EINTR (g_unlink (d->parent_auth_file));
-	    }
-	    g_free (d->parent_auth_file);
-	    d->parent_auth_file = NULL;
-    }
+    d->authfile_mdm = NULL;    
 
     if (d->parent_temp_auth_file != NULL) {
 	    VE_IGNORE_EINTR (g_unlink (d->parent_temp_auth_file));
@@ -797,15 +757,7 @@ mdm_display_dispose (MdmDisplay *d)
     if (d->xsession_errors_fd >= 0) {
 	    VE_IGNORE_EINTR (close (d->xsession_errors_fd));
 	    d->xsession_errors_fd = -1;
-    }
-
-    g_free (d->chooser_last_line);
-    d->chooser_last_line = NULL;
-
-    if (d->chooser_output_fd >= 0) {
-	    VE_IGNORE_EINTR (close (d->chooser_output_fd));
-	    d->chooser_output_fd = -1;
-    }
+    }   
 
     g_free (d->theme_name);
     d->theme_name = NULL;

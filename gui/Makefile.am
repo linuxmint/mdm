@@ -47,14 +47,10 @@ libexec_PROGRAMS = \
 sbin_PROGRAMS = \
 	mdmsetup
 
-bin_PROGRAMS = \
-	@MDMXNESTCHOOSER@	\
+bin_PROGRAMS = \	
 	mdmflexiserver      \
 	mdmdynamic
-EXTRA_PROGRAMS = mdmchooser mdmXnestchooser
-
-mdmXnestchooser_SOURCES = \
-	mdmXnestchooser.c
+EXTRA_PROGRAMS = mdmchooser
 
 mdmflexiserver_SOURCES = \
 	mdmflexiserver.c
@@ -123,7 +119,6 @@ mdmchooser_LDADD = \
 	$(X_EXTRA_LIBS)		\
 	$(XINERAMA_LIBS)	\
 	$(X_LIBS)		\
-	$(XDMCP_LIBS)		\
 	-lX11			\
 	-lXau			\
 	-lm				\
@@ -196,21 +191,6 @@ mdmsetup_LDADD = \
 	-lX11			\
 	$(NULL)
 
-mdmXnestchooser_LDADD = \
-	libmdmcommon.a		\
-	$(GUI_LIBS)		\
-	$(INTLLIBS)		\
-	$(GLIB_LIBS)		\
-	$(GOBJECT_LIBS)		\
-	$(GDK_LIBS)		\
-	$(EXTRA_SOCKET_LIB)	\
-	$(EXTRA_NSL_LIB)	\
-	$(X_LIBS)		\
-	-lXau			\
-	-lX11			\
-	$(top_builddir)/common/libmdmcommon.a \
-	$(NULL)
-
 mdmflexiserver_LDADD = \
 	libmdmcommon.a		\
 	$(GUI_LIBS)		\
@@ -244,15 +224,13 @@ mdmdynamic_LDADD = 		\
 Systemdir = $(datadir)/mdm/applications
 System_files = \
 	mdmsetup.desktop	\
-	mdmflexiserver.desktop	\
-	mdmflexiserver-xnest.desktop
+	mdmflexiserver.desktop	
 System_in_files = \
 	mdmsetup.desktop.in.in			\
-	mdmflexiserver.desktop.in		\
-	mdmflexiserver-xnest.desktop.in.in
+	mdmflexiserver.desktop.in	
 System_DATA = $(System_files)
 
-CLEANFILES = mdmsetup.desktop mdmsetup.desktop.in mdmflexiserver.desktop mdmflexiserver-xnest.desktop mdmflexiserver-xnest.desktop.in
+CLEANFILES = mdmsetup.desktop mdmsetup.desktop.in mdmflexiserver.desktop
 
 mdmsetup.desktop.in: $(srcdir)/mdmsetup.desktop.in.in
 	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/mdmsetup.desktop.in.in \
@@ -262,10 +240,6 @@ mdmsetup.desktop.in: $(srcdir)/mdmsetup.desktop.in.in
 
 Gladedir = $(datadir)/mdm
 Glade_DATA = mdmsetup.glade mdmchooser.glade
-
-install-data-local:
-	-test -z "$(DESTDIR)$(bindir)/mdmXnest" || rm -f $(DESTDIR)$(bindir)/mdmXnest
-	$(LN_S) -f mdmXnestchooser $(DESTDIR)$(bindir)/mdmXnest
 
 EXTRA_DIST = \
 	$(Glade_DATA)		\

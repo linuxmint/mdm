@@ -56,7 +56,6 @@ static const char *server        = NULL;
 static const char *chosen_server = NULL;
 static char *auth_cookie         = NULL;
 static gboolean got_standard     = FALSE;
-static gboolean use_xnest        = FALSE;
 static gboolean debug_in         = FALSE;
 static gboolean authenticate     = FALSE;
 static gboolean no_lock          = FALSE;
@@ -66,7 +65,6 @@ static gchar **args_remaining    = NULL;
 
 GOptionEntry options [] = {
 	{ "command", 'c', 0, G_OPTION_ARG_STRING, &send_command, N_("Send the specified protocol command to MDM"), N_("COMMAND") },
-	{ "xnest", 'n', 0, G_OPTION_ARG_NONE, &use_xnest, N_("Xnest mode"), NULL },
 	{ "no-lock", 'l', 0, G_OPTION_ARG_NONE, &no_lock, N_("Do not lock current screen"), NULL },
 	{ "debug", 'd', 0, G_OPTION_ARG_NONE, &debug_in, N_("Debugging output"), NULL },
 	{ "authenticate", 'a', 0, G_OPTION_ARG_NONE, &authenticate, N_("Authenticate before running --command"), NULL },
@@ -147,7 +145,7 @@ change_vt (int vt)
 	if (ve_string_empty (ret) ||
 	    strcmp (ret, "OK") != 0) {
 		GtkWidget *dialog;
-		const char *message = mdmcomm_get_error_message (ret, use_xnest);
+		const char *message = mdmcomm_get_error_message (ret);
 
 		dialog = hig_dialog_new (NULL /* parent */,
 					 GTK_DIALOG_MODAL /* flags */,
@@ -885,72 +883,39 @@ main (int argc, char *argv[])
 	 * servers
 	 */
 	auth_cookie = mdmcomm_get_auth_cookie ();
+	
+	/* check for other displays/logged in users */
+	check_for_users ();
 
-	if (use_xnest) {
-		char *cookie = mdmcomm_get_a_cookie (FALSE /* binary */);
+	if (auth_cookie == NULL) {
 
-		if (cookie == NULL) {
+		/* At this point we are done using the socket, so close it */
+		mdmcomm_comm_bulk_stop ();
 
-			/* At this point we are done using the socket, so close it */
-			mdmcomm_comm_bulk_stop ();
-
-			dialog = hig_dialog_new (NULL /* parent */,
-						 GTK_DIALOG_MODAL /* flags */,
-						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_OK,
-						 _("You do not seem to have the "
-						   "authentication needed for this "
-						   "operation"),
-						 _("Perhaps your .Xauthority "
-						   "file is not set up correctly."));
-			gtk_widget_show_all (dialog);
-			gtk_dialog_run (GTK_DIALOG (dialog));
-			gtk_widget_destroy (dialog);
-			return 1;
-		}
-		command = g_strdup_printf (MDM_SUP_FLEXI_XNEST " %s %d %s %s",
-					   mdmcomm_get_display (),
-					   (int)getuid (),
-					   cookie,
-					   XauFileName ());
-		g_free (cookie);
-		version = "1.0.0.0";
-		auth_cookie = NULL;
-	} else {
-
-		/* check for other displays/logged in users */
-		check_for_users ();
-
-		if (auth_cookie == NULL) {
-
-			/* At this point we are done using the socket, so close it */
-			mdmcomm_comm_bulk_stop ();
-
-			dialog = hig_dialog_new (NULL /* parent */,
-						 GTK_DIALOG_MODAL /* flags */,
-						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_OK,
-						 _("You do not seem to be logged in on the "
-						   "console"),
-						 _("Starting a new login only "
-						   "works correctly on the console."));
-			gtk_dialog_set_has_separator (GTK_DIALOG (dialog),
-						      FALSE);
-			gtk_widget_show_all (dialog);
-			gtk_dialog_run (GTK_DIALOG (dialog));
-			gtk_widget_destroy (dialog);
-			return 1;
-		}
-
-		read_servers ();
-		server = choose_server ();
-		if (server == NULL)
-			command = g_strdup (MDM_SUP_FLEXI_XSERVER);
-		else
-			command = g_strdup_printf (MDM_SUP_FLEXI_XSERVER " %s",
-						   server);
-		version = "1.0.0.0";
+		dialog = hig_dialog_new (NULL /* parent */,
+					 GTK_DIALOG_MODAL /* flags */,
+					 GTK_MESSAGE_ERROR,
+					 GTK_BUTTONS_OK,
+					 _("You do not seem to be logged in on the "
+					   "console"),
+					 _("Starting a new login only "
+					   "works correctly on the console."));
+		gtk_dialog_set_has_separator (GTK_DIALOG (dialog),
+					      FALSE);
+		gtk_widget_show_all (dialog);
+		gtk_dialog_run (GTK_DIALOG (dialog));
+		gtk_widget_destroy (dialog);
+		return 1;
 	}
+
+	read_servers ();
+	server = choose_server ();
+	if (server == NULL)
+		command = g_strdup (MDM_SUP_FLEXI_XSERVER);
+	else
+		command = g_strdup_printf (MDM_SUP_FLEXI_XSERVER " %s",
+					   server);
+	version = "1.0.0.0";	
 
 	ret = mdmcomm_call_mdm (command, auth_cookie, version, 5);
 	g_free (command);
@@ -965,7 +930,7 @@ main (int argc, char *argv[])
 
 		/* if we switched to a different screen as a result of this,
 		 * lock the current screen */
-		if ( ! no_lock && ! use_xnest) {
+		if ( ! no_lock ) {
 			maybe_lock_screen ();
 		}
 
@@ -974,7 +939,7 @@ main (int argc, char *argv[])
 		return 0;
 	}
 
-	message = mdmcomm_get_error_message (ret, use_xnest);
+	message = mdmcomm_get_error_message (ret);
 
 	dialog = hig_dialog_new (NULL /* parent */,
 				 GTK_DIALOG_MODAL /* flags */,

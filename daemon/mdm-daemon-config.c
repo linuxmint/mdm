@@ -810,10 +810,6 @@ lookup_notify_key (MdmConfig  *config,
 	/* bools */
 	if (is_key (keystring, MDM_KEY_ALLOW_ROOT))
 		nkey = g_strdup (MDM_NOTIFY_ALLOW_ROOT);
-	else if (is_key (keystring, MDM_KEY_ALLOW_REMOTE_ROOT))
-		nkey = g_strdup (MDM_NOTIFY_ALLOW_REMOTE_ROOT);
-	else if (is_key (keystring, MDM_KEY_ALLOW_REMOTE_AUTOLOGIN))
-		nkey = g_strdup (MDM_NOTIFY_ALLOW_REMOTE_AUTOLOGIN);
 	else if (is_key (keystring, MDM_KEY_SYSTEM_MENU))
 		nkey = g_strdup (MDM_NOTIFY_SYSTEM_MENU);
 	else if (is_key (keystring, MDM_KEY_CONFIG_AVAILABLE))
@@ -834,8 +830,6 @@ lookup_notify_key (MdmConfig  *config,
 	/* strings */
 	else if (is_key (keystring, MDM_KEY_GREETER))
 		nkey = g_strdup (MDM_NOTIFY_GREETER);
-	else if (is_key (keystring, MDM_KEY_REMOTE_GREETER))
-		nkey = g_strdup (MDM_NOTIFY_REMOTE_GREETER);
 	else if (is_key (keystring, MDM_KEY_SOUND_ON_LOGIN_FILE))
 		nkey = g_strdup (MDM_NOTIFY_SOUND_ON_LOGIN_FILE);
 	else if (is_key (keystring, MDM_KEY_SOUND_ON_LOGIN_SUCCESS_FILE))
@@ -1097,19 +1091,7 @@ mdm_daemon_config_load_xserver (MdmConfig  *config,
 	res = mdm_config_get_value (config, group, "flexible", &value);
 	if (res) {
 		svr->flexible = mdm_config_value_get_bool (value);
-	}
-	res = mdm_config_get_value (config, group, "choosable", &value);
-	if (res) {
-		svr->choosable = mdm_config_value_get_bool (value);
-	}
-	res = mdm_config_get_value (config, group, "handled", &value);
-	if (res) {
-		svr->handled = mdm_config_value_get_bool (value);
-	}
-	res = mdm_config_get_value (config, group, "chooser", &value);
-	if (res) {
-		svr->chooser = mdm_config_value_get_bool (value);
-	}
+	}	
 
 	/* int */
 	res = mdm_config_get_value (config, group, "priority", &value);
@@ -1171,8 +1153,6 @@ mdm_daemon_config_ensure_one_xserver (MdmConfig *config)
 		svr->name      = g_strdup ("Standard server");
 		svr->command   = g_strdup (X_SERVER);
 		svr->flexible  = TRUE;
-		svr->choosable = TRUE;
-		svr->handled   = TRUE;
 		svr->priority  = MDM_PRIO_DEFAULT;
 
 		xservers       = g_slist_append (xservers, svr);
@@ -1594,22 +1574,6 @@ validate_greeter (MdmConfig          *config,
 }
 
 static gboolean
-validate_remote_greeter (MdmConfig          *config,
-			 MdmConfigSourceType source,
-			 MdmConfigValue     *value)
-{
-	const char *str;
-
-	str = mdm_config_value_get_string (value);
-
-	if (str == NULL || str[0] == '\0') {
-		mdm_error (_("%s: No remote greeter specified."), "mdm_config_parse");
-	}
-
-	return TRUE;
-}
-
-static gboolean
 validate_session_desktop_dir (MdmConfig          *config,
 			      MdmConfigSourceType source,
 			      MdmConfigValue     *value)
@@ -1647,39 +1611,6 @@ validate_password_required (MdmConfig          *config,
 		val = (g_ascii_strcasecmp (str, "YES") == 0);
 		mdm_config_value_set_bool (value, val);
 	}
-
-	return TRUE;
-}
-
-static gboolean
-validate_allow_remote_root (MdmConfig          *config,
-			    MdmConfigSourceType source,
-			    MdmConfigValue     *value)
-{
-	char *str;
-
-	str = mdm_read_default ("CONSOLE=");
-	if (str != NULL && str[0] == '\0') {
-		gboolean val;
-		val = (g_ascii_strcasecmp (str, "/dev/console") != 0);
-		mdm_config_value_set_bool (value, val);
-	}
-
-	return TRUE;
-}
-
-static gboolean
-validate_xdmcp (MdmConfig          *config,
-		MdmConfigSourceType source,
-		MdmConfigValue     *value)
-{
-
-#ifndef HAVE_LIBXDMCP
-	if (mdm_config_value_get_bool (value)) {
-		mdm_info (_("%s: XDMCP was enabled while there is no XDMCP support; turning it off"), "mdm_config_parse");
-		mdm_config_value_set_bool (value, FALSE);
-	}
-#endif
 
 	return TRUE;
 }
@@ -1755,20 +1686,11 @@ validate_cb (MdmConfig          *config,
         case MDM_ID_GREETER:
 		res = validate_greeter (config, source, value);
 		break;
-        case MDM_ID_REMOTE_GREETER:
-		res = validate_remote_greeter (config, source, value);
-		break;
         case MDM_ID_SESSION_DESKTOP_DIR:
 		res = validate_session_desktop_dir (config, source, value);
 		break;
         case MDM_ID_PASSWORD_REQUIRED:
 		res = validate_password_required (config, source, value);
-		break;
-        case MDM_ID_ALLOW_REMOTE_ROOT:
-		res = validate_allow_remote_root (config, source, value);
-		break;
-        case MDM_ID_XDMCP:
-		res = validate_xdmcp (config, source, value);
 		break;
 	case MDM_ID_MAX_INDIRECT:
 	case MDM_ID_XINERAMA_SCREEN:
@@ -1839,15 +1761,12 @@ notify_cb (MdmConfig          *config,
 
         switch (id) {
         case MDM_ID_GREETER:
-        case MDM_ID_REMOTE_GREETER:
         case MDM_ID_SOUND_ON_LOGIN_FILE:
         case MDM_ID_SOUND_ON_LOGIN_SUCCESS_FILE:
         case MDM_ID_SOUND_ON_LOGIN_FAILURE_FILE:
         case MDM_ID_GTK_MODULES_LIST:
         case MDM_ID_TIMED_LOGIN:
         case MDM_ID_ALLOW_ROOT:
-        case MDM_ID_ALLOW_REMOTE_ROOT:
-        case MDM_ID_ALLOW_REMOTE_AUTOLOGIN:
         case MDM_ID_SYSTEM_MENU:
         case MDM_ID_CONFIG_AVAILABLE:
         case MDM_ID_CHOOSER_BUTTON:
@@ -1901,7 +1820,7 @@ handle_no_displays (MdmConfig *config,
 	 * then don't display errors in console messages
 	 */
 	if (no_console) {
-		mdm_fail (_("%s: XDMCP disabled and no static servers defined. Aborting!"), "mdm_config_parse");
+		mdm_fail (_("%s: no static servers defined. Aborting!"), "mdm_config_parse");
 	}
 
 	server = X_SERVER;
@@ -1920,7 +1839,7 @@ handle_no_displays (MdmConfig *config,
 
 		int num = mdm_get_free_display (0 /* start */, 0 /* server uid */);
 
-		mdm_error (_("%s: XDMCP disabled and no static servers defined. Adding %s on :%d to allow configuration!"),
+		mdm_error (_("%s: no static servers defined. Adding %s on :%d to allow configuration!"),
 			   "mdm_config_parse", server, num);
 
 		d = mdm_display_alloc (num, server, NULL);
@@ -1935,7 +1854,7 @@ handle_no_displays (MdmConfig *config,
 
 	} else {
 		if (console_notify) {
-			gchar *s = g_strdup_printf (C_(N_("XDMCP is disabled and MDM "
+			gchar *s = g_strdup_printf (C_(N_("MDM "
 							  "cannot find any static server "
 							  "to start.  Aborting!  Please "
 							  "correct the configuration "
@@ -1944,7 +1863,7 @@ handle_no_displays (MdmConfig *config,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: XDMCP disabled and no static servers defined. Aborting!"), "mdm_config_parse");
+		mdm_fail (_("%s: No static servers defined. Aborting!"), "mdm_config_parse");
 	}
 }
 
@@ -2208,27 +2127,7 @@ mdm_daemon_config_update_key (const char *keystring)
 		mdm_daemon_config_load_xservers (temp_config);
 		goto out;
 	}
-
-	/* Shortcut for updating all XDMCP parameters */
-	if (is_key (keystring, "xdmcp/PARAMETERS")) {
-		rc = mdm_daemon_config_update_key (MDM_KEY_DISPLAYS_PER_HOST);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_MAX_PENDING);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_MAX_WAIT);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_MAX_SESSIONS);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_INDIRECT);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_MAX_INDIRECT);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_MAX_WAIT_INDIRECT);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_PING_INTERVAL);
-		goto out;
-	}
-
+	
 	/* find the entry for the key */
 	res = mdm_common_config_parse_key_string (keystring,
 						  &group,
@@ -2272,7 +2171,6 @@ mdm_daemon_config_parse (const char *config_file,
 {
 	uid_t         uid;
 	gid_t         gid;
-	gboolean      xdmcp_enabled;
 	gboolean      dynamic_enabled;
 
 	displays            = NULL;
@@ -2294,12 +2192,10 @@ mdm_daemon_config_parse (const char *config_file,
 	if (! no_console) {
 		mdm_daemon_config_load_displays (daemon_config);
 	}
-
-	xdmcp_enabled = FALSE;
-	mdm_config_get_bool_for_id (daemon_config, MDM_ID_XDMCP, &xdmcp_enabled);
+	
 	dynamic_enabled = FALSE;
 	mdm_config_get_bool_for_id (daemon_config, MDM_ID_DYNAMIC_XSERVERS, &dynamic_enabled);
-	if G_UNLIKELY ((displays == NULL) && (! xdmcp_enabled) && (! dynamic_enabled)) {
+	if G_UNLIKELY ((displays == NULL) && (! dynamic_enabled)) {
 		handle_no_displays (daemon_config, no_console);
 	}
 
@@ -2609,7 +2505,7 @@ mdm_daemon_config_get_facefile_from_home (const char *homedir,
 	}
 
 	/* Only look at local home directories so we don't try to
-	   read from remote (e.g. NFS) volumes */
+	   read from elsewhere (e.g. NFS) volumes */
 	if (! is_local)
 		return NULL;
 

@@ -54,7 +54,6 @@
 
 #include "mdm.h"
 #include "misc.h"
-#include "xdmcp.h"
 #include "slave.h"
 
 #include "mdm-common.h"
@@ -312,8 +311,7 @@ mdm_get_free_display (int start, uid_t server_uid)
 
 		for (li = displays; li != NULL; li = li->next) {
 			MdmDisplay *dsp = li->data;
-			if (SERVER_IS_LOCAL (dsp) &&
-			    dsp->dispnum == i)
+			if (dsp->dispnum == i)
 				break;
 		}
 		if (li != NULL) {
@@ -806,12 +804,7 @@ mdm_fork_extra (void)
 		 * possible children
                  */
 		setsid ();
-
-		/* Harmless in children, but in case we'd run
-		   extra processes from main daemon would fix
-		   problems ... */
-		if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP))
-			mdm_xdmcp_close ();
+		
 	}
 
 	return pid;

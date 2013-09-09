@@ -30,11 +30,9 @@ G_BEGIN_DECLS
 #define MDM_CONFIG_GROUP_NONE       NULL
 #define MDM_CONFIG_GROUP_DAEMON     "daemon"
 #define MDM_CONFIG_GROUP_SECURITY   "security"
-#define MDM_CONFIG_GROUP_XDMCP      "xdmcp"
 #define MDM_CONFIG_GROUP_GREETER    "greeter"
 #define MDM_CONFIG_GROUP_GUI        "gui"
 #define MDM_CONFIG_GROUP_CUSTOM_CMD "customcommand"
-#define MDM_CONFIG_GROUP_CHOOSER    "chooser"
 #define MDM_CONFIG_GROUP_SERVERS    "servers"
 #define MDM_CONFIG_GROUP_DEBUG      "debug"
 
@@ -46,11 +44,9 @@ typedef enum {
 	MDM_ID_NONE,
 	MDM_ID_DEBUG,
 	MDM_ID_DEBUG_GESTURES,
-	MDM_ID_CHOOSER,
 	MDM_ID_AUTOMATIC_LOGIN_ENABLE,
 	MDM_ID_AUTOMATIC_LOGIN,
 	MDM_ID_GREETER,
-	MDM_ID_REMOTE_GREETER,
 	MDM_ID_ADD_GTK_MODULES,
 	MDM_ID_GTK_MODULES_LIST,
 	MDM_ID_GROUP,
@@ -93,8 +89,6 @@ typedef enum {
 	MDM_ID_STANDARD_XSERVER,
 	MDM_ID_FLEXIBLE_XSERVERS,
 	MDM_ID_DYNAMIC_XSERVERS,
-	MDM_ID_XNEST,
-	MDM_ID_XNEST_UNSCALED_FONT_PATH,
 	MDM_ID_FIRST_VT,
 	MDM_ID_VT_ALLOCATION,
 	MDM_ID_CONSOLE_CANNOT_HANDLE,
@@ -103,13 +97,8 @@ typedef enum {
 	MDM_ID_SERVER_NAME,
 	MDM_ID_SERVER_COMMAND,
 	MDM_ID_SERVER_FLEXIBLE,
-	MDM_ID_SERVER_CHOOSABLE,
-	MDM_ID_SERVER_HANDLED,
-	MDM_ID_SERVER_CHOOSER,
 	MDM_ID_SERVER_PRIORITY,
 	MDM_ID_ALLOW_ROOT,
-	MDM_ID_ALLOW_REMOTE_ROOT,
-	MDM_ID_ALLOW_REMOTE_AUTOLOGIN,
 	MDM_ID_USER_MAX_FILE,
 	MDM_ID_RELAX_PERM,
 	MDM_ID_CHECK_DIR_OWNER,
@@ -119,10 +108,8 @@ typedef enum {
 	MDM_ID_PAM_STACK,
 	MDM_ID_NEVER_PLACE_COOKIES_ON_NFS,
 	MDM_ID_PASSWORD_REQUIRED,
-	MDM_ID_UTMP_LINE_ATTACHED,
-	MDM_ID_UTMP_LINE_REMOTE,
+	MDM_ID_UTMP_LINE_ATTACHED,	
 	MDM_ID_UTMP_PSEUDO_DEVICE,
-	MDM_ID_XDMCP,
 	MDM_ID_MAX_PENDING,
 	MDM_ID_MAX_SESSIONS,
 	MDM_ID_MAX_WAIT,
@@ -133,9 +120,6 @@ typedef enum {
 	MDM_ID_MAX_WAIT_INDIRECT,
 	MDM_ID_PING_INTERVAL,
 	MDM_ID_WILLING,
-	MDM_ID_XDMCP_PROXY,
-	MDM_ID_XDMCP_PROXY_XSERVER,
-	MDM_ID_XDMCP_PROXY_RECONNECT,
 	MDM_ID_GTK_THEME,
 	MDM_ID_GTKRC,
 	MDM_ID_MAX_ICON_WIDTH,
@@ -154,11 +138,8 @@ typedef enum {
 	MDM_ID_SYSTEM_MENU,
 	MDM_ID_CONFIGURATOR,
 	MDM_ID_CONFIG_AVAILABLE,
-	MDM_ID_CHOOSER_BUTTON,	
 	MDM_ID_DEFAULT_WELCOME,
-	MDM_ID_DEFAULT_REMOTE_WELCOME,
 	MDM_ID_WELCOME,
-	MDM_ID_REMOTE_WELCOME,
 	MDM_ID_XINERAMA_SCREEN,
 	MDM_ID_BACKGROUND_PROGRAM,
 	MDM_ID_RUN_BACKGROUND_PROGRAM_ALWAYS,
@@ -238,7 +219,7 @@ typedef enum {
  *   functions to handle this key.
  *
  * + Add the key to the mdm_read_config and mdm_reread_config functions in
- *   gui/mdmlogin.c, gui/mdmchooser.c, and gui/greeter/greeter.c
+ *   gui/mdmlogin.c, and gui/greeter/greeter.c
  *   if the key is used by those programs.  Note that all MDM slaves load
  *   all their configuration data between calls to mdmcomm_comm_bulk_start()
  *   and mdmcomm_comm_bulk_stop().  This makes sure that the slave only uses
@@ -267,7 +248,6 @@ typedef enum {
  */
 
 #define MDM_DEFAULT_WELCOME_MSG "Welcome"
-#define MDM_DEFAULT_REMOTE_WELCOME_MSG "Welcome to %n"
 
 /* These are processed in order so debug should always be first */
 static const MdmConfigEntry mdm_daemon_config_entries [] = {
@@ -275,7 +255,6 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_DEBUG, "Gestures", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_DEBUG_GESTURES },
 
 
-	{ MDM_CONFIG_GROUP_DAEMON, "Chooser", MDM_CONFIG_VALUE_STRING, LIBEXECDIR "/mdmchooser", MDM_ID_CHOOSER },
 	{ MDM_CONFIG_GROUP_DAEMON, "AutomaticLoginEnable", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_AUTOMATIC_LOGIN_ENABLE },
 	{ MDM_CONFIG_GROUP_DAEMON, "AutomaticLogin", MDM_CONFIG_VALUE_STRING, "", MDM_ID_AUTOMATIC_LOGIN },
 
@@ -285,7 +264,6 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	 * documentation */
 
 	{ MDM_CONFIG_GROUP_DAEMON, "Greeter", MDM_CONFIG_VALUE_STRING, LIBEXECDIR "/mdmlogin", MDM_ID_GREETER },
-	{ MDM_CONFIG_GROUP_DAEMON, "RemoteGreeter", MDM_CONFIG_VALUE_STRING, LIBEXECDIR "/mdmlogin", MDM_ID_REMOTE_GREETER },
 	{ MDM_CONFIG_GROUP_DAEMON, "AddGtkModules", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_ADD_GTK_MODULES },
 	{ MDM_CONFIG_GROUP_DAEMON, "GtkModulesList", MDM_CONFIG_VALUE_STRING, NULL, MDM_ID_GTK_MODULES_LIST },
 
@@ -330,8 +308,6 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_DAEMON, "StandardXServer", MDM_CONFIG_VALUE_STRING, X_SERVER, MDM_ID_STANDARD_XSERVER },
 	{ MDM_CONFIG_GROUP_DAEMON, "FlexibleXServers", MDM_CONFIG_VALUE_INT, "5", MDM_ID_FLEXIBLE_XSERVERS },
 	{ MDM_CONFIG_GROUP_DAEMON, "DynamicXServers", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_DYNAMIC_XSERVERS },
-	{ MDM_CONFIG_GROUP_DAEMON, "Xnest", MDM_CONFIG_VALUE_STRING, X_XNEST_CMD ", " X_XNEST_CONFIG_OPTIONS, MDM_ID_XNEST },
-	{ MDM_CONFIG_GROUP_DAEMON, "XnestUnscaledFontPath", MDM_CONFIG_VALUE_BOOL, X_XNEST_UNSCALED_FONTPATH, MDM_ID_XNEST_UNSCALED_FONT_PATH },
 
 	/* Keys for automatic VT allocation rather then letting it up to the X server */
 	{ MDM_CONFIG_GROUP_DAEMON, "FirstVT", MDM_CONFIG_VALUE_INT, "7", MDM_ID_FIRST_VT },
@@ -347,8 +323,6 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_DAEMON, "RBACSystemCommandKeys", MDM_CONFIG_VALUE_STRING_ARRAY, MDM_RBAC_SYSCMD_KEYS, MDM_ID_RBAC_SYSTEM_COMMAND_KEYS },
 
 	{ MDM_CONFIG_GROUP_SECURITY, "AllowRoot", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_ALLOW_ROOT },
-	{ MDM_CONFIG_GROUP_SECURITY, "AllowRemoteRoot", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_ALLOW_REMOTE_ROOT },
-	{ MDM_CONFIG_GROUP_SECURITY, "AllowRemoteAutoLogin", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_ALLOW_REMOTE_AUTOLOGIN },
 	{ MDM_CONFIG_GROUP_SECURITY, "UserMaxFile", MDM_CONFIG_VALUE_INT, "65536", MDM_ID_USER_MAX_FILE },
 	{ MDM_CONFIG_GROUP_SECURITY, "RelaxPermissions", MDM_CONFIG_VALUE_INT, "0", MDM_ID_RELAX_PERM },
 	{ MDM_CONFIG_GROUP_SECURITY, "CheckDirOwner", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_CHECK_DIR_OWNER },
@@ -360,24 +334,7 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_SECURITY, "NeverPlaceCookiesOnNFS", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_NEVER_PLACE_COOKIES_ON_NFS },
 	{ MDM_CONFIG_GROUP_SECURITY, "PasswordRequired", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_PASSWORD_REQUIRED },
 	{ MDM_CONFIG_GROUP_SECURITY, "UtmpLineAttached", MDM_CONFIG_VALUE_STRING, "", MDM_ID_UTMP_LINE_ATTACHED },
-	{ MDM_CONFIG_GROUP_SECURITY, "UtmpLineRemote", MDM_CONFIG_VALUE_STRING, "", MDM_ID_UTMP_LINE_REMOTE },
 	{ MDM_CONFIG_GROUP_SECURITY, "UtmpPseudoDevice", MDM_CONFIG_VALUE_BOOL, "", MDM_ID_UTMP_PSEUDO_DEVICE },
-
-	{ MDM_CONFIG_GROUP_XDMCP, "Enable", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_XDMCP },
-	{ MDM_CONFIG_GROUP_XDMCP, "MaxPending", MDM_CONFIG_VALUE_INT, "4", MDM_ID_MAX_PENDING },
-	{ MDM_CONFIG_GROUP_XDMCP, "MaxSessions", MDM_CONFIG_VALUE_INT, "16", MDM_ID_MAX_SESSIONS },
-	{ MDM_CONFIG_GROUP_XDMCP, "MaxWait", MDM_CONFIG_VALUE_INT, "15", MDM_ID_MAX_WAIT },
-	{ MDM_CONFIG_GROUP_XDMCP, "DisplaysPerHost", MDM_CONFIG_VALUE_INT, "2", MDM_ID_DISPLAYS_PER_HOST },
-	{ MDM_CONFIG_GROUP_XDMCP, "Port", MDM_CONFIG_VALUE_INT, "177", MDM_ID_UDP_PORT },
-	{ MDM_CONFIG_GROUP_XDMCP, "HonorIndirect", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_INDIRECT },
-	{ MDM_CONFIG_GROUP_XDMCP, "MaxPendingIndirect", MDM_CONFIG_VALUE_INT, "4", MDM_ID_MAX_INDIRECT },
-	{ MDM_CONFIG_GROUP_XDMCP, "MaxWaitIndirect", MDM_CONFIG_VALUE_INT, "15", MDM_ID_MAX_WAIT_INDIRECT },
-	{ MDM_CONFIG_GROUP_XDMCP, "PingIntervalSeconds", MDM_CONFIG_VALUE_INT, "15", MDM_ID_PING_INTERVAL },
-	{ MDM_CONFIG_GROUP_XDMCP, "Willing", MDM_CONFIG_VALUE_STRING, MDMCONFDIR "/Xwilling", MDM_ID_WILLING },
-
-	{ MDM_CONFIG_GROUP_XDMCP, "EnableProxy", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_XDMCP_PROXY },
-	{ MDM_CONFIG_GROUP_XDMCP, "ProxyXServer", MDM_CONFIG_VALUE_STRING, "", MDM_ID_XDMCP_PROXY_XSERVER },
-	{ MDM_CONFIG_GROUP_XDMCP, "ProxyReconnect", MDM_CONFIG_VALUE_STRING, "", MDM_ID_XDMCP_PROXY_RECONNECT },
 
 	{ MDM_CONFIG_GROUP_GUI, "GtkTheme", MDM_CONFIG_VALUE_STRING, "Default", MDM_ID_GTK_THEME },
 	{ MDM_CONFIG_GROUP_GUI, "GtkRC", MDM_CONFIG_VALUE_STRING, DATADIR "/themes/Default/gtk-2.0/gtkrc", MDM_ID_GTKRC },
@@ -398,24 +355,20 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_GREETER, "SystemMenu", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_SYSTEM_MENU },
 	{ MDM_CONFIG_GROUP_DAEMON, "Configurator", MDM_CONFIG_VALUE_STRING, SBINDIR "/mdmsetup --disable-sound --disable-crash-dialog", MDM_ID_CONFIGURATOR },
 	{ MDM_CONFIG_GROUP_GREETER, "ConfigAvailable", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_CONFIG_AVAILABLE },
-	{ MDM_CONFIG_GROUP_GREETER, "ChooserButton", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_CHOOSER_BUTTON },	
 
 	/*
-	 * For backwards compatibility, do not set values for DEFAULT_WELCOME or
-	 * DEFAULT_REMOTEWELCOME.  This will cause these values to always be
+	 * For backwards compatibility, do not set values for DEFAULT_WELCOME.
+	 * This will cause these values to always be
 	 * read from the config file, and will cause them to return FALSE if
 	 * no value is set in the config file.  We want the value, "FALSE" if
 	 * the values don't exist in the config file.  The daemon will compare
 	 * the Welcome/RemoveWelcome value with the default string and
 	 * automatically translate the text if the string is the same as the
-	 * default string.  We set the default values of MDM_ID_WELCOME and
-	 * MDM_ID_REMOTEWELCOME so that the default value is returned when
+	 * default string.  We set the default values of MDM_ID_WELCOME so that the default value is returned when
 	 * you run GET_CONFIG on these keys.
 	 */
-	{ MDM_CONFIG_GROUP_GREETER, "DefaultWelcome", MDM_CONFIG_VALUE_BOOL, "", MDM_ID_DEFAULT_WELCOME },
-	{ MDM_CONFIG_GROUP_GREETER, "DefaultRemoteWelcome", MDM_CONFIG_VALUE_BOOL, "", MDM_ID_DEFAULT_REMOTE_WELCOME },
+	{ MDM_CONFIG_GROUP_GREETER, "DefaultWelcome", MDM_CONFIG_VALUE_BOOL, "", MDM_ID_DEFAULT_WELCOME },	
 	{ MDM_CONFIG_GROUP_GREETER, "Welcome", MDM_CONFIG_VALUE_LOCALE_STRING, MDM_DEFAULT_WELCOME_MSG, MDM_ID_WELCOME },
-	{ MDM_CONFIG_GROUP_GREETER, "RemoteWelcome", MDM_CONFIG_VALUE_LOCALE_STRING, MDM_DEFAULT_REMOTE_WELCOME_MSG, MDM_ID_REMOTE_WELCOME },
 	{ MDM_CONFIG_GROUP_GREETER, "XineramaScreen", MDM_CONFIG_VALUE_INT, "0", MDM_ID_XINERAMA_SCREEN },
 	{ MDM_CONFIG_GROUP_GREETER, "BackgroundProgram", MDM_CONFIG_VALUE_STRING, "", MDM_ID_BACKGROUND_PROGRAM },
 	{ MDM_CONFIG_GROUP_GREETER, "RunBackgroundProgramAlways", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_RUN_BACKGROUND_PROGRAM_ALWAYS },
@@ -445,15 +398,6 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_GREETER, "SoundOnLoginSuccessFile", MDM_CONFIG_VALUE_STRING, "", MDM_ID_SOUND_ON_LOGIN_SUCCESS_FILE },
 	{ MDM_CONFIG_GROUP_GREETER, "SoundOnLoginFailureFile", MDM_CONFIG_VALUE_STRING, "", MDM_ID_SOUND_ON_LOGIN_FAILURE_FILE },
 	{ MDM_CONFIG_GROUP_DAEMON, "SoundProgram", MDM_CONFIG_VALUE_STRING, SOUND_PROGRAM, MDM_ID_SOUND_PROGRAM },
-
-	{ MDM_CONFIG_GROUP_CHOOSER, "ScanTime", MDM_CONFIG_VALUE_INT, "4", MDM_ID_SCAN_TIME },
-	{ MDM_CONFIG_GROUP_CHOOSER, "DefaultHostImg", MDM_CONFIG_VALUE_STRING, PIXMAPDIR "/nohost.png", MDM_ID_DEFAULT_HOST_IMG },
-	{ MDM_CONFIG_GROUP_CHOOSER, "HostImageDir", MDM_CONFIG_VALUE_STRING, DATADIR "/hosts/", MDM_ID_HOST_IMAGE_DIR },
-	{ MDM_CONFIG_GROUP_CHOOSER, "Hosts", MDM_CONFIG_VALUE_STRING, "", MDM_ID_HOSTS },
-	{ MDM_CONFIG_GROUP_CHOOSER, "Multicast", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_MULTICAST },
-	{ MDM_CONFIG_GROUP_CHOOSER, "MulticastAddr", MDM_CONFIG_VALUE_STRING, "ff02::1", MDM_ID_MULTICAST_ADDR },
-	{ MDM_CONFIG_GROUP_CHOOSER, "Broadcast", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_BROADCAST },
-	{ MDM_CONFIG_GROUP_CHOOSER, "AllowAdd", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_ALLOW_ADD },
 
 	{ MDM_CONFIG_GROUP_GREETER, "ShowGnomeFailsafeSession", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_SHOW_GNOME_FAILSAFE },
 	{ MDM_CONFIG_GROUP_GREETER, "ShowXtermFailsafeSession", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_SHOW_XTERM_FAILSAFE },
@@ -539,12 +483,6 @@ static const MdmConfigEntry mdm_daemon_server_config_entries [] = {
 	{ MDM_CONFIG_GROUP_NONE, "command", MDM_CONFIG_VALUE_STRING, X_SERVER, MDM_ID_SERVER_COMMAND },
 	/* runnable as flexi server */
 	{ MDM_CONFIG_GROUP_NONE, "flexible", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_SERVER_FLEXIBLE },
-	/* choosable from the login screen */
-	{ MDM_CONFIG_GROUP_NONE, "choosable", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_SERVER_CHOOSABLE },
-	/* Login is handled by mdm, otherwise it's a remote server */
-	{ MDM_CONFIG_GROUP_NONE, "handled", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_SERVER_HANDLED },
-	/* Instead of the greeter run the chooser */
-	{ MDM_CONFIG_GROUP_NONE, "chooser", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_SERVER_CHOOSER },
 	/* select a nice level to run the X server at */
 	{ MDM_CONFIG_GROUP_NONE, "priority", MDM_CONFIG_VALUE_INT, "0", MDM_ID_SERVER_PRIORITY },
 };
