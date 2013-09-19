@@ -57,10 +57,7 @@ mdm.conf: $(srcdir)/mdm.conf.in
 		-e 's,[@]UTMP_LINE_REMOTE[@],$(UTMP_LINE_REMOTE),g' \
 		-e 's,[@]UTMP_PSEUDO_DEVICE[@],$(UTMP_PSEUDO_DEVICE),g' \
 		-e 's,[@]X_CONFIG_OPTIONS[@],$(X_CONFIG_OPTIONS),g' \
-		-e 's,[@]X_SERVER[@],$(X_SERVER),g' \
-		-e 's,[@]X_XNEST_CMD[@],$(X_XNEST_CMD),g' \
-		-e 's,[@]X_XNEST_CONFIG_OPTIONS[@],$(X_XNEST_CONFIG_OPTIONS),g' \
-		-e 's,[@]X_XNEST_UNSCALED_FONTPATH[@],$(X_XNEST_UNSCALED_FONTPATH),g' \
+		-e 's,[@]X_SERVER[@],$(X_SERVER),g' \		
 		-e 's,[@]MDM_RBAC_SYSCMD_KEYS[@],$(MDM_RBAC_SYSCMD_KEYS),g' \
 		-e 's,[@]authdir[@],$(authdir),g' \
 		-e 's,[@]datadir[@],$(datadir),g' \

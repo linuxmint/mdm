@@ -2076,8 +2076,6 @@ main (int argc, char *argv[])
 		return EXIT_SUCCESS;
 	}
     
-	gtk_window_set_default_icon_name ("mdm-xnest");
-
 	mdm_chooser_gui_init ();
 	mdm_chooser_signals_init ();
 

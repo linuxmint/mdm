@@ -58,7 +58,6 @@ Depends: ${shlibs:Depends},
 Recommends: whiptail | dialog,
             zenity,
             mdm-themes,
-            xserver-xephyr | xnest,
             xserver-xorg
 Suggests: locales,
           pm-utils,

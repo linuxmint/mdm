@@ -258,7 +258,6 @@ mdm_server_stop (MdmDisplay *disp)
     d->fbconsolepid = 0;
 #endif
 
-    mdm_slave_whack_temp_auth_file ();
 }
 
 static gboolean
@@ -1137,13 +1136,10 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 				         &argc,
 				         &argv);
     if (rc == FALSE)
-       return;
+       return;    
 
-    /* Do not support additional session arguments with Xnest. */
-    if (d->type != TYPE_FLEXI_XNEST) {
-	    if (d->xserver_session_args)
-		    mdm_server_add_xserver_args (d, argv);
-    }
+    if (d->xserver_session_args)
+	    mdm_server_add_xserver_args (d, argv);
 
     command = g_strjoinv (" ", argv);
 
@@ -1230,47 +1226,16 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 	sigprocmask (SIG_SETMASK, &mask, NULL);
 
 	if (SERVER_IS_PROXY (d)) {
-		gboolean add_display = TRUE;
-
 		g_unsetenv ("DISPLAY");
-		if (d->parent_auth_file != NULL)
-			g_setenv ("XAUTHORITY", d->parent_auth_file, TRUE);
-		else
-			g_unsetenv ("XAUTHORITY");
-
-		if (d->type == TYPE_FLEXI_XNEST) {
-			char *font_path = NULL;
-			/* Add -fp with the current font path, but only if not
-			 * already among the arguments */
-			if (strstr (command, "-fp") == NULL)
-				font_path = get_font_path (d->parent_disp);
-			if (font_path != NULL) {
-				argv = g_renew (char *, argv, argc + 2);
-				argv[argc++] = "-fp";
-				argv[argc++] = font_path;
-				command = g_strconcat (command, " -fp ",
-						       font_path, NULL);
-			}
-			add_display = FALSE;
-		}
-
-		/*
-		 * Set the DISPLAY environment variable when calling
-		 * nested server since some Xnest commands like Xephyr 
-		 * do not support the -display argument.
-		 */
-		if (add_display == TRUE) {
-			argv = g_renew (char *, argv, argc + 3);
-			argv[argc++] = "-display";
-			argv[argc++] = d->parent_disp;
-			argv[argc++] = NULL;
-			command = g_strconcat (command, " -display ",
-				       d->parent_disp, NULL);
-		} else {
-			argv = g_renew (char *, argv, argc + 1);
-			argv[argc++] = NULL;
-			g_setenv ("DISPLAY", d->parent_disp, TRUE);
-		}
+		g_unsetenv ("XAUTHORITY");		
+	
+		argv = g_renew (char *, argv, argc + 3);
+		argv[argc++] = "-display";
+		argv[argc++] = d->parent_disp;
+		argv[argc++] = NULL;
+		command = g_strconcat (command, " -display ",
+			       d->parent_disp, NULL);
+		
 	}
 
 	if (argv[0] == NULL) {
@@ -1497,15 +1462,12 @@ get_font_path (const char *display)
 	gs = g_string_new (NULL);
 	for (i = 0; i < n_fonts; i++) {
 		if (i != 0)
-			g_string_append_c (gs, ',');
-
-	        if (mdm_daemon_config_get_value_bool (MDM_KEY_XNEST_UNSCALED_FONT_PATH) == TRUE)
-			g_string_append (gs, font_path[i]);
+			g_string_append_c (gs, ',');	        
 		else {
 			gchar *unscaled_ptr = NULL;
 
 			/*
-			 * When using Xsun Xnest, it doesn't support the
+			 * When using Xsun, it doesn't support the
 			 * ":unscaled" suffix in fontpath entries, so strip it.
 			 */
 			unscaled_ptr = g_strrstr (font_path[i], ":unscaled");

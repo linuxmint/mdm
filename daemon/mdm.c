@@ -98,10 +98,6 @@ static void handle_flexi_server (MdmConnection *conn,
 				 const gchar *server,
 				 gboolean handled,
 				 gboolean chooser,
-				 const gchar *xnest_disp,
-				 uid_t xnest_uid,
-				 const gchar *xnest_auth_file,
-				 const gchar *xnest_cookie,
 				 const gchar *username);
 static void custom_cmd_restart (long cmd_id);
 static void custom_cmd_no_restart (long cmd_id);
@@ -320,7 +316,7 @@ mdm_final_cleanup (void)
 		extra_process = 0;
 	}
 
-	/* First off whack all XDMCP and FLEXI_XNEST
+	/* First off whack all XDMCP 
 	   slaves, we'll wait for them later */
 	for (li = displays; li != NULL; li = li->next) {
 		MdmDisplay *d = li->data;
@@ -358,7 +354,7 @@ mdm_final_cleanup (void)
 	}
 	g_slist_free (list);
 
-	/* and now kill and wait for the XDMCP and FLEXI_XNEST
+	/* and now kill and wait for the XDMCP 
 	   slaves.  unmanage will not kill slaves we have already
 	   killed unless a SIGTERM was sent in the meantime */
 
@@ -1137,7 +1133,7 @@ mdm_cleanup_children (void)
 				 * start them now */
 				mdm_start_first_unborn_local (3 /* delay */);
 			}
-		} else if (d->type == TYPE_FLEXI || d->type == TYPE_FLEXI_XNEST) {
+		} else if (d->type == TYPE_FLEXI) {
 			/*
 			 * If this was a chooser session and we have chosen a
 			 * host, then we don't want to unmanage, we want to
@@ -2603,7 +2599,7 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 		handle_flexi_server (NULL, TYPE_FLEXI, mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER),
 				     TRUE /* handled */,
 				     FALSE /* chooser */,
-				     NULL, 0, NULL, NULL, NULL);
+				     NULL);
 	} else if (strncmp (msg, "opcode="MDM_SOP_SHOW_ERROR_DIALOG,
 			    strlen ("opcode="MDM_SOP_SHOW_ERROR_DIALOG)) == 0) {
 		char **list;
@@ -3034,11 +3030,7 @@ handle_flexi_server (MdmConnection *conn,
 		     int            type,
 		     const char    *server,
 		     gboolean       handled,
-		     gboolean       chooser,
-		     const char    *xnest_disp,
-		     uid_t          xnest_uid,
-		     const char    *xnest_auth_file,
-		     const char    *xnest_cookie,
+		     gboolean       chooser,		   
 		     const char    *username)
 {
 	MdmDisplay *display;
@@ -3052,63 +3044,7 @@ handle_flexi_server (MdmConnection *conn,
 			mdm_connection_write (conn,
 					      "ERROR 1 No more flexi servers\n");
 		return;
-	}
-
-	if (type == TYPE_FLEXI_XNEST) {
-		gboolean authorized = TRUE;
-		struct passwd *pw;
-		gid_t oldgid = getegid ();
-
-		pw = getpwuid (xnest_uid);
-		if (pw == NULL) {
-			if (conn != NULL)
-				mdm_connection_write (conn,
-						      "ERROR 100 Not authenticated\n");
-			return;
-		}
-
-		/* paranoia */
-		NEVER_FAILS_seteuid (0);
-
-		if (setegid (pw->pw_gid) < 0)
-			NEVER_FAILS_setegid (mdm_daemon_config_get_mdmgid ());
-
-		if (seteuid (xnest_uid) < 0) {
-			if (conn != NULL)
-				mdm_connection_write (conn,
-						      "ERROR 100 Not authenticated\n");
-			return;
-		}
-
-		mdm_assert (xnest_auth_file != NULL);
-		mdm_assert (xnest_disp != NULL);
-		mdm_assert (xnest_cookie != NULL);
-
-		if (authorized &&
-		    ! mdm_auth_file_check ("handle_flexi_server", xnest_uid, xnest_auth_file, FALSE /* absentok */, NULL))
-			authorized = FALSE;
-
-		if (authorized &&
-		    ! check_cookie (xnest_auth_file,
-				    xnest_disp,
-				    xnest_cookie)) {
-			authorized = FALSE;
-		}
-
-		/* this must always work, thus the asserts */
-		NEVER_FAILS_root_set_euid_egid (0, oldgid);
-
-		if (! authorized) {
-			/* Sorry dude, you're not doing something
-			 * right */
-			if (conn != NULL)
-				mdm_connection_write (conn,
-						      "ERROR 100 Not authenticated\n");
-			return;
-		}
-
-		server_uid = xnest_uid;
-	}
+	}	
 
 	if (flexi_servers >= mdm_daemon_config_get_value_int (MDM_KEY_FLEXIBLE_XSERVERS)) {
 		if (conn != NULL)
@@ -3142,40 +3078,12 @@ handle_flexi_server (MdmConnection *conn,
 	display->handled = handled;
 	display->use_chooser = chooser;
 
-	if (type == TYPE_FLEXI_XNEST) {
-		MdmDisplay *parent;
-		gchar *disp, *p;
-		mdm_assert (xnest_disp != NULL);
-
-		disp = g_strdup (xnest_disp);
-		/* whack the screen info */
-		p = strchr (disp, ':');
-		if (p != NULL)
-			p = strchr (p+1, '.');
-		if (p != NULL)
-			*p = '\0';
-		/* if it's on one of the attached displays we started,
-		 * it's on the console, else it's not (it could be but
-		 * we aren't sure and we don't want to be fooled) */
-		parent = find_display (disp);
-		if (/* paranoia */xnest_disp[0] == ':' &&
-		    parent != NULL &&
-		    parent->attached)
-			display->attached = TRUE;
-		else
-			display->attached = FALSE;
-		g_free (disp);
-
-		display->server_uid = server_uid;
-	}
-
 	flexi_servers++;
 
 	display->preset_user = g_strdup (username);
 	display->type = type;
 	display->socket_conn = conn;
-	display->parent_disp = g_strdup (xnest_disp);
-	display->parent_auth_file = g_strdup (xnest_auth_file);
+		
 	if (conn != NULL)
 		mdm_connection_set_close_notify (conn, display, close_conn);
 	mdm_daemon_config_display_list_append (display);
@@ -3407,11 +3315,7 @@ sup_handle_attached_servers (MdmConnection *conn,
 						ve_sure_string (disp->name),
 						ve_sure_string (disp->login));
 			sep = ";";
-			if (disp->type == TYPE_FLEXI_XNEST) {
-				g_string_append (retMsg, ve_sure_string (disp->parent_disp));
-			} else {
-				g_string_append_printf (retMsg, "%d", disp->vt);
-			}
+			g_string_append_printf (retMsg, "%d", disp->vt);			
 		}
 	}
 
@@ -3552,80 +3456,8 @@ sup_handle_flexi_xserver (MdmConnection *conn,
 				the standard resolution for this, but
 				oh well, this makes other things simpler */
 			     svr->handled,
-			     svr->chooser,
-			     NULL,
-			     0,
-			     NULL,
-			     NULL,
+			     svr->chooser,			     
 			     username);
-	g_free (username);
-}
-
-static void
-sup_handle_flexi_xnest (MdmConnection *conn,
-			const char    *msg,
-			gpointer       data)
-{
-	char       *dispname = NULL;
-	char       *xauthfile = NULL;
-	char       *cookie = NULL;
-	uid_t       uid;
-	const char *rest;
-	char       *username;
-	char       *end;
-	gboolean    has_user;
-
-	has_user = strncmp (msg, MDM_SUP_FLEXI_XNEST_USER " ", strlen (MDM_SUP_FLEXI_XNEST_USER " ")) == 0;
-
-	mdm_debug ("Handling flexi xnest request has-user:%d", has_user);
-
-	if (has_user) {
-		rest = msg + strlen (MDM_SUP_FLEXI_XNEST_USER " ");
-		end = strchr (rest, ' ');
-		username = g_strndup (rest, end - rest);
-	} else {
-		rest = msg;
-		username = NULL;
-	}
-
-	extract_dispname_uid_xauthfile_cookie (rest,
-					       &dispname,
-					       &uid,
-					       &xauthfile,
-					       &cookie);
-
-	if (dispname == NULL) {
-		/* Something bogus is going on, so just whack the
-		 * connection */
-		g_free (xauthfile);
-		mdm_connection_close (conn);
-		mdm_debug ("Unable to get display name from request");
-		return;
-	}
-
-	/* This is probably a pre-2.2.4.2 client */
-	if (xauthfile == NULL || cookie == NULL) {
-		/* evil, just whack the connection in this case */
-		mdm_connection_write (conn,
-				      "ERROR 100 Not authenticated\n");
-		mdm_connection_close (conn);
-		g_free (cookie);
-		return;
-	}
-
-	handle_flexi_server (conn,
-			     TYPE_FLEXI_XNEST,
-			     mdm_daemon_config_get_value_string (MDM_KEY_XNEST),
-			     TRUE /* handled */,
-			     FALSE /* chooser */,
-			     dispname,
-			     uid,
-			     xauthfile,
-			     cookie,
-			     username);
-
-	g_free (dispname);
-	g_free (xauthfile);
 	g_free (username);
 }
 
@@ -4250,11 +4082,7 @@ mdm_handle_user_message (MdmConnection *conn,
 				     TYPE_FLEXI,
 				     mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER),
 				     TRUE /* handled */,
-				     FALSE /* chooser */,
-				     NULL,
-				     0,
-				     NULL,
-				     NULL,
+				     FALSE /* chooser */,				    
 				     NULL);
 	} else if ((strncmp (msg, MDM_SUP_FLEXI_XSERVER_USER " ",
 			     strlen (MDM_SUP_FLEXI_XSERVER_USER " ")) == 0) ||
@@ -4262,13 +4090,6 @@ mdm_handle_user_message (MdmConnection *conn,
 			     strlen (MDM_SUP_FLEXI_XSERVER " ")) == 0)) {
 
 		sup_handle_flexi_xserver (conn, msg, data);
-
-	} else if ((strncmp (msg, MDM_SUP_FLEXI_XNEST_USER " ",
-			     strlen (MDM_SUP_FLEXI_XNEST_USER " ")) == 0) ||
-		   (strncmp (msg, MDM_SUP_FLEXI_XNEST " ",
-			     strlen (MDM_SUP_FLEXI_XNEST " ")) == 0)) {
-
-		sup_handle_flexi_xnest (conn, msg, data);
 
 	} else if ((strncmp (msg, MDM_SUP_ATTACHED_SERVERS,
 	                     strlen (MDM_SUP_ATTACHED_SERVERS)) == 0) ||

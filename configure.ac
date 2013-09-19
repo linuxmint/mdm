@@ -555,7 +555,6 @@ AC_SUBST(XDMCP_LIBS)
 if test x$XDMCP_SUPPORT = xyes ; then
 	AM_CONDITIONAL(XDMCP_SUPPORT, true)
 	MDMCHOOSER=mdmchooser
-	MDMXNESTCHOOSER=mdmXnestchooser
 else
         # No need for TCP Wrappers in case XDMCP is disabled
         if test x$with_tcp_wrappers != xno ; then
@@ -564,10 +563,8 @@ else
 	with_tcp_wrappers=no
 	AM_CONDITIONAL(XDMCP_SUPPORT, false)
 	MDMCHOOSER=
-	MDMXNESTCHOOSER=
 fi
 AC_SUBST(MDMCHOOSER)
-AC_SUBST(MDMXNESTCHOOSER)
 
 #
 # TCP Wrappers for XDMCP access control
@@ -1202,11 +1199,6 @@ else
    X_CONFIG_OPTIONS="-audit 0"
 fi
 
-# Use the wrapper script for the nested X server
-X_XNEST_CMD=/usr/share/mdm/mdmXnestWrapper
-X_XNEST_CONFIG_OPTIONS="-audit 0"
-X_XNEST_UNSCALED_FONTPATH="true"
-
 # Set POST_PATH after doing system specific case above just in case
 # any platforms want to update the PATH for a specific OS or distro.
 # None currently, but might be useful.
@@ -1326,13 +1318,6 @@ AC_DEFINE_UNQUOTED(X_SERVER,"$X_SERVER")
 AC_DEFINE_UNQUOTED(X_SERVER_PATH,"$X_SERVER_PATH")
 AC_DEFINE_UNQUOTED(X_CONFIG_OPTIONS,"$X_CONFIG_OPTIONS", Options used when launching xserver)
 
-AC_SUBST(X_XNEST_CMD)
-AC_SUBST(X_XNEST_CONFIG_OPTIONS)
-AC_SUBST(X_XNEST_UNSCALED_FONTPATH)
-AC_DEFINE_UNQUOTED(X_XNEST_CMD,"$X_XNEST_CMD")
-AC_DEFINE_UNQUOTED(X_XNEST_CONFIG_OPTIONS,"$X_XNEST_CONFIG_OPTIONS")
-AC_DEFINE_UNQUOTED(X_XNEST_UNSCALED_FONTPATH,"$X_XNEST_UNSCALED_FONTPATH")
-
 ## Stuff for debian/changelog.in
 #if test -e "debian/changelog"; then
 #  DEBIAN_DATESTAMP=`head -1 debian/changelog| sed -e 's/.*cvs.//' -e 's/).*//'`
@@ -1363,7 +1348,6 @@ data/icons/48x48/apps/Makefile
 data/icons/scalable/Makefile
 data/icons/scalable/apps/Makefile
 gui/Makefile
-gui/mdmflexiserver-xnest.desktop.in
 gui/faces/Makefile
 gui/greeter/Makefile
 gui/greeter/themes/Makefile
@@ -1371,9 +1355,7 @@ gui/greeter/themes/circles/Makefile
 gui/modules/Makefile
 utils/Makefile
 pixmaps/Makefile
-pixmaps/16x16/Makefile
 pixmaps/24x24/Makefile
-pixmaps/32x32/Makefile
 pixmaps/48x48/Makefile
 config/Makefile
 po/Makefile.in

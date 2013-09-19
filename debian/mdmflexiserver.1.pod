@@ -1,7 +1,6 @@
 =head1 NAME
 
-mdmflexiserver - start a MDM session using the MDM I<flexible server> mechanism,
-or in B<Xnest>
+mdmflexiserver - start a MDM session using the MDM I<flexible server> mechanism
 
 =head1 SYNOPSIS
 
@@ -15,9 +14,6 @@ using alternate X servers, or different options, in the B<mdm.conf> file, and
 B<mdmflexiserver> will present you with a menu, where you will be asked to
 choose between those server configurations marked with B<flexible=true>.
 
-Alternatively, the B<--xnest> option allows you to run a new session in an
-Xnest(1) window.
-
 =head1 OPTIONS
 
 In addition to the common Gtk and GNOME options, B<mdmflexiserver> accepts the
@@ -28,10 +24,6 @@ following options:
 =item B<-c> I<command>, B<--command>=I<command>
 
 Send the specified protocol command to mdm
-
-=item B<-n>, B<--xnest>
-
-Xnest mode
 
 =item B<-l>, B<--no-lock>
 
@@ -49,10 +41,9 @@ Authenticate before running B<--command>
 
 =head1 SEE ALSO
 
-mdm(8), Xnest(1).
+mdm(8)
 
 =head1 AUTHORS
 
-B<mdmflexiserver> is part of the B<MDM> software package, which is part of the
-GNOME project. This manpage was written by Yann Dirson <dirson@debian.org> for
+B<mdmflexiserver> is part of the B<MDM> software package. This manpage was written by Yann Dirson <dirson@debian.org> for
 the Debian system, but may be used by others.

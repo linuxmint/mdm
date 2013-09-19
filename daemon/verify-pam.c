@@ -1233,7 +1233,7 @@ mdm_verify_user (MdmDisplay *d,
 	cur_mdm_disp = NULL;
 
 #ifdef  HAVE_LOGINDEVPERM
-	if (d->attached && d->type != TYPE_FLEXI_XNEST) {
+	if (d->attached) {
 		gchar *device_name = mdm_slave_get_display_device (d);
 		/*
 		 * Only do logindevperm processing if /dev/console or
@@ -1568,7 +1568,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 	extra_standalone_message = NULL;
 
 #ifdef  HAVE_LOGINDEVPERM
-	if (d->attached && d->type != TYPE_FLEXI_XNEST) {
+	if (d->attached) {
 		gchar *device_name = mdm_slave_get_display_device (d);
 		/*
 		 * Only do logindevperm processing if /dev/console or
@@ -1705,7 +1705,7 @@ mdm_verify_cleanup (MdmDisplay *d)
 
 #ifdef  HAVE_LOGINDEVPERM
 		if (old_opened_session && old_did_setcred &&
-		    d->attached && d->type != TYPE_FLEXI_XNEST) {
+		    d->attached) {
 			gchar *device_name = mdm_slave_get_display_device (d);
 			/*
 			 * Only do logindevperm processing if /dev/console or

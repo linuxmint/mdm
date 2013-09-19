@@ -3,9 +3,7 @@
 appsicondir = \
 	$(datadir)/icons/hicolor/48x48/apps
 dist_appsicon_DATA = \
-	mdm.png \
-	mdm-login-photo.png \
-	mdm-xnest.png
+	mdm.png	
 
 MAINTAINERCLEANFILES = \
 	Makefile.in

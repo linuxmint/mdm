@@ -726,21 +726,7 @@ mdm_display_dispose (MdmDisplay *d)
     d->authfile = NULL;
 
     g_free (d->authfile_mdm);
-    d->authfile_mdm = NULL;
-
-    if (d->type == TYPE_XDMCP_PROXY) {
-	    if (d->parent_auth_file != NULL) {
-		    VE_IGNORE_EINTR (g_unlink (d->parent_auth_file));
-	    }
-	    g_free (d->parent_auth_file);
-	    d->parent_auth_file = NULL;
-    }
-
-    if (d->parent_temp_auth_file != NULL) {
-	    VE_IGNORE_EINTR (g_unlink (d->parent_temp_auth_file));
-    }
-    g_free (d->parent_temp_auth_file);
-    d->parent_temp_auth_file = NULL;
+    d->authfile_mdm = NULL; 
 
     if (d->auths) {
 	    mdm_auth_free_auth_list (d->auths);

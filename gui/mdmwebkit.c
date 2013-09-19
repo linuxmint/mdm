@@ -659,8 +659,7 @@ greeter_is_capslock_on (void)
   Display *dsp;
 
   /* HACK! incredible hack, if MDM_PARENT_DISPLAY is set we get
-   * indicator state from the parent display, since we must be inside an
-   * Xnest */
+   * indicator state from the parent display, since we must be inside a nested display*/
   dsp = get_parent_display ();
   if (dsp == NULL)
     dsp = GDK_DISPLAY ();
@@ -1905,7 +1904,7 @@ main (int argc, char *argv[])
     /* if a flexiserver, reap self after some time */
     if (mdm_config_get_int (MDM_KEY_FLEXI_REAP_DELAY_MINUTES) > 0 &&
 	! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER")) &&
-	/* but don't reap Xnest flexis */
+	/* but don't reap nested flexis */
 	ve_string_empty (g_getenv ("MDM_PARENT_DISPLAY"))) {
 	    sid = g_signal_lookup ("activate",
 				   GTK_TYPE_MENU_ITEM);

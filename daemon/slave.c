@@ -226,8 +226,6 @@ static gint   mdm_slave_exec_script (MdmDisplay *d, const gchar *dir,
 static gchar *mdm_slave_parse_enriched_login (MdmDisplay *d, const gchar *s);
 static void   mdm_slave_handle_usr2_message (void);
 static void   mdm_slave_handle_notify (const char *msg);
-static void   create_temp_auth_file (void);
-static void   set_xnest_parent_stuff (void);
 static void   check_notifies_now (void);
 static void   restart_the_greeter (void);
 
@@ -1185,7 +1183,6 @@ mdm_slave_whack_greeter (void)
 
 	mdm_slave_send_num (MDM_SOP_GREETPID, 0);
 
-	mdm_slave_whack_temp_auth_file ();
 }
 
 static void
@@ -2618,116 +2615,6 @@ run_pictures (void)
 	g_free (response); /* not reached */
 }
 
-/* hakish, copy file (owned by fromuid) to a temp file owned by touid */
-static char *
-copy_auth_file (uid_t fromuid, uid_t touid, const char *file)
-{
-	uid_t old = geteuid ();
-	gid_t oldg = getegid ();
-	char *name;
-	int authfd;
-	int fromfd;
-	int bytes;
-	char buf[2048];
-	int cnt;
-
-	NEVER_FAILS_seteuid (0);
-	NEVER_FAILS_setegid (mdm_daemon_config_get_mdmgid ());
-
-	if G_UNLIKELY (seteuid (fromuid) != 0) {
-		NEVER_FAILS_root_set_euid_egid (old, oldg);
-		return NULL;
-	}
-
-	if ( ! mdm_auth_file_check ("copy_auth_file", fromuid,
-				    file, FALSE /* absentok */, NULL)) {
-		NEVER_FAILS_root_set_euid_egid (old, oldg);
-		return NULL;
-	}
-
-	do {
-		errno = 0;
-		fromfd = open (file, O_RDONLY
-#ifdef O_NOCTTY
-			       |O_NOCTTY
-#endif
-#ifdef O_NOFOLLOW
-			       |O_NOFOLLOW
-#endif
-			       );
-	} while G_UNLIKELY (errno == EINTR);
-
-	if G_UNLIKELY (fromfd < 0) {
-		NEVER_FAILS_root_set_euid_egid (old, oldg);
-		return NULL;
-	}
-
-	NEVER_FAILS_root_set_euid_egid (0, 0);
-
-	name = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR),
-				  d->name, ".XnestAuth");
-
-	VE_IGNORE_EINTR (g_unlink (name));
-	VE_IGNORE_EINTR (authfd = open (name, O_EXCL|O_TRUNC|O_WRONLY|O_CREAT, 0600));
-
-	if G_UNLIKELY (authfd < 0) {
-		VE_IGNORE_EINTR (close (fromfd));
-		NEVER_FAILS_root_set_euid_egid (old, oldg);
-		g_free (name);
-		return NULL;
-	}
-
-	VE_IGNORE_EINTR (fchown (authfd, touid, -1));
-
-	cnt = 0;
-	for (;;) {
-		int written, n;
-		VE_IGNORE_EINTR (bytes = read (fromfd, buf, sizeof (buf)));
-
-		/* EOF */
-		if (bytes == 0)
-			break;
-
-		if G_UNLIKELY (bytes < 0) {
-			/* Error reading */
-			mdm_error ("Error reading %s: %s", file, strerror (errno));
-			VE_IGNORE_EINTR (close (fromfd));
-			VE_IGNORE_EINTR (close (authfd));
-			NEVER_FAILS_root_set_euid_egid (old, oldg);
-			g_free (name);
-			return NULL;
-		}
-
-		written = 0;
-		do {
-			VE_IGNORE_EINTR (n = write (authfd, &buf[written], bytes-written));
-			if G_UNLIKELY (n < 0) {
-				/* Error writing */
-				mdm_error ("Error writing %s: %s", name, strerror (errno));
-				VE_IGNORE_EINTR (close (fromfd));
-				VE_IGNORE_EINTR (close (authfd));
-				NEVER_FAILS_root_set_euid_egid (old, oldg);
-				g_free (name);
-				return NULL;
-			}
-			written += n;
-		} while (written < bytes);
-
-		cnt = cnt + written;
-		/* this should never occur (we check above)
-		   but we're paranoid) */
-		if G_UNLIKELY (cnt > mdm_daemon_config_get_value_int (MDM_KEY_USER_MAX_FILE))
-			return NULL;
-	}
-
-	VE_IGNORE_EINTR (close (fromfd));
-	VE_IGNORE_EINTR (close (authfd));
-
-	NEVER_FAILS_root_set_euid_egid (old, oldg);
-
-	return name;
-}
-
 static void
 exec_command (const char *command, const char *extra_arg)
 {
@@ -2783,10 +2670,7 @@ mdm_slave_greeter (void)
 		VE_IGNORE_EINTR (close (pipe1[1]));
 		mdm_slave_exit (DISPLAY_REMANAGE, _("%s: Can't init pipe to mdmgreeter"),
 				"mdm_slave_greeter");
-	}
-
-	/* hackish ain't it */
-	create_temp_auth_file ();
+	}	
 
 	if (d->attached)
 		command = mdm_daemon_config_get_value_string (MDM_KEY_GREETER);
@@ -2871,10 +2755,7 @@ mdm_slave_greeter (void)
 		g_setenv ("XAUTHORITY", MDM_AUTHFILE (d), TRUE);
 		g_setenv ("DISPLAY", d->name, TRUE);
 		if (d->windowpath)
-			g_setenv ("WINDOWPATH", d->windowpath, TRUE);
-
-		/* hackish ain't it */
-		set_xnest_parent_stuff ();
+			g_setenv ("WINDOWPATH", d->windowpath, TRUE);		
 
 		g_setenv ("LOGNAME", mdmuser, TRUE);
 		g_setenv ("USER", mdmuser, TRUE);
@@ -3865,9 +3746,6 @@ session_child_run (struct passwd *pwent,
 	} else if (d->type == TYPE_FLEXI) {
 		g_setenv ("MDM_XSERVER_LOCATION", "flexi", TRUE);
 		g_setenv ("GDM_XSERVER_LOCATION", "flexi", TRUE);
-	} else if (d->type == TYPE_FLEXI_XNEST) {
-		g_setenv ("MDM_XSERVER_LOCATION", "flexi-xnest", TRUE);
-		g_setenv ("GDM_XSERVER_LOCATION", "flexi-xnest", TRUE);
 	} else if (d->type == TYPE_XDMCP_PROXY) {
 		g_setenv ("MDM_XSERVER_LOCATION", "xdmcp-proxy", TRUE);
 		g_setenv ("GDM_XSERVER_LOCATION", "xdmcp-proxy", TRUE);
@@ -5490,7 +5368,6 @@ mdm_slave_child_handler (int sig)
 			d->servstat = SERVER_DEAD;
 			d->servpid = 0;
 			mdm_server_wipe_cookies (d);
-			mdm_slave_whack_temp_auth_file ();
 
 			mdm_slave_send_num (MDM_SOP_XPID, 0);
 
@@ -5950,53 +5827,6 @@ mdm_child_exit (gint status, const gchar *format, ...)
 	_exit (status);
 }
 
-void
-mdm_slave_whack_temp_auth_file (void)
-{
-	uid_t old;
-
-	old = geteuid ();
-	if (old != 0)
-		seteuid (0);
-	if (d->parent_temp_auth_file != NULL) {
-		VE_IGNORE_EINTR (g_unlink (d->parent_temp_auth_file));
-	}
-	g_free (d->parent_temp_auth_file);
-	d->parent_temp_auth_file = NULL;
-	if (old != 0)
-		seteuid (old);
-}
-
-static void
-create_temp_auth_file (void)
-{
-	if (d->type == TYPE_FLEXI_XNEST &&
-	    d->parent_auth_file != NULL) {
-		if (d->parent_temp_auth_file != NULL) {
-			VE_IGNORE_EINTR (g_unlink (d->parent_temp_auth_file));
-		}
-		g_free (d->parent_temp_auth_file);
-		d->parent_temp_auth_file =
-			copy_auth_file (d->server_uid,
-					mdm_daemon_config_get_mdmuid (),
-					d->parent_auth_file);
-	}
-}
-
-static void
-set_xnest_parent_stuff (void)
-{
-	if (d->type == TYPE_FLEXI_XNEST) {
-		g_setenv ("MDM_PARENT_DISPLAY", d->parent_disp, TRUE);
-		if (d->parent_temp_auth_file != NULL) {
-			g_setenv ("MDM_PARENT_XAUTHORITY",
-				  d->parent_temp_auth_file, TRUE);
-			g_free (d->parent_temp_auth_file);
-			d->parent_temp_auth_file = NULL;
-		}
-	}
-}
-
 static gint
 mdm_slave_exec_script (MdmDisplay *d,
 		       const gchar *dir,
@@ -6066,8 +5896,6 @@ mdm_slave_exec_script (MdmDisplay *d,
 	setegid (0);
 	setgid (0);
 
-	create_temp_auth_file ();
-
 	mdm_debug ("Forking extra process: %s", script);
 
 	extra_process = pid = mdm_fork_extra ();
@@ -6122,9 +5950,7 @@ mdm_slave_exec_script (MdmDisplay *d,
 			g_setenv ("PWD", "/", TRUE);
 			VE_IGNORE_EINTR (g_chdir ("/"));
 			g_setenv ("SHELL", "/bin/sh", TRUE);
-		}
-
-		set_xnest_parent_stuff ();
+		}		
 
 		/* some env for use with the Pre and Post scripts */
 		x_servers_file = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR),
@@ -6157,7 +5983,6 @@ mdm_slave_exec_script (MdmDisplay *d,
 		_exit (EXIT_SUCCESS);
 
 	case -1:
-		mdm_slave_whack_temp_auth_file ();
 		g_free (script);
 		g_error (_("%s: Can't fork script process!"), "mdm_slave_exec_script");
 
@@ -6168,7 +5993,6 @@ mdm_slave_exec_script (MdmDisplay *d,
 
 	default:
 		mdm_wait_for_extra (extra_process, &status);
-		mdm_slave_whack_temp_auth_file ();
 		g_free (script);
 
 		setgid (save_gid);

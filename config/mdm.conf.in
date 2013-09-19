@@ -178,18 +178,6 @@ StandardXServer=@X_SERVER@
 # affect nested flexiservers.
 #FlexiReapDelayMinutes=0
 
-# The X nest command.
-# Examples of valid commands (assuming installed to /usr/X11/bin:
-# Xorg Xnest: /usr/X11/bin/Xnest -audit 0 -name Xnest
-# Xsun Xnest: /usr/openwin/bin/Xnest -audit 0 -name Xnest -pn
-# Xephyr:     /usr/X11/bin/Xephyr -audit 0
-Xnest=@X_XNEST_CMD@ @X_XNEST_CONFIG_OPTIONS@
-# Xsun Xnest does not support font paths (passed into Xnest -fp argument)
-# that include the ":unscaled" suffix after a path name.  Setting this to
-# false will strip any ":unscaled" suffix from the font path.  If not 
-# using this Xnest, the value should be true.
-XnestUnscaledFontPath=@X_XNEST_UNSCALED_FONTPATH@
-
 # Automatic VT allocation.  Right now only works on Linux.  This way we force
 # X to use specific vts.  Turn VTAllocation to false if this is causing
 # problems.

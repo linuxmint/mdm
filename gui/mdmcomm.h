@@ -42,7 +42,6 @@ char *		mdmcomm_get_a_cookie (gboolean binary);
 char *		mdmcomm_get_auth_cookie (void);
 
 gboolean	mdmcomm_check (gboolean show_dialog);
-const char *	mdmcomm_get_error_message (const char *ret,
-					   gboolean use_xnest);
+const char *	mdmcomm_get_error_message (const char *ret);
 
 #endif /* MDMCOMM_H */

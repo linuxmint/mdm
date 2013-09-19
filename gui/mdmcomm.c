@@ -665,7 +665,7 @@ mdmcomm_check (gboolean show_dialog)
 }
 
 const char *
-mdmcomm_get_error_message (const char *ret, gboolean use_xnest)
+mdmcomm_get_error_message (const char *ret)
 {
 	/* These need a bit more refinement */
 	if (ret == NULL) {
@@ -688,13 +688,7 @@ mdmcomm_get_error_message (const char *ret, gboolean use_xnest)
 			 "current X server.  You may be missing an "
 			 "X authorization file.");
 	} else if (strncmp (ret, "ERROR 6 ", strlen ("ERROR 6 ")) == 0) {
-		if (use_xnest)
-			return _("The nested X server is not available, "
-				 "or MDM is badly configured.\n"
-				 "Please install the Xnest package in "
-				 "order to use the nested login.");
-		else
-			return _("The X server is not available. "
+		return _("The X server is not available. "
 				 "MDM may be misconfigured.");
 	} else if (strncmp (ret, "ERROR 7 ", strlen ("ERROR 7 ")) == 0) {
 		return _("Trying to set an unknown logout action, or trying "

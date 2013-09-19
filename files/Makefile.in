@@ -60,7 +60,7 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/gnome-doc-utils.m4 \
 	$(top_srcdir)/acinclude.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
@@ -183,7 +183,6 @@ MDMPREFETCHCMD = @MDMPREFETCHCMD@
 MDMPREFETCHLIST = @MDMPREFETCHLIST@
 MDMSSHSESSION = @MDMSSHSESSION@
 MDMSSHSESSIONCMD = @MDMSSHSESSIONCMD@
-MDMXNESTCHOOSER = @MDMXNESTCHOOSER@
 MDM_CUSTOM_CONF = @MDM_CUSTOM_CONF@
 MDM_DEFAULTS_CONF = @MDM_DEFAULTS_CONF@
 MDM_OLD_CONF = @MDM_OLD_CONF@
@@ -260,9 +259,6 @@ X_PATH = @X_PATH@
 X_PRE_LIBS = @X_PRE_LIBS@
 X_SERVER = @X_SERVER@
 X_SERVER_PATH = @X_SERVER_PATH@
-X_XNEST_CMD = @X_XNEST_CMD@
-X_XNEST_CONFIG_OPTIONS = @X_XNEST_CONFIG_OPTIONS@
-X_XNEST_UNSCALED_FONTPATH = @X_XNEST_UNSCALED_FONTPATH@
 ZENITY = @ZENITY@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
