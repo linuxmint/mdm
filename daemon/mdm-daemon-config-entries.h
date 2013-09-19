@@ -47,7 +47,6 @@ typedef enum {
 	MDM_ID_AUTOMATIC_LOGIN_ENABLE,
 	MDM_ID_AUTOMATIC_LOGIN,
 	MDM_ID_GREETER,
-	MDM_ID_REMOTE_GREETER,
 	MDM_ID_ADD_GTK_MODULES,
 	MDM_ID_GTK_MODULES_LIST,
 	MDM_ID_GROUP,
@@ -101,9 +100,7 @@ typedef enum {
 	MDM_ID_SERVER_CHOOSABLE,
 	MDM_ID_SERVER_HANDLED,
 	MDM_ID_SERVER_PRIORITY,
-	MDM_ID_ALLOW_ROOT,
-	MDM_ID_ALLOW_REMOTE_ROOT,
-	MDM_ID_ALLOW_REMOTE_AUTOLOGIN,
+	MDM_ID_ALLOW_ROOT,	
 	MDM_ID_USER_MAX_FILE,
 	MDM_ID_RELAX_PERM,
 	MDM_ID_CHECK_DIR_OWNER,
@@ -113,8 +110,7 @@ typedef enum {
 	MDM_ID_PAM_STACK,
 	MDM_ID_NEVER_PLACE_COOKIES_ON_NFS,
 	MDM_ID_PASSWORD_REQUIRED,
-	MDM_ID_UTMP_LINE_ATTACHED,
-	MDM_ID_UTMP_LINE_REMOTE,
+	MDM_ID_UTMP_LINE_ATTACHED,	
 	MDM_ID_UTMP_PSEUDO_DEVICE,
 	MDM_ID_GTK_THEME,
 	MDM_ID_GTKRC,
@@ -135,9 +131,7 @@ typedef enum {
 	MDM_ID_CONFIGURATOR,
 	MDM_ID_CONFIG_AVAILABLE,
 	MDM_ID_DEFAULT_WELCOME,
-	MDM_ID_DEFAULT_REMOTE_WELCOME,
 	MDM_ID_WELCOME,
-	MDM_ID_REMOTE_WELCOME,
 	MDM_ID_XINERAMA_SCREEN,
 	MDM_ID_BACKGROUND_PROGRAM,
 	MDM_ID_RUN_BACKGROUND_PROGRAM_ALWAYS,
@@ -246,7 +240,6 @@ typedef enum {
  */
 
 #define MDM_DEFAULT_WELCOME_MSG "Welcome"
-#define MDM_DEFAULT_REMOTE_WELCOME_MSG "Welcome to %n"
 
 /* These are processed in order so debug should always be first */
 static const MdmConfigEntry mdm_daemon_config_entries [] = {
@@ -263,7 +256,6 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	 * documentation */
 
 	{ MDM_CONFIG_GROUP_DAEMON, "Greeter", MDM_CONFIG_VALUE_STRING, LIBEXECDIR "/mdmlogin", MDM_ID_GREETER },
-	{ MDM_CONFIG_GROUP_DAEMON, "RemoteGreeter", MDM_CONFIG_VALUE_STRING, LIBEXECDIR "/mdmlogin", MDM_ID_REMOTE_GREETER },
 	{ MDM_CONFIG_GROUP_DAEMON, "AddGtkModules", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_ADD_GTK_MODULES },
 	{ MDM_CONFIG_GROUP_DAEMON, "GtkModulesList", MDM_CONFIG_VALUE_STRING, NULL, MDM_ID_GTK_MODULES_LIST },
 
@@ -323,8 +315,6 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_DAEMON, "RBACSystemCommandKeys", MDM_CONFIG_VALUE_STRING_ARRAY, MDM_RBAC_SYSCMD_KEYS, MDM_ID_RBAC_SYSTEM_COMMAND_KEYS },
 
 	{ MDM_CONFIG_GROUP_SECURITY, "AllowRoot", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_ALLOW_ROOT },
-	{ MDM_CONFIG_GROUP_SECURITY, "AllowRemoteRoot", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_ALLOW_REMOTE_ROOT },
-	{ MDM_CONFIG_GROUP_SECURITY, "AllowRemoteAutoLogin", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_ALLOW_REMOTE_AUTOLOGIN },
 	{ MDM_CONFIG_GROUP_SECURITY, "UserMaxFile", MDM_CONFIG_VALUE_INT, "65536", MDM_ID_USER_MAX_FILE },
 	{ MDM_CONFIG_GROUP_SECURITY, "RelaxPermissions", MDM_CONFIG_VALUE_INT, "0", MDM_ID_RELAX_PERM },
 	{ MDM_CONFIG_GROUP_SECURITY, "CheckDirOwner", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_CHECK_DIR_OWNER },
@@ -336,7 +326,6 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_SECURITY, "NeverPlaceCookiesOnNFS", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_NEVER_PLACE_COOKIES_ON_NFS },
 	{ MDM_CONFIG_GROUP_SECURITY, "PasswordRequired", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_PASSWORD_REQUIRED },
 	{ MDM_CONFIG_GROUP_SECURITY, "UtmpLineAttached", MDM_CONFIG_VALUE_STRING, "", MDM_ID_UTMP_LINE_ATTACHED },
-	{ MDM_CONFIG_GROUP_SECURITY, "UtmpLineRemote", MDM_CONFIG_VALUE_STRING, "", MDM_ID_UTMP_LINE_REMOTE },
 	{ MDM_CONFIG_GROUP_SECURITY, "UtmpPseudoDevice", MDM_CONFIG_VALUE_BOOL, "", MDM_ID_UTMP_PSEUDO_DEVICE },
 
 	{ MDM_CONFIG_GROUP_GUI, "GtkTheme", MDM_CONFIG_VALUE_STRING, "Default", MDM_ID_GTK_THEME },
@@ -360,21 +349,17 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_GREETER, "ConfigAvailable", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_CONFIG_AVAILABLE },
 
 	/*
-	 * For backwards compatibility, do not set values for DEFAULT_WELCOME or
-	 * DEFAULT_REMOTEWELCOME.  This will cause these values to always be
+	 * For backwards compatibility, do not set values for DEFAULT_WELCOME This will cause these values to always be
 	 * read from the config file, and will cause them to return FALSE if
 	 * no value is set in the config file.  We want the value, "FALSE" if
 	 * the values don't exist in the config file.  The daemon will compare
 	 * the Welcome/RemoveWelcome value with the default string and
 	 * automatically translate the text if the string is the same as the
-	 * default string.  We set the default values of MDM_ID_WELCOME and
-	 * MDM_ID_REMOTEWELCOME so that the default value is returned when
+	 * default string.  We set the default values of MDM_ID_WELCOME so that the default value is returned when
 	 * you run GET_CONFIG on these keys.
 	 */
 	{ MDM_CONFIG_GROUP_GREETER, "DefaultWelcome", MDM_CONFIG_VALUE_BOOL, "", MDM_ID_DEFAULT_WELCOME },
-	{ MDM_CONFIG_GROUP_GREETER, "DefaultRemoteWelcome", MDM_CONFIG_VALUE_BOOL, "", MDM_ID_DEFAULT_REMOTE_WELCOME },
 	{ MDM_CONFIG_GROUP_GREETER, "Welcome", MDM_CONFIG_VALUE_LOCALE_STRING, MDM_DEFAULT_WELCOME_MSG, MDM_ID_WELCOME },
-	{ MDM_CONFIG_GROUP_GREETER, "RemoteWelcome", MDM_CONFIG_VALUE_LOCALE_STRING, MDM_DEFAULT_REMOTE_WELCOME_MSG, MDM_ID_REMOTE_WELCOME },
 	{ MDM_CONFIG_GROUP_GREETER, "XineramaScreen", MDM_CONFIG_VALUE_INT, "0", MDM_ID_XINERAMA_SCREEN },
 	{ MDM_CONFIG_GROUP_GREETER, "BackgroundProgram", MDM_CONFIG_VALUE_STRING, "", MDM_ID_BACKGROUND_PROGRAM },
 	{ MDM_CONFIG_GROUP_GREETER, "RunBackgroundProgramAlways", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_RUN_BACKGROUND_PROGRAM_ALWAYS },

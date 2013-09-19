@@ -893,14 +893,13 @@ mdm_verify_user (MdmDisplay *d,
 {
 	gint pamerr = 0;
 	struct passwd *pwent = NULL;
-	char *login, *passreq, *consoleonly;
+	char *login, *passreq;
 	char *pam_stack = NULL;
 	MDM_PAM_QUAL void *p;
 	int null_tok = 0;
 	gboolean credentials_set = FALSE;
 	gboolean error_msg_given = FALSE;
 	gboolean started_timer   = FALSE;
-	gboolean allow_remote    = TRUE;
 
 #ifdef HAVE_ADT
 	int pw_change = PW_FALSE;   /* if got to trying to change password */
@@ -922,8 +921,7 @@ mdm_verify_user (MdmDisplay *d,
 	} else {
 		/* start the timer for timed logins */
 		if ( ! ve_string_empty (mdm_daemon_config_get_value_string (MDM_KEY_TIMED_LOGIN)) &&
-		    d->timed_login_ok && (d->attached ||
-		    mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_REMOTE_AUTOLOGIN))) {
+		    d->timed_login_ok && (d->attached)) {
 			mdm_slave_greeter_ctl_no_ret (MDM_STARTTIMER, "");
 			started_timer = TRUE;
 		}
@@ -1101,16 +1099,10 @@ mdm_verify_user (MdmDisplay *d,
 	}
 
 	/* Check if user is root and is allowed to log in */
-	consoleonly = mdm_read_default ("CONSOLE=");
-	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_REMOTE_ROOT)) ||
-            ((consoleonly != NULL) &&
-	     (g_ascii_strcasecmp (consoleonly, "/dev/console") == 0))) {
-		allow_remote = FALSE;
-	}
 
 	pwent = getpwnam (login);
 	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_ROOT) ||
-            ( ! d->attached && allow_remote == FALSE)) &&
+            ( ! d->attached )) &&
             (pwent != NULL && pwent->pw_uid == 0)) {
 		mdm_error (_("Root login disallowed on display '%s'"),
 			   d->name);

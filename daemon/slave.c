@@ -895,7 +895,7 @@ mdm_slave_start (MdmDisplay *display)
 		mdm_debug ("mdm_slave_start: Loop Thingie");
 		mdm_slave_run (display);
 
-		/* remote and flexi only run once */
+		/* flexi only run once */
 		if (display->type != TYPE_STATIC ||
 		    ! parent_exists ()) {
 			mdm_server_stop (display);
@@ -2577,10 +2577,7 @@ mdm_slave_greeter (void)
 				"mdm_slave_greeter");
 	}	
 
-	if (d->attached)
-		command = mdm_daemon_config_get_value_string (MDM_KEY_GREETER);
-	else
-		command = mdm_daemon_config_get_value_string (MDM_KEY_REMOTE_GREETER);
+	command = mdm_daemon_config_get_value_string (MDM_KEY_GREETER);	
 
 #ifdef __sun
 	/*
@@ -3395,11 +3392,7 @@ session_child_run (struct passwd *pwent,
 
 	/* Determine default greeter type so the PreSession */
 	/* script can set the appropriate background color. */
-	if (d->attached) {
-		greeter = mdm_daemon_config_get_value_string (MDM_KEY_GREETER);
-	} else {
-		greeter = mdm_daemon_config_get_value_string (MDM_KEY_REMOTE_GREETER);
-	}
+	greeter = mdm_daemon_config_get_value_string (MDM_KEY_GREETER);	
 
 	if (strstr (greeter, "mdmlogin") != NULL) {
 		g_setenv ("MDM_GREETER_TYPE", "PLAIN", TRUE);
@@ -3967,40 +3960,27 @@ gchar *
 mdm_slave_get_display_device (MdmDisplay *d)
 {
 	gchar *device_name = NULL;
+	
+	if (d->vtnum != -1)
+		device_name = mdm_get_vt_device (d->vtnum);
 
-	if (d->attached) {
-		if (d->vtnum != -1)
-			device_name = mdm_get_vt_device (d->vtnum);
+	/*
+	 * Default to the value in the MDM configuration for the
+	 * display number.  Allow pseudo devices.
+	 */
+	if (device_name == NULL && d->device_name != NULL) {
+		device_name = mdm_slave_update_pseudo_device (d,
+			d->device_name);
+	}
 
-		/*
-		 * Default to the value in the MDM configuration for the
-		 * display number.  Allow pseudo devices.
-		 */
-		if (device_name == NULL && d->device_name != NULL) {
+	/* If not VT, then use default local value from configuration */
+	if (device_name == NULL) {
+		const char *dev_local =
+			mdm_daemon_config_get_value_string (MDM_KEY_UTMP_LINE_ATTACHED);
+
+		if (dev_local != NULL) {
 			device_name = mdm_slave_update_pseudo_device (d,
-				d->device_name);
-		}
-
-		/* If not VT, then use default local value from configuration */
-		if (device_name == NULL) {
-			const char *dev_local =
-				mdm_daemon_config_get_value_string (MDM_KEY_UTMP_LINE_ATTACHED);
-
-			if (dev_local != NULL) {
-				device_name = mdm_slave_update_pseudo_device (d,
-					dev_local);
-			}
-		}
-	} else {
-		/*
-		 * If a remote display, then use default remote value from
-		 * configuration
-		 */
-		const char *dev_remote =
-			mdm_daemon_config_get_value_string (MDM_KEY_UTMP_LINE_REMOTE);
-		if (dev_remote != NULL) {
-			device_name = mdm_slave_update_pseudo_device (d,
-				dev_remote);
+				dev_local);
 		}
 	}
 
@@ -5237,8 +5217,7 @@ check_for_interruption (const char *msg)
 			 * it is allowed for this display (it's only allowed
 			 * for the first local display) and if it's set up
 			 * correctly */
-			if ((d->attached || mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_REMOTE_AUTOLOGIN))
-                            && d->timed_login_ok &&
+			if (d->attached && d->timed_login_ok &&
 			    ! ve_string_empty (ParsedTimedLogin) &&
                             strcmp (ParsedTimedLogin, mdm_root_user ()) != 0 &&
 			    mdm_daemon_config_get_value_int (MDM_KEY_TIMED_LOGIN_DELAY) > 0) {
@@ -5798,11 +5777,7 @@ mdm_slave_handle_notify (const char *msg)
 	mdm_debug ("Handling slave notify: '%s'", msg);
 
 	if (sscanf (msg, MDM_NOTIFY_ALLOW_ROOT " %d", &val) == 1) {
-		mdm_daemon_config_set_value_bool (MDM_KEY_ALLOW_ROOT, val);
-	} else if (sscanf (msg, MDM_NOTIFY_ALLOW_REMOTE_ROOT " %d", &val) == 1) {
-		mdm_daemon_config_set_value_bool (MDM_KEY_ALLOW_REMOTE_ROOT, val);
-	} else if (sscanf (msg, MDM_NOTIFY_ALLOW_REMOTE_AUTOLOGIN " %d", &val) == 1) {
-		mdm_daemon_config_set_value_bool (MDM_KEY_ALLOW_REMOTE_AUTOLOGIN, val);
+		mdm_daemon_config_set_value_bool (MDM_KEY_ALLOW_ROOT, val);	
 	} else if (sscanf (msg, MDM_NOTIFY_SYSTEM_MENU " %d", &val) == 1) {
 		mdm_daemon_config_set_value_bool (MDM_KEY_SYSTEM_MENU, val);
 		if (d->greetpid > 1)
@@ -5856,16 +5831,6 @@ mdm_slave_handle_notify (const char *msg)
 						remanage_asap = TRUE;
 					}
 				}
-			}
-		}
-	} else if (strncmp (msg, MDM_NOTIFY_REMOTE_GREETER " ",
-			    strlen (MDM_NOTIFY_REMOTE_GREETER) + 1) == 0) {
-		mdm_daemon_config_set_value_string (MDM_KEY_REMOTE_GREETER,
-						    (gchar *)(&msg[strlen (MDM_NOTIFY_REMOTE_GREETER) + 1]));
-		if ( ! d->attached) {
-			do_restart_greeter = TRUE;
-			if (restart_greeter_now) {
-				; /* will get restarted later */
 			}
 		}
 	} else if ((strncmp (msg, MDM_NOTIFY_TIMED_LOGIN " ",

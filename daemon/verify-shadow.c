@@ -225,8 +225,7 @@ mdm_verify_user (MdmDisplay *d,
 	}
 
 	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_ROOT) ||
-	    ( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_REMOTE_ROOT) &&
-              ! d->attached)) && pwent->pw_uid == 0) {
+	    ( ! d->attached)) && pwent->pw_uid == 0) {
 
 		mdm_debug ("Root login disallowed on display '%s'", d->name);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,

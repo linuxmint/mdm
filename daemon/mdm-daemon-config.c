@@ -810,10 +810,6 @@ lookup_notify_key (MdmConfig  *config,
 	/* bools */
 	if (is_key (keystring, MDM_KEY_ALLOW_ROOT))
 		nkey = g_strdup (MDM_NOTIFY_ALLOW_ROOT);
-	else if (is_key (keystring, MDM_KEY_ALLOW_REMOTE_ROOT))
-		nkey = g_strdup (MDM_NOTIFY_ALLOW_REMOTE_ROOT);
-	else if (is_key (keystring, MDM_KEY_ALLOW_REMOTE_AUTOLOGIN))
-		nkey = g_strdup (MDM_NOTIFY_ALLOW_REMOTE_AUTOLOGIN);
 	else if (is_key (keystring, MDM_KEY_SYSTEM_MENU))
 		nkey = g_strdup (MDM_NOTIFY_SYSTEM_MENU);
 	else if (is_key (keystring, MDM_KEY_CONFIG_AVAILABLE))
@@ -832,8 +828,6 @@ lookup_notify_key (MdmConfig  *config,
 	/* strings */
 	else if (is_key (keystring, MDM_KEY_GREETER))
 		nkey = g_strdup (MDM_NOTIFY_GREETER);
-	else if (is_key (keystring, MDM_KEY_REMOTE_GREETER))
-		nkey = g_strdup (MDM_NOTIFY_REMOTE_GREETER);
 	else if (is_key (keystring, MDM_KEY_SOUND_ON_LOGIN_FILE))
 		nkey = g_strdup (MDM_NOTIFY_SOUND_ON_LOGIN_FILE);
 	else if (is_key (keystring, MDM_KEY_SOUND_ON_LOGIN_SUCCESS_FILE))
@@ -1733,17 +1727,11 @@ validate_cb (MdmConfig          *config,
         case MDM_ID_GREETER:
 		res = validate_greeter (config, source, value);
 		break;
-        case MDM_ID_REMOTE_GREETER:
-		res = validate_remote_greeter (config, source, value);
-		break;
         case MDM_ID_SESSION_DESKTOP_DIR:
 		res = validate_session_desktop_dir (config, source, value);
 		break;
         case MDM_ID_PASSWORD_REQUIRED:
 		res = validate_password_required (config, source, value);
-		break;
-        case MDM_ID_ALLOW_REMOTE_ROOT:
-		res = validate_allow_remote_root (config, source, value);
 		break;
 	case MDM_ID_XINERAMA_SCREEN:
 		res = validate_at_least_int (config, source, value, 0, 0);
@@ -1813,15 +1801,12 @@ notify_cb (MdmConfig          *config,
 
         switch (id) {
         case MDM_ID_GREETER:
-        case MDM_ID_REMOTE_GREETER:
         case MDM_ID_SOUND_ON_LOGIN_FILE:
         case MDM_ID_SOUND_ON_LOGIN_SUCCESS_FILE:
         case MDM_ID_SOUND_ON_LOGIN_FAILURE_FILE:
         case MDM_ID_GTK_MODULES_LIST:
         case MDM_ID_TIMED_LOGIN:
         case MDM_ID_ALLOW_ROOT:
-        case MDM_ID_ALLOW_REMOTE_ROOT:
-        case MDM_ID_ALLOW_REMOTE_AUTOLOGIN:
         case MDM_ID_SYSTEM_MENU:
         case MDM_ID_CONFIG_AVAILABLE:
         case MDM_ID_DISALLOW_TCP:

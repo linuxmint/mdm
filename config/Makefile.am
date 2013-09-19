@@ -54,7 +54,6 @@ mdm.conf: $(srcdir)/mdm.conf.in
 		-e 's,[@]XEVIE_OPTION[@],$(XEVIE_OPTION),g' \
 		-e 's,[@]ALWAYS_RESTART_SERVER[@],$(ALWAYS_RESTART_SERVER),g' \
 		-e 's,[@]UTMP_LINE_ATTACHED[@],$(UTMP_LINE_ATTACHED),g' \
-		-e 's,[@]UTMP_LINE_REMOTE[@],$(UTMP_LINE_REMOTE),g' \
 		-e 's,[@]UTMP_PSEUDO_DEVICE[@],$(UTMP_PSEUDO_DEVICE),g' \
 		-e 's,[@]X_CONFIG_OPTIONS[@],$(X_CONFIG_OPTIONS),g' \
 		-e 's,[@]X_SERVER[@],$(X_SERVER),g' \		

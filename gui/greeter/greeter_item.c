@@ -181,10 +181,10 @@ greeter_item_is_visible (GreeterItemInfo *info)
       ! (info->show_modes & GREETER_ITEM_SHOW_CONSOLE_FLEXI))
     return FALSE;
   if ( ! MDM_IS_LOCAL && MDM_FLEXI_SERVER &&
-       ! (info->show_modes & GREETER_ITEM_SHOW_REMOTE_FLEXI))
+       ! (info->show_modes))
     return FALSE;
   if ( ! MDM_IS_LOCAL && ! MDM_FLEXI_SERVER &&
-       ! (info->show_modes & GREETER_ITEM_SHOW_REMOTE))
+       ! (info->show_modes))
     return FALSE;
 
   if ((mdm_wm_screen.width < info->minimum_required_screen_width) ||

@@ -270,15 +270,14 @@ PamStack=mdm
 # device associated with the VT.  If the console is attached and has a device
 # name specified in the [servers] section, then this value will be used.
 # Otherwise the value is defaulted to the value specified in UtmpLineAttached
-# for attached displays and UtmpLineRemote for remote displays.  The value
+# for attached displays.  The value
 # can be left empty which means that ut_line will be set to an empty value
 # (if not VT and no value specified in the [servers] section.  The values
 # can contain "%d" which is translated to the DISPLAY value or %h which
 # is translated to the hostname.  The values for both keys  must begin with
 # "/dev/".
 UtmpLineAttached=@UTMP_LINE_ATTACHED@
-UtmpLineRemote=@UTMP_LINE_REMOTE@
-# If true and the specified UtmpLineAttached or UtmpLineRemote does not exist,
+# If true and the specified UtmpLineAttached does not exist,
 # then create a pseudo-device filename that will be touched when the utmp
 # record is updated.  Creating such a psuedo-device ensures that programs
 # that stat the utmp device associated with ut_line such as finger, last,

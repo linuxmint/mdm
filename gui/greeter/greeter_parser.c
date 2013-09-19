@@ -652,17 +652,9 @@ parse_show (xmlNodePtr       node,
             {
 	      info->show_modes |= GREETER_ITEM_SHOW_CONSOLE_FLEXI;
 	    }
-          else if (strcmp (argv[i], "remote-flexi") == 0)
-            {
-	      info->show_modes |= GREETER_ITEM_SHOW_REMOTE_FLEXI;
-	    }
           else if (strcmp (argv[i], "flexi") == 0)
             {
 	      info->show_modes |= GREETER_ITEM_SHOW_FLEXI;
-	    }
-          else if (strcmp (argv[i], "remote") == 0)
-            {
-	      info->show_modes |= GREETER_ITEM_SHOW_REMOTE;
 	    }
 	}
       g_strfreev (argv);
