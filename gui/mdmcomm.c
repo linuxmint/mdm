@@ -127,26 +127,6 @@ do_command (int fd, const char *command, gboolean get_response)
 	return cstr;
 }
 
-static gboolean
-version_ok_p (const char *version, const char *min_version)
-{
-	int a = 0, b = 0, c = 0, d = 0;
-	int mina = 0, minb = 0, minc = 0, mind = 0;
-
-	/* Note that if some fields in the version don't exist, then
-	 * we don't mind, they are zero */
-	sscanf (version, "%d.%d.%d.%d", &a, &b, &c, &d);
-	sscanf (min_version, "%d.%d.%d.%d", &mina, &minb, &minc, &mind);
-
-	if ((a > mina) ||
-	    (a == mina && b > minb) ||
-	    (a == mina && b == minb && c > minc) ||
-	    (a == mina && b == minb && c == minc && d >= mind))
-		return TRUE;
-	else
-		return FALSE;
-}
-
 static gboolean allow_sleep          = TRUE;
 static gboolean did_sleep_on_failure = FALSE;
 static int comm_fd                   = 0;
@@ -154,7 +134,6 @@ static int comm_fd                   = 0;
 static char *
 mdmcomm_call_mdm_real (const char *command,
 		       const char *auth_cookie,
-		       const char *min_version,
 		       int tries,
 		       int try_start)
 {
@@ -192,7 +171,7 @@ mdmcomm_call_mdm_real (const char *command,
 			if ( !quiet)
 				mdm_common_debug ("  Failed to open socket");
 
-			return mdmcomm_call_mdm_real (command, auth_cookie, min_version, tries - 1, try_start);
+			return mdmcomm_call_mdm_real (command, auth_cookie, tries - 1, try_start);
 		}
 
 		if (connect (comm_fd, (struct sockaddr *)&addr, sizeof (addr)) < 0) {
@@ -228,7 +207,7 @@ mdmcomm_call_mdm_real (const char *command,
 			VE_IGNORE_EINTR (close (comm_fd));
 			comm_fd = 0;
 			return mdmcomm_call_mdm_real (command, auth_cookie,
-						      min_version, tries - 1, try_start);
+						      tries - 1, try_start);
 		}
 
 		/*
@@ -247,7 +226,7 @@ mdmcomm_call_mdm_real (const char *command,
 			VE_IGNORE_EINTR (close (comm_fd));
 			comm_fd = 0;
 			return mdmcomm_call_mdm_real (command, auth_cookie,
-						      min_version, tries - 1, try_start);
+						      tries - 1, try_start);
 		}
 		if (strncmp (ret, "MDM ", strlen ("MDM ")) != 0) {
 			if ( !quiet)
@@ -258,16 +237,7 @@ mdmcomm_call_mdm_real (const char *command,
 			VE_IGNORE_EINTR (close (comm_fd));
 			comm_fd = 0;
 			return NULL;
-		}
-		if ( ! version_ok_p (&ret[4], min_version)) {
-			if ( !quiet)
-				mdm_common_debug ("  Version check failed, bad version");
-			g_free (ret);
-			do_command (comm_fd, MDM_SUP_CLOSE, FALSE);
-			VE_IGNORE_EINTR (close (comm_fd));
-			comm_fd = 0;
-			return NULL;
-		}
+		}		
 		g_free (ret);
 	}
 
@@ -281,7 +251,7 @@ mdmcomm_call_mdm_real (const char *command,
 			VE_IGNORE_EINTR (close (comm_fd));
 			comm_fd = 0;
 			return mdmcomm_call_mdm_real (command, auth_cookie,
-						      min_version, tries - 1, try_start);
+						      tries - 1, try_start);
 		}
 		/* not auth'ed */
 		if (strcmp (ve_sure_string (ret), "OK") != 0) {
@@ -301,7 +271,7 @@ mdmcomm_call_mdm_real (const char *command,
 		VE_IGNORE_EINTR (close (comm_fd));
 		comm_fd = 0;
 		return mdmcomm_call_mdm_real (command, auth_cookie,
-					      min_version, tries - 1, try_start);
+					      tries - 1, try_start);
 	}
 
 	/*
@@ -325,14 +295,12 @@ mdmcomm_call_mdm_real (const char *command,
 }
 
 char *
-mdmcomm_call_mdm (const char *command, const char * auth_cookie,
-		  const char *min_version, int tries)
+mdmcomm_send_cmd_to_daemon_with_args (const char *command, const char * auth_cookie, int tries)
 {
 
 	char *retstr;
 
-	retstr = mdmcomm_call_mdm_real (command, auth_cookie, min_version,
-					tries, tries);
+	retstr = mdmcomm_call_mdm_real (command, auth_cookie, tries, tries);
 
 	/*
 	 * Disallow sleeping on future calls if it failed to connect.
@@ -343,6 +311,12 @@ mdmcomm_call_mdm (const char *command, const char * auth_cookie,
 		allow_sleep = FALSE;
 
 	return (retstr);
+}
+
+char *
+mdmcomm_send_cmd_to_daemon (const char *command)
+{
+	mdmcomm_send_cmd_to_daemon_with_args (command, NULL, 5);
 }
 
 /**
@@ -366,13 +340,13 @@ mdmcomm_set_allow_sleep (gboolean val)
 }
 
 void
-mdmcomm_comm_bulk_start (void)
+mdmcomm_open_connection_to_daemon (void)
 {
 	bulk_acs = TRUE;
 }
 
 void
-mdmcomm_comm_bulk_stop (void)
+mdmcomm_close_connection_to_daemon (void)
 {
 	/* Close the connection */
 	if (comm_fd > 0) {
@@ -551,7 +525,7 @@ mdmcomm_get_auth_cookie (void)
 		XauDisposeAuth (xau);
 
 		cmd = g_strdup_printf (MDM_SUP_AUTH_LOCAL " %s", buffer);
-		ret = mdmcomm_call_mdm (cmd, NULL /* auth cookie */, "1.0.0.0", 5);
+		ret = mdmcomm_send_cmd_to_daemon (cmd);
 		g_free (cmd);
 		if (ret != NULL &&
 		    strcmp (ve_sure_string (ret), "OK") == 0) {
@@ -594,7 +568,7 @@ hig_dialog_new (GtkWindow      *parent,
 }
 
 gboolean
-mdmcomm_check (gboolean show_dialog)
+mdmcomm_is_daemon_running (gboolean show_dialog)
 {
 	GtkWidget *dialog;
 	FILE *fp = NULL;

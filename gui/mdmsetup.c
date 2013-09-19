@@ -201,15 +201,12 @@ update_greeters (void)
 	gboolean have_error = FALSE;
 
 	/* recheck for mdm */
-	mdm_running = mdmcomm_check (FALSE);
+	mdm_running = mdmcomm_is_daemon_running (FALSE);
 
 	if ( ! mdm_running)
 		return;
 
-	ret = mdmcomm_call_mdm (MDM_SUP_GREETERPIDS,
-				NULL /* auth_cookie */,
-				"1.0.0.0",
-				5);
+	ret = mdmcomm_send_cmd_to_daemon (MDM_SUP_GREETERPIDS);
 	if (ret == NULL)
 		return;
 	p = strchr (ret, ' ');
@@ -305,16 +302,13 @@ update_key (const char *key)
 	       return;
 
 	/* recheck for mdm */
-	mdm_running = mdmcomm_check (FALSE);
+	mdm_running = mdmcomm_is_daemon_running (FALSE);
 
 	if (mdm_running) {
 		char *ret;
 		char *s = g_strdup_printf ("%s %s", MDM_SUP_UPDATE_CONFIG,
 					   key);
-		ret = mdmcomm_call_mdm (s,
-					NULL /* auth_cookie */,
-					"1.0.0.0",
-					5);
+		ret = mdmcomm_send_cmd_to_daemon (s);
 		g_free (s);
 		g_free (ret);
 	}
@@ -3668,22 +3662,21 @@ main (int argc, char *argv[])
 	/* Lets check if mdm daemon is running
 	   if no there is no point in continuing
 	*/
-	mdm_running = mdmcomm_check (TRUE);
+	mdm_running = mdmcomm_is_daemon_running (TRUE);
 	if (mdm_running == FALSE)
 		exit (EXIT_FAILURE);
 
 	gtk_window_set_default_icon_name ("mdmsetup");	
 	glade_init();
-	
-	/* Start using socket */
-	mdmcomm_comm_bulk_start ();
+		
+	mdmcomm_open_connection_to_daemon ();
 	
 	config_file = mdm_common_get_config_file ();
 	if (config_file == NULL) {
 		GtkWidget *dialog;
 
 		/* Done using socket */
-		mdmcomm_comm_bulk_stop ();
+		mdmcomm_close_connection_to_daemon ();
 		dialog = hig_dialog_new (NULL /* parent */,
 					 GTK_DIALOG_MODAL /* flags */,
 					 GTK_MESSAGE_ERROR,
@@ -3700,7 +3693,7 @@ main (int argc, char *argv[])
 		GtkWidget *dialog;
 
 		/* Done using socket */
-		mdmcomm_comm_bulk_stop ();
+		mdmcomm_close_connection_to_daemon ();
 		dialog = hig_dialog_new (NULL /* parent */,
 					 GTK_DIALOG_MODAL /* flags */,
 					 GTK_MESSAGE_ERROR,
@@ -3747,7 +3740,7 @@ main (int argc, char *argv[])
 		GtkWidget *fatal_error;
 
 		/* Done using socket */
-		mdmcomm_comm_bulk_stop ();
+		mdmcomm_close_connection_to_daemon ();
 
 		fatal_error = hig_dialog_new (NULL /* parent */,
 					      GTK_DIALOG_MODAL /* flags */,
@@ -3762,7 +3755,7 @@ main (int argc, char *argv[])
 	}
 	
 	/* Done using socket */
-	mdmcomm_comm_bulk_stop ();	
+	mdmcomm_close_connection_to_daemon ();	
 	
 	dialog = setup_gui ();
 	

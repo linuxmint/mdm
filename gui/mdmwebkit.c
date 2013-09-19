@@ -136,14 +136,13 @@ check_for_displays (void)
 {
 	char  *ret;
 	char **vec;
-	char  *auth_cookie = NULL;
 	int    i;
 
 	/*
 	 * Might be nice to move this call into read_config() so that it happens
 	 * on the same socket call as reading the configuration.
 	 */
-	ret = mdmcomm_call_mdm (MDM_SUP_ATTACHED_SERVERS, auth_cookie, "1.0.0.0", 5);
+	ret = mdmcomm_send_cmd_to_daemon (MDM_SUP_ATTACHED_SERVERS);
 	if (ve_string_empty (ret) || strncmp (ret, "OK ", 3) != 0) {
 		g_free (ret);
 		return;
@@ -1380,9 +1379,8 @@ mdm_read_config (void)
 {
 	gint i;
 	gchar *key_string = NULL;
-	
-	/* Read config data in bulk */
-	mdmcomm_comm_bulk_start ();
+		
+	mdmcomm_open_connection_to_daemon ();
 
 	/*
 	 * Read all the keys at once and close sockets connection so we do
@@ -1445,7 +1443,7 @@ mdm_read_config (void)
 	/* Keys not to include in reread_config */	
 	mdm_config_get_string (MDM_KEY_PRE_FETCH_PROGRAM);	
 
-	mdmcomm_comm_bulk_stop ();
+	mdmcomm_close_connection_to_daemon ();
 }
 
 static gboolean
@@ -1454,9 +1452,8 @@ mdm_reread_config (int sig, gpointer data)
 	gboolean resize = FALSE;
 	gint i;
 	gchar *key_string = NULL;
-
-	/* Read config data in bulk */
-	mdmcomm_comm_bulk_start ();
+	
+	mdmcomm_open_connection_to_daemon ();
 
 	/* reparse config stuff here.  At least the ones we care about */
 	/* FIXME: We should update these on the fly rather than just
@@ -1511,7 +1508,7 @@ mdm_reread_config (int sig, gpointer data)
 		mdm_common_setup_cursor (GDK_WATCH);
 
 		mdm_wm_save_wm_order ();
-		mdmcomm_comm_bulk_stop ();
+		mdmcomm_close_connection_to_daemon ();
 
 		_exit (DISPLAY_RESTARTGREETER);
 		return TRUE;
@@ -1529,7 +1526,7 @@ mdm_reread_config (int sig, gpointer data)
 		mdm_set_welcomemsg ();
 	}
 
-	mdmcomm_comm_bulk_stop ();
+	mdmcomm_close_connection_to_daemon ();
 
 	return TRUE;
 }

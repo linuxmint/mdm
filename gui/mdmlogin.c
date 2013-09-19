@@ -2529,9 +2529,8 @@ mdm_read_config (void)
 {
 	gint i;
 	gchar *key_string = NULL;
-	
-	/* Read config data in bulk */
-	mdmcomm_comm_bulk_start ();
+		
+	mdmcomm_open_connection_to_daemon ();
 
 	/*
 	 * Read all the keys at once and close sockets connection so we do
@@ -2593,7 +2592,7 @@ mdm_read_config (void)
 	/* Keys not to include in reread_config */	
 	mdm_config_get_string (MDM_KEY_PRE_FETCH_PROGRAM);	
 
-	mdmcomm_comm_bulk_stop ();
+	mdmcomm_close_connection_to_daemon ();
 }
 
 static gboolean
@@ -2602,9 +2601,8 @@ mdm_reread_config (int sig, gpointer data)
 	gboolean resize = FALSE;
 	gint i;
 	gchar *key_string = NULL;
-
-	/* Read config data in bulk */
-	mdmcomm_comm_bulk_start ();
+	
+	mdmcomm_open_connection_to_daemon ();
 
 	/* reparse config stuff here.  At least the ones we care about */
 	/* FIXME: We should update these on the fly rather than just
@@ -2659,7 +2657,7 @@ mdm_reread_config (int sig, gpointer data)
 
 		mdm_wm_save_wm_order ();
 		mdm_kill_thingies ();
-		mdmcomm_comm_bulk_stop ();
+		mdmcomm_close_connection_to_daemon ();
 
 		_exit (DISPLAY_RESTARTGREETER);
 		return TRUE;
@@ -2689,7 +2687,7 @@ mdm_reread_config (int sig, gpointer data)
 	if (resize)
 		login_window_resize (TRUE /* force */);
 
-	mdmcomm_comm_bulk_stop ();
+	mdmcomm_close_connection_to_daemon ();
 
 	return TRUE;
 }

@@ -71,7 +71,7 @@ get_cur_vt (void)
 		return cur_vt;
 	}
 
-	ret = mdmcomm_call_mdm ("QUERY_VT", auth_cookie, "1.0.0.0", 5);
+	ret = mdmcomm_send_cmd_to_daemon_with_args ("QUERY_VT", auth_cookie, 5);
 	if (ve_string_empty (ret) || strncmp (ret, "OK ", 3) != 0) {
 		goto out;
 	}
@@ -122,7 +122,7 @@ change_vt (int vt)
 	char *ret;
 
 	cmd = g_strdup_printf (MDM_SUP_SET_VT " %d", vt);
-	ret = mdmcomm_call_mdm (cmd, auth_cookie, "1.0.0.0", 5);
+	ret = mdmcomm_send_cmd_to_daemon_with_args (cmd, auth_cookie, 5);
 	g_free (cmd);
 
 	if (ve_string_empty (ret) ||
@@ -251,7 +251,7 @@ check_for_users (void)
 	    get_cur_vt () < 0)
 		return;
 
-	ret = mdmcomm_call_mdm ("CONSOLE_SERVERS", auth_cookie, "1.0.0.0", 5);
+	ret = mdmcomm_send_cmd_to_daemon_with_args ("CONSOLE_SERVERS", auth_cookie, 5);
 	if (ve_string_empty (ret) ||
 	    strncmp (ret, "OK ", 3) != 0) {
 		g_free (ret);
@@ -335,7 +335,6 @@ main (int argc, char *argv[])
 {
 	GtkWidget *dialog;
 	char *command;
-	char *version;
 	char *ret;
 	const char *message;
 	GOptionContext *ctx;
@@ -354,7 +353,7 @@ main (int argc, char *argv[])
 	mdm_log_set_debug (debug_in);
 
 	if (send_command != NULL) {
-		if ( ! mdmcomm_check (FALSE)) {
+		if ( ! mdmcomm_is_daemon_running (FALSE)) {
 			mdm_common_error (_("Error: MDM (MDM Display Manager) is not running."));
 			mdm_common_error (_("You might be using a different display manager."));
 			return 1;
@@ -369,13 +368,12 @@ main (int argc, char *argv[])
 		 */
 		gtk_init (&argc, &argv);
 
-		if ( ! mdmcomm_check (TRUE)) {
+		if ( ! mdmcomm_is_daemon_running (TRUE)) {
 			return 1;
 		}
 	}
-
-	/* Start reading config data in bulk */
-	mdmcomm_comm_bulk_start ();
+	
+	mdmcomm_open_connection_to_daemon ();
 
 	/* Process --command option */
 
@@ -407,18 +405,16 @@ main (int argc, char *argv[])
 
 			/*
 			 * If the above didn't return a value, then must be a
-			 * different key, so call mdmcomm_call_mdm.
+			 * different key, so call the daemon.
 			 */
 			if (value == NULL)
-				ret = mdmcomm_call_mdm (send_command, auth_cookie,
-							"1.0.0.0", 5);
+				ret = mdmcomm_send_cmd_to_daemon_with_args (send_command, auth_cookie, 5);
 		} else {
-			ret = mdmcomm_call_mdm (send_command, auth_cookie,
-						"1.0.0.0", 5);
+			ret = mdmcomm_send_cmd_to_daemon_with_args (send_command, auth_cookie, 5);
 		}
 
 		/* At this point we are done using the socket, so close it */
-		mdmcomm_comm_bulk_stop ();
+		mdmcomm_close_connection_to_daemon ();
 
 		if (ret != NULL) {
 			g_print ("%s\n", ret);
@@ -451,7 +447,7 @@ main (int argc, char *argv[])
 	if (auth_cookie == NULL) {
 
 		/* At this point we are done using the socket, so close it */
-		mdmcomm_comm_bulk_stop ();
+		mdmcomm_close_connection_to_daemon ();
 
 		dialog = hig_dialog_new (NULL /* parent */,
 					 GTK_DIALOG_MODAL /* flags */,
@@ -469,16 +465,15 @@ main (int argc, char *argv[])
 		return 1;
 	}
 	
-	command = g_strdup (MDM_SUP_FLEXI_XSERVER);
-	version = "1.0.0.0";	
+	command = g_strdup (MDM_SUP_FLEXI_XSERVER);	
 
-	ret = mdmcomm_call_mdm (command, auth_cookie, version, 5);
+	ret = mdmcomm_send_cmd_to_daemon_with_args (command, auth_cookie, 5);
 	g_free (command);
 	g_free (auth_cookie);
 	g_strfreev (args_remaining);
 
 	/* At this point we are done using the socket, so close it */
-	mdmcomm_comm_bulk_stop ();
+	mdmcomm_close_connection_to_daemon ();
 
 	if (ret != NULL &&
 	    strncmp (ret, "OK ", 3) == 0) {

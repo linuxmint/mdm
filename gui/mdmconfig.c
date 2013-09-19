@@ -148,8 +148,7 @@ mdm_config_get_result (const gchar *key)
 	else
 		command = g_strdup_printf ("GET_CONFIG %s %s", newkey, display);
 
-	result  = mdmcomm_call_mdm (command, NULL /* auth cookie */,
-	          "1.0.0.0", comm_tries);
+	result  = mdmcomm_send_cmd_to_daemon_with_args (command, NULL, comm_tries);
 
 	g_free (display);
 	g_free (command);
@@ -171,8 +170,7 @@ mdm_config_get_xserver_details (const gchar *xserver,
 	gchar *temp;
 
 	command = g_strdup_printf ("GET_SERVER_DETAILS %s %s", xserver, key);
-	result = mdmcomm_call_mdm (command, NULL /* auth cookie */,
-		"1.0.0.0", comm_tries);
+	result = mdmcomm_send_cmd_to_daemon_with_args (command, NULL, comm_tries);
 
 	g_free (command);
 
@@ -208,8 +206,7 @@ mdm_config_get_xservers (gboolean flexible)
 	gchar *temp;
 
 	command = g_strdup_printf ("GET_SERVER_LIST");
-	result = mdmcomm_call_mdm (command, NULL /* auth cookie */,
-		"1.0.0.0", comm_tries);
+	result = mdmcomm_send_cmd_to_daemon_with_args (command, NULL, comm_tries);
 
 	g_free (command);
 

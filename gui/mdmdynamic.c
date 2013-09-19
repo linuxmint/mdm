@@ -72,7 +72,6 @@ int
 main (int argc, char *argv[])
 {
     gchar *cstr;
-    gchar *version;
     gchar *params         = "";
     gchar *command        = NULL;
     gchar *ret            = NULL;
@@ -88,7 +87,6 @@ main (int argc, char *argv[])
 
     myname  = basename (argv[0]);
     argv[0] = myname;
-    version = "1.0.0.0";
 
     g_type_init ();
 
@@ -223,7 +221,7 @@ main (int argc, char *argv[])
 	 * daemon.
 	 */
 	if (strcmp (command, MDM_SUP_ATTACHED_SERVERS) != 0) {
-		ret = mdmcomm_call_mdm (MDM_SUP_SERVER_BUSY, NULL, version, 1);
+		ret = mdmcomm_send_cmd_to_daemon_with_args (MDM_SUP_SERVER_BUSY, NULL, 1);
 		conn_failed = mdmcomm_did_connection_fail ();
 		if (ret == NULL)
 			conn_failed = TRUE;
@@ -239,9 +237,8 @@ main (int argc, char *argv[])
 			}
 		}
 	}
-
-	/* Start reading config data in bulk */
-	mdmcomm_comm_bulk_start ();
+	
+	mdmcomm_open_connection_to_daemon ();
 
 	/*
 	 * All other commands besides LIST need root cookie.  Only bother
@@ -286,7 +283,7 @@ main (int argc, char *argv[])
 
 	if (conn_failed == FALSE) {
                 /* Allow to fail if connection fails after 1 try */
-		ret = mdmcomm_call_mdm (cstr, cookie, version, 1);
+		ret = mdmcomm_send_cmd_to_daemon_with_args (cstr, cookie, 1);
 
                 /* Verify the connection did not fail */
 		conn_failed = mdmcomm_did_connection_fail ();
@@ -300,9 +297,8 @@ main (int argc, char *argv[])
 			conn_failed = TRUE;
 		}
 	}
-
-	/* Done reading config data */
-	mdmcomm_comm_bulk_stop ();
+	
+	mdmcomm_close_connection_to_daemon ();
 
 	/*
          * If the connection failed, sleep and try again.  The sleep time is

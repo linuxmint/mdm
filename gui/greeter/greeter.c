@@ -652,9 +652,8 @@ mdm_read_config (void)
 {
 	gint i;
 	gchar *key_string = NULL;
-
-	/* Read config data in bulk */
-	mdmcomm_comm_bulk_start ();
+	
+	mdmcomm_open_connection_to_daemon ();
 
 	/*
 	 * Read all the keys at once and close sockets connection so we do
@@ -710,7 +709,7 @@ mdm_read_config (void)
 	mdm_config_get_string (MDM_KEY_SESSION_DESKTOP_DIR);
 	mdm_config_get_string (MDM_KEY_PRE_FETCH_PROGRAM);
 
-	mdmcomm_comm_bulk_stop ();
+	mdmcomm_close_connection_to_daemon ();
 }
 
 static gboolean
@@ -718,9 +717,8 @@ greeter_reread_config (int sig, gpointer data)
 {
 	gint i;
 	gchar *key_string = NULL;
-	
-	/* Read config data in bulk */
-	mdmcomm_comm_bulk_start ();
+		
+	mdmcomm_open_connection_to_daemon ();
 
 	/* FIXME: The following is evil, we should update on the fly rather
 	 * then just restarting */
@@ -770,7 +768,7 @@ greeter_reread_config (int sig, gpointer data)
 		mdm_common_setup_cursor (GDK_WATCH);
 
 		mdm_wm_save_wm_order ();
-		mdmcomm_comm_bulk_stop ();
+		mdmcomm_close_connection_to_daemon ();
 
 		_exit (DISPLAY_RESTARTGREETER);
 	}	
@@ -789,12 +787,12 @@ greeter_reread_config (int sig, gpointer data)
 		mdm_common_setup_cursor (GDK_WATCH);
 
 		mdm_wm_save_wm_order ();
-		mdmcomm_comm_bulk_stop ();
+		mdmcomm_close_connection_to_daemon ();
 
 		_exit (DISPLAY_RESTARTGREETER);
 	}
 
-	mdmcomm_comm_bulk_stop ();
+	mdmcomm_close_connection_to_daemon ();
 
 	return TRUE;
 }
