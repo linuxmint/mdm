@@ -863,7 +863,6 @@ mdm_read_config (void)
 	mdm_config_get_bool   (MDM_KEY_INCLUDE_ALL);
 	mdm_config_get_bool   (MDM_KEY_SYSTEM_MENU);
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
-	mdm_config_get_bool   (MDM_KEY_CHOOSER_BUTTON);
 	mdm_config_get_bool   (MDM_KEY_TIMED_LOGIN_ENABLE);
 	mdm_config_get_bool   (MDM_KEY_SHOW_LAST_SESSION);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);
@@ -952,7 +951,6 @@ greeter_reread_config (int sig, gpointer data)
 	    mdm_config_reload_bool   (MDM_KEY_INCLUDE_ALL) ||
 	    mdm_config_reload_bool   (MDM_KEY_SYSTEM_MENU) ||
 	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
-	    mdm_config_reload_bool   (MDM_KEY_CHOOSER_BUTTON) ||
 	    mdm_config_reload_bool   (MDM_KEY_TIMED_LOGIN_ENABLE) ||
 	    mdm_config_reload_bool   (MDM_KEY_SHOW_LAST_SESSION) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||

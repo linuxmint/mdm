@@ -45,7 +45,6 @@
 #include "mdm.h"
 #include "server.h"
 #include "misc.h"
-#include "xdmcp.h"
 #include "display.h"
 #include "auth.h"
 #include "slave.h"
@@ -186,19 +185,13 @@ mdm_server_stop (MdmDisplay *disp)
 	return;
 
     /* Kill our connection if one existed */
-    if (disp->dsp != NULL) {
-	    /* on XDMCP servers first kill everything in sight */
-	    if (disp->type == TYPE_XDMCP)
-		    mdm_server_whack_clients (disp->dsp);
+    if (disp->dsp != NULL) {	    	    
 	    XCloseDisplay (disp->dsp);
 	    disp->dsp = NULL;
     }
 
     /* Kill our parent connection if one existed */
-    if (disp->parent_dsp != NULL) {
-	    /* on XDMCP servers first kill everything in sight */
-	    if (disp->type == TYPE_XDMCP_PROXY)
-		    mdm_server_whack_clients (disp->parent_dsp);
+    if (disp->parent_dsp != NULL) {	    
 	    XCloseDisplay (disp->parent_dsp);
 	    disp->parent_dsp = NULL;
     }
@@ -594,9 +587,6 @@ do_server_wait (MdmDisplay *d)
 /* We keep a connection (parent_dsp) open with the parent X server
  * before running a proxy on it to prevent the X server resetting
  * as we open and close other connections.
- * Note that XDMCP servers, by default, reset when the seed X
- * connection closes whereas usually the X server only quits when
- * all X connections have closed.
  */
 static gboolean
 connect_to_parent (MdmDisplay *d)
@@ -609,7 +599,7 @@ connect_to_parent (MdmDisplay *d)
 
 	d->parent_dsp = NULL;
 
-	maxtries = SERVER_IS_XDMCP (d) ? 10 : 2;
+	maxtries = 2;
 
 	openretries = 0;
 	while (openretries < maxtries &&
@@ -679,11 +669,7 @@ mdm_server_start (MdmDisplay *disp,
 
 	    mdm_slave_send_num (MDM_SOP_DISP_NUM, flexi_disp);
     }
-
-    if (d->type == TYPE_XDMCP_PROXY &&
-	! connect_to_parent (d))
-	    return FALSE;
-
+  
     mdm_debug ("mdm_server_start: %s", d->name);
 
     /* Create new cookie */
@@ -1011,12 +997,7 @@ mdm_server_resolve_command_line (MdmDisplay *disp,
 
 			if (resolve_flags) {
 				/* Setup the handled function */
-				disp->handled = svr->handled;
-				/* never make use_chooser FALSE,
-				   it may have been set temporarily for
-				   us by the master */
-				if (svr->chooser)
-					disp->use_chooser = TRUE;
+				disp->handled = svr->handled;			
 				disp->priority = svr->priority;
 			}
 		}
@@ -1054,9 +1035,7 @@ mdm_server_resolve_command_line (MdmDisplay *disp,
 
 	if (resolve_flags && disp->chosen_hostname) {
 		/* this display is NOT handled */
-		disp->handled = FALSE;
-		/* never ever ever use chooser here */
-		disp->use_chooser = FALSE;
+		disp->handled = FALSE;		
 		disp->priority = MDM_PRIO_DEFAULT;
 		/* run just one session */
 		argv[len++] = g_strdup ("-terminate");

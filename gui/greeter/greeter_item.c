@@ -203,12 +203,7 @@ greeter_item_is_visible (GreeterItemInfo *info)
         ! MdmConfiguratorFound) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "config") == 0))
-	  return FALSE;
-
-  if (( ! mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON) || ! sysmenu) &&
-      (info->show_type != NULL &&
-       strcmp (info->show_type, "chooser") == 0))
-	  return FALSE;
+	  return FALSE;  
 
   if ( ! sysmenu && info->show_type != NULL &&
       strcmp (info->show_type, "system") == 0)

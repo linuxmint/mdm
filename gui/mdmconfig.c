@@ -179,7 +179,7 @@ mdm_config_get_xserver_details (const gchar *xserver,
 	if (! result || ve_string_empty (result) ||
 	    strncmp (result, "OK ", 3) != 0) {
 
-		mdm_common_error ("Could not access xserver configuration");
+		mdm_common_error (result);
 
 		if (result)
 			g_free (result);
@@ -216,7 +216,7 @@ mdm_config_get_xservers (gboolean flexible)
 	if (! result || ve_string_empty (result) ||
 	    strncmp (result, "OK ", 3) != 0) {
 
-		mdm_common_error ("Could not access xserver configuration");
+		mdm_common_error (result);
 
 		if (result)
 			g_free (result);
@@ -278,16 +278,6 @@ mdm_config_get_xservers (gboolean flexible)
 			svr->handled = TRUE;
 		else
 			svr->handled = FALSE;
-		g_free (temp);
-
-		temp = mdm_config_get_xserver_details (*sec, "CHOOSER");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		} else if (g_strncasecmp (temp, "true", 4) == 0)
-			svr->chooser = TRUE;
-		else
-			svr->chooser = FALSE;
 		g_free (temp);
 
 		temp = mdm_config_get_xserver_details (*sec, "PRIORITY");

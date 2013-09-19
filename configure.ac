@@ -59,10 +59,6 @@ AC_ARG_WITH(xinerama,
   [  --with-xinerama=[auto/yes/no]  Add Xinerama support [default=auto]],,
   with_xinerama=auto)
 
-AC_ARG_WITH(xdmcp,
-  [  --with-xdmcp=[auto/yes/no]  Add XDMCP (remote login) support [default=auto]],,
-  with_xdmcp=auto)
-
 AC_ARG_WITH(tcp-wrappers,
   [  --with-tcp-wrappers=[auto/yes/no]  Use TCP Wrappers [default=auto]],,
   with_tcp_wrappers=auto)
@@ -239,7 +235,6 @@ dnl ## internationalization support
 AM_GLIB_GNU_GETTEXT
 
 EXTRA_DAEMON_LIBS=""
-EXTRA_CHOOSER_LIBS=""
 EXTRA_GREETER_LIBS=""
 EXTRA_SOCKET_LIB=""
 EXTRA_NSL_LIB=""
@@ -247,12 +242,10 @@ EXTRA_NSL_LIB=""
 AC_CHECK_FUNC(socket,,[
 	      AC_CHECK_LIB(socket,socket, [
 			   EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lsocket"
-			   EXTRA_CHOOSER_LIBS="$EXTRA_CHOOSER_LIBS -lsocket"
                            EXTRA_SOCKET_LIB="-lsocket"])])
 AC_CHECK_FUNC(gethostbyname,,[
 	      AC_CHECK_LIB(nsl,gethostbyname, [
 			   EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lnsl"
-			   EXTRA_CHOOSER_LIBS="$EXTRA_CHOOSER_LIBS -lnsl"
                            EXTRA_NSL_LIB="-lnsl"])])
 AC_CHECK_FUNC(sched_yield,[
 	      AC_DEFINE(HAVE_SCHED_YIELD)],[
@@ -260,9 +253,6 @@ AC_CHECK_FUNC(sched_yield,[
 			   AC_DEFINE(HAVE_SCHED_YIELD)
 			   EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lrt"], [
 			   echo "No sched_yield found"])])
-AC_CHECK_FUNC(inet_aton,,[
-	      AC_CHECK_LIB(resolv,inet_aton, [
-			   EXTRA_CHOOSER_LIBS="$EXTRA_CHOOSER_LIBS -lresolv"])])
 
 AC_MSG_CHECKING(if utmpx structure has ut_syslen field)
 AC_TRY_COMPILE([
@@ -530,41 +520,6 @@ AC_CHECK_LIB(util,login)
 AC_CHECK_LIB(util,logout)
 MDM_CHECK_UTMP
 
-
-#
-# Xdmcp checking
-#
-XDMCP_LIBS=""
-if test x$with_xdmcp != xno ; then
-	xdmcp_save_CPPFLAGS="$CPPFLAGS"
-	CPPFLAGS="$CPPFLAGS $X_CFLAGS"
-	AC_CHECK_HEADER(X11/Xdmcp.h, [
-		AC_CHECK_LIB(Xdmcp, XdmcpFlush, [
-		     	AC_DEFINE(HAVE_LIBXDMCP)
-		     	XDMCP_LIBS="-lXdmcp"
-		     	XDMCP_SUPPORT=yes],,[$X_LIBS -lX11 $X_EXTRA_LIBS])
-	],,[#include <X11/Xproto.h>])
-
-	if test x$with_xdmcp = xyes -a x$XDMCP_SUPPORT = x ; then
-		AC_MSG_ERROR(XDMCP support requested but XDMCP libraries not found)
-	fi
-	CPPFLAGS="$xdmcp_save_CPPFLAGS"
-fi
-AC_SUBST(XDMCP_LIBS)
-
-if test x$XDMCP_SUPPORT = xyes ; then
-	AM_CONDITIONAL(XDMCP_SUPPORT, true)
-	MDMCHOOSER=mdmchooser
-else
-        # No need for TCP Wrappers in case XDMCP is disabled
-        if test x$with_tcp_wrappers != xno ; then
-	        echo "TCP wrappers not needed if XDMCP is not enabled"
-        fi
-	with_tcp_wrappers=no
-	AM_CONDITIONAL(XDMCP_SUPPORT, false)
-	MDMCHOOSER=
-fi
-AC_SUBST(MDMCHOOSER)
 
 #
 # TCP Wrappers for XDMCP access control
@@ -1037,7 +992,6 @@ AC_DEFINE_UNQUOTED(NOLOGIN, "$NOLOGIN", [Path to the nologin binary])
 # Subst the extra libs
 #
 AC_SUBST(EXTRA_DAEMON_LIBS)
-AC_SUBST(EXTRA_CHOOSER_LIBS)
 AC_SUBST(EXTRA_GREETER_LIBS)
 AC_SUBST(EXTRA_SOCKET_LIB)
 AC_SUBST(EXTRA_NSL_LIB)
@@ -1412,13 +1366,6 @@ if test x"$XINERAMA_SUPPORT" = xyes ; then
 	echo "Xinerama support                      : YES"
 else
 	echo "Xinerama support                      : NO"
-fi
-
-dnl <= XDMCP =>
-if test x"$XDMCP_SUPPORT" = xyes ; then
-	echo "XDMCP (remote login) support          : YES"
-else
-	echo "XDMCP (remote login) support          : NO"
 fi
 
 dnl <= Secure remote connection =>

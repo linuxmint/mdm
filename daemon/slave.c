@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-/* This is the mdm slave process. mdmslave runs the chooser, greeter
+/* This is the mdm slave process. mdmslave runs the greeter
  * and the user's session scripts. */
 
 #include "config.h"
@@ -101,7 +101,6 @@
 #include "filecheck.h"
 #include "auth.h"
 #include "server.h"
-#include "choose.h"
 #include "getvt.h"
 #include "errorgui.h"
 #include "cookie.h"
@@ -210,7 +209,6 @@ static gint   mdm_slave_xioerror_handler (Display *disp);
 static void   mdm_slave_run (MdmDisplay *display);
 static void   mdm_slave_wait_for_login (void);
 static void   mdm_slave_greeter (void);
-static void   mdm_slave_chooser (void);
 static void   mdm_slave_session_start (void);
 static void   mdm_slave_session_stop (gboolean run_post_session,
 					gboolean no_shutdown_check);
@@ -398,24 +396,6 @@ run_session_output (gboolean read_until_eof)
 	NEVER_FAILS_root_set_euid_egid (old, oldg);
 }
 
-static void
-run_chooser_output (void)
-{
-	char *bf;
-
-	if G_UNLIKELY (d->chooser_output_fd < 0)
-		return;
-
-	/* the fd is non-blocking */
-	do {
-		bf = mdm_fdgets (d->chooser_output_fd);
-		if (bf != NULL) {
-			g_free (d->chooser_last_line);
-			d->chooser_last_line = bf;
-		}
-	} while (bf != NULL);
-}
-
 #define TIME_UNSET_P(tv) ((tv)->tv_sec == 0 && (tv)->tv_usec == 0)
 
 /* Try to touch an authfb auth file every 12 hours.  That way if it's
@@ -507,16 +487,12 @@ slave_waitpid (MdmWaitPid *wp)
 			tv.tv_sec = 5;
 			tv.tv_usec = 0;
 			select (0, NULL, NULL, NULL, min_time_to_wait (&tv));
-			/* don't want to use sleep since we're using alarm
-			   for pinging */
-
+			
 			/* try to touch an fb auth file */
 			try_to_touch_fb_userauth ();
 
 			if (d->session_output_fd >= 0)
-				run_session_output (FALSE /* read_until_eof */);
-			if (d->chooser_output_fd >= 0)
-				run_chooser_output ();
+				run_session_output (FALSE /* read_until_eof */);			
 			check_notifies_now ();
 		}
 		check_notifies_now ();
@@ -537,17 +513,12 @@ slave_waitpid (MdmWaitPid *wp)
 			    d->session_output_fd >= 0) {
 				FD_SET (d->session_output_fd, &rfds);
                 mdm_debug ("slave_waitpid: no session");
-            }
-			if (d->chooser_output_fd >= 0) {
-				FD_SET (d->chooser_output_fd, &rfds);
-                mdm_debug ("slave_waitpid: no chooser");
-            }
+            }			
 
 			/* unset time */
 			tv.tv_sec = 0;
 			tv.tv_usec = 0;
 			maxfd = MAX (slave_waitpid_r, d->session_output_fd);
-			maxfd = MAX (maxfd, d->chooser_output_fd);
             
             struct timeval * timetowait = min_time_to_wait (&tv);
 
@@ -560,7 +531,6 @@ slave_waitpid (MdmWaitPid *wp)
             }
             mdm_debug ("slave_waitpid: slave_waitpid_r = %d", (int) slave_waitpid_r);
             mdm_debug ("slave_waitpid: d->session_output_fd = %d", (int) d->session_output_fd);
-            mdm_debug ("slave_waitpid: d->chooser_output_fd = %d", (int) d->chooser_output_fd);
             mdm_debug ("slave_waitpid: MAX = %d", (int) maxfd);                
 
 			ret = select (maxfd + 1, &rfds, NULL, NULL, timetowait);
@@ -577,11 +547,7 @@ slave_waitpid (MdmWaitPid *wp)
 				if (d->session_output_fd >= 0 &&
 				    FD_ISSET (d->session_output_fd, &rfds)) {
 					run_session_output (FALSE /* read_until_eof */);
-				}
-				if (d->chooser_output_fd >= 0 &&
-				    FD_ISSET (d->chooser_output_fd, &rfds)) {
-					run_chooser_output ();
-				}
+				}				
 			} else if (errno == EBADF) {
 				read_session_output = FALSE;
                 mdm_debug ("slave_waitpid: errno = EBADF");
@@ -815,7 +781,6 @@ mdm_slave_start (MdmDisplay *display)
 	struct sigaction xfsz;
 #endif /* SIGXFSZ */
 	sigset_t mask;
-	int pinginterval = mdm_daemon_config_get_value_int (MDM_KEY_PING_INTERVAL);
 
 	/*
 	 * Set d global to display before setting signal handlers,
@@ -845,9 +810,7 @@ mdm_slave_start (MdmDisplay *display)
 	sigaddset (&mask, SIGCHLD);
 	sigaddset (&mask, SIGUSR2);
 	sigaddset (&mask, SIGUSR1); /* normally we ignore USR1 */
-	if ( ! SERVER_IS_LOCAL (display) && pinginterval > 0) {
-		sigaddset (&mask, SIGALRM);
-	}
+
 	/* must set signal mask before the Setjmp as it will be
 	   restored, and we're only interested in catching the above signals */
 	sigprocmask (SIG_UNBLOCK, &mask, NULL);
@@ -874,20 +837,7 @@ mdm_slave_start (MdmDisplay *display)
 		/* huh? should never get here */
 		_exit (DISPLAY_REMANAGE);
 	}
-
-	if ( ! SERVER_IS_LOCAL (display) && pinginterval > 0) {
-		/* Handle a ALRM signals from our ping alarms */
-		alrm.sa_handler = mdm_slave_alrm_handler;
-		alrm.sa_flags = SA_RESTART | SA_NODEFER;
-		sigemptyset (&alrm.sa_mask);
-		sigaddset (&alrm.sa_mask, SIGALRM);
-
-		if G_UNLIKELY (sigaction (SIGALRM, &alrm, NULL) < 0)
-			mdm_slave_exit (DISPLAY_ABORT,
-					_("%s: Error setting up %s signal handler: %s"),
-					"mdm_slave_start", "ALRM", strerror (errno));
-	}
-
+	
 	/* Handle a INT/TERM signals from mdm master */
 	term.sa_handler = mdm_slave_term_handler;
 	term.sa_flags = SA_RESTART;
@@ -1326,79 +1276,48 @@ mdm_slave_check_user_wants_to_log_in (const char *user)
 	if ( ! loggedin)
 		return TRUE;
 
-	if (d->type != TYPE_XDMCP_PROXY) {
-		int r;
+	int r;
 
-		r = ask_migrate (migrate_to);
+	r = ask_migrate (migrate_to);
 
-		if (r <= 0) {
-			g_free (migrate_to);
-			return TRUE;
-		}
-
-		/*
-		 * migrate_to should never be NULL here, since
-		 * ask_migrate will always return 0 or 1 if migrate_to
-		 * is NULL.
-		 */
-		if (migrate_to == NULL ||
-		    (migrate_to != NULL && r == 2)) {
-			g_free (migrate_to);
-			return FALSE;
-		}
-
-		/* Must be that r == 1, that is return to previous login */
-
-		if (d->type == TYPE_FLEXI) {
-			mdm_slave_whack_greeter ();
-			mdm_server_stop (d);
-			mdm_slave_send_num (MDM_SOP_XPID, 0);
-
-			/* wait for a few seconds to avoid any vt changing race
-			 */
-			mdm_sleep_no_signal (1);
-		}
-
-#ifdef WITH_CONSOLE_KIT
-		unlock_ck_session (user, migrate_to);
-#endif
-		mdm_slave_send_string (MDM_SOP_MIGRATE, migrate_to);
+	if (r <= 0) {
 		g_free (migrate_to);
+		return TRUE;
+	}
 
-		if (d->type == TYPE_FLEXI) {
-			/* we are no longer needed so just die.
-			   REMANAGE == ABORT here really */
-			mdm_slave_quick_exit (DISPLAY_REMANAGE);
-		}
-	} else {
-		Display *parent_dsp;
-
-		if (migrate_to == NULL)
-			return TRUE;
-
-		mdm_slave_send_string (MDM_SOP_MIGRATE, migrate_to);
+	/*
+	 * migrate_to should never be NULL here, since
+	 * ask_migrate will always return 0 or 1 if migrate_to
+	 * is NULL.
+	 */
+	if (migrate_to == NULL ||
+	    (migrate_to != NULL && r == 2)) {
 		g_free (migrate_to);
+		return FALSE;
+	}
 
-		/*
-		 * We must stay running and hold open our connection to the
-		 * parent display because with XDMCP the Xserver resets when
-		 * the initial X client closes its connection (rather than
-		 * when *all* X clients have closed their connection)
-		 */
+	/* Must be that r == 1, that is return to previous login */
 
+	if (d->type == TYPE_FLEXI) {
 		mdm_slave_whack_greeter ();
-
-		parent_dsp = d->parent_dsp;
-		d->parent_dsp = NULL;
 		mdm_server_stop (d);
-
 		mdm_slave_send_num (MDM_SOP_XPID, 0);
 
-		mdm_debug ("Slave not exiting in order to hold open the connection to the parent display");
+		/* wait for a few seconds to avoid any vt changing race
+		 */
+		mdm_sleep_no_signal (1);
+	}
 
-		wait_for_display_to_die (d->parent_dsp, d->parent_disp);
+#ifdef WITH_CONSOLE_KIT
+	unlock_ck_session (user, migrate_to);
+#endif
+	mdm_slave_send_string (MDM_SOP_MIGRATE, migrate_to);
+	g_free (migrate_to);
 
-		mdm_slave_quick_exit (DISPLAY_ABORT);
+	if (d->type == TYPE_FLEXI) {
+		/* we are no longer needed so just die.
+		   REMANAGE == ABORT here really */
+		mdm_slave_quick_exit (DISPLAY_REMANAGE);
 	}
 
 	/* abort this login attempt */
@@ -1425,7 +1344,6 @@ mdm_slave_run (MdmDisplay *display)
 {	
 	gint openretries = 0;
 	gint maxtries = 0;
-	gint pinginterval = mdm_daemon_config_get_value_int (MDM_KEY_PING_INTERVAL);
 
 	mdm_reset_locale ();
 
@@ -1561,8 +1479,7 @@ mdm_slave_run (MdmDisplay *display)
 		tv.tv_sec = 1;
 		tv.tv_usec = 0;
 		select (0, NULL, NULL, NULL, &tv);
-		/* don't want to use sleep since we're using alarm
-		   for pinging */
+		
 		check_notifies_now ();
 	}
 
@@ -1598,12 +1515,7 @@ mdm_slave_run (MdmDisplay *display)
 
 	/* OK from now on it's really the user whacking us most likely,
 	 * we have already started up well */
-	do_xfailed_on_xio_error = FALSE;
-
-	/* If XDMCP setup pinging */
-	if ( ! SERVER_IS_LOCAL (d) && pinginterval > 0) {
-		alarm (pinginterval);
-	}
+	do_xfailed_on_xio_error = FALSE;	
 
 	/* checkout xinerama */
 	if (d->handled)
@@ -1636,11 +1548,7 @@ mdm_slave_run (MdmDisplay *display)
 		while (d->servpid > 0) {
 			pause ();
 		}
-		mdm_slave_quick_exit (DISPLAY_REMANAGE);
-	} else if (d->use_chooser) {
-		/* this usually doesn't return */
-		mdm_slave_chooser ();  /* Run the chooser */
-		return;
+		mdm_slave_quick_exit (DISPLAY_REMANAGE);	
 	} else if (d->type == TYPE_STATIC &&
 		   mdm_first_login &&
 		   ! ve_string_empty (ParsedAutomaticLogin) &&
@@ -1723,10 +1631,7 @@ mdm_slave_run (MdmDisplay *display)
 		 * so no need to reinit the server nor rebake cookies
 		 * nor such nonsense */
 	} while (greet);
-
-	/* If XDMCP stop pinging */
-	if ( ! SERVER_IS_LOCAL (d))
-		alarm (0);
+	
 }
 
 /* A hack really, this will wait around until the first mapped window
@@ -2829,8 +2734,7 @@ mdm_slave_greeter (void)
 			mdm_errorgui_error_box (d,
 						GTK_MESSAGE_ERROR,
 						_("No servers were defined in the "
-						  "configuration file and XDMCP was "
-						  "disabled.  This can only be a "
+						  "configuration file.  This can only be a "
 						  "configuration error.  MDM has started "
 						  "a single server for you.  You should "
 						  "log in and fix the configuration.  "
@@ -3066,8 +2970,7 @@ mdm_slave_send (const char *str, gboolean wait_for_ack)
 				tv.tv_sec = 1;
 				tv.tv_usec = 0;
 				select (0, NULL, NULL, NULL, &tv);
-				/* don't want to use sleep since we're using alarm
-				   for pinging */
+			
 			}
 		}
 	}
@@ -3162,197 +3065,6 @@ send_chosen_host (MdmDisplay *disp,
 	mdm_slave_send (str, FALSE);
 
 	g_free (str);
-}
-
-
-static void
-mdm_slave_chooser (void)
-{
-	gint p[2];
-	struct passwd *pwent;
-	pid_t pid;
-	MdmWaitPid *wp;
-	const char *defaultpath;
-	const char *mdmuser;
-	const char *moduleslist;
-
-	mdm_debug ("mdm_slave_chooser: Running chooser on %s", d->name);
-
-	/* Open a pipe for chooser communications */
-	if G_UNLIKELY (pipe (p) < 0)
-		mdm_slave_exit (DISPLAY_REMANAGE, _("%s: Can't init pipe to mdmchooser"), "mdm_slave_chooser");
-
-	/* Run the init script. mdmslave suspends until script has terminated */
-	mdm_slave_exec_script (d, mdm_daemon_config_get_value_string (MDM_KEY_DISPLAY_INIT_DIR),
-			       NULL, NULL, FALSE /* pass_stdout */);
-
-	mdm_debug ("Forking chooser process: %s", mdm_daemon_config_get_value_string (MDM_KEY_CHOOSER));
-
-	/* Fork. Parent is mdmslave, child is greeter process. */
-	mdm_sigchld_block_push ();
-	mdm_sigterm_block_push ();
-	pid = d->chooserpid = fork ();
-	if (pid == 0)
-		mdm_unset_signals ();
-	mdm_sigterm_block_pop ();
-	mdm_sigchld_block_pop ();
-
-	switch (pid) {
-
-	case 0:
-		setsid ();
-
-		mdm_unset_signals ();
-
-		/* Plumbing */
-		VE_IGNORE_EINTR (close (p[0]));
-
-		if (p[1] != STDOUT_FILENO)
-			VE_IGNORE_EINTR (dup2 (p[1], STDOUT_FILENO));
-
-		mdm_log_shutdown ();
-
-		VE_IGNORE_EINTR (close (0));
-		mdm_close_all_descriptors (2 /* from */, slave_fifo_pipe_fd /* except */, d->slave_notify_fd /* except2 */);
-
-		mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
-		mdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
-
-		mdm_log_init ();
-
-		if G_UNLIKELY (setgid (mdm_daemon_config_get_mdmgid ()) < 0)
-			mdm_child_exit (DISPLAY_ABORT,
-					_("%s: Couldn't set groupid to %d"),
-					"mdm_slave_chooser",
-					mdm_daemon_config_get_mdmgid ());
-
-		mdmuser = mdm_daemon_config_get_value_string (MDM_KEY_USER);
-		if G_UNLIKELY (initgroups (mdmuser, mdm_daemon_config_get_mdmgid ()) < 0)
-			mdm_child_exit (DISPLAY_ABORT,
-					_("%s: initgroups () failed for %s"),
-					"mdm_slave_chooser",
-					mdmuser ? mdmuser : "(null)");
-
-		if G_UNLIKELY (setuid (mdm_daemon_config_get_mdmuid ()) < 0)
-			mdm_child_exit (DISPLAY_ABORT,
-					_("%s: Couldn't set userid to %d"),
-					"mdm_slave_chooser",
-					mdm_daemon_config_get_mdmuid ());
-
-		mdm_restoreenv ();
-		mdm_reset_locale ();
-
-		g_setenv ("XAUTHORITY", MDM_AUTHFILE (d), TRUE);
-		g_setenv ("DISPLAY", d->name, TRUE);
-		if (d->windowpath)
-			g_setenv ("WINDOWPATH", d->windowpath, TRUE);
-
-		g_setenv ("LOGNAME", mdmuser, TRUE);
-		g_setenv ("USER", mdmuser, TRUE);
-		g_setenv ("USERNAME", mdmuser, TRUE);
-
-		g_setenv ("MDM_VERSION", VERSION, TRUE);
-
-		pwent = getpwnam (mdmuser);
-		if G_LIKELY (pwent != NULL) {
-			/* Note that usually this doesn't exist */
-			if (g_file_test (pwent->pw_dir, G_FILE_TEST_EXISTS))
-				g_setenv ("HOME", pwent->pw_dir, TRUE);
-			else
-				g_setenv ("HOME",
-					  ve_sure_string (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR)),
-					  TRUE); /* Hack */
-			g_setenv ("SHELL", pwent->pw_shell, TRUE);
-		} else {
-			g_setenv ("HOME",
-				  ve_sure_string (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR)),
-				  TRUE); /* Hack */
-			g_setenv ("SHELL", "/bin/sh", TRUE);
-		}
-
-		defaultpath = mdm_daemon_config_get_value_string (MDM_KEY_PATH);
-		if (ve_string_empty (g_getenv ("PATH"))) {
-			g_setenv ("PATH", defaultpath, TRUE);
-		} else if ( ! ve_string_empty (defaultpath)) {
-			gchar *temp_string = g_strconcat (g_getenv ("PATH"),
-							  ":", defaultpath, NULL);
-			g_setenv ("PATH", temp_string, TRUE);
-			g_free (temp_string);
-		}
-		g_setenv ("RUNNING_UNDER_MDM", "true", TRUE);
-		if ( ! ve_string_empty (d->theme_name))
-			g_setenv ("MDM_GTK_THEME", d->theme_name, TRUE);
-
-		moduleslist = mdm_daemon_config_get_value_string (MDM_KEY_GTK_MODULES_LIST);
-		if (mdm_daemon_config_get_value_bool (MDM_KEY_ADD_GTK_MODULES) &&
-		    ! ve_string_empty (moduleslist)) {
-			char *modules = g_strdup_printf ("--gtk-module=%s", moduleslist);
-			exec_command (mdm_daemon_config_get_value_string (MDM_KEY_CHOOSER), modules);
-		}
-
-		exec_command (mdm_daemon_config_get_value_string (MDM_KEY_CHOOSER), NULL);
-
-		mdm_errorgui_error_box (d,
-			       GTK_MESSAGE_ERROR,
-			       _("Cannot start the chooser application. "
-				 "You will probably not be able to log in.  "
-				 "Please contact the system administrator."));
-
-		mdm_child_exit (DISPLAY_REMANAGE,
-				_("%s: Error starting chooser on display %s"),
-				"mdm_slave_chooser",
-				d->name ? d->name : "(null)");
-
-	case -1:
-		mdm_slave_exit (DISPLAY_REMANAGE, _("%s: Can't fork mdmchooser process"), "mdm_slave_chooser");
-
-	default:
-		mdm_debug ("mdm_slave_chooser: Chooser on pid %d", d->chooserpid);
-		mdm_slave_send_num (MDM_SOP_CHOOSERPID, d->chooserpid);
-
-		VE_IGNORE_EINTR (close (p[1]));
-
-		g_free (d->chooser_last_line);
-		d->chooser_last_line = NULL;
-		d->chooser_output_fd = p[0];
-		/* make the output read fd non-blocking */
-		fcntl (d->chooser_output_fd, F_SETFL, O_NONBLOCK);
-
-		/* wait for the chooser to die */
-
-		mdm_sigchld_block_push ();
-		wp = slave_waitpid_setpid (d->chooserpid);
-		mdm_sigchld_block_pop ();
-
-		slave_waitpid (wp);
-
-		d->chooserpid = 0;
-		mdm_slave_send_num (MDM_SOP_CHOOSERPID, 0);
-
-		/* Note: Nothing affecting the chooser needs update
-		 * from notifies, plus we are exitting right now */
-
-		run_chooser_output ();
-		VE_IGNORE_EINTR (close (d->chooser_output_fd));
-		d->chooser_output_fd = -1;
-
-		if (d->chooser_last_line != NULL) {
-			char *host = d->chooser_last_line;
-			d->chooser_last_line = NULL;
-
-			if (SERVER_IS_XDMCP (d)) {
-				send_chosen_host (d, host);
-				mdm_slave_quick_exit (DISPLAY_CHOSEN);
-			} else {
-				mdm_debug ("Sending locally chosen host %s", host);
-				mdm_slave_send_string (MDM_SOP_CHOSEN_LOCAL, host);
-				mdm_slave_quick_exit (DISPLAY_REMANAGE);
-			}
-		}
-
-		mdm_slave_quick_exit (DISPLAY_REMANAGE);
-		break;
-	}
 }
 
 gboolean
@@ -3739,16 +3451,10 @@ session_child_run (struct passwd *pwent,
 
 	if (d->type == TYPE_STATIC) {
 		g_setenv ("MDM_XSERVER_LOCATION", "local", TRUE);
-		g_setenv ("GDM_XSERVER_LOCATION", "local", TRUE);
-	} else if (d->type == TYPE_XDMCP) {
-		g_setenv ("MDM_XSERVER_LOCATION", "xdmcp", TRUE);
-		g_setenv ("GDM_XSERVER_LOCATION", "xdmcp", TRUE);
+		g_setenv ("GDM_XSERVER_LOCATION", "local", TRUE);	
 	} else if (d->type == TYPE_FLEXI) {
 		g_setenv ("MDM_XSERVER_LOCATION", "flexi", TRUE);
-		g_setenv ("GDM_XSERVER_LOCATION", "flexi", TRUE);
-	} else if (d->type == TYPE_XDMCP_PROXY) {
-		g_setenv ("MDM_XSERVER_LOCATION", "xdmcp-proxy", TRUE);
-		g_setenv ("GDM_XSERVER_LOCATION", "xdmcp-proxy", TRUE);
+		g_setenv ("GDM_XSERVER_LOCATION", "flexi", TRUE);	
 	} else {
 		/* huh? */
 		g_setenv ("MDM_XSERVER_LOCATION", "unknown", TRUE);
@@ -5169,8 +4875,7 @@ mdm_slave_session_stop (gboolean run_post_session,
 				tv.tv_sec = 30;
 				tv.tv_usec = 0;
 				select (0, NULL, NULL, NULL, &tv);
-				/* don't want to use sleep since we're using alarm
-				   for pinging */
+				
 			}
 			/* hmm, didn't get TERM, weird */
 		}
@@ -5226,46 +4931,6 @@ mdm_slave_term_handler (int sig)
 
 	/* never reached */
 	mdm_in_signal--;
-}
-
-/* called on alarms to ping */
-static void
-mdm_slave_alrm_handler (int sig)
-{
-	static gboolean in_ping = FALSE;
-
-	if G_UNLIKELY (already_in_slave_start_jmp)
-		return;
-
-	mdm_in_signal++;
-
-	if G_UNLIKELY (d->dsp == NULL) {
-		mdm_in_signal --;
-		/* huh? */
-		return;
-	}
-
-	if G_UNLIKELY (in_ping) {
-		need_to_quit_after_session_stop = TRUE;
-		exit_code_to_use = DISPLAY_REMANAGE;
-
-		if (session_started) {
-			SIGNAL_EXIT_WITH_JMP (d, JMP_SESSION_STOP_AND_QUIT);
-		} else {
-			SIGNAL_EXIT_WITH_JMP (d, JMP_JUST_QUIT_QUICKLY);
-		}
-	}
-
-	in_ping = TRUE;
-
-	/* schedule next alarm */
-	alarm (mdm_daemon_config_get_value_int (MDM_KEY_PING_INTERVAL));
-
-	XSync (d->dsp, True);
-
-	in_ping = FALSE;
-
-	mdm_in_signal --;
 }
 
 /* Called on every SIGCHLD */
@@ -5333,7 +4998,6 @@ mdm_slave_child_handler (int sig)
 			     WEXITSTATUS (status) == DISPLAY_REBOOT ||
 			     WEXITSTATUS (status) == DISPLAY_HALT ||
 			     WEXITSTATUS (status) == DISPLAY_SUSPEND ||
-			     WEXITSTATUS (status) == DISPLAY_RUN_CHOOSER ||
 			     WEXITSTATUS (status) == DISPLAY_RESTARTMDM ||
 			     WEXITSTATUS (status) == DISPLAY_GREETERFAILED)) {
 				exit_code_to_use = WEXITSTATUS (status);
@@ -5360,8 +5024,6 @@ mdm_slave_child_handler (int sig)
 				d->last_sess_status = WEXITSTATUS (status);
 			else
 				d->last_sess_status = -1;
-		} else if (pid != 0 && pid == d->chooserpid) {
-			d->chooserpid = 0;
 		} else if (pid != 0 && pid == d->servpid) {
 			if (d->servstat == SERVER_RUNNING)
 				mdm_server_whack_lockfile (d);
@@ -5379,11 +5041,7 @@ mdm_slave_child_handler (int sig)
 			if (d->greetpid > 1) {
 				mdm_slave_send_num (MDM_SOP_GREETPID, 0);
 				kill (d->greetpid, SIGTERM);
-			}
-			if (d->chooserpid > 1) {
-				mdm_slave_send_num (MDM_SOP_CHOOSERPID, 0);
-				kill (d->chooserpid, SIGTERM);
-			}
+			}			
 
 			/* just in case we restart again wait at least
 			   one sec to avoid races */
@@ -5766,11 +5424,7 @@ mdm_slave_quick_exit (gint status)
 		/* Kill children where applicable */
 		if (d->greetpid > 1)
 			kill (d->greetpid, SIGTERM);
-		d->greetpid = 0;
-
-		if (d->chooserpid > 1)
-			kill (d->chooserpid, SIGTERM);
-		d->chooserpid = 0;
+		d->greetpid = 0;		
 
 		if (d->sesspid > 1)
 			kill (-(d->sesspid), SIGTERM);
@@ -5857,15 +5511,7 @@ mdm_slave_exec_script (MdmDisplay *d,
 			g_free (script);
 			script = NULL;
 		}
-	}
-	if (script == NULL &&
-	    SERVER_IS_XDMCP (d)) {
-		script = g_build_filename (dir, "XDMCP", NULL);
-		if (g_access (script, R_OK|X_OK) != 0) {
-			g_free (script);
-			script = NULL;
-		}
-	}
+	}	
 	if (script == NULL &&
 	    SERVER_IS_FLEXI (d)) {
 		script = g_build_filename (dir, "Flexi", NULL);
@@ -5956,9 +5602,7 @@ mdm_slave_exec_script (MdmDisplay *d,
 		x_servers_file = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR),
 						    d->name, ".Xservers");
 		g_setenv ("X_SERVERS", x_servers_file, TRUE);
-		g_free (x_servers_file);
-		if (SERVER_IS_XDMCP (d))
-			g_setenv ("REMOTE_HOST", d->hostname, TRUE);
+		g_free (x_servers_file);		
 
 		/* Runs as root */
 		if (MDM_AUTHFILE (d) != NULL)
@@ -6084,8 +5728,7 @@ mdm_slave_parse_enriched_login (MdmDisplay *d, const gchar *s)
 				g_setenv ("DISPLAY", d->name, TRUE);
 				if (d->windowpath)
 					g_setenv ("WINDOWPATH", d->windowpath, TRUE);
-				if (SERVER_IS_XDMCP (d))
-					g_setenv ("REMOTE_HOST", d->hostname, TRUE);
+				
 				g_setenv ("PATH", mdm_daemon_config_get_value_string (MDM_KEY_ROOT_PATH), TRUE);
 				g_setenv ("SHELL", "/bin/sh", TRUE);
 				g_setenv ("RUNNING_UNDER_MDM", "true", TRUE);
@@ -6168,10 +5811,6 @@ mdm_slave_handle_notify (const char *msg)
 		mdm_daemon_config_set_value_bool (MDM_KEY_CONFIG_AVAILABLE, val);
 		if (d->greetpid > 1)
 			kill (d->greetpid, SIGHUP);
-	} else if (sscanf (msg, MDM_NOTIFY_CHOOSER_BUTTON " %d", &val) == 1) {
-		mdm_daemon_config_set_value_bool (MDM_KEY_CHOOSER_BUTTON, val);
-		if (d->greetpid > 1)
-			kill (d->greetpid, SIGHUP);
 	} else if (sscanf (msg, MDM_NOTIFY_RETRY_DELAY " %d", &val) == 1) {
 		mdm_daemon_config_set_value_int (MDM_KEY_RETRY_DELAY, val);
 	} else if (sscanf (msg, MDM_NOTIFY_DISALLOW_TCP " %d", &val) == 1) {
@@ -6227,14 +5866,6 @@ mdm_slave_handle_notify (const char *msg)
 			do_restart_greeter = TRUE;
 			if (restart_greeter_now) {
 				; /* will get restarted later */
-			} else if (d->type == TYPE_XDMCP) {
-				/* FIXME: can't handle flexi servers like this
-				 * without going all cranky */
-				if ( ! d->logged_in) {
-					mdm_slave_quick_exit (DISPLAY_REMANAGE);
-				} else {
-					remanage_asap = TRUE;
-				}
 			}
 		}
 	} else if ((strncmp (msg, MDM_NOTIFY_TIMED_LOGIN " ",
@@ -6246,7 +5877,7 @@ mdm_slave_handle_notify (const char *msg)
 		do_restart_greeter = TRUE;
 		/* FIXME: this is fairly nasty, we should handle this nicer   */
 		/* FIXME: can't handle flexi servers without going all cranky */
-		if (d->type == TYPE_STATIC || d->type == TYPE_XDMCP) {
+		if (d->type == TYPE_STATIC) {
 			if ( ! d->logged_in) {
 				mdm_slave_quick_exit (DISPLAY_REMANAGE);
 			} else {

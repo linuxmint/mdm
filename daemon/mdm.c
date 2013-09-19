@@ -65,7 +65,6 @@
 #include "server.h"
 #include "verify.h"
 #include "display.h"
-#include "choose.h"
 #include "getvt.h"
 #include "mdm-net.h"
 #include "cookie.h"
@@ -75,8 +74,6 @@
 #include "mdm-socket-protocol.h"
 #include "mdm-daemon-config.h"
 #include "mdm-log.h"
-
-#include "xdmcp.h"
 
 #define DYNAMIC_ADD     0
 #define DYNAMIC_RELEASE 1
@@ -97,7 +94,6 @@ static void handle_flexi_server (MdmConnection *conn,
 				 int type,
 				 const gchar *server,
 				 gboolean handled,
-				 gboolean chooser,
 				 const gchar *username);
 static void custom_cmd_restart (long cmd_id);
 static void custom_cmd_no_restart (long cmd_id);
@@ -264,16 +260,14 @@ mdm_start_first_unborn_local (int delay)
 				   we actually log in gets
 				   autologged in */
 				if (svr != NULL &&
-				    svr->handled &&
-				    ! svr->chooser)
+				    svr->handled)
 					mdm_first_login = FALSE;
 			} else {
 				/* only the first static display where
 				   we actually log in gets
 				   autologged in */
 				if (svr != NULL &&
-				    svr->handled &&
-				    ! svr->chooser)
+				    svr->handled)
 					mdm_first_login = FALSE;
 				break;
 			}
@@ -314,20 +308,7 @@ mdm_final_cleanup (void)
 		 * don't wait */
 		kill (-(extra_process), SIGTERM);
 		extra_process = 0;
-	}
-
-	/* First off whack all XDMCP 
-	   slaves, we'll wait for them later */
-	for (li = displays; li != NULL; li = li->next) {
-		MdmDisplay *d = li->data;
-		if (SERVER_IS_XDMCP (d) ||
-		    SERVER_IS_PROXY (d)) {
-			/* set to DEAD so that we won't kill it again */
-			d->dispstat = DISPLAY_DEAD;
-			if (d->slavepid > 1)
-				kill (d->slavepid, SIGTERM);
-		}
-	}
+	}	
 
 	/* Now completely unmanage the static servers */
 	first = TRUE;
@@ -337,10 +318,7 @@ mdm_final_cleanup (void)
 	 * the right vt */
 	list = g_slist_reverse (list);
 	for (li = list; li != NULL; li = li->next) {
-		MdmDisplay *d = li->data;
-		if (SERVER_IS_XDMCP (d) ||
-		    SERVER_IS_PROXY (d))
-			continue;
+		MdmDisplay *d = li->data;		
 		/* HACK! Wait 2 seconds between killing of static servers
 		 * because X is stupid and full of races and will otherwise
 		 * hang my keyboard */
@@ -352,26 +330,10 @@ mdm_final_cleanup (void)
 		first = FALSE;
 		mdm_display_unmanage (d);
 	}
-	g_slist_free (list);
-
-	/* and now kill and wait for the XDMCP 
-	   slaves.  unmanage will not kill slaves we have already
-	   killed unless a SIGTERM was sent in the meantime */
-
-	list = g_slist_copy (displays);
-	for (li = list; li != NULL; li = li->next) {
-		MdmDisplay *d = li->data;
-		if (SERVER_IS_XDMCP (d) ||
-		    SERVER_IS_PROXY (d))
-			mdm_display_unmanage (d);
-	}
-	g_slist_free (list);
-
+	g_slist_free (list);	
+	
 	/* Close stuff */
-
-	if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP))
-		mdm_xdmcp_close ();
-
+	
 	if (fifoconn != NULL) {
 		char *path;
 		mdm_connection_close (fifoconn);
@@ -453,10 +415,7 @@ deal_with_x_crashes (MdmDisplay *d)
 			/* Also make a new process group so that we may use
 			 * kill -(extra_process) to kill extra process and all its
 			 * possible children */
-			setsid ();
-
-			if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP))
-				mdm_xdmcp_close ();
+			setsid ();		
 
 			mdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */);
 
@@ -876,10 +835,7 @@ mdm_cleanup_children (void)
 		d->sesspid = 0;
 		if (d->greetpid > 1)
 			kill (-(d->greetpid), SIGTERM);
-		d->greetpid = 0;
-		if (d->chooserpid > 1)
-			kill (-(d->chooserpid), SIGTERM);
-		d->chooserpid = 0;
+		d->greetpid = 0;	
 		if (d->servpid > 1)
 			kill (d->servpid, SIGTERM);
 		d->servpid = 0;
@@ -897,7 +853,6 @@ mdm_cleanup_children (void)
 	d->servpid    = 0;
 	d->sesspid    = 0;
 	d->greetpid   = 0;
-	d->chooserpid = 0;
 
 	/* definately not logged in now */
 	d->logged_in = FALSE;
@@ -948,37 +903,7 @@ mdm_cleanup_children (void)
 			break;
 		}
 	}
-
-	if (status == DISPLAY_RUN_CHOOSER) {
-		sysmenu = mdm_daemon_config_get_value_bool_per_display (
-			MDM_KEY_SYSTEM_MENU, d->name);
-
-		/* Use the chooser on the next run (but only if allowed) */
-		if (sysmenu &&
-		    mdm_daemon_config_get_value_bool_per_display (
-			MDM_KEY_CHOOSER_BUTTON, d->name)) {
-			d->use_chooser = TRUE;
-		}
-
-		status = DISPLAY_REMANAGE;
-		/*
-		 * Go around the display loop detection, these are short
-		 * sessions, so this decreases the chances of the loop
-		 * detection being hit
-		 */
-		d->last_loop_start_time = 0;
-	}
-
-	if (status == DISPLAY_CHOSEN) {
-		/*
-		 * Forget about this indirect id, since this
-		 * display will be dead very soon, and we don't want it
-		 * to take the indirect display with it
-		 */
-		d->indirect_id = 0;
-		status = DISPLAY_REMANAGE;
-	}
-
+		
 	if (status == DISPLAY_GREETERFAILED) {
 		if (d->managetime + 10 >= time (NULL)) {
 			d->try_different_greeter = TRUE;
@@ -1139,7 +1064,7 @@ mdm_cleanup_children (void)
 			 * host, then we don't want to unmanage, we want to
 			 * manage and choose that host
 			 */
-			if (d->chosen_hostname != NULL || d->use_chooser) {
+			if (d->chosen_hostname != NULL) {
 				if ( ! mdm_display_manage (d)) {
 					mdm_display_unmanage (d);
 				}
@@ -1148,9 +1073,7 @@ mdm_cleanup_children (void)
 				mdm_display_unmanage (d);
 			}
 			/* Remote displays will send a request to be managed */
-		} else /* TYPE_XDMCP */ {
-			mdm_display_unmanage (d);
-		}
+		} 
 
 		break;
 	}
@@ -1769,12 +1692,7 @@ main (int argc, char *argv[])
 	mdm_signal_ignore (SIGLOST);
 #endif
 
-	mdm_debug ("mdm_main: Here we go...");
-
-	/* Init XDMCP if applicable */
-	if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP) && ! mdm_wait_for_go) {
-		mdm_xdmcp_init ();
-	}
+	mdm_debug ("mdm_main: Here we go...");	
 
 	create_connections ();
 
@@ -1786,13 +1704,7 @@ main (int argc, char *argv[])
 	mdm_make_global_cookie ();
 
 	/* Start static X servers */
-	mdm_start_first_unborn_local (0 /* delay */);
-
-	/* Accept remote connections */
-	if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP) && ! mdm_wait_for_go) {
-		mdm_debug ("Accepting XDMCP connections...");
-		mdm_xdmcp_run ();
-	}
+	mdm_start_first_unborn_local (0 /* delay */);	
 
 	/* We always exit via exit (), and sadly we need to g_main_quit ()
 	 * at times not knowing if it's this main or a recursive one we're
@@ -2023,10 +1935,7 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 		}
 	}
 
-	if (strncmp (msg, MDM_SOP_CHOSEN " ",
-		     strlen (MDM_SOP_CHOSEN " ")) == 0) {
-		mdm_choose_data (msg);
-	} else if (strncmp (msg, MDM_SOP_CHOSEN_LOCAL " ",
+	if (strncmp (msg, MDM_SOP_CHOSEN_LOCAL " ",
 		            strlen (MDM_SOP_CHOSEN_LOCAL " ")) == 0) {
 		MdmDisplay *d;
 		long slave_pid;
@@ -2103,24 +2012,6 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 		if (d != NULL) {
 			d->greetpid = pid;
 			mdm_debug ("Got GREETPID == %ld", (long)pid);
-			/* send ack */
-			send_slave_ack (d, NULL);
-		}
-	} else if (strncmp (msg, MDM_SOP_CHOOSERPID " ",
-		            strlen (MDM_SOP_CHOOSERPID " ")) == 0) {
-		MdmDisplay *d;
-		long slave_pid, pid;
-
-		if (sscanf (msg, MDM_SOP_CHOOSERPID " %ld %ld",
-			    &slave_pid, &pid) != 2)
-			return;
-
-		/* Find out who this slave belongs to */
-		d = mdm_display_lookup (slave_pid);
-
-		if (d != NULL) {
-			d->chooserpid = pid;
-			mdm_debug ("Got CHOOSERPID == %ld", (long)pid);
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
@@ -2267,10 +2158,7 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 					g_string_append_c (resp, ',');
 
 					if (d->attached && di->attached && di->vt > 0)
-						migratable = TRUE;
-					else if (mdm_daemon_config_get_value_string (MDM_KEY_XDMCP_PROXY_RECONNECT) != NULL &&
-						 d->type == TYPE_XDMCP_PROXY && di->type == TYPE_XDMCP_PROXY)
-						migratable = TRUE;
+						migratable = TRUE;					
 
 					g_string_append_c (resp, migratable ? '1' : '0');
 				}
@@ -2314,9 +2202,7 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 			MdmDisplay *di = li->data;
 			if (di->logged_in && strcmp (di->name, p) == 0) {
 				if (d->attached && di->vt > 0)
-					mdm_change_vt (di->vt);
-				else if (d->type == TYPE_XDMCP_PROXY && di->type == TYPE_XDMCP_PROXY)
-					mdm_xdmcp_migrate (d, di);
+					mdm_change_vt (di->vt);				
 			}
 		}
 		send_slave_ack (d, NULL);
@@ -2495,9 +2381,7 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 		for (li = displays; li != NULL; li = li->next) {
 			MdmDisplay *d = li->data;
 			if (d->greetpid > 1)
-				kill (d->greetpid, SIGHUP);
-			else if (d->chooserpid > 1)
-				kill (d->chooserpid, SIGHUP);
+				kill (d->greetpid, SIGHUP);			
 		}
 	} else if (strcmp (msg, MDM_SOP_GO) == 0) {
 		GSList *li;
@@ -2509,14 +2393,7 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 		for (li = displays; li != NULL; li = li->next) {
 			MdmDisplay *d = li->data;
 			send_slave_command (d, MDM_NOTIFY_GO);
-		}
-		/* Init XDMCP if applicable */
-		if (old_wait && mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP)) {
-			if (mdm_xdmcp_init ()) {
-				mdm_debug ("Accepting XDMCP connections...");
-				mdm_xdmcp_run ();
-			}
-		}
+		}		
 	} else if (strncmp (msg, MDM_SOP_WRITE_X_SERVERS " ",
 		            strlen (MDM_SOP_WRITE_X_SERVERS " ")) == 0) {
 		MdmDisplay *d;
@@ -2598,7 +2475,6 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 	} else if (strcmp (msg, MDM_SOP_FLEXI_XSERVER) == 0) {
 		handle_flexi_server (NULL, TYPE_FLEXI, mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER),
 				     TRUE /* handled */,
-				     FALSE /* chooser */,
 				     NULL);
 	} else if (strncmp (msg, "opcode="MDM_SOP_SHOW_ERROR_DIALOG,
 			    strlen ("opcode="MDM_SOP_SHOW_ERROR_DIALOG)) == 0) {
@@ -3030,7 +2906,6 @@ handle_flexi_server (MdmConnection *conn,
 		     int            type,
 		     const char    *server,
 		     gboolean       handled,
-		     gboolean       chooser,		   
 		     const char    *username)
 {
 	MdmDisplay *display;
@@ -3076,7 +2951,6 @@ handle_flexi_server (MdmConnection *conn,
 	   the standard resolution for this, but
 	   oh well, this makes other things simpler */
 	display->handled = handled;
-	display->use_chooser = chooser;
 
 	flexi_servers++;
 
@@ -3368,14 +3242,8 @@ sup_handle_get_server_details (MdmConnection *conn,
 		else if (g_strcasecmp (splitstr[1], "HANDLED") == 0 &&
 			 !svr->handled)
 			mdm_connection_printf (conn, "OK false\n");
-		else if (g_strcasecmp (splitstr[1], "CHOOSER") == 0 &&
-			 svr->chooser)
-			mdm_connection_printf (conn, "OK true\n");
-		else if (g_strcasecmp (splitstr[1], "CHOOSER") == 0 &&
-			 !svr->chooser)
-			mdm_connection_printf (conn, "OK false\n");
 		else
-			mdm_connection_printf (conn, "ERROR 2 Key not valid\n");
+			mdm_connection_printf (conn, "ERROR 2 Key not valid %s\n", splitstr[1]);
 
 	} else {
 		mdm_connection_printf (conn, "ERROR 1 Server not found\n");
@@ -3456,7 +3324,6 @@ sup_handle_flexi_xserver (MdmConnection *conn,
 				the standard resolution for this, but
 				oh well, this makes other things simpler */
 			     svr->handled,
-			     svr->chooser,			     
 			     username);
 	g_free (username);
 }
@@ -4082,7 +3949,6 @@ mdm_handle_user_message (MdmConnection *conn,
 				     TYPE_FLEXI,
 				     mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER),
 				     TRUE /* handled */,
-				     FALSE /* chooser */,				    
 				     NULL);
 	} else if ((strncmp (msg, MDM_SUP_FLEXI_XSERVER_USER " ",
 			     strlen (MDM_SUP_FLEXI_XSERVER_USER " ")) == 0) ||

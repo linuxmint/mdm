@@ -43,7 +43,6 @@
 #include "display.h"
 #include "slave.h"
 #include "misc.h"
-#include "choose.h"
 #include "auth.h"
 #include "mdm-net.h"
 
@@ -755,9 +754,7 @@ mdm_display_dispose (MdmDisplay *d)
 
     g_free (d->bcookie);
     d->bcookie = NULL;
-
-    if (d->indirect_id > 0)
-	    mdm_choose_indirect_dispose_empty_id (d->indirect_id);
+    
     d->indirect_id = 0;
 
     g_free (d->parent_disp);

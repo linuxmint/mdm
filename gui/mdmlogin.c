@@ -701,13 +701,6 @@ mdm_login_halt_handler (void)
 }
 
 static void
-mdm_login_use_chooser_handler (void)
-{
-	mdm_kill_thingies ();
-	_exit (DISPLAY_RUN_CHOOSER);
-}
-
-static void
 mdm_login_suspend_handler (void)
 {
 	if (mdm_wm_warn_dialog (
@@ -2087,17 +2080,7 @@ mdm_login_gui_init (void)
 
         gboolean got_anything = FALSE;
 
-	menu = gtk_menu_new ();
-
-	if (mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
-		item = gtk_menu_item_new_with_mnemonic (_("Remote Login via _XDMCP..."));
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (mdm_login_use_chooser_handler),
-				  NULL);
-		gtk_widget_show (item);
-		got_anything = TRUE;
-	}
+	menu = gtk_menu_new ();	
 
 	/*
 	 * Disable Configuration if using accessibility (AddGtkModules) since
@@ -2181,25 +2164,7 @@ mdm_login_gui_init (void)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar), thememenu);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (thememenu), menu);
 	gtk_widget_show (GTK_WIDGET (thememenu));
-    }
-
-    /* Add a quit/disconnect item when in xdmcp mode or flexi mode */
-    /* Do note that the order is important, we always want "Quit" for
-     * flexi, even if not local.  and Disconnect
-     * only for xdmcp */
-    if ( ! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER"))) {
-	    item = gtk_menu_item_new_with_mnemonic (_("_Quit"));
-    } else if (ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
-	    item = gtk_menu_item_new_with_mnemonic (_("D_isconnect"));
-    } else {
-	    item = NULL;
-    }
-    if (item != NULL) {
-	    gtk_menu_shell_append (GTK_MENU_SHELL (menubar), item);
-	    gtk_widget_show (GTK_WIDGET (item));
-	    g_signal_connect (G_OBJECT (item), "activate",
-			      G_CALLBACK (gtk_main_quit), NULL);
-    }
+    }   
 
     /* The clock */
     clock_label = gtk_label_new ("");
@@ -2683,7 +2648,6 @@ mdm_read_config (void)
 	mdm_config_get_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_REMOTE_ROOT);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);	
-	mdm_config_get_bool   (MDM_KEY_CHOOSER_BUTTON);
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
@@ -2753,7 +2717,6 @@ mdm_reread_config (int sig, gpointer data)
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_REMOTE_ROOT) ||	    
-	    mdm_config_reload_bool   (MDM_KEY_CHOOSER_BUTTON) ||
 	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_CIRCLES) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_INVISIBLE) ||

@@ -160,12 +160,6 @@ greeter_config_handler (void)
 	fflush (stdout);
 }
 
-static void
-greeter_chooser_handler (void)
-{
-	_exit (DISPLAY_RUN_CHOOSER);
-}
-
 void
 greeter_system_append_system_menu (GtkWidget *menu)
 {
@@ -175,19 +169,7 @@ greeter_system_append_system_menu (GtkWidget *menu)
 	/* should never be allowed by the UI */
 	if ( ! mdm_config_get_bool (MDM_KEY_SYSTEM_MENU) ||
 	    ve_string_empty (g_getenv ("MDM_IS_LOCAL")))
-		return;
-
-	if (mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
-		w = gtk_image_menu_item_new_with_mnemonic (_("Remote Login via _XDMCP..."));
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (w),
-			gtk_image_new_from_icon_name ("preferences-desktop-remote-desktop", GTK_ICON_SIZE_MENU));
-
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), w);
-		gtk_widget_show (GTK_WIDGET (w));
-		g_signal_connect (G_OBJECT (w), "activate",
-				  G_CALLBACK (greeter_chooser_handler),
-				  NULL);
-	}
+		return;	
 
 	/*
 	 * Disable Configuration if using accessibility (AddGtkModules) since
@@ -293,7 +275,6 @@ greeter_system_handler (GreeterItemInfo *info,
   GtkWidget *restart_radio = NULL;
   GtkWidget **custom_cmds_radio = NULL;
   GtkWidget *config_radio = NULL;
-  GtkWidget *chooser_radio = NULL;
   gchar *s;
   int ret;
   gint i;
@@ -421,25 +402,7 @@ greeter_system_handler (GreeterItemInfo *info,
 	  gtk_widget_show (suspend_radio);
   }
 
-  if (mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
-	  if (group_radio != NULL)
-		  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (group_radio));
-	  chooser_radio = gtk_radio_button_new_with_mnemonic (radio_group,
-							     _("Run _XDMCP chooser"));
-	  group_radio = chooser_radio;
-	  gtk_tooltips_set_tip (tooltips, GTK_WIDGET (chooser_radio),
-				_("Run an XDMCP chooser which will allow "
-				  "you to log into available remote "
-				  "computers, if there are any."),
-				NULL);
-	  g_signal_connect (G_OBJECT(chooser_radio), "button_press_event",
-			    G_CALLBACK(radio_button_press_event), NULL);
-	  gtk_box_pack_start (GTK_BOX (vbox),
-			      chooser_radio,
-			      FALSE, FALSE, 4);
-	  gtk_widget_show (chooser_radio);
-  }
-
+ 
   /*
    * Disable Configuration if using accessibility (AddGtkModules) since
    * using it with accessibility causes a hang.
@@ -495,9 +458,7 @@ greeter_system_handler (GreeterItemInfo *info,
   else if (suspend_radio != NULL && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (suspend_radio)))
     greeter_suspend_handler ();
   else if (config_radio != NULL && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (config_radio)))
-    greeter_config_handler ();
-  else if (chooser_radio != NULL && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (chooser_radio)))
-    greeter_chooser_handler ();
+    greeter_config_handler ();  
   else
     for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
 	if (custom_cmds_radio[i] != NULL &&  gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (custom_cmds_radio[i])))
@@ -527,10 +488,7 @@ greeter_item_system_setup (void)
 					 NULL);
   greeter_item_register_action_callback ("config_button",
 					 (ActionFunc)greeter_config_handler,
-					 NULL);
-  greeter_item_register_action_callback ("chooser_button",
-					 (ActionFunc)greeter_chooser_handler,
-					 NULL);
+					 NULL);  
 
   for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
 	  gint * cmd_index = g_new0(gint, 1);

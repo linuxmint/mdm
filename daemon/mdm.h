@@ -33,9 +33,6 @@
 #define DISPLAY_REBOOT 8	/* Rebewt */
 #define DISPLAY_HALT 16		/* Halt */
 #define DISPLAY_SUSPEND 17	/* Suspend (don't use, use the interrupt) */
-#define DISPLAY_CHOSEN 20	/* successful chooser session,
-				   restart display */
-#define DISPLAY_RUN_CHOOSER 30	/* Run chooser */
 #define DISPLAY_XFAILED 64	/* X failed */
 #define DISPLAY_GREETERFAILED 65 /* greeter failed (crashed) */
 #define DISPLAY_RESTARTGREETER 127 /* Restart greeter */
@@ -43,9 +40,7 @@
 
 enum {
 	DISPLAY_UNBORN /* Not yet started */,
-	DISPLAY_ALIVE /* Yay! we're alive (non-XDMCP) */,
-	XDMCP_PENDING /* Pending XDMCP display */,
-	XDMCP_MANAGED /* Managed XDMCP display */,
+	DISPLAY_ALIVE /* Yay! we're alive */,
 	DISPLAY_DEAD /* Left for dead */,
 	DISPLAY_CONFIG /* in process of being configured */
 };

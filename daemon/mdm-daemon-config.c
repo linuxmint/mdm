@@ -817,9 +817,7 @@ lookup_notify_key (MdmConfig  *config,
 	else if (is_key (keystring, MDM_KEY_SYSTEM_MENU))
 		nkey = g_strdup (MDM_NOTIFY_SYSTEM_MENU);
 	else if (is_key (keystring, MDM_KEY_CONFIG_AVAILABLE))
-		nkey = g_strdup (MDM_NOTIFY_CONFIG_AVAILABLE);
-	else if (is_key (keystring, MDM_KEY_CHOOSER_BUTTON))
-		nkey = g_strdup (MDM_NOTIFY_CHOOSER_BUTTON);
+		nkey = g_strdup (MDM_NOTIFY_CONFIG_AVAILABLE);	
 	else if (is_key (keystring, MDM_KEY_DISALLOW_TCP))
 		nkey = g_strdup (MDM_NOTIFY_DISALLOW_TCP);
 	else if (is_key (keystring, MDM_KEY_ADD_GTK_MODULES))
@@ -1105,11 +1103,7 @@ mdm_daemon_config_load_xserver (MdmConfig  *config,
 	res = mdm_config_get_value (config, group, "handled", &value);
 	if (res) {
 		svr->handled = mdm_config_value_get_bool (value);
-	}
-	res = mdm_config_get_value (config, group, "chooser", &value);
-	if (res) {
-		svr->chooser = mdm_config_value_get_bool (value);
-	}
+	}	
 
 	/* int */
 	res = mdm_config_get_value (config, group, "priority", &value);
@@ -1668,22 +1662,6 @@ validate_allow_remote_root (MdmConfig          *config,
 	return TRUE;
 }
 
-static gboolean
-validate_xdmcp (MdmConfig          *config,
-		MdmConfigSourceType source,
-		MdmConfigValue     *value)
-{
-
-#ifndef HAVE_LIBXDMCP
-	if (mdm_config_value_get_bool (value)) {
-		mdm_info (_("%s: XDMCP was enabled while there is no XDMCP support; turning it off"), "mdm_config_parse");
-		mdm_config_value_set_bool (value, FALSE);
-	}
-#endif
-
-	return TRUE;
-}
-
 /* Cause debug to affect logging as soon as the config value is read */
 static gboolean
 validate_debug (MdmConfig          *config,
@@ -1767,10 +1745,6 @@ validate_cb (MdmConfig          *config,
         case MDM_ID_ALLOW_REMOTE_ROOT:
 		res = validate_allow_remote_root (config, source, value);
 		break;
-        case MDM_ID_XDMCP:
-		res = validate_xdmcp (config, source, value);
-		break;
-	case MDM_ID_MAX_INDIRECT:
 	case MDM_ID_XINERAMA_SCREEN:
 		res = validate_at_least_int (config, source, value, 0, 0);
 		break;
@@ -1850,7 +1824,6 @@ notify_cb (MdmConfig          *config,
         case MDM_ID_ALLOW_REMOTE_AUTOLOGIN:
         case MDM_ID_SYSTEM_MENU:
         case MDM_ID_CONFIG_AVAILABLE:
-        case MDM_ID_CHOOSER_BUTTON:
         case MDM_ID_DISALLOW_TCP:
         case MDM_ID_ADD_GTK_MODULES:
         case MDM_ID_TIMED_LOGIN_ENABLE:
@@ -1901,7 +1874,7 @@ handle_no_displays (MdmConfig *config,
 	 * then don't display errors in console messages
 	 */
 	if (no_console) {
-		mdm_fail (_("%s: XDMCP disabled and no static servers defined. Aborting!"), "mdm_config_parse");
+		mdm_fail (_("%s: No static servers defined. Aborting!"), "mdm_config_parse");
 	}
 
 	server = X_SERVER;
@@ -1920,7 +1893,7 @@ handle_no_displays (MdmConfig *config,
 
 		int num = mdm_get_free_display (0 /* start */, 0 /* server uid */);
 
-		mdm_error (_("%s: XDMCP disabled and no static servers defined. Adding %s on :%d to allow configuration!"),
+		mdm_error (_("%s: No static servers defined. Adding %s on :%d to allow configuration!"),
 			   "mdm_config_parse", server, num);
 
 		d = mdm_display_alloc (num, server, NULL);
@@ -1935,7 +1908,7 @@ handle_no_displays (MdmConfig *config,
 
 	} else {
 		if (console_notify) {
-			gchar *s = g_strdup_printf (C_(N_("XDMCP is disabled and MDM "
+			gchar *s = g_strdup_printf (C_(N_("MDM "
 							  "cannot find any static server "
 							  "to start.  Aborting!  Please "
 							  "correct the configuration "
@@ -1944,7 +1917,7 @@ handle_no_displays (MdmConfig *config,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: XDMCP disabled and no static servers defined. Aborting!"), "mdm_config_parse");
+		mdm_fail (_("%s: No static servers defined. Aborting!"), "mdm_config_parse");
 	}
 }
 
@@ -2208,27 +2181,7 @@ mdm_daemon_config_update_key (const char *keystring)
 		mdm_daemon_config_load_xservers (temp_config);
 		goto out;
 	}
-
-	/* Shortcut for updating all XDMCP parameters */
-	if (is_key (keystring, "xdmcp/PARAMETERS")) {
-		rc = mdm_daemon_config_update_key (MDM_KEY_DISPLAYS_PER_HOST);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_MAX_PENDING);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_MAX_WAIT);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_MAX_SESSIONS);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_INDIRECT);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_MAX_INDIRECT);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_MAX_WAIT_INDIRECT);
-                if (rc == TRUE)
-			rc = mdm_daemon_config_update_key (MDM_KEY_PING_INTERVAL);
-		goto out;
-	}
-
+	
 	/* find the entry for the key */
 	res = mdm_common_config_parse_key_string (keystring,
 						  &group,
@@ -2272,7 +2225,6 @@ mdm_daemon_config_parse (const char *config_file,
 {
 	uid_t         uid;
 	gid_t         gid;
-	gboolean      xdmcp_enabled;
 	gboolean      dynamic_enabled;
 
 	displays            = NULL;
@@ -2295,11 +2247,9 @@ mdm_daemon_config_parse (const char *config_file,
 		mdm_daemon_config_load_displays (daemon_config);
 	}
 
-	xdmcp_enabled = FALSE;
-	mdm_config_get_bool_for_id (daemon_config, MDM_ID_XDMCP, &xdmcp_enabled);
 	dynamic_enabled = FALSE;
 	mdm_config_get_bool_for_id (daemon_config, MDM_ID_DYNAMIC_XSERVERS, &dynamic_enabled);
-	if G_UNLIKELY ((displays == NULL) && (! xdmcp_enabled) && (! dynamic_enabled)) {
+	if G_UNLIKELY ((displays == NULL) && (! dynamic_enabled)) {
 		handle_no_displays (daemon_config, no_console);
 	}
 
