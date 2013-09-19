@@ -34,18 +34,10 @@ typedef struct _MdmDisplay MdmDisplay;
 #include "mdm.h" /* for MDM_CUSTOM_COMMAND_MAX */
 
 #define TYPE_STATIC 1		/* X server defined in MDM configuration */
-#define TYPE_XDMCP 2		/* Remote display/Xserver */
-#define TYPE_FLEXI 3		/* Local Flexi X server */
-#define TYPE_XDMCP_PROXY 4	/* Proxy X server for XDMCP */
+#define TYPE_FLEXI 2		/* Local Flexi X server */
 
-#define SERVER_IS_LOCAL(d) ((d)->type == TYPE_STATIC || \
-			    (d)->type == TYPE_FLEXI || \
-			    (d)->type == TYPE_XDMCP_PROXY)
-#define SERVER_IS_FLEXI(d) ((d)->type == TYPE_FLEXI || \
-			    (d)->type == TYPE_XDMCP_PROXY)
-#define SERVER_IS_PROXY(d) ((d)->type == TYPE_XDMCP_PROXY)
-#define SERVER_IS_XDMCP(d) ((d)->type == TYPE_XDMCP || \
-			    (d)->type == TYPE_XDMCP_PROXY)
+#define SERVER_IS_LOCAL(d) ((d)->type == TYPE_STATIC || (d)->type == TYPE_FLEXI)
+#define SERVER_IS_FLEXI(d) ((d)->type == TYPE_FLEXI)
 
 /* Use this to get the right authfile name */
 #define MDM_AUTHFILE(display) \

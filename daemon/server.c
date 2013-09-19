@@ -66,7 +66,6 @@
 static void mdm_server_spawn (MdmDisplay *d, const char *vtarg);
 static void mdm_server_usr1_handler (gint);
 static void mdm_server_child_handler (gint);
-static char * get_font_path (const char *display);
 
 /* Global vars */
 static int server_signal_pipe[2];
@@ -121,19 +120,11 @@ mdm_server_wipe_cookies (MdmDisplay *disp)
 	disp->authfile_mdm = NULL;
 }
 
-static Jmp_buf reinitjmp;
-
 /* ignore handlers */
 static int
 ignore_xerror_handler (Display *disp, XErrorEvent *evt)
 {
 	return 0;
-}
-
-static int
-jumpback_xioerror_handler (Display *disp)
-{
-	Longjmp (reinitjmp, 1);
 }
 
 #ifdef HAVE_FBCONSOLE
@@ -286,39 +277,6 @@ busy_ask_user (MdmDisplay *disp)
 	    /* Well we'll just try another display number */
 	    return TRUE;
     }
-}
-
-/* Checks only output, no XFree86 v4 logfile */
-static gboolean
-display_parent_no_connect (MdmDisplay *disp)
-{
-	char *logname = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_LOG_DIR), d->name, ".log");
-	FILE *fp;
-	char buf[256];
-	char *getsret;
-
-	VE_IGNORE_EINTR (fp = fopen (logname, "r"));
-	g_free (logname);
-
-	if (fp == NULL)
-		return FALSE;
-
-	for (;;) {
-		VE_IGNORE_EINTR (getsret = fgets (buf, sizeof (buf), fp));
-		if (getsret == NULL) {
-			VE_IGNORE_EINTR (fclose (fp));
-			return FALSE;
-		}
-		/* Note: this is probably XFree86 specific, and perhaps even
-		 * version 3 specific (I don't have xfree v4 to test this),
-		 * of course additions are welcome to make this more robust */
-		if (strstr (buf, "Unable to open display \"") == buf) {
-			mdm_error (_("Display '%s' cannot be opened by nested display"),
-				   ve_sure_string (disp->parent_disp));
-			VE_IGNORE_EINTR (fclose (fp));
-			return TRUE;
-		}
-	}
 }
 
 static gboolean
@@ -584,41 +542,6 @@ do_server_wait (MdmDisplay *d)
     }
 }
 
-/* We keep a connection (parent_dsp) open with the parent X server
- * before running a proxy on it to prevent the X server resetting
- * as we open and close other connections.
- */
-static gboolean
-connect_to_parent (MdmDisplay *d)
-{
-	int maxtries;
-	int openretries;
-
-	mdm_debug ("mdm_server_start: Connecting to parent display \'%s\'",
-		   d->parent_disp);
-
-	d->parent_dsp = NULL;
-
-	maxtries = 2;
-
-	openretries = 0;
-	while (openretries < maxtries &&
-	       d->parent_dsp == NULL) {
-		d->parent_dsp = XOpenDisplay (d->parent_disp);
-
-		if G_UNLIKELY (d->parent_dsp == NULL) {
-			mdm_debug ("mdm_server_start: Sleeping %d on a retry", 1+openretries*2);
-			mdm_sleep_no_signal (1+openretries*2);
-			openretries++;
-		}
-	}
-
-	if (d->parent_dsp == NULL)
-		mdm_error (_("%s: failed to connect to parent display \'%s\'"),
-			   "mdm_server_start", d->parent_disp);
-
-	return d->parent_dsp != NULL;
-}
 
 /**
  * mdm_server_start:
@@ -736,14 +659,7 @@ mdm_server_start (MdmDisplay *disp,
 	    return TRUE;
     default:
 	    break;
-    }
-
-    if (SERVER_IS_PROXY (disp) &&
-	display_parent_no_connect (disp)) {
-	    mdm_slave_send_num (MDM_SOP_FLEXI_ERR,
-				5 /* proxy can't connect */);
-	    _exit (DISPLAY_REMANAGE);
-    }
+    }    
 
     /* if this was a busy fail, that is, there is already
      * a server on that display, we'll display an error and after
@@ -1203,20 +1119,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 	 * can control the X server */
 	sigemptyset (&mask);
 	sigprocmask (SIG_SETMASK, &mask, NULL);
-
-	if (SERVER_IS_PROXY (d)) {
-		g_unsetenv ("DISPLAY");
-		g_unsetenv ("XAUTHORITY");		
 	
-		argv = g_renew (char *, argv, argc + 3);
-		argv[argc++] = "-display";
-		argv[argc++] = d->parent_disp;
-		argv[argc++] = NULL;
-		command = g_strconcat (command, " -display ",
-			       d->parent_disp, NULL);
-		
-	}
-
 	if (argv[0] == NULL) {
 		mdm_error (_("%s: Empty server command for display %s"),
 			   "mdm_server_spawn",
@@ -1419,59 +1322,6 @@ mdm_server_whack_clients (Display *dsp)
 	XSetErrorHandler (old_xerror_handler);
 }
 
-static char *
-get_font_path (const char *display)
-{
-	Display *disp;
-	char **font_path;
-	int n_fonts;
-	int i;
-	GString *gs;
 
-	disp = XOpenDisplay (display);
-	if (disp == NULL)
-		return NULL;
-
-	font_path = XGetFontPath (disp, &n_fonts);
-	if (font_path == NULL) {
-		XCloseDisplay (disp);
-		return NULL;
-	}
-
-	gs = g_string_new (NULL);
-	for (i = 0; i < n_fonts; i++) {
-		if (i != 0)
-			g_string_append_c (gs, ',');	        
-		else {
-			gchar *unscaled_ptr = NULL;
-
-			/*
-			 * When using Xsun, it doesn't support the
-			 * ":unscaled" suffix in fontpath entries, so strip it.
-			 */
-			unscaled_ptr = g_strrstr (font_path[i], ":unscaled");
-			if (unscaled_ptr != NULL) {
-				gchar *temp_string;
-
-				temp_string = g_strndup (font_path[i],
-					strlen (font_path[i]) -
-					strlen (":unscaled"));
-
-mdm_debug ("font_path[i] is %s, temp_string is %s", font_path[i], temp_string);
-				g_string_append (gs, temp_string);
-				g_free (temp_string);
-			} else {
-mdm_debug ("font_path[i] is %s", font_path[i]);
-				g_string_append (gs, font_path[i]);
-			}
-		}
-	}
-
-	XFreeFontPath (font_path);
-
-	XCloseDisplay (disp);
-
-	return g_string_free (gs, FALSE);
-}
 
 /* EOF */

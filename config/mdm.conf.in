@@ -284,45 +284,6 @@ UtmpLineAttached=@UTMP_LINE_ATTACHED@
 # etc. work in a reasonable way.  
 UtmpPseudoDevice=@UTMP_PSEUDO_DEVICE@
 
-# XDMCP is the protocol that allows remote login.  If you want to log into MDM
-# remotely (I'd never turn this on on open network, use ssh for such remote
-# usage).  You can then run X with -query <thishost> to log in, or
-# -indirect <thishost> to run a chooser.  Look for the 'Terminal' server type
-# at the bottom of this config file.
-[xdmcp]
-# Distributions: Ship with this off.  It is never a safe thing to leave out on
-# the net.  Setting up /etc/hosts.allow and /etc/hosts.deny to only allow local
-# access is another alternative but not the safest.  Firewalling port 177 is
-# the safest if you wish to have xdmcp on.  Read the manual for more notes on
-# the security of XDMCP.
-Enable=false
-# Honor indirect queries, we run a chooser for these, and then redirect the
-# user to the chosen host.  Otherwise we just log the user in locally.
-#HonorIndirect=true
-# Maximum pending requests.
-#MaxPending=4
-#MaxPendingIndirect=4
-# Maximum open XDMCP sessions at any point in time.
-#MaxSessions=16
-# Maximum wait times.
-#MaxWait=15
-#MaxWaitIndirect=15
-# How many times can a person log in from a single host.  Usually better to
-# keep low to fend off DoS attacks by running many logins from a single host.
-# This is now set at 2 since if the server crashes then MDM doesn't know for
-# some time and wouldn't allow another session.
-#DisplaysPerHost=2
-# The number of seconds after which a non-responsive session is logged off.
-# Better keep this low.
-#PingIntervalSeconds=15
-# The port.  177 is the standard port so better keep it that way.
-#Port=177
-# Willing script, none is shipped and by default we'll send hostname system id.
-# But if you supply something here, the output of this script will be sent as
-# status of this host so that the chooser can display it.  You could for
-# example send load, or mail details for some user, or some such.
-#Willing=@mdmconfdir@/Xwilling
-
 [gui]
 # The specific gtkrc file we use.  It should be the full path to the gtkrc that
 # we need.  Unless you need a specific gtkrc that doesn't correspond to a
@@ -379,17 +340,12 @@ IncludeAll=true
 LocaleFile=/etc/mdm/locale.conf
 
 # The Actions menu (formerly system menu) is shown in the greeter, this is the
-# menu that contains reboot, shutdown, suspend, config and chooser.  None of
+# menu that contains reboot, shutdown, suspend, config.  None of
 # these is available if this is off.  They can be turned off individually
 # however.
 #SystemMenu=true
 # Configuration is available from the system menu of the greeter.
 #ConfigAvailable=true
-# Should the chooser button be shown.  If this is shown, MDM can drop into
-# chooser mode which will run the xdmcp chooser locally and allow the user to
-# connect to some remote host.  Local XDMCP does not need to be enabled,
-# however.
-#ChooserButton=true
 
 # Welcome is for all console logins and RemoteWelcome is for remote logins
 # (through XDMCP).
@@ -489,30 +445,6 @@ HTMLTheme=mdm
 # list of libraries, one per line, and load each library in the file.
 PreFetchProgram=@MDMPREFETCHCMD@
 
-# The chooser is what's displayed when a user wants an indirect XDMCP session,
-# or selects Run XDMCP chooser from the system menu
-[chooser]
-# Default image for hosts.
-#DefaultHostImg=@pixmapdir@/nohost.png
-# Directory with host images, they are named by the hosts: host or host.png.
-HostImageDir=@datadir@/hosts/
-# Time we scan for hosts (well only the time we tell the user we are scanning
-# actually, we continue to listen even after this has expired).
-#ScanTime=4
-# A comma separated lists of hosts to automatically add (if they answer to a
-# query of course).  You can use this to reach hosts that broadcast cannot
-# reach.
-Hosts=
-# Broadcast a query to get all hosts on the current network that answer.
-Broadcast=true
-# Set it to true if you want to send a multicast query to hosts.
-Multicast=false
-# It is an IPv6 multicast address.It is hardcoded here and will be replaced
-# when officially registered xdmcp multicast address of TBD will be available.
-#Multicast_Addr=ff02::1
-# Allow adding random hosts to the list by typing in their names.
-#AllowAdd=true
-
 [debug]
 # This will cause MDM to send debugging information to the system log, which 
 # will create a LOT of output.  It is not recommended to turn this on for
@@ -557,10 +489,6 @@ Gestures=false
 
 # Example of how to set up DISPLAY :1 to also use Standard.
 #1=Standard
-
-# If you wish to run the XDMCP chooser on the local display use the following
-# line
-#0=Chooser
 
 # X Server Definitions
 #

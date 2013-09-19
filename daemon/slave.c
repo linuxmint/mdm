@@ -212,7 +212,6 @@ static void   mdm_slave_greeter (void);
 static void   mdm_slave_session_start (void);
 static void   mdm_slave_session_stop (gboolean run_post_session,
 					gboolean no_shutdown_check);
-static void   mdm_slave_alrm_handler (int sig);
 static void   mdm_slave_term_handler (int sig);
 static void   mdm_slave_usr2_handler (int sig);
 static void   mdm_slave_quick_exit (gint status);
