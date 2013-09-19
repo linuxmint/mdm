@@ -31,7 +31,7 @@ typedef struct _MdmDisplay MdmDisplay;
 
 #include "mdm-net.h" /* for MdmConnection */
 
-#include "mdm.h" /* for MDM_CUSTOM_COMMAND_MAX */
+#include "mdm.h"
 
 #define TYPE_STATIC 1		/* X server defined in MDM configuration */
 #define TYPE_FLEXI 2		/* Local Flexi X server */
@@ -43,15 +43,11 @@ typedef struct _MdmDisplay MdmDisplay;
 #define MDM_AUTHFILE(display) \
 	(display->authfile_mdm != NULL ? display->authfile_mdm : display->authfile)
 
-/* Values between MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST and
-   MDM_LOGOUT_ACTION_CUSTOM_CMD_LAST are reserved and should not be used */
 typedef enum {
 	MDM_LOGOUT_ACTION_NONE = 0,
 	MDM_LOGOUT_ACTION_HALT,
 	MDM_LOGOUT_ACTION_REBOOT,
 	MDM_LOGOUT_ACTION_SUSPEND,
-	MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST,
-	MDM_LOGOUT_ACTION_CUSTOM_CMD_LAST = MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + MDM_CUSTOM_COMMAND_MAX - 1,
 	MDM_LOGOUT_ACTION_LAST
 } MdmLogoutAction;
 

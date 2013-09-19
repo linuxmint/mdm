@@ -1134,46 +1134,6 @@ mdm_slave_whack_greeter (void)
 
 }
 
-static void
-wait_for_display_to_die (Display    *display,
-			 const char *display_name)
-{
-	fd_set rfds;
-	int    fd;
-
-	mdm_debug ("wait_for_display_to_die: waiting for display '%s' to die",
-		   display_name);
-
-	fd = ConnectionNumber (display);
-
-	FD_ZERO (&rfds);
-	FD_SET (fd, &rfds);
-
-	while (1) {
-		char           buf[256];
-		struct timeval tv;
-		int            n;
-
-		tv.tv_sec  = 5;
-		tv.tv_usec = 0;
-
-		n = select (fd + 1, &rfds, NULL, NULL, &tv);
-		if (G_LIKELY (n == 0)) {
-			XSync (display, True);
-		} else if (n > 0) {
-			VE_IGNORE_EINTR (n = read (fd, buf, sizeof (buf)));
-			if (n <= 0)
-				break;
-		} else if (errno != EINTR) {
-			break;
-		}
-
-		FD_CLR (fd, &rfds);
-	}
-
-	mdm_debug ("wait_for_display_to_die: '%s' dead", display_name);
-}
-
 static int
 ask_migrate (const char *migrate_to)
 {
@@ -3031,36 +2991,6 @@ mdm_slave_send_string (const char *opcode, const char *str)
 	mdm_slave_send (msg, TRUE);
 
 	g_free (msg);
-}
-
-static void
-send_chosen_host (MdmDisplay *disp,
-		  const char *hostname)
-{
-	MdmHostent *hostent;
-	struct sockaddr_storage ss;
-	char *str = NULL;
-	char *host;
-
-	hostent = mdm_gethostbyname (hostname);
-
-	if G_UNLIKELY (hostent->addrs == NULL) {
-		mdm_error ("Cannot get address of host '%s'", hostname);
-		mdm_hostent_free (hostent);
-		return;
-	}
-
-	/* take first address */
-	memcpy (&ss, &hostent->addrs[0], sizeof (struct sockaddr_storage));
-
-	mdm_address_get_info (&ss, &host, NULL);
-	mdm_hostent_free (hostent);
-
-	mdm_debug ("Sending chosen host address (%s) %s", hostname, host);
-	str = g_strdup_printf ("%s %d %s", MDM_SOP_CHOSEN, disp->indirect_id, host);
-	mdm_slave_send (str, FALSE);
-
-	g_free (str);
 }
 
 gboolean
@@ -5257,18 +5187,7 @@ check_for_interruption (const char *msg)
 			break;
 		case MDM_INTERRUPT_CANCEL:
 			do_cancel = TRUE;
-			break;
-		case MDM_INTERRUPT_CUSTOM_CMD:
-			if (d->attached &&
-			    ! ve_string_empty (&msg[2])) {
-				gchar *message = g_strdup_printf ("%s %ld %s", 
-								  MDM_SOP_CUSTOM_CMD,
-								  (long)getpid (), &msg[2]);
-
-				mdm_slave_send (message, TRUE);
-				g_free (message);
-			}
-			return TRUE;
+			break;		
 		case MDM_INTERRUPT_THEME:
 			g_free (d->theme_name);
 			d->theme_name = NULL;
@@ -5807,31 +5726,7 @@ mdm_slave_handle_notify (const char *msg)
 					remanage_asap = TRUE;
 				}
 			}
-		}
-	} else if (strncmp (msg, MDM_NOTIFY_CUSTOM_CMD_TEMPLATE,
-			    strlen (MDM_NOTIFY_CUSTOM_CMD_TEMPLATE)) == 0) {
-    	        if (sscanf (msg, MDM_NOTIFY_CUSTOM_CMD_TEMPLATE "%d", &val) == 1) {
-			gchar * key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, val);
-			/* This assumes that the number of commands is < 100, i.e two digits
-			   if that is not the case then this will fail */
-			mdm_daemon_config_set_value_string (key_string, ((gchar *)&msg[strlen (MDM_NOTIFY_CUSTOM_CMD_TEMPLATE) + 2]));
-			g_free(key_string);
-
-			if (d->attached) {
-				do_restart_greeter = TRUE;
-				if (restart_greeter_now) {
-					; /* will get restarted later */
-				} else if (d->type == TYPE_STATIC) {
-					/* FIXME: can't handle flexi servers like this
-					 * without going all cranky */
-					if ( ! d->logged_in) {
-						mdm_slave_quick_exit (DISPLAY_REMANAGE);
-					} else {
-						remanage_asap = TRUE;
-					}
-				}
-			}
-		}
+		}	
 	} else if ((strncmp (msg, MDM_NOTIFY_TIMED_LOGIN " ",
 			     strlen (MDM_NOTIFY_TIMED_LOGIN) + 1) == 0) ||
 	           (strncmp (msg, MDM_NOTIFY_TIMED_LOGIN_DELAY " ",

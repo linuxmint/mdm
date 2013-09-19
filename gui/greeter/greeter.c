@@ -72,8 +72,6 @@ gboolean MDM_IS_LOCAL          = FALSE;
 static gboolean ignore_buttons = FALSE;
 gboolean MdmHaltFound          = FALSE;
 gboolean MdmRebootFound        = FALSE;
-gboolean *MdmCustomCmdsFound   = NULL;
-gboolean MdmAnyCustomCmdsFound = FALSE;
 gboolean MdmSuspendFound       = FALSE;
 gboolean MdmConfiguratorFound  = FALSE;
 
@@ -706,30 +704,7 @@ mdm_read_config (void)
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);
 	mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
-	mdm_config_get_bool   (MDM_KEY_ADD_GTK_MODULES);	
-
-	/* Keys for custom commands */
-	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {		
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-		
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-		
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-		
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-		
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-	}     
+	mdm_config_get_bool   (MDM_KEY_ADD_GTK_MODULES);		
 
 	/* Keys not to include in reread_config */
 	mdm_config_get_string (MDM_KEY_SESSION_DESKTOP_DIR);
@@ -742,7 +717,6 @@ static gboolean
 greeter_reread_config (int sig, gpointer data)
 {
 	gint i;
-	gboolean custom_changed = FALSE;
 	gchar *key_string = NULL;
 	
 	/* Read config data in bulk */
@@ -799,44 +773,7 @@ greeter_reread_config (int sig, gpointer data)
 		mdmcomm_comm_bulk_stop ();
 
 		_exit (DISPLAY_RESTARTGREETER);
-	}
-
-	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {		
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-		if (mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-		
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
-		if (mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-		
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
-		if (mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-		
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, i);
-		if (mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-		
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE, i);
-		if (mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-	}     	
-	
-	if(custom_changed){
-		/* Set busy cursor */
-		mdm_common_setup_cursor (GDK_WATCH);
-		
-		mdm_wm_save_wm_order ();
-		mdmcomm_comm_bulk_stop ();
-		
-		_exit (DISPLAY_RESTARTGREETER);
-	}
+	}	
 
 	mdm_config_reload_string (MDM_KEY_SOUND_PROGRAM);
 	mdm_config_reload_bool   (MDM_KEY_SOUND_ON_LOGIN);
@@ -1154,17 +1091,6 @@ main (int argc, char *argv[])
   MdmRebootFound          = mdm_working_command_exists (mdm_config_get_string (MDM_KEY_REBOOT));
   MdmSuspendFound         = mdm_working_command_exists (mdm_config_get_string (MDM_KEY_SUSPEND));
   MdmConfiguratorFound    = mdm_working_command_exists (mdm_config_get_string (MDM_KEY_CONFIGURATOR));
-
-  MdmCustomCmdsFound = g_new0 (gboolean, MDM_CUSTOM_COMMAND_MAX);
-  for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
-	  /*  For each possible custom command */      
-	  key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-	  MdmCustomCmdsFound[i] = mdm_working_command_exists (mdm_config_get_string (key_string));
-	  if (MdmCustomCmdsFound[i])
-		  MdmAnyCustomCmdsFound = TRUE;
-
-	  g_free (key_string);
-  }
   
   if (g_getenv ("MDM_THEME") != NULL)
      mdm_graphical_theme = g_strdup (g_getenv ("MDM_THEME"));  

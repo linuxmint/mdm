@@ -416,15 +416,7 @@ parse_stock (xmlNodePtr node,
         {
           g_free (*translated_text);
           *translated_text = g_strdup (_("_Start Again"));
-        }
-      else if (sscanf ((char *) prop, "custom_cmd%d", &i) == 1 && 
-	       i >= 0 && i < MDM_CUSTOM_COMMAND_MAX) 
-        {
-	      key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
-	      g_free (*translated_text);
-	      *translated_text = g_strdup(mdm_config_get_string (key_string));
-	      g_free (key_string);
-	}
+        }     
       else
       {
 	      g_set_error (error,

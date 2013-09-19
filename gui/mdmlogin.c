@@ -70,11 +70,9 @@
  */
 gboolean DOING_MDM_DEVELOPMENT              = FALSE;
 gboolean MdmConfiguratorFound               = FALSE;
-gboolean *MdmCustomCmdsFound                = NULL;
 gboolean MdmSuspendFound                    = FALSE;
 gboolean MdmHaltFound                       = FALSE;
 gboolean MdmRebootFound                     = FALSE;
-gboolean MdmAnyCustomCmdsFound              = FALSE;
 static gboolean disable_system_menu_buttons = FALSE;
 
 #define GTK_KEY "gtk-2.0"
@@ -658,23 +656,6 @@ mdm_login_restart_handler (void)
 
 		mdm_kill_thingies ();
 		_exit (DISPLAY_REBOOT);
-	}
-}
-
-static void
-mdm_custom_cmd_handler (GtkWidget *widget, gpointer data)
-{	
-	if (data) {
-		int *cmd_id = (int*)data;
-		gchar * key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, *cmd_id);
-		if (mdm_wm_warn_dialog (
-			    mdm_config_get_string (key_string) , "", GTK_STOCK_OK, NULL, TRUE) == GTK_RESPONSE_YES) {
-			
-			printf ("%c%c%c%d\n", STX, BEL, MDM_INTERRUPT_CUSTOM_CMD, *cmd_id);
-			fflush (stdout);
-		}
-		
-		g_free (key_string);		
 	}
 }
 
@@ -2119,26 +2100,7 @@ mdm_login_gui_init (void)
 				  NULL);
 		gtk_widget_show (GTK_WIDGET (item));
 		got_anything = TRUE;
-	}
-	
-	if (mdm_common_is_action_available ("CUSTOM_CMD")) {
-		for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {			
-			key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-			if (mdm_working_command_exists (mdm_config_get_string (key_string))) {
-				gint * cmd_index = g_new0(gint, 1);
-				*cmd_index = i;
-				key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
-				item = gtk_menu_item_new_with_mnemonic (mdm_config_get_string (key_string));
-				gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-				g_signal_connect (G_OBJECT (item), "activate",
-						  G_CALLBACK (mdm_custom_cmd_handler), 
-						  cmd_index);
-				gtk_widget_show (GTK_WIDGET (item));
-				got_anything = TRUE;			
-			}
-			g_free (key_string);
-		}
-	}
+	}	
 
 	if (got_anything) {
 		item = gtk_menu_item_new_with_mnemonic (_("_Actions"));
@@ -2599,30 +2561,7 @@ mdm_read_config (void)
 	mdm_config_get_string (MDM_KEY_USE_24_CLOCK);
 	mdm_config_get_string (MDM_KEY_WELCOME);
 	mdm_config_get_string (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
-	mdm_config_get_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU);
-
-	/* String keys for custom commands */	
-	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {				
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-		
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-	}     
+	mdm_config_get_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU);	
 
 	mdm_config_get_int    (MDM_KEY_BACKGROUND_TYPE);
 	mdm_config_get_int    (MDM_KEY_BACKGROUND_PROGRAM_INITIAL_DELAY);
@@ -2661,7 +2600,6 @@ static gboolean
 mdm_reread_config (int sig, gpointer data)
 {
 	gboolean resize = FALSE;
-	gboolean custom_changed = FALSE;
 	gint i;
 	gchar *key_string = NULL;
 
@@ -2725,46 +2663,6 @@ mdm_reread_config (int sig, gpointer data)
 
 		_exit (DISPLAY_RESTARTGREETER);
 		return TRUE;
-	}
-
-	/* Keys for custom commands */
-	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {		
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-		if(mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
-		if(mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
-		if(mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, i);
-		if(mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE, i);
-		if(mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-	}     
-
-	if(custom_changed){
-		/* Set busy cursor */
-		mdm_common_setup_cursor (GDK_WATCH);
-
-		mdm_wm_save_wm_order ();
-		mdm_kill_thingies ();
-		mdmcomm_comm_bulk_stop ();
-
-		_exit (DISPLAY_RESTARTGREETER);
-		return TRUE;		
 	}
 
 	if (mdm_config_reload_string (MDM_KEY_BACKGROUND_IMAGE) ||

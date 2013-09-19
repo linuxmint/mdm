@@ -838,11 +838,7 @@ lookup_notify_key (MdmConfig  *config,
 		nkey = g_strdup (MDM_NOTIFY_GTK_MODULES_LIST);
 	else if (is_key (keystring, MDM_KEY_TIMED_LOGIN))
 		nkey = g_strdup (MDM_NOTIFY_TIMED_LOGIN);
-	else if (strcmp (group, MDM_CONFIG_GROUP_CUSTOM_CMD) == 0 &&
-		 g_str_has_prefix (key, "CustomCommand")) {
-		/* this should match 'CustomCommandN' */
-		nkey = g_strdup (MDM_NOTIFY_CUSTOM_CMD_TEMPLATE);
-	}
+
 	g_free (keystring);
 
 	return nkey;
@@ -1297,21 +1293,6 @@ check_servauthdir (const char  *auth_path,
 	}
 }
 
-static gboolean
-have_display_for_number (int number)
-{
-	GSList *l;
-
-	for (l = displays; l != NULL; l = l->next) {
-		MdmDisplay *disp = l->data;
-		if (disp->dispnum == number) {
-			return TRUE;
-		}
-	}
-
-	return FALSE;
-}
-
 static void
 mdm_daemon_config_load_displays (MdmConfig *config)
 {
@@ -1582,22 +1563,6 @@ validate_greeter (MdmConfig          *config,
 }
 
 static gboolean
-validate_remote_greeter (MdmConfig          *config,
-			 MdmConfigSourceType source,
-			 MdmConfigValue     *value)
-{
-	const char *str;
-
-	str = mdm_config_value_get_string (value);
-
-	if (str == NULL || str[0] == '\0') {
-		mdm_error (_("%s: No remote greeter specified."), "mdm_config_parse");
-	}
-
-	return TRUE;
-}
-
-static gboolean
 validate_session_desktop_dir (MdmConfig          *config,
 			      MdmConfigSourceType source,
 			      MdmConfigValue     *value)
@@ -1633,23 +1598,6 @@ validate_password_required (MdmConfig          *config,
 	if (str != NULL && str[0] == '\0') {
 		gboolean val;
 		val = (g_ascii_strcasecmp (str, "YES") == 0);
-		mdm_config_value_set_bool (value, val);
-	}
-
-	return TRUE;
-}
-
-static gboolean
-validate_allow_remote_root (MdmConfig          *config,
-			    MdmConfigSourceType source,
-			    MdmConfigValue     *value)
-{
-	char *str;
-
-	str = mdm_read_default ("CONSOLE=");
-	if (str != NULL && str[0] == '\0') {
-		gboolean val;
-		val = (g_ascii_strcasecmp (str, "/dev/console") != 0);
 		mdm_config_value_set_bool (value, val);
 	}
 
@@ -1823,9 +1771,7 @@ notify_cb (MdmConfig          *config,
 			if (group != NULL) {
 				if (strcmp (group, MDM_CONFIG_GROUP_SERVERS) == 0) {
 					/* FIXME: handle this? */
-				} else if (strcmp (group, MDM_CONFIG_GROUP_CUSTOM_CMD) == 0) {
-					notify_displays_value (config, group, key, value);
-				}
+				} 
 			}
 		}
                 break;

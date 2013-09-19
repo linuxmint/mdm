@@ -58,10 +58,6 @@ TimedLoginDelay=30
 # probably leave this alone.
 #Configurator=@sbindir@/mdmsetup --disable-sound --disable-crash-dialog
 
-# The chooser program.  Must output the chosen host on stdout, probably you
-# should leave this alone.
-#Chooser=@libexecdir@/mdmchooser
-
 # The greeter for attached (non-xdmcp) logins.  Change mdmlogin to mdmgreeter
 # to get the new graphical greeter.
 Greeter=@libexecdir@/mdmgreeter
@@ -125,13 +121,12 @@ SuspendCommand=/usr/sbin/pm-suspend
 # The following options specify how MDM system commands are supported.
 #
 # Specify which actions are displayed in the greeter.  Valid values are HALT,
-# REBOOT, SUSPEND, and CUSTOM_CMD separated by semicolons.
-SystemCommandsInMenu=HALT;REBOOT;SUSPEND;CUSTOM_CMD
+# REBOOT, SUSPEND separated by semicolons.
+SystemCommandsInMenu=HALT;REBOOT;SUSPEND
 
 # Specify which actions are supported by QUERY_LOGOUT_ACTION, SET_LOGOUT_ACTION
-# and SET_SAFE_LOGOUT_ACTION.  Valid values are HALT, REBOOT, SUSPEND, and
-# CUSTOM_CMD separated by semicolons.
-AllowLogoutActions=HALT;REBOOT;SUSPEND;CUSTOM_CMD
+# and SET_SAFE_LOGOUT_ACTION.  Valid values are HALT, REBOOT, SUSPEND separated by semicolons.
+AllowLogoutActions=HALT;REBOOT;SUSPEND
 
 # This feature is only functional if MDM is compiled with RBAC (Role Based
 # Access Control) support.
@@ -522,95 +517,6 @@ flexible=false
 # Do not handle this X server for attached displays.
 handled=false
 
-# To use this server type you should add -query host or -indirect host to the
-# command line.
-[server-Chooser]
-name=Chooser server
-command=@X_SERVER@ @X_CONFIG_OPTIONS@
-# Make this not appear in the flexible servers for now, but if you wish to
-# allow a chooser server then make this true.  This is the only way to make a
-# flexible chooser server that behaves nicely.
-flexible=false
-# Run the chooser instead of the greeter.  When the user chooses a machine they
-# will get this same server but run with "-terminate -query hostname".
-chooser=true
 
-[customcommand]
-# This section allows you specify up to 10 custom commands. Each of the
-# commands can be defined by the seven parameters listed below. In each of the
-# descriptions of the parameters N can take on any values between 0 and 9,
-# i.e. CustomCommand0=,CustomCommand1=,...,CustomCommand9=.  The  numbers
-# can have gaps as long as they fit within predefined set of 10, and their
-# placement order within this section and with respect to each other is
-# not important.
-#
-# CustomCommandN, CustomCommandTextN, CustomCommandLabelN, 
-# CustomCommandLRLabelN, CustomCommandTooltipN, CustomCommandIsPersistentN
-# and CustomCommandNoRestartN should all be defined for a given integer N, 
-# where N can be a number from 0-9 (if not the default values will be 
-# assigned except CustomCommandN for which no default exists).
 
-# Custom command to run.  Multiple commands may be specified separated by 
-# semicolons.  MDM will use the first valid command.  Examples:
-# /sbin/bootwindoze;/usr/bin/bootwindoze, or
-# /sbin/runupdate;/usr/local/sbin/runupdate
-#
-#CustomCommandN=
 
-# Custom command dialog message that will appear on all warning dialogs.
-# This will vary depending on what you want to do. Examples:
-# Are you sure you want to restart system into Windoze?, or
-# Are you sure you want do do this?
-#CustomCommandTextN=
-
-# Custom command label that will appear as stock label on buttons/menu items.
-# This option can't contain any semicolon characters (i.e. ";").
-# Examples:
-# _Windoze, or
-# _Update Me
-#CustomCommandLabelN=
-
-# Custom command label that will appear as stock label on radio buttons/list
-# items.  The underscore indicates the mnemonic used with this item.  Examples:
-#   Restart into _Windoze
-#   Perform system _Update
-#CustomCommandLRLabelN=
-
-# Custom command tooltip. Examples
-# Restarts the computer into Windoze
-# Updates the computer software to the most recent version(s)
-#CustomCommandTooltipN=
-
-# Custom command persistence option. Setting it to true will allow this
-# command to appear outside the login manager, e.g. on the desktop through 
-# Log Out/Shut Down dialogs. The default value is false.
-#CustomCommandIsPersistentN=
-
-# Custom command mdm/system restart option. Setting it to true will not
-# restart mdm after command execution.  The default commands (reboot, shut
-# down) all reboot the system by default which is why the default setting
-# is true.
-# In addition when corresponding CustomCommandIsPersistentN option is set to
-# true, setting CustomCommandNoRestartN to false will place CustomCommandN
-# in the Shut Down dialog set of actions, setting it to true will place
-# CustomCommandN in the Log Out dialog set of actions.
-#CustomCommandNoRestartN=
-#
-# Example layout for more than one command:
-#CustomCommand0=
-#CustomCommandText0=
-#CustomCommandLabel0=
-#CustomCommandLRLabel0=
-#CustomCommandTooltip0=
-#CustomCommandIsPersistent0=
-#CustomCommandNoRestart0=
-#
-#CustomCommand1=
-#CustomCommandText1=
-#CustomCommandLabel1=
-#CustomCommandLRLabel1=
-#CustomCommandTooltip1=
-#CustomCommandIsPersistent1=
-#CustomCommandNoRestart1=
-#
-# and so on

@@ -976,42 +976,6 @@ typedef enum
   LOCALE_UP_TO_MODIFIER,
 } LocaleScope;
 
-static char *
-get_less_specific_locale (const char *locale,
-                          LocaleScope scope)
-{
-  char *generalized_locale;
-  char *end;
-
-  generalized_locale = strdup (locale);
-
-  end = strchr (generalized_locale, '_');
-
-  if (end != NULL && scope <= LOCALE_UP_TO_LANGUAGE)
-    {
-      *end = '\0';
-      return generalized_locale;
-    }
-
-  end = strchr (generalized_locale, '.');
-
-  if (end != NULL && scope <= LOCALE_UP_TO_COUNTRY)
-    {
-      *end = '\0';
-      return generalized_locale;
-    }
-
-  end = strchr (generalized_locale, '@');
-
-  if (end != NULL && scope <= LOCALE_UP_TO_ENCODING)
-    {
-      *end = '\0';
-      return generalized_locale;
-    }
-
-  return generalized_locale;
-}
-
 gboolean
 mdm_common_locale_is_displayable (const gchar *locale)
 {

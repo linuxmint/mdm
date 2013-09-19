@@ -220,14 +220,7 @@ greeter_item_is_visible (GreeterItemInfo *info)
   if (( ! sysmenu || ! MdmSuspendFound) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "suspend") == 0))
-	  return FALSE;
-
-  if (info->show_type != NULL && 
-      sscanf (info->show_type, "custom_cmd%d", &i) == 1 &&
-      i >= 0 && i < MDM_CUSTOM_COMMAND_MAX &&
-      (! sysmenu || ! MdmCustomCmdsFound[i])) {	  
-	  return FALSE;
-  }
+	  return FALSE; 
 
   if (( ! mdm_config_get_bool (MDM_KEY_TIMED_LOGIN_ENABLE) ||
           ve_string_empty (mdm_config_get_string (MDM_KEY_TIMED_LOGIN)) ||

@@ -60,8 +60,6 @@ enum {
 
 #define MDM_RESPONSE_CANCEL "MDM_RESPONSE_CANCEL"
 
-#define MDM_CUSTOM_COMMAND_MAX 10 /* maximum number of supported custom commands */
-
 #ifdef __sun
 #define MDM_DT_DIR "/var/dt"
 #define MDM_SDTLOGIN_DIR "/var/dt/sdtlogin"

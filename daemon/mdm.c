@@ -95,8 +95,6 @@ static void handle_flexi_server (MdmConnection *conn,
 				 const gchar *server,
 				 gboolean handled,
 				 const gchar *username);
-static void custom_cmd_restart (long cmd_id);
-static void custom_cmd_no_restart (long cmd_id);
 
 /* Global vars */
 
@@ -661,114 +659,6 @@ restart_machine (void)
 	}
 }
 
-static void
-custom_cmd (long cmd_id)
-{
-        gchar * key_string;
-
-        if (cmd_id < 0 || cmd_id >= MDM_CUSTOM_COMMAND_MAX) {
-		/* We are just feeling very paranoid */
-		mdm_error (_("custom_cmd: Custom command index %ld outside permitted range [0,%d)"),
-			   cmd_id, MDM_CUSTOM_COMMAND_MAX);
-		return;
-	}
-
-        key_string = g_strdup_printf ("%s%ld=", MDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE, cmd_id);
-        if (mdm_daemon_config_get_value_bool (key_string))
-	        custom_cmd_no_restart (cmd_id);
-	else
-	        custom_cmd_restart (cmd_id);
-
-	g_free(key_string);
-}
-
-static void
-custom_cmd_restart (long cmd_id)
-{
-	gchar * key_string;
-	char **argv;
-	const char *s;
-
-        mdm_debug (_("Executing custom command %ld with restart option..."), cmd_id);
-
-	VE_IGNORE_EINTR (g_chdir ("/"));
-
-#ifdef __linux__
-	change_to_first_and_clear (TRUE);
-#endif /* __linux */
-
-	key_string = g_strdup_printf ("%s%ld=", MDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_id);
-
-	argv = NULL;
-	s = mdm_daemon_config_get_value_string (key_string);
-	g_free (key_string);
-	if (s != NULL) {
-		g_shell_parse_argv (s, NULL, &argv, NULL);
-	}
-
-	mdm_final_cleanup ();
-
-	if (argv != NULL && argv[0] != NULL)
-		VE_IGNORE_EINTR (execv (argv[0], argv));
-
-	g_strfreev (argv);
-
-	mdm_error (_("%s: Execution of custom command failed: %s"),
-		   "mdm_child_action", strerror (errno));
-}
-
-static void
-custom_cmd_no_restart (long cmd_id)
-{
-        pid_t pid;
-
-        mdm_debug (_("Executing custom command %ld with no restart option ..."), cmd_id);
-
-        pid = fork ();
-
-	if (pid < 0) {
-	        /*failed fork*/
-	        mdm_error (_("custom_cmd: forking process for custom command %ld failed"), cmd_id);
-		return;
-	}
-	else if (pid == 0) {
-		/* child */
-		char **argv;
-		const char *s;
-		gchar *key_string;
-
-		key_string = g_strdup_printf ("%s%ld=", MDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_id);
-
-		argv = NULL;
-		s = mdm_daemon_config_get_value_string (key_string);
-		g_free (key_string);
-		if (s != NULL) {
-			g_shell_parse_argv (s, NULL, &argv, NULL);
-		}
-
-		if (argv != NULL && argv[0] != NULL)
-			VE_IGNORE_EINTR (execv (argv[0], argv));
-
-		g_strfreev (argv);
-
-		mdm_error (_("%s: Execution of custom command failed: %s"),
-			   "mdm_child_action", strerror (errno));
-		_exit (0);
-	}
-	else {
-		/* parent */
-		gint exitstatus = 0, status;
-		pid_t p_stat = waitpid (1, &exitstatus, WNOHANG);
-		if (p_stat > 0) {
-			if G_LIKELY (WIFEXITED (exitstatus)){
-				status = WEXITSTATUS (exitstatus);
-				mdm_debug (_("custom_cmd: child %d returned %d"), p_stat, status);
-			}
-			return;
-		}
-	}
-}
-
 static gboolean
 mdm_cleanup_children (void)
 {
@@ -1132,12 +1022,7 @@ mdm_do_logout_action (MdmLogoutAction logout_action)
 		suspend_machine ();
 		break;
 
-	default:
-	        /* This is a bit ugly but its the only place we can
-		   check for the range of values */
-	        if (logout_action >= MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST &&
-		    logout_action <= MDM_LOGOUT_ACTION_CUSTOM_CMD_LAST)
-			custom_cmd (logout_action - MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST);
+	default:	       
 		break;
 	}
 }
@@ -2458,20 +2343,6 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 
 			send_slave_ack (d, NULL);
 		}
-	} else if (strncmp (msg, MDM_SOP_CUSTOM_CMD " ",
-		            strlen (MDM_SOP_CUSTOM_CMD " ")) == 0) {
-		MdmDisplay *d;
-		long slave_pid;
-		long cmd_id;
-
-		if (sscanf (msg, MDM_SOP_CUSTOM_CMD " %ld %ld", &slave_pid, &cmd_id) != 2)
-			return;
-		d = mdm_display_lookup (slave_pid);
-
-		if (d != NULL) {
-		        custom_cmd (cmd_id);
-			send_slave_ack (d, NULL);
-		}
 	} else if (strcmp (msg, MDM_SOP_FLEXI_XSERVER) == 0) {
 		handle_flexi_server (NULL, TYPE_FLEXI, mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER),
 				     TRUE /* handled */,
@@ -2696,84 +2567,6 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 	}
 }
 
-/* extract second word and the rest of the string */
-static void
-extract_dispname_uid_xauthfile_cookie (const char *msg,
-				       char **dispname,
-				       uid_t *uid,
-				       char **xauthfile,
-				       char **cookie)
-{
-	const char *p;
-	int i;
-	char *pp;
-
-	*dispname = NULL;
-	*xauthfile = NULL;
-	*cookie = NULL;
-
-	/* Get dispname */
-	p = strchr (msg, ' ');
-	if (p == NULL)
-		return;
-
-	while (*p == ' ')
-		p++;
-
-	*dispname = g_strdup (p);
-	pp = strchr (*dispname, ' ');
-	if (pp != NULL)
-		*pp = '\0';
-
-	/* Get uid */
-	p = strchr (p, ' ');
-	if (p == NULL) {
-		*dispname = NULL;
-		g_free (*dispname);
-		return;
-	}
-	while (*p == ' ')
-		p++;
-
-	if (sscanf (p, "%d", &i) != 1) {
-		*dispname = NULL;
-		g_free (*dispname);
-		return;
-	}
-	*uid = i;
-
-	/* Get cookie */
-	p = strchr (p, ' ');
-	if (p == NULL) {
-		*dispname = NULL;
-		g_free (*dispname);
-		return;
-	}
-	while (*p == ' ')
-		p++;
-
-	*cookie = g_strdup (p);
-	pp = strchr (*cookie, ' ');
-	if (pp != NULL)
-		*pp = '\0';
-
-	/* Get xauthfile */
-	p = strchr (p, ' ');
-	if (p == NULL) {
-		*cookie = NULL;
-		g_free (*cookie);
-		*dispname = NULL;
-		g_free (*dispname);
-		return;
-	}
-
-	while (*p == ' ')
-		p++;
-
-	*xauthfile = g_strstrip (g_strdup (p));
-
-}
-
 static void
 close_conn (gpointer data)
 {
@@ -2784,121 +2577,6 @@ close_conn (gpointer data)
 		disp->socket_conn = NULL;
 		mdm_display_unmanage (disp);
 	}
-}
-
-static MdmDisplay *
-find_display (const char *name)
-{
-	GSList *li;
-	GSList *displays;
-
-	displays = mdm_daemon_config_get_display_list ();
-
-	for (li = displays; li != NULL; li = li->next) {
-		MdmDisplay *disp = li->data;
-		if (disp->name != NULL &&
-		    strcmp (disp->name, name) == 0)
-			return disp;
-	}
-	return NULL;
-}
-
-static char *
-extract_dispnum (const char *addy)
-{
-	int num;
-	char *p;
-
-	mdm_assert (addy != NULL);
-
-	p = strchr (addy, ':');
-	if (p == NULL)
-		return NULL;
-
-	/* Whee! handles DECnet even if we don't do that */
-	while (*p == ':')
-		p++;
-
-	if (sscanf (p, "%d", &num) != 1)
-		return NULL;
-
-	return g_strdup_printf ("%d", num);
-}
-
-static char *
-dehex_cookie (const char *cookie, int *len)
-{
-	/* it should be +1 really, but I'm paranoid */
-	char *bcookie = g_new0 (char, (strlen (cookie) / 2) + 2);
-	int i;
-	const char *p;
-
-	*len = 0;
-
-	for (i = 0, p = cookie;
-	     *p != '\0' && *(p+1) != '\0';
-	     i++, p += 2) {
-		unsigned int num;
-		if (sscanf (p, "%02x", &num) != 1) {
-			g_free (bcookie);
-			return NULL;
-		}
-		bcookie[i] = num;
-	}
-	*len = i;
-	return bcookie;
-}
-
-/* This runs as the user who owns the file */
-static gboolean
-check_cookie (const gchar *file, const gchar *disp, const gchar *cookie)
-{
-	Xauth *xa;
-	gchar *number;
-	gchar *bcookie;
-	int cookielen;
-	gboolean ret = FALSE;
-	int cnt = 0;
-
-	FILE *fp = fopen (file, "r");
-	if (fp == NULL)
-		return FALSE;
-
-	number = extract_dispnum (disp);
-	if (number == NULL)
-		return FALSE;
-	bcookie = dehex_cookie (cookie, &cookielen);
-	if (bcookie == NULL) {
-		g_free (number);
-		return FALSE;
-	}
-
-	while ((xa = XauReadAuth (fp)) != NULL) {
-		if (xa->number_length == strlen (number) &&
-		    strncmp (xa->number, number, xa->number_length) == 0 &&
-		    xa->name_length == strlen ("MIT-MAGIC-COOKIE-1") &&
-		    strncmp (xa->name, "MIT-MAGIC-COOKIE-1",
-			     xa->name_length) == 0 &&
-		    xa->data_length == cookielen &&
-		    memcmp (xa->data, bcookie, cookielen) == 0) {
-			XauDisposeAuth (xa);
-			ret = TRUE;
-			break;
-		}
-		XauDisposeAuth (xa);
-
-		/* just being ultra anal */
-		cnt++;
-		if (cnt > 500)
-			break;
-	}
-
-	g_free (number);
-	g_free (bcookie);
-
-	VE_IGNORE_EINTR (fclose (fp));
-
-	return ret;
 }
 
 static void
@@ -3497,78 +3175,7 @@ sup_handle_query_logout_action (MdmConnection *conn,
 		if (logout_action == MDM_LOGOUT_ACTION_SUSPEND)
 			g_string_append (reply, "!");
 		sep = ";";
-	}
-
-	if (is_action_available (disp, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) {
-		for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
-			key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-
-			if (! ve_string_empty (mdm_daemon_config_get_value_string (key_string))) {
-
-				g_free (key_string);
-				key_string = g_strdup_printf("%s%d=",
-					MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
-
-				if (mdm_daemon_config_get_value_bool (key_string)) {
-					g_string_append_printf (reply, "%s%s%d", sep,
-						MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE, i);
-					if (logout_action == (MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + i))
-						g_string_append (reply, "!");
-				sep = ";";
-				}
-			}
-			g_free(key_string);
-		}
-	}
-
-	g_string_append (reply, "\n");
-	mdm_connection_write (conn, reply->str);
-	g_string_free (reply, TRUE);
-}
-
-static void
-sup_handle_query_custom_cmd_labels (MdmConnection *conn,
-				    const char    *msg,
-				    gpointer       data)
-{
-
-	MdmDisplay *disp;
-	GString *reply;
-	const gchar *sep = " ";
-	gboolean sysmenu;
-	int i;
-	gchar *key_string = NULL;
-
-	disp = mdm_connection_get_display (conn);
-	sysmenu = mdm_daemon_config_get_value_bool_per_display (MDM_KEY_SYSTEM_MENU, disp->name);
-
-	/* Only allow locally authenticated connections */
-	if ( ! MDM_CONN_AUTHENTICATED (conn) ||
-	     disp == NULL) {
-		mdm_info (_("%s request denied: "
-			    "Not authenticated"), "QUERY_CUSTOM_CMD_LABELS");
-		mdm_connection_write (conn,
-				      "ERROR 100 Not authenticated\n");
-		return;
-	}
-
-	reply = g_string_new ("OK");
-
-	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-		if (sysmenu && disp->attached &&
-		    ! ve_string_empty (mdm_daemon_config_get_value_string (key_string))) {
-			g_free (key_string);
-			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
-			if (mdm_daemon_config_get_value_bool (key_string)) {
-				g_free (key_string);
-				key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
-				g_string_append_printf (reply, "%s%s",  sep, mdm_daemon_config_get_value_string (key_string));
-				sep = ";";
-			}
-		}
-		g_free(key_string);
-	}
+	}	
 
 	g_string_append (reply, "\n");
 	mdm_connection_write (conn, reply->str);
@@ -3657,55 +3264,6 @@ sup_handle_greeterpids (MdmConnection *conn,
 }
 
 static void
-sup_handle_query_custom_cmd_no_restart_status (MdmConnection *conn,
-					       const char    *msg,
-					       gpointer       data)
-{
-
-	MdmDisplay *disp;
-	GString *reply;
-	gboolean sysmenu;
-	unsigned long no_restart_status_flag = 0; /* we can store up-to 32 commands this way */
-	int i;
-	gchar *key_string = NULL;
-
-	disp = mdm_connection_get_display (conn);
-	sysmenu = mdm_daemon_config_get_value_bool_per_display (MDM_KEY_SYSTEM_MENU, disp->name);
-
-	/* Only allow locally authenticated connections */
-	if ( ! MDM_CONN_AUTHENTICATED (conn) ||
-	     disp == NULL) {
-		mdm_info (_("%s request denied: "
-			    "Not authenticated"), "QUERY_CUSTOM_CMD_NO_RESTART_STATUS");
-		mdm_connection_write (conn,
-				      "ERROR 100 Not authenticated\n");
-		return;
-	}
-
-	reply = g_string_new ("OK ");
-
-	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {
-		key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-		if (sysmenu && disp->attached &&
-		    ! ve_string_empty (mdm_daemon_config_get_value_string (key_string))) {
-			g_free (key_string);
-			key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_IS_PERSISTENT_TEMPLATE, i);
-			if (mdm_daemon_config_get_value_bool (key_string)) {
-				g_free (key_string);
-				key_string = g_strdup_printf("%s%d=", MDM_KEY_CUSTOM_CMD_NO_RESTART_TEMPLATE, i);
-				if(mdm_daemon_config_get_value_bool (key_string))
-					no_restart_status_flag |= (1 << i);
-			}
-		}
-		g_free(key_string);
-	}
-
-	g_string_append_printf (reply, "%ld\n", no_restart_status_flag);
-	mdm_connection_write (conn, reply->str);
-	g_string_free (reply, TRUE);
-}
-
-static void
 sup_handle_set_logout_action (MdmConnection *conn,
 			      const char    *msg,
 			      gpointer       data)
@@ -3747,23 +3305,7 @@ sup_handle_set_logout_action (MdmConnection *conn,
 		   is_action_available (disp, MDM_SUP_LOGOUT_ACTION_SUSPEND)) {
 		disp->logout_action = MDM_LOGOUT_ACTION_SUSPEND;
 		was_ok = TRUE;
-	}
-	else if (strncmp (action, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE,
-			  strlen (MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) == 0 &&
-		 is_action_available (disp, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) {
-
-		int cmd_index;
-		if (sscanf (action, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE "%d", &cmd_index) == 1) {
-			gchar *key_string = NULL;
-			key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_index);
-			if (! ve_string_empty (mdm_daemon_config_get_value_string (key_string))) {
-				disp->logout_action =
-					MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + cmd_index;
-				was_ok = TRUE;
-			}
-			g_free(key_string);
-		}
-	}
+	}	
 
 	if (was_ok) {
 		mdm_connection_write (conn, "OK\n");
@@ -3815,25 +3357,7 @@ sup_handle_set_safe_logout_action (MdmConnection *conn,
 		   is_action_available (disp, MDM_SUP_LOGOUT_ACTION_SUSPEND)) {
 		safe_logout_action = MDM_LOGOUT_ACTION_SUSPEND;
 		was_ok = TRUE;
-	}
-	else if (strncmp (action, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE,
-			  strlen (MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) == 0 &&
-		 is_action_available (disp, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE)) {
-
-		int cmd_index;
-		if (sscanf (action, MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE "%d", &cmd_index) == 1) {
-
-			gchar *key_string = NULL;
-			key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, cmd_index);
-
-			if (! ve_string_empty (mdm_daemon_config_get_value_string (key_string))) {
-				safe_logout_action =
-					MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + cmd_index;
-				was_ok = TRUE;
-			}
-			g_free(key_string);
-		}
-	}
+	}	
 
 	if (was_ok) {
 		mdm_connection_write (conn, "OK\n");
@@ -4014,14 +3538,6 @@ mdm_handle_user_message (MdmConnection *conn,
 	} else if (strcmp (msg, MDM_SUP_QUERY_LOGOUT_ACTION) == 0) {
 
 		sup_handle_query_logout_action (conn, msg, data);
-
-	} else if (strcmp (msg, MDM_SUP_QUERY_CUSTOM_CMD_LABELS) == 0) {
-
-		sup_handle_query_custom_cmd_labels (conn, msg, data);
-
-	} else if (strcmp (msg, MDM_SUP_QUERY_CUSTOM_CMD_NO_RESTART_STATUS) == 0) {
-
-		sup_handle_query_custom_cmd_no_restart_status (conn, msg, data);
 
 	} else if (strncmp (msg, MDM_SUP_SET_LOGOUT_ACTION " ",
 			    strlen (MDM_SUP_SET_LOGOUT_ACTION " ")) == 0) {
