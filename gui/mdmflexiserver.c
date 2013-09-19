@@ -1,23 +1,13 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
- *
- *    MDMflexiserver - run a flexible server
- *    (c)2001 Queen of England
- *
- *    This program is free software; you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation; either version 2 of the License, or
- *    (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
- *
- *    You should have received a copy of the GNU General Public License
- *    along with this program; if not, write to the Free Software
- *    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- */
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+
+// The MDM daemon process is launched as root by daemon/mdm.c.
+// It sets up a UNIX socket in /var/run/gdm_socket (MDM_SUP_SOCKET) and writes its pid in /var/run/mdm.pid (MDM_PID_FILE).
+// MDMFlexiServer is like a remote control... it can be used to send commands with the --command option, or to ask for a new greeter.
+// It uses mdmcomm.c to talk with MDM via the socket:
+// If --command is used, it sends that command to MDM.
+// Otherwise, it asks MDM for a list of already running greeters, with the command "CONSOLE_SERVERS".
+// If some greeters are already running, it picks the first one, locks the screen and switches the screen to its VT.
+// If none are running, it locks the screen and sends MDM the command "MDM_SUP_FLEXI_XSERVER" to start a new greeter.
 
 #include "config.h"
 
@@ -56,8 +46,6 @@ static gboolean got_standard     = FALSE;
 static gboolean debug_in         = FALSE;
 static gboolean authenticate     = FALSE;
 static gboolean no_lock          = FALSE;
-static gboolean monte_carlo_pi   = FALSE;
-static gboolean startnew         = FALSE;
 static gchar **args_remaining    = NULL; 
 
 GOptionEntry options [] = {
@@ -65,8 +53,6 @@ GOptionEntry options [] = {
 	{ "no-lock", 'l', 0, G_OPTION_ARG_NONE, &no_lock, N_("Do not lock current screen"), NULL },
 	{ "debug", 'd', 0, G_OPTION_ARG_NONE, &debug_in, N_("Debugging output"), NULL },
 	{ "authenticate", 'a', 0, G_OPTION_ARG_NONE, &authenticate, N_("Authenticate before running --command"), NULL },
-	{ "startnew", 's', 0, G_OPTION_ARG_NONE, &startnew, N_("Start new flexible session; do not show popup"), NULL },
-	{ "monte-carlo-pi", 0, 0, G_OPTION_ARG_NONE, &monte_carlo_pi, NULL, NULL },
 	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_STRING_ARRAY, &args_remaining, NULL, NULL },
 	{ NULL }
 };
@@ -344,24 +330,6 @@ is_key (const gchar *key1, const gchar *key2)
    }
 }
 
-static void
-calc_pi (void)
-{
-	unsigned long n = 0, h = 0;
-	double x, y;
-	printf ("\n");
-	for (;;) {
-		x = g_random_double ();
-		y = g_random_double ();
-		if (x*x + y*y <= 1)
-			h++;
-		n++;
-		if ( ! (n & 0xfff))
-			printf ("pi ~~ %1.10f\t(%lu/%lu * 4) iteration: %lu \r",
-				((double)h)/(double)n * 4.0, h, n, n);
-	}
-}
-
 int
 main (int argc, char *argv[])
 {
@@ -381,11 +349,6 @@ main (int argc, char *argv[])
 	g_option_context_add_main_entries (ctx, options, _("main options"));
 	g_option_context_parse (ctx, &argc, &argv, NULL);
 	g_option_context_free (ctx);
-
-	if (monte_carlo_pi) {
-		calc_pi ();
-		return 0;
-	}
 
 	mdm_log_init ();
 	mdm_log_set_debug (debug_in);

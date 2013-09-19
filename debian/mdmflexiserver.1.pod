@@ -8,11 +8,7 @@ B<mdmflexiserver>       GNOME options   mdmflexiserver options
 
 =head1 DESCRIPTION
 
-The I<flexi server> mechanism allows to run MDM sessions on demand, in a new
-virtual console. The administrator can define multiple server configurations,
-using alternate X servers, or different options, in the B<mdm.conf> file, and
-B<mdmflexiserver> will present you with a menu, where you will be asked to
-choose between those server configurations marked with B<flexible=true>.
+The I<flexi server> mechanism allows to run MDM sessions on demand.
 
 =head1 OPTIONS
 

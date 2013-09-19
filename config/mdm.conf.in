@@ -58,13 +58,9 @@ TimedLoginDelay=30
 # probably leave this alone.
 #Configurator=@sbindir@/mdmsetup --disable-sound --disable-crash-dialog
 
-# The greeter for attached (non-xdmcp) logins.  Change mdmlogin to mdmgreeter
+# The greeter for attached logins.  Change mdmlogin to mdmgreeter
 # to get the new graphical greeter.
 Greeter=@libexecdir@/mdmgreeter
-
-# The greeter for xdmcp logins, usually you want a less graphically intensive
-# greeter here so it's better to leave this with mdmlogin
-#RemoteGreeter=@libexecdir@/mdmlogin
 
 # Launch the greeter with an additional list of colon separated GTK+ modules.
 # This is useful for enabling additional feature support e.g. GNOME
@@ -217,13 +213,6 @@ MdmXserverTimeout=10
 # Allow root to login.  It makes sense to turn this off for kiosk use, when
 # you want to minimize the possibility of break in.
 AllowRoot=false
-# Allow login as root via XDMCP.  This value will be overridden and set to
-# false if the /etc/default/login file exists and contains
-# "CONSOLE=/dev/login", and set to true if the /etc/default/login file exists
-# and contains any other value or no value for CONSOLE.
-AllowRemoteRoot=false
-# This will allow remote timed login.
-AllowRemoteAutoLogin=false
 # 0 is the most restrictive, 1 allows group write permissions, 2 allows all
 # write permissions.
 RelaxPermissions=1
@@ -342,21 +331,18 @@ LocaleFile=/etc/mdm/locale.conf
 # Configuration is available from the system menu of the greeter.
 #ConfigAvailable=true
 
-# Welcome is for all console logins and RemoteWelcome is for remote logins
-# (through XDMCP).
-# DefaultWelcome and DefaultRemoteWelcome set the string for Welcome to
+# Welcome is for all console logins 
+# DefaultWelcome set the string for Welcome to
 # "Welcome" and for DefaultWelcome to "Welcome to %n", and properly translate
 # the message to the appropriate language.  Note that %n gets translated to the
 # hostname of the machine.  These default values can be overridden by setting
-# DefaultWelcome and/or DefaultRemoteWelcome to false, and setting the Welcome
+# DefaultWelcome to false, and setting the Welcome
 # and DefaultWelcome values as desired.  Just make sure the strings are in
 # utf-8 Note to distributors, if you wish to have a different Welcome string
 # and wish to have this translated you can have entries such as
 # "Welcome[cs]=Vitejte na %n".
 DefaultWelcome=true
-DefaultRemoteWelcome=true
 #Welcome=Welcome
-#RemoteWelcome=Welcome to %n
 
 # Xinerama screen we use to display the greeter on.  Not for true multihead,
 # currently only works for Xinerama.
