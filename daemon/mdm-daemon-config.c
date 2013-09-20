@@ -2156,7 +2156,6 @@ mdm_daemon_config_parse (const char *config_file,
 {
 	uid_t         uid;
 	gid_t         gid;
-	gboolean      dynamic_enabled;
 
 	displays            = NULL;
 	high_display_num    = 0;
@@ -2177,10 +2176,8 @@ mdm_daemon_config_parse (const char *config_file,
 	if (! no_console) {
 		mdm_daemon_config_load_displays (daemon_config);
 	}
-
-	dynamic_enabled = FALSE;
-	mdm_config_get_bool_for_id (daemon_config, MDM_ID_DYNAMIC_XSERVERS, &dynamic_enabled);
-	if G_UNLIKELY ((displays == NULL) && (! dynamic_enabled)) {
+	
+	if G_UNLIKELY (displays == NULL) {
 		handle_no_displays (daemon_config, no_console);
 	}
 

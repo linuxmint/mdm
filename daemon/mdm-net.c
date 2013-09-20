@@ -291,13 +291,7 @@ mdm_socket_handler (GIOChannel *source,
 
 	conn->subconnections = g_list_append (conn->subconnections, newconn);
 	conn->n_subconnections++;
-
-	/*
-	 * When dynamix servers is turned on, the daemon can be flooded with
-	 * requests and closing a subconnection will typically make the client
-	 * just try and connect again, and worsen the flooding problem.  When
-	 * using dynamic servers, allow more clients to connect at once.  
-	 */
+	
 	max_connections = MAX_CONNECTIONS;
              
 	if (conn->n_subconnections > max_connections) {

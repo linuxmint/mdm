@@ -75,10 +75,6 @@
 #include "mdm-daemon-config.h"
 #include "mdm-log.h"
 
-#define DYNAMIC_ADD     0
-#define DYNAMIC_RELEASE 1
-#define DYNAMIC_REMOVE  2
-
 /* Local functions */
 static void mdm_handle_message (MdmConnection *conn, const gchar *msg, gpointer data);
 static void mdm_handle_user_message (MdmConnection *conn, const gchar *msg, gpointer data);
@@ -128,29 +124,6 @@ static GMainLoop *main_loop       = NULL;
 static gchar *config_file         = NULL;
 static gboolean mdm_restart_mode  = FALSE;
 static gboolean monte_carlo_sqrt2 = FALSE;
-
-/*
- * Lookup display number if the display number is
- * exists then clear the remove flag and return TRUE
- * otherwise return FALSE.
- */
-static gboolean
-mark_display_exists (int num)
-{
-	GSList *li;
-	GSList *displays;
-
-	displays = mdm_daemon_config_get_display_list ();
-
-	for (li = displays; li != NULL; li = li->next) {
-		MdmDisplay *disp = li->data;
-		if (disp->dispnum == num) {
-			disp->removeconf = FALSE;
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
 
 /**
  * mdm_daemonify:
@@ -720,12 +693,7 @@ mdm_cleanup_children (void)
 		d->greetpid = 0;	
 		if (d->servpid > 1)
 			kill (d->servpid, SIGTERM);
-		d->servpid = 0;
-
-		if (mdm_daemon_config_get_value_bool (MDM_KEY_DYNAMIC_XSERVERS)) {
-			/* XXX - This needs to be handled better */
-			mdm_server_whack_lockfile (d);
-		}
+		d->servpid = 0;	
 
 		/* Race avoider */
 		mdm_sleep_no_signal (1);
@@ -2637,132 +2605,6 @@ handle_flexi_server (MdmConnection *conn, int type, const char *server, gboolean
 }
 
 static void
-handle_dynamic_server (MdmConnection *conn, int type, gchar *key)
-{
-	MdmDisplay *disp;
-	int disp_num;
-	gchar *msg;
-	gchar *full;
-	gchar *val;
-
-	if (!(mdm_daemon_config_get_value_bool (MDM_KEY_DYNAMIC_XSERVERS))) {
-		mdm_connection_write (conn, "ERROR 200 Dynamic Displays not allowed\n");
-		return;
-	}
-
-	if ( ! MDM_CONN_AUTH_GLOBAL(conn)) {
-		mdm_info (_("DYNAMIC request denied: " "Not authenticated"));
-		mdm_connection_write (conn, "ERROR 100 Not authenticated\n");
-		return;
-	}
-
-	if (key == NULL) {
-		mdm_connection_write (conn, "ERROR 1 Bad display number <NULL>\n");
-		return;
-	} else if ( !(isdigit (*key))) {
-		msg = g_strdup_printf ("ERROR 1 Bad display number <%s>\n", key);
-		mdm_connection_write (conn, msg);
-		g_free (msg);
-		return;
-	}
-	disp_num = atoi (key);
-
-	if (type == DYNAMIC_ADD) {
-		/* prime an X server for launching */
-
-		if (mark_display_exists (disp_num)) {
-			/* need to skip starting this one again */
-			mdm_connection_write (conn, "ERROR 2 Existing display\n");
-			return;
-		}
-
-		full = strchr (key, '=');
-		if (full == NULL || *(full + 1) == 0) {
-			mdm_connection_write (conn, "ERROR 3 No server string\n");
-			return;
-		}
-
-		val = full + 1;
-		disp = mdm_display_alloc (disp_num, val, NULL);
-
-		if (disp == NULL) {
-			mdm_connection_write (conn, "ERROR 4 Display startup failure\n");
-			return;
-		}
-
-		mdm_daemon_config_display_list_insert (disp);
-
-		disp->dispstat = DISPLAY_CONFIG;
-		disp->removeconf = FALSE;
-
-		if (disp_num > mdm_daemon_config_get_high_display_num ())
-			mdm_daemon_config_set_high_display_num (disp_num);
-
-		mdm_connection_write (conn, "OK\n");
-		return;
-	}
-
-	if (type == DYNAMIC_REMOVE) {
-		GSList *li;
-		GSList *nli;
-		GSList *displays;
-
-		displays = mdm_daemon_config_get_display_list ();
-
-		/* shutdown a dynamic X server */
-
-		for (li = displays; li != NULL; li = nli) {
-			disp = li->data;
-			nli = li->next;
-			if (disp->dispnum == disp_num) {
-				disp->removeconf = TRUE;
-				mdm_display_unmanage (disp);
-				mdm_connection_write (conn, "OK\n");
-				return;
-			}
-		}
-
-		msg = g_strdup_printf ("ERROR 1 Bad display number <%d>\n", disp_num);
-		mdm_connection_write (conn, msg);
-		return;
-	}
-
-	if (type == DYNAMIC_RELEASE) {
-		/* cause the newly configured X servers to actually run */
-		GSList *li;
-		GSList *nli;
-		gboolean found = FALSE;
-		GSList *displays;
-
-		displays = mdm_daemon_config_get_display_list ();
-
-		for (li = displays; li != NULL; li = nli) {
-			MdmDisplay *disp = li->data;
-			nli = li->next;
-			if ((disp->dispnum == disp_num) &&
-			    (disp->dispstat == DISPLAY_CONFIG)) {
-				disp->dispstat = DISPLAY_UNBORN;
-
-				if ( ! mdm_display_manage (disp)) {
-					mdm_display_unmanage (disp);
-				}
-				found = TRUE;
-			}
-		}
-
-		if (found)
-			mdm_connection_write (conn, "OK\n");
-		else {
-			msg = g_strdup_printf ("ERROR 1 Bad display number <%d>\n", disp_num);
-			mdm_connection_write (conn, msg);
-		}
-
-		/* Now we wait for the server to start up (or not) */
-		return;
-	}
-}
-
-static void
 sup_handle_auth_local (MdmConnection *conn,
 		       const char    *msg,
 		       gpointer       data)
@@ -2858,58 +2700,6 @@ sup_handle_attached_servers (MdmConnection *conn,
 	mdm_connection_write (conn, retMsg->str);
 	g_free (key);
 	g_string_free (retMsg, TRUE);
-}
-
-static void
-sup_handle_get_server_details (MdmConnection *conn,
-			       const char    *msg,
-			       gpointer       data)
-{
-	const gchar  *server   = &msg[strlen (MDM_SUP_GET_SERVER_DETAILS " ")];
-	gchar       **splitstr = g_strsplit (server, " ", 2);
-	MdmXserver   *svr      = NULL;
-
-	if (mdm_vector_len (splitstr) == 2) {
-		svr = mdm_daemon_config_find_xserver ((gchar *)splitstr[0]);
-	}
-
-	if (svr != NULL) {
-		if (g_strcasecmp (splitstr[1], "ID") == 0)
-			mdm_connection_printf (conn, "OK %s\n",
-				svr->id ? svr->id : "(null)");
-		else if (g_strcasecmp (splitstr[1], "NAME") == 0)
-			mdm_connection_printf (conn, "OK %s\n",
-				svr->name ? svr->name : "(null)");
-		else if (g_strcasecmp (splitstr[1], "COMMAND") == 0)
-			mdm_connection_printf (conn, "OK %s\n",
-				svr->command ? svr->command : "(null)");
-		else if (g_strcasecmp (splitstr[1], "PRIORITY") == 0)
-			mdm_connection_printf (conn, "OK %d\n", svr->priority);
-		else if (g_strcasecmp (splitstr[1], "FLEXIBLE") == 0 &&
-			 svr->flexible)
-			mdm_connection_printf (conn, "OK true\n");
-		else if (g_strcasecmp (splitstr[1], "FLEXIBLE") == 0 &&
-			 !svr->flexible)
-			mdm_connection_printf (conn, "OK false\n");
-		else if (g_strcasecmp (splitstr[1], "CHOOSABLE") == 0 &&
-			 svr->choosable)
-			mdm_connection_printf (conn, "OK true\n");
-		else if (g_strcasecmp (splitstr[1], "CHOOSABLE") == 0 &&
-			 !svr->choosable)
-			mdm_connection_printf (conn, "OK false\n");
-		else if (g_strcasecmp (splitstr[1], "HANDLED") == 0 &&
-			 svr->handled)
-			mdm_connection_printf (conn, "OK true\n");
-		else if (g_strcasecmp (splitstr[1], "HANDLED") == 0 &&
-			 !svr->handled)
-			mdm_connection_printf (conn, "OK false\n");
-		else
-			mdm_connection_printf (conn, "ERROR 2 Key not valid %s\n", splitstr[1]);
-
-	} else {
-		mdm_connection_printf (conn, "ERROR 1 Server not found\n");
-	}
-	g_strfreev (splitstr);
 }
 
 static void
@@ -3086,46 +2876,6 @@ sup_handle_query_logout_action (MdmConnection *conn,
 	g_string_append (reply, "\n");
 	mdm_connection_write (conn, reply->str);
 	g_string_free (reply, TRUE);
-}
-
-static void
-sup_handle_all_servers (MdmConnection *conn,
-			const char    *msg,
-			gpointer       data)
-{
-	GString *reply;
-	GSList *li;
-	const gchar *sep = " ";
-	GSList *displays;
-
-	displays = mdm_daemon_config_get_display_list ();
-
-	reply = g_string_new ("OK");
-	for (li = displays; li != NULL; li = li->next) {
-		MdmDisplay *disp = li->data;
-		g_string_append_printf (reply, "%s%s,%s", sep,
-					ve_sure_string (disp->name),
-					ve_sure_string (disp->login));
-		sep = ";";
-	}
-	g_string_append (reply, "\n");
-	mdm_connection_write (conn, reply->str);
-	g_string_free (reply, TRUE);
-}
-
-static void
-sup_handle_get_server_list (MdmConnection *conn,
-			    const char    *msg,
-			    gpointer       data)
-{
-	gchar *retval = mdm_daemon_config_get_xservers ();
-
-	if (retval != NULL) {
-		mdm_connection_printf (conn, "OK %s\n", retval);
-		g_free (retval);
-	} else {
-		mdm_connection_printf (conn, "ERROR 1 No servers found\n");
-	}
 }
 
 static void
@@ -3382,19 +3132,6 @@ mdm_handle_user_message (MdmConnection *conn,
 
 		sup_handle_attached_servers (conn, msg, data);
 
-	} else if (strcmp (msg, MDM_SUP_ALL_SERVERS) == 0) {
-
-		sup_handle_all_servers (conn, msg, data);
-
-	} else if (strcmp (msg, MDM_SUP_GET_SERVER_LIST) == 0) {
-
-		sup_handle_get_server_list (conn, msg, data);
-
-	} else if (strncmp (msg, MDM_SUP_GET_SERVER_DETAILS " ",
-			    strlen (MDM_SUP_GET_SERVER_DETAILS " ")) == 0) {
-
-		sup_handle_get_server_details (conn, msg, data);
-
 	} else if (strcmp (msg, MDM_SUP_GREETERPIDS) == 0) {
 
 		sup_handle_greeterpids (conn, msg, data);
@@ -3450,43 +3187,9 @@ mdm_handle_user_message (MdmConnection *conn,
 	} else if (strncmp (msg, MDM_SUP_SET_VT " ",
 			    strlen (MDM_SUP_SET_VT " ")) == 0) {
 
-		sup_handle_set_vt (conn, msg, data);
-
-	} else if (strncmp (msg, MDM_SUP_ADD_DYNAMIC_DISPLAY " ",
-			    strlen (MDM_SUP_ADD_DYNAMIC_DISPLAY " ")) == 0) {
-		gchar *key;
-
-		key = g_strdup (&msg[strlen (MDM_SUP_ADD_DYNAMIC_DISPLAY " ")]);
-		g_strstrip (key);
-		handle_dynamic_server (conn, DYNAMIC_ADD, key);
-		g_free (key);
-
-	} else if (strncmp (msg, MDM_SUP_REMOVE_DYNAMIC_DISPLAY " ",
-			    strlen (MDM_SUP_REMOVE_DYNAMIC_DISPLAY " ")) == 0) {
-		gchar *key;
-
-		key = g_strdup (&msg[strlen (MDM_SUP_REMOVE_DYNAMIC_DISPLAY " ")]);
-		g_strstrip (key);
-		handle_dynamic_server (conn, DYNAMIC_REMOVE, key);
-		g_free (key);
-
-	} else if (strncmp (msg, MDM_SUP_RELEASE_DYNAMIC_DISPLAYS " ",
-			    strlen (MDM_SUP_RELEASE_DYNAMIC_DISPLAYS " ")) == 0) {
-
-		gchar *key;
-
-		key = g_strdup (&msg[strlen (MDM_SUP_RELEASE_DYNAMIC_DISPLAYS " ")]);
-		g_strstrip (key);
-		handle_dynamic_server (conn, DYNAMIC_RELEASE, key);
-		g_free (key);
-
+		sup_handle_set_vt (conn, msg, data);	
 	} else if (strcmp (msg, MDM_SUP_VERSION) == 0) {
-		mdm_connection_write (conn, "MDM " VERSION "\n");
-	} else if (strcmp (msg, MDM_SUP_SERVER_BUSY) == 0) {
-		if (mdm_connection_is_server_busy (unixconn))
-	        	mdm_connection_write (conn, "OK true\n");
-		else
-	        	mdm_connection_write (conn, "OK false\n");
+		mdm_connection_write (conn, "MDM " VERSION "\n");	
 	} else if (strcmp (msg, MDM_SUP_CLOSE) == 0) {
 		mdm_connection_close (conn);
 	} else {

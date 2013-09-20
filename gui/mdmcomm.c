@@ -319,20 +319,6 @@ mdmcomm_send_cmd_to_daemon (const char *command)
 	mdmcomm_send_cmd_to_daemon_with_args (command, NULL, 5);
 }
 
-/**
- * mdmcomm_did_connection_fail
- *
- * If allow_sleep is TRUE, then connection was able to go through.
- * so the client can call this function after calling to see if
- * the failure was due to the connection being too busy.  This is
- * useful for mdmdynamic.
- */
-gboolean
-mdmcomm_did_connection_fail (void)
-{
-	return !allow_sleep;
-}
-
 void
 mdmcomm_set_allow_sleep (gboolean val)
 {

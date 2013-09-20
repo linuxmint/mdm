@@ -198,10 +198,6 @@ VTAllocation=true
 # This is the default:
 #ConsoleCannotHandle=am,ar,az,bn,el,fa,gu,hi,ja,ko,ml,mr,pa,ta,zh
 
-# This determines whether MDM will honor requests DYNAMIC requests from the
-# mdmdynamic command.
-#DynamicXServers=false
-
 # This determines whether MDM will send notifications to the console.
 #ConsoleNotify=true
 

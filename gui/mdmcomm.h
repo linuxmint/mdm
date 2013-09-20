@@ -27,7 +27,6 @@ void		mdmcomm_set_debug (gboolean enable);
 void		mdmcomm_set_quiet_errors (gboolean enable);
 char *		mdmcomm_send_cmd_to_daemon_with_args (const char *command, const char * auth_cookie, int tries);
 char *		mdmcomm_send_cmd_to_daemon (const char *command);
-gboolean	mdmcomm_did_connection_fail (void);
 void		mdmcomm_set_allow_sleep (gboolean val);
 void		mdmcomm_open_connection_to_daemon (void);
 void		mdmcomm_close_connection_to_daemon (void);

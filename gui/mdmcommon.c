@@ -53,7 +53,7 @@ static Atom AT_SPI_IOR;
 
 /*
  * Some slaves want to send output to syslog and others (such as
- * mdmflexiserver and mdmdynamic send error messages to stdout.
+ * mdmflexiserver send error messages to stdout.
  * Calling mdm_common_openlog to open the syslog sets the
  * using_syslog flag so that calls to mdm_common_fail,
  * mdm_common_info, mdm_common_error, and mdm_common_debug sends

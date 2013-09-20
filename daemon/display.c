@@ -632,8 +632,8 @@ mdm_display_unmanage (MdmDisplay *d)
     whack_old_slave (d, TRUE /* kill_connection */);
     
     d->dispstat = DISPLAY_DEAD;
-    if (d->type != TYPE_STATIC || d->removeconf)
-	mdm_display_dispose (d);
+    if (d->type != TYPE_STATIC)
+		mdm_display_dispose (d);
 
     mdm_debug ("mdm_display_unmanage: Display stopped");
 }

@@ -36,6 +36,7 @@
 
 #include "mdm-common.h"
 #include "mdm-log.h"
+#include "mdm-socket-protocol.h"
 
 #include "server.h"
 
@@ -144,9 +145,9 @@ mdm_config_get_result (const gchar *key)
 
 	display = g_strdup (g_getenv ("DISPLAY"));
 	if (display == NULL)
-		command = g_strdup_printf ("GET_CONFIG %s", newkey);
+		command = g_strdup_printf ("%s %s", MDM_SUP_GET_CONFIG, newkey);
 	else
-		command = g_strdup_printf ("GET_CONFIG %s %s", newkey, display);
+		command = g_strdup_printf ("%s %s %s", MDM_SUP_GET_CONFIG, newkey, display);
 
 	result  = mdmcomm_send_cmd_to_daemon_with_args (command, NULL, comm_tries);
 
@@ -154,151 +155,6 @@ mdm_config_get_result (const gchar *key)
 	g_free (command);
 	g_free (newkey);
 	return result;
-}
-
-/**
- * mdm_config_get_xserver_details
- *
- * Calls daemon to get details for an xserver config.
- */
-static gchar *
-mdm_config_get_xserver_details (const gchar *xserver,
-				const gchar *key)
-{
-	gchar *command = NULL;
-	gchar *result  = NULL;
-	gchar *temp;
-
-	command = g_strdup_printf ("GET_SERVER_DETAILS %s %s", xserver, key);
-	result = mdmcomm_send_cmd_to_daemon_with_args (command, NULL, comm_tries);
-
-	g_free (command);
-
-	if (! result || ve_string_empty (result) ||
-	    strncmp (result, "OK ", 3) != 0) {
-
-		mdm_common_error (result);
-
-		if (result)
-			g_free (result);
-		return NULL;
-	}
-
-	/* skip the "OK " */
-	temp = g_strdup (result + 3);
-	g_free (result);
-
-	return temp;
-}
-
-/**
- * mdm_config_get_xservers
- *
- * Calls daemon to get xserver config.
- */
-GSList *
-mdm_config_get_xservers (gboolean flexible)
-{
-	GSList *xservers = NULL;
-        gchar **splitstr, **sec;
-	gchar *command = NULL;
-	gchar *result  = NULL;
-	gchar *temp;
-
-	command = g_strdup_printf ("GET_SERVER_LIST");
-	result = mdmcomm_send_cmd_to_daemon_with_args (command, NULL, comm_tries);
-
-	g_free (command);
-
-	if (! result || ve_string_empty (result) ||
-	    strncmp (result, "OK ", 3) != 0) {
-
-		mdm_common_error (result);
-
-		if (result)
-			g_free (result);
-		return NULL;
-	}
-
-	/* skip the "OK " */
-	splitstr = g_strsplit (result + 3, ";", 0);
-	sec      = splitstr;
-	g_free (result);
-
-	while (sec != NULL && *sec != NULL) {
-		MdmXserver *svr = g_new0 (MdmXserver, 1);
-
-		temp = mdm_config_get_xserver_details (*sec, "ID");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		}
-		svr->id = temp;
-		temp = mdm_config_get_xserver_details (*sec, "NAME");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		}
-		svr->name = temp;
-		temp = mdm_config_get_xserver_details (*sec, "COMMAND");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		}
-		svr->command = temp;
-
-		temp = mdm_config_get_xserver_details (*sec, "FLEXIBLE");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		} else if (g_strncasecmp (ve_sure_string (temp), "true", 4) == 0)
-			svr->flexible = TRUE;
-		else
-			svr->flexible = FALSE;
-		g_free (temp);
-
-		temp = mdm_config_get_xserver_details (*sec, "CHOOSABLE");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		} else if (g_strncasecmp (temp, "true", 4) == 0)
-			svr->choosable = TRUE;
-		else
-			svr->choosable = FALSE;
-		g_free (temp);
-
-		temp = mdm_config_get_xserver_details (*sec, "HANDLED");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		} else if (g_strncasecmp (temp, "true", 4) == 0)
-			svr->handled = TRUE;
-		else
-			svr->handled = FALSE;
-		g_free (temp);
-
-		temp = mdm_config_get_xserver_details (*sec, "PRIORITY");
-		if (temp == NULL) {
-			g_free (svr);
-			continue;
-		} else {
-			svr->priority = atoi (temp);
-		}
-		g_free (temp);
-
-		sec++;
-
-		/* If only flexible was requested, then skip if not flexible */
-		if (flexible && !svr->flexible) {
-			g_free (svr);
-			continue;
-		}
-
-		xservers = g_slist_append (xservers, svr);
-	}
-
-	g_strfreev (splitstr);
-	return xservers;
 }
 
 /**

@@ -177,7 +177,6 @@ struct _MdmDisplay
 
 	/* STATIC TYPE */
 
-	gboolean removeconf; /* used to mark "dynamic" static displays for removal */
 	gboolean busy_display; /* only needed on static displays since flexi try another */
 	time_t last_x_failed;
 	int x_faileds;
