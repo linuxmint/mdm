@@ -328,8 +328,7 @@ mdm_connection_open_unix (const char *sockname, mode_t mode)
 
 	fd = socket (AF_UNIX, SOCK_STREAM, 0);
 	if G_UNLIKELY (fd < 0) {
-		mdm_error (_("%s: Could not make socket"),
-			   "mdm_connection_open_unix");
+		mdm_error ("mdm_connection_open_unix: Could not make socket");
 		return NULL;
 	}
 
@@ -359,8 +358,7 @@ try_again:
 	addr.sun_family = AF_UNIX;
 	if G_UNLIKELY (bind (fd,
 			     (struct sockaddr *) &addr, sizeof (addr)) < 0) {
-		mdm_error (_("%s: Could not bind socket"),
-			   "mdm_connection_open_unix");
+		mdm_error ("mdm_connection_open_unix: Could not bind socket");
 		try_again_attempts --;
 		/* someone is being evil on us */
 		if (errno == EADDRINUSE && try_again_attempts >= 0)
@@ -445,16 +443,14 @@ mdm_connection_open_fifo (const char *fifo, mode_t mode)
 	VE_IGNORE_EINTR (g_unlink (fifo));
 
 	if G_UNLIKELY (mkfifo (fifo, 0660) < 0) {
-		mdm_error (_("%s: Could not make FIFO"),
-			   "mdm_connection_open_fifo");
+		mdm_error ("mdm_connection_open_fifo: Could not make FIFO");
 		return NULL;
 	}
 
 	fd = open (fifo, O_RDWR); /* Open with write to avoid EOF */
 
 	if G_UNLIKELY (fd < 0) {
-		mdm_error (_("%s: Could not open FIFO"),
-			   "mdm_connection_open_fifo");
+		mdm_error ("mdm_connection_open_fifo: Could not open FIFO");
 		return NULL;
 	}
 

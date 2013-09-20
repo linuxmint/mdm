@@ -770,7 +770,7 @@ create_pamh (MdmDisplay *d,
 #endif
 
 	if (display == NULL) {
-		mdm_error (_("Cannot setup pam handle with null display"));
+		mdm_error ("Cannot setup pam handle with null display");
 		return FALSE;
 	}
 
@@ -787,8 +787,7 @@ create_pamh (MdmDisplay *d,
 	if ((*pamerr = pam_start (service, login, conv, &pamh)) != PAM_SUCCESS) {
 		pamh = NULL; /* be anal */
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Unable to establish service %s: %s\n"),
-				   service, pam_strerror (NULL, *pamerr));
+			mdm_error ("Unable to establish service %s: %s\n", service, pam_strerror (NULL, *pamerr));
 		return FALSE;
 	}
 
@@ -803,7 +802,7 @@ create_pamh (MdmDisplay *d,
 #endif	/* sun */
 		if ((*pamerr = pam_set_item (pamh, PAM_TTY, display)) != PAM_SUCCESS) {
 			if (mdm_slave_action_pending ())
-				mdm_error (_("Can't set PAM_TTY=%s"), display);
+				mdm_error ("Can't set PAM_TTY=%s", display);
 			return FALSE;
 		}
 #ifdef __sun
@@ -816,8 +815,7 @@ create_pamh (MdmDisplay *d,
 		if ((*pamerr = pam_set_item (pamh, PAM_RHOST,
 					     d->hostname)) != PAM_SUCCESS) {
 			if (mdm_slave_action_pending ())
-				mdm_error (_("Can't set PAM_RHOST=%s"),
-					   d->hostname);
+				mdm_error ("Can't set PAM_RHOST=%s", d->hostname);
 			return FALSE;
 		}
 	}
@@ -1032,7 +1030,7 @@ mdm_verify_user (MdmDisplay *d,
 			/* wait up to 100ms randomly */
 			usleep (g_random_int_range (0, 100000));
 			/* #endif */ /* PAM_FAIL_DELAY */
-			mdm_error (_("Couldn't authenticate user"));
+			mdm_error ("Couldn't authenticate user");
 
 			if (prev_user) {
 
@@ -1077,7 +1075,7 @@ mdm_verify_user (MdmDisplay *d,
 		   pretty much look as such, it shouldn't really
 		   happen */
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't authenticate user"));
+			mdm_error ("Couldn't authenticate user");
 		goto pamerr;
 	}
 
@@ -1104,8 +1102,7 @@ mdm_verify_user (MdmDisplay *d,
 	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_ROOT) ||
             ( ! d->attached )) &&
             (pwent != NULL && pwent->pw_uid == 0)) {
-		mdm_error (_("Root login disallowed on display '%s'"),
-			   d->name);
+		mdm_error ("Root login disallowed on display '%s'", d->name);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 					      _("\nThe system administrator "
 						"is not allowed to login "
@@ -1137,7 +1134,7 @@ mdm_verify_user (MdmDisplay *d,
 		break;
 	case PAM_NEW_AUTHTOK_REQD :
 		if ((pamerr = pam_chauthtok (pamh, PAM_CHANGE_EXPIRED_AUTHTOK)) != PAM_SUCCESS) {
-			mdm_error (_("Authentication token change failed for user %s"), login);
+			mdm_error ("Authentication token change failed for user %s", login);
 			mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 						      _("\nThe change of the authentication token failed. "
 							"Please try again later or contact the system administrator."));
@@ -1154,27 +1151,27 @@ mdm_verify_user (MdmDisplay *d,
 #endif	/* HAVE_ADT */
 		break;
 	case PAM_ACCT_EXPIRED :
-		mdm_error (_("User %s no longer permitted to access the system"), login);
+		mdm_error ("User %s no longer permitted to access the system", login);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 					      _("\nThe system administrator has disabled your account."));
 		error_msg_given = TRUE;
 		goto pamerr;
 	case PAM_PERM_DENIED :
-		mdm_error (_("User %s not permitted to gain access at this time"), login);
+		mdm_error ("User %s not permitted to gain access at this time", login);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 					      _("\nThe system administrator has disabled access to the system temporarily."));
 		error_msg_given = TRUE;
 		goto pamerr;
 	default :
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't set acct. mgmt for %s"), login);
+			mdm_error ("Couldn't set acct. mgmt for %s", login);
 		goto pamerr;
 	}
 
 	pwent = getpwnam (login);
 	if (/* paranoia */ pwent == NULL ||
 	    ! mdm_setup_gids (login, pwent->pw_gid)) {
-		mdm_error (_("Cannot set user group for %s"), login);
+		mdm_error ("Cannot set user group for %s", login);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 					      _("\nCannot set your user group; "
 						"you will not be able to log in. "
@@ -1200,7 +1197,7 @@ mdm_verify_user (MdmDisplay *d,
 	if (pamerr != PAM_SUCCESS) {
 		did_setcred = FALSE;
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't set credentials for %s"), login);
+			mdm_error ("Couldn't set credentials for %s", login);
 		goto pamerr;
 	}
 
@@ -1214,7 +1211,7 @@ mdm_verify_user (MdmDisplay *d,
 		/* we handle this above */
 		did_setcred = FALSE;
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't open session for %s"), login);
+			mdm_error ("Couldn't open session for %s", login);
 		goto pamerr;
 	}
 
@@ -1430,7 +1427,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 	did_we_ask_for_password = FALSE;
 	if ((pamerr = pam_authenticate (pamh, null_tok)) != PAM_SUCCESS) {
 		if (mdm_slave_action_pending ()) {
-			mdm_error (_("Couldn't authenticate user"));
+			mdm_error ("Couldn't authenticate user");
 			mdm_errorgui_error_box (cur_mdm_disp,
 						GTK_MESSAGE_ERROR,
 						_("Authentication failed"));
@@ -1442,7 +1439,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 		/* is not really an auth problem, but it will
 		   pretty much look as such, it shouldn't really
 		   happen */
-		mdm_error (_("Couldn't authenticate user"));
+		mdm_error ("Couldn't authenticate user");
 		mdm_errorgui_error_box (cur_mdm_disp,
 					GTK_MESSAGE_ERROR,
 					_("Authentication failed"));
@@ -1467,7 +1464,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 		 * this would be OK */
 #if	0	/* don't change password */
 		if ((pamerr = pam_chauthtok (pamh, PAM_CHANGE_EXPIRED_AUTHTOK)) != PAM_SUCCESS) {
-			mdm_error (_("Authentication token change failed for user %s"), login);
+			mdm_error ("Authentication token change failed for user %s", login);
 			mdm_errorgui_error_box (cur_mdm_disp,
 						GTK_MESSAGE_ERROR,
 						_("\nThe change of the authentication token failed. "
@@ -1483,27 +1480,27 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 #endif	/* 0 */
 		break;
 	case PAM_ACCT_EXPIRED :
-		mdm_error (_("User %s no longer permitted to access the system"), login);
+		mdm_error ("User %s no longer permitted to access the system", login);
 		mdm_errorgui_error_box (cur_mdm_disp,
 					GTK_MESSAGE_ERROR,
 					_("The system administrator has disabled your account."));
 		goto setup_pamerr;
 	case PAM_PERM_DENIED :
-		mdm_error (_("User %s not permitted to gain access at this time"), login);
+		mdm_error ("User %s not permitted to gain access at this time", login);
 		mdm_errorgui_error_box (cur_mdm_disp,
 					GTK_MESSAGE_ERROR,
 					_("The system administrator has disabled your access to the system temporarily."));
 		goto setup_pamerr;
 	default :
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't set acct. mgmt for %s"), login);
+			mdm_error ("Couldn't set acct. mgmt for %s", login);
 		goto setup_pamerr;
 	}
 
 	pwent = getpwnam (login);
 	if (/* paranoia */ pwent == NULL ||
 	    ! mdm_setup_gids (login, pwent->pw_gid)) {
-		mdm_error (_("Cannot set user group for %s"), login);
+		mdm_error ("Cannot set user group for %s", login);
 		mdm_errorgui_error_box (cur_mdm_disp,
 					GTK_MESSAGE_ERROR,
 					_("Cannot set your user group; "
@@ -1530,7 +1527,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 	if (pamerr != PAM_SUCCESS) {
 		did_setcred = FALSE;
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't set credentials for %s"), login);
+			mdm_error ("Couldn't set credentials for %s", login);
 		goto setup_pamerr;
 	}
 
@@ -1546,7 +1543,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 		pam_setcred (pamh, PAM_DELETE_CRED);
 
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't open session for %s"), login);
+			mdm_error ("Couldn't open session for %s", login);
 		goto setup_pamerr;
 	}
 

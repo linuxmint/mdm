@@ -154,7 +154,7 @@ mdm_exec_fbconsole (MdmDisplay *disp)
 		_exit (0);
         }
         if (d->fbconsolepid == -1) {
-                mdm_error (_("Can not start fallback console"));
+                mdm_error ("Can not start fallback console");
         }
 }
 #endif
@@ -302,9 +302,7 @@ display_busy (MdmDisplay *disp)
 		/* Note: this is probably XFree86 specific */
 		if (strstr (buf, "Server is already active for display")
 		    == buf) {
-			mdm_error (_("Display %s is busy. There is another "
-				     "X server running already."),
-				   disp->name);
+			mdm_error ("Display %s is busy. There is another X server running already.", disp->name);
 			VE_IGNORE_EINTR (fclose (fp));
 			return TRUE;
 		}
@@ -386,8 +384,7 @@ setup_server_wait (MdmDisplay *d)
     sigset_t mask;
 
     if (pipe (server_signal_pipe) != 0) {
-	    mdm_error (_("%s: Error opening a pipe: %s"),
-		       "setup_server_wait", strerror (errno));
+	    mdm_error ("setup_server_wait: Error opening a pipe: %s", strerror (errno));
 	    return FALSE; 
     }
     server_signal_notified = FALSE;
@@ -398,8 +395,7 @@ setup_server_wait (MdmDisplay *d)
     sigemptyset (&usr1.sa_mask);
 
     if (sigaction (SIGUSR1, &usr1, NULL) < 0) {
-	    mdm_error (_("%s: Error setting up %s signal handler: %s"),
-		       "mdm_server_start", "USR1", strerror (errno));
+	    mdm_error ("mdm_server_start: Error setting up %s signal handler: %s", "USR1", strerror (errno));
 	    VE_IGNORE_EINTR (close (server_signal_pipe[0]));
 	    VE_IGNORE_EINTR (close (server_signal_pipe[1]));
 	    return FALSE;
@@ -411,8 +407,7 @@ setup_server_wait (MdmDisplay *d)
     sigemptyset (&chld.sa_mask);
 
     if (sigaction (SIGCHLD, &chld, &old_svr_wait_chld) < 0) {
-	    mdm_error (_("%s: Error setting up %s signal handler: %s"),
-		       "mdm_server_start", "CHLD", strerror (errno));
+	    mdm_error ("mdm_server_start: Error setting up %s signal handler: %s", "CHLD", strerror (errno));
 	    mdm_signal_ignore (SIGUSR1);
 	    VE_IGNORE_EINTR (close (server_signal_pipe[0]));
 	    VE_IGNORE_EINTR (close (server_signal_pipe[1]));
@@ -672,9 +667,7 @@ mdm_server_start (MdmDisplay *disp,
 		     * display numbers */
 		    if (flexi_retries <= 0) {
 			    /* Send X too busy */
-			    mdm_error (_("%s: Cannot find a free "
-					 "display number"),
-				       "mdm_server_start");
+			    mdm_error ("mdm_server_start: Cannot find a free display number");
 			    if (SERVER_IS_FLEXI (disp)) {
 				    mdm_slave_send_num (MDM_SOP_FLEXI_ERR,
 							4 /* X too busy */);
@@ -688,9 +681,7 @@ mdm_server_start (MdmDisplay *disp,
 					     flexi_retries - 1);
 	    } else {
 		    if (try_again_if_busy) {
-			    mdm_debug ("%s: Display %s busy.  Trying once again "
-				       "(after 2 sec delay)",
-				       "mdm_server_start", d->name);
+			    mdm_debug ("mdm_server_start: Display %s busy.  Trying once again (after 2 sec delay) mdm_server_start", d->name);
 			    mdm_sleep_no_signal (2);
 			    return mdm_server_start (d,
 						     FALSE /* try_again_if_busy */,
@@ -699,10 +690,7 @@ mdm_server_start (MdmDisplay *disp,
 						     flexi_retries);
 		    }
 		    if (busy_ask_user (disp)) {
-			    mdm_error (_("%s: Display %s busy.  Trying "
-					 "another display number."),
-				       "mdm_server_start",
-				       d->name);
+			    mdm_error ("mdm_server_start: Display %s busy.  Trying another display number.", d->name);
 			    d->busy_display = TRUE;
 			    return mdm_server_start (d,
 						     FALSE /*try_again_if_busy */,
@@ -861,7 +849,7 @@ mdm_server_resolve_command_line (MdmDisplay *disp,
 	if (bin == NULL) {
 		const char *str;
 
-		mdm_error (_("Invalid server command '%s'"), disp->command);
+		mdm_error ("Invalid server command '%s'", disp->command);
 		str = mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER);
        		g_shell_parse_argv (str, &argc, &argv, NULL);
 	} else if (bin[0] != '/') {
@@ -869,8 +857,7 @@ mdm_server_resolve_command_line (MdmDisplay *disp,
 		if (svr == NULL) {
 			const char *str;
 
-			mdm_error (_("Server name '%s' not found; "
-				     "using standard server"), bin);
+			mdm_error ("Server name '%s' not found; using standard server", bin);
 			str = mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER);
 			g_shell_parse_argv (str, &argc, &argv, NULL);
 
@@ -1082,8 +1069,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 		VE_IGNORE_EINTR (dup2 (logfd, 2));
 		close (logfd);
         } else {
-		mdm_error (_("%s: Could not open logfile for display %s!"),
-			   "mdm_server_spawn", d->name);
+		mdm_error ("mdm_server_spawn: Could not open logfile for display %s!", d->name);
 	}
 
 	g_free (logfile);
@@ -1096,19 +1082,16 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 	if (d->server_uid == 0) {
 		/* only set this if we can actually listen */
 		if (sigaction (SIGUSR1, &ign_signal, NULL) < 0) {
-			mdm_error (_("%s: Error setting %s to %s"),
-				   "mdm_server_spawn", "USR1", "SIG_IGN");
+			mdm_error ("mdm_server_spawn: Error setting %s to %s", "USR1", "SIG_IGN");
 			_exit (SERVER_ABORT);
 		}
 	}
 	if (sigaction (SIGTTIN, &ign_signal, NULL) < 0) {
-		mdm_error (_("%s: Error setting %s to %s"),
-			   "mdm_server_spawn", "TTIN", "SIG_IGN");
+		mdm_error ("mdm_server_spawn: Error setting %s to %s", "TTIN", "SIG_IGN");
 		_exit (SERVER_ABORT);
 	}
 	if (sigaction (SIGTTOU, &ign_signal, NULL) < 0) {
-		mdm_error (_("%s: Error setting %s to %s"),
-			   "mdm_server_spawn", "TTOU", "SIG_IGN");
+		mdm_error ("mdm_server_spawn: Error setting %s to %s", "TTOU", "SIG_IGN");
 		_exit (SERVER_ABORT);
 	}
 
@@ -1121,9 +1104,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 	sigprocmask (SIG_SETMASK, &mask, NULL);
 	
 	if (argv[0] == NULL) {
-		mdm_error (_("%s: Empty server command for display %s"),
-			   "mdm_server_spawn",
-			   d->name);
+		mdm_error ("mdm_server_spawn: Empty server command for display %s", d->name);
 		_exit (SERVER_ABORT);
 	}
 
@@ -1131,9 +1112,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 	
 	if (d->priority != MDM_PRIO_DEFAULT) {
 		if (setpriority (PRIO_PROCESS, 0, d->priority)) {
-			mdm_error (_("%s: Server priority couldn't be set to %d: %s"),
-				   "mdm_server_spawn", d->priority,
-				   strerror (errno));
+			mdm_error ("mdm_server_spawn: Server priority couldn't be set to %d: %s", d->priority, strerror (errno));
 		}
 	}
 
@@ -1143,10 +1122,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 		struct passwd *pwent;
 		pwent = getpwuid (d->server_uid);
 		if (pwent == NULL) {
-			mdm_error (_("%s: Server was to be spawned by uid %d but "
-				     "that user doesn't exist"),
-				   "mdm_server_spawn",
-				   (int)d->server_uid);
+			mdm_error ("mdm_server_spawn: Server was to be spawned by uid %d but that user doesn't exist", (int)d->server_uid);
 			_exit (SERVER_ABORT);
 		}
 	/*
@@ -1167,27 +1143,23 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 		g_unsetenv ("MAIL");
 
 		if (setgid (pwent->pw_gid) < 0)  {
-			mdm_error (_("%s: Couldn't set groupid to %d"), 
-				   "mdm_server_spawn", (int)pwent->pw_gid);
+			mdm_error ("mdm_server_spawn: Couldn't set groupid to %d", (int)pwent->pw_gid);
 			_exit (SERVER_ABORT);
 		}
 
 		if (initgroups (pwent->pw_name, pwent->pw_gid) < 0) {
-			mdm_error (_("%s: initgroups () failed for %s"),
-				   "mdm_server_spawn", pwent->pw_name);
+			mdm_error ("mdm_server_spawn: initgroups () failed for %s", pwent->pw_name);
 			_exit (SERVER_ABORT);
 		}
 
 		if (setuid (d->server_uid) < 0)  {
-			mdm_error (_("%s: Couldn't set userid to %d"),
-				   "mdm_server_spawn", (int)d->server_uid);
+			mdm_error ("mdm_server_spawn: Couldn't set userid to %d", (int)d->server_uid);
 			_exit (SERVER_ABORT);
 		}
 	} else {
 		gid_t groups[1] = { 0 };
 		if (setgid (0) < 0)  {
-			mdm_error (_("%s: Couldn't set groupid to 0"), 
-				   "mdm_server_spawn");
+			mdm_error ("mdm_server_spawn: Couldn't set groupid to 0");
 			/* Don't error out, it's not fatal, if it fails we'll
 			 * just still be */
 		}
@@ -1213,16 +1185,14 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 		      "MDM configuration and restart MDM.",
 		      command);
 
-	mdm_error (_("%s: Xserver not found: %s"), 
-		   "mdm_server_spawn", command);
+	mdm_error ("mdm_server_spawn: Xserver not found: %s", command);
 	
 	_exit (SERVER_ABORT);
 	
     case -1:
 	g_strfreev (argv);
 	g_free (command);
-	mdm_error (_("%s: Can't fork Xserver process!"),
-		   "mdm_server_spawn");
+	mdm_error ("mdm_server_spawn: Can't fork Xserver process!");
 	d->servpid = 0;
 	d->servstat = SERVER_DEAD;
 
@@ -1231,8 +1201,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
     default:
 	g_strfreev (argv);
 	g_free (command);
-	mdm_debug ("%s: Forked server on pid %d", 
-		   "mdm_server_spawn", (int)pid);
+	mdm_debug ("mdm_server_spawn: Forked server on pid %d", (int)pid);
 	break;
     }
 }

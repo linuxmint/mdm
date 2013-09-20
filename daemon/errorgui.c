@@ -497,8 +497,7 @@ mdm_errorgui_error_box_full (MdmDisplay *d,
 			}
 		}
 	} else {
-		mdm_error (_("%s: Cannot fork to display error/info box"),
-			   "mdm_errorgui_error_box");
+		mdm_error ("mdm_errorgui_error_box: Cannot fork to display error/info box");
 	}
 }
 
@@ -647,8 +646,7 @@ mdm_errorgui_failsafe_question (MdmDisplay *d,
 		} 
 		VE_IGNORE_EINTR (close (p[0]));
 	} else {
-		mdm_error (_("%s: Cannot fork to display error/info box"),
-			   "mdm_errorgui_failsafe_question");
+		mdm_error ("mdm_errorgui_failsafe_question: Cannot fork to display error/info box");
 	}
 	return NULL;
 }
@@ -760,8 +758,7 @@ mdm_errorgui_failsafe_yesno (MdmDisplay *d,
 		} 
 		VE_IGNORE_EINTR (close (p[0]));
 	} else {
-		mdm_error (_("%s: Cannot fork to display error/info box"),
-			   "mdm_errorgui_failsafe_yesno");
+		mdm_error ("mdm_errorgui_failsafe_yesno: Cannot fork to display error/info box");
 	}
 	return FALSE;
 }
@@ -883,8 +880,7 @@ mdm_errorgui_failsafe_ask_buttons (MdmDisplay *d,
 		} 
 		VE_IGNORE_EINTR (close (p[0]));
 	} else {
-		mdm_error (_("%s: Cannot fork to display error/info box"),
-			   "mdm_errorgui_failsafe_ask_buttons");
+		mdm_error ("mdm_errorgui_failsafe_ask_buttons: Cannot fork to display error/info box");
 	}
 	return -1;
 }

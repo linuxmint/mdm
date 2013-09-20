@@ -1109,14 +1109,12 @@ mdm_daemon_config_load_xserver (MdmConfig  *config,
 		n = MDM_PRIO_MAX;
 
 	if (n != svr->priority) {
-		mdm_error (_("%s: Priority out of bounds; changed to %d"),
-			   "mdm_config_parse", n);
+		mdm_error ("mdm_config_parse: Priority out of bounds; changed to %d", n);
 		svr->priority = n;
 	}
 
 	if (ve_string_empty (svr->command)) {
-		mdm_error (_("%s: Empty server command; "
-			     "using standard command."), "mdm_config_parse");
+		mdm_error ("mdm_config_parse: Empty server command; using standard command.");
 		g_free (svr->command);
 		svr->command = g_strdup (X_SERVER);
 	}
@@ -1237,10 +1235,7 @@ check_logdir (void)
 
         VE_IGNORE_EINTR (r = g_stat (log_path, &statbuf));
         if (r < 0 || ! S_ISDIR (statbuf.st_mode))  {
-                mdm_error (_("%s: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s."),
-			   "mdm_config_parse",
-                           log_path,
-			   auth_path);
+                mdm_error ("mdm_config_parse: Logdir %s does not exist or isn't a directory.  Using ServAuthDir %s.", log_path, auth_path);
 		mdm_config_set_value_for_id (daemon_config, MDM_ID_LOG_DIR, value);
         }
 
@@ -1273,7 +1268,7 @@ check_servauthdir (const char  *auth_path,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: Authdir %s does not exist. Aborting."), "mdm_config_parse", auth_path);
+		mdm_fail ("mdm_config_parse: Authdir %s does not exist. Aborting.", auth_path);
 	}
 
 	if G_UNLIKELY (! S_ISDIR (statbuf->st_mode)) {
@@ -1289,7 +1284,7 @@ check_servauthdir (const char  *auth_path,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: Authdir %s is not a directory. Aborting."), "mdm_config_parse", auth_path);
+		mdm_fail ("mdm_config_parse: Authdir %s is not a directory. Aborting.", auth_path);
 	}
 }
 
@@ -1450,7 +1445,7 @@ validate_base_xsession (MdmConfig          *config,
 	if (str == NULL || str[0] == '\0') {
 		char *path;
 		path = g_build_filename (MDMCONFDIR, "mdm", "Xsession", NULL);
-		mdm_info (_("%s: BaseXsession empty; using %s"), "mdm_config_parse", path);
+		mdm_info ("mdm_config_parse: BaseXsession empty; using %s", path);
 		mdm_config_value_set_string (value, path);
 		g_free (path);
 	}
@@ -1494,7 +1489,7 @@ validate_standard_xserver (MdmConfig          *config,
 	}
 
 	if G_UNLIKELY (! is_ok) {
-		mdm_info (_("%s: Standard X server not found; trying alternatives"), "mdm_config_parse");
+		mdm_info ("mdm_config_parse: Standard X server not found; trying alternatives");
 		if (g_access ("/usr/X11R6/bin/X", X_OK) == 0) {
 			new = g_strdup ("/usr/X11R6/bin/X");
 		} else if (g_access ("/opt/X11R6/bin/X", X_OK) == 0) {
@@ -1556,7 +1551,7 @@ validate_greeter (MdmConfig          *config,
 	str = mdm_config_value_get_string (value);
 
 	if (str == NULL || str[0] == '\0') {
-		mdm_error (_("%s: No greeter specified."), "mdm_config_parse");
+		mdm_error ("mdm_config_parse: No greeter specified.");
 	}
 
 	return TRUE;
@@ -1575,7 +1570,7 @@ validate_session_desktop_dir (MdmConfig          *config,
 	str = mdm_config_value_get_string (value);
 
 	if (str == NULL || str[0] == '\0') {
-		mdm_error (_("%s: No sessions directory specified."), "mdm_config_parse");
+		mdm_error ("mdm_config_parse: No sessions directory specified.");
 	}
 
 #ifdef HAVE_TSOL
@@ -1805,7 +1800,7 @@ handle_no_displays (MdmConfig *config,
 	 * then don't display errors in console messages
 	 */
 	if (no_console) {
-		mdm_fail (_("%s: No static servers defined. Aborting!"), "mdm_config_parse");
+		mdm_fail ("mdm_config_parse: No static servers defined. Aborting!");
 	}
 
 	server = X_SERVER;
@@ -1824,8 +1819,7 @@ handle_no_displays (MdmConfig *config,
 
 		int num = mdm_get_free_display (0 /* start */, 0 /* server uid */);
 
-		mdm_error (_("%s: No static servers defined. Adding %s on :%d to allow configuration!"),
-			   "mdm_config_parse", server, num);
+		mdm_error ("mdm_config_parse: No static servers defined. Adding %s on :%d to allow configuration!", server, num);
 
 		d = mdm_display_alloc (num, server, NULL);
 		d->is_emergency_server = TRUE;
@@ -1848,7 +1842,7 @@ handle_no_displays (MdmConfig *config,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: No static servers defined. Aborting!"), "mdm_config_parse");
+		mdm_fail ("mdm_config_parse: No static servers defined. Aborting!");
 	}
 }
 
@@ -1890,7 +1884,7 @@ mdm_daemon_change_user (MdmConfig *config,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: Can't find the MDM user '%s'. Aborting!"), "mdm_config_parse", username);
+		mdm_fail ("mdm_config_parse: Can't find the MDM user '%s'. Aborting!", username);
 	} else {
 		uid = pwent->pw_uid;
 	}
@@ -1907,7 +1901,7 @@ mdm_daemon_change_user (MdmConfig *config,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: The MDM user should not be root. Aborting!"), "mdm_config_parse");
+		mdm_fail ("mdm_config_parse: The MDM user should not be root. Aborting!");
 	}
 
 	grent = getgrnam (groupname);
@@ -1922,7 +1916,7 @@ mdm_daemon_change_user (MdmConfig *config,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: Can't find the MDM group '%s'. Aborting!"), "mdm_config_parse", groupname);
+		mdm_fail ("mdm_config_parse: Can't find the MDM group '%s'. Aborting!", groupname);
 	} else  {
 		gid = grent->gr_gid;
 	}
@@ -1938,7 +1932,7 @@ mdm_daemon_change_user (MdmConfig *config,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: The MDM group should not be root. Aborting!"), "mdm_config_parse");
+		mdm_fail ("mdm_config_parse: The MDM group should not be root. Aborting!");
 	}
 
 	/* gid remains `mdm' */
@@ -1999,11 +1993,7 @@ mdm_daemon_check_permissions (MdmConfig *config,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: Authdir %s is not owned by user %d, group %d. Aborting."),
-			  "mdm_config_parse",
-			  auth_path,
-			  (int)uid,
-			  (int)gid);
+		mdm_fail ("mdm_config_parse: Authdir %s is not owned by user %d, group %d. Aborting.", auth_path, (int)uid, (int)gid);
 	}
 
 	if G_UNLIKELY (statbuf.st_mode != (S_IFDIR|S_IRWXU|S_IRWXG|S_ISVTX))  {
@@ -2021,11 +2011,7 @@ mdm_daemon_check_permissions (MdmConfig *config,
 			g_free (s);
 		}
 
-		mdm_fail (_("%s: Authdir %s has wrong permissions %o. Should be %o. Aborting."),
-			  "mdm_config_parse",
-			  auth_path,
-			  statbuf.st_mode,
-			  (S_IRWXU|S_IRWXG|S_ISVTX));
+		mdm_fail ("mdm_config_parse: Authdir %s has wrong permissions %o. Should be %o. Aborting.", auth_path, statbuf.st_mode, (S_IRWXU|S_IRWXG|S_ISVTX));
 	}
 
 	g_free (auth_path);

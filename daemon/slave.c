@@ -325,7 +325,7 @@ run_session_output (gboolean read_until_eof)
 	   stuff */
 	if G_LIKELY (logged_in_gid >= 0) {
 		if G_UNLIKELY (setegid (logged_in_gid) != 0) {
-			mdm_error (_("Can't set EGID to user GID"));
+			mdm_error ("Can't set EGID to user GID");
 			NEVER_FAILS_root_set_euid_egid (old, oldg);
 			return;
 		}
@@ -333,7 +333,7 @@ run_session_output (gboolean read_until_eof)
 
 	if G_LIKELY (logged_in_uid >= 0) {
 		if G_UNLIKELY (seteuid (logged_in_uid) != 0) {
-			mdm_error (_("Can't set EUID to user UID"));
+			mdm_error ("Can't set EUID to user UID");
 			NEVER_FAILS_root_set_euid_egid (old, oldg);
 			return;
 		}
@@ -1616,7 +1616,7 @@ focus_first_x_window (const char *class_res_name)
 			VE_IGNORE_EINTR (close (p[0]));
 		if (p[1] != -1)
 			VE_IGNORE_EINTR (close (p[1]));
-		mdm_error (_("%s: cannot fork"), "focus_first_x_window");
+		mdm_error ("focus_first_x_window: cannot fork");
 		return;
 	}
 	/* parent */
@@ -1679,9 +1679,7 @@ focus_first_x_window (const char *class_res_name)
 	disp = XOpenDisplay (d->name);
 	mdm_sigchld_block_pop ();
 	if G_UNLIKELY (disp == NULL) {
-		mdm_error (_("%s: cannot open display %s"),
-			   "focus_first_x_window",
-			   d->name);
+		mdm_error ("focus_first_x_window: cannot open display %s", d->name);
 		_exit (0);
 	}
 
@@ -2170,8 +2168,7 @@ mdm_slave_wait_for_login (void)
 			if (d->attached && failuresound &&
 			    mdm_daemon_config_get_value_bool (MDM_KEY_SOUND_ON_LOGIN_FAILURE) &&
 			    ! play_login_sound (failuresound)) {
-				mdm_error (_("Login sound requested on non-local display or the play "
-					     "software cannot be run or the sound does not exist."));
+				mdm_error ("Login sound requested on non-local display or the play software cannot be run or the sound does not exist.");
 			}
 		}
 	}
@@ -2193,8 +2190,7 @@ mdm_slave_wait_for_login (void)
 	    mdm_daemon_config_get_value_bool (MDM_KEY_SOUND_ON_LOGIN_SUCCESS) &&
 	    d->attached &&
 	    ! play_login_sound (successsound)) {
-		mdm_error (_("Login sound requested on non-local display or the play software "
-			     "cannot be run or the sound does not exist."));
+		mdm_error ("Login sound requested on non-local display or the play software cannot be run or the sound does not exist.");
 	}
 
 	mdm_debug ("mdm_slave_wait_for_login: got_login for '%s'",
@@ -2749,16 +2745,12 @@ mdm_slave_greeter (void)
 			gchar *modules = g_strdup_printf ("--gtk-module=%s", moduleslist);
 			exec_command (command, modules);
 			/* Something went wrong */
-			mdm_error (_("%s: Cannot start greeter with gtk modules: %s. Trying without modules"),
-				   "mdm_slave_greeter",
-				   moduleslist);
+			mdm_error ("mdm_slave_greeter: Cannot start greeter with gtk modules: %s. Trying without modules", moduleslist);
 			g_free (modules);
 		}
 		exec_command (command, NULL);
 
-		mdm_error (_("%s: Cannot start greeter trying default: %s"),
-			   "mdm_slave_greeter",
-			   LIBEXECDIR "/mdmlogin");
+		mdm_error ("mdm_slave_greeter: Cannot start greeter trying default: %s", LIBEXECDIR "/mdmlogin");
 
 		g_setenv ("MDM_WHACKED_GREETER_CONFIG", "true", TRUE);
 
@@ -2776,7 +2768,7 @@ mdm_slave_greeter (void)
 
 		/* If no greeter we really have to disable the display */
 		mdm_child_exit (DISPLAY_ABORT,
-				_("%s: Error starting greeter on display %s"),
+				_("mdm_slave_greeter: Error starting greeter on display %s"),
 				"mdm_slave_greeter",
 				d->name ? d->name : "(null)");
 
@@ -3134,8 +3126,7 @@ open_xsession_errors (struct passwd *pwent,
 		NEVER_FAILS_root_set_euid_egid (old, oldg);
 
 		if G_UNLIKELY (logfd < 0) {
-			mdm_error (_("%s: Could not open ~/.xsession-errors"),
-				   "run_session_child");
+			mdm_error ("run_session_child: Could not open ~/.xsession-errors");
 			g_free (filename);
 		} else {
 			d->xsession_errors_filename = filename;
@@ -3249,8 +3240,7 @@ session_child_run (struct passwd *pwent,
 	mdm_unset_signals ();
 	if G_UNLIKELY (setsid () < 0)
 		/* should never happen */
-		mdm_error (_("%s: setsid () failed: %s!"),
-			   "session_child_run", strerror (errno));
+		mdm_error ("session_child_run: setsid () failed: %s!", strerror (errno));
 
 	g_setenv ("XAUTHORITY", MDM_AUTHFILE (d), TRUE);
 
@@ -3502,7 +3492,7 @@ session_child_run (struct passwd *pwent,
 						      _("No Exec line in the session file: %s.  Running the GNOME failsafe session instead"),
 						      session);
 
-			mdm_error (_("%s: %s"), "session_child_run", msg);
+			mdm_error ("session_child_run: %s", msg);
 			mdm_errorgui_error_box (d, GTK_MESSAGE_ERROR, msg);
 			g_free (msg);
 
@@ -3525,8 +3515,7 @@ session_child_run (struct passwd *pwent,
 
 		/* cannot be possibly failsafe */
 		if G_UNLIKELY (bxvec == NULL || g_access (bxvec[0], X_OK) != 0) {
-			mdm_error (_("%s: Cannot find or run the base Xsession script.  Running the GNOME failsafe session instead."),
-				   "session_child_run");
+			mdm_error ("session_child_run: Cannot find or run the base Xsession script.  Running the GNOME failsafe session instead.");
 			session = MDM_SESSION_FAILSAFE_GNOME;
 			sessionexec = NULL;
 			mdm_errorgui_error_box
@@ -3575,8 +3564,7 @@ session_child_run (struct passwd *pwent,
 		test_exec = find_prog ("cinnamon-session");
 		if G_UNLIKELY (test_exec == NULL) {
 			/* yaikes */
-			mdm_error (_("%s: cinnamon-session not found for a failsafe GNOME session, trying xterm"),
-				   "session_child_run");
+			mdm_error ("session_child_run: cinnamon-session not found for a failsafe GNOME session, trying xterm");
 			session = MDM_SESSION_FAILSAFE_XTERM;
 			mdm_errorgui_error_box
 				(d, GTK_MESSAGE_ERROR,
@@ -3677,8 +3665,7 @@ session_child_run (struct passwd *pwent,
 	if (strcmp (shell, NOLOGIN) == 0 ||
 	    strcmp (shell, "/bin/false") == 0 ||
 	    strcmp (shell, "/bin/true") == 0) {
-		mdm_error (_("%s: User not allowed to log in"),
-			   "session_child_run");
+		mdm_error ("session_child_run: User not allowed to log in");
 		mdm_errorgui_error_box (d, GTK_MESSAGE_ERROR,
 			       _("The system administrator has "
 				 "disabled your account."));
@@ -3721,10 +3708,8 @@ session_child_run (struct passwd *pwent,
 	g_strfreev (argv);
 
 	/* will go to .xsession-errors */
-	fprintf (stderr, _("%s: Could not exec %s"),
-		 "session_child_run", fullexec->str);
-	mdm_error ( _("%s: Could not exec %s"),
-		    "session_child_run", fullexec->str);
+	fprintf (stderr, "session_child_run: Could not exec %s", fullexec->str);
+	mdm_error ("session_child_run: Could not exec %s", fullexec->str);
 	g_string_free (fullexec, TRUE);
 
 	/* if we can't read and exec the session, then make a nice
@@ -4143,7 +4128,7 @@ mdm_slave_session_start (void)
 		       /* ignore errors in failsafe modes */
 		       ! failsafe) {
 		mdm_verify_cleanup (d);
-		mdm_error (_("%s: Execution of PostLogin script returned > 0. Aborting."), "mdm_slave_session_start");
+		mdm_error ("mdm_slave_session_start: Execution of PostLogin script returned > 0. Aborting.");
 		/* script failed so just try again */
 		return;
 	}
@@ -4176,10 +4161,7 @@ mdm_slave_session_start (void)
 		seteuid (0);
 		setegid (mdm_daemon_config_get_mdmgid ());
 
-		mdm_error (_("%s: Home directory for %s: '%s' does not exist!"),
-			   "mdm_slave_session_start",
-			   login_user,
-			   ve_sure_string (pwent->pw_dir));
+		mdm_error ("mdm_slave_session_start: Home directory for %s: '%s' does not exist!", login_user, ve_sure_string (pwent->pw_dir));
 
 		/* Check what the user wants to do */
 		yesno_msg = g_strdup_printf ("yesno_msg=%s", msg);
@@ -4735,8 +4717,7 @@ mdm_slave_session_stop (gboolean run_post_session,
 			/* this is a stupid loop, but we may be getting signals,
 			   so we don't want to just do sleep (30) */
 			time_t c = time (NULL);
-			mdm_info (_("MDM detected a halt or restart "
-				    "in progress."));
+			mdm_info ("MDM detected a halt or restart in progress.");
 			while (c + 30 >= time (NULL)) {
 				struct timeval tv;
 				/* Wait 30 seconds. */
@@ -5137,8 +5118,7 @@ check_for_interruption (const char *msg)
 		case MDM_INTERRUPT_LOGIN_SOUND:
 			if (d->attached &&
 			    ! play_login_sound (mdm_daemon_config_get_value_string (MDM_KEY_SOUND_ON_LOGIN_FILE))) {
-				mdm_error (_("Login sound requested on non-local display or the play software "
-					     "cannot be run or the sound does not exist"));
+				mdm_error ("Login sound requested on non-local display or the play software cannot be run or the sound does not exist");
 			}
 			return TRUE;
 		case MDM_INTERRUPT_SELECT_USER:
@@ -5553,8 +5533,7 @@ mdm_slave_parse_enriched_login (MdmDisplay *d, const gchar *s)
 	if (str->len > 0 && str->str[str->len - 1] == '|') {
 		g_string_truncate (str, str->len - 1);
 		if G_UNLIKELY (pipe (pipe1) < 0) {
-			mdm_error (_("%s: Failed creating pipe"),
-				   "mdm_slave_parse_enriched_login");
+			mdm_error ("mdm_slave_parse_enriched_login: Failed creating pipe");
 		} else {
 			mdm_debug ("Forking extra process: %s", str->str);
 
@@ -5595,14 +5574,11 @@ mdm_slave_parse_enriched_login (MdmDisplay *d, const gchar *s)
 
 				VE_IGNORE_EINTR (execv (argv[0], argv));
 				g_strfreev (argv);
-				mdm_error (_("%s: Failed executing: %s"),
-					   "mdm_slave_parse_enriched_login",
-					   str->str);
+				mdm_error ("mdm_slave_parse_enriched_login: Failed executing: %s", str->str);
 				_exit (EXIT_SUCCESS);
 
 			case -1:
-				mdm_error (_("%s: Can't fork script process!"),
-					   "mdm_slave_parse_enriched_login");
+				mdm_error ("mdm_slave_parse_enriched_login: Can't fork script process!");
 				VE_IGNORE_EINTR (close (pipe1[0]));
 				VE_IGNORE_EINTR (close (pipe1[1]));
 				break;

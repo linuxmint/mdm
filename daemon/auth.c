@@ -61,12 +61,9 @@ static void
 display_add_error (MdmDisplay *d)
 {
 	if (errno != 0)
-		mdm_error (_("%s: Could not write new authorization entry: %s"),
-			   "add_auth_entry", strerror (errno));
+		mdm_error ("add_auth_entry: Could not write new authorization entry: %s", strerror (errno));
 	else
-		mdm_error (_("%s: Could not write new authorization entry.  "
-			     "Possibly out of diskspace"),
-			   "add_auth_entry");
+		mdm_error ("add_auth_entry: Could not write new authorization entry. Possibly out of diskspace");
 	if (d->attached) {
 		char *s = g_strdup_printf
 			(C_(N_("MDM could not write a new authorization "
@@ -202,8 +199,7 @@ mdm_auth_secure_display (MdmDisplay *d)
 		umask (022);
 
 		if G_UNLIKELY (authfd == -1) {
-			mdm_error (_("%s: Could not make new cookie file in %s"),
-				   "mdm_auth_secure_display", mdm_daemon_config_get_value_string (MDM_KEY_USER_AUTHDIR_FALLBACK));
+			mdm_error ("mdm_auth_secure_display: Could not make new cookie file in %s", mdm_daemon_config_get_value_string (MDM_KEY_USER_AUTHDIR_FALLBACK));
 			g_free (d->authfile);
 			d->authfile = NULL;
 			return FALSE;
@@ -226,9 +222,7 @@ mdm_auth_secure_display (MdmDisplay *d)
 		af_mdm = mdm_safe_fopen_w (d->authfile_mdm, 0644);
 
 		if G_UNLIKELY (af_mdm == NULL) {
-			mdm_error (_("%s: Cannot safely open %s"),
-				   "mdm_auth_secure_display",
-				   d->authfile_mdm);
+			mdm_error ("mdm_auth_secure_display: Cannot safely open %s", d->authfile_mdm);
 
 			g_free (d->authfile_mdm);
 			d->authfile_mdm = NULL;
@@ -243,9 +237,7 @@ mdm_auth_secure_display (MdmDisplay *d)
 		af = mdm_safe_fopen_w (d->authfile, 0644);
 
 		if G_UNLIKELY (af == NULL) {
-			mdm_error (_("%s: Cannot safely open %s"),
-				   "mdm_auth_secure_display",
-				   d->authfile);
+			mdm_error ("mdm_auth_secure_display: Cannot safely open %s", d->authfile);
 
 			g_free (d->authfile);
 			d->authfile = NULL;
@@ -649,9 +641,7 @@ mdm_auth_user_add (MdmDisplay *d, uid_t user, const char *homedir)
 		}
 
 		if G_UNLIKELY (authfd < 0) {
-			mdm_error (_("%s: Could not open cookie file %s"),
-				   "mdm_auth_user_add",
-				   d->userauth);
+			mdm_error ("mdm_auth_user_add: Could not open cookie file %s", d->userauth);
 			g_free (d->userauth);
 			d->userauth = NULL;
 
@@ -669,9 +659,7 @@ mdm_auth_user_add (MdmDisplay *d, uid_t user, const char *homedir)
 
 		/* FIXME: Better implement my own locking. The libXau one is not kosher */
 		if G_UNLIKELY (XauLockAuth (d->userauth, 3, 3, 0) != LOCK_SUCCESS) {
-			mdm_error (_("%s: Could not lock cookie file %s"),
-				   "mdm_auth_user_add",
-				   d->userauth);
+			mdm_error ("mdm_auth_user_add: Could not lock cookie file %s", d->userauth);
 			g_free (d->userauth);
 			d->userauth = NULL;
 
@@ -690,9 +678,7 @@ mdm_auth_user_add (MdmDisplay *d, uid_t user, const char *homedir)
 
 	if G_UNLIKELY (af == NULL) {
 		/* Really no need to clean up here - this process is a goner anyway */
-		mdm_error (_("%s: Could not open cookie file %s"),
-			   "mdm_auth_user_add",
-			   d->userauth);
+		mdm_error ("mdm_auth_user_add: Could not open cookie file %s", d->userauth);
 		if (locked)
 			XauUnlockAuth (d->userauth);
 		g_free (d->userauth);
@@ -718,8 +704,7 @@ mdm_auth_user_add (MdmDisplay *d, uid_t user, const char *homedir)
 
 	while (auths) {
 		if G_UNLIKELY ( ! XauWriteAuth (af, auths->data)) {
-			mdm_error (_("%s: Could not write cookie"),
-				   "mdm_auth_user_add");
+			mdm_error ("mdm_auth_user_add: Could not write cookie");
 
 			if ( ! d->authfb) {
 				VE_IGNORE_EINTR (fclose (af));
@@ -740,8 +725,7 @@ mdm_auth_user_add (MdmDisplay *d, uid_t user, const char *homedir)
 
 	VE_IGNORE_EINTR (closeret = fclose (af));
 	if G_UNLIKELY (closeret < 0) {
-		mdm_error (_("%s: Could not write cookie"),
-			   "mdm_auth_user_add");
+		mdm_error ("mdm_auth_user_add: Could not write cookie");
 
 		if ( ! d->authfb) {
 			if (locked)
@@ -823,9 +807,7 @@ mdm_auth_user_remove (MdmDisplay *d, uid_t user)
 			! mdm_auth_file_check ("mdm_auth_user_remove", user, d->userauth, FALSE /* absentok */, NULL)) {
 		g_free (authdir);
 		g_free (authfile);
-		mdm_error (_("%s: Ignoring suspiciously looking cookie file %s"),
-			   "mdm_auth_user_remove",
-			   d->userauth);
+		mdm_error ("mdm_auth_user_remove: Ignoring suspiciously looking cookie file %s", d->userauth);
 
 		return; 
 	}
@@ -845,9 +827,7 @@ mdm_auth_user_remove (MdmDisplay *d, uid_t user)
 	if G_UNLIKELY (af == NULL) {
 		XauUnlockAuth (d->userauth);
 
-		mdm_error (_("%s: Cannot safely open %s"),
-			   "mdm_auth_user_remove",
-			   d->userauth);
+		mdm_error ("mdm_auth_user_remove: Cannot safely open %s", d->userauth);
 
 		g_free (d->userauth);
 		d->userauth = NULL;
@@ -864,8 +844,7 @@ mdm_auth_user_remove (MdmDisplay *d, uid_t user)
 		errno = 0;
 		VE_IGNORE_EINTR (fclose (af));
 		if G_UNLIKELY (errno != 0) {
-			mdm_error (_("Can't write to %s: %s"), d->userauth,
-				   strerror (errno));
+			mdm_error ("Can't write to %s: %s", d->userauth, strerror (errno));
 		}
 	}
 

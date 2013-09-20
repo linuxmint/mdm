@@ -147,16 +147,14 @@ mdm_daemonify (void)
 				/* FIXME: how to handle this? */
 				mdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
 					      pidfile, strerror (errno));
-				mdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
-					   pidfile, strerror (errno));
+				mdm_error ("Cannot write PID file %s: possibly out of diskspace.  Error: %s", pidfile, strerror (errno));
 
 			}
 		} else if G_UNLIKELY (errno != 0) {
 			/* FIXME: how to handle this? */
 			mdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
 				      pidfile, strerror (errno));
-			mdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
-				   pidfile, strerror (errno));
+			mdm_error ("Cannot write PID file %s: possibly out of diskspace.  Error: %s", pidfile, strerror (errno));
 
 		}
 
@@ -166,11 +164,10 @@ mdm_daemonify (void)
 	mdm_main_pid = getpid ();
 
 	if G_UNLIKELY (pid < 0)
-		mdm_fail (_("%s: fork () failed!"), "mdm_daemonify");
+		mdm_fail ("mdm_daemonify: fork () failed!");
 
 	if G_UNLIKELY (setsid () < 0)
-		mdm_fail (_("%s: setsid () failed: %s!"), "mdm_daemonify",
-			  strerror (errno));
+		mdm_fail ("mdm_daemonify: setsid () failed: %s!", strerror (errno));
 
 	VE_IGNORE_EINTR (g_chdir (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR)));
 	umask (022);
@@ -332,10 +329,7 @@ deal_with_x_crashes (MdmDisplay *d)
 		/* Yay we have a failsafe */
 		if ( ! ve_string_empty (bin) &&
 		     g_access (bin, X_OK) == 0) {
-			mdm_info (_("%s: Trying failsafe X "
-				    "server %s"),
-				  "deal_with_x_crashes",
-				  failsafe);
+			mdm_info ("deal_with_x_crashes: Trying failsafe X server %s", failsafe);
 			g_free (bin);
 			g_free (d->command);
 			d->command = g_strdup (failsafe);
@@ -350,9 +344,7 @@ deal_with_x_crashes (MdmDisplay *d)
 	     g_access (keepscrashing, X_OK|R_OK) == 0) {
 		pid_t pid;
 
-		mdm_info (_("%s: Running the "
-			    "XKeepsCrashing script"),
-			  "deal_with_x_crashes");
+		mdm_info ("deal_with_x_crashes: Running the XKeepsCrashing script");
 
 		extra_process = pid = fork ();
 		if (pid < 0)
@@ -473,7 +465,7 @@ deal_with_x_crashes (MdmDisplay *d)
 	   * reading will do him good
 	   * } */
 
-	mdm_error (_("Failed to start X server several times in a short time period; disabling display %s"), d->name);
+	mdm_error ("Failed to start X server several times in a short time period; disabling display %s", d->name);
 
 	return FALSE;
 }
@@ -530,7 +522,7 @@ suspend_machine (void)
 
 	suspend = mdm_daemon_config_get_value_string_array (MDM_KEY_SUSPEND);
 
-	mdm_info (_("Master suspending..."));
+	mdm_info ("Master suspending...");
 
 	if (suspend == NULL) {
 		return;
@@ -574,7 +566,7 @@ halt_machine (void)
 {
 	const char **s;
 
-	mdm_debug (_("Master halting..."));
+	mdm_debug ("Master halting...");
 
 	s = mdm_daemon_config_get_value_string_array (MDM_KEY_HALT);
 
@@ -597,7 +589,7 @@ restart_machine (void)
 {
 	const char **s;
 
-	mdm_debug (_("Restarting computer..."));
+	mdm_debug ("Restarting computer...");
 
 	s = mdm_daemon_config_get_value_string_array (MDM_KEY_REBOOT);
 
@@ -714,13 +706,13 @@ mdm_cleanup_children (void)
 			MDM_KEY_SYSTEM_MENU, d->name);
 
 		if (!sysmenu) {
-			mdm_info (_("Restart MDM, Restart machine, Suspend, or Halt request when there is no system menu from display %s"), d->name);
+			mdm_info ("Restart MDM, Restart machine, Suspend, or Halt request when there is no system menu from display %s", d->name);
 			status = DISPLAY_REMANAGE;
 		}
 
 
 		if ( ! d->attached) {
-			mdm_info (_("Restart MDM, Restart machine, Suspend or Halt request from a non-static display %s"), d->name);
+			mdm_info ("Restart MDM, Restart machine, Suspend or Halt request from a non-static display %s", d->name);
 			status = DISPLAY_REMANAGE;
 		}
 
@@ -767,8 +759,7 @@ mdm_cleanup_children (void)
 	switch (status) {
 
 	case DISPLAY_ABORT:		/* Bury this display for good */
-		mdm_info (_("%s: Aborting display %s"),
-			  "mdm_child_action", d->name);
+		mdm_info ("mdm_child_action: Aborting display %s", d->name);
 
 		mdm_try_logout_action (d);
 		mdm_safe_restart ();
@@ -926,11 +917,11 @@ mdm_cleanup_children (void)
 static void
 mdm_restart_now (void)
 {
-	mdm_info (_("MDM restarting ..."));
+	mdm_info ("MDM restarting ...");
 	mdm_final_cleanup ();
 	mdm_restoreenv ();
 	VE_IGNORE_EINTR (execvp (stored_argv[0], stored_argv));
-	mdm_error (_("Failed to restart self"));
+	mdm_error ("Failed to restart self");
 	_exit (1);
 }
 
@@ -1010,7 +1001,7 @@ static void
 main_daemon_abrt (int sig)
 {
 	/* FIXME: note that this could mean out of memory */
-	mdm_error (_("main daemon: Got SIGABRT. Something went very wrong. Going down!"));
+	mdm_error ("main daemon: Got SIGABRT. Something went very wrong. Going down!");
 	mdm_final_cleanup ();
 	exit (EXIT_FAILURE);
 }
@@ -1241,7 +1232,7 @@ mdm_make_global_cookie (void)
 
 	fp = mdm_safe_fopen_w (file, 0600);
 	if G_UNLIKELY (fp == NULL) {
-		mdm_error (_("Can't open %s for writing"), file);
+		mdm_error ("Can't open %s for writing", file);
 		g_free (file);
 		return;
 	}
@@ -1252,7 +1243,7 @@ mdm_make_global_cookie (void)
 	errno = 0;
 	VE_IGNORE_EINTR (fclose (fp));
 	if G_UNLIKELY (errno != 0) {
-		mdm_error (_("Can't write to %s: %s"), file,
+		mdm_error ("Can't write to %s: %s", file,
 			   strerror (errno));
 	}
 
@@ -1324,7 +1315,7 @@ main (int argc, char *argv[])
 	/* XDM compliant error message */
 	if G_UNLIKELY (getuid () != 0) {
 		/* make sure the pid file doesn't get wiped */
-		mdm_error (_("Only root wants to run MDM\n"));
+		mdm_error ("Only root wants to run MDM\n");
 		exit (-1);
 	}
 
@@ -1341,12 +1332,10 @@ main (int argc, char *argv[])
 	 * since the mdm_fail function uses config data
 	 */
 	if G_UNLIKELY (sigaction (SIGTERM, &sig, NULL) < 0)
-		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
-			  "main", "TERM", strerror (errno));
+		mdm_fail ("main: Error setting up %s signal handler: %s", "TERM", strerror (errno));
 
 	if G_UNLIKELY (sigaction (SIGINT, &sig, NULL) < 0)
-		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
-			  "main", "INT", strerror (errno));
+		mdm_fail ("main: Error setting up %s signal handler: %s", "INT", strerror (errno));
 
 	/* get the name of the root user */
 	mdm_root_user ();
@@ -1367,7 +1356,7 @@ main (int argc, char *argv[])
 		    linux_only_is_running (pidv)) {
 			/* make sure the pid file doesn't get wiped */
 			VE_IGNORE_EINTR (fclose (pf));
-			mdm_fail (_("MDM already running. Aborting!"));
+			mdm_fail ("MDM already running. Aborting!");
 		}
 
 		if (pf != NULL)
@@ -1387,16 +1376,14 @@ main (int argc, char *argv[])
 				/* FIXME: how to handle this? */
 				mdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
 					      pidfile, strerror (errno));
-				mdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
-					   pidfile, strerror (errno));
+				mdm_error ("Cannot write PID file %s: possibly out of diskspace.  Error: %s", pidfile, strerror (errno));
 
 			}
 		} else if (errno != 0) {
 			/* FIXME: how to handle this? */
 			mdm_fdprintf (2, _("Cannot write PID file %s: possibly out of diskspace.  Error: %s\n"),
 				      pidfile, strerror (errno));
-			mdm_error (_("Cannot write PID file %s: possibly out of diskspace.  Error: %s"),
-				   pidfile, strerror (errno));
+			mdm_error ("Cannot write PID file %s: possibly out of diskspace.  Error: %s", pidfile, strerror (errno));
 
 		}
 
@@ -1433,20 +1420,16 @@ main (int argc, char *argv[])
 	sigemptyset (&sig.sa_mask);
 
 	if G_UNLIKELY (sigaction (SIGTERM, &sig, NULL) < 0)
-		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
-			  "main", "TERM", strerror (errno));
+		mdm_fail ("main: Error setting up %s signal handler: %s", "TERM", strerror (errno));
 
 	if G_UNLIKELY (sigaction (SIGINT, &sig, NULL) < 0)
-		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
-			  "main", "INT", strerror (errno));
+		mdm_fail ("main: Error setting up %s signal handler: %s", "INT", strerror (errno));
 
 	if G_UNLIKELY (sigaction (SIGHUP, &sig, NULL) < 0)
-		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
-			  "main", "HUP", strerror (errno));
+		mdm_fail ("main: Error setting up %s signal handler: %s", "HUP", strerror (errno));
 
 	if G_UNLIKELY (sigaction (SIGUSR1, &sig, NULL) < 0)
-		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
-			  "main", "USR1", strerror (errno));
+		mdm_fail ("main: Error setting up %s signal handler: %s", "USR1", strerror (errno));
 
 	/* some process limit signals we catch and restart on,
 	   note that we don't catch these in the slave, but then
@@ -1455,14 +1438,12 @@ main (int argc, char *argv[])
 #ifdef SIGXCPU
 	ve_signal_add (SIGXCPU, mainloop_sig_callback, NULL);
 	if G_UNLIKELY (sigaction (SIGXCPU, &sig, NULL) < 0)
-		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
-			  "main", "XCPU", strerror (errno));
+		mdm_fail ("main: Error setting up %s signal handler: %s", "XCPU", strerror (errno));
 #endif
 #ifdef SIGXFSZ
 	ve_signal_add (SIGXFSZ, mainloop_sig_callback, NULL);
 	if G_UNLIKELY (sigaction (SIGXFSZ, &sig, NULL) < 0)
-		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
-			  "main", "XFSZ", strerror (errno));
+		mdm_fail ("main: Error setting up %s signal handler: %s", "XFSZ", strerror (errno));
 #endif
 
 	/* cannot use mainloop for SIGABRT, the handler can never
@@ -1472,8 +1453,7 @@ main (int argc, char *argv[])
 	sigemptyset (&abrt.sa_mask);
 
 	if G_UNLIKELY (sigaction (SIGABRT, &abrt, NULL) < 0)
-		mdm_fail (_("%s: Error setting up %s signal handler: %s"),
-			  "main", "ABRT", strerror (errno));
+		mdm_fail ("main: Error setting up %s signal handler: %s", "ABRT", strerror (errno));
 
 	child.sa_handler = ve_signal_notify;
 	child.sa_flags = SA_RESTART|SA_NOCLDSTOP;
@@ -1481,7 +1461,7 @@ main (int argc, char *argv[])
 	sigaddset (&child.sa_mask, SIGCHLD);
 
 	if G_UNLIKELY (sigaction (SIGCHLD, &child, NULL) < 0)
-		mdm_fail (_("%s: Error setting up CHLD signal handler"), "mdm_main");
+		mdm_fail ("mdm_main: Error setting up CHLD signal handler");
 
 	sigemptyset (&mask);
 	sigaddset (&mask, SIGINT);
@@ -1586,7 +1566,7 @@ write_x_servers (MdmDisplay *d)
 
 	fp = mdm_safe_fopen_w (file, 0644);
 	if G_UNLIKELY (fp == NULL) {
-		mdm_error (_("Can't open %s for writing"), file);
+		mdm_error ("Can't open %s for writing", file);
 		g_free (file);
 		return;
 	}
@@ -1630,8 +1610,7 @@ write_x_servers (MdmDisplay *d)
 	errno = 0;
 	VE_IGNORE_EINTR (fclose (fp));
 	if G_UNLIKELY (errno != 0) {
-		mdm_error (_("Can't write to %s: %s"), file,
-			   strerror (errno));
+		mdm_error ("Can't write to %s: %s", file, strerror (errno));
 	}
 
 	g_free (file);
@@ -2241,7 +2220,7 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 			return;
 		d = mdm_display_lookup (slave_pid);
 
-		mdm_info (_("Master suspending..."));
+		mdm_info ("Master suspending...");
 
 		sysmenu = mdm_daemon_config_get_value_bool_per_display (MDM_KEY_SYSTEM_MENU, d->name);
 		if (sysmenu && mdm_daemon_config_get_value_string_array (MDM_KEY_SUSPEND) != NULL) {
@@ -2809,10 +2788,8 @@ sup_handle_query_logout_action (MdmConnection *conn,
 
 	/* Only allow locally authenticated connections */
         if (! MDM_CONN_AUTHENTICATED (conn) || disp == NULL) {
-		mdm_info (_("%s request denied: "
-			    "Not authenticated"), "QUERY_LOGOUT_ACTION");
-		mdm_connection_write (conn,
-				      "ERROR 100 Not authenticated\n");
+		mdm_info ("%s request denied: Not authenticated", "QUERY_LOGOUT_ACTION");
+		mdm_connection_write (conn, "ERROR 100 Not authenticated\n");
 		return;
 	}
 
@@ -2910,10 +2887,8 @@ sup_handle_set_logout_action (MdmConnection *conn,
 	if ( ! MDM_CONN_AUTHENTICATED (conn) ||
 	     disp == NULL ||
 	     ! disp->logged_in) {
-		mdm_info (_("%s request denied: "
-			    "Not authenticated"), "SET_LOGOUT_ACTION");
-		mdm_connection_write (conn,
-				      "ERROR 100 Not authenticated\n");
+		mdm_info ("%s request denied: Not authenticated", "SET_LOGOUT_ACTION");
+		mdm_connection_write (conn, "ERROR 100 Not authenticated\n");
 		return;
 	}
 
@@ -2962,10 +2937,8 @@ sup_handle_set_safe_logout_action (MdmConnection *conn,
 	if ( ! MDM_CONN_AUTHENTICATED (conn) ||
 	     disp == NULL ||
 	     ! disp->logged_in) {
-		mdm_info (_("%s request denied: "
-			    "Not authenticated"), "SET_LOGOUT_ACTION");
-		mdm_connection_write (conn,
-				      "ERROR 100 Not authenticated\n");
+		mdm_info ("%s request denied: Not authenticated", "SET_LOGOUT_ACTION");
+		mdm_connection_write (conn, "ERROR 100 Not authenticated\n");
 		return;
 	}
 
@@ -3007,10 +2980,8 @@ sup_handle_query_vt (MdmConnection *conn,
 
 	/* Only allow locally authenticated connections */
 	if ( ! MDM_CONN_AUTHENTICATED (conn)) {
-		mdm_info (_("%s request denied: "
-			    "Not authenticated"), "QUERY_VT");
-		mdm_connection_write (conn,
-				      "ERROR 100 Not authenticated\n");
+		mdm_info ("%s request denied: Not authenticated", "QUERY_VT");
+		mdm_connection_write (conn,"ERROR 100 Not authenticated\n");
 		return;
 	}
 
@@ -3047,10 +3018,8 @@ sup_handle_set_vt (MdmConnection *conn,
 
 	/* Only allow locally authenticated connections */
 	if ( ! MDM_CONN_AUTHENTICATED (conn)) {
-		mdm_info (_("%s request denied: "
-			    "Not authenticated"), "QUERY_VT");
-		mdm_connection_write (conn,
-				      "ERROR 100 Not authenticated\n");
+		mdm_info ("%s request denied: Not authenticated", "QUERY_VT");
+		mdm_connection_write (conn, "ERROR 100 Not authenticated\n");
 		return;
 	}
 
@@ -3092,10 +3061,8 @@ mdm_handle_user_message (MdmConnection *conn,
 	} else if (strcmp (msg, MDM_SUP_FLEXI_XSERVER) == 0) {
 		/* Only allow locally authenticated connections */
 		if ( ! MDM_CONN_AUTHENTICATED (conn)) {
-			mdm_info (_("%s request denied: "
-				    "Not authenticated"), "FLEXI_XSERVER");
-			mdm_connection_write (conn,
-					      "ERROR 100 Not authenticated\n");
+			mdm_info ("%s request denied: Not authenticated", "FLEXI_XSERVER");
+			mdm_connection_write (conn, "ERROR 100 Not authenticated\n");
 			return;
 		}
 

@@ -995,12 +995,12 @@ mdm_setup_gids (const char *login, gid_t gid)
 	 * stuff here
          */
 	if G_UNLIKELY (setgid (gid) < 0)  {
-		mdm_error (_("Could not setgid %d. Aborting."), (int)gid);
+		mdm_error ("Could not setgid %d. Aborting.", (int)gid);
 		return FALSE;
 	}
 
 	if G_UNLIKELY (initgroups (login, gid) < 0) {
-		mdm_error (_("initgroups () failed for %s. Aborting."), login);
+		mdm_error ("initgroups () failed for %s. Aborting.", login);
 		return FALSE;
 	}
 
@@ -1251,8 +1251,7 @@ mdm_signal_ignore (int signal)
 	sigemptyset (&ign_signal.sa_mask);
 
 	if G_UNLIKELY (sigaction (signal, &ign_signal, NULL) < 0)
-		mdm_error (_("%s: Error setting signal %d to %s"),
-			   "mdm_signal_ignore", signal, "SIG_IGN");
+		mdm_error ("mdm_signal_ignore: Error setting signal %d to %s", signal, "SIG_IGN");
 }
 
 void
@@ -1265,8 +1264,7 @@ mdm_signal_default (int signal)
 	sigemptyset (&def_signal.sa_mask);
 
 	if G_UNLIKELY (sigaction (signal, &def_signal, NULL) < 0)
-		mdm_error (_("%s: Error setting signal %d to %s"),
-			   "mdm_signal_ignore", signal, "SIG_DFL");
+		mdm_error ("mdm_signal_ignore: Error setting signal %d to %s", signal, "SIG_DFL");
 }
 
 static MdmHostent *
@@ -1396,31 +1394,25 @@ jumpback_sighandler (int signal)
     sigemptyset (&term.sa_mask);					\
 									\
     if G_UNLIKELY (sigaction (SIGTERM, &term, &oldterm) < 0) 		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "TERM", strerror (errno)); \
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "TERM", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGINT, &term, &oldint) < 0)		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "INT", strerror (errno)); \
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "INT", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGHUP, &term, &oldhup) < 0) 		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "HUP", strerror (errno)); \
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "HUP", strerror (errno)); \
 
 #define SETUP_INTERRUPTS_FOR_TERM_TEARDOWN \
     do_jumpback = FALSE;						\
 									\
     if G_UNLIKELY (sigaction (SIGTERM, &oldterm, NULL) < 0) 		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "TERM", strerror (errno)); \
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "TERM", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGINT, &oldint, NULL) < 0) 		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "INT", strerror (errno)); \
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "INT", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGHUP, &oldhup, NULL) < 0) 		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "HUP", strerror (errno));
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "HUP", strerror (errno));
 
 MdmHostent *
 mdm_gethostbyname (const char *name)

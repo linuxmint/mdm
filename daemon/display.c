@@ -476,7 +476,7 @@ mdm_display_manage (MdmDisplay *d)
     mdm_debug ("mdm_display_manage: Managing %s", d->name);
 
     if (pipe (fds) < 0) {
-	    mdm_error (_("%s: Cannot create pipe"), "mdm_display_manage");
+	    mdm_error ("mdm_display_manage: Cannot create pipe");
     }
 
     if ( ! mdm_display_check_loop (d))
@@ -567,15 +567,12 @@ mdm_display_manage (MdmDisplay *d)
 
     case -1:
 	d->slavepid = 0;
-	mdm_error (_("%s: Failed forking MDM slave process for %s"),
-		   "mdm_display_manage",
-		   d->name);
+	mdm_error ("mdm_display_manage: Failed forking MDM slave process for %s", d->name);
 
 	return FALSE;
 
     default:
-	mdm_debug ("mdm_display_manage: Forked slave: %d",
-		   (int)pid);
+	mdm_debug ("mdm_display_manage: Forked slave: %d", (int)pid);
 	d->master_notify_fd = fds[1];
 	VE_IGNORE_EINTR (close (fds[0]));
 	break;
