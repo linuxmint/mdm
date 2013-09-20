@@ -1696,42 +1696,10 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 			/* cut off most of the cookie for "security" */
 			mdm_debug ("Handling message: '%s...'", s);
 			g_free (s);
-		} else if (strncmp (msg, MDM_SOP_SYSLOG " ",
-				    strlen (MDM_SOP_SYSLOG " ")) != 0) {
-			/* Don't print out the syslog message as it will
-			 * be printed out anyway as that's the whole point
-			 * of the message. */
-			mdm_debug ("Handling message: '%s'", msg);
 		}
 	}
 
-	if (strncmp (msg, MDM_SOP_CHOSEN_LOCAL " ",
-		            strlen (MDM_SOP_CHOSEN_LOCAL " ")) == 0) {
-		MdmDisplay *d;
-		long slave_pid;
-		char *p;
-
-		if (sscanf (msg, MDM_SOP_CHOSEN_LOCAL " %ld", &slave_pid)
-		    != 1)
-			return;
-		p = strchr (msg, ' ');
-		if (p != NULL)
-			p = strchr (p+1, ' ');
-		if (p == NULL)
-			return;
-		p++;
-
-		/* Find out who this slave belongs to */
-		d = mdm_display_lookup (slave_pid);
-
-		if (d != NULL) {
-			g_free (d->chosen_hostname);
-			d->chosen_hostname = g_strdup (p);
-			mdm_debug ("Got CHOSEN_LOCAL == %s", p);
-			/* send ack */
-			send_slave_ack (d, NULL);
-		}
-	} else if (strncmp (msg, MDM_SOP_XPID " ",
+	if (strncmp (msg, MDM_SOP_XPID " ",
 		            strlen (MDM_SOP_XPID " ")) == 0) {
 		MdmDisplay *d;
 		long slave_pid, pid;
@@ -2094,76 +2062,8 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 			/* send ack */
 			send_slave_ack (d, NULL);
 		}
-	} else if (strcmp (msg, MDM_SOP_SOFT_RESTART) == 0) {
-		mdm_restart_mode = TRUE;
-		mdm_safe_restart ();
-	} else if (strcmp (msg, MDM_SOP_DIRTY_SERVERS) == 0) {
-		GSList *li;
-		GSList *displays;
-
-		displays = mdm_daemon_config_get_display_list ();
-		for (li = displays; li != NULL; li = li->next) {
-			MdmDisplay *d = li->data;
-			send_slave_command (d, MDM_NOTIFY_DIRTY_SERVERS);
-		}
-	} else if (strcmp (msg, MDM_SOP_SOFT_RESTART_SERVERS) == 0) {
-		GSList *li;
-		GSList *displays;
-
-		displays = mdm_daemon_config_get_display_list ();
-		for (li = displays; li != NULL; li = li->next) {
-			MdmDisplay *d = li->data;
-			send_slave_command (d, MDM_NOTIFY_SOFT_RESTART_SERVERS);
-		}
-	} else if (strncmp (msg, MDM_SOP_SYSLOG " ",
-		            strlen (MDM_SOP_SYSLOG " ")) == 0) {
-		char *p;
-		long pid;
-	       	int type;
-		p = strchr (msg, ' ');
-		if (p == NULL)
-			return;
-		p++;
-		if (sscanf (p, "%ld", &pid) != 1)
-			return;
-		p = strchr (p, ' ');
-		if (p == NULL)
-			return;
-		p++;
-		if (sscanf (p, "%d", &type) != 1)
-			return;
-
-		p = strchr (p, ' ');
-		if (p == NULL)
-			return;
-		p++;
-
-		/* FIXME: use g_critical or mdm_debug when required */
-		mdm_debug ("(child %ld) %s", pid, p);
 	} else if (strcmp (msg, MDM_SOP_START_NEXT_LOCAL) == 0) {
 		mdm_start_first_unborn_local (3 /* delay */);
-	} else if (strcmp (msg, MDM_SOP_HUP_ALL_GREETERS) == 0) {
-		/* probably shouldn't be done too often */
-		GSList *li;
-		GSList *displays;
-
-		displays = mdm_daemon_config_get_display_list ();
-		for (li = displays; li != NULL; li = li->next) {
-			MdmDisplay *d = li->data;
-			if (d->greetpid > 1)
-				kill (d->greetpid, SIGHUP);			
-		}
-	} else if (strcmp (msg, MDM_SOP_GO) == 0) {
-		GSList *li;
-		gboolean old_wait = mdm_wait_for_go;
-		GSList *displays;
-
-		displays = mdm_daemon_config_get_display_list ();
-		mdm_wait_for_go = FALSE;
-		for (li = displays; li != NULL; li = li->next) {
-			MdmDisplay *d = li->data;
-			send_slave_command (d, MDM_NOTIFY_GO);
-		}		
 	} else if (strncmp (msg, MDM_SOP_WRITE_X_SERVERS " ",
 		            strlen (MDM_SOP_WRITE_X_SERVERS " ")) == 0) {
 		MdmDisplay *d;
@@ -2228,8 +2128,6 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 
 			send_slave_ack (d, NULL);
 		}
-	} else if (strcmp (msg, MDM_SOP_FLEXI_XSERVER) == 0) {
-		handle_flexi_server (NULL, TYPE_FLEXI, mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER), TRUE, NULL);
 	} else if (strncmp (msg, "opcode="MDM_SOP_SHOW_ERROR_DIALOG,
 			    strlen ("opcode="MDM_SOP_SHOW_ERROR_DIALOG)) == 0) {
 		char **list;
