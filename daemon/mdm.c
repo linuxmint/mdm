@@ -43,11 +43,6 @@
 #include <locale.h>
 #include <dirent.h>
 
-#ifdef HAVE_CHKAUTHATTR
-#include <auth_attr.h>
-#include <secdb.h>
-#endif
-
 /* This should be moved to auth.c I suppose */
 
 #include <X11/Xauth.h>
@@ -1365,21 +1360,6 @@ main (int argc, char *argv[])
 	else
 		mdm_daemonify ();
 
-#ifdef __sun
-	{
-		struct stat statbuf;
-		int r;
-
-		r = stat (MDM_DT_DIR, &statbuf);
-		if (r < 0) {
-			g_mkdir (MDM_DT_DIR, 0755);
-		}
-		
-		g_remove (MDM_SDTLOGIN_DIR);
-		g_mkdir (MDM_SDTLOGIN_DIR, 0700);
-	}
-#endif
-
 	/* Signal handling */
 	ve_signal_add (SIGCHLD, mainloop_sig_callback, NULL);
 	ve_signal_add (SIGTERM, mainloop_sig_callback, NULL);
@@ -2616,28 +2596,6 @@ is_action_available (MdmDisplay *disp, gchar *action)
 			break;
 		}
 	}
-
-#ifdef HAVE_CHKAUTHATTR
-	if (ret == TRUE && rbackeys) {
-		for (i = 0; rbackeys[i] != NULL; i++) {
-			gchar **rbackey = g_strsplit (rbackeys[i], ":", 2);
-
-			if (mdm_vector_len (rbackey) == 2 &&
-			    ! ve_string_empty (rbackey[0]) &&
-			    ! ve_string_empty (rbackey[1]) &&
-			    strcmp (rbackey[0], action) == 0) {
-
-       				if (!chkauthattr (rbackey[1], disp->login)) {
-					g_strfreev (rbackey);
-					ret = FALSE;
-					break;
-				}
-			
-			}
-			g_strfreev (rbackey);
-		}
-	}
-#endif
 
 	return ret;
 }

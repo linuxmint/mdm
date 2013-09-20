@@ -66,99 +66,12 @@ extern pid_t extra_process;
 
 #ifdef ENABLE_IPV6
 
-#ifdef __sun
-static gboolean 
-have_ipv6_solaris (void)
-{
-          int            s, i;
-          int            ret;
-          struct lifnum  ln; 
-          struct lifconf ifc;
-          struct lifreq *ifr;   
-          char          *ifreqs;
-          
-          /* First, try the <AB>classic<BB> way */
-          s = socket (AF_INET6, SOCK_DGRAM, 0);
-          if (s < 0) return FALSE;
-          close (s);
-
-          s = socket (AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
-
-          /*
-           * Ok, the system is able to create IPv6 sockets, so
-           * lets check if IPv6 is configured in the machine
-           */
-          ln.lifn_family=AF_UNSPEC;
-          ln.lifn_flags=ln.lifn_count=0; 
-
-          ret = ioctl (s, SIOCGLIFNUM, &ln);
-          if (ret == -1) {
-                        perror ("ioctl SIOCGLIFNUM");
-                        return FALSE;
-          }
-
-          /* Alloc the memory and get the configuration */
-          ifc.lifc_flags  = 0; 
-          ifc.lifc_family = AF_UNSPEC;
-          ifc.lifc_len    = ln.lifn_count * sizeof (struct lifreq);
-
-          ifreqs = (char *) malloc (ifc.lifc_len);
-          ifc.lifc_buf = ifreqs;
-
-          if (ioctl (s, SIOCGLIFCONF, &ifc) < 0) {
-                        perror ("ioctl SIOCGLIFCONF");
-                        return FALSE;
-          }
-
-          /* Check each interface */
-          ifr  = ifc.lifc_req;
-          ret  = FALSE;
-
-          for (i = ifc.lifc_len/sizeof (struct lifreq); --i >= 0; ifr++) {
-                struct sockaddr_in *sin;
-
-                        /* Check the address */
-                        if (ioctl (s, SIOCGLIFFLAGS, ifr) < 0) {
-                                   /* perror ("ioctl SIOCGLIFADDR"); */
-                                   continue;
-                        }
-
-                        sin = (struct sockaddr_in *)&ifr->lifr_addr;
-
-                        if (sin->sin_family == AF_INET6) {
-                                   ret = TRUE;
-                                   break;
-                        }
-
-                        /* Check the interface flags */
-                        if (ioctl (s, SIOCGLIFFLAGS, (char *) ifr) < 0) {
-                                   /* perror ("ioctl SIOCGLIFFLAGS"); */
-                                   continue;
-                        }
-
-                        if (ifr->lifr_flags & IFF_IPV6) {      
-                                   ret = TRUE;
-                                   break;
-                        }
-          }
-          
-          /* Clean up */
-          free (ifreqs);
-          close (s);
-
-          return ret;
-}
-#endif
-
 static gboolean
 have_ipv6 (void)
 {
 	int s;
         static gboolean has_ipv6 = -1;
 
-#ifdef __sun
-        has_ipv6 = have_ipv6_solaris ();
-#else
         if (has_ipv6 != -1) return has_ipv6;
 
         s = socket (AF_INET6, SOCK_STREAM, 0);  
@@ -168,7 +81,6 @@ have_ipv6 (void)
 	}
 
        VE_IGNORE_EINTR (close (s));            
-#endif
        return has_ipv6;
 }
 #endif
@@ -883,10 +795,6 @@ mdm_ensure_sanity (void)
 	uid_t old_euid;
 	gid_t old_egid;
 
-#ifdef __sun
-	return;
-#endif
-
 	old_euid = geteuid ();
 	old_egid = getegid ();
 
@@ -1267,39 +1175,7 @@ mdm_signal_default (int signal)
 		mdm_error ("mdm_signal_ignore: Error setting signal %d to %s", signal, "SIG_DFL");
 }
 
-static gboolean do_jumpback = FALSE;
-static Jmp_buf signal_jumpback;
 static struct sigaction oldterm, oldint, oldhup;
-
-static void
-jumpback_sighandler (int signal)
-{
-	/*
-         * This avoids a race see Note below.
-	 * We want to jump back only on the first
-	 * signal invocation, even if the signal
-	 * handler didn't return.
-         */
-	gboolean old_do_jumpback = do_jumpback;
-	do_jumpback = FALSE;
-
-	if (signal == SIGINT)
-		oldint.sa_handler (signal);
-	else if (signal == SIGTERM)
-		oldint.sa_handler (signal);
-	else if (signal == SIGHUP)
-		oldint.sa_handler (signal);
-	/* No others should be set up */
-
-	/* Note that we may not get here since
-	   the SIGTERM handler in slave.c
-	   might have in fact done the big Longjmp
-	   to the slave's death */
-
-	if (old_do_jumpback) {
-		Longjmp (signal_jumpback, 1);
-	}
-}
 
 /*
  * This sets up interruptes to be proxied and the
@@ -1312,7 +1188,6 @@ jumpback_sighandler (int signal)
     struct sigaction term;
 
 #define SETUP_INTERRUPTS_FOR_TERM_SETUP \
-    do_jumpback = FALSE;						\
     									\
     term.sa_handler = jumpback_sighandler;				\
     term.sa_flags = SA_RESTART;						\
@@ -1328,7 +1203,6 @@ jumpback_sighandler (int signal)
 	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "HUP", strerror (errno)); \
 
 #define SETUP_INTERRUPTS_FOR_TERM_TEARDOWN \
-    do_jumpback = FALSE;						\
 									\
     if G_UNLIKELY (sigaction (SIGTERM, &oldterm, NULL) < 0) 		\
 	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "TERM", strerror (errno)); \

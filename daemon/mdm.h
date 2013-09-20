@@ -60,11 +60,6 @@ enum {
 
 #define MDM_RESPONSE_CANCEL "MDM_RESPONSE_CANCEL"
 
-#ifdef __sun
-#define MDM_DT_DIR "/var/dt"
-#define MDM_SDTLOGIN_DIR "/var/dt/sdtlogin"
-#endif
-
 /* If id == NULL, then get the first X server */
 void		mdm_final_cleanup	(void);
 

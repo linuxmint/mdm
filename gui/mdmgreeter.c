@@ -25,11 +25,6 @@
 
 #include <string.h>
 
-#ifdef HAVE_CHKAUTHATTR
-#include <auth_attr.h>
-#include <secdb.h>
-#endif
-
 #include "mdmgreeter.h"
 
 #include <glib/gi18n.h>
@@ -67,38 +62,6 @@ mdm_common_is_action_available (gchar *action)
 		}
 	}
 
-#ifdef HAVE_CHKAUTHATTR
-	if (ret == TRUE) {
-		gchar **rbackeys = NULL;
-		const gchar *rbackeysval;
-		const char *mdmuser;
-
-		mdmuser     = mdm_config_get_string (MDM_KEY_USER);
-		rbackeysval = mdm_config_get_string (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
-		if (rbackeysval)
-			rbackeys = g_strsplit (rbackeysval, ";", 0);
-
-		if (rbackeys) {
-			for (i = 0; rbackeys[i] != NULL; i++) {
-				gchar **rbackey = g_strsplit (rbackeys[i], ":", 2);
-
-				if (mdm_vector_len (rbackey) == 2 &&
-				    ! ve_string_empty (rbackey[0]) &&
-				    ! ve_string_empty (rbackey[1]) &&
-				    strcmp (rbackey[0], action) == 0) {
-
-					if (!chkauthattr (rbackey[1], mdmuser)) {
-						g_strfreev (rbackey);
-						ret = FALSE;
-						break;
-					}
-				}
-				g_strfreev (rbackey);
-			}
-		}
-		g_strfreev (rbackeys);
-	}
-#endif
 	g_strfreev (allowsyscmd);
 
 	return ret;

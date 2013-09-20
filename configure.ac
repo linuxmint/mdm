@@ -727,24 +727,6 @@ AC_SUBST(DMX_LIBS)
 AM_CONDITIONAL(DMX_SUPPORT, test x$DMX_SUPPORT = xyes)
 
 #
-# Solaris Trusted Extensions stuff
-#
-case "$host" in
-*solaris*)
-        AC_CHECK_HEADERS(sys/tsol/label_macro.h,
-                AC_DEFINE(HAVE_TSOL, ,[Building with TSOL support]) found_tsol=yes,)
-        ;;
-*)
-        ;;
-esac
-
-AM_CONDITIONAL(TSOL_DEFINED, test x$found_tsol = xyes)
-if test "x$found_tsol" = "xyes" ; then
-	EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lsecdb"
-fi
-
-
-#
 # SELinux stuff
 #
 if test "x$with_selinux" = "xyes" ; then
@@ -915,14 +897,6 @@ fi
 AC_SUBST(XEVIE_OPTION)
 AC_DEFINE_UNQUOTED(XEVIE_OPTION,"$XEVIE_OPTION")
 
-AC_MSG_CHECKING(for Solaris fbconsole)
-if test -x /usr/openwin/bin/fbconsole; then
-   AC_DEFINE(HAVE_FBCONSOLE)
-   AC_MSG_RESULT(yes)
-else
-   AC_MSG_RESULT(no)
-fi
-
 # Check for Linux auditing API
 #
 # libaudit detection
@@ -940,42 +914,6 @@ if test x$have_libaudit = xyes ; then
     EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -laudit"
     AC_DEFINE(HAVE_LIBAUDIT,1,[linux audit support])
 fi
-
-# Check for Solaris auditing API
-# Note, Solaris auditing not supported for Solaris 9 or earlier and
-# should not be used on these versions of Solaris if auditing is
-# required.  Solaris auditing is only supported on systems that
-# support the ADT_USER enumeration value.
-#
-AC_MSG_CHECKING(for Solaris auditing API)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <bsm/adt.h>
-adt_user_context = ADT_USER;
-]], [[]])], [ check_sun_audit=yes ], [ check_sun_audit=no ])
-
-if test ${check_sun_audit} = yes
-then
-   AC_DEFINE(HAVE_ADT)
-   EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lbsm"
-   AC_MSG_RESULT(yes)
-else
-   AC_MSG_RESULT(no)
-fi
-
-# Check for Solaris logindevperm support
-#
-AC_MSG_CHECKING(for Solaris di_devperm_login)
-AC_CHECK_LIB(devinfo, di_devperm_login, [
-		     	AC_DEFINE(HAVE_LOGINDEVPERM)
-			    EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -ldevinfo" ])
-
-# Check for RBAC support (chkauthattr
-#
-AC_MSG_CHECKING(for RBAC support - chkauthattr)
-AC_CHECK_LIB(secdb, chkauthattr, [
-		     	AC_DEFINE(HAVE_CHKAUTHATTR)
-			    EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lsecdb"
-			    EXTRA_GREETER_LIBS="$EXTRA_GREETER_LIBS -lsecdb"])
 
 # check for the nologin location
 AC_PATH_PROG(NOLOGIN, nologin, /sbin/nologin)
@@ -1381,13 +1319,6 @@ if test "x$with_selinux" = "xyes" ; then
 	echo "SELinux support                       : YES"
 else
 	echo "SELinux support                       : NO"
-fi
-
-dnl <= Solaris Trusted Extensions support =>
-if test "x$found_tsol" = "xyes" ; then
-	echo "Solaris Trusted Extensions support    : YES"
-else
-	echo "Solaris Trusted Extensions support    : NO"
 fi
 
 dnl <= ConsoleKit support =>

@@ -81,10 +81,6 @@
 #include <errno.h>
 #include <time.h>
 
-#ifdef HAVE_TSOL
-#include <user_attr.h>
-#endif
-
 #ifdef HAVE_SELINUX
 #include <selinux/selinux.h>
 #include <selinux/get_context_list.h>
@@ -156,18 +152,8 @@ static gboolean session_started        = FALSE;
 static gboolean greeter_disabled       = FALSE;
 static gboolean greeter_no_focus       = FALSE;
 
-#ifdef __sun
-/*
- * On Solaris uid_t and gid_t are unsigned ints, so you cannot
- * set them to -1.  These globals are just used for bookkeeping
- * so using a signed long works.
- */
-static long logged_in_uid              = -1;
-static long logged_in_gid              = -1;
-#else
 static uid_t logged_in_uid             = -1;
 static gid_t logged_in_gid             = -1;
-#endif
 
 static int greeter_fd_out              = -1;
 static int greeter_fd_in               = -1;
@@ -180,10 +166,6 @@ static int mdm_in_signal               = 0;
 static int mdm_normal_runlevel         = -1;
 static pid_t extra_process             = 0;
 static int extra_status                = 0;
-
-#ifdef HAVE_TSOL
-static gboolean have_suntsol_extension = FALSE;
-#endif
 
 static int slave_waitpid_r             = -1;
 static int slave_waitpid_w             = -1;
@@ -225,10 +207,6 @@ static void   mdm_slave_handle_usr2_message (void);
 static void   mdm_slave_handle_notify (const char *msg);
 static void   check_notifies_now (void);
 static void   restart_the_greeter (void);
-
-#ifdef HAVE_TSOL
-static gboolean mdm_can_i_assume_root_role (struct passwd *pwent);
-#endif
 
 gboolean mdm_is_user_valid (const char *username);
 
@@ -957,23 +935,6 @@ setup_automatic_session (MdmDisplay *display, const char *name)
 	return TRUE;
 }
 
-#ifdef HAVE_TSOL
-static void
-mdm_tsol_init (MdmDisplay *display)
-{
-
- 	int opcode;
-	int firstevent;
-	int firsterror;
-
-	have_suntsol_extension = XQueryExtension (display->dsp,
-						  "SUN_TSOL",
-						  &opcode,
-						  &firstevent,
-						  &firsterror);
-}
-#endif
-
 static void
 mdm_screen_init (MdmDisplay *display)
 {
@@ -1479,12 +1440,6 @@ mdm_slave_run (MdmDisplay *display)
 	/* checkout xinerama */
 	if (d->handled)
 		mdm_screen_init (d);
-
-#ifdef HAVE_TSOL
-	/* Check out Solaris Trusted Xserver extension */
-	if (d->handled)
-		mdm_tsol_init (d);
-#endif
 
 	/*
 	 * Find out the VT number of the display.  VT's could be started by some
@@ -2534,25 +2489,6 @@ mdm_slave_greeter (void)
 
 	command = mdm_daemon_config_get_value_string (MDM_KEY_GREETER);	
 
-#ifdef __sun
-	/*
-	 * Set access control for audio device so that MDM owned programs can
-	 * play audio and work with accessibility programs that require audio.
-	 * This is only needed if a11y is turned on.
-	 */
-	if (mdm_daemon_config_get_value_bool (MDM_KEY_ADD_GTK_MODULES)) {
-		int acl_flavor;
-		acl_flavor = pathconf("/dev/audio", _PC_ACL_ENABLED);
-
-		if (acl_flavor & _ACL_ACLENT_ENABLED) {
-			system ("/usr/bin/setfacl -m user:mdm:rwx,mask:rwx /dev/audio");
-			system ("/usr/bin/setfacl -m user:mdm:rwx,mask:rwx /dev/audioctl");
-		} else if (acl_flavor & _ACL_ACE_ENABLED) {
-			system ("/usr/bin/chmod A+user:mdm:rwx:allow /dev/audio");
-			system ("/usr/bin/chmod A+user:mdm:rwx:allow /dev/audioctl");
-		}
-	}
-#endif
 	mdm_debug ("Forking greeter process: %s", command);
 
 	/* Fork. Parent is mdmslave, child is greeter process. */
@@ -3530,10 +3466,6 @@ session_child_run (struct passwd *pwent,
 			g_string_append (fullexec, bxvec[0]);
 			g_string_append (fullexec, " ");
 
-#ifdef HAVE_TSOL
-			if (have_suntsol_extension)
-				g_string_append (fullexec, "/usr/bin/tsoljdslabel ");
-#endif
 			//If we find space chars in the session Exec, and there's no quotes around them, add quotes.
 			if ((strchr (sessionexec, ' ') != NULL) && (strchr (sessionexec, '"') == NULL)) {
 				// Exec line doesn't contain quotes, let's add them
@@ -3551,15 +3483,6 @@ session_child_run (struct passwd *pwent,
 
 	if (strcmp (session, MDM_SESSION_FAILSAFE_GNOME) == 0) {
 		gchar *test_exec = NULL;
-
-#ifdef HAVE_TSOL
-		/*
-		 * Trusted Path will be preserved as long as the sys admin
-		 * doesn't put anything stupid in mdm.conf
-		 */
-		if (have_suntsol_extension == TRUE)
-			g_string_append (fullexec, "/usr/bin/tsoljdslabel ");
-#endif
 
 		test_exec = find_prog ("cinnamon-session");
 		if G_UNLIKELY (test_exec == NULL) {
@@ -3611,40 +3534,6 @@ session_child_run (struct passwd *pwent,
 					 "if you cannot log in any other way.  "
 					 "To exit the terminal emulator, type "
 					 "'exit' and an enter into the window.");
-#ifdef HAVE_TSOL
-			if (have_suntsol_extension) {
-				/*
-				 * In a Solaris Trusted Extensions environment, failsafe
-				 * xterms should be restricted to the root user, or
-				 * users who have the root role.  This is necessary to
-				 * prevent normal users and evil terrorists bypassing
-				 * their assigned clearance and getting direct access
-				 * to the global zone.
-				 */
-				if (pwent->pw_uid != 0 &&
-				    mdm_can_i_assume_root_role (pwent) == TRUE) {
-					g_string_append (fullexec, " -C -e su");
-					failsafe_msg =  _("This is the Failsafe xterm session.  "
-							  "You will be logged into a terminal "
-							  "console and be prompted to enter the "
-							  "password for root so that you may fix "
-							  "your system if you cannot log in any "
-							  "other way. To exit the terminal "
-							  "emulator, type 'exit' and an enter "
-							  "into the window.");
-				} else {
-					/* Normal user without root role - get lost */
-					mdm_errorgui_error_box
-						(d, GTK_MESSAGE_INFO,
-						 _("The failsafe session is restricted to "
-						   "users who have been assigned the root "
-						   "role. If you cannot log in any other "
-						   "way please contact your system "
-						   "administrator"));
-					_exit (66);
-				}
-			}
-#endif /* HAVE_TSOL */
 
 			mdm_errorgui_error_box (d, GTK_MESSAGE_INFO, failsafe_msg);
 			focus_first_x_window ("xterm");
@@ -5744,39 +5633,6 @@ mdm_slave_final_cleanup (void)
 	mdm_slave_term_handler (SIGTERM);
 	return TRUE;
 }
-
-#ifdef HAVE_TSOL
-static gboolean
-mdm_can_i_assume_root_role (struct passwd *pwent)
-{
-	userattr_t *uattr = NULL;
-	char *freeroles = NULL;
-	char *roles = NULL;
-	char *role = NULL;
-
-	uattr = getuseruid (pwent->pw_uid);
-	if G_UNLIKELY (uattr == NULL)
-		return FALSE;
-
-	freeroles = roles = g_strdup (kva_match (uattr->attr, USERATTR_ROLES_KW));
-	if (roles == NULL) {
-		return FALSE;
-	}
-
-	while ((role = strtok (roles, ",")) != NULL) {
-		roles = NULL;
-		if (!strncmp (role, "root", 4)) {
-			g_free (freeroles);
-			g_free (role);
-			return TRUE;
-		}
-	}
-	g_free (freeroles);
-	g_free (role);
-	return FALSE;
-}
-#endif /* HAVE_TSOL */
-
 
 /* mdm_is_user_valid() mostly copied from gui/mdmuser.c */
 gboolean

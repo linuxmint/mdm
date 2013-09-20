@@ -56,11 +56,7 @@
 
 #include "mdm-socket-protocol.h"
 
-#if __sun
-#define MDM_PRIO_DEFAULT NZERO
-#else
 #define MDM_PRIO_DEFAULT 0
-#endif
 
 /* Local prototypes */
 static void mdm_server_spawn (MdmDisplay *d, const char *vtarg);
@@ -126,38 +122,6 @@ ignore_xerror_handler (Display *disp, XErrorEvent *evt)
 {
 	return 0;
 }
-
-#ifdef HAVE_FBCONSOLE
-#define FBCONSOLE "/usr/openwin/bin/fbconsole"
-
-static void
-mdm_exec_fbconsole (MdmDisplay *disp)
-{
-        char *argv[6];
-
-        argv[0] = FBCONSOLE;
-        argv[1] = "-n";
-        argv[2] = "-d";
-        argv[3] = disp->name;
-        argv[4] = NULL;
-
-	mdm_debug ("Forking fbconsole");
-
-        d->fbconsolepid = fork ();
-        if (d->fbconsolepid == 0) {
-                mdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */)
-;
-                VE_IGNORE_EINTR (execv (argv[0], argv));
-
-		mdm_error ("Can not start fallback console: %s",
-			   strerror (errno));
-		_exit (0);
-        }
-        if (d->fbconsolepid == -1) {
-                mdm_error ("Can not start fallback console");
-        }
-}
-#endif
 
 /**
  * mdm_server_stop:
@@ -228,13 +192,6 @@ mdm_server_stop (MdmDisplay *disp)
     }
 
     mdm_server_wipe_cookies (disp);
-
-#ifdef HAVE_FBCONSOLE
-    /* Kill fbconsole if it is running */
-    if (d->fbconsolepid > 0)
-        kill (d->fbconsolepid, SIGTERM);
-    d->fbconsolepid = 0;
-#endif
 
 }
 
@@ -555,10 +512,6 @@ mdm_server_start (MdmDisplay *disp,
 
     d = disp;
 
-#ifdef HAVE_FBCONSOLE
-    d->fbconsolepid = 0;
-#endif
-
     /* if an X server exists, wipe it */
     mdm_server_stop (d);
 
@@ -640,10 +593,6 @@ mdm_server_start (MdmDisplay *disp,
 		    if (d->vt >= 0)
 			    mdm_slave_send_num (MDM_SOP_VT_NUM, d->vt);
 	    }
-
-#ifdef HAVE_FBCONSOLE
-            mdm_exec_fbconsole (d);
-#endif
 
 	    return TRUE;
     default:
@@ -1160,16 +1109,6 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 		/* this will get rid of any suplementary groups etc... */
 		setgroups (1, groups);
 	}
-
-#if __sun
-    {
-        /* Remove old communication pipe, if present */
-        char old_pipe[MAXPATHLEN];
-
-        sprintf (old_pipe, "%s/%d", MDM_SDTLOGIN_DIR, d->name);
-        g_unlink (old_pipe);
-    }
-#endif
 
 	VE_IGNORE_EINTR (execv (argv[0], argv));
 

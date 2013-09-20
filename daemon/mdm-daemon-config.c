@@ -1038,15 +1038,9 @@ mdm_daemon_config_get_xservers (void)
 	return retval;
 }
 
-#if __sun
-#define MDM_PRIO_MIN 0
-#define MDM_PRIO_MAX (NZERO*2)-1
-#define MDM_PRIO_DEFAULT NZERO
-#else
 #define MDM_PRIO_MIN PRIO_MIN
 #define MDM_PRIO_MAX PRIO_MAX
 #define MDM_PRIO_DEFAULT 0
-#endif
 
 /**
  * mdm_daemon_config_load_xserver
@@ -1563,21 +1557,12 @@ validate_session_desktop_dir (MdmConfig          *config,
 			      MdmConfigValue     *value)
 {
 	const char *str;
-#ifdef HAVE_TSOL
-	char *new;
-#endif
 
 	str = mdm_config_value_get_string (value);
 
 	if (str == NULL || str[0] == '\0') {
 		mdm_error ("mdm_config_parse: No sessions directory specified.");
 	}
-
-#ifdef HAVE_TSOL
-	new = g_strconcat (str, ":" DATADIR "/xsessions/multilabel/", NULL);
-	mdm_config_value_set_string (value, new);
-	g_free (new);
-#endif
 
 	return TRUE;
 }
