@@ -102,9 +102,7 @@ static gboolean no_console       = FALSE; /* There are no static servers, this
                                              and second, don't display info on
                                              the console */
 
-MdmConnection *fifoconn = NULL; /* Fifo connection */
-MdmConnection *pipeconn = NULL; /* slavepipe (handled just like Fifo for
-                                   compatibility) connection */
+MdmConnection *pipeconn = NULL; /* slavepipe connection */
 MdmConnection *unixconn = NULL; /* UNIX Socket connection */
 int slave_fifo_pipe_fd = -1;    /* The slavepipe connection */
 
@@ -295,16 +293,7 @@ mdm_final_cleanup (void)
 	}
 	g_slist_free (list);	
 	
-	/* Close stuff */
-	
-	if (fifoconn != NULL) {
-		char *path;
-		mdm_connection_close (fifoconn);
-		path = g_build_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR), ".mdmfifo", NULL);
-		VE_IGNORE_EINTR (g_unlink (path));
-		g_free (path);
-		fifoconn = NULL;
-	}
+	/* Close stuff */	
 
 	if (pipeconn != NULL) {
 		mdm_connection_close (pipeconn);
@@ -1104,21 +1093,6 @@ static void
 create_connections (void)
 {
 	int p[2];
-	gchar *path;
-
-	path = g_build_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR), ".mdmfifo", NULL);
-	fifoconn = mdm_connection_open_fifo (path, 0660);
-	g_free (path);
-
-	if G_LIKELY (fifoconn != NULL) {
-		mdm_connection_set_handler (fifoconn,
-					    mdm_handle_message,
-					    NULL /* data */,
-					    NULL /* destroy_notify */);
-		mdm_connection_set_close_notify (fifoconn,
-						 &fifoconn,
-						 close_notify);
-	}
 
 	if G_UNLIKELY (pipe (p) < 0) {
 		slave_fifo_pipe_fd = -1;

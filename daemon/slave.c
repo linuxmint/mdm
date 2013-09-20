@@ -191,7 +191,7 @@ static GSList *slave_waitpids          = NULL;
 
 extern gboolean mdm_first_login;
 
-/* The slavepipe (like fifo) connection, this is the write end */
+/* The slavepipe, this is the write end */
 extern int slave_fifo_pipe_fd;
 
 /* wait for a GO in the SOP protocol */
@@ -2817,8 +2817,6 @@ mdm_slave_greeter (void)
 void
 mdm_slave_send (const char *str, gboolean wait_for_ack)
 {
-	int fd;
-	char *fifopath;
 	int i;
 	uid_t old;
 
@@ -2831,46 +2829,7 @@ mdm_slave_send (const char *str, gboolean wait_for_ack)
 		mdm_ack_response = NULL;
 	}
 
-	/* ensure this is sent from the actual slave with the pipe always, this is anal I know */
-	if (G_LIKELY (d->slavepid == getppid ()) || G_LIKELY (d->slavepid == getpid ())) {
-		fd = slave_fifo_pipe_fd;
-	} else {
-		fd = -1;
-	}
-
-	if G_UNLIKELY (fd < 0) {
-		/* FIXME: This is not likely to ever be used, remove
-		   at some point.  Other then slaves shouldn't be using
-		   these functions.  And if the pipe creation failed
-		   in main daemon just abort the main daemon.  */
-		/* Use the fifo as a fallback only now that we have a pipe */
-		fifopath = g_build_filename (mdm_daemon_config_get_value_string (MDM_KEY_SERV_AUTHDIR),
-					     ".mdmfifo", NULL);
-		old = geteuid ();
-		if (old != 0)
-			seteuid (0);
-#ifdef O_NOFOLLOW
-		VE_IGNORE_EINTR (fd = open (fifopath, O_WRONLY|O_NOFOLLOW));
-#else
-		VE_IGNORE_EINTR (fd = open (fifopath, O_WRONLY));
-#endif
-		if (old != 0)
-			seteuid (old);
-		g_free (fifopath);
-	}
-
-	/* eek */
-	if G_UNLIKELY (fd < 0) {
-		if (mdm_in_signal == 0)
-			mdm_error (_("%s: Can't open fifo!"), "mdm_slave_send");
-		return;
-	}
-
-	mdm_fdprintf (fd, "\n%s\n", str);
-
-	if G_UNLIKELY (fd != slave_fifo_pipe_fd) {
-		VE_IGNORE_EINTR (close (fd));
-	}
+	mdm_fdprintf (slave_fifo_pipe_fd, "\n%s\n", str);	
 
 #if defined (_POSIX_PRIORITY_SCHEDULING) && defined (HAVE_SCHED_YIELD)
 	if (wait_for_ack && ! mdm_got_ack) {

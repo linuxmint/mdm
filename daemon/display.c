@@ -51,7 +51,6 @@
 #include "mdm-daemon-config.h"
 
 /* External vars */
-extern MdmConnection *fifoconn;
 extern MdmConnection *pipeconn;
 extern MdmConnection *unixconn;
 extern int slave_fifo_pipe_fd; /* the slavepipe (like fifo) connection, this is the write end */
@@ -525,9 +524,7 @@ mdm_display_manage (MdmDisplay *d)
 	mdm_unset_signals ();
 
 	d->slavepid = getpid ();
-
-	mdm_connection_close (fifoconn);
-	fifoconn = NULL;
+	
 	mdm_connection_close (pipeconn);
 	pipeconn = NULL;
 	mdm_connection_close (unixconn);
