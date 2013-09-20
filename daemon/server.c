@@ -179,13 +179,7 @@ mdm_server_stop (MdmDisplay *disp)
     if (disp->dsp != NULL) {	    	    
 	    XCloseDisplay (disp->dsp);
 	    disp->dsp = NULL;
-    }
-
-    /* Kill our parent connection if one existed */
-    if (disp->parent_dsp != NULL) {	    
-	    XCloseDisplay (disp->parent_dsp);
-	    disp->parent_dsp = NULL;
-    }
+    }   
 
     if (disp->servpid <= 0)
 	    return;

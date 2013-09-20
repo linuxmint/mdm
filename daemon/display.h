@@ -22,7 +22,6 @@
 #define _MDM_DISPLAY_H
 
 #include <X11/Xlib.h> /* for Display */
-#include <X11/Xmd.h> /* for CARD32 */
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h> /* for in_addr */
@@ -149,12 +148,7 @@ struct _MdmDisplay
 	MdmLogoutAction logout_action;
 
 	/* XDMCP TYPE */
-
-	time_t acctime;
-
-	int xdmcp_dispnum;
-	CARD32 sessionid;
-
+	
 	struct sockaddr_storage addr;
 	struct sockaddr_storage *addrs; /* array of addresses */
 	int addr_count; /* number of addresses in array */
@@ -174,30 +168,17 @@ struct _MdmDisplay
 	/* order in the Xservers file for sessreg, -1 if unset yet */
 	int x_servers_order;
 
-
 	/* STATIC TYPE */
 
 	gboolean busy_display; /* only needed on static displays since flexi try another */
 	time_t last_x_failed;
 	int x_faileds;
 
-
 	/* FLEXI TYPE */
 
 	char *preset_user;
 	uid_t server_uid;
 	MdmConnection *socket_conn;
-
-
-	/* PROXY/Parented TYPE (xdmcp proxy) */
-
-	char *parent_disp;
-	Display *parent_dsp;
-
-
-	/* XDMCP PROXY TYPE */
-
-	char *parent_auth_file;
 
 };
 

@@ -28,13 +28,6 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#ifdef HAVE_SMF_CONTRACTS
-#include <sys/ctfs.h>
-#include <sys/contract.h>
-#include <sys/contract/process.h>
-#include <libcontract.h>
-#endif
-
 #include <glib/gi18n.h>
 
 #include "mdm.h"
@@ -97,8 +90,6 @@ mdm_display_alloc (gint id, const gchar *command, const gchar *device)
     d->slavepid = 0;
     d->type = TYPE_STATIC;
     d->attached = TRUE;
-    d->sessionid = 0;
-    d->acctime = 0;
     d->dsp = NULL;
     d->screenx = 0; /* xinerama offset */
     d->screeny = 0;
@@ -323,140 +314,6 @@ wait_again:
     d->slavepid = 0;
 }
 
-#ifdef HAVE_SMF_CONTRACTS
-static int contracts_fd = -1;
-
-void
-contracts_pre_fork ()
-{
-   const char *errmsg = "opening process contract template";
-
-	/*
-	 * On failure, just continue since it is better to start with
-	 * children in the same contract than to not start them at all.
-	 */
-	if (contracts_fd == -1) {
-		if ((contracts_fd = open64 (CTFS_ROOT "/process/template",
-					    O_RDWR)) == -1)
-			goto exit;
-
-		errmsg = "setting contract terms";
-		if ((errno = ct_pr_tmpl_set_param (contracts_fd, CT_PR_PGRPONLY)))
-			goto exit;
-
-		if ((errno = ct_tmpl_set_informative (contracts_fd, CT_PR_EV_HWERR)))
-			goto exit;
-
-		if ((errno = ct_pr_tmpl_set_fatal (contracts_fd, CT_PR_EV_HWERR)))
-			goto exit;
-
-		if ((errno = ct_tmpl_set_critical (contracts_fd, 0)))
-			goto exit;
-	}
-
-	errmsg = "setting active template";
-	if ((errno = ct_tmpl_activate (contracts_fd)))
-		goto exit;
-
-	mdm_debug ("Set active contract");
-	return;
-
-exit:
-	if (contracts_fd != -1)
-		(void) close (contracts_fd);
-
-	contracts_fd = -1;
-
-	if (errno) {
-		mdm_debug (
-			"Error setting up active contract template: %s while %s",
-			strerror (errno), errmsg);
-	}
-}
-
-void
-contracts_post_fork_child ()
-{
-	/* Clear active template so no new contracts are created on fork */
-	if (contracts_fd == -1)
-		return;
-
-	if ((errno = (ct_tmpl_clear (contracts_fd)))) {
-		mdm_debug (
-			"Error clearing active contract template (child): %s",
-			strerror (errno));
-	} else {
-		mdm_debug ("Cleared active contract template (child)");
-	}
-
-	(void) close (contracts_fd);
-
-	contracts_fd = -1;
-}
-
-void
-contracts_post_fork_parent (int fork_succeeded)
-{
-	char path[PATH_MAX];
-	int cfd;
-	ct_stathdl_t status;
-	ctid_t latest;
-
-	/* Clear active template, abandon latest contract. */
-	if (contracts_fd == -1)
-		return;
-
-	if ((errno = ct_tmpl_clear (contracts_fd)))
-		mdm_debug ("Error while clearing active contract template: %s",
-			   strerror (errno));
-	else
-		mdm_debug ("Cleared active contract template (parent)");
-
-	if (!fork_succeeded)
-		return;
-
-	if ((cfd = open64 (CTFS_ROOT "/process/latest", O_RDONLY)) == -1) {
-		mdm_debug ("Error getting latest contract: %s",
-			   strerror(errno));
-		return;
-	}
-
-	if ((errno = ct_status_read (cfd, CTD_COMMON, &status)) != 0) {
-		mdm_debug ("Error getting latest contract ID: %s",
-			   strerror(errno));
-		(void) close (cfd);
-		return;
-	}
-
-	latest = ct_status_get_id (status);
-	ct_status_free (status);
-	(void) close (cfd);
-
-
-	if ((snprintf (path, PATH_MAX, CTFS_ROOT "/all/%ld/ctl", latest)) >=
-	     PATH_MAX) {
-		mdm_debug ("Error opening the latest contract ctl file: %s",
-			   strerror (ENAMETOOLONG));
-		return;
-	}
-
-	cfd = open64 (path, O_WRONLY);
-	if (cfd == -1) {
-		mdm_debug ("Error opening the latest contract ctl file: %s",
-			   strerror (errno));
-		return;
-	}
- 
-	if ((errno = ct_ctl_abandon (cfd)))
-		mdm_debug ("Error abandoning latest contract: %s",
-			   strerror (errno));
-	else
-		mdm_debug ("Abandoned latest contract");
-
-	(void) close (cfd);
-}
-#endif HAVE_SMF_CONTRACTS
-
 /**
  * mdm_display_manage:
  * @d: Pointer to a MdmDisplay struct
@@ -498,19 +355,12 @@ mdm_display_manage (MdmDisplay *d)
 
     mdm_debug ("Forking slave process");
 
-#ifdef HAVE_SMF_CONTRACTS
-    contracts_pre_fork ();
-#endif
-
     /* Fork slave process */
     pid = d->slavepid = fork ();
 
     switch (pid) {
 
     case 0:
-#ifdef HAVE_SMF_CONTRACTS
-        contracts_post_fork_child ();
-#endif
 
 	setpgid (0, 0);
 
@@ -577,10 +427,6 @@ mdm_display_manage (MdmDisplay *d)
 	VE_IGNORE_EINTR (close (fds[0]));
 	break;
     }
-
-#ifdef HAVE_SMF_CONTRACTS
-    contracts_post_fork_parent ((pid > 0));
-#endif
 
     /* invalidate chosen hostname */
     g_free (d->chosen_hostname);
@@ -749,14 +595,8 @@ mdm_display_dispose (MdmDisplay *d)
     g_free (d->bcookie);
     d->bcookie = NULL;
     
-    d->indirect_id = 0;
-
-    g_free (d->parent_disp);
-    d->parent_disp = NULL;
-
-    g_free (d->parent_auth_file);
-    d->parent_auth_file = NULL;
-
+    d->indirect_id = 0;   
+   
     g_free (d->login);
     d->login = NULL;
 
