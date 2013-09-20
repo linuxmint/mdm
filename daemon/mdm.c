@@ -80,21 +80,13 @@
 #define DYNAMIC_REMOVE  2
 
 /* Local functions */
-static void mdm_handle_message (MdmConnection *conn,
-				const gchar *msg,
-				gpointer data);
-static void mdm_handle_user_message (MdmConnection *conn,
-				     const gchar *msg,
-				     gpointer data);
+static void mdm_handle_message (MdmConnection *conn, const gchar *msg, gpointer data);
+static void mdm_handle_user_message (MdmConnection *conn, const gchar *msg, gpointer data);
 static void mdm_daemonify (void);
 static void mdm_safe_restart (void);
 static void mdm_try_logout_action (MdmDisplay *disp);
 static void mdm_restart_now (void);
-static void handle_flexi_server (MdmConnection *conn,
-				 int type,
-				 const gchar *server,
-				 gboolean handled,
-				 const gchar *username);
+static void handle_flexi_server (MdmConnection *conn, int type, const gchar *server, gboolean handled, const gchar *username);
 
 /* Global vars */
 
@@ -2344,9 +2336,7 @@ mdm_handle_message (MdmConnection *conn, const char *msg, gpointer data)
 			send_slave_ack (d, NULL);
 		}
 	} else if (strcmp (msg, MDM_SOP_FLEXI_XSERVER) == 0) {
-		handle_flexi_server (NULL, TYPE_FLEXI, mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER),
-				     TRUE /* handled */,
-				     NULL);
+		handle_flexi_server (NULL, TYPE_FLEXI, mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER), TRUE, NULL);
 	} else if (strncmp (msg, "opcode="MDM_SOP_SHOW_ERROR_DIALOG,
 			    strlen ("opcode="MDM_SOP_SHOW_ERROR_DIALOG)) == 0) {
 		char **list;
@@ -2580,11 +2570,7 @@ close_conn (gpointer data)
 }
 
 static void
-handle_flexi_server (MdmConnection *conn,
-		     int            type,
-		     const char    *server,
-		     gboolean       handled,
-		     const char    *username)
+handle_flexi_server (MdmConnection *conn, int type, const char *server, gboolean handled, const char *username)
 {
 	MdmDisplay *display;
 	gchar *bin;
@@ -2848,10 +2834,7 @@ sup_handle_attached_servers (MdmConnection *conn,
 
 	if (strncmp (msg, MDM_SUP_ATTACHED_SERVERS,
 		     strlen (MDM_SUP_ATTACHED_SERVERS)) == 0)
-		msgLen = strlen (MDM_SUP_ATTACHED_SERVERS);
-	else if (strncmp (msg, MDM_SUP_CONSOLE_SERVERS,
-			  strlen (MDM_SUP_CONSOLE_SERVERS)) == 0)
-		msgLen = strlen (MDM_SUP_CONSOLE_SERVERS);
+		msgLen = strlen (MDM_SUP_ATTACHED_SERVERS);	
 
 	key = g_strdup (&msg[msgLen]);
 	g_strstrip (key);
@@ -2927,83 +2910,6 @@ sup_handle_get_server_details (MdmConnection *conn,
 		mdm_connection_printf (conn, "ERROR 1 Server not found\n");
 	}
 	g_strfreev (splitstr);
-}
-
-static void
-sup_handle_flexi_xserver (MdmConnection *conn,
-			  const char    *msg,
-			  gpointer       data)
-{
-	char       *name;
-	const char *command = NULL;
-	MdmXserver *svr;
-	const char *rest;
-	char       *username;
-	char       *end;
-	gboolean    has_user;
-
-	has_user = strncmp (msg, MDM_SUP_FLEXI_XSERVER_USER " ", strlen (MDM_SUP_FLEXI_XSERVER_USER " ")) == 0;
-
-	mdm_debug ("Handling flexi request has-user:%d", has_user);
-
-	/* Only allow locally authenticated connections */
-	if ( ! MDM_CONN_AUTHENTICATED (conn)) {
-		mdm_info (_("%s request denied: "
-			    "Not authenticated"), "FLEXI_XSERVER");
-		mdm_connection_write (conn,
-				      "ERROR 100 Not authenticated\n");
-		return;
-	}
-
-	if (has_user) {
-		rest = msg + strlen (MDM_SUP_FLEXI_XSERVER_USER " ");
-		end = strchr (rest, ' ');
-		if (end) {
-			username = g_strndup (rest, end - rest);
-			rest = end + 1;
-		} else {
-			username = g_strdup (rest);
-			rest = rest + strlen (rest);
-		}
-	} else {
-		rest = msg + strlen (MDM_SUP_FLEXI_XSERVER " ");
-		username = NULL;
-	}
-
-	name = g_strdup (rest);
-	g_strstrip (name);
-	if (ve_string_empty (name)) {
-		g_free (name);
-		name = g_strdup (MDM_STANDARD);
-	}
-
-	svr = mdm_daemon_config_find_xserver (name);
-
-	if G_UNLIKELY (svr == NULL) {
-		/* Don't print the name to syslog as it might be
-		 * long and dangerous */
-		mdm_error (_("Unknown server type requested; using "
-			     "standard server."));
-		command = mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER);
-	} else if G_UNLIKELY ( ! svr->flexible) {
-		mdm_error (_("Requested server %s not allowed to be "
-			     "used for flexible servers; using "
-			     "standard server."), name);
-		command = mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER);
-	} else {
-		command = svr->command;
-	}
-	g_free (name);
-
-	handle_flexi_server (conn,
-			     TYPE_FLEXI,
-			     command,
-			     /* It is kind of ugly that we don't use
-				the standard resolution for this, but
-				oh well, this makes other things simpler */
-			     svr->handled,
-			     username);
-	g_free (username);
 }
 
 static void
@@ -3469,22 +3375,10 @@ mdm_handle_user_message (MdmConnection *conn,
 			return;
 		}
 
-		handle_flexi_server (conn,
-				     TYPE_FLEXI,
-				     mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER),
-				     TRUE /* handled */,
-				     NULL);
-	} else if ((strncmp (msg, MDM_SUP_FLEXI_XSERVER_USER " ",
-			     strlen (MDM_SUP_FLEXI_XSERVER_USER " ")) == 0) ||
-                   (strncmp (msg, MDM_SUP_FLEXI_XSERVER " ",
-			     strlen (MDM_SUP_FLEXI_XSERVER " ")) == 0)) {
-
-		sup_handle_flexi_xserver (conn, msg, data);
+		handle_flexi_server (conn, TYPE_FLEXI, mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER), TRUE, NULL);
 
 	} else if ((strncmp (msg, MDM_SUP_ATTACHED_SERVERS,
-	                     strlen (MDM_SUP_ATTACHED_SERVERS)) == 0) ||
-	           (strncmp (msg, MDM_SUP_CONSOLE_SERVERS,
-	                     strlen (MDM_SUP_CONSOLE_SERVERS)) == 0)) {
+	                     strlen (MDM_SUP_ATTACHED_SERVERS)) == 0)) {
 
 		sup_handle_attached_servers (conn, msg, data);
 

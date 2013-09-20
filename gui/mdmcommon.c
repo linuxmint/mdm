@@ -461,7 +461,7 @@ mdm_common_get_config_file (void)
 	gchar *config_file;
 
 	/* Get config file */
-	result = mdmcomm_send_cmd_to_daemon ("GET_CONFIG_FILE");
+	result = mdmcomm_send_cmd_to_daemon (MDM_SUP_GET_CONFIG_FILE);
 	if (! result)
 		return NULL;
 
@@ -486,7 +486,7 @@ mdm_common_get_custom_config_file (void)
 	gchar *config_file;
 
 	/* Get config file */
-	result = mdmcomm_send_cmd_to_daemon ("GET_CUSTOM_CONFIG_FILE");
+	result = mdmcomm_send_cmd_to_daemon (MDM_SUP_GET_CUSTOM_CONFIG_FILE);
 	if (! result)
 		return NULL;
 

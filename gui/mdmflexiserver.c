@@ -5,7 +5,7 @@
 // MDMFlexiServer is like a remote control... it can be used to send commands with the --command option, or to ask for a new greeter.
 // It uses mdmcomm.c to talk with MDM via the socket:
 // If --command is used, it sends that command to MDM.
-// Otherwise, it asks MDM for a list of already running greeters, with the command "CONSOLE_SERVERS".
+// Otherwise, it asks MDM for a list of already running greeters, with the command "MDM_SUP_ATTACHED_SERVERS".
 // If some greeters are already running, it picks the first one, locks the screen and switches the screen to its VT.
 // If none are running, it locks the screen and sends MDM the command "MDM_SUP_FLEXI_XSERVER" to start a new greeter.
 
@@ -71,7 +71,7 @@ get_cur_vt (void)
 		return cur_vt;
 	}
 
-	ret = mdmcomm_send_cmd_to_daemon_with_args ("QUERY_VT", auth_cookie, 5);
+	ret = mdmcomm_send_cmd_to_daemon_with_args (MDM_SUP_QUERY_VT, auth_cookie, 5);
 	if (ve_string_empty (ret) || strncmp (ret, "OK ", 3) != 0) {
 		goto out;
 	}
@@ -251,7 +251,7 @@ check_for_users (void)
 	    get_cur_vt () < 0)
 		return;
 
-	ret = mdmcomm_send_cmd_to_daemon_with_args ("CONSOLE_SERVERS", auth_cookie, 5);
+	ret = mdmcomm_send_cmd_to_daemon_with_args (MDM_SUP_ATTACHED_SERVERS, auth_cookie, 5);
 	if (ve_string_empty (ret) ||
 	    strncmp (ret, "OK ", 3) != 0) {
 		g_free (ret);
@@ -334,7 +334,6 @@ int
 main (int argc, char *argv[])
 {
 	GtkWidget *dialog;
-	char *command;
 	char *ret;
 	const char *message;
 	GOptionContext *ctx;
@@ -465,10 +464,8 @@ main (int argc, char *argv[])
 		return 1;
 	}
 	
-	command = g_strdup (MDM_SUP_FLEXI_XSERVER);	
+	ret = mdmcomm_send_cmd_to_daemon_with_args (MDM_SUP_FLEXI_XSERVER, auth_cookie, 5);
 
-	ret = mdmcomm_send_cmd_to_daemon_with_args (command, auth_cookie, 5);
-	g_free (command);
 	g_free (auth_cookie);
 	g_strfreev (args_remaining);
 
