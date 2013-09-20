@@ -3188,8 +3188,6 @@ mdm_handle_user_message (MdmConnection *conn,
 			    strlen (MDM_SUP_SET_VT " ")) == 0) {
 
 		sup_handle_set_vt (conn, msg, data);	
-	} else if (strcmp (msg, MDM_SUP_VERSION) == 0) {
-		mdm_connection_write (conn, "MDM " VERSION "\n");	
 	} else if (strcmp (msg, MDM_SUP_CLOSE) == 0) {
 		mdm_connection_close (conn);
 	} else {

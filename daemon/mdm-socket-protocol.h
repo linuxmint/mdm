@@ -198,7 +198,6 @@
 /* The user protocol, using /tmp/.mdm_socket */
 
 
-#define MDM_SUP_VERSION "VERSION"
 #define MDM_SUP_AUTH_LOCAL "AUTH_LOCAL"
 #define MDM_SUP_FLEXI_XSERVER "FLEXI_XSERVER"
 #define MDM_SUP_ATTACHED_SERVERS "ATTACHED_SERVERS"

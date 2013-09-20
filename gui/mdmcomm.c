@@ -211,34 +211,12 @@ mdmcomm_call_mdm_real (const char *command,
 		}
 
 		/*
-                 * If we get this far, then even if we did sleep in the past,
+         * If we get this far, then even if we did sleep in the past,
 		 * we did get a connection, so no need to prevent future
 		 * sleeps if required.
                  */
 		allow_sleep          = TRUE;
-                did_sleep_on_failure = FALSE;
-
-		/* Version check first - only check first time */
-		ret = do_command (comm_fd, MDM_SUP_VERSION, TRUE);
-		if (ret == NULL) {
-			if ( !quiet)
-				mdm_common_debug ("  Version check failed");
-			VE_IGNORE_EINTR (close (comm_fd));
-			comm_fd = 0;
-			return mdmcomm_call_mdm_real (command, auth_cookie,
-						      tries - 1, try_start);
-		}
-		if (strncmp (ret, "MDM ", strlen ("MDM ")) != 0) {
-			if ( !quiet)
-				mdm_common_debug ("  Version check failed, bad name");
-
-			g_free (ret);
-			do_command (comm_fd, MDM_SUP_CLOSE, FALSE);
-			VE_IGNORE_EINTR (close (comm_fd));
-			comm_fd = 0;
-			return NULL;
-		}		
-		g_free (ret);
+        did_sleep_on_failure = FALSE;	
 	}
 
 	/* require authentication */
