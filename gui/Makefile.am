@@ -47,14 +47,10 @@ sbin_PROGRAMS = \
 	mdmsetup
 
 bin_PROGRAMS = \
-	mdmflexiserver      \
-	mdmdynamic
+	mdmflexiserver
 
 mdmflexiserver_SOURCES = \
 	mdmflexiserver.c
-
-mdmdynamic_SOURCES = \
-	mdmdynamic.c
 
 libmdmwm_a_SOURCES = \
 	mdmwm.c			\
@@ -169,21 +165,6 @@ mdmflexiserver_LDADD = \
 	$(GLIB_LIBS)		\
 	$(GOBJECT_LIBS)		\
 	$(GDK_LIBS)		\
-	$(top_builddir)/common/libmdmcommon.a \
-	$(EXTRA_SOCKET_LIB)	\
-	$(EXTRA_NSL_LIB)	\
-	$(X_LIBS)		\
-	-lX11			\
-	-lXau			\
-	$(NULL)
-
-mdmdynamic_LDADD = 		\
-	libmdmcommon.a		\
-	$(GUI_LIBS)		\
-	$(INTLLIBS) 		\
-	$(GLIB_LIBS) 		\
-	$(GOBJECT_LIBS) 	\
-	$(GDK_LIBS) 		\
 	$(top_builddir)/common/libmdmcommon.a \
 	$(EXTRA_SOCKET_LIB)	\
 	$(EXTRA_NSL_LIB)	\
