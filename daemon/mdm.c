@@ -121,7 +121,6 @@ int stored_argc     = 0;
 static GMainLoop *main_loop       = NULL;
 static gchar *config_file         = NULL;
 static gboolean mdm_restart_mode  = FALSE;
-static gboolean monte_carlo_sqrt2 = FALSE;
 
 /**
  * mdm_daemonify:
@@ -1121,26 +1120,6 @@ create_connections (void)
 	}
 }
 
-static void
-calc_sqrt2 (void)
-{
-	unsigned long n = 0, h = 0;
-	double x;
-	printf ("\n");
-	for (;;) {
-		x = g_random_double_range (1.0, 2.0);
-		if (x*x <= 2.0)
-			h++;
-		n++;
-		if ( ! (n & 0xfff)) {
-			double sqrttwo = 1.0 + ((double)h)/(double)n;
-			printf ("sqrt(2) ~~ %1.10f\t(1 + %lu/%lu) "
-				"iteration: %lu \r",
-				sqrttwo, h, n, n);
-		}
-	}
-}
-
 GOptionEntry options [] = {
 	{ "nodaemon", '\0', 0, G_OPTION_ARG_NONE,
 	  &no_daemon, N_("Do not fork into the background"), NULL },
@@ -1153,9 +1132,7 @@ GOptionEntry options [] = {
 	{ "version", '\0', 0, G_OPTION_ARG_NONE,
 	  &print_version, N_("Print MDM version"), NULL },
 	{ "wait-for-go", '\0', 0, G_OPTION_ARG_NONE,
-	  &mdm_wait_for_go, N_("Start the first X server but then halt until we get a GO in the fifo"), NULL },
-	{ "monte-carlo-sqrt2", 0, 0, G_OPTION_ARG_NONE,
-	  &monte_carlo_sqrt2, NULL, NULL },
+	  &mdm_wait_for_go, N_("Start the first X server but then halt until we get a GO in the fifo"), NULL },	
 	{ NULL }
 };
 
@@ -1295,12 +1272,7 @@ main (int argc, char *argv[])
 	}
 
 	g_option_context_parse (ctx, &argc, &argv, NULL);
-	g_option_context_free (ctx);
-
-	if (monte_carlo_sqrt2) {
-		calc_sqrt2 ();
-		return 0;
-	}
+	g_option_context_free (ctx);	
 
 	if (print_version) {
 		printf ("MDM %s\n", VERSION);
