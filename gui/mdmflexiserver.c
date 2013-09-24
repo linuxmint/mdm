@@ -242,56 +242,62 @@ maybe_lock_screen (void)
 static void
 check_for_users (void)
 {
-	char *ret;
-	char **vec;
+	char *result_string;
+	char **servers;
 	int i;
 
-	/* only for console logins on vt supporting systems */
-	if (auth_cookie == NULL ||
-	    get_cur_vt () < 0)
+	// Return if we're not on a VT
+	if (auth_cookie == NULL || get_cur_vt () < 0) {
 		return;
+	}
+		
+    // Get the list of running servers from the daemon
+	result_string = mdmcomm_send_cmd_to_daemon_with_args (MDM_SUP_ATTACHED_SERVERS, auth_cookie, 5);
 
-	ret = mdmcomm_send_cmd_to_daemon_with_args (MDM_SUP_ATTACHED_SERVERS, auth_cookie, 5);
-	if (ve_string_empty (ret) ||
-	    strncmp (ret, "OK ", 3) != 0) {
-		g_free (ret);
+	// Return if the daemon didn't send us the list
+	if (ve_string_empty (result_string) || strncmp (result_string, "OK ", 3) != 0) {
+		g_free (result_string);
 		return;
 	}
 
-	vec = g_strsplit (&ret[3], ";", -1);
-	g_free (ret);
-	if (vec == NULL)
+	// Place the servers into the servers variable	
+	servers = g_strsplit (&result_string[3], ";", -1);
+	g_free (result_string);
+
+	// Return if there are no servers running
+	if (servers == NULL)
 		return;
 
-	for (i = 0; vec[i] != NULL; i++) {
-		char **rvec;
+	// Each server is composed of 3 parts: [display, user, tty]
+	for (i = 0; servers[i] != NULL; i++) {
+		char **server;
 		int vt;
-		rvec = g_strsplit (vec[i], ",", -1);
-		if (mdm_vector_len (rvec) != 3) {
-			g_strfreev (rvec);
+		server = g_strsplit (servers[i], ",", -1);
+		if (mdm_vector_len (server) != 3) {
+			g_strfreev (server);
 			continue;
 		}
 
-		vt = get_vt_num (vec, rvec[2], 5);		
+		// Get the VT of the server
+		vt = get_vt_num (servers, server[2], 5);
 
-		if (strcmp (rvec[0], mdmcomm_get_display ()) != 0 &&
-		    vt >= 0) {
-			/* this is not the current display */
-			/* we switched to a different screen as a result of this,
-			* lock the current screen */
+		// If the server's username is empty, this is a greeter and we want to switch to it
+		if (strcmp (server[1], "") == 0 && vt >= 0) {			
+			// lock the screen
 			if ( ! no_lock && vt != get_cur_vt () && vt >= 0) {
 				maybe_lock_screen ();
 			}
+			// Switch VT
 			change_vt (vt);	
 			printf ("Switching to MDM server on VT #%d\n", vt);
 			exit (0);
 		}
 
-		g_strfreev (rvec);
+		g_strfreev (server);
 	}
 	
 	printf ("Found no MDM server, ordering a new one\n");
-	g_strfreev (vec);
+	g_strfreev (servers);
 }
 
 /**
