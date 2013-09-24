@@ -1157,7 +1157,7 @@ HTML</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="border_width">12</property>
-                    <property name="n_rows">4</property>
+                    <property name="n_rows">5</property>
                     <property name="n_columns">2</property>
                     <property name="column_spacing">6</property>
                     <property name="row_spacing">6</property>
@@ -1235,8 +1235,8 @@ no</property>
                       </widget>
                       <packing>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
+                        <property name="top_attach">3</property>
+                        <property name="bottom_attach">4</property>
                         <property name="y_options"/>
                       </packing>
                     </child>
@@ -1254,8 +1254,24 @@ no</property>
                       </widget>
                       <packing>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
+                        <property name="top_attach">4</property>
+                        <property name="bottom_attach">5</property>
+                        <property name="y_options"/>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkCheckButton" id="select_last_login">
+                        <property name="label" translatable="yes">Automatically select the last logged in user</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="draw_indicator">True</property>
+                      </widget>
+                      <packing>
+                        <property name="right_attach">2</property>
+                        <property name="top_attach">2</property>
+                        <property name="bottom_attach">3</property>
                         <property name="y_options"/>
                       </packing>
                     </child>

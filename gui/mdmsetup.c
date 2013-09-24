@@ -2679,6 +2679,9 @@ setup_security_tab (void)
 	GtkWidget *checkbox;
 	GtkWidget *label;
 
+	/* Setup user preselection */
+	setup_notify_toggle ("select_last_login", MDM_KEY_SELECT_LAST_LOGIN);
+
 	/* Setup Local administrator login setttings */
 	setup_notify_toggle ("allowroot", MDM_KEY_ALLOW_ROOT);
 

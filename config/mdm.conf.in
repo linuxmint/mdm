@@ -188,6 +188,10 @@ VTAllocation=true
 # login and contact the sysadmin (avoids running malicious startup scripts).
 #DisplayLastLogin=false
 
+# If true then the last username who logged in is automatically pre-selected in the login screen
+# and only the password needs to be typed.
+#SelectLastLogin=true
+
 # Program used to play sounds.  Should not require any 'daemon' or anything
 # like that as it will be run when no one is logged in yet.
 #SoundProgram=@SOUND_PROGRAM@
