@@ -456,7 +456,7 @@ create_pamh (MdmDisplay *d,
 
 		if (mdm_daemon_config_get_value_bool (MDM_KEY_SELECT_LAST_LOGIN)) {
 			char last_username[255];
-			FILE *fp = popen("last | head -1 | awk {'print $1;'}", "r");
+			FILE *fp = popen("last | grep tty | head -1 | awk {'print $1;'}", "r");
 			fscanf(fp, "%s", last_username);
 			pclose(fp);
 
