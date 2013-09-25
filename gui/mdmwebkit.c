@@ -1532,9 +1532,9 @@ main (int argc, char *argv[])
     if (g_getenv ("DOING_MDM_DEVELOPMENT") != NULL)
 	    DOING_MDM_DEVELOPMENT = TRUE;
 
-    bindtextdomain ("mdm", "/usr/share/mdm/locale/");
-    bind_textdomain_codeset ("mdm", "UTF-8");
-    textdomain ("mdm");
+    bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+    bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+    textdomain (GETTEXT_PACKAGE);
 
     /*
      * mdm_common_atspi_launch () needs gdk initialized.
