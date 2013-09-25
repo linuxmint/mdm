@@ -72,7 +72,6 @@
 #define MDM_INTERRUPT_SELECT_USER 'U'
 #define MDM_INTERRUPT_LOGIN_SOUND 'L'
 #define MDM_INTERRUPT_THEME       'H'
-#define MDM_INTERRUPT_CUSTOM_CMD  'M'
 #define MDM_INTERRUPT_CANCEL      'X'
 #define MDM_INTERRUPT_SELECT_LANG 'O'
 
@@ -91,12 +90,9 @@
  * used from inside slaves, so those messages may stop being processed
  * by the fifo at some point perhaps.  */
 /* The fifo protocol, used only by mdm internally */
-#define MDM_SOP_CHOSEN       "CHOSEN" /* <indirect id> <ip addr> */
-#define MDM_SOP_CHOSEN_LOCAL "CHOSEN_LOCAL" /* <slave pid> <hostname> */
 #define MDM_SOP_XPID         "XPID" /* <slave pid> <xpid> */
 #define MDM_SOP_SESSPID      "SESSPID" /* <slave pid> <sesspid> */
 #define MDM_SOP_GREETPID     "GREETPID" /* <slave pid> <greetpid> */
-#define MDM_SOP_CHOOSERPID   "CHOOSERPID" /* <slave pid> <chooserpid> */
 #define MDM_SOP_LOGGED_IN    "LOGGED_IN" /* <slave pid> <logged_in as int> */
 #define MDM_SOP_LOGIN        "LOGIN" /* <slave pid> <username> */
 #define MDM_SOP_COOKIE       "COOKIE" /* <slave pid> <cookie> */
@@ -113,48 +109,20 @@
 	/* 4 = X too busy */
 	/* 5 = Nest display can't connect */
 #define MDM_SOP_FLEXI_OK     "FLEXI_OK" /* <slave pid> */
-#define MDM_SOP_SOFT_RESTART "SOFT_RESTART" /* no arguments */
 #define MDM_SOP_START_NEXT_LOCAL "START_NEXT_LOCAL" /* no arguments */
-#define MDM_SOP_HUP_ALL_GREETERS "HUP_ALL_GREETERS" /* no arguments */
-
-/* stop waiting for this and go on with your life, useful with
-   the --wait-for-go command line option */
-#define MDM_SOP_GO "GO" /* no arguments */
-
-/* sometimes we can't do a syslog so we tell the main daemon */
-#define MDM_SOP_SYSLOG "SYSLOG" /* <pid> <type> <message> */
 
 /* write out a sessreg (xdm) compatible Xservers file
  * in the ServAuthDir as <name>.Xservers */
 #define MDM_SOP_WRITE_X_SERVERS "WRITE_X_SERVERS" /* <slave pid> */
 
-/* All X servers should be restarted rather then regenerated.  Useful
- * if you have updated the X configuration.  Note that this happens
- * only when the user logs out or when we otherwise would have restarted
- * a server, nothing is done by this command. */
-#define MDM_SOP_DIRTY_SERVERS "DIRTY_SERVERS"  /* no arguments */
-
-/* restart all servers that people aren't logged in on.  Maybe you may not
- * want to do this on every change of X server config since this may cause
- * flicker on screen and jumping around on the vt.  Perhaps useful to do
- * by asking the user if they want to do that.  Note that this will not
- * kill any logged in sessions. */
-#define MDM_SOP_SOFT_RESTART_SERVERS "SOFT_RESTART_SERVERS"  /* no arguments */
 /* Suspend the machine if it is even allowed */
 #define MDM_SOP_SUSPEND_MACHINE "SUSPEND_MACHINE"  /* no arguments */
 #define MDM_SOP_CHOSEN_THEME "CHOSEN_THEME"  /* <slave pid> <theme name> */
-
-/*Execute custom cmd*/
-#define MDM_SOP_CUSTOM_CMD "CUSTOM_CMD"  /* <slave pid> <cmd id> */
-
-/* Start a new standard X flexible server */
-#define MDM_SOP_FLEXI_XSERVER "FLEXI_XSERVER" /* no arguments */
 
 #define MDM_SOP_SHOW_ERROR_DIALOG "SHOW_ERROR_DIALOG"  /* show the error dialog from daemon */
 #define MDM_SOP_SHOW_YESNO_DIALOG "SHOW_YESNO_DIALOG"  /* show the yesno dialog from daemon */
 #define MDM_SOP_SHOW_QUESTION_DIALOG "SHOW_QUESTION_DIALOG"  /* show the question dialog from daemon */
 #define MDM_SOP_SHOW_ASKBUTTONS_DIALOG "SHOW_ASKBUTTON_DIALOG"  /* show the askbutton dialog from daemon */
-
 
 /* Ack for a slave message */
 /* Note that an extra response can follow an 'ack' */
@@ -202,39 +170,23 @@
 /* The user protocol, using /tmp/.mdm_socket */
 
 
-#define MDM_SUP_VERSION "VERSION"
 #define MDM_SUP_AUTH_LOCAL "AUTH_LOCAL"
 #define MDM_SUP_FLEXI_XSERVER "FLEXI_XSERVER"
-#define MDM_SUP_FLEXI_XSERVER_USER  "FLEXI_XSERVER_USER"
-#define MDM_SUP_FLEXI_XNEST  "FLEXI_XNEST"
-#define MDM_SUP_FLEXI_XNEST_USER  "FLEXI_XNEST_USER"
-#define MDM_SUP_ADD_DYNAMIC_DISPLAY	"ADD_DYNAMIC_DISPLAY"
-#define MDM_SUP_RELEASE_DYNAMIC_DISPLAYS	"RELEASE_DYNAMIC_DISPLAYS"
-#define MDM_SUP_REMOVE_DYNAMIC_DISPLAY	"REMOVE_DYNAMIC_DISPLAY"
 #define MDM_SUP_ATTACHED_SERVERS "ATTACHED_SERVERS"
-#define MDM_SUP_CONSOLE_SERVERS  "CONSOLE_SERVERS"
-#define MDM_SUP_ALL_SERVERS  "ALL_SERVERS"
-#define MDM_SUP_GET_SERVER_LIST "GET_SERVER_LIST"
-#define MDM_SUP_GET_SERVER_DETAILS "GET_SERVER_DETAILS"
 #define MDM_SUP_GET_CONFIG "GET_CONFIG"
 #define MDM_SUP_GET_CONFIG_FILE  "GET_CONFIG_FILE"
 #define MDM_SUP_GET_CUSTOM_CONFIG_FILE  "GET_CUSTOM_CONFIG_FILE"
 #define MDM_SUP_UPDATE_CONFIG "UPDATE_CONFIG"
 #define MDM_SUP_GREETERPIDS  "GREETERPIDS"
 #define MDM_SUP_QUERY_LOGOUT_ACTION "QUERY_LOGOUT_ACTION"
-#define MDM_SUP_QUERY_CUSTOM_CMD_LABELS "QUERY_CUSTOM_CMD_LABELS"
-#define MDM_SUP_QUERY_CUSTOM_CMD_NO_RESTART_STATUS "QUERY_CUSTOM_CMD_NO_RESTART_STATUS"
 #define MDM_SUP_SET_LOGOUT_ACTION "SET_LOGOUT_ACTION"
 #define MDM_SUP_SET_SAFE_LOGOUT_ACTION "SET_SAFE_LOGOUT_ACTION"
 #define MDM_SUP_LOGOUT_ACTION_NONE	          "NONE"
 #define MDM_SUP_LOGOUT_ACTION_HALT	          "HALT"
 #define MDM_SUP_LOGOUT_ACTION_REBOOT	          "REBOOT"
 #define MDM_SUP_LOGOUT_ACTION_SUSPEND	          "SUSPEND"
-#define MDM_SUP_LOGOUT_ACTION_CUSTOM_CMD_TEMPLATE "CUSTOM_CMD"
 #define MDM_SUP_QUERY_VT "QUERY_VT"
 #define MDM_SUP_SET_VT "SET_VT"
-#define MDM_SUP_SERVER_BUSY "SERVER_BUSY"
-#define MDM_SUP_GET_SERVER_DETAILS "GET_SERVER_DETAILS"
 #define MDM_SUP_CLOSE        "CLOSE"
 
 /* User flags for the SUP protocol */

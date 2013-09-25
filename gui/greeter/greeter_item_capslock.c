@@ -67,8 +67,7 @@ greeter_is_capslock_on (void)
   Display *dsp;
 
   /* HACK! incredible hack, if this is set we get
-   * indicator state from the parent display, since we must be inside an
-   * Xnest */
+   * indicator state from the parent display, since we must be inside a nested display */
   dsp = get_parent_display ();
   if (dsp == NULL)
     dsp = GDK_DISPLAY ();

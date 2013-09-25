@@ -54,7 +54,6 @@
 
 #include "mdm.h"
 #include "misc.h"
-#include "xdmcp.h"
 #include "slave.h"
 
 #include "mdm-common.h"
@@ -67,99 +66,12 @@ extern pid_t extra_process;
 
 #ifdef ENABLE_IPV6
 
-#ifdef __sun
-static gboolean 
-have_ipv6_solaris (void)
-{
-          int            s, i;
-          int            ret;
-          struct lifnum  ln; 
-          struct lifconf ifc;
-          struct lifreq *ifr;   
-          char          *ifreqs;
-          
-          /* First, try the <AB>classic<BB> way */
-          s = socket (AF_INET6, SOCK_DGRAM, 0);
-          if (s < 0) return FALSE;
-          close (s);
-
-          s = socket (AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
-
-          /*
-           * Ok, the system is able to create IPv6 sockets, so
-           * lets check if IPv6 is configured in the machine
-           */
-          ln.lifn_family=AF_UNSPEC;
-          ln.lifn_flags=ln.lifn_count=0; 
-
-          ret = ioctl (s, SIOCGLIFNUM, &ln);
-          if (ret == -1) {
-                        perror ("ioctl SIOCGLIFNUM");
-                        return FALSE;
-          }
-
-          /* Alloc the memory and get the configuration */
-          ifc.lifc_flags  = 0; 
-          ifc.lifc_family = AF_UNSPEC;
-          ifc.lifc_len    = ln.lifn_count * sizeof (struct lifreq);
-
-          ifreqs = (char *) malloc (ifc.lifc_len);
-          ifc.lifc_buf = ifreqs;
-
-          if (ioctl (s, SIOCGLIFCONF, &ifc) < 0) {
-                        perror ("ioctl SIOCGLIFCONF");
-                        return FALSE;
-          }
-
-          /* Check each interface */
-          ifr  = ifc.lifc_req;
-          ret  = FALSE;
-
-          for (i = ifc.lifc_len/sizeof (struct lifreq); --i >= 0; ifr++) {
-                struct sockaddr_in *sin;
-
-                        /* Check the address */
-                        if (ioctl (s, SIOCGLIFFLAGS, ifr) < 0) {
-                                   /* perror ("ioctl SIOCGLIFADDR"); */
-                                   continue;
-                        }
-
-                        sin = (struct sockaddr_in *)&ifr->lifr_addr;
-
-                        if (sin->sin_family == AF_INET6) {
-                                   ret = TRUE;
-                                   break;
-                        }
-
-                        /* Check the interface flags */
-                        if (ioctl (s, SIOCGLIFFLAGS, (char *) ifr) < 0) {
-                                   /* perror ("ioctl SIOCGLIFFLAGS"); */
-                                   continue;
-                        }
-
-                        if (ifr->lifr_flags & IFF_IPV6) {      
-                                   ret = TRUE;
-                                   break;
-                        }
-          }
-          
-          /* Clean up */
-          free (ifreqs);
-          close (s);
-
-          return ret;
-}
-#endif
-
 static gboolean
 have_ipv6 (void)
 {
 	int s;
         static gboolean has_ipv6 = -1;
 
-#ifdef __sun
-        has_ipv6 = have_ipv6_solaris ();
-#else
         if (has_ipv6 != -1) return has_ipv6;
 
         s = socket (AF_INET6, SOCK_STREAM, 0);  
@@ -169,7 +81,6 @@ have_ipv6 (void)
 	}
 
        VE_IGNORE_EINTR (close (s));            
-#endif
        return has_ipv6;
 }
 #endif
@@ -806,12 +717,7 @@ mdm_fork_extra (void)
 		 * possible children
                  */
 		setsid ();
-
-		/* Harmless in children, but in case we'd run
-		   extra processes from main daemon would fix
-		   problems ... */
-		if (mdm_daemon_config_get_value_bool (MDM_KEY_XDMCP))
-			mdm_xdmcp_close ();
+		
 	}
 
 	return pid;
@@ -888,10 +794,6 @@ mdm_ensure_sanity (void)
 {
 	uid_t old_euid;
 	gid_t old_egid;
-
-#ifdef __sun
-	return;
-#endif
 
 	old_euid = geteuid ();
 	old_egid = getegid ();
@@ -1001,12 +903,12 @@ mdm_setup_gids (const char *login, gid_t gid)
 	 * stuff here
          */
 	if G_UNLIKELY (setgid (gid) < 0)  {
-		mdm_error (_("Could not setgid %d. Aborting."), (int)gid);
+		mdm_error ("Could not setgid %d. Aborting.", (int)gid);
 		return FALSE;
 	}
 
 	if G_UNLIKELY (initgroups (login, gid) < 0) {
-		mdm_error (_("initgroups () failed for %s. Aborting."), login);
+		mdm_error ("initgroups () failed for %s. Aborting.", login);
 		return FALSE;
 	}
 
@@ -1257,8 +1159,7 @@ mdm_signal_ignore (int signal)
 	sigemptyset (&ign_signal.sa_mask);
 
 	if G_UNLIKELY (sigaction (signal, &ign_signal, NULL) < 0)
-		mdm_error (_("%s: Error setting signal %d to %s"),
-			   "mdm_signal_ignore", signal, "SIG_IGN");
+		mdm_error ("mdm_signal_ignore: Error setting signal %d to %s", signal, "SIG_IGN");
 }
 
 void
@@ -1271,118 +1172,10 @@ mdm_signal_default (int signal)
 	sigemptyset (&def_signal.sa_mask);
 
 	if G_UNLIKELY (sigaction (signal, &def_signal, NULL) < 0)
-		mdm_error (_("%s: Error setting signal %d to %s"),
-			   "mdm_signal_ignore", signal, "SIG_DFL");
+		mdm_error ("mdm_signal_ignore: Error setting signal %d to %s", signal, "SIG_DFL");
 }
 
-static MdmHostent *
-fillout_addrinfo (struct addrinfo *res,
-		  struct sockaddr *ia,
-		  const char *name)
-{
-	MdmHostent *he;
-	gint i;
-	gint addr_count = 0;
-	struct addrinfo *tempaddrinfo;
-
-	he = g_new0 (MdmHostent, 1);
-
-	he->addrs = NULL;
-	he->addr_count = 0;
-
-	if (res != NULL && res->ai_canonname != NULL) {
-		he->hostname = g_strdup (res->ai_canonname);
-		he->not_found = FALSE;
-	} else {
-		he->not_found = TRUE;
-		if (name != NULL)
-			he->hostname = g_strdup (name);
-		else {
-			static char buffer6[INET6_ADDRSTRLEN];
-			static char buffer[INET_ADDRSTRLEN];
-			const char *new = NULL;
-
-			if (ia->sa_family == AF_INET6) {
-				if (IN6_IS_ADDR_V4MAPPED (&((struct sockaddr_in6 *)ia)->sin6_addr)) {
-					new = inet_ntop (AF_INET, &(((struct sockaddr_in6 *)ia)->sin6_addr.s6_addr[12]), buffer, sizeof (buffer));
-				} else {
-					new = inet_ntop (AF_INET6, &((struct sockaddr_in6 *)ia)->sin6_addr, buffer6, sizeof (buffer6));
-				}
-			} else if (ia->sa_family == AF_INET) {
-				new = inet_ntop (AF_INET, &((struct sockaddr_in *)ia)->sin_addr, buffer, sizeof (buffer));
-			}
-
-			if (new != NULL) {
-				he->hostname = g_strdup (new);
-			} else {
-				he->hostname = NULL;
-			}
-		}
-	}
-
-	tempaddrinfo = res;
-
-	while (res != NULL) {
-		addr_count++;
-		res = res->ai_next;
-	}
-
-	he->addrs = g_new0 (struct sockaddr_storage, addr_count);
-	he->addr_count = addr_count;
-	res = tempaddrinfo;
-	for (i = 0; ; i++) {
-		if (res == NULL)
-			break;
-
-		if ((res->ai_family == AF_INET) || (res->ai_family == AF_INET6)) {
-			(he->addrs)[i] = *(struct sockaddr_storage *)(res->ai_addr);
-		}
-
-		res = res->ai_next;
-	}
-
-	/* We don't want the ::ffff: that could arise here */
-	if (he->hostname != NULL &&
-	    strncmp (he->hostname, "::ffff:", 7) == 0) {
-		strcpy (he->hostname, he->hostname + 7);
-	}
-
-	return he;
-}
-
-static gboolean do_jumpback = FALSE;
-static Jmp_buf signal_jumpback;
 static struct sigaction oldterm, oldint, oldhup;
-
-static void
-jumpback_sighandler (int signal)
-{
-	/*
-         * This avoids a race see Note below.
-	 * We want to jump back only on the first
-	 * signal invocation, even if the signal
-	 * handler didn't return.
-         */
-	gboolean old_do_jumpback = do_jumpback;
-	do_jumpback = FALSE;
-
-	if (signal == SIGINT)
-		oldint.sa_handler (signal);
-	else if (signal == SIGTERM)
-		oldint.sa_handler (signal);
-	else if (signal == SIGHUP)
-		oldint.sa_handler (signal);
-	/* No others should be set up */
-
-	/* Note that we may not get here since
-	   the SIGTERM handler in slave.c
-	   might have in fact done the big Longjmp
-	   to the slave's death */
-
-	if (old_do_jumpback) {
-		Longjmp (signal_jumpback, 1);
-	}
-}
 
 /*
  * This sets up interruptes to be proxied and the
@@ -1395,227 +1188,30 @@ jumpback_sighandler (int signal)
     struct sigaction term;
 
 #define SETUP_INTERRUPTS_FOR_TERM_SETUP \
-    do_jumpback = FALSE;						\
     									\
     term.sa_handler = jumpback_sighandler;				\
     term.sa_flags = SA_RESTART;						\
     sigemptyset (&term.sa_mask);					\
 									\
     if G_UNLIKELY (sigaction (SIGTERM, &term, &oldterm) < 0) 		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "TERM", strerror (errno)); \
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "TERM", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGINT, &term, &oldint) < 0)		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "INT", strerror (errno)); \
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "INT", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGHUP, &term, &oldhup) < 0) 		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "HUP", strerror (errno)); \
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "HUP", strerror (errno)); \
 
 #define SETUP_INTERRUPTS_FOR_TERM_TEARDOWN \
-    do_jumpback = FALSE;						\
 									\
     if G_UNLIKELY (sigaction (SIGTERM, &oldterm, NULL) < 0) 		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "TERM", strerror (errno)); \
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "TERM", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGINT, &oldint, NULL) < 0) 		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "INT", strerror (errno)); \
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "INT", strerror (errno)); \
 									\
     if G_UNLIKELY (sigaction (SIGHUP, &oldhup, NULL) < 0) 		\
-	mdm_fail (_("%s: Error setting up %s signal handler: %s"),	\
-		  "SETUP_INTERRUPTS_FOR_TERM", "HUP", strerror (errno));
-
-MdmHostent *
-mdm_gethostbyname (const char *name)
-{
-	struct addrinfo hints;
-	/* static because of Setjmp */
-	static struct addrinfo *result;
-
-	SETUP_INTERRUPTS_FOR_TERM_DECLS
-
-	/* The cached address */
-	static MdmHostent *he = NULL;
-	static time_t last_time = 0;
-	static char *cached_hostname = NULL;
-
-	if (cached_hostname != NULL &&
-	    strcmp (cached_hostname, name) == 0) {
-		/* Don't check more then every 60 seconds */
-		if (last_time + 60 > time (NULL))
-			return mdm_hostent_copy (he);
-	}
-
-	SETUP_INTERRUPTS_FOR_TERM_SETUP
-
-	if (Setjmp (signal_jumpback) == 0) {
-		do_jumpback = TRUE;
-
-		/* Find client hostname */
-		memset (&hints, 0, sizeof (hints));
-		hints.ai_socktype = SOCK_DGRAM;
-		hints.ai_flags = AI_CANONNAME;
-
-		if (result) {
-			freeaddrinfo (result);
-			result = NULL;
-		}
-
-		getaddrinfo (name, NULL, &hints, &result);
-		do_jumpback = FALSE;
-	} else {
-               /* Here we got interrupted */
-		result = NULL;
-	}
-
-	SETUP_INTERRUPTS_FOR_TERM_TEARDOWN
-
-	g_free (cached_hostname);
-	cached_hostname = g_strdup (name);
-
-	mdm_hostent_free (he);
-
-	he = fillout_addrinfo (result, NULL, name);
-
-	last_time = time (NULL);
-	return mdm_hostent_copy (he);
-}
-
-MdmHostent *
-mdm_gethostbyaddr (struct sockaddr_storage *ia)
-{
-	struct addrinfo hints;
-	/* static because of Setjmp */
-	static struct addrinfo *result = NULL;
-	struct sockaddr_in6 sin6;
-	struct sockaddr_in sin;
-	static struct in6_addr cached_addr6;
-
-	SETUP_INTERRUPTS_FOR_TERM_DECLS
-
-	/* The cached address */
-	static MdmHostent *he = NULL;
-	static time_t last_time = 0;
-	static struct in_addr cached_addr;
-
-	if (last_time != 0) {
-		if ((ia->ss_family == AF_INET6) && (memcmp (cached_addr6.s6_addr, ((struct sockaddr_in6 *) ia)->sin6_addr.s6_addr, sizeof (struct in6_addr)) == 0)) {
-			/* Don't check more then every 60 seconds */
-			if (last_time + 60 > time (NULL))
-				return mdm_hostent_copy (he);
-		} else if (ia->ss_family == AF_INET) {
-			if (memcmp (&cached_addr, &(((struct sockaddr_in *)ia)->sin_addr), sizeof (struct in_addr)) == 0) {
-				/* Don't check more then every 60 seconds */
-				if (last_time + 60 > time (NULL))
-					return mdm_hostent_copy (he);
-			}
-		}
-	}
-
-	SETUP_INTERRUPTS_FOR_TERM_SETUP
-
-	if (Setjmp (signal_jumpback) == 0) {
-		do_jumpback = TRUE;
-
-		/* Find client hostname */
-		memset (&hints, 0, sizeof (hints));
-		hints.ai_socktype = SOCK_DGRAM;
-		hints.ai_flags = AI_CANONNAME;
-
-		if (result) {
-			freeaddrinfo (result);
-			result = NULL;
-		}
-
-		if (ia->ss_family == AF_INET6) {
-			char buffer6[INET6_ADDRSTRLEN];
-
-			inet_ntop (AF_INET6, &((struct sockaddr_in6 *)ia)->sin6_addr, buffer6, sizeof (buffer6));
-
-			/*
-                         * In the case of IPv6 mapped address strip the
-                         * ::ffff: and lookup as an IPv4 address
-                         */
-			if (strncmp (buffer6, "::ffff:", 7) == 0) {
-				char *temp= (buffer6 + 7);
-				strcpy (buffer6, temp);
-			}
-			getaddrinfo (buffer6, NULL, &hints, &result);
-
-		} else if (ia->ss_family == AF_INET) {
-			char buffer[INET_ADDRSTRLEN];
-
-			inet_ntop (AF_INET, &((struct sockaddr_in *)ia)->sin_addr, buffer, sizeof (buffer));
-
-			getaddrinfo (buffer, NULL, &hints, &result);
-		}
-
-		do_jumpback = FALSE;
-	} else {
-		/* Here we got interrupted */
-		result = NULL;
-	}
-
-	SETUP_INTERRUPTS_FOR_TERM_TEARDOWN
-
-	if (ia->ss_family == AF_INET6) {
-		memcpy (cached_addr6.s6_addr, ((struct sockaddr_in6 *)ia)->sin6_addr.s6_addr, sizeof (struct in6_addr));
-		memset (&sin6, 0, sizeof (sin6));
-		memcpy (sin6.sin6_addr.s6_addr, cached_addr6.s6_addr, sizeof (struct in6_addr));
-		sin6.sin6_family = AF_INET6;
-		he = fillout_addrinfo (result, (struct sockaddr *)&sin6, NULL);
-	}
-	else if (ia->ss_family == AF_INET) {
-		memcpy (&(cached_addr.s_addr), &(((struct sockaddr_in *)ia)->sin_addr.s_addr), sizeof (struct in_addr));
-		memset (&sin, 0, sizeof (sin));
-		memcpy (&sin.sin_addr, &cached_addr, sizeof (struct in_addr));
-		sin.sin_family = AF_INET;
-		he = fillout_addrinfo (result, (struct sockaddr *)&sin, NULL);
-	}
-
-	last_time = time (NULL);
-	return mdm_hostent_copy (he);
-}
-
-MdmHostent *
-mdm_hostent_copy (MdmHostent *he)
-{
-	MdmHostent *cpy;
-
-	if (he == NULL)
-		return NULL;
-
-	cpy = g_new0 (MdmHostent, 1);
-	cpy->not_found = he->not_found;
-	cpy->hostname = g_strdup (he->hostname);
-	if (he->addr_count == 0) {
-		cpy->addr_count = 0;
-		cpy->addrs = NULL;
-	} else {
-		cpy->addr_count = he->addr_count;
-		cpy->addrs = g_new0 (struct sockaddr_storage, he->addr_count);
-		memcpy (cpy->addrs, he->addrs, sizeof (struct sockaddr_storage) * he->addr_count);
-	}
-	return cpy;
-}
-
-void
-mdm_hostent_free (MdmHostent *he)
-{
-	if (he == NULL)
-		return;
-	g_free (he->hostname);
-	he->hostname = NULL;
-
-	g_free (he->addrs);
-	he->addrs = NULL;
-	he->addr_count = 0;
-
-	g_free (he);
-}
+	mdm_fail ("SETUP_INTERRUPTS_FOR_TERM: Error setting up %s signal handler: %s", "HUP", strerror (errno));
 
 /* Like fopen with "w" */
 FILE *

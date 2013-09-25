@@ -2,7 +2,7 @@ AC_PREREQ(2.52)
 AC_INIT(daemon/mdm.h)
 
 AC_CONFIG_HEADERS(config.h)
-AM_INIT_AUTOMAKE(mdm,1.3.1)
+AM_INIT_AUTOMAKE(mdm,1.3.2)
 AC_CONFIG_MACRO_DIR([m4])
 AM_MAINTAINER_MODE
 AC_GNU_SOURCE
@@ -58,10 +58,6 @@ AC_ARG_ENABLE(authentication-scheme,
 AC_ARG_WITH(xinerama,
   [  --with-xinerama=[auto/yes/no]  Add Xinerama support [default=auto]],,
   with_xinerama=auto)
-
-AC_ARG_WITH(xdmcp,
-  [  --with-xdmcp=[auto/yes/no]  Add XDMCP (remote login) support [default=auto]],,
-  with_xdmcp=auto)
 
 AC_ARG_WITH(tcp-wrappers,
   [  --with-tcp-wrappers=[auto/yes/no]  Use TCP Wrappers [default=auto]],,
@@ -239,7 +235,6 @@ dnl ## internationalization support
 AM_GLIB_GNU_GETTEXT
 
 EXTRA_DAEMON_LIBS=""
-EXTRA_CHOOSER_LIBS=""
 EXTRA_GREETER_LIBS=""
 EXTRA_SOCKET_LIB=""
 EXTRA_NSL_LIB=""
@@ -247,12 +242,10 @@ EXTRA_NSL_LIB=""
 AC_CHECK_FUNC(socket,,[
 	      AC_CHECK_LIB(socket,socket, [
 			   EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lsocket"
-			   EXTRA_CHOOSER_LIBS="$EXTRA_CHOOSER_LIBS -lsocket"
                            EXTRA_SOCKET_LIB="-lsocket"])])
 AC_CHECK_FUNC(gethostbyname,,[
 	      AC_CHECK_LIB(nsl,gethostbyname, [
 			   EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lnsl"
-			   EXTRA_CHOOSER_LIBS="$EXTRA_CHOOSER_LIBS -lnsl"
                            EXTRA_NSL_LIB="-lnsl"])])
 AC_CHECK_FUNC(sched_yield,[
 	      AC_DEFINE(HAVE_SCHED_YIELD)],[
@@ -260,9 +253,6 @@ AC_CHECK_FUNC(sched_yield,[
 			   AC_DEFINE(HAVE_SCHED_YIELD)
 			   EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lrt"], [
 			   echo "No sched_yield found"])])
-AC_CHECK_FUNC(inet_aton,,[
-	      AC_CHECK_LIB(resolv,inet_aton, [
-			   EXTRA_CHOOSER_LIBS="$EXTRA_CHOOSER_LIBS -lresolv"])])
 
 AC_MSG_CHECKING(if utmpx structure has ut_syslen field)
 AC_TRY_COMPILE([
@@ -532,44 +522,6 @@ MDM_CHECK_UTMP
 
 
 #
-# Xdmcp checking
-#
-XDMCP_LIBS=""
-if test x$with_xdmcp != xno ; then
-	xdmcp_save_CPPFLAGS="$CPPFLAGS"
-	CPPFLAGS="$CPPFLAGS $X_CFLAGS"
-	AC_CHECK_HEADER(X11/Xdmcp.h, [
-		AC_CHECK_LIB(Xdmcp, XdmcpFlush, [
-		     	AC_DEFINE(HAVE_LIBXDMCP)
-		     	XDMCP_LIBS="-lXdmcp"
-		     	XDMCP_SUPPORT=yes],,[$X_LIBS -lX11 $X_EXTRA_LIBS])
-	],,[#include <X11/Xproto.h>])
-
-	if test x$with_xdmcp = xyes -a x$XDMCP_SUPPORT = x ; then
-		AC_MSG_ERROR(XDMCP support requested but XDMCP libraries not found)
-	fi
-	CPPFLAGS="$xdmcp_save_CPPFLAGS"
-fi
-AC_SUBST(XDMCP_LIBS)
-
-if test x$XDMCP_SUPPORT = xyes ; then
-	AM_CONDITIONAL(XDMCP_SUPPORT, true)
-	MDMCHOOSER=mdmchooser
-	MDMXNESTCHOOSER=mdmXnestchooser
-else
-        # No need for TCP Wrappers in case XDMCP is disabled
-        if test x$with_tcp_wrappers != xno ; then
-	        echo "TCP wrappers not needed if XDMCP is not enabled"
-        fi
-	with_tcp_wrappers=no
-	AM_CONDITIONAL(XDMCP_SUPPORT, false)
-	MDMCHOOSER=
-	MDMXNESTCHOOSER=
-fi
-AC_SUBST(MDMCHOOSER)
-AC_SUBST(MDMXNESTCHOOSER)
-
-#
 # TCP Wrappers for XDMCP access control
 #
 if test x$with_tcp_wrappers = xno ; then
@@ -775,24 +727,6 @@ AC_SUBST(DMX_LIBS)
 AM_CONDITIONAL(DMX_SUPPORT, test x$DMX_SUPPORT = xyes)
 
 #
-# Solaris Trusted Extensions stuff
-#
-case "$host" in
-*solaris*)
-        AC_CHECK_HEADERS(sys/tsol/label_macro.h,
-                AC_DEFINE(HAVE_TSOL, ,[Building with TSOL support]) found_tsol=yes,)
-        ;;
-*)
-        ;;
-esac
-
-AM_CONDITIONAL(TSOL_DEFINED, test x$found_tsol = xyes)
-if test "x$found_tsol" = "xyes" ; then
-	EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lsecdb"
-fi
-
-
-#
 # SELinux stuff
 #
 if test "x$with_selinux" = "xyes" ; then
@@ -963,14 +897,6 @@ fi
 AC_SUBST(XEVIE_OPTION)
 AC_DEFINE_UNQUOTED(XEVIE_OPTION,"$XEVIE_OPTION")
 
-AC_MSG_CHECKING(for Solaris fbconsole)
-if test -x /usr/openwin/bin/fbconsole; then
-   AC_DEFINE(HAVE_FBCONSOLE)
-   AC_MSG_RESULT(yes)
-else
-   AC_MSG_RESULT(no)
-fi
-
 # Check for Linux auditing API
 #
 # libaudit detection
@@ -989,49 +915,6 @@ if test x$have_libaudit = xyes ; then
     AC_DEFINE(HAVE_LIBAUDIT,1,[linux audit support])
 fi
 
-# Check for Solaris auditing API
-# Note, Solaris auditing not supported for Solaris 9 or earlier and
-# should not be used on these versions of Solaris if auditing is
-# required.  Solaris auditing is only supported on systems that
-# support the ADT_USER enumeration value.
-#
-AC_MSG_CHECKING(for Solaris auditing API)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <bsm/adt.h>
-adt_user_context = ADT_USER;
-]], [[]])], [ check_sun_audit=yes ], [ check_sun_audit=no ])
-
-if test ${check_sun_audit} = yes
-then
-   AC_DEFINE(HAVE_ADT)
-   EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lbsm"
-   AC_MSG_RESULT(yes)
-else
-   AC_MSG_RESULT(no)
-fi
-
-# Check for Solaris logindevperm support
-#
-AC_MSG_CHECKING(for Solaris di_devperm_login)
-AC_CHECK_LIB(devinfo, di_devperm_login, [
-		     	AC_DEFINE(HAVE_LOGINDEVPERM)
-			    EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -ldevinfo" ])
-
-# Check for RBAC support (chkauthattr
-#
-AC_MSG_CHECKING(for RBAC support - chkauthattr)
-AC_CHECK_LIB(secdb, chkauthattr, [
-		     	AC_DEFINE(HAVE_CHKAUTHATTR)
-			    EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lsecdb"
-			    EXTRA_GREETER_LIBS="$EXTRA_GREETER_LIBS -lsecdb"])
-
-# Check for Solaris SMF contract support
-#
-AC_MSG_CHECKING(for Solaris SMF contract support)
-AC_CHECK_LIB(contract, ct_tmpl_activate, [
-		     	AC_DEFINE(HAVE_SMF_CONTRACTS)
-			    EXTRA_DAEMON_LIBS="$EXTRA_DAEMON_LIBS -lcontract" ])
-
 # check for the nologin location
 AC_PATH_PROG(NOLOGIN, nologin, /sbin/nologin)
 AC_DEFINE_UNQUOTED(NOLOGIN, "$NOLOGIN", [Path to the nologin binary])
@@ -1040,7 +923,6 @@ AC_DEFINE_UNQUOTED(NOLOGIN, "$NOLOGIN", [Path to the nologin binary])
 # Subst the extra libs
 #
 AC_SUBST(EXTRA_DAEMON_LIBS)
-AC_SUBST(EXTRA_CHOOSER_LIBS)
 AC_SUBST(EXTRA_GREETER_LIBS)
 AC_SUBST(EXTRA_SOCKET_LIB)
 AC_SUBST(EXTRA_NSL_LIB)
@@ -1064,7 +946,6 @@ case "$host" in
 	HOST_MDMGNOMESESSIONCMD=/usr/dt/config/Xsession.jds
 	HOST_MDM_RBAC_SYSCMD_KEYS="HALT:solaris.system.shutdown;REBOOT:solaris.system.shutdown;SUSPEND:solaris.system.power.suspend.ram"
 	HOST_UTMP_LINE_ATTACHED="/dev/dtlocal"
-	HOST_UTMP_LINE_REMOTE="/dev/dtremote"
 	HOST_UTMP_PSEUDO_DEVICE="true"
 	os_solaris=yes
 	;;
@@ -1077,7 +958,6 @@ case "$host" in
 	HOST_SOUND_PROGRAM=
 	HOST_MDMGNOMESESSIONCMD=cinnamon-session
 	HOST_UTMP_LINE_ATTACHED="/dev/console"
-	HOST_UTMP_LINE_REMOTE=""
 	HOST_UTMP_PSEUDO_DEVICE="false"
 	;;
 *openbsd*)
@@ -1089,7 +969,6 @@ case "$host" in
 	HOST_SOUND_PROGRAM="$real_mdm_prefix/bin/play"
 	HOST_MDMGNOMESESSIONCMD=cinnamon-session
 	HOST_UTMP_LINE_ATTACHED="/dev/console"
-	HOST_UTMP_LINE_REMOTE=""
 	HOST_UTMP_PSEUDO_DEVICE="false"
 	;;
 *)
@@ -1101,7 +980,6 @@ case "$host" in
 	HOST_SOUND_PROGRAM=/usr/bin/paplay
 	HOST_MDMGNOMESESSIONCMD=cinnamon-session
 	HOST_UTMP_LINE_ATTACHED="/dev/console"
-	HOST_UTMP_LINE_REMOTE=""
 	HOST_UTMP_PSEUDO_DEVICE="false"
 	;;
 esac
@@ -1117,7 +995,6 @@ test "x$XSESSION_SHELL" == x && XSESSION_SHELL=${HOST_XSESSION_SHELL}
 test "x$SOUND_PROGRAM" == x && SOUND_PROGRAM=${HOST_SOUND_PROGRAM}
 test "x$MDMGNOMESESSIONCMD" == x && MDMGNOMESESSIONCMD=${HOST_MDMGNOMESESSIONCMD}
 test "x$UTMP_LINE_ATTACHED" == x && UTMP_LINE_ATTACHED=${HOST_UTMP_LINE_ATTACHED}
-test "x$UTMP_LINE_REMOTE" == x && UTMP_LINE_REMOTE=${HOST_UTMP_LINE_REMOTE}
 test "x$UTMP_PSEUDO_DEVICE" == x && UTMP_PSEUDO_DEVICE=${HOST_UTMP_PSEUDO_DEVICE}
 test "x$MDM_RBAC_SYSCMD_KEYS" == x && MDM_RBAC_SYSCMD_KEYS=${HOST_MDM_RBAC_SYSCMD_KEYS}
 
@@ -1201,11 +1078,6 @@ else
    MDM_USER_PATH="$MDM_USER_PATH:/usr/bin/X11:/usr/X11R6/bin:/usr/local/bin:/opt/X11R6/bin"
    X_CONFIG_OPTIONS="-audit 0"
 fi
-
-# Use the wrapper script for the nested X server
-X_XNEST_CMD=/usr/share/mdm/mdmXnestWrapper
-X_XNEST_CONFIG_OPTIONS="-audit 0"
-X_XNEST_UNSCALED_FONTPATH="true"
 
 # Set POST_PATH after doing system specific case above just in case
 # any platforms want to update the PATH for a specific OS or distro.
@@ -1310,8 +1182,6 @@ AC_SUBST(SOUND_PROGRAM)
 AC_DEFINE_UNQUOTED(SOUND_PROGRAM,"$SOUND_PROGRAM")
 AC_SUBST(UTMP_LINE_ATTACHED)
 AC_DEFINE_UNQUOTED(UTMP_LINE_ATTACHED,"$UTMP_LINE_ATTACHED")
-AC_SUBST(UTMP_LINE_REMOTE)
-AC_DEFINE_UNQUOTED(UTMP_LINE_REMOTE,"$UTMP_LINE_REMOTE")
 AC_SUBST(UTMP_PSEUDO_DEVICE)
 AC_DEFINE_UNQUOTED(UTMP_PSEUDO_DEVICE,"$UTMP_PSEUDO_DEVICE")
 AC_SUBST(MDMGNOMESESSIONCMD)
@@ -1325,13 +1195,6 @@ AC_SUBST(X_CONFIG_OPTIONS)
 AC_DEFINE_UNQUOTED(X_SERVER,"$X_SERVER")
 AC_DEFINE_UNQUOTED(X_SERVER_PATH,"$X_SERVER_PATH")
 AC_DEFINE_UNQUOTED(X_CONFIG_OPTIONS,"$X_CONFIG_OPTIONS", Options used when launching xserver)
-
-AC_SUBST(X_XNEST_CMD)
-AC_SUBST(X_XNEST_CONFIG_OPTIONS)
-AC_SUBST(X_XNEST_UNSCALED_FONTPATH)
-AC_DEFINE_UNQUOTED(X_XNEST_CMD,"$X_XNEST_CMD")
-AC_DEFINE_UNQUOTED(X_XNEST_CONFIG_OPTIONS,"$X_XNEST_CONFIG_OPTIONS")
-AC_DEFINE_UNQUOTED(X_XNEST_UNSCALED_FONTPATH,"$X_XNEST_UNSCALED_FONTPATH")
 
 ## Stuff for debian/changelog.in
 #if test -e "debian/changelog"; then
@@ -1363,7 +1226,6 @@ data/icons/48x48/apps/Makefile
 data/icons/scalable/Makefile
 data/icons/scalable/apps/Makefile
 gui/Makefile
-gui/mdmflexiserver-xnest.desktop.in
 gui/faces/Makefile
 gui/greeter/Makefile
 gui/greeter/themes/Makefile
@@ -1371,9 +1233,7 @@ gui/greeter/themes/circles/Makefile
 gui/modules/Makefile
 utils/Makefile
 pixmaps/Makefile
-pixmaps/16x16/Makefile
 pixmaps/24x24/Makefile
-pixmaps/32x32/Makefile
 pixmaps/48x48/Makefile
 config/Makefile
 po/Makefile.in
@@ -1432,13 +1292,6 @@ else
 	echo "Xinerama support                      : NO"
 fi
 
-dnl <= XDMCP =>
-if test x"$XDMCP_SUPPORT" = xyes ; then
-	echo "XDMCP (remote login) support          : YES"
-else
-	echo "XDMCP (remote login) support          : NO"
-fi
-
 dnl <= Secure remote connection =>
 if test x"$enable_secureremote" = xyes ; then
 	echo "Secure remote connection              : YES"
@@ -1466,13 +1319,6 @@ if test "x$with_selinux" = "xyes" ; then
 	echo "SELinux support                       : YES"
 else
 	echo "SELinux support                       : NO"
-fi
-
-dnl <= Solaris Trusted Extensions support =>
-if test "x$found_tsol" = "xyes" ; then
-	echo "Solaris Trusted Extensions support    : YES"
-else
-	echo "Solaris Trusted Extensions support    : NO"
 fi
 
 dnl <= ConsoleKit support =>

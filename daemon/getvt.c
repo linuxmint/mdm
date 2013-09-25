@@ -132,11 +132,7 @@ mdm_get_vt_device (int vtno)
    gchar *vtname = NULL;
 
 #if defined (MDM_USE_SYS_VT)
-#ifdef __sun
-     vtname = g_strdup_printf ("/dev/vt/%d", vtno);
-#else
      vtname = g_strdup_printf ("/dev/tty%d", vtno);
-#endif
 #elif defined (MDM_USE_CONSIO_VT)
      vtname = g_strdup_printf ("/dev/ttyv%s", __itovty (vtno - 1));
 #endif
@@ -146,12 +142,7 @@ mdm_get_vt_device (int vtno)
 
 #if defined (MDM_USE_SYS_VT) || defined (MDM_USE_CONSIO_VT)
 
-#ifdef __sun
-#define MDMCONSOLEDEVICE "/dev/vt/0"
-#else
 #define MDMCONSOLEDEVICE "/dev/tty0"
-#endif
-
 
 static int
 open_vt (int vtno)

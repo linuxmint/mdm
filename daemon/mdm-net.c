@@ -291,13 +291,7 @@ mdm_socket_handler (GIOChannel *source,
 
 	conn->subconnections = g_list_append (conn->subconnections, newconn);
 	conn->n_subconnections++;
-
-	/*
-	 * When dynamix servers is turned on, the daemon can be flooded with
-	 * requests and closing a subconnection will typically make the client
-	 * just try and connect again, and worsen the flooding problem.  When
-	 * using dynamic servers, allow more clients to connect at once.  
-	 */
+	
 	max_connections = MAX_CONNECTIONS;
              
 	if (conn->n_subconnections > max_connections) {
@@ -334,8 +328,7 @@ mdm_connection_open_unix (const char *sockname, mode_t mode)
 
 	fd = socket (AF_UNIX, SOCK_STREAM, 0);
 	if G_UNLIKELY (fd < 0) {
-		mdm_error (_("%s: Could not make socket"),
-			   "mdm_connection_open_unix");
+		mdm_error ("mdm_connection_open_unix: Could not make socket");
 		return NULL;
 	}
 
@@ -365,8 +358,7 @@ try_again:
 	addr.sun_family = AF_UNIX;
 	if G_UNLIKELY (bind (fd,
 			     (struct sockaddr *) &addr, sizeof (addr)) < 0) {
-		mdm_error (_("%s: Could not bind socket"),
-			   "mdm_connection_open_unix");
+		mdm_error ("mdm_connection_open_unix: Could not bind socket");
 		try_again_attempts --;
 		/* someone is being evil on us */
 		if (errno == EADDRINUSE && try_again_attempts >= 0)
@@ -451,16 +443,14 @@ mdm_connection_open_fifo (const char *fifo, mode_t mode)
 	VE_IGNORE_EINTR (g_unlink (fifo));
 
 	if G_UNLIKELY (mkfifo (fifo, 0660) < 0) {
-		mdm_error (_("%s: Could not make FIFO"),
-			   "mdm_connection_open_fifo");
+		mdm_error ("mdm_connection_open_fifo: Could not make FIFO");
 		return NULL;
 	}
 
 	fd = open (fifo, O_RDWR); /* Open with write to avoid EOF */
 
 	if G_UNLIKELY (fd < 0) {
-		mdm_error (_("%s: Could not open FIFO"),
-			   "mdm_connection_open_fifo");
+		mdm_error ("mdm_connection_open_fifo: Could not open FIFO");
 		return NULL;
 	}
 

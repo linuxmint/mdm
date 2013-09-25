@@ -183,7 +183,7 @@ make_menubar (void)
 
 	/* Add a quit/disconnect item when in xdmcp mode or flexi mode */
 	/* Do note that the order is important, we always want "Quit" for
-	 * flexi, even if not local (non-local xnest).  and Disconnect
+	 * flexi, even if not local.  and Disconnect
 	 * only for xdmcp */
 	if ( ! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER"))) {
 		w = gtk_image_menu_item_new_with_mnemonic (_("_Quit"));

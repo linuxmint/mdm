@@ -28,13 +28,6 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#ifdef HAVE_SMF_CONTRACTS
-#include <sys/ctfs.h>
-#include <sys/contract.h>
-#include <sys/contract/process.h>
-#include <libcontract.h>
-#endif
-
 #include <glib/gi18n.h>
 
 #include "mdm.h"
@@ -43,7 +36,6 @@
 #include "display.h"
 #include "slave.h"
 #include "misc.h"
-#include "choose.h"
 #include "auth.h"
 #include "mdm-net.h"
 
@@ -52,7 +44,6 @@
 #include "mdm-daemon-config.h"
 
 /* External vars */
-extern MdmConnection *fifoconn;
 extern MdmConnection *pipeconn;
 extern MdmConnection *unixconn;
 extern int slave_fifo_pipe_fd; /* the slavepipe (like fifo) connection, this is the write end */
@@ -99,8 +90,6 @@ mdm_display_alloc (gint id, const gchar *command, const gchar *device)
     d->slavepid = 0;
     d->type = TYPE_STATIC;
     d->attached = TRUE;
-    d->sessionid = 0;
-    d->acctime = 0;
     d->dsp = NULL;
     d->screenx = 0; /* xinerama offset */
     d->screeny = 0;
@@ -325,140 +314,6 @@ wait_again:
     d->slavepid = 0;
 }
 
-#ifdef HAVE_SMF_CONTRACTS
-static int contracts_fd = -1;
-
-void
-contracts_pre_fork ()
-{
-   const char *errmsg = "opening process contract template";
-
-	/*
-	 * On failure, just continue since it is better to start with
-	 * children in the same contract than to not start them at all.
-	 */
-	if (contracts_fd == -1) {
-		if ((contracts_fd = open64 (CTFS_ROOT "/process/template",
-					    O_RDWR)) == -1)
-			goto exit;
-
-		errmsg = "setting contract terms";
-		if ((errno = ct_pr_tmpl_set_param (contracts_fd, CT_PR_PGRPONLY)))
-			goto exit;
-
-		if ((errno = ct_tmpl_set_informative (contracts_fd, CT_PR_EV_HWERR)))
-			goto exit;
-
-		if ((errno = ct_pr_tmpl_set_fatal (contracts_fd, CT_PR_EV_HWERR)))
-			goto exit;
-
-		if ((errno = ct_tmpl_set_critical (contracts_fd, 0)))
-			goto exit;
-	}
-
-	errmsg = "setting active template";
-	if ((errno = ct_tmpl_activate (contracts_fd)))
-		goto exit;
-
-	mdm_debug ("Set active contract");
-	return;
-
-exit:
-	if (contracts_fd != -1)
-		(void) close (contracts_fd);
-
-	contracts_fd = -1;
-
-	if (errno) {
-		mdm_debug (
-			"Error setting up active contract template: %s while %s",
-			strerror (errno), errmsg);
-	}
-}
-
-void
-contracts_post_fork_child ()
-{
-	/* Clear active template so no new contracts are created on fork */
-	if (contracts_fd == -1)
-		return;
-
-	if ((errno = (ct_tmpl_clear (contracts_fd)))) {
-		mdm_debug (
-			"Error clearing active contract template (child): %s",
-			strerror (errno));
-	} else {
-		mdm_debug ("Cleared active contract template (child)");
-	}
-
-	(void) close (contracts_fd);
-
-	contracts_fd = -1;
-}
-
-void
-contracts_post_fork_parent (int fork_succeeded)
-{
-	char path[PATH_MAX];
-	int cfd;
-	ct_stathdl_t status;
-	ctid_t latest;
-
-	/* Clear active template, abandon latest contract. */
-	if (contracts_fd == -1)
-		return;
-
-	if ((errno = ct_tmpl_clear (contracts_fd)))
-		mdm_debug ("Error while clearing active contract template: %s",
-			   strerror (errno));
-	else
-		mdm_debug ("Cleared active contract template (parent)");
-
-	if (!fork_succeeded)
-		return;
-
-	if ((cfd = open64 (CTFS_ROOT "/process/latest", O_RDONLY)) == -1) {
-		mdm_debug ("Error getting latest contract: %s",
-			   strerror(errno));
-		return;
-	}
-
-	if ((errno = ct_status_read (cfd, CTD_COMMON, &status)) != 0) {
-		mdm_debug ("Error getting latest contract ID: %s",
-			   strerror(errno));
-		(void) close (cfd);
-		return;
-	}
-
-	latest = ct_status_get_id (status);
-	ct_status_free (status);
-	(void) close (cfd);
-
-
-	if ((snprintf (path, PATH_MAX, CTFS_ROOT "/all/%ld/ctl", latest)) >=
-	     PATH_MAX) {
-		mdm_debug ("Error opening the latest contract ctl file: %s",
-			   strerror (ENAMETOOLONG));
-		return;
-	}
-
-	cfd = open64 (path, O_WRONLY);
-	if (cfd == -1) {
-		mdm_debug ("Error opening the latest contract ctl file: %s",
-			   strerror (errno));
-		return;
-	}
- 
-	if ((errno = ct_ctl_abandon (cfd)))
-		mdm_debug ("Error abandoning latest contract: %s",
-			   strerror (errno));
-	else
-		mdm_debug ("Abandoned latest contract");
-
-	(void) close (cfd);
-}
-#endif HAVE_SMF_CONTRACTS
-
 /**
  * mdm_display_manage:
  * @d: Pointer to a MdmDisplay struct
@@ -478,7 +333,7 @@ mdm_display_manage (MdmDisplay *d)
     mdm_debug ("mdm_display_manage: Managing %s", d->name);
 
     if (pipe (fds) < 0) {
-	    mdm_error (_("%s: Cannot create pipe"), "mdm_display_manage");
+	    mdm_error ("mdm_display_manage: Cannot create pipe");
     }
 
     if ( ! mdm_display_check_loop (d))
@@ -500,19 +355,12 @@ mdm_display_manage (MdmDisplay *d)
 
     mdm_debug ("Forking slave process");
 
-#ifdef HAVE_SMF_CONTRACTS
-    contracts_pre_fork ();
-#endif
-
     /* Fork slave process */
     pid = d->slavepid = fork ();
 
     switch (pid) {
 
     case 0:
-#ifdef HAVE_SMF_CONTRACTS
-        contracts_post_fork_child ();
-#endif
 
 	setpgid (0, 0);
 
@@ -526,9 +374,7 @@ mdm_display_manage (MdmDisplay *d)
 	mdm_unset_signals ();
 
 	d->slavepid = getpid ();
-
-	mdm_connection_close (fifoconn);
-	fifoconn = NULL;
+	
 	mdm_connection_close (pipeconn);
 	pipeconn = NULL;
 	mdm_connection_close (unixconn);
@@ -571,23 +417,16 @@ mdm_display_manage (MdmDisplay *d)
 
     case -1:
 	d->slavepid = 0;
-	mdm_error (_("%s: Failed forking MDM slave process for %s"),
-		   "mdm_display_manage",
-		   d->name);
+	mdm_error ("mdm_display_manage: Failed forking MDM slave process for %s", d->name);
 
 	return FALSE;
 
     default:
-	mdm_debug ("mdm_display_manage: Forked slave: %d",
-		   (int)pid);
+	mdm_debug ("mdm_display_manage: Forked slave: %d", (int)pid);
 	d->master_notify_fd = fds[1];
 	VE_IGNORE_EINTR (close (fds[0]));
 	break;
     }
-
-#ifdef HAVE_SMF_CONTRACTS
-    contracts_post_fork_parent ((pid > 0));
-#endif
 
     /* invalidate chosen hostname */
     g_free (d->chosen_hostname);
@@ -633,8 +472,8 @@ mdm_display_unmanage (MdmDisplay *d)
     whack_old_slave (d, TRUE /* kill_connection */);
     
     d->dispstat = DISPLAY_DEAD;
-    if (d->type != TYPE_STATIC || d->removeconf)
-	mdm_display_dispose (d);
+    if (d->type != TYPE_STATIC)
+		mdm_display_dispose (d);
 
     mdm_debug ("mdm_display_unmanage: Display stopped");
 }
@@ -726,21 +565,7 @@ mdm_display_dispose (MdmDisplay *d)
     d->authfile = NULL;
 
     g_free (d->authfile_mdm);
-    d->authfile_mdm = NULL;
-
-    if (d->type == TYPE_XDMCP_PROXY) {
-	    if (d->parent_auth_file != NULL) {
-		    VE_IGNORE_EINTR (g_unlink (d->parent_auth_file));
-	    }
-	    g_free (d->parent_auth_file);
-	    d->parent_auth_file = NULL;
-    }
-
-    if (d->parent_temp_auth_file != NULL) {
-	    VE_IGNORE_EINTR (g_unlink (d->parent_temp_auth_file));
-    }
-    g_free (d->parent_temp_auth_file);
-    d->parent_temp_auth_file = NULL;
+    d->authfile_mdm = NULL; 
 
     if (d->auths) {
 	    mdm_auth_free_auth_list (d->auths);
@@ -769,17 +594,9 @@ mdm_display_dispose (MdmDisplay *d)
 
     g_free (d->bcookie);
     d->bcookie = NULL;
-
-    if (d->indirect_id > 0)
-	    mdm_choose_indirect_dispose_empty_id (d->indirect_id);
-    d->indirect_id = 0;
-
-    g_free (d->parent_disp);
-    d->parent_disp = NULL;
-
-    g_free (d->parent_auth_file);
-    d->parent_auth_file = NULL;
-
+    
+    d->indirect_id = 0;   
+   
     g_free (d->login);
     d->login = NULL;
 

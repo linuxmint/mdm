@@ -69,7 +69,6 @@ binary-arch: build install
 	dh_testroot
 	dh_installdirs -a
 	dh_install -a
-	chmod 755 debian/mdm/usr/share/mdm/mdmXnestWrapper
 	# special environment settings should be done in /etc/default/mdm
 	mv debian/mdm/usr/sbin/mdm-binary debian/mdm/usr/sbin/mdm
 	cd debian/mdm/usr/sbin && rm -f mdm-restart mdm-safe-restart mdm-stop

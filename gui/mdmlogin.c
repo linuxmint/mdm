@@ -70,11 +70,9 @@
  */
 gboolean DOING_MDM_DEVELOPMENT              = FALSE;
 gboolean MdmConfiguratorFound               = FALSE;
-gboolean *MdmCustomCmdsFound                = NULL;
 gboolean MdmSuspendFound                    = FALSE;
 gboolean MdmHaltFound                       = FALSE;
 gboolean MdmRebootFound                     = FALSE;
-gboolean MdmAnyCustomCmdsFound              = FALSE;
 static gboolean disable_system_menu_buttons = FALSE;
 
 #define GTK_KEY "gtk-2.0"
@@ -631,16 +629,6 @@ typedef struct _CursorOffset {
 	int y;
 } CursorOffset;
 
-static gboolean
-within_rect (GdkRectangle *rect, int x, int y)
-{
-	return
-		x >= rect->x &&
-		x <= rect->x + rect->width &&
-		y >= rect->y &&
-		y <= rect->y + rect->height;
-}
-
 static void
 mdm_run_mdmconfig (GtkWidget *w, gpointer data)
 {
@@ -672,23 +660,6 @@ mdm_login_restart_handler (void)
 }
 
 static void
-mdm_custom_cmd_handler (GtkWidget *widget, gpointer data)
-{	
-	if (data) {
-		int *cmd_id = (int*)data;
-		gchar * key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, *cmd_id);
-		if (mdm_wm_warn_dialog (
-			    mdm_config_get_string (key_string) , "", GTK_STOCK_OK, NULL, TRUE) == GTK_RESPONSE_YES) {
-			
-			printf ("%c%c%c%d\n", STX, BEL, MDM_INTERRUPT_CUSTOM_CMD, *cmd_id);
-			fflush (stdout);
-		}
-		
-		g_free (key_string);		
-	}
-}
-
-static void
 mdm_login_halt_handler (void)
 {
 	if (mdm_wm_warn_dialog (
@@ -698,13 +669,6 @@ mdm_login_halt_handler (void)
 		mdm_kill_thingies ();
 		_exit (DISPLAY_HALT);
 	}
-}
-
-static void
-mdm_login_use_chooser_handler (void)
-{
-	mdm_kill_thingies ();
-	_exit (DISPLAY_RUN_CHOOSER);
 }
 
 static void
@@ -1224,8 +1188,7 @@ greeter_is_capslock_on (void)
   Display *dsp;
 
   /* HACK! incredible hack, if MDM_PARENT_DISPLAY is set we get
-   * indicator state from the parent display, since we must be inside an
-   * Xnest */
+   * indicator state from the parent display, since we must be inside a nested display */
   dsp = get_parent_display ();
   if (dsp == NULL)
     dsp = GDK_DISPLAY ();
@@ -2088,17 +2051,7 @@ mdm_login_gui_init (void)
 
         gboolean got_anything = FALSE;
 
-	menu = gtk_menu_new ();
-
-	if (mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON)) {
-		item = gtk_menu_item_new_with_mnemonic (_("Remote Login via _XDMCP..."));
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (mdm_login_use_chooser_handler),
-				  NULL);
-		gtk_widget_show (item);
-		got_anything = TRUE;
-	}
+	menu = gtk_menu_new ();	
 
 	/*
 	 * Disable Configuration if using accessibility (AddGtkModules) since
@@ -2147,26 +2100,7 @@ mdm_login_gui_init (void)
 				  NULL);
 		gtk_widget_show (GTK_WIDGET (item));
 		got_anything = TRUE;
-	}
-	
-	if (mdm_common_is_action_available ("CUSTOM_CMD")) {
-		for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {			
-			key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-			if (mdm_working_command_exists (mdm_config_get_string (key_string))) {
-				gint * cmd_index = g_new0(gint, 1);
-				*cmd_index = i;
-				key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
-				item = gtk_menu_item_new_with_mnemonic (mdm_config_get_string (key_string));
-				gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-				g_signal_connect (G_OBJECT (item), "activate",
-						  G_CALLBACK (mdm_custom_cmd_handler), 
-						  cmd_index);
-				gtk_widget_show (GTK_WIDGET (item));
-				got_anything = TRUE;			
-			}
-			g_free (key_string);
-		}
-	}
+	}	
 
 	if (got_anything) {
 		item = gtk_menu_item_new_with_mnemonic (_("_Actions"));
@@ -2182,25 +2116,7 @@ mdm_login_gui_init (void)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar), thememenu);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (thememenu), menu);
 	gtk_widget_show (GTK_WIDGET (thememenu));
-    }
-
-    /* Add a quit/disconnect item when in xdmcp mode or flexi mode */
-    /* Do note that the order is important, we always want "Quit" for
-     * flexi, even if not local (non-local xnest).  and Disconnect
-     * only for xdmcp */
-    if ( ! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER"))) {
-	    item = gtk_menu_item_new_with_mnemonic (_("_Quit"));
-    } else if (ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
-	    item = gtk_menu_item_new_with_mnemonic (_("D_isconnect"));
-    } else {
-	    item = NULL;
-    }
-    if (item != NULL) {
-	    gtk_menu_shell_append (GTK_MENU_SHELL (menubar), item);
-	    gtk_widget_show (GTK_WIDGET (item));
-	    g_signal_connect (G_OBJECT (item), "activate",
-			      G_CALLBACK (gtk_main_quit), NULL);
-    }
+    }   
 
     /* The clock */
     clock_label = gtk_label_new ("");
@@ -2613,9 +2529,8 @@ mdm_read_config (void)
 {
 	gint i;
 	gchar *key_string = NULL;
-	
-	/* Read config data in bulk */
-	mdmcomm_comm_bulk_start ();
+		
+	mdmcomm_open_connection_to_daemon ();
 
 	/*
 	 * Read all the keys at once and close sockets connection so we do
@@ -2636,8 +2551,7 @@ mdm_read_config (void)
 	mdm_config_get_string (MDM_KEY_INFO_MSG_FILE);
 	mdm_config_get_string (MDM_KEY_INFO_MSG_FONT);
 	mdm_config_get_string (MDM_KEY_LOCALE_FILE);	
-	mdm_config_get_string (MDM_KEY_REBOOT);
-	mdm_config_get_string (MDM_KEY_REMOTE_WELCOME);
+	mdm_config_get_string (MDM_KEY_REBOOT);	
 	mdm_config_get_string (MDM_KEY_SESSION_DESKTOP_DIR);
 	mdm_config_get_string (MDM_KEY_SOUND_PROGRAM);
 	mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE);
@@ -2646,30 +2560,7 @@ mdm_read_config (void)
 	mdm_config_get_string (MDM_KEY_USE_24_CLOCK);
 	mdm_config_get_string (MDM_KEY_WELCOME);
 	mdm_config_get_string (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
-	mdm_config_get_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU);
-
-	/* String keys for custom commands */	
-	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {				
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-		
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE, i);
-		mdm_config_get_string (key_string);
-		g_free (key_string);
-	}     
+	mdm_config_get_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU);	
 
 	mdm_config_get_int    (MDM_KEY_BACKGROUND_TYPE);
 	mdm_config_get_int    (MDM_KEY_BACKGROUND_PROGRAM_INITIAL_DELAY);
@@ -2682,11 +2573,8 @@ mdm_read_config (void)
 	mdm_config_get_int    (MDM_KEY_XINERAMA_SCREEN);
 
 	mdm_config_get_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE);
-	mdm_config_get_bool   (MDM_KEY_ALLOW_REMOTE_ROOT);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);	
-	mdm_config_get_bool   (MDM_KEY_CHOOSER_BUTTON);
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
-	mdm_config_get_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_ENTRY_CIRCLES);
 	mdm_config_get_bool   (MDM_KEY_ENTRY_INVISIBLE);
@@ -2704,19 +2592,17 @@ mdm_read_config (void)
 	/* Keys not to include in reread_config */	
 	mdm_config_get_string (MDM_KEY_PRE_FETCH_PROGRAM);	
 
-	mdmcomm_comm_bulk_stop ();
+	mdmcomm_close_connection_to_daemon ();
 }
 
 static gboolean
 mdm_reread_config (int sig, gpointer data)
 {
 	gboolean resize = FALSE;
-	gboolean custom_changed = FALSE;
 	gint i;
 	gchar *key_string = NULL;
-
-	/* Read config data in bulk */
-	mdmcomm_comm_bulk_start ();
+	
+	mdmcomm_open_connection_to_daemon ();
 
 	/* reparse config stuff here.  At least the ones we care about */
 	/* FIXME: We should update these on the fly rather than just
@@ -2753,8 +2639,6 @@ mdm_reread_config (int sig, gpointer data)
 
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
-	    mdm_config_reload_bool   (MDM_KEY_ALLOW_REMOTE_ROOT) ||	    
-	    mdm_config_reload_bool   (MDM_KEY_CHOOSER_BUTTON) ||
 	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_CIRCLES) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_INVISIBLE) ||
@@ -2773,50 +2657,10 @@ mdm_reread_config (int sig, gpointer data)
 
 		mdm_wm_save_wm_order ();
 		mdm_kill_thingies ();
-		mdmcomm_comm_bulk_stop ();
+		mdmcomm_close_connection_to_daemon ();
 
 		_exit (DISPLAY_RESTARTGREETER);
 		return TRUE;
-	}
-
-	/* Keys for custom commands */
-	for (i = 0; i < MDM_CUSTOM_COMMAND_MAX; i++) {		
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEMPLATE, i);
-		if(mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LABEL_TEMPLATE, i);
-		if(mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_LR_LABEL_TEMPLATE, i);
-		if(mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TEXT_TEMPLATE, i);
-		if(mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-
-		key_string = g_strdup_printf ("%s%d=", MDM_KEY_CUSTOM_CMD_TOOLTIP_TEMPLATE, i);
-		if(mdm_config_reload_string (key_string))
-			custom_changed = TRUE;
-		g_free (key_string);
-	}     
-
-	if(custom_changed){
-		/* Set busy cursor */
-		mdm_common_setup_cursor (GDK_WATCH);
-
-		mdm_wm_save_wm_order ();
-		mdm_kill_thingies ();
-		mdmcomm_comm_bulk_stop ();
-
-		_exit (DISPLAY_RESTARTGREETER);
-		return TRUE;		
 	}
 
 	if (mdm_config_reload_string (MDM_KEY_BACKGROUND_IMAGE) ||
@@ -2835,9 +2679,7 @@ mdm_reread_config (int sig, gpointer data)
 	update_clock ();
 	
 	if (mdm_config_reload_string (MDM_KEY_WELCOME) ||
-            mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME) ||
-            mdm_config_reload_string (MDM_KEY_REMOTE_WELCOME) ||
-            mdm_config_reload_bool   (MDM_KEY_DEFAULT_REMOTE_WELCOME)) {
+            mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME)) {
 
 		mdm_set_welcomemsg ();
 	}
@@ -2845,7 +2687,7 @@ mdm_reread_config (int sig, gpointer data)
 	if (resize)
 		login_window_resize (TRUE /* force */);
 
-	mdmcomm_comm_bulk_stop ();
+	mdmcomm_close_connection_to_daemon ();
 
 	return TRUE;
 }
@@ -2866,8 +2708,6 @@ main (int argc, char *argv[])
     struct sigaction term;
     sigset_t mask;
     GIOChannel *ctrlch;
-    const char *mdm_version;
-    const char *mdm_protocol_version;
     guint sid;
 
     if (g_getenv ("DOING_MDM_DEVELOPMENT") != NULL)
@@ -2902,156 +2742,13 @@ main (int argc, char *argv[])
     
     setlocale (LC_ALL, "");
 
-    mdm_wm_screen_init (mdm_config_get_int (MDM_KEY_XINERAMA_SCREEN));
-
-    mdm_version = g_getenv ("MDM_VERSION");
-    mdm_protocol_version = g_getenv ("MDM_GREETER_PROTOCOL_VERSION");
+    mdm_wm_screen_init (mdm_config_get_int (MDM_KEY_XINERAMA_SCREEN));   
 
     /* Load the background as early as possible so MDM does not leave  */
     /* the background unfilled.   The cursor should be a watch already */
     /* but just in case */
     setup_background ();
-    mdm_common_setup_cursor (GDK_WATCH);
-
-    if ( ! DOING_MDM_DEVELOPMENT &&
-	 ((mdm_protocol_version != NULL &&
-	   strcmp (mdm_protocol_version, MDM_GREETER_PROTOCOL_VERSION) != 0) ||
-	  (mdm_protocol_version == NULL &&
-	   (mdm_version == NULL ||
-	    strcmp (mdm_version, VERSION) != 0))) &&
-	        ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
-	    GtkWidget *dialog;
-	    gchar *msg;
-
-	    mdm_wm_init (0);
-
-	    mdm_wm_focus_new_windows (TRUE);
-	    
-	    msg = g_strdup_printf (_("The greeter version (%s) does not match the daemon "
-				     "version. "
-				     "You have probably just upgraded MDM. "
-				     "Please restart the MDM daemon or the computer."),
-				   VERSION);
-
-	    dialog = hig_dialog_new (NULL /* parent */,
-				     GTK_DIALOG_MODAL /* flags */,
-				     GTK_MESSAGE_ERROR,
-				     GTK_BUTTONS_OK,
-				     _("Cannot start the greeter"),
-				     msg);
-	    g_free (msg);
-
-	    gtk_widget_show_all (dialog);
-	    mdm_wm_center_window (GTK_WINDOW (dialog));
-
-	    mdm_common_setup_cursor (GDK_LEFT_PTR);
-
-	    gtk_dialog_run (GTK_DIALOG (dialog));
-
-	    return EXIT_SUCCESS;
-    }
-
-    if ( ! DOING_MDM_DEVELOPMENT &&
-	mdm_protocol_version == NULL &&
-	mdm_version == NULL) {
-	    GtkWidget *dialog;
-	    gchar *msg;
-
-	    mdm_wm_init (0);
-
-	    mdm_wm_focus_new_windows (TRUE);
-	    
-	    msg = g_strdup_printf (_("The greeter version (%s) does not match the daemon "
-	                             "version. "
-	                             "You have probably just upgraded MDM. "
-	                             "Please restart the MDM daemon or the computer."),
-	                           VERSION);
-
-	    dialog = hig_dialog_new (NULL /* parent */,
-				     GTK_DIALOG_MODAL /* flags */,
-				     GTK_MESSAGE_WARNING,
-				     GTK_BUTTONS_NONE,
-				     _("Cannot start the greeter"),
-				     msg);
-	    g_free (msg);
-
-	    gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-				    _("Restart"),
-				    RESPONSE_REBOOT,
-				    GTK_STOCK_CLOSE,
-				    RESPONSE_CLOSE,
-				    NULL);
-
-	    gtk_widget_show_all (dialog);
-	    mdm_wm_center_window (GTK_WINDOW (dialog));
-
-	    mdm_common_setup_cursor (GDK_LEFT_PTR);
-
-	    switch (gtk_dialog_run (GTK_DIALOG (dialog))) {
-	    case RESPONSE_REBOOT:
-		    gtk_widget_destroy (dialog);
-		    return DISPLAY_REBOOT;
-	    default:
-		    gtk_widget_destroy (dialog);
-		    return DISPLAY_ABORT;
-	    }
-    }
-
-    if ( ! DOING_MDM_DEVELOPMENT &&
-	 ((mdm_protocol_version != NULL &&
-	   strcmp (mdm_protocol_version, MDM_GREETER_PROTOCOL_VERSION) != 0) ||
-	  (mdm_protocol_version == NULL &&
-	   strcmp (mdm_version, VERSION) != 0))) {
-	    GtkWidget *dialog;
-	    gchar *msg;
-
-	    mdm_wm_init (0);
-
-	    mdm_wm_focus_new_windows (TRUE);
-	    
-	    msg = g_strdup_printf (_("The greeter version (%s) does not match the daemon "
-	                             "version (%s).  "
-	                             "You have probably just upgraded MDM.  "
-	                             "Please restart the MDM daemon or the computer."),
-	                           VERSION, mdm_version);
-
-	    dialog = hig_dialog_new (NULL /* parent */,
-				     GTK_DIALOG_MODAL /* flags */,
-				     GTK_MESSAGE_WARNING,
-				     GTK_BUTTONS_NONE,
-				     _("Cannot start the greeter"),
-				     msg);
-	    g_free (msg);
-
-	    gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-				    _("Restart MDM"),
-				    RESPONSE_RESTART,
-				    _("Restart computer"),
-				    RESPONSE_REBOOT,
-				    GTK_STOCK_CLOSE,
-				    RESPONSE_CLOSE,
-				    NULL);
-
-
-	    gtk_widget_show_all (dialog);
-	    mdm_wm_center_window (GTK_WINDOW (dialog));
-
-	    gtk_dialog_set_default_response (GTK_DIALOG (dialog), RESPONSE_RESTART);
-
-	    mdm_common_setup_cursor (GDK_LEFT_PTR);
-
-	    switch (gtk_dialog_run (GTK_DIALOG (dialog))) {
-	    case RESPONSE_RESTART:
-		    gtk_widget_destroy (dialog);
-		    return DISPLAY_RESTARTMDM;
-	    case RESPONSE_REBOOT:
-		    gtk_widget_destroy (dialog);
-		    return DISPLAY_REBOOT;
-	    default:
-		    gtk_widget_destroy (dialog);
-		    return DISPLAY_ABORT;
-	    }
-    }
+    mdm_common_setup_cursor (GDK_WATCH);   
 
     defface = mdm_common_get_face (NULL,
                    mdm_config_get_string (MDM_KEY_DEFAULT_FACE),
@@ -3159,7 +2856,7 @@ main (int argc, char *argv[])
     /* if a flexiserver, reap self after some time */
     if (mdm_config_get_int (MDM_KEY_FLEXI_REAP_DELAY_MINUTES) > 0 &&
 	! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER")) &&
-	/* but don't reap Xnest flexis */
+	/* but don't reap nested flexis */
 	ve_string_empty (g_getenv ("MDM_PARENT_DISPLAY"))) {
 	    sid = g_signal_lookup ("activate",
 				   GTK_TYPE_MENU_ITEM);

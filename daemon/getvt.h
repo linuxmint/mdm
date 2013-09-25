@@ -20,7 +20,7 @@
 #define GETVT_H
 
 /* Virtual terminals only supported on Linux, FreeBSD, DragonFly, or Solaris */
-#if defined (__linux__) || defined (__sun)
+#if defined (__linux__)
 /* Must check HAVE_SYS_VT since older Solaris doesn't support this. */
 #ifdef HAVE_SYS_VT_H
 #define MDM_USE_SYS_VT

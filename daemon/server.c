@@ -45,7 +45,6 @@
 #include "mdm.h"
 #include "server.h"
 #include "misc.h"
-#include "xdmcp.h"
 #include "display.h"
 #include "auth.h"
 #include "slave.h"
@@ -57,17 +56,12 @@
 
 #include "mdm-socket-protocol.h"
 
-#if __sun
-#define MDM_PRIO_DEFAULT NZERO
-#else
 #define MDM_PRIO_DEFAULT 0
-#endif
 
 /* Local prototypes */
 static void mdm_server_spawn (MdmDisplay *d, const char *vtarg);
 static void mdm_server_usr1_handler (gint);
 static void mdm_server_child_handler (gint);
-static char * get_font_path (const char *display);
 
 /* Global vars */
 static int server_signal_pipe[2];
@@ -122,52 +116,12 @@ mdm_server_wipe_cookies (MdmDisplay *disp)
 	disp->authfile_mdm = NULL;
 }
 
-static Jmp_buf reinitjmp;
-
 /* ignore handlers */
 static int
 ignore_xerror_handler (Display *disp, XErrorEvent *evt)
 {
 	return 0;
 }
-
-static int
-jumpback_xioerror_handler (Display *disp)
-{
-	Longjmp (reinitjmp, 1);
-}
-
-#ifdef HAVE_FBCONSOLE
-#define FBCONSOLE "/usr/openwin/bin/fbconsole"
-
-static void
-mdm_exec_fbconsole (MdmDisplay *disp)
-{
-        char *argv[6];
-
-        argv[0] = FBCONSOLE;
-        argv[1] = "-n";
-        argv[2] = "-d";
-        argv[3] = disp->name;
-        argv[4] = NULL;
-
-	mdm_debug ("Forking fbconsole");
-
-        d->fbconsolepid = fork ();
-        if (d->fbconsolepid == 0) {
-                mdm_close_all_descriptors (0 /* from */, -1 /* except */, -1 /* except2 */)
-;
-                VE_IGNORE_EINTR (execv (argv[0], argv));
-
-		mdm_error ("Can not start fallback console: %s",
-			   strerror (errno));
-		_exit (0);
-        }
-        if (d->fbconsolepid == -1) {
-                mdm_error (_("Can not start fallback console"));
-        }
-}
-#endif
 
 /**
  * mdm_server_stop:
@@ -186,22 +140,10 @@ mdm_server_stop (MdmDisplay *disp)
 	return;
 
     /* Kill our connection if one existed */
-    if (disp->dsp != NULL) {
-	    /* on XDMCP servers first kill everything in sight */
-	    if (disp->type == TYPE_XDMCP)
-		    mdm_server_whack_clients (disp->dsp);
+    if (disp->dsp != NULL) {	    	    
 	    XCloseDisplay (disp->dsp);
 	    disp->dsp = NULL;
-    }
-
-    /* Kill our parent connection if one existed */
-    if (disp->parent_dsp != NULL) {
-	    /* on XDMCP servers first kill everything in sight */
-	    if (disp->type == TYPE_XDMCP_PROXY)
-		    mdm_server_whack_clients (disp->parent_dsp);
-	    XCloseDisplay (disp->parent_dsp);
-	    disp->parent_dsp = NULL;
-    }
+    }   
 
     if (disp->servpid <= 0)
 	    return;
@@ -251,14 +193,6 @@ mdm_server_stop (MdmDisplay *disp)
 
     mdm_server_wipe_cookies (disp);
 
-#ifdef HAVE_FBCONSOLE
-    /* Kill fbconsole if it is running */
-    if (d->fbconsolepid > 0)
-        kill (d->fbconsolepid, SIGTERM);
-    d->fbconsolepid = 0;
-#endif
-
-    mdm_slave_whack_temp_auth_file ();
 }
 
 static gboolean
@@ -296,39 +230,6 @@ busy_ask_user (MdmDisplay *disp)
     }
 }
 
-/* Checks only output, no XFree86 v4 logfile */
-static gboolean
-display_parent_no_connect (MdmDisplay *disp)
-{
-	char *logname = mdm_make_filename (mdm_daemon_config_get_value_string (MDM_KEY_LOG_DIR), d->name, ".log");
-	FILE *fp;
-	char buf[256];
-	char *getsret;
-
-	VE_IGNORE_EINTR (fp = fopen (logname, "r"));
-	g_free (logname);
-
-	if (fp == NULL)
-		return FALSE;
-
-	for (;;) {
-		VE_IGNORE_EINTR (getsret = fgets (buf, sizeof (buf), fp));
-		if (getsret == NULL) {
-			VE_IGNORE_EINTR (fclose (fp));
-			return FALSE;
-		}
-		/* Note: this is probably XFree86 specific, and perhaps even
-		 * version 3 specific (I don't have xfree v4 to test this),
-		 * of course additions are welcome to make this more robust */
-		if (strstr (buf, "Unable to open display \"") == buf) {
-			mdm_error (_("Display '%s' cannot be opened by nested display"),
-				   ve_sure_string (disp->parent_disp));
-			VE_IGNORE_EINTR (fclose (fp));
-			return TRUE;
-		}
-	}
-}
-
 static gboolean
 display_busy (MdmDisplay *disp)
 {
@@ -352,9 +253,7 @@ display_busy (MdmDisplay *disp)
 		/* Note: this is probably XFree86 specific */
 		if (strstr (buf, "Server is already active for display")
 		    == buf) {
-			mdm_error (_("Display %s is busy. There is another "
-				     "X server running already."),
-				   disp->name);
+			mdm_error ("Display %s is busy. There is another X server running already.", disp->name);
 			VE_IGNORE_EINTR (fclose (fp));
 			return TRUE;
 		}
@@ -436,8 +335,7 @@ setup_server_wait (MdmDisplay *d)
     sigset_t mask;
 
     if (pipe (server_signal_pipe) != 0) {
-	    mdm_error (_("%s: Error opening a pipe: %s"),
-		       "setup_server_wait", strerror (errno));
+	    mdm_error ("setup_server_wait: Error opening a pipe: %s", strerror (errno));
 	    return FALSE; 
     }
     server_signal_notified = FALSE;
@@ -448,8 +346,7 @@ setup_server_wait (MdmDisplay *d)
     sigemptyset (&usr1.sa_mask);
 
     if (sigaction (SIGUSR1, &usr1, NULL) < 0) {
-	    mdm_error (_("%s: Error setting up %s signal handler: %s"),
-		       "mdm_server_start", "USR1", strerror (errno));
+	    mdm_error ("mdm_server_start: Error setting up %s signal handler: %s", "USR1", strerror (errno));
 	    VE_IGNORE_EINTR (close (server_signal_pipe[0]));
 	    VE_IGNORE_EINTR (close (server_signal_pipe[1]));
 	    return FALSE;
@@ -461,8 +358,7 @@ setup_server_wait (MdmDisplay *d)
     sigemptyset (&chld.sa_mask);
 
     if (sigaction (SIGCHLD, &chld, &old_svr_wait_chld) < 0) {
-	    mdm_error (_("%s: Error setting up %s signal handler: %s"),
-		       "mdm_server_start", "CHLD", strerror (errno));
+	    mdm_error ("mdm_server_start: Error setting up %s signal handler: %s", "CHLD", strerror (errno));
 	    mdm_signal_ignore (SIGUSR1);
 	    VE_IGNORE_EINTR (close (server_signal_pipe[0]));
 	    VE_IGNORE_EINTR (close (server_signal_pipe[1]));
@@ -592,44 +488,6 @@ do_server_wait (MdmDisplay *d)
     }
 }
 
-/* We keep a connection (parent_dsp) open with the parent X server
- * before running a proxy on it to prevent the X server resetting
- * as we open and close other connections.
- * Note that XDMCP servers, by default, reset when the seed X
- * connection closes whereas usually the X server only quits when
- * all X connections have closed.
- */
-static gboolean
-connect_to_parent (MdmDisplay *d)
-{
-	int maxtries;
-	int openretries;
-
-	mdm_debug ("mdm_server_start: Connecting to parent display \'%s\'",
-		   d->parent_disp);
-
-	d->parent_dsp = NULL;
-
-	maxtries = SERVER_IS_XDMCP (d) ? 10 : 2;
-
-	openretries = 0;
-	while (openretries < maxtries &&
-	       d->parent_dsp == NULL) {
-		d->parent_dsp = XOpenDisplay (d->parent_disp);
-
-		if G_UNLIKELY (d->parent_dsp == NULL) {
-			mdm_debug ("mdm_server_start: Sleeping %d on a retry", 1+openretries*2);
-			mdm_sleep_no_signal (1+openretries*2);
-			openretries++;
-		}
-	}
-
-	if (d->parent_dsp == NULL)
-		mdm_error (_("%s: failed to connect to parent display \'%s\'"),
-			   "mdm_server_start", d->parent_disp);
-
-	return d->parent_dsp != NULL;
-}
 
 /**
  * mdm_server_start:
@@ -654,10 +512,6 @@ mdm_server_start (MdmDisplay *disp,
 
     d = disp;
 
-#ifdef HAVE_FBCONSOLE
-    d->fbconsolepid = 0;
-#endif
-
     /* if an X server exists, wipe it */
     mdm_server_stop (d);
 
@@ -680,11 +534,7 @@ mdm_server_start (MdmDisplay *disp,
 
 	    mdm_slave_send_num (MDM_SOP_DISP_NUM, flexi_disp);
     }
-
-    if (d->type == TYPE_XDMCP_PROXY &&
-	! connect_to_parent (d))
-	    return FALSE;
-
+  
     mdm_debug ("mdm_server_start: %s", d->name);
 
     /* Create new cookie */
@@ -744,21 +594,10 @@ mdm_server_start (MdmDisplay *disp,
 			    mdm_slave_send_num (MDM_SOP_VT_NUM, d->vt);
 	    }
 
-#ifdef HAVE_FBCONSOLE
-            mdm_exec_fbconsole (d);
-#endif
-
 	    return TRUE;
     default:
 	    break;
-    }
-
-    if (SERVER_IS_PROXY (disp) &&
-	display_parent_no_connect (disp)) {
-	    mdm_slave_send_num (MDM_SOP_FLEXI_ERR,
-				5 /* proxy can't connect */);
-	    _exit (DISPLAY_REMANAGE);
-    }
+    }    
 
     /* if this was a busy fail, that is, there is already
      * a server on that display, we'll display an error and after
@@ -771,9 +610,7 @@ mdm_server_start (MdmDisplay *disp,
 		     * display numbers */
 		    if (flexi_retries <= 0) {
 			    /* Send X too busy */
-			    mdm_error (_("%s: Cannot find a free "
-					 "display number"),
-				       "mdm_server_start");
+			    mdm_error ("mdm_server_start: Cannot find a free display number");
 			    if (SERVER_IS_FLEXI (disp)) {
 				    mdm_slave_send_num (MDM_SOP_FLEXI_ERR,
 							4 /* X too busy */);
@@ -787,9 +624,7 @@ mdm_server_start (MdmDisplay *disp,
 					     flexi_retries - 1);
 	    } else {
 		    if (try_again_if_busy) {
-			    mdm_debug ("%s: Display %s busy.  Trying once again "
-				       "(after 2 sec delay)",
-				       "mdm_server_start", d->name);
+			    mdm_debug ("mdm_server_start: Display %s busy.  Trying once again (after 2 sec delay) mdm_server_start", d->name);
 			    mdm_sleep_no_signal (2);
 			    return mdm_server_start (d,
 						     FALSE /* try_again_if_busy */,
@@ -798,10 +633,7 @@ mdm_server_start (MdmDisplay *disp,
 						     flexi_retries);
 		    }
 		    if (busy_ask_user (disp)) {
-			    mdm_error (_("%s: Display %s busy.  Trying "
-					 "another display number."),
-				       "mdm_server_start",
-				       d->name);
+			    mdm_error ("mdm_server_start: Display %s busy.  Trying another display number.", d->name);
 			    d->busy_display = TRUE;
 			    return mdm_server_start (d,
 						     FALSE /*try_again_if_busy */,
@@ -960,7 +792,7 @@ mdm_server_resolve_command_line (MdmDisplay *disp,
 	if (bin == NULL) {
 		const char *str;
 
-		mdm_error (_("Invalid server command '%s'"), disp->command);
+		mdm_error ("Invalid server command '%s'", disp->command);
 		str = mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER);
        		g_shell_parse_argv (str, &argc, &argv, NULL);
 	} else if (bin[0] != '/') {
@@ -968,8 +800,7 @@ mdm_server_resolve_command_line (MdmDisplay *disp,
 		if (svr == NULL) {
 			const char *str;
 
-			mdm_error (_("Server name '%s' not found; "
-				     "using standard server"), bin);
+			mdm_error ("Server name '%s' not found; using standard server", bin);
 			str = mdm_daemon_config_get_value_string (MDM_KEY_STANDARD_XSERVER);
 			g_shell_parse_argv (str, &argc, &argv, NULL);
 
@@ -1012,12 +843,7 @@ mdm_server_resolve_command_line (MdmDisplay *disp,
 
 			if (resolve_flags) {
 				/* Setup the handled function */
-				disp->handled = svr->handled;
-				/* never make use_chooser FALSE,
-				   it may have been set temporarily for
-				   us by the master */
-				if (svr->chooser)
-					disp->use_chooser = TRUE;
+				disp->handled = svr->handled;			
 				disp->priority = svr->priority;
 			}
 		}
@@ -1055,9 +881,7 @@ mdm_server_resolve_command_line (MdmDisplay *disp,
 
 	if (resolve_flags && disp->chosen_hostname) {
 		/* this display is NOT handled */
-		disp->handled = FALSE;
-		/* never ever ever use chooser here */
-		disp->use_chooser = FALSE;
+		disp->handled = FALSE;		
 		disp->priority = MDM_PRIO_DEFAULT;
 		/* run just one session */
 		argv[len++] = g_strdup ("-terminate");
@@ -1137,13 +961,10 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 				         &argc,
 				         &argv);
     if (rc == FALSE)
-       return;
+       return;    
 
-    /* Do not support additional session arguments with Xnest. */
-    if (d->type != TYPE_FLEXI_XNEST) {
-	    if (d->xserver_session_args)
-		    mdm_server_add_xserver_args (d, argv);
-    }
+    if (d->xserver_session_args)
+	    mdm_server_add_xserver_args (d, argv);
 
     command = g_strjoinv (" ", argv);
 
@@ -1191,8 +1012,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 		VE_IGNORE_EINTR (dup2 (logfd, 2));
 		close (logfd);
         } else {
-		mdm_error (_("%s: Could not open logfile for display %s!"),
-			   "mdm_server_spawn", d->name);
+		mdm_error ("mdm_server_spawn: Could not open logfile for display %s!", d->name);
 	}
 
 	g_free (logfile);
@@ -1205,19 +1025,16 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 	if (d->server_uid == 0) {
 		/* only set this if we can actually listen */
 		if (sigaction (SIGUSR1, &ign_signal, NULL) < 0) {
-			mdm_error (_("%s: Error setting %s to %s"),
-				   "mdm_server_spawn", "USR1", "SIG_IGN");
+			mdm_error ("mdm_server_spawn: Error setting %s to %s", "USR1", "SIG_IGN");
 			_exit (SERVER_ABORT);
 		}
 	}
 	if (sigaction (SIGTTIN, &ign_signal, NULL) < 0) {
-		mdm_error (_("%s: Error setting %s to %s"),
-			   "mdm_server_spawn", "TTIN", "SIG_IGN");
+		mdm_error ("mdm_server_spawn: Error setting %s to %s", "TTIN", "SIG_IGN");
 		_exit (SERVER_ABORT);
 	}
 	if (sigaction (SIGTTOU, &ign_signal, NULL) < 0) {
-		mdm_error (_("%s: Error setting %s to %s"),
-			   "mdm_server_spawn", "TTOU", "SIG_IGN");
+		mdm_error ("mdm_server_spawn: Error setting %s to %s", "TTOU", "SIG_IGN");
 		_exit (SERVER_ABORT);
 	}
 
@@ -1228,55 +1045,9 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 	 * can control the X server */
 	sigemptyset (&mask);
 	sigprocmask (SIG_SETMASK, &mask, NULL);
-
-	if (SERVER_IS_PROXY (d)) {
-		gboolean add_display = TRUE;
-
-		g_unsetenv ("DISPLAY");
-		if (d->parent_auth_file != NULL)
-			g_setenv ("XAUTHORITY", d->parent_auth_file, TRUE);
-		else
-			g_unsetenv ("XAUTHORITY");
-
-		if (d->type == TYPE_FLEXI_XNEST) {
-			char *font_path = NULL;
-			/* Add -fp with the current font path, but only if not
-			 * already among the arguments */
-			if (strstr (command, "-fp") == NULL)
-				font_path = get_font_path (d->parent_disp);
-			if (font_path != NULL) {
-				argv = g_renew (char *, argv, argc + 2);
-				argv[argc++] = "-fp";
-				argv[argc++] = font_path;
-				command = g_strconcat (command, " -fp ",
-						       font_path, NULL);
-			}
-			add_display = FALSE;
-		}
-
-		/*
-		 * Set the DISPLAY environment variable when calling
-		 * nested server since some Xnest commands like Xephyr 
-		 * do not support the -display argument.
-		 */
-		if (add_display == TRUE) {
-			argv = g_renew (char *, argv, argc + 3);
-			argv[argc++] = "-display";
-			argv[argc++] = d->parent_disp;
-			argv[argc++] = NULL;
-			command = g_strconcat (command, " -display ",
-				       d->parent_disp, NULL);
-		} else {
-			argv = g_renew (char *, argv, argc + 1);
-			argv[argc++] = NULL;
-			g_setenv ("DISPLAY", d->parent_disp, TRUE);
-		}
-	}
-
+	
 	if (argv[0] == NULL) {
-		mdm_error (_("%s: Empty server command for display %s"),
-			   "mdm_server_spawn",
-			   d->name);
+		mdm_error ("mdm_server_spawn: Empty server command for display %s", d->name);
 		_exit (SERVER_ABORT);
 	}
 
@@ -1284,9 +1055,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 	
 	if (d->priority != MDM_PRIO_DEFAULT) {
 		if (setpriority (PRIO_PROCESS, 0, d->priority)) {
-			mdm_error (_("%s: Server priority couldn't be set to %d: %s"),
-				   "mdm_server_spawn", d->priority,
-				   strerror (errno));
+			mdm_error ("mdm_server_spawn: Server priority couldn't be set to %d: %s", d->priority, strerror (errno));
 		}
 	}
 
@@ -1296,10 +1065,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 		struct passwd *pwent;
 		pwent = getpwuid (d->server_uid);
 		if (pwent == NULL) {
-			mdm_error (_("%s: Server was to be spawned by uid %d but "
-				     "that user doesn't exist"),
-				   "mdm_server_spawn",
-				   (int)d->server_uid);
+			mdm_error ("mdm_server_spawn: Server was to be spawned by uid %d but that user doesn't exist", (int)d->server_uid);
 			_exit (SERVER_ABORT);
 		}
 	/*
@@ -1320,43 +1086,29 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 		g_unsetenv ("MAIL");
 
 		if (setgid (pwent->pw_gid) < 0)  {
-			mdm_error (_("%s: Couldn't set groupid to %d"), 
-				   "mdm_server_spawn", (int)pwent->pw_gid);
+			mdm_error ("mdm_server_spawn: Couldn't set groupid to %d", (int)pwent->pw_gid);
 			_exit (SERVER_ABORT);
 		}
 
 		if (initgroups (pwent->pw_name, pwent->pw_gid) < 0) {
-			mdm_error (_("%s: initgroups () failed for %s"),
-				   "mdm_server_spawn", pwent->pw_name);
+			mdm_error ("mdm_server_spawn: initgroups () failed for %s", pwent->pw_name);
 			_exit (SERVER_ABORT);
 		}
 
 		if (setuid (d->server_uid) < 0)  {
-			mdm_error (_("%s: Couldn't set userid to %d"),
-				   "mdm_server_spawn", (int)d->server_uid);
+			mdm_error ("mdm_server_spawn: Couldn't set userid to %d", (int)d->server_uid);
 			_exit (SERVER_ABORT);
 		}
 	} else {
 		gid_t groups[1] = { 0 };
 		if (setgid (0) < 0)  {
-			mdm_error (_("%s: Couldn't set groupid to 0"), 
-				   "mdm_server_spawn");
+			mdm_error ("mdm_server_spawn: Couldn't set groupid to 0");
 			/* Don't error out, it's not fatal, if it fails we'll
 			 * just still be */
 		}
 		/* this will get rid of any suplementary groups etc... */
 		setgroups (1, groups);
 	}
-
-#if __sun
-    {
-        /* Remove old communication pipe, if present */
-        char old_pipe[MAXPATHLEN];
-
-        sprintf (old_pipe, "%s/%d", MDM_SDTLOGIN_DIR, d->name);
-        g_unlink (old_pipe);
-    }
-#endif
 
 	VE_IGNORE_EINTR (execv (argv[0], argv));
 
@@ -1366,16 +1118,14 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
 		      "MDM configuration and restart MDM.",
 		      command);
 
-	mdm_error (_("%s: Xserver not found: %s"), 
-		   "mdm_server_spawn", command);
+	mdm_error ("mdm_server_spawn: Xserver not found: %s", command);
 	
 	_exit (SERVER_ABORT);
 	
     case -1:
 	g_strfreev (argv);
 	g_free (command);
-	mdm_error (_("%s: Can't fork Xserver process!"),
-		   "mdm_server_spawn");
+	mdm_error ("mdm_server_spawn: Can't fork Xserver process!");
 	d->servpid = 0;
 	d->servstat = SERVER_DEAD;
 
@@ -1384,8 +1134,7 @@ mdm_server_spawn (MdmDisplay *d, const char *vtarg)
     default:
 	g_strfreev (argv);
 	g_free (command);
-	mdm_debug ("%s: Forked server on pid %d", 
-		   "mdm_server_spawn", (int)pid);
+	mdm_debug ("mdm_server_spawn: Forked server on pid %d", (int)pid);
 	break;
     }
 }
@@ -1475,62 +1224,6 @@ mdm_server_whack_clients (Display *dsp)
 	XSetErrorHandler (old_xerror_handler);
 }
 
-static char *
-get_font_path (const char *display)
-{
-	Display *disp;
-	char **font_path;
-	int n_fonts;
-	int i;
-	GString *gs;
 
-	disp = XOpenDisplay (display);
-	if (disp == NULL)
-		return NULL;
-
-	font_path = XGetFontPath (disp, &n_fonts);
-	if (font_path == NULL) {
-		XCloseDisplay (disp);
-		return NULL;
-	}
-
-	gs = g_string_new (NULL);
-	for (i = 0; i < n_fonts; i++) {
-		if (i != 0)
-			g_string_append_c (gs, ',');
-
-	        if (mdm_daemon_config_get_value_bool (MDM_KEY_XNEST_UNSCALED_FONT_PATH) == TRUE)
-			g_string_append (gs, font_path[i]);
-		else {
-			gchar *unscaled_ptr = NULL;
-
-			/*
-			 * When using Xsun Xnest, it doesn't support the
-			 * ":unscaled" suffix in fontpath entries, so strip it.
-			 */
-			unscaled_ptr = g_strrstr (font_path[i], ":unscaled");
-			if (unscaled_ptr != NULL) {
-				gchar *temp_string;
-
-				temp_string = g_strndup (font_path[i],
-					strlen (font_path[i]) -
-					strlen (":unscaled"));
-
-mdm_debug ("font_path[i] is %s, temp_string is %s", font_path[i], temp_string);
-				g_string_append (gs, temp_string);
-				g_free (temp_string);
-			} else {
-mdm_debug ("font_path[i] is %s", font_path[i]);
-				g_string_append (gs, font_path[i]);
-			}
-		}
-	}
-
-	XFreeFontPath (font_path);
-
-	XCloseDisplay (disp);
-
-	return g_string_free (gs, FALSE);
-}
 
 /* EOF */

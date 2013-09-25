@@ -32,15 +32,6 @@ INCLUDES = \
 libexec_PROGRAMS = \
 	mdmgreeter
 
-bin_SCRIPTS = \
-	mdmthemetester
-
-CLEANFILES = mdmthemetester
-
-mdmthemetester: $(srcdir)/mdmthemetester.in
-	sed -e 's,[@]libexecdir[@],$(libexecdir),g' \
-		<$(srcdir)/mdmthemetester.in >mdmthemetester
-
 mdmgreeter_SOURCES =  \
 	greeter.c \
 	greeter.h \
@@ -96,5 +87,4 @@ mdmgreeter_LDADD = \
 	-lXau
 
 EXTRA_DIST = \
-	mdmthemetester.in \
 	greeter.dtd

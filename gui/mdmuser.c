@@ -183,10 +183,7 @@ mdm_check_exclude (struct passwd *pwent, char **excludes, gboolean is_local)
 	gint i;
 
         if ( ! mdm_config_get_bool (MDM_KEY_ALLOW_ROOT) && pwent->pw_uid == 0)
-                return TRUE;
-
-        if ( ! mdm_config_get_bool (MDM_KEY_ALLOW_REMOTE_ROOT) && ! is_local && pwent->pw_uid == 0)
-                return TRUE;
+                return TRUE;       
 
 	if (pwent->pw_uid < mdm_config_get_int (MDM_KEY_MINIMAL_UID))
 		return TRUE;

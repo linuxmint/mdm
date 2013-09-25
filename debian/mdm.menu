@@ -4,16 +4,6 @@
   icon="/usr/share/pixmaps/mdm.xpm"\
   longtitle="New MDM Session"
 ?package(mdm):needs="X11" section="Applications/System/Administration" \
-  title="MDM flexiserver in Xnest" command="mdmflexiserver -n"\
-  hints="Display Manager"\
-  icon="/usr/share/pixmaps/mdm.xpm"\
-  longtitle="New MDM Session in Xnest"
-?package(mdm):needs="X11" section="Applications/System/Administration" \
-  title="MDM Photo Setup" command="mdmphotosetup"\
-  hints="Display Manager"\
-  icon="/usr/share/pixmaps/mdm.xpm"\
-  longtitle="Select a photo for MDM"
-?package(mdm):needs="X11" section="Applications/System/Administration" \
   title="MDM Setup" command="su-to-root -X -p root -c /usr/sbin/mdmsetup"\
   hints="Display Manager"\
   icon="/usr/share/pixmaps/mdm.xpm"\
