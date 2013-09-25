@@ -3293,16 +3293,7 @@ session_child_run (struct passwd *pwent,
 		g_setenv ("XDG_DATA_DIRS", new_system_data_dirs, TRUE);
 
 		g_free (new_system_data_dirs);
-	}
-
-	/* Eeeeek, this no lookie as a correct language code,
-	 * just use the system default */
-	if G_UNLIKELY ( ! ve_string_empty (language) && ! ve_locale_exists (language)) {
-		char *msg = g_strdup_printf (_("Language %s does not exist; using %s"), language, _("System default"));
-		mdm_errorgui_error_box (d, GTK_MESSAGE_ERROR, msg);
-		language = NULL;
-		g_free (msg);
-	}
+	}	
 
 	/* Now still as root make the system authfile not readable by others,
 	   and therefore not by the mdm user */
