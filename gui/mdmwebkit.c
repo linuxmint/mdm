@@ -285,7 +285,7 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
         fflush (stdout);
 	}
 	else {		
-		printf("Unknown command received from Webkit greeter: %s\n", command);
+		//printf("Unknown command received from Webkit greeter: %s\n", command);
 	}    
     return TRUE;
 }
@@ -356,8 +356,6 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 		g_free (name);
 		g_free (untranslated);
 	}	
-
-	webkit_execute_script("mdm_ready", NULL);
 	
 	if G_LIKELY ( ! DOING_MDM_DEVELOPMENT) {
 	    ctrlch = g_io_channel_unix_new (STDIN_FILENO);
@@ -715,15 +713,14 @@ process_operation (guchar       op_code,
     
     /* Parse opcode */
     switch (op_code) {
-    case MDM_SETLOGIN:
-	/* somebody is trying to fool us this is the user that
-	 * wants to log in, and well, we are the gullible kind */
-	g_free (curuser);
-	curuser = g_strdup (args);	
-    // WEBKIT TODO: SELECT THE USER curuser IN THE WEBKIT USER LIST
-	printf ("%c\n", STX);
-	fflush (stdout);
-	break;
+
+	    case MDM_SETLOGIN:	
+			g_free (curuser);
+			curuser = g_strdup (args);	
+	    	webkit_execute_script("mdm_set_current_user", curuser);
+			printf ("%c\n", STX);
+			fflush (stdout);
+			break;
 
     case MDM_PROMPT:
 	tmp = ve_locale_to_utf8 (args);
@@ -1076,11 +1073,11 @@ process_operation (guchar       op_code,
 
     case MDM_SAVEDIE:
 	/* Set busy cursor */
-	mdm_common_setup_cursor (GDK_WATCH);
+	//mdm_common_setup_cursor (GDK_WATCH);
 
-	mdm_wm_save_wm_order ();
+	//mdm_wm_save_wm_order ();
 	
-	gdk_flush ();
+	//gdk_flush ();
 
 	printf ("%c\n", STX);
 	fflush (stdout);
@@ -1216,7 +1213,7 @@ webkit_init (void) {
 		gtk_widget_show_all (dialog);
 		mdm_wm_center_window (GTK_WINDOW (dialog));
 
-		mdm_common_setup_cursor (GDK_LEFT_PTR);
+		//mdm_common_setup_cursor (GDK_LEFT_PTR);
 
 		gtk_dialog_run (GTK_DIALOG (dialog));
 		gtk_widget_destroy (dialog);
@@ -1253,24 +1250,7 @@ webkit_init (void) {
 	html = str_replace(html, "$areyousuretoquit", html_encode(_("Are you sure you want to quit?")));
 	html = str_replace(html, "$close", html_encode(_("Close")));
 	
-	html = str_replace(html, "$locale", g_strdup (setlocale (LC_MESSAGES, NULL)));
-
-	FILE *fp;
-  	int status;
-  	char * username = NULL;
-	fp = popen("ck-history --last | head -1 | awk {'print $1;'}", "r");
-  	if (fp != NULL) { 	
-  	 	/* Read the output a line at a time - output it. */
-  	 	char line[1035];
-  		while (fgets(line, sizeof(line)-1, fp) != NULL) {
-    		username = g_strchomp(line);
-			break;
-  		}
-  		pclose(fp);  		
-  	}
-  	if (username != NULL) {
-  		html = str_replace(html, "$preselected_username", username);
-  	}
+	html = str_replace(html, "$locale", g_strdup (setlocale (LC_MESSAGES, NULL)));	
 		
 	webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
 	
@@ -1505,7 +1485,7 @@ mdm_reread_config (int sig, gpointer data)
 	    mdm_config_reload_bool   (MDM_KEY_ADD_GTK_MODULES)) {
 
 		/* Set busy cursor */
-		mdm_common_setup_cursor (GDK_WATCH);
+		//mdm_common_setup_cursor (GDK_WATCH);
 
 		mdm_wm_save_wm_order ();
 		mdmcomm_close_connection_to_daemon ();
@@ -1574,7 +1554,7 @@ main (int argc, char *argv[])
     mdm_common_setup_builtin_icons ();
 
     /* Read all configuration at once, so the values get cached */
-    mdm_read_config ();
+   // mdm_read_config ();
     
     setlocale (LC_ALL, "");
 
@@ -1589,7 +1569,7 @@ main (int argc, char *argv[])
 		bg_color = mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
 	}
 	mdm_common_setup_background_color (bg_color);
-    mdm_common_setup_cursor (GDK_WATCH);
+    //mdm_common_setup_cursor (GDK_WATCH);
 
        
     defface = mdm_common_get_face (NULL,
@@ -1610,7 +1590,7 @@ main (int argc, char *argv[])
     mdm_login_gui_init ();
 	
 
-    ve_signal_add (SIGHUP, mdm_reread_config, NULL);
+    //ve_signal_add (SIGHUP, mdm_reread_config, NULL);
 
     hup.sa_handler = ve_signal_notify;
     hup.sa_flags = 0;
@@ -1715,73 +1695,73 @@ main (int argc, char *argv[])
 
     mdm_wm_center_window (GTK_WINDOW (login));    
 
-    /* can it ever happen that it'd be NULL here ??? */
-    if G_UNLIKELY (login->window != NULL) {
-	    mdm_wm_init (GDK_WINDOW_XWINDOW (login->window));
+    // /* can it ever happen that it'd be NULL here ??? */
+    // if G_UNLIKELY (login->window != NULL) {
+	   //  mdm_wm_init (GDK_WINDOW_XWINDOW (login->window));
 
-	    /* Run the focus, note that this will work no matter what
-	     * since mdm_wm_init will set the display to the gdk one
-	     * if it fails */
-	    mdm_wm_focus_window (GDK_WINDOW_XWINDOW (login->window));
-    }
+	   //  /* Run the focus, note that this will work no matter what
+	   //   * since mdm_wm_init will set the display to the gdk one
+	   //   * if it fails */
+	   //  mdm_wm_focus_window (GDK_WINDOW_XWINDOW (login->window));
+    // }
 
-    if G_UNLIKELY (session_dir_whacked_out) {
-	    GtkWidget *dialog;
+    // if G_UNLIKELY (session_dir_whacked_out) {
+	   //  GtkWidget *dialog;
 
-	    mdm_wm_focus_new_windows (TRUE);
+	   //  mdm_wm_focus_new_windows (TRUE);
 
-	    dialog = hig_dialog_new (NULL /* parent */,
-				     GTK_DIALOG_MODAL /* flags */,
-				     GTK_MESSAGE_ERROR,
-				     GTK_BUTTONS_OK,
-				     _("Session directory is missing"),
-				     _("Your session directory is missing or empty!  "
-				       "There are two available sessions you can use, but "
-				       "you should log in and correct the MDM configuration."));
-	    gtk_widget_show_all (dialog);
-	    mdm_wm_center_window (GTK_WINDOW (dialog));
+	   //  dialog = hig_dialog_new (NULL /* parent */,
+				//      GTK_DIALOG_MODAL /* flags */,
+				//      GTK_MESSAGE_ERROR,
+				//      GTK_BUTTONS_OK,
+				//      _("Session directory is missing"),
+				//      _("Your session directory is missing or empty!  "
+				//        "There are two available sessions you can use, but "
+				//        "you should log in and correct the MDM configuration."));
+	   //  gtk_widget_show_all (dialog);
+	   //  mdm_wm_center_window (GTK_WINDOW (dialog));
 
-	    mdm_common_setup_cursor (GDK_LEFT_PTR);
+	   mdm_common_setup_cursor (GDK_LEFT_PTR);
 
-	    mdm_wm_no_login_focus_push ();
-	    gtk_dialog_run (GTK_DIALOG (dialog));
-	    gtk_widget_destroy (dialog);
-	    mdm_wm_no_login_focus_pop ();
-    }
+	   //  mdm_wm_no_login_focus_push ();
+	   //  gtk_dialog_run (GTK_DIALOG (dialog));
+	   //  gtk_widget_destroy (dialog);
+	   //  mdm_wm_no_login_focus_pop ();
+    // }
 
-    if G_UNLIKELY (g_getenv ("MDM_WHACKED_GREETER_CONFIG") != NULL) {
-	    GtkWidget *dialog;
+    // if G_UNLIKELY (g_getenv ("MDM_WHACKED_GREETER_CONFIG") != NULL) {
+	   //  GtkWidget *dialog;
 
-	    mdm_wm_focus_new_windows (TRUE);
+	   //  mdm_wm_focus_new_windows (TRUE);
 
-	    dialog = hig_dialog_new (NULL /* parent */,
-				     GTK_DIALOG_MODAL /* flags */,
-				     GTK_MESSAGE_ERROR,
-				     GTK_BUTTONS_OK,
-				     _("Configuration is not correct"),
-				     _("The configuration file contains an invalid command "
-				       "line for the login dialog, so running the "
-				       "default command.  Please fix your configuration."));
-	    gtk_widget_show_all (dialog);
-	    mdm_wm_center_window (GTK_WINDOW (dialog));
+	   //  dialog = hig_dialog_new (NULL /* parent */,
+				//      GTK_DIALOG_MODAL /* flags */,
+				//      GTK_MESSAGE_ERROR,
+				//      GTK_BUTTONS_OK,
+				//      _("Configuration is not correct"),
+				//      _("The configuration file contains an invalid command "
+				//        "line for the login dialog, so running the "
+				//        "default command.  Please fix your configuration."));
+	   //  gtk_widget_show_all (dialog);
+	   //  mdm_wm_center_window (GTK_WINDOW (dialog));
 
-	    mdm_common_setup_cursor (GDK_LEFT_PTR);
+	   //  mdm_common_setup_cursor (GDK_LEFT_PTR);
 
-	    mdm_wm_no_login_focus_push ();
-	    gtk_dialog_run (GTK_DIALOG (dialog));
-	    gtk_widget_destroy (dialog);
-	    mdm_wm_no_login_focus_pop ();
-    }
+	   //  mdm_wm_no_login_focus_push ();
+	   //  gtk_dialog_run (GTK_DIALOG (dialog));
+	   //  gtk_widget_destroy (dialog);
+	   //  mdm_wm_no_login_focus_pop ();
+    // }
 
-    mdm_wm_restore_wm_order ();
+    //mdm_wm_restore_wm_order ();
 
     mdm_wm_show_info_msg_dialog (mdm_config_get_string (MDM_KEY_INFO_MSG_FILE),
-       mdm_config_get_string (MDM_KEY_INFO_MSG_FONT));
+    mdm_config_get_string (MDM_KEY_INFO_MSG_FONT));
 
     /* Only setup the cursor now since it will be a WATCH from before */
-    mdm_common_setup_cursor (GDK_LEFT_PTR);
+    //mdm_common_setup_cursor (GDK_LEFT_PTR);
 
-    mdm_common_pre_fetch_launch ();
+    //mdm_common_pre_fetch_launch ();
     gtk_main ();
 
     return EXIT_SUCCESS;
