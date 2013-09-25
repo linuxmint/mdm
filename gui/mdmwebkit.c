@@ -230,7 +230,7 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
 	}	
 	else if (strcmp(command, "LANGUAGE") == 0) {
 		gchar *language = message_parts[1];
-		printf ("%c%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_SELECT_LANG, 1, language);
+		printf ("%c%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_SELECT_LANG, 0, language);
 		fflush (stdout);
 		g_free (language);
 	}
