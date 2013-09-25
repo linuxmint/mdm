@@ -220,7 +220,7 @@ void webkit_execute_script(const gchar * function, const gchar * arguments)
 	}
 }
 
-gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gchar* message)
+gboolean webkit_on_message(WebKitWebView *view, WebKitWebFrame *frame, gchar *message, gpointer user_data)
 {    
     gchar ** message_parts = g_strsplit (message, "###", -1);
     gchar * command = message_parts[0];
@@ -290,7 +290,7 @@ gboolean webkit_on_message(WebKitWebView* view, WebKitWebFrame* frame, const gch
     return TRUE;
 }
 
-void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
+void webkit_on_loaded(WebKitWebView *view, WebKitWebFrame *frame, gpointer user_data)
 {    
 	GIOChannel *ctrlch;
 	
@@ -374,6 +374,17 @@ void webkit_on_loaded(WebKitWebView* view, WebKitWebFrame* frame)
 	
 
     gtk_widget_show_all (GTK_WIDGET (login));    
+}
+
+gboolean webkit_on_navigation_policy_decision_requested(WebKitWebView         *web_view,
+									                WebKitWebFrame            *frame,
+									                WebKitNetworkRequest      *request,
+									                WebKitWebNavigationAction *navigation_action,
+									                WebKitWebPolicyDecision   *policy_decision,
+									                gpointer                   user_data) 
+{
+	webkit_web_policy_decision_ignore (policy_decision);
+	return TRUE;
 }
 
 static GtkWidget *
@@ -1266,8 +1277,9 @@ webkit_init (void) {
 	
 	webkit_web_view_load_string(webView, html, "text/html", "UTF-8", theme_dir);
 
-	g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(webkit_on_message), 0);
-	g_signal_connect(G_OBJECT(webView), "load-finished", G_CALLBACK(webkit_on_loaded), 0);
+	g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(webkit_on_message), NULL);
+	g_signal_connect(G_OBJECT(webView), "load-finished", G_CALLBACK(webkit_on_loaded), NULL);
+	g_signal_connect(G_OBJECT(webView), "navigation-policy-decision-requested", G_CALLBACK(webkit_on_navigation_policy_decision_requested), NULL);
 }
 
 static void
