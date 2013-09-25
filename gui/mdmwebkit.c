@@ -1239,6 +1239,12 @@ webkit_init (void) {
 			
 	}
 	
+	char lsb_description[255];
+	FILE *fp = popen("lsb_release -d -s", "r");
+	fgets(lsb_description, 255, fp);
+	pclose(fp);
+	html = str_replace(html, "$lsb_description", lsb_description);
+	
 	html = str_replace(html, "$login_label", html_encode(_("Login")));
 	html = str_replace(html, "$ok_label", html_encode(_("OK")));
 	html = str_replace(html, "$cancel_label", html_encode(_("Cancel")));
