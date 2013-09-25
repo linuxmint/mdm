@@ -30,18 +30,8 @@
 #include <security/pam_appl.h>
 #include <pwd.h>
 
-#ifdef __sun
-#include <fcntl.h>
-/*
- * Solaris and other operating systems use const differently
- * with PAM functions.  Using these defines avoids compiler
- * warnings and needing to cast.
- */
-#define MDM_PAM_QUAL
-#else
 #define MDM_PAM_QUAL const
-#endif
-
+ 
 #include <glib/gi18n.h>
 
 #include "mdm.h"
@@ -56,15 +46,6 @@
 #include "mdm-daemon-config.h"
 
 #include "mdm-socket-protocol.h"
-
-#ifdef	HAVE_LOGINDEVPERM
-#include <libdevinfo.h>
-#endif	/* HAVE_LOGINDEVPERM */
-
-#ifdef  HAVE_ADT
-#include <bsm/adt.h>
-#include <bsm/adt_event.h>
-#endif	/* HAVE_ADT */
 
 #define  AU_FAILED 0
 #define  AU_SUCCESS 1
@@ -85,7 +66,7 @@ static MdmDisplay *cur_mdm_disp = NULL;
 static char* prev_user;
 static unsigned auth_retries;
 
-/* this is another hack */
+static gboolean do_we_need_to_preset_the_username = TRUE;
 static gboolean did_we_ask_for_password = FALSE;
 
 static char *selected_user = NULL;
@@ -94,344 +75,6 @@ static gboolean opened_session = FALSE;
 static gboolean did_setcred    = FALSE;
 
 extern char *mdm_ack_question_response;
-
-#ifdef	HAVE_ADT
-#define	PW_FALSE	1	/* no password change */
-#define PW_TRUE		2	/* successful password change */
-#define PW_FAILED	3	/* failed password change */
-
-static	adt_session_data_t      *adt_ah = NULL;    /* audit session handle */
-
-/*
- * audit_success_login - audit successful login
- *
- *	Entry	process audit context established -- i.e., pam_setcred ()
- *			called.
- *		pw_change == PW_TRUE, if successful password change audit
- *				      required.
- *		pwent = authenticated user's passwd entry.
- *
- *	Exit	ADT_login (ADT_SUCCESS) audit record written
- *		pw_change == PW_TRUE, ADT_passwd (ADT_SUCCESS) audit
- *			record written.
- *		adt_ah = audit session established for audit_logout ();
- *
- */
-static void
-audit_success_login (int pw_change, struct passwd *pwent)
-{
-	adt_event_data_t	*event;	/* event to generate */
-
-	if (adt_start_session (&adt_ah, NULL, ADT_USE_PROC_DATA) != 0) {
-
-		syslog (LOG_AUTH | LOG_ALERT,
-			"adt_start_session (ADT_login): %m");
-		return;
-	}
-
-	if (adt_set_user (adt_ah, pwent->pw_uid, pwent->pw_gid,
-			  pwent->pw_uid, pwent->pw_gid, NULL, ADT_USER) != 0) {
-
-		syslog (LOG_AUTH | LOG_ALERT,
-			"adt_set_user (ADT_login, %s): %m", pwent->pw_name);
-	}
-	if ((event = adt_alloc_event (adt_ah, ADT_login)) == NULL) {
-
-		syslog (LOG_AUTH | LOG_ALERT, "adt_alloc_event (ADT_login): %m");
-	} else if (adt_put_event (event, ADT_SUCCESS, ADT_SUCCESS) != 0) {
-
-		syslog (LOG_AUTH | LOG_ALERT,
-			"adt_put_event (ADT_login, ADT_SUCCESS): %m");
-	}
-
-	if (pw_change == PW_TRUE) {
-
-		/* Also audit password change */
-		adt_free_event (event);
-		if ((event = adt_alloc_event (adt_ah, ADT_passwd)) == NULL) {
-
-			syslog (LOG_AUTH | LOG_ALERT,
-				"adt_alloc_event (ADT_passwd): %m");
-		} else if (adt_put_event (event, ADT_SUCCESS,
-					  ADT_SUCCESS) != 0) {
-
-			syslog (LOG_AUTH | LOG_ALERT,
-				"adt_put_event (ADT_passwd, ADT_SUCCESS): %m");
-		}
-	}
-	adt_free_event (event);
-}
-
-/*
- * audit_fail_login - audit failed login
- *
- *	Entry	did_setcred == FALSE, process audit context is not established.
- *			       TRUE, process audit context established.
- *		d = display structure, d->attached non 0 if local,
- *			d->hostname used if remote.
- *		pw_change == PW_FALSE, if no password change requested.
- *			     PW_TRUE, if successful password change audit
- *				      required.
- *			     PW_FAILED, if failed password change audit
- *				      required.
- *		pwent = NULL, or password entry to use.
- *		pamerr = PAM error code; reason for failure.
- *
- *	Exit	ADT_login (ADT_FAILURE) audit record written
- *		pw_change == PW_TRUE, ADT_passwd (ADT_FAILURE) audit
- *			record written.
- *
- */
-static void
-audit_fail_login (MdmDisplay *d, int pw_change, struct passwd *pwent,
-		  int pamerr)
-{
-	adt_session_data_t	*ah;	/* audit session handle */
-	adt_event_data_t	*event;	/* event to generate */
-	adt_termid_t		*tid;	/* terminal ID for failures */
-
-	if (did_setcred == TRUE) {
-		if (adt_start_session (&ah, NULL, ADT_USE_PROC_DATA) != 0) {
-
-			syslog (LOG_AUTH | LOG_ALERT,
-				"adt_start_session (ADT_login, ADT_FAILURE): %m");
-			return;
-		}
-	} else {
-		if (adt_start_session (&ah, NULL, 0) != 0) {
-
-			syslog (LOG_AUTH | LOG_ALERT,
-				"adt_start_session (ADT_login, ADT_FAILURE): %m");
-			return;
-		}
-
-		if (d->attached) {
-			gchar *device_name = mdm_slave_get_display_device (d);
-
-			/* login from the local host */
-			if (adt_load_ttyname (device_name, &tid) != 0) {
-
-				syslog (LOG_AUTH | LOG_ALERT,
-					"adt_loadhostname (localhost): %m");
-			g_free (device_name);
-			}
-		} else {
-			/* login from a remote host */
-			if (adt_load_hostname (d->hostname, &tid) != 0) {
-
-				syslog (LOG_AUTH | LOG_ALERT,
-					"adt_loadhostname (%s): %m", d->hostname);
-			}
-		}
-
-		if (adt_set_user (ah,
-				  pwent ? pwent->pw_uid : ADT_NO_ATTRIB,
-				  pwent ? pwent->pw_gid : ADT_NO_ATTRIB,
-				  pwent ? pwent->pw_uid : ADT_NO_ATTRIB,
-				  pwent ? pwent->pw_gid : ADT_NO_ATTRIB,
-				  tid, ADT_NEW) != 0) {
-
-			syslog (LOG_AUTH | LOG_ALERT,
-				"adt_set_user (%s): %m",
-				pwent ? pwent->pw_name : "ADT_NO_ATTRIB");
-		}
-	}
-	if ((event = adt_alloc_event (ah, ADT_login)) == NULL) {
-
-		syslog (LOG_AUTH | LOG_ALERT,
-			"adt_alloc_event (ADT_login, ADT_FAILURE): %m");
-		goto done;
-	} else if (adt_put_event (event, ADT_FAILURE,
-				  ADT_FAIL_PAM + pamerr) != 0) {
-
-		syslog (LOG_AUTH | LOG_ALERT,
-			"adt_put_event (ADT_login (ADT_FAIL, %s): %m",
-			pam_strerror (pamh, pamerr));
-	}
-	if (pw_change != PW_FALSE) {
-
-		/* Also audit password change */
-		adt_free_event (event);
-		if ((event = adt_alloc_event (ah, ADT_passwd)) == NULL) {
-
-			syslog (LOG_AUTH | LOG_ALERT,
-				"adt_alloc_event (ADT_passwd): %m");
-			goto done;
-		}
-		if (pw_change == PW_TRUE) {
-			if (adt_put_event (event, ADT_SUCCESS,
-					   ADT_SUCCESS) != 0) {
-
-				syslog (LOG_AUTH | LOG_ALERT,
-					"adt_put_event (ADT_passwd, ADT_SUCCESS): "
-					"%m");
-			}
-		} else if (pw_change == PW_FAILED) {
-			if (adt_put_event (event, ADT_FAILURE,
-					   ADT_FAIL_PAM + pamerr) != 0) {
-
-				syslog (LOG_AUTH | LOG_ALERT,
-					"adt_put_event (ADT_passwd, ADT_FAILURE): "
-					"%m");
-			}
-		}
-	}
-	adt_free_event (event);
-
- done:
-	/* reset process audit state. this process is being reused.*/
-
-	if ((adt_set_user (ah, ADT_NO_AUDIT, ADT_NO_AUDIT, ADT_NO_AUDIT,
-			   ADT_NO_AUDIT, NULL, ADT_NEW) != 0) ||
-	    (adt_set_proc (ah) != 0)) {
-
-		syslog (LOG_AUTH | LOG_ALERT,
-			"adt_put_event (ADT_login (ADT_FAILURE reset, %m)");
-	}
-	(void) adt_end_session (ah);
-}
-
-/*
- * audit_logout - audit user logout
- *
- *	Entry	adt_ah = audit session handle established by
- *			 audit_success_login ().
- *
- *	Exit	ADT_logout (ADT_SUCCESS) audit record written
- *		process audit state reset.  (this process is reused for
- *			the next login.)
- *		audit session adt_ah ended.
- */
-static void
-audit_logout (void)
-{
-	adt_event_data_t	*event;	/* event to generate */
-
-	if ((event = adt_alloc_event (adt_ah, ADT_logout)) == NULL) {
-
-		syslog (LOG_AUTH | LOG_ALERT,
-			"adt_alloc_event (ADT_logout): %m");
-	} else if (adt_put_event (event, ADT_SUCCESS, ADT_SUCCESS) != 0) {
-
-		syslog (LOG_AUTH | LOG_ALERT,
-			"adt_put_event (ADT_logout, ADT_SUCCESS): %m");
-	}
-	adt_free_event (event);
-
-	/* reset process audit state. this process is being reused.*/
-
-	if ((adt_set_user (adt_ah, ADT_NO_AUDIT, ADT_NO_AUDIT, ADT_NO_AUDIT,
-			   ADT_NO_AUDIT, NULL, ADT_NEW) != 0) ||
-	    (adt_set_proc (adt_ah) != 0)) {
-
-		syslog (LOG_AUTH | LOG_ALERT,
-			"adt_set_proc (ADT_logout reset): %m");
-	}
-	(void) adt_end_session (adt_ah);
-}
-#endif	/* HAVE_ADT */
-
-#ifdef __sun
-void
-solaris_xserver_cred (char *login, MdmDisplay *d, struct passwd *pwent)
-{
-    	struct stat statbuf;
-        struct group *gr;
-	gid_t  groups[NGROUPS_UMAX];
-	char *home, *disp, *tmp, pipe[MAXPATHLEN], info[MAXPATHLEN];
-	int displayNumber = 0;
-	int retval, fd, i, nb;
-	int ngroups;
-
-	if (!d->attached)
-		return;
-
-	if (g_access (pwent->pw_dir, F_OK) != 0) {
-		mdm_debug ("solaris_xserver_cred: no HOME dir access\n");
-		return;
-	}
-
-	/*
-	 * Handshake with server. Make sure it created a pipe.
-	 * Open and write.
-	 */
-        if ((tmp = strstr (d->name, ":")) != NULL) {
-		tmp++;
-                displayNumber = atoi (tmp);
-	}
-
-        sprintf (pipe, "%s/%d", MDM_SDTLOGIN_DIR, displayNumber);
-
-        if (g_stat (MDM_SDTLOGIN_DIR, &statbuf) == 0) {
-		if (! statbuf.st_mode & S_IFDIR) {
-			mdm_debug ("solaris_xserver_cred: %s is not a directory\n",
-				   MDM_SDTLOGIN_DIR);
-			return;
-		}
-	}
-	else {
-		mdm_debug ("solaris_xserver_cred: %s does not exist\n", MDM_SDTLOGIN_DIR);
-		return;
-	}
-
-	fd = open (pipe, O_RDWR);
-	g_unlink (pipe);
-
-	if (fd < 0) {
-		mdm_debug ("solaris_xserver_cred: could not open %s\n", pipe);
-		return;
-	}
-        if (fstat (fd, &statbuf) == 0 ) {
-		if ( ! statbuf.st_mode & S_IFIFO) {
-			close (fd);
-			mdm_debug ("solaris_xserver_cred: %s is not a pipe\n", pipe);
-			return;
-		}
-	} else {
-		close (fd);
-		mdm_debug ("solaris_xserver_cred: %s does not exist\n", pipe);
-		return;
-	}
-
-	sprintf (info, "GID=\"%d\"; ", pwent->pw_gid);
-	nb = write (fd, info, strlen (info));
-        mdm_debug ("solaris_xserver_cred: %s\n", info);
-
-	if (initgroups (login, pwent->pw_gid) == -1) {
-		ngroups = 0;
-	} else {
-		ngroups = getgroups (NGROUPS_UMAX, groups);
-	}
-
-        for (i=0; i < ngroups; i++) {
-		sprintf (info, "G_LIST_ID=\"%u\" ", groups[i]);
-		nb = write (fd, info, strlen (info));
-		mdm_debug ("solaris_xserver_cred: %s\n", info);
-	}
-
-	if (ngroups > 0) {
-		sprintf (info, ";");
-		write (fd, info, strlen (info));
-	}
-
-        sprintf (info, " HOME=\"%s\" ", pwent->pw_dir);
-	nb = write (fd, info, strlen (info));
-        mdm_debug ("solaris_xserver_cred: %s\n", info);
-
-        sprintf (info, " UID=\"%d\" EOF=\"\";", pwent->pw_uid);
-	nb = write (fd, info, strlen (info));
-        mdm_debug ("solaris_xserver_cred: %s\n", info);
-
-	/*
-	 * Handshake with server. Make sure it read the pipe.
-	 *
-	 * Close file descriptor.
-	 */
- 	close (fd);
-
-	return;
-}
-#endif
 
 void
 mdm_verify_select_user (const char *user)
@@ -765,12 +408,9 @@ create_pamh (MdmDisplay *d,
 	     const char *display,
 	     int *pamerr)
 {
-#ifdef __sun
-	gchar *device_name = NULL;
-#endif
 
 	if (display == NULL) {
-		mdm_error (_("Cannot setup pam handle with null display"));
+		mdm_error ("Cannot setup pam handle with null display");
 		return FALSE;
 	}
 
@@ -787,28 +427,16 @@ create_pamh (MdmDisplay *d,
 	if ((*pamerr = pam_start (service, login, conv, &pamh)) != PAM_SUCCESS) {
 		pamh = NULL; /* be anal */
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Unable to establish service %s: %s\n"),
-				   service, pam_strerror (NULL, *pamerr));
+			mdm_error ("Unable to establish service %s: %s\n", service, pam_strerror (NULL, *pamerr));
 		return FALSE;
 	}
 
 	/* Inform PAM of the user's tty */
-#ifdef __sun
-	device_name = mdm_slave_get_display_device (d);
-
-	if (device_name != NULL) {
-		(void) pam_set_item (pamh, PAM_TTY, device_name);
-		g_free (device_name);
-	} else {
-#endif	/* sun */
 		if ((*pamerr = pam_set_item (pamh, PAM_TTY, display)) != PAM_SUCCESS) {
 			if (mdm_slave_action_pending ())
-				mdm_error (_("Can't set PAM_TTY=%s"), display);
+				mdm_error ("Can't set PAM_TTY=%s", display);
 			return FALSE;
 		}
-#ifdef __sun
-	}
-#endif
 
 	if ( ! d->attached) {
 		/* Only set RHOST if host is remote */
@@ -816,9 +444,28 @@ create_pamh (MdmDisplay *d,
 		if ((*pamerr = pam_set_item (pamh, PAM_RHOST,
 					     d->hostname)) != PAM_SUCCESS) {
 			if (mdm_slave_action_pending ())
-				mdm_error (_("Can't set PAM_RHOST=%s"),
-					   d->hostname);
+				mdm_error ("Can't set PAM_RHOST=%s", d->hostname);
 			return FALSE;
+		}
+	}
+
+	// Preselect the previous user
+	if (do_we_need_to_preset_the_username) {
+		
+		do_we_need_to_preset_the_username = FALSE;
+
+		if (mdm_daemon_config_get_value_bool (MDM_KEY_SELECT_LAST_LOGIN)) {
+			char last_username[255];
+			FILE *fp = popen("last | head -1 | awk {'print $1;'}", "r");
+			fscanf(fp, "%s", last_username);
+			pclose(fp);
+
+			mdm_debug("mdm_verify_user: presetting user to '%s'", last_username);
+			
+			if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {
+				if (mdm_slave_action_pending ())
+					mdm_error ("Can't set PAM_USER='%s'", last_username);
+			}
 		}
 	}
 
@@ -893,20 +540,15 @@ mdm_verify_user (MdmDisplay *d,
 {
 	gint pamerr = 0;
 	struct passwd *pwent = NULL;
-	char *login, *passreq, *consoleonly;
+	char *login, *passreq;
 	char *pam_stack = NULL;
 	MDM_PAM_QUAL void *p;
 	int null_tok = 0;
 	gboolean credentials_set = FALSE;
 	gboolean error_msg_given = FALSE;
 	gboolean started_timer   = FALSE;
-	gboolean allow_remote    = TRUE;
 
-#ifdef HAVE_ADT
-	int pw_change = PW_FALSE;   /* if got to trying to change password */
-#endif	/* HAVE_ADT */
-
- verify_user_again:
+    verify_user_again:
 
 	pamerr = 0;
 	login = NULL;
@@ -922,8 +564,7 @@ mdm_verify_user (MdmDisplay *d,
 	} else {
 		/* start the timer for timed logins */
 		if ( ! ve_string_empty (mdm_daemon_config_get_value_string (MDM_KEY_TIMED_LOGIN)) &&
-		    d->timed_login_ok && (d->attached ||
-		    mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_REMOTE_AUTOLOGIN))) {
+		    d->timed_login_ok && (d->attached)) {
 			mdm_slave_greeter_ctl_no_ret (MDM_STARTTIMER, "");
 			started_timer = TRUE;
 		}
@@ -1034,7 +675,7 @@ mdm_verify_user (MdmDisplay *d,
 			/* wait up to 100ms randomly */
 			usleep (g_random_int_range (0, 100000));
 			/* #endif */ /* PAM_FAIL_DELAY */
-			mdm_error (_("Couldn't authenticate user"));
+			mdm_error ("Couldn't authenticate user");
 
 			if (prev_user) {
 
@@ -1079,7 +720,7 @@ mdm_verify_user (MdmDisplay *d,
 		   pretty much look as such, it shouldn't really
 		   happen */
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't authenticate user"));
+			mdm_error ("Couldn't authenticate user");
 		goto pamerr;
 	}
 
@@ -1101,19 +742,12 @@ mdm_verify_user (MdmDisplay *d,
 	}
 
 	/* Check if user is root and is allowed to log in */
-	consoleonly = mdm_read_default ("CONSOLE=");
-	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_REMOTE_ROOT)) ||
-            ((consoleonly != NULL) &&
-	     (g_ascii_strcasecmp (consoleonly, "/dev/console") == 0))) {
-		allow_remote = FALSE;
-	}
 
 	pwent = getpwnam (login);
 	if (( ! mdm_daemon_config_get_value_bool (MDM_KEY_ALLOW_ROOT) ||
-            ( ! d->attached && allow_remote == FALSE)) &&
+            ( ! d->attached )) &&
             (pwent != NULL && pwent->pw_uid == 0)) {
-		mdm_error (_("Root login disallowed on display '%s'"),
-			   d->name);
+		mdm_error ("Root login disallowed on display '%s'", d->name);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 					      _("\nThe system administrator "
 						"is not allowed to login "
@@ -1122,13 +756,6 @@ mdm_verify_user (MdmDisplay *d,
 		  _("Root login disallowed"));*/
 		error_msg_given = TRUE;
 
-#ifdef  HAVE_ADT
-		/*
-		 * map console login not allowed as a pam_acct_mgmt () failure
-		 * indeed that's where these checks should be made.
-		 */
-		pamerr = PAM_PERM_DENIED;
-#endif	/* HAVE_ADT */
 		goto pamerr;
 	}
 
@@ -1145,70 +772,51 @@ mdm_verify_user (MdmDisplay *d,
 		break;
 	case PAM_NEW_AUTHTOK_REQD :
 		if ((pamerr = pam_chauthtok (pamh, PAM_CHANGE_EXPIRED_AUTHTOK)) != PAM_SUCCESS) {
-			mdm_error (_("Authentication token change failed for user %s"), login);
+			mdm_error ("Authentication token change failed for user %s", login);
 			mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 						      _("\nThe change of the authentication token failed. "
 							"Please try again later or contact the system administrator."));
 			error_msg_given = TRUE;
-#ifdef  HAVE_ADT
-			/* Password change failed */
-			pw_change = PW_FAILED;
-#endif	/* HAVE_ADT */
 			goto pamerr;
 		}
-#ifdef  HAVE_ADT
-		/* Password changed */
-		pw_change = PW_TRUE;
-#endif	/* HAVE_ADT */
 		break;
 	case PAM_ACCT_EXPIRED :
-		mdm_error (_("User %s no longer permitted to access the system"), login);
+		mdm_error ("User %s no longer permitted to access the system", login);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 					      _("\nThe system administrator has disabled your account."));
 		error_msg_given = TRUE;
 		goto pamerr;
 	case PAM_PERM_DENIED :
-		mdm_error (_("User %s not permitted to gain access at this time"), login);
+		mdm_error ("User %s not permitted to gain access at this time", login);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 					      _("\nThe system administrator has disabled access to the system temporarily."));
 		error_msg_given = TRUE;
 		goto pamerr;
 	default :
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't set acct. mgmt for %s"), login);
+			mdm_error ("Couldn't set acct. mgmt for %s", login);
 		goto pamerr;
 	}
 
 	pwent = getpwnam (login);
 	if (/* paranoia */ pwent == NULL ||
 	    ! mdm_setup_gids (login, pwent->pw_gid)) {
-		mdm_error (_("Cannot set user group for %s"), login);
+		mdm_error ("Cannot set user group for %s", login);
 		mdm_slave_greeter_ctl_no_ret (MDM_ERRBOX,
 					      _("\nCannot set your user group; "
 						"you will not be able to log in. "
 						"Please contact your system administrator."));
-#ifdef  HAVE_ADT
-		/*
-		 * map group setup error as a pam_setcred () failure
-		 * indeed that's where this should be done.
-		 */
-		pamerr = PAM_SYSTEM_ERR;
-#endif	/* HAVE_ADT */
 		goto pamerr;
 	}
 
 	did_setcred = TRUE;
-
-#ifdef __sun
-	solaris_xserver_cred (login, d, pwent);
-#endif
 
 	/* Set credentials */
 	pamerr = pam_setcred (pamh, PAM_ESTABLISH_CRED);
 	if (pamerr != PAM_SUCCESS) {
 		did_setcred = FALSE;
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't set credentials for %s"), login);
+			mdm_error ("Couldn't set credentials for %s", login);
 		goto pamerr;
 	}
 
@@ -1222,7 +830,7 @@ mdm_verify_user (MdmDisplay *d,
 		/* we handle this above */
 		did_setcred = FALSE;
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't open session for %s"), login);
+			mdm_error ("Couldn't open session for %s", login);
 		goto pamerr;
 	}
 
@@ -1231,29 +839,6 @@ mdm_verify_user (MdmDisplay *d,
 	mdm_log_init ();
 
 	cur_mdm_disp = NULL;
-
-#ifdef  HAVE_LOGINDEVPERM
-	if (d->attached && d->type != TYPE_FLEXI_XNEST) {
-		gchar *device_name = mdm_slave_get_display_device (d);
-		/*
-		 * Only do logindevperm processing if /dev/console or
-		 * a device associated with a VT
-		 */
-		if (device_name != NULL &&
-		   (strncmp (device_name, "/dev/vt/", strlen ("/dev/vt/")) == 0 ||
-		    strcmp  (device_name, "/dev/console") == 0)) {
-			mdm_debug ("Logindevperm login for device %s", device_name);
-
-			(void) di_devperm_login (device_name, pwent->pw_uid,
-						 pwent->pw_gid, NULL);
-			g_free (device_name);
-		}
-	}
-#endif	/* HAVE_LOGINDEVPERM */
-
-#ifdef  HAVE_ADT
-	audit_success_login (pw_change, pwent);
-#endif  /* HAVE_ADT */
 
 	/*
 	 * Login succeeded.
@@ -1276,10 +861,6 @@ mdm_verify_user (MdmDisplay *d,
 	if (pwent == NULL && login != NULL) {
 		pwent = getpwnam (login);
 	}
-
-#ifdef  HAVE_ADT
-	audit_fail_login (d, pw_change, pwent, pamerr);
-#endif	/* HAVE_ADT */
 
 	/*
 	 * Log the failed login attempt.
@@ -1393,10 +974,6 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 
 	credentials_set = FALSE;
 
-#ifdef HAVE_ADT
-	int pw_change = PW_FALSE;   /* if got to trying to change password */
-#endif	/* HAVE_ADT */
-
 	*new_login = NULL;
 
 	if (login == NULL)
@@ -1438,7 +1015,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 	did_we_ask_for_password = FALSE;
 	if ((pamerr = pam_authenticate (pamh, null_tok)) != PAM_SUCCESS) {
 		if (mdm_slave_action_pending ()) {
-			mdm_error (_("Couldn't authenticate user"));
+			mdm_error ("Couldn't authenticate user");
 			mdm_errorgui_error_box (cur_mdm_disp,
 						GTK_MESSAGE_ERROR,
 						_("Authentication failed"));
@@ -1450,7 +1027,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 		/* is not really an auth problem, but it will
 		   pretty much look as such, it shouldn't really
 		   happen */
-		mdm_error (_("Couldn't authenticate user"));
+		mdm_error ("Couldn't authenticate user");
 		mdm_errorgui_error_box (cur_mdm_disp,
 					GTK_MESSAGE_ERROR,
 					_("Authentication failed"));
@@ -1475,70 +1052,56 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 		 * this would be OK */
 #if	0	/* don't change password */
 		if ((pamerr = pam_chauthtok (pamh, PAM_CHANGE_EXPIRED_AUTHTOK)) != PAM_SUCCESS) {
-			mdm_error (_("Authentication token change failed for user %s"), login);
+			mdm_error ("Authentication token change failed for user %s", login);
 			mdm_errorgui_error_box (cur_mdm_disp,
 						GTK_MESSAGE_ERROR,
 						_("\nThe change of the authentication token failed. "
 						  "Please try again later or contact the system administrator."));
-#ifdef  HAVE_ADT
-			pw_change = PW_FAILED;
-#endif	/* HAVE_ADT */
+
 			goto setup_pamerr;
 		}
-#ifdef  HAVE_ADT
-		pw_change = PW_TRUE;
-#endif	/* HAVE_ADT */
+
 #endif	/* 0 */
 		break;
 	case PAM_ACCT_EXPIRED :
-		mdm_error (_("User %s no longer permitted to access the system"), login);
+		mdm_error ("User %s no longer permitted to access the system", login);
 		mdm_errorgui_error_box (cur_mdm_disp,
 					GTK_MESSAGE_ERROR,
 					_("The system administrator has disabled your account."));
 		goto setup_pamerr;
 	case PAM_PERM_DENIED :
-		mdm_error (_("User %s not permitted to gain access at this time"), login);
+		mdm_error ("User %s not permitted to gain access at this time", login);
 		mdm_errorgui_error_box (cur_mdm_disp,
 					GTK_MESSAGE_ERROR,
 					_("The system administrator has disabled your access to the system temporarily."));
 		goto setup_pamerr;
 	default :
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't set acct. mgmt for %s"), login);
+			mdm_error ("Couldn't set acct. mgmt for %s", login);
 		goto setup_pamerr;
 	}
 
 	pwent = getpwnam (login);
 	if (/* paranoia */ pwent == NULL ||
 	    ! mdm_setup_gids (login, pwent->pw_gid)) {
-		mdm_error (_("Cannot set user group for %s"), login);
+		mdm_error ("Cannot set user group for %s", login);
 		mdm_errorgui_error_box (cur_mdm_disp,
 					GTK_MESSAGE_ERROR,
 					_("Cannot set your user group; "
 					  "you will not be able to log in. "
 					  "Please contact your system administrator."));
-#ifdef  HAVE_ADT
-		/*
-		 * map group setup error as a pam_setcred () failure
-		 * indeed that's where this should be done.
-		 */
-		pamerr = PAM_SYSTEM_ERR;
-#endif	/* HAVE_ADT */
+
 		goto setup_pamerr;
 	}
 
 	did_setcred = TRUE;
-
-#ifdef __sun
-	solaris_xserver_cred ((char *)login, d, pwent);
-#endif
 
 	/* Set credentials */
 	pamerr = pam_setcred (pamh, PAM_ESTABLISH_CRED);
 	if (pamerr != PAM_SUCCESS) {
 		did_setcred = FALSE;
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't set credentials for %s"), login);
+			mdm_error ("Couldn't set credentials for %s", login);
 		goto setup_pamerr;
 	}
 
@@ -1554,7 +1117,7 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 		pam_setcred (pamh, PAM_DELETE_CRED);
 
 		if (mdm_slave_action_pending ())
-			mdm_error (_("Couldn't open session for %s"), login);
+			mdm_error ("Couldn't open session for %s", login);
 		goto setup_pamerr;
 	}
 
@@ -1566,28 +1129,6 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 
 	g_free (extra_standalone_message);
 	extra_standalone_message = NULL;
-
-#ifdef  HAVE_LOGINDEVPERM
-	if (d->attached && d->type != TYPE_FLEXI_XNEST) {
-		gchar *device_name = mdm_slave_get_display_device (d);
-		/*
-		 * Only do logindevperm processing if /dev/console or
-		 * a device associated with a VT
-		 */
-		if (device_name != NULL &&
-		   (strncmp (device_name, "/dev/vt/", strlen ("/dev/vt/")) == 0 ||
-		    strcmp  (device_name, "/dev/console") == 0)) {
-			mdm_debug ("Logindevperm login for device %s", device_name);
-			(void) di_devperm_login (device_name, pwent->pw_uid,
-						 pwent->pw_gid, NULL);
-			g_free (device_name);
-		}
-	}
-#endif	/* HAVE_LOGINDEVPERM */
-
-#ifdef  HAVE_ADT
-	audit_success_login (pw_change, pwent);
-#endif	/* HAVE_ADT */
 
 	/*
 	 * Login succeeded.
@@ -1605,10 +1146,6 @@ mdm_verify_setup_user (MdmDisplay *d, const gchar *login, char **new_login)
 	if (pwent == NULL) {
 		pwent = getpwnam (login);
 	}
-
-#ifdef  HAVE_ADT
-	audit_fail_login (d, pw_change, pwent, pamerr);
-#endif	/* HAVE_ADT */
 
 	/*
 	 * Log the failed login attempt.
@@ -1680,15 +1217,6 @@ mdm_verify_cleanup (MdmDisplay *d)
 
 		pamerr = PAM_SUCCESS;
 
-#ifdef	HAVE_ADT
-		/*
-		 * User exiting.
-		 * If logged in, audit logout before cleaning up
-		 */
-		if (old_opened_session && old_did_setcred) {
-			audit_logout ();
-		}
-#endif	/* HAVE_ADT */
 		/* Close the users session */
 		if (old_opened_session) {
 			mdm_debug ("Running pam_close_session");
@@ -1702,24 +1230,6 @@ mdm_verify_cleanup (MdmDisplay *d)
 		}
 
 		pam_end (tmp_pamh, pamerr);
-
-#ifdef  HAVE_LOGINDEVPERM
-		if (old_opened_session && old_did_setcred &&
-		    d->attached && d->type != TYPE_FLEXI_XNEST) {
-			gchar *device_name = mdm_slave_get_display_device (d);
-			/*
-			 * Only do logindevperm processing if /dev/console or
-			 * a device associated with a VT
-			 */
-			if (device_name != NULL &&
-			   (strncmp (device_name, "/dev/vt/", strlen ("/dev/vt/")) == 0 ||
-			    strcmp  (device_name, "/dev/console") == 0)) {
-				mdm_debug ("Logindevperm logout for device %s", device_name);
-				(void) di_devperm_logout (device_name);
-				g_free (device_name);
-			}
-		}
-#endif  /* HAVE_LOGINDEVPERM */
 
 		/* Workaround to avoid mdm messages being logged as PAM_pwdb */
                 mdm_log_shutdown ();

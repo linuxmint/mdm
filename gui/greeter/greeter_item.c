@@ -181,10 +181,10 @@ greeter_item_is_visible (GreeterItemInfo *info)
       ! (info->show_modes & GREETER_ITEM_SHOW_CONSOLE_FLEXI))
     return FALSE;
   if ( ! MDM_IS_LOCAL && MDM_FLEXI_SERVER &&
-       ! (info->show_modes & GREETER_ITEM_SHOW_REMOTE_FLEXI))
+       ! (info->show_modes))
     return FALSE;
   if ( ! MDM_IS_LOCAL && ! MDM_FLEXI_SERVER &&
-       ! (info->show_modes & GREETER_ITEM_SHOW_REMOTE))
+       ! (info->show_modes))
     return FALSE;
 
   if ((mdm_wm_screen.width < info->minimum_required_screen_width) ||
@@ -203,12 +203,7 @@ greeter_item_is_visible (GreeterItemInfo *info)
         ! MdmConfiguratorFound) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "config") == 0))
-	  return FALSE;
-
-  if (( ! mdm_config_get_bool (MDM_KEY_CHOOSER_BUTTON) || ! sysmenu) &&
-      (info->show_type != NULL &&
-       strcmp (info->show_type, "chooser") == 0))
-	  return FALSE;
+	  return FALSE;  
 
   if ( ! sysmenu && info->show_type != NULL &&
       strcmp (info->show_type, "system") == 0)
@@ -225,14 +220,7 @@ greeter_item_is_visible (GreeterItemInfo *info)
   if (( ! sysmenu || ! MdmSuspendFound) &&
       (info->show_type != NULL &&
        strcmp (info->show_type, "suspend") == 0))
-	  return FALSE;
-
-  if (info->show_type != NULL && 
-      sscanf (info->show_type, "custom_cmd%d", &i) == 1 &&
-      i >= 0 && i < MDM_CUSTOM_COMMAND_MAX &&
-      (! sysmenu || ! MdmCustomCmdsFound[i])) {	  
-	  return FALSE;
-  }
+	  return FALSE; 
 
   if (( ! mdm_config_get_bool (MDM_KEY_TIMED_LOGIN_ENABLE) ||
           ve_string_empty (mdm_config_get_string (MDM_KEY_TIMED_LOGIN)) ||

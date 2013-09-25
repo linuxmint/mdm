@@ -53,7 +53,7 @@ static Atom AT_SPI_IOR;
 
 /*
  * Some slaves want to send output to syslog and others (such as
- * mdmflexiserver and mdmdynamic send error messages to stdout.
+ * mdmflexiserver send error messages to stdout.
  * Calling mdm_common_openlog to open the syslog sets the
  * using_syslog flag so that calls to mdm_common_fail,
  * mdm_common_info, mdm_common_error, and mdm_common_debug sends
@@ -461,7 +461,7 @@ mdm_common_get_config_file (void)
 	gchar *config_file;
 
 	/* Get config file */
-	result = mdmcomm_call_mdm ("GET_CONFIG_FILE", NULL /* auth cookie */, "1.0.0.0", 5);
+	result = mdmcomm_send_cmd_to_daemon (MDM_SUP_GET_CONFIG_FILE);
 	if (! result)
 		return NULL;
 
@@ -486,7 +486,7 @@ mdm_common_get_custom_config_file (void)
 	gchar *config_file;
 
 	/* Get config file */
-	result = mdmcomm_call_mdm ("GET_CUSTOM_CONFIG_FILE", NULL /* auth cookie */, "1.0.0.0", 5);
+	result = mdmcomm_send_cmd_to_daemon (MDM_SUP_GET_CUSTOM_CONFIG_FILE);
 	if (! result)
 		return NULL;
 
@@ -612,7 +612,7 @@ mdm_common_set_root_background (GdkPixbuf *pb)
 gchar *
 mdm_common_get_welcomemsg (void)
 {
-        gchar *welcomemsg;
+    gchar *welcomemsg;
 	gchar *tempstr;
 
 	/*
@@ -621,35 +621,15 @@ mdm_common_get_welcomemsg (void)
 	 * set.  If the user wants to use the default remote welcome msg as the
          * local welcome msg (or vice versa), then also translate.
 	 */
-        if (ve_string_empty (g_getenv ("MDM_IS_LOCAL"))) {
-                if (mdm_config_get_bool (MDM_KEY_DEFAULT_REMOTE_WELCOME))
-                        welcomemsg = g_strdup (_(MDM_DEFAULT_REMOTE_WELCOME_MSG));
-                else {
-			tempstr = mdm_config_get_translated_string (MDM_KEY_REMOTE_WELCOME);
-
-			if (tempstr == NULL ||
-			    strcmp (ve_sure_string (tempstr), MDM_DEFAULT_REMOTE_WELCOME_MSG) == 0)
-				welcomemsg = g_strdup (_(MDM_DEFAULT_REMOTE_WELCOME_MSG));
-			else if (strcmp (ve_sure_string (tempstr), MDM_DEFAULT_WELCOME_MSG) == 0)
-		        	welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
-			else
-				welcomemsg = g_strdup (tempstr);
-		}
-        } else {
-                if (mdm_config_get_bool (MDM_KEY_DEFAULT_WELCOME))
-                        welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
-                else {
-                        tempstr = mdm_config_get_translated_string (MDM_KEY_WELCOME);
-
-			if (tempstr == NULL ||
-			    strcmp (ve_sure_string (tempstr), MDM_DEFAULT_WELCOME_MSG) == 0)
-				welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
-			else if (strcmp (ve_sure_string (tempstr), MDM_DEFAULT_REMOTE_WELCOME_MSG) == 0)
-	        		welcomemsg = g_strdup (_(MDM_DEFAULT_REMOTE_WELCOME_MSG));
-			else
-       				welcomemsg = g_strdup (tempstr);
-		}
-        }
+    if (mdm_config_get_bool (MDM_KEY_DEFAULT_WELCOME))
+        welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
+    else {
+        tempstr = mdm_config_get_translated_string (MDM_KEY_WELCOME);
+		if (tempstr == NULL || strcmp (ve_sure_string (tempstr), MDM_DEFAULT_WELCOME_MSG) == 0)
+			welcomemsg = g_strdup (_(MDM_DEFAULT_WELCOME_MSG));
+		else
+       		welcomemsg = g_strdup (tempstr);
+	}
 
 	return welcomemsg;
 }
@@ -995,42 +975,6 @@ typedef enum
   LOCALE_UP_TO_ENCODING,
   LOCALE_UP_TO_MODIFIER,
 } LocaleScope;
-
-static char *
-get_less_specific_locale (const char *locale,
-                          LocaleScope scope)
-{
-  char *generalized_locale;
-  char *end;
-
-  generalized_locale = strdup (locale);
-
-  end = strchr (generalized_locale, '_');
-
-  if (end != NULL && scope <= LOCALE_UP_TO_LANGUAGE)
-    {
-      *end = '\0';
-      return generalized_locale;
-    }
-
-  end = strchr (generalized_locale, '.');
-
-  if (end != NULL && scope <= LOCALE_UP_TO_COUNTRY)
-    {
-      *end = '\0';
-      return generalized_locale;
-    }
-
-  end = strchr (generalized_locale, '@');
-
-  if (end != NULL && scope <= LOCALE_UP_TO_ENCODING)
-    {
-      *end = '\0';
-      return generalized_locale;
-    }
-
-  return generalized_locale;
-}
 
 gboolean
 mdm_common_locale_is_displayable (const gchar *locale)

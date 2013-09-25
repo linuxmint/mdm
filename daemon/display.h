@@ -22,7 +22,6 @@
 #define _MDM_DISPLAY_H
 
 #include <X11/Xlib.h> /* for Display */
-#include <X11/Xmd.h> /* for CARD32 */
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h> /* for in_addr */
@@ -31,39 +30,23 @@ typedef struct _MdmDisplay MdmDisplay;
 
 #include "mdm-net.h" /* for MdmConnection */
 
-#include "mdm.h" /* for MDM_CUSTOM_COMMAND_MAX */
+#include "mdm.h"
 
 #define TYPE_STATIC 1		/* X server defined in MDM configuration */
-#define TYPE_XDMCP 2		/* Remote display/Xserver */
-#define TYPE_FLEXI 3		/* Local Flexi X server */
-#define TYPE_FLEXI_XNEST 4	/* Local Flexi Nested server */
-#define TYPE_XDMCP_PROXY 5	/* Proxy X server for XDMCP */
+#define TYPE_FLEXI 2		/* Local Flexi X server */
 
-#define SERVER_IS_LOCAL(d) ((d)->type == TYPE_STATIC || \
-			    (d)->type == TYPE_FLEXI || \
-			    (d)->type == TYPE_FLEXI_XNEST || \
-			    (d)->type == TYPE_XDMCP_PROXY)
-#define SERVER_IS_FLEXI(d) ((d)->type == TYPE_FLEXI || \
-			    (d)->type == TYPE_FLEXI_XNEST || \
-			    (d)->type == TYPE_XDMCP_PROXY)
-#define SERVER_IS_PROXY(d) ((d)->type == TYPE_FLEXI_XNEST || \
-			    (d)->type == TYPE_XDMCP_PROXY)
-#define SERVER_IS_XDMCP(d) ((d)->type == TYPE_XDMCP || \
-			    (d)->type == TYPE_XDMCP_PROXY)
+#define SERVER_IS_LOCAL(d) ((d)->type == TYPE_STATIC || (d)->type == TYPE_FLEXI)
+#define SERVER_IS_FLEXI(d) ((d)->type == TYPE_FLEXI)
 
 /* Use this to get the right authfile name */
 #define MDM_AUTHFILE(display) \
 	(display->authfile_mdm != NULL ? display->authfile_mdm : display->authfile)
 
-/* Values between MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST and
-   MDM_LOGOUT_ACTION_CUSTOM_CMD_LAST are reserved and should not be used */
 typedef enum {
 	MDM_LOGOUT_ACTION_NONE = 0,
 	MDM_LOGOUT_ACTION_HALT,
 	MDM_LOGOUT_ACTION_REBOOT,
 	MDM_LOGOUT_ACTION_SUSPEND,
-	MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST,
-	MDM_LOGOUT_ACTION_CUSTOM_CMD_LAST = MDM_LOGOUT_ACTION_CUSTOM_CMD_FIRST + MDM_CUSTOM_COMMAND_MAX - 1,
 	MDM_LOGOUT_ACTION_LAST
 } MdmLogoutAction;
 
@@ -165,12 +148,7 @@ struct _MdmDisplay
 	MdmLogoutAction logout_action;
 
 	/* XDMCP TYPE */
-
-	time_t acctime;
-
-	int xdmcp_dispnum;
-	CARD32 sessionid;
-
+	
 	struct sockaddr_storage addr;
 	struct sockaddr_storage *addrs; /* array of addresses */
 	int addr_count; /* number of addresses in array */
@@ -190,14 +168,11 @@ struct _MdmDisplay
 	/* order in the Xservers file for sessreg, -1 if unset yet */
 	int x_servers_order;
 
-
 	/* STATIC TYPE */
 
-	gboolean removeconf; /* used to mark "dynamic" static displays for removal */
 	gboolean busy_display; /* only needed on static displays since flexi try another */
 	time_t last_x_failed;
 	int x_faileds;
-
 
 	/* FLEXI TYPE */
 
@@ -205,20 +180,6 @@ struct _MdmDisplay
 	uid_t server_uid;
 	MdmConnection *socket_conn;
 
-
-	/* PROXY/Parented TYPE (flexi-xnest or xdmcp proxy) */
-
-	char *parent_disp;
-	Display *parent_dsp;
-
-
-	/* XDMCP PROXY TYPE */
-
-	char *parent_auth_file;
-
-
-	/* FLEXI XNEST TYPE */
-	char *parent_temp_auth_file;
 };
 
 MdmDisplay *mdm_display_alloc    (gint id, const gchar *command, const gchar *device);

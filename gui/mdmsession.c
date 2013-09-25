@@ -30,10 +30,6 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#ifdef HAVE_TSOL
-#include <tsol/label.h>
-#endif
-
 #include "mdm.h"
 #include "mdmsession.h"
 #include "mdmcommon.h"
@@ -171,12 +167,6 @@ _mdm_session_list_init (GHashTable **sessnames, GList **sessions,
 	 ":", -1);
     for (i = 0; vec != NULL && vec[i] != NULL; i++) {
 	    const char *dir = vec[i];
-#ifdef HAVE_TSOL
-	    /* skip the multilabel dir if the system is not labeled */
-           if (!is_system_labeled () &&
-               strcmp (dir, DATADIR "/xsessions/multilabel/") == 0)
-                   continue;
-#endif
 
 	    /* Check that session dir is readable */
 	    if G_UNLIKELY (dir == NULL || access (dir, R_OK|X_OK) != 0)

@@ -1,7 +1,6 @@
 debian/*.xpm                            usr/share/pixmaps/
 debian/locale.conf                      etc/mdm
 debian/Xsession                         etc/mdm
-debian/mdmXnestWrapper                  usr/share/mdm/
 debian/insserv.conf.d			etc
 debian/tmp/etc/dm
 debian/tmp/etc/mdm/Init

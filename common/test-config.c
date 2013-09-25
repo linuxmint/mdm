@@ -120,12 +120,7 @@ notify_cb (MdmConfig          *config,
 
         str = mdm_config_value_to_string (value);
 
-        g_print ("SOURCE=%s GROUP=%s KEY=%s ID=%d TYPE=%s VALUE=%s\n", source_to_name (source), group, key, id, type_to_name (value->type), str);
-        if (strcmp (group, MDM_CONFIG_GROUP_CUSTOM_CMD) == 0 &&
-            g_str_has_prefix (key, "CustomCommand") &&
-            strlen (key) == 14) {
-                g_message ("NOTIFY: Custom command");
-        }
+        g_print ("SOURCE=%s GROUP=%s KEY=%s ID=%d TYPE=%s VALUE=%s\n", source_to_name (source), group, key, id, type_to_name (value->type), str);     
 
         g_free (str);
         return TRUE;

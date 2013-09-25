@@ -40,7 +40,6 @@ INCLUDES = \
 noinst_LIBRARIES = libmdmwm.a libmdmcommon.a libmdmgreeter.a
 
 libexec_PROGRAMS = \
-	@MDMCHOOSER@ 		\
 	mdmlogin			\
 	mdmwebkit
 
@@ -48,23 +47,10 @@ sbin_PROGRAMS = \
 	mdmsetup
 
 bin_PROGRAMS = \
-	mdmphotosetup 		\
-	@MDMXNESTCHOOSER@	\
-	mdmflexiserver      \
-	mdmdynamic
-EXTRA_PROGRAMS = mdmchooser mdmXnestchooser
-
-mdmphotosetup_SOURCES = \
-	mdmphotosetup.c	
-
-mdmXnestchooser_SOURCES = \
-	mdmXnestchooser.c
+	mdmflexiserver
 
 mdmflexiserver_SOURCES = \
 	mdmflexiserver.c
-
-mdmdynamic_SOURCES = \
-	mdmdynamic.c
 
 libmdmwm_a_SOURCES = \
 	mdmwm.c			\
@@ -92,12 +78,6 @@ libmdmcommon_a_SOURCES = \
 	mdmcommon.h		\
 	$(NULL)
 
-mdmchooser_SOURCES = \
-	mdmchooser.c		\
-	misc.c			\
-	misc.h			\
-	$(NULL)
-
 mdmlogin_SOURCES = \
 	mdmlogin.c
 
@@ -110,28 +90,6 @@ mdmsetup_SOURCES = \
 	mdmuser.c		\
 	mdmuser.h		\
 	mdmsetup.c
-
-mdmchooser_LDFLAGS = -export-dynamic
-mdmchooser_LDADD = \
-	$(EXTRA_CHOOSER_LIBS)	\
-	libmdmwm.a		\
-	libmdmcommon.a		\
-	$(GUIGLADE_LIBS)	\
-	$(INTLLIBS)		\
-	$(GLIB_LIBS)		\
-	$(GOBJECT_LIBS)		\
-	$(PANGO_LIBS)		\
-	$(GDK_LIBS)		\
-	$(GDKPIXBUF_LIBS)	\
-	$(top_builddir)/common/libmdmcommon.a \
-	$(X_EXTRA_LIBS)		\
-	$(XINERAMA_LIBS)	\
-	$(X_LIBS)		\
-	$(XDMCP_LIBS)		\
-	-lX11			\
-	-lXau			\
-	-lm				\
-	$(NULL)
 
 mdmlogin_LDADD = \
 	$(EXTRA_GREETER_LIBS)	\
@@ -200,38 +158,6 @@ mdmsetup_LDADD = \
 	-lX11			\
 	$(NULL)
 
-mdmphotosetup_LDADD = \
-	libmdmcommon.a		\
-	$(GUI_LIBS)		\
-	$(INTLLIBS)		\
-	$(GLIB_LIBS)		\
-	$(GOBJECT_LIBS)		\
-	$(GDK_LIBS)		\
-	$(GDKPIXBUF_LIBS)	\
-	$(INTLLIBS)		\
-	$(EXTRA_SOCKET_LIB)	\
-	$(EXTRA_NSL_LIB)	\
-	-lX11			\
-	-lXau			\
-	-lm				\
-	$(top_builddir)/common/libmdmcommon.a \
-	$(NULL)
-
-mdmXnestchooser_LDADD = \
-	libmdmcommon.a		\
-	$(GUI_LIBS)		\
-	$(INTLLIBS)		\
-	$(GLIB_LIBS)		\
-	$(GOBJECT_LIBS)		\
-	$(GDK_LIBS)		\
-	$(EXTRA_SOCKET_LIB)	\
-	$(EXTRA_NSL_LIB)	\
-	$(X_LIBS)		\
-	-lXau			\
-	-lX11			\
-	$(top_builddir)/common/libmdmcommon.a \
-	$(NULL)
-
 mdmflexiserver_LDADD = \
 	libmdmcommon.a		\
 	$(GUI_LIBS)		\
@@ -247,38 +173,16 @@ mdmflexiserver_LDADD = \
 	-lXau			\
 	$(NULL)
 
-mdmdynamic_LDADD = 		\
-	libmdmcommon.a		\
-	$(GUI_LIBS)		\
-	$(INTLLIBS) 		\
-	$(GLIB_LIBS) 		\
-	$(GOBJECT_LIBS) 	\
-	$(GDK_LIBS) 		\
-	$(top_builddir)/common/libmdmcommon.a \
-	$(EXTRA_SOCKET_LIB)	\
-	$(EXTRA_NSL_LIB)	\
-	$(X_LIBS)		\
-	-lX11			\
-	-lXau			\
-	$(NULL)
-
-Settingsdir = $(datadir)/mdm/applications
-Settings_files = mdmphotosetup.desktop
-Settings_in_files = mdmphotosetup.desktop.in
-Settings_DATA = $(Settings_files)
-
 Systemdir = $(datadir)/mdm/applications
 System_files = \
 	mdmsetup.desktop	\
-	mdmflexiserver.desktop	\
-	mdmflexiserver-xnest.desktop
+	mdmflexiserver.desktop
 System_in_files = \
 	mdmsetup.desktop.in.in			\
-	mdmflexiserver.desktop.in		\
-	mdmflexiserver-xnest.desktop.in.in
+	mdmflexiserver.desktop.in	
 System_DATA = $(System_files)
 
-CLEANFILES = mdmsetup.desktop mdmsetup.desktop.in mdmflexiserver.desktop mdmflexiserver-xnest.desktop mdmflexiserver-xnest.desktop.in mdmphotosetup.desktop
+CLEANFILES = mdmsetup.desktop mdmsetup.desktop.in mdmflexiserver.desktop
 
 mdmsetup.desktop.in: $(srcdir)/mdmsetup.desktop.in.in
 	sed -e 's,[@]sbindir[@],$(sbindir),g' <$(srcdir)/mdmsetup.desktop.in.in \
@@ -287,19 +191,13 @@ mdmsetup.desktop.in: $(srcdir)/mdmsetup.desktop.in.in
 @INTLTOOL_DESKTOP_RULE@
 
 Gladedir = $(datadir)/mdm
-Glade_DATA = mdmsetup.glade mdmchooser.glade mdmphotosetup.glade
-
-install-data-local:
-	-test -z "$(DESTDIR)$(bindir)/mdmXnest" || rm -f $(DESTDIR)$(bindir)/mdmXnest
-	$(LN_S) -f mdmXnestchooser $(DESTDIR)$(bindir)/mdmXnest
+Glade_DATA = mdmsetup.glade
 
 EXTRA_DIST = \
 	$(Glade_DATA)		\
 	$(System_DATA)		\
-	$(System_in_files)	\
-	$(Settings_DATA)	\
-	$(Settings_in_files)
+	$(System_in_files)
 
 clean-local:
-	rm -f $(System_files) $(Settings_files)
+	rm -f $(System_files)
 
