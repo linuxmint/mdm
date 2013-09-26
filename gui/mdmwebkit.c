@@ -1,22 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
- *
- * MDM - The MDM Display Manager
- * Copyright (C) 1998, 1999, 2000 Martin K. Petersen <mkp@mkp.net>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 #include "config.h"
 
@@ -66,32 +48,7 @@
 
 #include <webkit/webkit.h>
 
-/*
- * Set the DOING_MDM_DEVELOPMENT env variable if you aren't running
- * within the protocol
- */
-gboolean DOING_MDM_DEVELOPMENT              = FALSE;
-gboolean MdmConfiguratorFound               = FALSE;
-gboolean *MdmCustomCmdsFound                = NULL;
-gboolean MdmSuspendFound                    = FALSE;
-gboolean MdmHaltFound                       = FALSE;
-gboolean MdmRebootFound                     = FALSE;
-gboolean MdmAnyCustomCmdsFound              = FALSE;
-
-#define GTK_KEY "gtk-2.0"
-
-enum {
-	GREETER_ULIST_ICON_COLUMN = 0,
-	GREETER_ULIST_LABEL_COLUMN,
-	GREETER_ULIST_LOGIN_COLUMN
-};
-
-enum {
-	MDM_BACKGROUND_NONE = 0,
-	MDM_BACKGROUND_IMAGE_AND_COLOR = 1,
-	MDM_BACKGROUND_COLOR = 2,
-	MDM_BACKGROUND_IMAGE = 3,
-};
+gboolean DOING_MDM_DEVELOPMENT = FALSE;
 
 static WebKitWebView *webView;
 static gboolean webkit_ready = FALSE;
@@ -99,11 +56,6 @@ static gchar * mdm_msg = "";
 
 static GtkWidget *login;
 static guint err_box_clear_handler = 0;
-static GtkWidget *icon_win = NULL;
-static GtkWidget *sessmenu;
-static GtkWidget *langmenu;
-
-static gboolean login_is_local = FALSE;
 
 static GdkPixbuf *defface;
 
@@ -515,12 +467,7 @@ mdm_login_session_init ()
 	    file = (char *) tmp->data;
 	    session = g_hash_table_lookup (sessnames, file);
 
-	    //if (num < 10 && 
-	    //   (strcmp (file, MDM_SESSION_FAILSAFE_GNOME) != 0) &&
-	    //   (strcmp (file, MDM_SESSION_FAILSAFE_XTERM) != 0))
-		//    label = g_strdup_printf ("_%d. %s", num, session->name);
-	    //else
-			label = g_strdup (session->name);
+	    label = g_strdup (session->name);
 	    num++;
 	    
 	    gchar * args = g_strdup_printf("%s\", \"%s", label, file);
@@ -541,8 +488,7 @@ mdm_login_session_init ()
                     n = g_object_get_data (G_OBJECT (w), SESSION_NAME);
                     
                     if (n && strcmp (n, current_session) == 0) {
-                            gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (w),
-                                                            TRUE);
+                            gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (w), TRUE);
                             break;
                     }
                     
@@ -558,23 +504,6 @@ mdm_login_lang_init (gchar * locale_file)
 
   list = mdm_lang_read_locale_file (locale_file);
 
-
-
-  /*gtk_list_store_append (lang_model, &iter);
-  gtk_list_store_set (lang_model, &iter,
-		      TRANSLATED_NAME_COLUMN, _("Last language"),
-		      UNTRANSLATED_NAME_COLUMN, NULL,
-		      LOCALE_COLUMN, LAST_LANGUAGE,
-		      -1);
-
-  gtk_list_store_append (lang_model, &iter);
-  gtk_list_store_set (lang_model, &iter,
-		      TRANSLATED_NAME_COLUMN, _("System Default"),
-		      UNTRANSLATED_NAME_COLUMN, NULL,
-		      LOCALE_COLUMN, DEFAULT_LANGUAGE,
-		      -1);
-		      */
-
   for (li = list; li != NULL; li = li->next)
     {
       char *lang = li->data;
@@ -588,14 +517,9 @@ mdm_login_lang_init (gchar * locale_file)
         continue;
       }
 
-      name = mdm_lang_name (lang,
-			    FALSE /* never_encoding */,
-			    TRUE /* no_group */,
-			    FALSE /* untranslated */,
-			    FALSE /* markup */);
+      name = mdm_lang_name (lang, FALSE, TRUE, FALSE, FALSE);
 
-      untranslated = mdm_lang_untranslated_name (lang,
-						 TRUE /* markup */);
+      untranslated = mdm_lang_untranslated_name (lang, TRUE);
 
       	if (untranslated != NULL) {
 			gchar * args = g_strdup_printf("%s\", \"%s", untranslated, lang);
@@ -623,47 +547,13 @@ err_box_clear (gpointer data)
 	return FALSE;
 }
 
-static Display *
-get_parent_display (void)
-{
-  static gboolean tested = FALSE;
-  static Display *dsp = NULL;
-
-  if (tested)
-    return dsp;
-
-  tested = TRUE;
-
-  if (g_getenv ("MDM_PARENT_DISPLAY") != NULL)
-    {
-      char *old_xauth = g_strdup (g_getenv ("XAUTHORITY"));
-      if (g_getenv ("MDM_PARENT_XAUTHORITY") != NULL)
-        {
-	  g_setenv ("XAUTHORITY",
-		     g_getenv ("MDM_PARENT_XAUTHORITY"), TRUE);
-	}
-      dsp = XOpenDisplay (g_getenv ("MDM_PARENT_DISPLAY"));
-      if (old_xauth != NULL)
-        g_setenv ("XAUTHORITY", old_xauth, TRUE);
-      else
-        g_unsetenv ("XAUTHORITY");
-      g_free (old_xauth);
-    }
-
-  return dsp;
-}
-
 static gboolean
 greeter_is_capslock_on (void)
 {
   XkbStateRec states;
   Display *dsp;
 
-  /* HACK! incredible hack, if MDM_PARENT_DISPLAY is set we get
-   * indicator state from the parent display, since we must be inside a nested display*/
-  dsp = get_parent_display ();
-  if (dsp == NULL)
-    dsp = GDK_DISPLAY ();
+  dsp = GDK_DISPLAY ();
 
   if (XkbGetState (dsp, XkbUseCoreKbd, &states) != Success)
       return FALSE;
@@ -1144,9 +1034,9 @@ mdm_login_browser_populate (void)
 gboolean
 update_clock (void)
 {
-        struct tm *the_tm;
+    struct tm *the_tm;
 	gchar *str;
-        gint time_til_next_min;
+    gint time_til_next_min;
 	
 	str = mdm_common_get_clock (&the_tm);
 	webkit_execute_script("set_clock", str);			
@@ -1157,13 +1047,6 @@ update_clock (void)
 	time_til_next_min = (time_til_next_min>=0?time_til_next_min:0);
 
 	g_timeout_add (time_til_next_min*1000, (GSourceFunc)update_clock, NULL);
-	return FALSE;
-}
-
-gboolean
-check_webkit (void)
-{
-	g_timeout_add (1000, (GSourceFunc)check_webkit, NULL);
 	return FALSE;
 }
 
@@ -1296,11 +1179,13 @@ mdm_login_gui_init (void)
     gchar *key_string = NULL;
 
     theme_name = g_getenv ("MDM_GTK_THEME");
-    if (ve_string_empty (theme_name))
+    if (ve_string_empty (theme_name)) {
 	    theme_name = mdm_config_get_string (MDM_KEY_GTK_THEME);
+	}
 
-    if ( ! ve_string_empty (mdm_config_get_string (MDM_KEY_GTKRC)))
+    if ( ! ve_string_empty (mdm_config_get_string (MDM_KEY_GTKRC))) {
 	    gtk_rc_parse (mdm_config_get_string (MDM_KEY_GTKRC));
+	}
 
     if ( ! ve_string_empty (theme_name)) {
 	    mdm_set_theme (theme_name);
@@ -1315,18 +1200,14 @@ mdm_login_gui_init (void)
     gtk_widget_modify_bg(login, GTK_STATE_NORMAL, &color);
 
     gtk_window_set_decorated (GTK_WINDOW (login), FALSE);
-    gtk_window_set_default_size (GTK_WINDOW (login), 
-			       mdm_wm_screen.width, 
-			       mdm_wm_screen.height);
+    gtk_window_set_default_size (GTK_WINDOW (login), mdm_wm_screen.width, mdm_wm_screen.height);
     
     g_object_ref (login);
-    g_object_set_data_full (G_OBJECT (login), "login", login,
-			    (GDestroyNotify) g_object_unref);
+    g_object_set_data_full (G_OBJECT (login), "login", login, (GDestroyNotify) g_object_unref);
 
     gtk_widget_set_events (login, GDK_ALL_EVENTS_MASK);
 
-    g_signal_connect (G_OBJECT (login), "key_press_event",
-                      G_CALLBACK (key_press_event), NULL);
+    g_signal_connect (G_OBJECT (login), "key_press_event", G_CALLBACK (key_press_event), NULL);
                          
      
     GtkWidget *scrolled = gtk_scrolled_window_new (NULL, NULL);
@@ -1346,16 +1227,9 @@ mdm_login_gui_init (void)
                              
     gtk_widget_grab_focus (webView);	
     gtk_window_set_focus (GTK_WINDOW (login), webView);	
-    g_object_set (G_OBJECT (login),
-		  "allow_grow", TRUE,
-		  "allow_shrink", TRUE,
-		  "resizable", TRUE,
-		  NULL);
+    g_object_set (G_OBJECT (login), "allow_grow", TRUE, "allow_shrink", TRUE, "resizable", TRUE, NULL);
     
-    mdm_wm_center_window (GTK_WINDOW (login));    
-    
-    
-    
+    mdm_wm_center_window (GTK_WINDOW (login));
 }
 
 enum {
@@ -1363,171 +1237,6 @@ enum {
 	RESPONSE_REBOOT,
 	RESPONSE_CLOSE
 };
-
-/* 
- * If new configuration keys are added to this program, make sure to add the
- * key to the mdm_read_config and mdm_reread_config functions.  Note if the
- * number of configuration values used by mdmlogin is greater than 
- * MDM_SUP_MAX_MESSAGES defined in daemon/mdm.h (currently defined to be 80),
- * consider bumping that number so that all the config can be read in one
- * socket connection.
- */
-static void
-mdm_read_config (void)
-{
-	gint i;
-	gchar *key_string = NULL;
-		
-	mdmcomm_open_connection_to_daemon ();
-
-	/*
-	 * Read all the keys at once and close sockets connection so we do
-	 * not have to keep the socket open. 
-	 */
-	mdm_config_get_string (MDM_KEY_HTML_THEME);
-	mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
-	mdm_config_get_string (MDM_KEY_BACKGROUND_IMAGE);
-	mdm_config_get_string (MDM_KEY_BACKGROUND_PROGRAM);
-	mdm_config_get_string (MDM_KEY_CONFIGURATOR);
-	mdm_config_get_string (MDM_KEY_DEFAULT_FACE);
-	mdm_config_get_string (MDM_KEY_DEFAULT_SESSION);
-	mdm_config_get_string (MDM_KEY_EXCLUDE);
-	mdm_config_get_string (MDM_KEY_GTK_THEME);
-	mdm_config_get_string (MDM_KEY_GTK_THEMES_TO_ALLOW);
-	mdm_config_get_string (MDM_KEY_GTKRC);
-	mdm_config_get_string (MDM_KEY_HALT);
-	mdm_config_get_string (MDM_KEY_INCLUDE);
-	mdm_config_get_string (MDM_KEY_INFO_MSG_FILE);
-	mdm_config_get_string (MDM_KEY_INFO_MSG_FONT);
-	mdm_config_get_string (MDM_KEY_LOCALE_FILE);	
-	mdm_config_get_string (MDM_KEY_REBOOT);
-	mdm_config_get_string (MDM_KEY_SESSION_DESKTOP_DIR);
-	mdm_config_get_string (MDM_KEY_SOUND_PROGRAM);
-	mdm_config_get_string (MDM_KEY_SOUND_ON_LOGIN_FILE);
-	mdm_config_get_string (MDM_KEY_SUSPEND);
-	mdm_config_get_string (MDM_KEY_TIMED_LOGIN);
-	mdm_config_get_string (MDM_KEY_USE_24_CLOCK);
-	mdm_config_get_string (MDM_KEY_WELCOME);
-	mdm_config_get_string (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
-	mdm_config_get_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU);	
-
-	mdm_config_get_int    (MDM_KEY_BACKGROUND_TYPE);
-	mdm_config_get_int    (MDM_KEY_BACKGROUND_PROGRAM_INITIAL_DELAY);
-	mdm_config_get_int    (MDM_KEY_BACKGROUND_PROGRAM_RESTART_DELAY);
-	mdm_config_get_int    (MDM_KEY_FLEXI_REAP_DELAY_MINUTES);
-	mdm_config_get_int    (MDM_KEY_MAX_ICON_HEIGHT);
-	mdm_config_get_int    (MDM_KEY_MAX_ICON_WIDTH);
-	mdm_config_get_int    (MDM_KEY_MINIMAL_UID);
-	mdm_config_get_int    (MDM_KEY_TIMED_LOGIN_DELAY);
-	mdm_config_get_int    (MDM_KEY_XINERAMA_SCREEN);
-
-	mdm_config_get_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE);
-	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);	
-	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
-	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
-	mdm_config_get_bool   (MDM_KEY_ENTRY_CIRCLES);
-	mdm_config_get_bool   (MDM_KEY_ENTRY_INVISIBLE);
-	mdm_config_get_bool   (MDM_KEY_INCLUDE_ALL);	
-	mdm_config_get_bool   (MDM_KEY_RUN_BACKGROUND_PROGRAM_ALWAYS);
-	mdm_config_get_bool   (MDM_KEY_RESTART_BACKGROUND_PROGRAM);
-	mdm_config_get_bool   (MDM_KEY_SHOW_GNOME_FAILSAFE);
-	mdm_config_get_bool   (MDM_KEY_SHOW_LAST_SESSION);
-	mdm_config_get_bool   (MDM_KEY_SHOW_XTERM_FAILSAFE);
-	mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN);
-	mdm_config_get_bool   (MDM_KEY_SYSTEM_MENU);
-	mdm_config_get_bool   (MDM_KEY_TIMED_LOGIN_ENABLE);	
-	mdm_config_get_bool   (MDM_KEY_ADD_GTK_MODULES);
-
-	/* Keys not to include in reread_config */	
-	mdm_config_get_string (MDM_KEY_PRE_FETCH_PROGRAM);	
-
-	mdmcomm_close_connection_to_daemon ();
-}
-
-static gboolean
-mdm_reread_config (int sig, gpointer data)
-{
-	gboolean resize = FALSE;
-	gint i;
-	gchar *key_string = NULL;
-	
-	mdmcomm_open_connection_to_daemon ();
-
-	/* reparse config stuff here.  At least the ones we care about */
-	/* FIXME: We should update these on the fly rather than just
-         * restarting */
-	/* Also we may not need to check ALL those keys but just a few */
-
-	if (mdm_config_reload_string (MDM_KEY_BACKGROUND_PROGRAM) ||
-	    mdm_config_get_string (MDM_KEY_HTML_THEME) || 
-	    mdm_config_reload_string (MDM_KEY_CONFIGURATOR) ||
-	    mdm_config_reload_string (MDM_KEY_DEFAULT_FACE) ||
-	    mdm_config_reload_string (MDM_KEY_DEFAULT_SESSION) ||
-	    mdm_config_reload_string (MDM_KEY_EXCLUDE) ||
-	    mdm_config_reload_string (MDM_KEY_GTKRC) ||
-	    mdm_config_reload_string (MDM_KEY_GTK_THEME) ||
-	    mdm_config_reload_string (MDM_KEY_GTK_THEMES_TO_ALLOW) ||
-	    mdm_config_reload_string (MDM_KEY_HALT) ||
-	    mdm_config_reload_string (MDM_KEY_INCLUDE) ||
-	    mdm_config_reload_string (MDM_KEY_INFO_MSG_FILE) ||
-	    mdm_config_reload_string (MDM_KEY_INFO_MSG_FONT) ||
-	    mdm_config_reload_string (MDM_KEY_LOCALE_FILE) ||
-	    mdm_config_reload_string (MDM_KEY_REBOOT) ||
-	    mdm_config_reload_string (MDM_KEY_SESSION_DESKTOP_DIR) ||
-	    mdm_config_reload_string (MDM_KEY_SUSPEND) ||
-	    mdm_config_reload_string (MDM_KEY_TIMED_LOGIN) ||
-	    mdm_config_reload_string (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS) ||
-	    mdm_config_reload_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU) ||
-
-	    mdm_config_reload_int    (MDM_KEY_BACKGROUND_PROGRAM_INITIAL_DELAY) ||
-	    mdm_config_reload_int    (MDM_KEY_BACKGROUND_PROGRAM_RESTART_DELAY) ||
-	    mdm_config_reload_int    (MDM_KEY_MAX_ICON_WIDTH) ||
-	    mdm_config_reload_int    (MDM_KEY_MAX_ICON_HEIGHT) ||
-	    mdm_config_reload_int    (MDM_KEY_MINIMAL_UID) ||
-	    mdm_config_reload_int    (MDM_KEY_TIMED_LOGIN_DELAY) ||
-	    mdm_config_reload_int    (MDM_KEY_XINERAMA_SCREEN) ||
-
-	    mdm_config_reload_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE) ||
-	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
-	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
-	    mdm_config_reload_bool   (MDM_KEY_ENTRY_CIRCLES) ||
-	    mdm_config_reload_bool   (MDM_KEY_ENTRY_INVISIBLE) ||
-	    mdm_config_reload_bool   (MDM_KEY_INCLUDE_ALL) ||	    
-	    mdm_config_reload_bool   (MDM_KEY_RESTART_BACKGROUND_PROGRAM) ||
-	    mdm_config_reload_bool   (MDM_KEY_RUN_BACKGROUND_PROGRAM_ALWAYS) ||
-	    mdm_config_reload_bool   (MDM_KEY_SHOW_GNOME_FAILSAFE) ||
-	    mdm_config_reload_bool   (MDM_KEY_SHOW_LAST_SESSION) ||
-	    mdm_config_reload_bool   (MDM_KEY_SHOW_XTERM_FAILSAFE) ||
-	    mdm_config_reload_bool   (MDM_KEY_SYSTEM_MENU) ||
-	    mdm_config_reload_bool   (MDM_KEY_TIMED_LOGIN_ENABLE) ||	    
-	    mdm_config_reload_bool   (MDM_KEY_ADD_GTK_MODULES)) {
-
-		/* Set busy cursor */
-		//mdm_common_setup_cursor (GDK_WATCH);
-
-		mdm_wm_save_wm_order ();
-		mdmcomm_close_connection_to_daemon ();
-
-		_exit (DISPLAY_RESTARTGREETER);
-		return TRUE;
-	}
-	
-	mdm_config_reload_string (MDM_KEY_SOUND_PROGRAM);
-	mdm_config_reload_bool   (MDM_KEY_SOUND_ON_LOGIN);
-	mdm_config_reload_string (MDM_KEY_SOUND_ON_LOGIN_FILE);
-	mdm_config_reload_string (MDM_KEY_USE_24_CLOCK);
-	update_clock ();
-	
-	if (mdm_config_reload_string (MDM_KEY_WELCOME) ||
-            mdm_config_reload_bool   (MDM_KEY_DEFAULT_WELCOME)) {
-
-		mdm_set_welcomemsg ();
-	}
-
-	mdmcomm_close_connection_to_daemon ();
-
-	return TRUE;
-}
 
 /*
  * This function does nothing for mdmlogin, but mdmgreeter does do extra
@@ -1547,77 +1256,48 @@ main (int argc, char *argv[])
     guint sid;
     char *bg_color;
 
-    if (g_getenv ("DOING_MDM_DEVELOPMENT") != NULL)
+    if (g_getenv ("DOING_MDM_DEVELOPMENT") != NULL) {
 	    DOING_MDM_DEVELOPMENT = TRUE;
+	}
 
     bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
     bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
     textdomain (GETTEXT_PACKAGE);
-
-    /*
-     * mdm_common_atspi_launch () needs gdk initialized.
-     * We cannot start gtk before the registry is running 
-     * because the atk-bridge will crash.
-     */
-    gdk_init (&argc, &argv);
-    if ( ! DOING_MDM_DEVELOPMENT) {
-       mdm_common_atspi_launch ();
-    }
-
+   
     gtk_init (&argc, &argv);
 
     mdm_common_log_init ();
     mdm_common_log_set_debug (mdm_config_get_bool (MDM_KEY_DEBUG));
-
-    mdm_common_setup_builtin_icons ();
-
-    /* Read all configuration at once, so the values get cached */
-   // mdm_read_config ();
     
     setlocale (LC_ALL, "");
 
     mdm_wm_screen_init (mdm_config_get_int (MDM_KEY_XINERAMA_SCREEN));
-
-    /* Load the background as early as possible so MDM does not leave  */
-    /* the background unfilled.   The cursor should be a watch already */
-    /* but just in case */
+   
     bg_color = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMED_COLOR);
-	/* If a graphical theme color does not exist fallback to the plain color */
 	if (ve_string_empty (bg_color)) {
 		bg_color = mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
 	}
 	mdm_common_setup_background_color (bg_color);
-    //mdm_common_setup_cursor (GDK_WATCH);
-
        
-    defface = mdm_common_get_face (NULL,
-                   mdm_config_get_string (MDM_KEY_DEFAULT_FACE),
-                   mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH),
-                   mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
+    defface = mdm_common_get_face (NULL, mdm_config_get_string (MDM_KEY_DEFAULT_FACE), mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH), mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
 
     if (! defface) {
-        mdm_common_warning ("Could not open DefaultImage: %s.  Suspending face browser!",
-            mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
+        mdm_common_warning ("mdmwebkit: Could not open DefaultImage: %s. Suspending face browser!", mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
     } else  {
-        mdm_users_init (&users, &users_string, NULL, defface,
-                &size_of_users, login_is_local, !DOING_MDM_DEVELOPMENT);
+        mdm_users_init (&users, &users_string, NULL, defface, &size_of_users, TRUE, !DOING_MDM_DEVELOPMENT);
     }
 
 	webkit_init();
 			
     mdm_login_gui_init ();
 	
-
-    //ve_signal_add (SIGHUP, mdm_reread_config, NULL);
-
     hup.sa_handler = ve_signal_notify;
     hup.sa_flags = 0;
     sigemptyset (&hup.sa_mask);
     sigaddset (&hup.sa_mask, SIGCHLD);
 
     if G_UNLIKELY (sigaction (SIGHUP, &hup, NULL) < 0) {
-	    mdm_common_fail_greeter (_("%s: Error setting up %s signal handler: %s"), "main",
-		"HUP", strerror (errno));
+	    mdm_common_fail_greeter ("mdmwebkit: Error setting up HUP signal handler: %s", strerror (errno));
     }
 
     term.sa_handler = mdm_login_done;
@@ -1626,13 +1306,11 @@ main (int argc, char *argv[])
     sigaddset (&term.sa_mask, SIGCHLD);
 
     if G_UNLIKELY (sigaction (SIGINT, &term, NULL) < 0) {
-	    mdm_common_fail_greeter (_("%s: Error setting up %s signal handler: %s"), "main",
-		"INT", strerror (errno));
+	    mdm_common_fail_greeter ("mdmwebkit: Error setting up INT signal handler: %s", strerror (errno));
     }
 
     if G_UNLIKELY (sigaction (SIGTERM, &term, NULL) < 0) {
-	    mdm_common_fail_greeter (_("%s: Error setting up %s signal handler: %s"), "main",
-		"TERM", strerror (errno));
+	    mdm_common_fail_greeter ("mdmwebkit: Error setting up TERM signal handler: %s", strerror (errno));
     }
 
     sigemptyset (&mask);
@@ -1646,140 +1324,39 @@ main (int argc, char *argv[])
 
     /* if in timed mode, delay timeout on keyboard or menu
      * activity */
-    if (mdm_config_get_bool (MDM_KEY_TIMED_LOGIN_ENABLE) &&
-        ! ve_string_empty (mdm_config_get_string (MDM_KEY_TIMED_LOGIN))) {
-	    sid = g_signal_lookup ("activate",
-				   GTK_TYPE_MENU_ITEM);
-	    g_signal_add_emission_hook (sid,
-					0 /* detail */,
-					mdm_timer_up_delay,
-					NULL /* data */,
-					NULL /* destroy_notify */);
+    if (mdm_config_get_bool (MDM_KEY_TIMED_LOGIN_ENABLE) && ! ve_string_empty (mdm_config_get_string (MDM_KEY_TIMED_LOGIN))) {
+	    sid = g_signal_lookup ("activate", GTK_TYPE_MENU_ITEM);
+	    g_signal_add_emission_hook (sid, 0, mdm_timer_up_delay, NULL, NULL);
 
-	    sid = g_signal_lookup ("key_release_event",
-				   GTK_TYPE_WIDGET);
-	    g_signal_add_emission_hook (sid,
-					0 /* detail */,
-					mdm_timer_up_delay,
-					NULL /* data */,
-					NULL /* destroy_notify */);
+	    sid = g_signal_lookup ("key_release_event", GTK_TYPE_WIDGET);
+	    g_signal_add_emission_hook (sid, 0, mdm_timer_up_delay, NULL, NULL);
 
-	    sid = g_signal_lookup ("button_press_event",
-				   GTK_TYPE_WIDGET);
-	    g_signal_add_emission_hook (sid,
-					0 /* detail */,
-					mdm_timer_up_delay,
-					NULL /* data */,
-					NULL /* destroy_notify */);
+	    sid = g_signal_lookup ("button_press_event", GTK_TYPE_WIDGET);
+	    g_signal_add_emission_hook (sid, 0, mdm_timer_up_delay, NULL, NULL);
     }
 
     /* if a flexiserver, reap self after some time */
-    if (mdm_config_get_int (MDM_KEY_FLEXI_REAP_DELAY_MINUTES) > 0 &&
-	! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER")) &&
-	/* but don't reap nested flexis */
-	ve_string_empty (g_getenv ("MDM_PARENT_DISPLAY"))) {
-	    sid = g_signal_lookup ("activate",
-				   GTK_TYPE_MENU_ITEM);
-	    g_signal_add_emission_hook (sid,
-					0 /* detail */,
-					delay_reaping,
-					NULL /* data */,
-					NULL /* destroy_notify */);
+    if (mdm_config_get_int (MDM_KEY_FLEXI_REAP_DELAY_MINUTES) > 0 && ! ve_string_empty (g_getenv ("MDM_FLEXI_SERVER")) ) {
+	    sid = g_signal_lookup ("activate", GTK_TYPE_MENU_ITEM);
+	    g_signal_add_emission_hook (sid, 0, delay_reaping, NULL, NULL);
 
-	    sid = g_signal_lookup ("key_release_event",
-				   GTK_TYPE_WIDGET);
-	    g_signal_add_emission_hook (sid,
-					0 /* detail */,
-					delay_reaping,
-					NULL /* data */,
-					NULL /* destroy_notify */);
+	    sid = g_signal_lookup ("key_release_event", GTK_TYPE_WIDGET);
+	    g_signal_add_emission_hook (sid, 0, delay_reaping, NULL, NULL);
 
-	    sid = g_signal_lookup ("button_press_event",
-				   GTK_TYPE_WIDGET);
-	    g_signal_add_emission_hook (sid,
-					0 /* detail */,
-					delay_reaping,
-					NULL /* data */,
-					NULL /* destroy_notify */);
+	    sid = g_signal_lookup ("button_press_event", GTK_TYPE_WIDGET);
+	    g_signal_add_emission_hook (sid, 0, delay_reaping, NULL, NULL);
 
 	    last_reap_delay = time (NULL);
 	    g_timeout_add (60*1000, reap_flexiserver, NULL);
-    }
-
-    
+    }    
 
     gtk_widget_queue_resize (login);
     gtk_widget_show_now (login);
 
     mdm_wm_center_window (GTK_WINDOW (login));    
+   
+	mdm_common_setup_cursor (GDK_LEFT_PTR);  
 
-    // /* can it ever happen that it'd be NULL here ??? */
-    // if G_UNLIKELY (login->window != NULL) {
-	   //  mdm_wm_init (GDK_WINDOW_XWINDOW (login->window));
-
-	   //  /* Run the focus, note that this will work no matter what
-	   //   * since mdm_wm_init will set the display to the gdk one
-	   //   * if it fails */
-	   //  mdm_wm_focus_window (GDK_WINDOW_XWINDOW (login->window));
-    // }
-
-    // if G_UNLIKELY (session_dir_whacked_out) {
-	   //  GtkWidget *dialog;
-
-	   //  mdm_wm_focus_new_windows (TRUE);
-
-	   //  dialog = hig_dialog_new (NULL /* parent */,
-				//      GTK_DIALOG_MODAL /* flags */,
-				//      GTK_MESSAGE_ERROR,
-				//      GTK_BUTTONS_OK,
-				//      _("Session directory is missing"),
-				//      _("Your session directory is missing or empty!  "
-				//        "There are two available sessions you can use, but "
-				//        "you should log in and correct the MDM configuration."));
-	   //  gtk_widget_show_all (dialog);
-	   //  mdm_wm_center_window (GTK_WINDOW (dialog));
-
-	   mdm_common_setup_cursor (GDK_LEFT_PTR);
-
-	   //  mdm_wm_no_login_focus_push ();
-	   //  gtk_dialog_run (GTK_DIALOG (dialog));
-	   //  gtk_widget_destroy (dialog);
-	   //  mdm_wm_no_login_focus_pop ();
-    // }
-
-    // if G_UNLIKELY (g_getenv ("MDM_WHACKED_GREETER_CONFIG") != NULL) {
-	   //  GtkWidget *dialog;
-
-	   //  mdm_wm_focus_new_windows (TRUE);
-
-	   //  dialog = hig_dialog_new (NULL /* parent */,
-				//      GTK_DIALOG_MODAL /* flags */,
-				//      GTK_MESSAGE_ERROR,
-				//      GTK_BUTTONS_OK,
-				//      _("Configuration is not correct"),
-				//      _("The configuration file contains an invalid command "
-				//        "line for the login dialog, so running the "
-				//        "default command.  Please fix your configuration."));
-	   //  gtk_widget_show_all (dialog);
-	   //  mdm_wm_center_window (GTK_WINDOW (dialog));
-
-	   //  mdm_common_setup_cursor (GDK_LEFT_PTR);
-
-	   //  mdm_wm_no_login_focus_push ();
-	   //  gtk_dialog_run (GTK_DIALOG (dialog));
-	   //  gtk_widget_destroy (dialog);
-	   //  mdm_wm_no_login_focus_pop ();
-    // }
-
-    //mdm_wm_restore_wm_order ();
-
-    mdm_wm_show_info_msg_dialog (mdm_config_get_string (MDM_KEY_INFO_MSG_FILE),
-    mdm_config_get_string (MDM_KEY_INFO_MSG_FONT));
-
-    /* Only setup the cursor now since it will be a WATCH from before */
-    //mdm_common_setup_cursor (GDK_LEFT_PTR);
-
-    //mdm_common_pre_fetch_launch ();
     gtk_main ();
 
     return EXIT_SUCCESS;
