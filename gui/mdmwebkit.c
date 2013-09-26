@@ -700,6 +700,7 @@ void process_operation (guchar op_code, const gchar *args) {
             break;
 
         case MDM_QUIT:
+            webkit_execute_script("mdm_quit", NULL);
             if (timed_handler_id != 0) {
                 g_source_remove (timed_handler_id);
                 timed_handler_id = 0;
