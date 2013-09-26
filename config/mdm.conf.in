@@ -192,6 +192,9 @@ VTAllocation=true
 # and only the password needs to be typed.
 #SelectLastLogin=true
 
+# If true then NumLock is activated by default on the login screen
+#EnableNumLock=false
+
 # Program used to play sounds.  Should not require any 'daemon' or anything
 # like that as it will be run when no one is logged in yet.
 #SoundProgram=@SOUND_PROGRAM@

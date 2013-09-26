@@ -2684,6 +2684,14 @@ mdm_slave_greeter (void)
 			mdm_error ("mdm_slave_greeter: Cannot start greeter with gtk modules: %s. Trying without modules", moduleslist);
 			g_free (modules);
 		}
+
+		if (mdm_daemon_config_get_value_bool (MDM_KEY_NUMLOCK)) {
+			if (g_file_test ("/usr/bin/numlockx", G_FILE_TEST_IS_EXECUTABLE)) {
+				mdm_debug("mdm_slave_greeter: Enabling NumLock");
+				system("/usr/bin/numlockx on");
+			}
+		}		
+
 		exec_command (command, NULL);
 
 		mdm_error ("mdm_slave_greeter: Cannot start greeter trying default: %s", LIBEXECDIR "/mdmlogin");

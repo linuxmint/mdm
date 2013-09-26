@@ -74,6 +74,7 @@ G_BEGIN_DECLS
 #define MDM_KEY_ALWAYS_LOGIN_CURRENT_SESSION "daemon/AlwaysLoginCurrentSession=true"
 #define MDM_KEY_DISPLAY_LAST_LOGIN "daemon/DisplayLastLogin=false"
 #define MDM_KEY_SELECT_LAST_LOGIN "daemon/SelectLastLogin=true"
+#define MDM_KEY_NUMLOCK "daemon/EnableNumLock=false"
 #define MDM_KEY_TIMED_LOGIN_ENABLE "daemon/TimedLoginEnable=false"
 #define MDM_KEY_TIMED_LOGIN "daemon/TimedLogin="
 #define MDM_KEY_TIMED_LOGIN_DELAY "daemon/TimedLoginDelay=30"
