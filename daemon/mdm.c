@@ -87,6 +87,8 @@ pid_t extra_process = 0;        /* An extra process.  Used for quickie
 static int extra_status    = 0; /* Last status from the last extra process */
 pid_t mdm_main_pid         = 0; /* PID of the main daemon */
 
+gboolean another_mdm_is_running  = FALSE;
+
 gboolean mdm_wait_for_go         = FALSE; /* wait for a GO in the fifo */
 static gboolean print_version    = FALSE; /* print version number and quit */
 static gboolean preserve_ld_vars = FALSE; /* Preserve the ld environment
@@ -262,27 +264,32 @@ mdm_final_cleanup (void)
 		extra_process = 0;
 	}	
 
-	/* Now completely unmanage the static servers */
-	first = TRUE;
-	list = g_slist_copy (displays);
-	/* somewhat of a hack to kill last server
-	 * started first.  This mostly makes things end up on
-	 * the right vt */
-	list = g_slist_reverse (list);
-	for (li = list; li != NULL; li = li->next) {
-		MdmDisplay *d = li->data;		
-		/* HACK! Wait 2 seconds between killing of static servers
-		 * because X is stupid and full of races and will otherwise
-		 * hang my keyboard */
-		if ( ! first) {
-			/* there could be signals happening
-			   here */
-			mdm_sleep_no_signal (2);
-		}
-		first = FALSE;
-		mdm_display_unmanage (d);
+	if (another_mdm_is_running) {
+		mdm_debug ("mdm_final_cleanup: Another MDM is already running. Leaving displays alone.");		
 	}
-	g_slist_free (list);	
+	else {
+		/* Now completely unmanage the static servers */
+		first = TRUE;
+		list = g_slist_copy (displays);
+		/* somewhat of a hack to kill last server
+		 * started first.  This mostly makes things end up on
+		 * the right vt */
+		list = g_slist_reverse (list);
+		for (li = list; li != NULL; li = li->next) {
+			MdmDisplay *d = li->data;		
+			/* HACK! Wait 2 seconds between killing of static servers
+			 * because X is stupid and full of races and will otherwise
+			 * hang my keyboard */
+			if ( ! first) {
+				/* there could be signals happening
+				   here */
+				mdm_sleep_no_signal (2);
+			}
+			first = FALSE;
+			mdm_display_unmanage (d);
+		}
+		g_slist_free (list);
+	}	
 	
 	/* Close stuff */	
 
@@ -302,9 +309,15 @@ mdm_final_cleanup (void)
 		unixconn = NULL;
 	}
 
-	pidfile = MDM_PID_FILE;
-	if (pidfile != NULL) {
-		VE_IGNORE_EINTR (g_unlink (pidfile));
+	if (another_mdm_is_running) {
+		mdm_debug ("mdm_final_cleanup: Another MDM is already running. Leaving %s alone.", MDM_PID_FILE);		
+	}
+	else {
+		mdm_debug ("mdm_final_cleanup: Removing %s", MDM_PID_FILE);
+		pidfile = MDM_PID_FILE;
+		if (pidfile != NULL) {
+			VE_IGNORE_EINTR (g_unlink (pidfile));
+		}
 	}
 
 	mdm_daemon_config_close ();
@@ -1323,7 +1336,8 @@ main (int argc, char *argv[])
 		    linux_only_is_running (pidv)) {
 			/* make sure the pid file doesn't get wiped */
 			VE_IGNORE_EINTR (fclose (pf));
-			mdm_fail ("MDM already running. Aborting!");
+			another_mdm_is_running = TRUE;
+			mdm_fail ("MDM already running. Aborting!");			
 		}
 
 		if (pf != NULL)
