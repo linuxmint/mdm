@@ -294,7 +294,7 @@ mdmcomm_send_cmd_to_daemon_with_args (const char *command, const char * auth_coo
 char *
 mdmcomm_send_cmd_to_daemon (const char *command)
 {
-	mdmcomm_send_cmd_to_daemon_with_args (command, NULL, 5);
+	return (mdmcomm_send_cmd_to_daemon_with_args (command, NULL, 5));
 }
 
 void
