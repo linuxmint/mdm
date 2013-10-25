@@ -42,6 +42,7 @@
 #include <errno.h>
 #include <locale.h>
 #include <dirent.h>
+#include <syslog.h>
 
 /* This should be moved to auth.c I suppose */
 
@@ -1238,6 +1239,23 @@ mdm_make_global_cookie (void)
 int
 main (int argc, char *argv[])
 {
+	// If another MDM is already running, leave immediately!
+	openlog ("mdm", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
+	char * command = g_strdup_printf ("pidof -s mdm -o %d", getpid());
+    if(system(command) == 0) {
+    	int otherpid;
+		FILE *fp = popen(command, "r");
+		fscanf(fp, "%d", &otherpid);
+		pclose(fp);
+		syslog (LOG_INFO, "Another MDM is running under process ID: %d", otherpid);
+		if (getpid() > otherpid) {
+			syslog(LOG_INFO, "Exiting...");
+			exit(1);
+		}
+    }
+    syslog(LOG_INFO, "Starting mdm...");
+	closelog ();
+
 	FILE *pf;
 	sigset_t mask;
 	struct sigaction sig, child, abrt;
