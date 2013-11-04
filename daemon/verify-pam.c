@@ -464,12 +464,13 @@ create_pamh (MdmDisplay *d,
 				FILE *fp = popen("last -w | grep tty | head -1 | awk {'print $1;'}", "r");
 				fscanf(fp, "%s", last_username);
 				pclose(fp);
-
-				mdm_debug("mdm_verify_user: presetting user to '%s'", last_username);
-				
-				if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {
-					if (mdm_slave_action_pending ())
-						mdm_error ("Can't set PAM_USER='%s'", last_username);
+				if (last_username != NULL && strcmp (last_username, "") != 0) {
+					mdm_debug("mdm_verify_user: presetting user to '%s'", last_username);				
+					if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {
+						if (mdm_slave_action_pending ()) {
+							mdm_error ("Can't set PAM_USER='%s'", last_username);
+						}
+					}
 				}
 			}
 		}
