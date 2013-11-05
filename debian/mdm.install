@@ -17,7 +17,6 @@ debian/tmp/usr/sbin/mdmsetup
 debian/tmp/usr/sbin/mdm-binary
 debian/tmp/usr/share/mdm/applications
 debian/tmp/usr/share/mdm/themes
-debian/tmp/usr/share/mdm/html-themes
 debian/tmp/usr/share/mdm/defaults.conf
 debian/tmp/usr/share/mdm/BuiltInSessions
 debian/tmp/usr/share/mdm/*.glade
