@@ -66,7 +66,6 @@ static MdmDisplay *cur_mdm_disp = NULL;
 static char* prev_user;
 static unsigned auth_retries;
 
-static gboolean do_we_need_to_preset_the_username = TRUE;
 static gboolean did_we_ask_for_password = FALSE;
 
 static char *selected_user = NULL;
@@ -449,27 +448,21 @@ create_pamh (MdmDisplay *d,
 		}
 	}
 
-	// Preselect the previous user
-	if (do_we_need_to_preset_the_username) {
-		
-		do_we_need_to_preset_the_username = FALSE;
+	if (mdm_daemon_config_get_value_bool (MDM_KEY_SELECT_LAST_LOGIN)) {
 
-		if (mdm_daemon_config_get_value_bool (MDM_KEY_SELECT_LAST_LOGIN)) {
-
-			if (mdm_daemon_config_get_value_bool (MDM_KEY_AUTOMATIC_LOGIN_ENABLE) || mdm_daemon_config_get_value_bool (MDM_KEY_TIMED_LOGIN_ENABLE)) {
-				mdm_debug("mdm_verify_user: Automatic/Timed login detected, not presetting user.");
-			}
-			else {			
-				char last_username[255];
-				FILE *fp = popen("last -w | grep tty | head -1 | awk {'print $1;'}", "r");
-				fscanf(fp, "%s", last_username);
-				pclose(fp);
-				if (last_username != NULL && strcmp (last_username, "") != 0) {
-					mdm_debug("mdm_verify_user: presetting user to '%s'", last_username);				
-					if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {
-						if (mdm_slave_action_pending ()) {
-							mdm_error ("Can't set PAM_USER='%s'", last_username);
-						}
+		if (mdm_daemon_config_get_value_bool (MDM_KEY_AUTOMATIC_LOGIN_ENABLE) || mdm_daemon_config_get_value_bool (MDM_KEY_TIMED_LOGIN_ENABLE)) {
+			mdm_debug("mdm_verify_user: Automatic/Timed login detected, not presetting user.");
+		}
+		else {
+			char last_username[255];
+			FILE *fp = popen("last -w | grep tty | head -1 | awk {'print $1;'}", "r");
+			fscanf(fp, "%s", last_username);
+			pclose(fp);
+			if (last_username != NULL && strcmp (last_username, "") != 0) {
+				mdm_debug("mdm_verify_user: presetting user to '%s'", last_username);
+				if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {
+					if (mdm_slave_action_pending ()) {
+						mdm_error ("Can't set PAM_USER='%s'", last_username);
 					}
 				}
 			}
