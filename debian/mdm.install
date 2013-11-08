@@ -27,4 +27,3 @@ debian/tmp/usr/share/locale
 debian/tmp/usr/share/man
 debian/tmp/usr/share/omf/mdm
 debian/tmp/usr/share/pixmaps
-debian/tmp/usr/share/xsessions/ssh.desktop
