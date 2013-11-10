@@ -459,12 +459,18 @@ create_pamh (MdmDisplay *d,
 			fscanf(fp, "%s", last_username);
 			pclose(fp);
 			if (last_username != NULL && strcmp (last_username, "") != 0) {
-				mdm_debug("mdm_verify_user: presetting user to '%s'", last_username);
-				if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {
-					if (mdm_slave_action_pending ()) {
-						mdm_error ("Can't set PAM_USER='%s'", last_username);
+				// Verify that the username returned is actually legit
+				char * home_dir = g_strdup_printf("/home/%s", last_username);
+  				char * accounts_service = g_strdup_printf("/var/lib/AccountsService/users/%s", last_username);
+				if ((g_file_test(home_dir, G_FILE_TEST_EXISTS)) || (g_file_test(accounts_service, G_FILE_TEST_EXISTS))) {
+					// Preset the user
+    				mdm_debug("mdm_verify_user: presetting user to '%s'", last_username);
+					if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {
+						if (mdm_slave_action_pending ()) {
+							mdm_error ("Can't set PAM_USER='%s'", last_username);
+						}
 					}
-				}
+  				}				
 			}
 		}
 	}
