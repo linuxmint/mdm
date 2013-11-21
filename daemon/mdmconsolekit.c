@@ -505,6 +505,8 @@ close_ck_session (const char *cookie)
 		return;
 	}
 
+	mdm_debug ("ConsoleKit: Closing session for cookie %s", cookie);
+
 	dbus_error_init (&error);
 	message = dbus_message_new_method_call (CK_NAME,
 						CK_MANAGER_PATH,

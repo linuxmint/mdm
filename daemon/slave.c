@@ -4486,6 +4486,7 @@ mdm_slave_session_start (void)
 				FALSE /* no_shutdown_check */);
 
 	mdm_debug ("mdm_slave_session_start: Session ended OK (now all finished)");
+
 }
 
 
@@ -4575,6 +4576,7 @@ mdm_slave_session_stop (gboolean run_post_session,
 	XSetErrorHandler (ignore_xerror_handler);
 
 	mdm_verify_cleanup (d);
+	mdm_slave_quick_exit (DISPLAY_REMANAGE); // Clem. Fix for 2nd login in Petra - Force slave to exit after logout
 
 	in_session_stop --;
 

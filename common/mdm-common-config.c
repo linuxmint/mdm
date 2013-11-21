@@ -53,7 +53,7 @@ mdm_common_config_parse_key_string (const char *keystring,
 	g = k = v = l = NULL;
 	split1 = split2 = NULL;
 
-	g_debug ("Attempting to parse key string: %s", keystring);
+	// g_debug ("Attempting to parse key string: %s", keystring);
 
 	split1 = g_strsplit (keystring, "/", 2);
 	if (split1 == NULL || split1 [0] == NULL || split1 [1] == NULL) {
