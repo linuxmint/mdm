@@ -876,6 +876,8 @@ static gboolean key_press_event (GtkWidget *widget, GdkEventKey *key, gpointer d
 static void webkit_init (void) {
     GError *error;
     char *html;
+    FILE *fp = NULL;
+    char lsb_description[255];
     gsize file_length;
     gchar * theme_name = mdm_config_get_string (MDM_KEY_HTML_THEME);
     gchar * theme_dir = g_strdup_printf("file:///usr/share/mdm/html-themes/%s/", theme_name);
@@ -913,10 +915,14 @@ static void webkit_init (void) {
             
     }
     
-    char lsb_description[255];
-    FILE *fp = popen("lsb_release -d -s", "r");
-    fgets(lsb_description, 255, fp);
-    pclose(fp);
+    fp = popen("lsb_release -d -s", "r");
+    if (fp) {
+        fgets(lsb_description, sizeof(lsb_description), fp);
+        pclose(fp);
+    } else {
+        /* popen failed, use blank lsb_description */
+        lsb_description = "";
+    }
 
     html = str_replace(html, "$lsb_description", lsb_description);
     html = str_replace(html, "$login_label", html_encode(_("Login")));
