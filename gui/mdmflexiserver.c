@@ -190,7 +190,6 @@ is_program_in_path (const char *program)
 static void
 maybe_lock_screen (void)
 {
-	gboolean   use_xscreensaver = FALSE;		
 	gboolean   call_multiple_screensaver = FALSE;		
 	GError    *error            = NULL;
 	char      *command;
@@ -210,7 +209,6 @@ maybe_lock_screen (void)
 	}
 	else if (is_program_in_path ("xscreensaver-command")) {
 		command = g_strdup ("xscreensaver-command -lock");
-		use_xscreensaver = TRUE;
 	}
      else if( access( "/usr/lib/kde4/libexec/kscreenlocker_greet", X_OK ) != -1 ) { 
           command = g_strdup ("/usr/lib/kde4/libexec/kscreenlocker_greet");
@@ -227,16 +225,6 @@ maybe_lock_screen (void)
 	}
 
 	g_free (command);
-
-	if (use_xscreensaver) {
-		command = g_strdup ("xscreensaver-command -throttle");
-		if (! gdk_spawn_command_line_on_screen (screen, command, &error)) {
-			g_warning ("Cannot disable screensaver engines: %s", error->message);
-			g_error_free (error);
-		}
-
-		g_free (command);
-	}
 }
 
 static void
