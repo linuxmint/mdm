@@ -458,8 +458,14 @@ create_pamh (MdmDisplay *d,
 				mdm_debug("mdm_verify_user: Automatic/Timed login detected, not presetting user.");
 			}
 			else {
+				FILE *fp = NULL;
 				char last_username[255];
-				FILE *fp = popen("last -w | grep tty | head -1 | awk {'print $1;'}", "r");
+
+				fp = popen("last -w | grep tty | head -1 | awk {'print $1;'}", "r");
+				if (!fp) {
+					mdm_debug("mdm_verify_user: Failed to determine last user (popen())");
+					return FALSE;
+				}
 				fscanf(fp, "%s", last_username);
 				pclose(fp);
 				if (last_username != NULL && strcmp (last_username, "") != 0) {

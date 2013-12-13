@@ -121,26 +121,31 @@ static void check_for_displays (void) {
     g_strfreev (vec);
 }
 
-static gchar * str_replace(const char *string, const char *delimiter, const char *replacement) {
+static gchar * str_replace(gchar **string, const gchar *delimiter, gchar *replacement, gboolean free_replace) {
     gchar **split;
     gchar *ret;
     g_return_val_if_fail(string != NULL, NULL);
     g_return_val_if_fail(delimiter != NULL, NULL);
     g_return_val_if_fail(replacement != NULL, NULL);    
 
-    split = g_strsplit(string, delimiter, 0);
+    split = g_strsplit(*string, delimiter, 0);
+    g_free(*string);
+    *string = NULL;
+
     ret = g_strjoinv(replacement, split);
     g_strfreev(split);
+
+    /* If the replacement is allocated, we should now free the replacement string */
+    if (free_replace)
+        g_free(replacement);
+
     return ret;
 }
 
 static char * html_encode(const char *string) { 
-    char * ret;
-    ret = str_replace(string, "'", "&#39");
-    ret = str_replace(ret, "\"", "&#34");
-    ret = str_replace(ret, ";", "&#59");
-    ret = str_replace(ret, "<", "&#60");
-    ret = str_replace(ret, ">", "&#62");
+    gchar *ret = NULL;
+
+    ret = g_markup_printf_escaped(string);
     return ret;
 }
 
@@ -876,6 +881,8 @@ static gboolean key_press_event (GtkWidget *widget, GdkEventKey *key, gpointer d
 static void webkit_init (void) {
     GError *error;
     char *html;
+    FILE *fp = NULL;
+    char lsb_description[255];
     gsize file_length;
     gchar * theme_name = mdm_config_get_string (MDM_KEY_HTML_THEME);
     gchar * theme_dir = g_strdup_printf("file:///usr/share/mdm/html-themes/%s/", theme_name);
@@ -913,30 +920,34 @@ static void webkit_init (void) {
             
     }
     
-    char lsb_description[255];
-    FILE *fp = popen("lsb_release -d -s", "r");
-    fgets(lsb_description, 255, fp);
-    pclose(fp);
+    fp = popen("lsb_release -d -s", "r");
+    if (fp) {
+        fgets(lsb_description, sizeof(lsb_description), fp);
+        pclose(fp);
+    } else {
+        /* popen failed, use blank lsb_description */
+        lsb_description = "";
+    }
 
-    html = str_replace(html, "$lsb_description", lsb_description);
-    html = str_replace(html, "$login_label", html_encode(_("Login")));
-    html = str_replace(html, "$ok_label", html_encode(_("OK")));
-    html = str_replace(html, "$cancel_label", html_encode(_("Cancel")));
-    html = str_replace(html, "$enter_your_username_label", html_encode(_("Please enter your username")));
-    html = str_replace(html, "$enter_your_password_label", html_encode(_("Please enter your password")));
-    html = str_replace(html, "$hostname", g_get_host_name());    
-    html = str_replace(html, "$shutdown", html_encode(_("Shutdown")));
-    html = str_replace(html, "$suspend", html_encode(_("Suspend")));
-    html = str_replace(html, "$quit", html_encode(_("Quit")));
-    html = str_replace(html, "$restart", html_encode(_("Restart")));        
-    html = str_replace(html, "$session", html_encode(_("Session")));
-    html = str_replace(html, "$selectsession", html_encode(_("Select a session")));
-    html = str_replace(html, "$defaultsession", html_encode(_("Default session")));    
-    html = str_replace(html, "$language", html_encode(_("Language")));
-    html = str_replace(html, "$selectlanguage", html_encode(_("Select a language")));
-    html = str_replace(html, "$areyousuretoquit", html_encode(_("Are you sure you want to quit?")));
-    html = str_replace(html, "$close", html_encode(_("Close")));
-    html = str_replace(html, "$locale", g_strdup (setlocale (LC_MESSAGES, NULL)));  
+    html = str_replace(&html, "$lsb_description", lsb_description, FALSE);
+    html = str_replace(&html, "$login_label", html_encode(_("Login")), TRUE);
+    html = str_replace(&html, "$ok_label", html_encode(_("OK")), TRUE);
+    html = str_replace(&html, "$cancel_label", html_encode(_("Cancel")), TRUE);
+    html = str_replace(&html, "$enter_your_username_label", html_encode(_("Please enter your username")), TRUE);
+    html = str_replace(&html, "$enter_your_password_label", html_encode(_("Please enter your password")), TRUE);
+    html = str_replace(&html, "$hostname", g_get_host_name(), FALSE);
+    html = str_replace(&html, "$shutdown", html_encode(_("Shutdown")), TRUE);
+    html = str_replace(&html, "$suspend", html_encode(_("Suspend")), TRUE);
+    html = str_replace(&html, "$quit", html_encode(_("Quit")), TRUE);
+    html = str_replace(&html, "$restart", html_encode(_("Restart")), TRUE);
+    html = str_replace(&html, "$session", html_encode(_("Session")), TRUE);
+    html = str_replace(&html, "$selectsession", html_encode(_("Select a session")), TRUE);
+    html = str_replace(&html, "$defaultsession", html_encode(_("Default session")), TRUE);
+    html = str_replace(&html, "$language", html_encode(_("Language")), TRUE);
+    html = str_replace(&html, "$selectlanguage", html_encode(_("Select a language")), TRUE);
+    html = str_replace(&html, "$areyousuretoquit", html_encode(_("Are you sure you want to quit?")), TRUE);
+    html = str_replace(&html, "$close", html_encode(_("Close")), TRUE);
+    html = str_replace(&html, "$locale", g_strdup (setlocale (LC_MESSAGES, NULL)), TRUE);
         
     webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
     
