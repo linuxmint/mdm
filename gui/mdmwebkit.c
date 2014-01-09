@@ -901,15 +901,14 @@ static void webkit_init (void) {
         //mdm_common_setup_cursor (GDK_LEFT_PTR);
 
         gtk_dialog_run (GTK_DIALOG (dialog));
-        gtk_widget_destroy (dialog);
-        
-        g_free (theme_name);
+        gtk_widget_destroy (dialog);        
+
         g_free (theme_dir);
         g_free (theme_filename);
-        theme_name = "mdm";
-        theme_dir = g_strdup_printf("file:///usr/share/mdm/html-themes/%s/", theme_name);
-        theme_filename = g_strdup_printf("/usr/share/mdm/html-themes/%s/index.html", theme_name);
-        g_file_get_contents (theme_filename, &html, &file_length, NULL);
+
+        mdm_common_fail_greeter ("mdm_webkit: There was an error loading the theme '%s'", theme_name);
+
+        g_free (theme_name);                
             
     }
     
