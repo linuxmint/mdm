@@ -2656,10 +2656,7 @@ mdm_slave_greeter (void)
 			/* This should handle mostly the case where mdmgreeter is crashing
 			   and we'd want to start mdmlogin for the user so that at least
 			   something works instead of a flickering screen */
-			mdm_errorgui_error_box (d,
-				       GTK_MESSAGE_ERROR,
-				       _("The greeter application appears to be crashing. "
-					 "Attempting to use a different one."));
+			mdm_error ("mdm_slave_greeter: Failed to run '%s', trying another greeter", command);
 			if (strstr (command, "mdmlogin") != NULL) {
 				/* in case it is mdmlogin that's crashing
 				   try the themed greeter for luck */
@@ -2690,7 +2687,9 @@ mdm_slave_greeter (void)
 				mdm_debug("mdm_slave_greeter: Enabling NumLock");
 				system("/usr/bin/numlockx on");
 			}
-		}		
+		}
+
+		mdm_debug ("mdm_slave_greeter: Launching greeter '%s'", command);
 
 		exec_command (command, NULL);
 
