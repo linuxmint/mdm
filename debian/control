@@ -50,8 +50,7 @@ Depends: ${shlibs:Depends},
          librsvg2-common,
          gir1.2-webkit-3.0,
          gir1.2-gtk-3.0,
-         python,
-         numlockx
+         python
 Recommends: whiptail | dialog,
             zenity,
             mdm-themes,

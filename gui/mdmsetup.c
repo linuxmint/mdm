@@ -664,7 +664,7 @@ toggle_toggled_sensitivity_positive (GtkWidget *toggle, GtkWidget *depend)
 	gtk_widget_set_sensitive (depend, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)));
 }
 
-static void
+static GtkWidget *
 setup_notify_toggle (const char *name,
 		     const char *key)
 {
@@ -737,6 +737,8 @@ setup_notify_toggle (const char *name,
 		g_signal_connect (G_OBJECT (toggle), "toggled",
 		                  G_CALLBACK (toggle_toggled), NULL);
 	}
+
+	return toggle;
 }
 
 static void
@@ -2683,7 +2685,11 @@ setup_security_tab (void)
 	setup_notify_toggle ("select_last_login", MDM_KEY_SELECT_LAST_LOGIN);
 
 	/* Setup Enable NumLock */
-	setup_notify_toggle ("enable_numlock", MDM_KEY_NUMLOCK);
+	GtkWidget *numlock = setup_notify_toggle ("enable_numlock", MDM_KEY_NUMLOCK);
+	if (!g_file_test ("/usr/bin/numlockx", G_FILE_TEST_IS_EXECUTABLE)) {
+		gtk_widget_set_sensitive (numlock, FALSE);
+		gtk_widget_set_tooltip_text (numlock, _("Please install 'numlockx' to enable this feature"));
+	}
 
 	/* Setup Local administrator login setttings */
 	setup_notify_toggle ("allowroot", MDM_KEY_ALLOW_ROOT);
