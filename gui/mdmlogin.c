@@ -104,7 +104,6 @@ static GtkWidget *msg;
 static GtkWidget *auto_timed_msg;
 static GtkWidget *err_box;
 static guint err_box_clear_handler = 0;
-static gboolean require_quarter = FALSE;
 static GtkWidget *icon_win = NULL;
 static GtkWidget *sessmenu;
 static GtkWidget *langmenu;
@@ -684,83 +683,6 @@ mdm_login_suspend_handler (void)
 	}
 }
 
-static int dance_handler = 0;
-
-static gboolean
-dance (gpointer data)
-{
-	static double t1 = 0.0, t2 = 0.0;
-	double xm, ym;
-	int x, y;
-	static int width = -1;
-	static int height = -1;
-
-	if (width == -1)
-		width = mdm_wm_screen.width;
-	if (height == -1)
-		height = mdm_wm_screen.height;
-
-	if (login == NULL ||
-	    login->window == NULL) {
-		dance_handler = 0;
-		return FALSE;
-	}
-
-	xm = cos (2.31 * t1);
-	ym = sin (1.03 * t2);
-
-	t1 += 0.03 + (rand () % 10) / 500.0;
-	t2 += 0.03 + (rand () % 10) / 500.0;
-
-	x = mdm_wm_screen.x + (width / 2) + (width / 5) * xm;
-	y = mdm_wm_screen.y + (height / 2) + (height / 5) * ym;
-
-	set_screen_pos (login,
-			x - login->allocation.width / 2,
-			y - login->allocation.height / 2);
-
-	return TRUE;
-}
-
-static gboolean
-evil (const char *user)
-{	
-	if (dance_handler == 0 &&
-	    /* do not translate */
-	    strcmp (user, "Start Dancing") == 0) {
-		mdm_common_setup_cursor (GDK_UMBRELLA);
-		dance_handler = g_timeout_add (50, dance, NULL);		
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
-		return TRUE;
-	} else if (dance_handler != 0 &&
-		   /* do not translate */
-		   strcmp (user, "Stop Dancing") == 0) {
-		mdm_common_setup_cursor (GDK_LEFT_PTR);
-		g_source_remove (dance_handler);
-		dance_handler = 0;		
-		mdm_wm_center_window (GTK_WINDOW (login));
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
-		return TRUE;
-				 /* do not translate */
-	} else if (strcmp (user, "Gimme Random Cursor") == 0) {
-		mdm_common_setup_cursor (((rand () >> 3) % (GDK_LAST_CURSOR/2)) * 2);
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
-		return TRUE;
-				 /* do not translate */
-	} else if (strcmp (user, "Require Quater") == 0 ||
-		   strcmp (user, "Require Quarter") == 0) {
-		/* btw, note that I misspelled quarter before and
-		 * thus this checks for Quater as well as Quarter to
-		 * keep compatibility which is obviously important for
-		 * something like this */
-		require_quarter = TRUE;
-		gtk_entry_set_text (GTK_ENTRY (entry), "");
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
 static void
 mdm_login_enter (GtkWidget *entry)
 {
@@ -790,20 +712,7 @@ mdm_login_enter (GtkWidget *entry)
 		printf ("%c%c%c\n", STX, BEL, MDM_INTERRUPT_TIMED_LOGIN);
 		fflush (stdout);
 		return;
-	}
-
-	if (str != NULL &&
-	    (strcmp (str, _("Username:")) == 0 ||
-	     strcmp (str, _("_Username:")) == 0) &&
-	    /* evilness */
-	    evil (login_string)) {
-		/* obviously being 100% reliable is not an issue for
-		   this test */
-		gtk_widget_set_sensitive (entry, TRUE);
-		gtk_widget_grab_focus (entry);	
-		gtk_window_set_focus (GTK_WINDOW (login), entry);	
-		return;
-	}
+	}	
 
 	/* clear the err_box */
 	if (err_box_clear_handler > 0)
@@ -1448,28 +1357,7 @@ process_operation (guchar       op_code,
 	if (timed_handler_id != 0) {
 		g_source_remove (timed_handler_id);
 		timed_handler_id = 0;
-	}
-
-	if (require_quarter) {
-		/* we should be now fine for focusing new windows */
-		mdm_wm_focus_new_windows (TRUE);
-
-		dlg = hig_dialog_new (NULL /* parent */,
-				      GTK_DIALOG_MODAL /* flags */,
-				      GTK_MESSAGE_INFO,
-				      GTK_BUTTONS_OK,
-				      /* translators:  This is a nice and evil eggie text, translate
-				       * to your favourite currency */
-				      _("Please insert 25 cents "
-					"to log in."),
-				      "");
-		mdm_wm_center_window (GTK_WINDOW (dlg));
-
-		mdm_wm_no_login_focus_push ();
-		gtk_dialog_run (GTK_DIALOG (dlg));
-		gtk_widget_destroy (dlg);
-		mdm_wm_no_login_focus_pop ();
-	}
+	}	
 
 	/* Hide the login window now */
 	gtk_widget_hide (login);
