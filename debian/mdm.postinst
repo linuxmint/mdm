@@ -7,18 +7,24 @@ set -e
 THIS_PACKAGE=mdm
 DEFAULT_DISPLAY_MANAGER_FILE=/etc/X11/default-display-manager
 
-# creating mdm group if he isn't already there
+# creating mdm group if it isn't already there
 if ! getent group mdm >/dev/null; then
         addgroup --system mdm
 fi
 
-# creating mdm user if he isn't already there
+# creating mdm user if it isn't already there
 if ! getent passwd mdm >/dev/null; then
         adduser --system --ingroup mdm --home /var/lib/mdm mdm
         usermod -c "MDM Display Manager" mdm
         usermod -d "/var/lib/mdm"          mdm
         usermod -g "mdm"                   mdm
         usermod -s "/bin/false"            mdm
+fi
+
+# Creating the nopasswdlogin group if it isn't already there.
+# Needed for passwordless logins, working thanks to MDM's PAM policy.
+if ! getent group nopasswdlogin >/dev/null; then
+        addgroup --system nopasswdlogin
 fi
 
 if [ -d /var/lib/mdm ]; then
