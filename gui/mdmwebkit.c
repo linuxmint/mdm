@@ -1034,7 +1034,7 @@ int main (int argc, char *argv[]) {
     bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
     bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
     textdomain (GETTEXT_PACKAGE);
-   
+
     gtk_init (&argc, &argv);
 
     mdm_common_log_init ();
@@ -1125,8 +1125,20 @@ int main (int argc, char *argv[]) {
     gtk_widget_show_now (login);
 
     mdm_wm_center_window (GTK_WINDOW (login));    
+
+    /* can it ever happen that it'd be NULL here ??? */
+    if G_UNLIKELY (login->window != NULL) {
+        mdm_wm_init (GDK_WINDOW_XWINDOW (login->window));
+
+        /* Run the focus, note that this will work no matter what
+         * since mdm_wm_init will set the display to the gdk one
+         * if it fails */
+        mdm_wm_focus_window (GDK_WINDOW_XWINDOW (login->window));
+    }
    
     mdm_common_setup_cursor (GDK_LEFT_PTR);  
+    
+    mdm_wm_center_cursor ();
 
     gtk_main ();
 

@@ -2964,7 +2964,7 @@ main (int argc, char *argv[])
 
     /* Only setup the cursor now since it will be a WATCH from before */
     mdm_common_setup_cursor (GDK_LEFT_PTR);
-
+	mdm_wm_center_cursor ();
     mdm_common_pre_fetch_launch ();
     gtk_main ();
 
