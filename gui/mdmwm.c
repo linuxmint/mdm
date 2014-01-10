@@ -74,15 +74,15 @@ static Atom XA_NET_WM_STRUT = 0;
 
 static int trap_depth = 0;
 
-GdkRectangle *mdm_wm_allscreens = NULL;
-int mdm_wm_screens = 0;
+GdkRectangle *mdm_wm_all_monitors = NULL;
+int mdm_wm_num_monitors = 0;
 GdkRectangle mdm_wm_screen = {0,0,0,0};
 
 static Window strut_owners[4] = {None, None, None, None};
 static guint save_struts[4] = {0, 0, 0, 0};
 
 void 
-mdm_wm_screen_init (int cur_screen_num)
+mdm_wm_screen_init (int current_monitor_num)
 {
 	GdkScreen *screen;
 	int i;
@@ -94,37 +94,37 @@ mdm_wm_screen_init (int cur_screen_num)
 		mdm_wm_screen.width = gdk_screen_width () / 2 - 100;
 		mdm_wm_screen.height = gdk_screen_height () / 2 - 100;
 
-		mdm_wm_allscreens = g_new0 (GdkRectangle, 2);
-		mdm_wm_allscreens[0] = mdm_wm_screen;
-		mdm_wm_allscreens[1].x = gdk_screen_width () / 2;
-		mdm_wm_allscreens[1].y = gdk_screen_height () / 2;
-		mdm_wm_allscreens[1].width = gdk_screen_width () / 2;
-		mdm_wm_allscreens[1].height = gdk_screen_height () / 2;
-		mdm_wm_screens = 2;
+		mdm_wm_all_monitors = g_new0 (GdkRectangle, 2);
+		mdm_wm_all_monitors[0] = mdm_wm_screen;
+		mdm_wm_all_monitors[1].x = gdk_screen_width () / 2;
+		mdm_wm_all_monitors[1].y = gdk_screen_height () / 2;
+		mdm_wm_all_monitors[1].width = gdk_screen_width () / 2;
+		mdm_wm_all_monitors[1].height = gdk_screen_height () / 2;
+		mdm_wm_num_monitors = 2;
 		return;
 	}
 
 	screen = gdk_screen_get_default ();
 
-	mdm_wm_screens = gdk_screen_get_n_monitors (screen);
+	mdm_wm_num_monitors = gdk_screen_get_n_monitors (screen);
 
-	mdm_wm_allscreens = g_new (GdkRectangle, mdm_wm_screens);
-	for (i = 0; i < mdm_wm_screens; i++)
-		gdk_screen_get_monitor_geometry (screen, i, mdm_wm_allscreens + i);
+	mdm_wm_all_monitors = g_new (GdkRectangle, mdm_wm_num_monitors);
+	for (i = 0; i < mdm_wm_num_monitors; i++)
+		gdk_screen_get_monitor_geometry (screen, i, mdm_wm_all_monitors + i);
 
-	if (mdm_wm_screens < cur_screen_num)
-		cur_screen_num = 0;
+	if (mdm_wm_num_monitors < current_monitor_num)
+		current_monitor_num = 0;
 
-	mdm_wm_screen = mdm_wm_allscreens[cur_screen_num];
+	mdm_wm_screen = mdm_wm_all_monitors[current_monitor_num];
 }
 
 void 
-mdm_wm_set_screen (int cur_screen_num)
+mdm_wm_set_screen (int current_monitor_num)
 {
-	if (cur_screen_num >= mdm_wm_screens || cur_screen_num < 0)
-		cur_screen_num = 0;
+	if (current_monitor_num >= mdm_wm_num_monitors || current_monitor_num < 0)
+		current_monitor_num = 0;
 
-	mdm_wm_screen = mdm_wm_allscreens[cur_screen_num];
+	mdm_wm_screen = mdm_wm_all_monitors[current_monitor_num];
 }
 
 /* Not really a WM function, center a gtk window by setting uposition */

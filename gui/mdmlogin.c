@@ -2410,16 +2410,16 @@ render_scaled_back (const GdkPixbuf *pb)
 	width = gdk_pixbuf_get_width (pb);
 	height = gdk_pixbuf_get_height (pb);
 
-	for (i = 0; i < mdm_wm_screens; i++) {
+	for (i = 0; i < mdm_wm_num_monitors; i++) {
 		gdk_pixbuf_scale (pb, back,
-				  mdm_wm_allscreens[i].x,
-				  mdm_wm_allscreens[i].y,
-				  mdm_wm_allscreens[i].width,
-				  mdm_wm_allscreens[i].height,
-				  mdm_wm_allscreens[i].x /* offset_x */,
-				  mdm_wm_allscreens[i].y /* offset_y */,
-				  (double) mdm_wm_allscreens[i].width / width,
-				  (double) mdm_wm_allscreens[i].height / height,
+				  mdm_wm_all_monitors[i].x,
+				  mdm_wm_all_monitors[i].y,
+				  mdm_wm_all_monitors[i].width,
+				  mdm_wm_all_monitors[i].height,
+				  mdm_wm_all_monitors[i].x /* offset_x */,
+				  mdm_wm_all_monitors[i].y /* offset_y */,
+				  (double) mdm_wm_all_monitors[i].width / width,
+				  (double) mdm_wm_all_monitors[i].height / height,
 				  GDK_INTERP_BILINEAR);
 	}
 

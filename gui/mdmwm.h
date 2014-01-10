@@ -55,8 +55,8 @@ void	mdm_wm_no_login_focus_pop	(void);
 /*
  * Xinerama support stuff
  */
-void	mdm_wm_screen_init		(int cur_screen_num);
-void	mdm_wm_set_screen		(int cur_screen_num);
+void	mdm_wm_screen_init		(int current_monitor_num);
+void	mdm_wm_set_screen		(int current_monitor_num);
 
 /*
  * Not really a WM function, center a gtk window on current screen
@@ -92,8 +92,8 @@ void    mdm_wm_message_dialog           (const gchar *primary_message,
                                          const gchar *secondary_message);
 
 /* Access to the screen structures */
-extern GdkRectangle *mdm_wm_allscreens;
-extern int mdm_wm_screens;
+extern GdkRectangle *mdm_wm_all_monitors;
+extern int mdm_wm_num_monitors;
 extern GdkRectangle mdm_wm_screen;
 
 #endif /* MDM_WM_H */
