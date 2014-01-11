@@ -394,6 +394,68 @@ mdm_verify_standalone_pam_conv (int num_msg,
 	return PAM_SUCCESS;
 }
 
+/* Preselects the last logged in user */
+static void mdm_preselect_user (int *pamerr) {
+	
+	// Return if user preselection isn't enabled
+	if (!mdm_daemon_config_get_value_bool (MDM_KEY_SELECT_LAST_LOGIN)) {
+		return;
+	}
+	
+	// Return if we're using automatic or timed login
+	if (mdm_daemon_config_get_value_bool (MDM_KEY_AUTOMATIC_LOGIN_ENABLE) || mdm_daemon_config_get_value_bool (MDM_KEY_TIMED_LOGIN_ENABLE)) {
+		mdm_debug("mdm_preselect_user: Automatic/Timed login detected, not presetting user.");
+		return;
+	}
+
+	// Find the name of the last logged in user
+	char last_username[255];
+	FILE *fp = popen("last -w | grep tty | head -1 | awk {'print $1;'}", "r");
+	fscanf(fp, "%s", last_username);
+	pclose(fp);
+
+	// Return if the username is null or empty
+	if (last_username == NULL || strcmp (last_username, "") == 0) {
+		mdm_debug("mdm_preselect_user: invalid username, not presetting user.");
+		return;
+	}
+
+	// Return if the username is "oem"
+	if (strcmp (last_username, "oem") == 0) {
+		mdm_debug("mdm_preselect_user: username is 'oem', not presetting user.");
+		return;
+	}
+
+	char * home_dir = g_strdup_printf("/home/%s", last_username);
+	char * accounts_service = g_strdup_printf("/var/lib/AccountsService/users/%s", last_username);
+
+	// Return if the user doesn't exist (check /home and AccountsService)
+	if ( !(g_file_test(home_dir, G_FILE_TEST_EXISTS) || g_file_test(accounts_service, G_FILE_TEST_EXISTS)) ) {
+		mdm_debug("mdm_preselect_user: user '%s' doesn't exist, not presetting user.", last_username);
+		return;
+	}
+
+	// Return if the user belongs to the nopasswdlogin group
+	char result[255];
+	char * command = g_strdup_printf("id '%s' 2>/dev/null | grep nopasswdlogin | wc -l", last_username);
+	fp = popen(command, "r");
+	fscanf(fp, "%s", result);
+	pclose(fp);
+	if (strcmp(result, "0") != 0) {
+		mdm_debug("mdm_preselect_user: user '%s' is part of the nopasswdlogin group, not presetting user.", last_username);
+		return;
+	}
+
+	// Preset the user
+	mdm_debug("mdm_verify_user: presetting user to '%s'", last_username);
+	if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {
+		if (mdm_slave_action_pending ()) {
+			mdm_error ("Can't set PAM_USER='%s'", last_username);
+		}
+	}
+
+}
+
 static struct pam_conv standalone_pamc = {
 	&mdm_verify_standalone_pam_conv,
 	NULL
@@ -452,32 +514,7 @@ create_pamh (MdmDisplay *d,
 	// Preselect the previous user
 	if (do_we_need_to_preset_the_username) {		
 		do_we_need_to_preset_the_username = FALSE;
-		if (mdm_daemon_config_get_value_bool (MDM_KEY_SELECT_LAST_LOGIN)) {
-
-			if (mdm_daemon_config_get_value_bool (MDM_KEY_AUTOMATIC_LOGIN_ENABLE) || mdm_daemon_config_get_value_bool (MDM_KEY_TIMED_LOGIN_ENABLE)) {
-				mdm_debug("mdm_verify_user: Automatic/Timed login detected, not presetting user.");
-			}
-			else {
-				char last_username[255];
-				FILE *fp = popen("last -w | grep tty | head -1 | awk {'print $1;'}", "r");
-				fscanf(fp, "%s", last_username);
-				pclose(fp);
-				if (last_username != NULL && strcmp (last_username, "") != 0) {
-					// Verify that the username returned is actually legit
-					char * home_dir = g_strdup_printf("/home/%s", last_username);
-	  				char * accounts_service = g_strdup_printf("/var/lib/AccountsService/users/%s", last_username);
-					if ((g_file_test(home_dir, G_FILE_TEST_EXISTS)) || (g_file_test(accounts_service, G_FILE_TEST_EXISTS))) {
-						// Preset the user
-	    				mdm_debug("mdm_verify_user: presetting user to '%s'", last_username);
-						if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {
-							if (mdm_slave_action_pending ()) {
-								mdm_error ("Can't set PAM_USER='%s'", last_username);
-							}
-						}
-	  				}				
-				}
-			}
-		}
+		mdm_preselect_user(pamerr);
 	}
 
 	return TRUE;
