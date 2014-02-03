@@ -1,3 +1,9 @@
+mdm (1.4.10) debian; urgency=low
+
+  * 1.4.10
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 03 Feb 2014 13:11:59 +0000
+
 mdm (1.4.9) debian; urgency=low
 
   * 1.4.9
