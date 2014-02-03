@@ -189,20 +189,15 @@ is_program_in_path (const char *program)
 
 static void
 maybe_lock_screen (void)
-{
-	gboolean   call_multiple_screensaver = FALSE;		
+{	
 	GError    *error            = NULL;
 	char      *command;
 	GdkScreen *screen;
 	
 	screen = gdk_screen_get_default ();
 	
-	if (is_program_in_path ("gnome-screensaver-command") || is_program_in_path ("mate-screensaver-command")) {
-		command = g_strdup ("gnome-screensaver-command --lock || mate-screensaver-command --lock");
-		call_multiple_screensaver = TRUE;
-	}
-	if (is_program_in_path ("gnome-screensaver-command")) {
-		command = g_strdup ("gnome-screensaver-command --lock");
+	if (is_program_in_path ("cinnamon-screensaver-command")) {
+		command = g_strdup ("cinnamon-screensaver-command --lock");
 	}
 	else if (is_program_in_path ("mate-screensaver-command")) {
 		command = g_strdup ("mate-screensaver-command --lock");
@@ -210,17 +205,18 @@ maybe_lock_screen (void)
 	else if (is_program_in_path ("xscreensaver-command")) {
 		command = g_strdup ("xscreensaver-command -lock");
 	}
-     else if( access( "/usr/lib/kde4/libexec/kscreenlocker_greet", X_OK ) != -1 ) { 
-          command = g_strdup ("/usr/lib/kde4/libexec/kscreenlocker_greet");
-     }	
+    else if( access( "/usr/lib/kde4/libexec/kscreenlocker_greet", X_OK ) != -1 ) {
+        command = g_strdup ("/usr/lib/kde4/libexec/kscreenlocker_greet");
+    }
+    else if (is_program_in_path ("gnome-screensaver-command")) {
+		command = g_strdup ("gnome-screensaver-command --lock");
+	}	
 	else {		
 		return;	
 	}
 
-	if (! gdk_spawn_command_line_on_screen (screen, command, &error)) {
-		if (! call_multiple_screensaver) {
-			g_warning ("Cannot lock screen: %s", error->message);
-		}
+	if (! gdk_spawn_command_line_on_screen (screen, command, &error)) {		
+		g_warning ("Cannot lock screen: %s", error->message);
 		g_error_free (error);
 	}
 
