@@ -393,7 +393,7 @@ mdm_common_get_face (const char *filename,
 
 		/* If we don't have a fallback then return NULL */
 		if (! fallback_filename)
-			return NULL;
+			fallback_filename = "/usr/share/pixmaps/nobody.png";
 
 		/* Try to load an icon from the theme before the fallback */
 		theme = gtk_icon_theme_get_default ();
