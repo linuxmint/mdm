@@ -2525,12 +2525,10 @@ main (int argc, char *argv[])
                    mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
 
     if (! defface) {
-        mdm_common_warning ("Could not open DefaultImage: %s.  Suspending face browser!",
-            mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
-    } else  {
-        mdm_users_init (&users, &users_string, NULL, defface,
-                &size_of_users, login_is_local, !DOING_MDM_DEVELOPMENT);
+        mdm_common_warning ("Could not open DefaultFace: %s!", mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
     }
+
+    mdm_users_init (&users, &users_string, NULL, defface, &size_of_users, login_is_local, !DOING_MDM_DEVELOPMENT);    
 
     mdm_login_gui_init ();
 

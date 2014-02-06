@@ -1053,10 +1053,10 @@ int main (int argc, char *argv[]) {
     defface = mdm_common_get_face (NULL, mdm_config_get_string (MDM_KEY_DEFAULT_FACE), mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH), mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
 
     if (! defface) {
-        mdm_common_warning ("mdmwebkit: Could not open DefaultImage: %s. Suspending face browser!", mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
-    } else  {
-        mdm_users_init (&users, &users_string, NULL, defface, &size_of_users, TRUE, !DOING_MDM_DEVELOPMENT);
-    }
+        mdm_common_warning ("mdmwebkit: Could not open DefaultFace: %s!", mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
+    } 
+
+    mdm_users_init (&users, &users_string, NULL, defface, &size_of_users, TRUE, !DOING_MDM_DEVELOPMENT);    
 
     webkit_init();
             

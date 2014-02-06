@@ -169,12 +169,10 @@ mdm_greeter_users_init (void)
 				       mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH),
 				       mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
 	if (! defface) {
-		mdm_common_warning ("Can't open DefaultImage: %s!",
-			mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
+		mdm_common_warning ("Can't open DefaultFace: %s!", mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
 	}
 
-	mdm_users_init (&users, &users_string, NULL, defface,
-			&size_of_users, MDM_IS_LOCAL, !DOING_MDM_DEVELOPMENT);
+	mdm_users_init (&users, &users_string, NULL, defface, &size_of_users, MDM_IS_LOCAL, !DOING_MDM_DEVELOPMENT);
 }
 
 static void
