@@ -528,33 +528,6 @@ combobox_timeout (GtkWidget *combo_box)
 			mdm_setup_config_set_string (key, new_val);
 		}
 		g_free (new_val);
-	} 		
-	/* Use 24 clock combobox */
-	else if (strcmp (ve_sure_string (key), MDM_KEY_USE_24_CLOCK) == 0) {		
-		gchar *val;		
-		gchar *new_val;
-		
-		new_val = gtk_combo_box_get_active_text (GTK_COMBO_BOX (combo_box));
-		val     = mdm_config_get_string ((gchar *)key);
-
-		if (new_val) {
-                    if (strcmp (_(new_val), _("auto"))) {
-                       if (strcasecmp (ve_sure_string (val), "auto") != 0)
-                          mdm_setup_config_set_string (key, "auto");
-                    }
-                    else if (strcmp (_(new_val), _("yes"))) {
-                       if (strcasecmp (ve_sure_string (val), "true") != 0 &&
-                           strcasecmp (ve_sure_string (val), "yes") != 0)
-                          mdm_setup_config_set_string (key, "true");
-                    }
-                    else {
-                       if (strcasecmp (ve_sure_string (val), "false") != 0 &&
-                           strcasecmp (ve_sure_string (val), "no") != 0) 
-                           mdm_setup_config_set_string (key, "false");
-		    }
-		}
-		g_free (new_val);
-		g_free (val);
 	}	
 	/* Default session combobox*/
 	else if (strcmp (ve_sure_string (key), MDM_KEY_DEFAULT_SESSION) == 0) {
@@ -2675,50 +2648,6 @@ delete_html_theme (GtkWidget *button, gpointer data)
 	g_free (dir);
 }
 
-static void
-setup_security_tab (void)
-{
-	GtkWidget *checkbox;
-	GtkWidget *label;
-
-	/* Setup user preselection */
-	setup_notify_toggle ("select_last_login", MDM_KEY_SELECT_LAST_LOGIN);
-
-	/* Setup Enable NumLock */
-	GtkWidget *numlock = setup_notify_toggle ("enable_numlock", MDM_KEY_NUMLOCK);
-	if (!g_file_test ("/usr/bin/numlockx", G_FILE_TEST_IS_EXECUTABLE)) {
-		gtk_widget_set_sensitive (numlock, FALSE);
-		gtk_widget_set_tooltip_text (numlock, _("Please install 'numlockx' to enable this feature"));
-	}
-
-	/* Setup Local administrator login setttings */
-	setup_notify_toggle ("allowroot", MDM_KEY_ALLOW_ROOT);
-
-	/* Setup Enable debug message to system log */
-	setup_notify_toggle ("enable_debug", MDM_KEY_DEBUG);
-
-	/* Bold the Enable automatic login label */
-	checkbox = glade_xml_get_widget (xml, "autologin");
-	label = gtk_bin_get_child (GTK_BIN (checkbox));
-	g_object_set (G_OBJECT (label), "use_markup", TRUE, NULL);
-
-	/* Bold the Enable timed login label */
-	checkbox = glade_xml_get_widget (xml, "timedlogin");
-	label = gtk_bin_get_child (GTK_BIN (checkbox));
-	g_object_set (G_OBJECT (label), "use_markup", TRUE, NULL);
-
-	/* Setup Enable automatic login */
- 	setup_user_combobox ("autologin_combo",
-			     MDM_KEY_AUTOMATIC_LOGIN);
-	setup_notify_toggle ("autologin", MDM_KEY_AUTOMATIC_LOGIN_ENABLE);
-
-	/* Setup Enable timed login */
- 	setup_user_combobox ("timedlogin_combo",
-			     MDM_KEY_TIMED_LOGIN);
-	setup_intspin ("timedlogin_seconds", MDM_KEY_TIMED_LOGIN_DELAY);
-	setup_notify_toggle ("timedlogin", MDM_KEY_TIMED_LOGIN_ENABLE);	
-}
-
 static GList *
 get_file_list_from_uri_list (gchar *uri_list)
 {
@@ -3463,48 +3392,6 @@ setup_default_session (void)
 	
 }
 
-static void
-setup_general_tab (void)
-{	
-	GtkWidget *clock_type_chooser;	
-	gchar *user_24hr_clock;	
-
-	/* Setup default session */
-	setup_default_session ();
-		
-	/* Setup user 24Hr Clock */
-	clock_type_chooser = glade_xml_get_widget (xml, "use_24hr_clock_combobox");
-
-	user_24hr_clock = mdm_config_get_string (MDM_KEY_USE_24_CLOCK);
-	if (!ve_string_empty (user_24hr_clock)) {
-		if (strcasecmp (ve_sure_string (user_24hr_clock), "auto") == 0) {
-			gtk_combo_box_set_active (GTK_COMBO_BOX (clock_type_chooser), CLOCK_AUTO);
-		}
-		else if (strcasecmp (ve_sure_string (user_24hr_clock), "yes") == 0 ||
-		         strcasecmp (ve_sure_string (user_24hr_clock), "true") == 0) {
-			gtk_combo_box_set_active (GTK_COMBO_BOX (clock_type_chooser), CLOCK_YES);
-		}
-		else if (strcasecmp (ve_sure_string (user_24hr_clock), "no") == 0 ||
-		         strcasecmp (ve_sure_string (user_24hr_clock), "true") == 0) {
-			gtk_combo_box_set_active (GTK_COMBO_BOX (clock_type_chooser), CLOCK_NO);
-		}
-	}
-	
-	g_object_set_data_full (G_OBJECT (clock_type_chooser), "key",
-	                        g_strdup (MDM_KEY_USE_24_CLOCK), (GDestroyNotify) g_free);
-	g_signal_connect (G_OBJECT (clock_type_chooser), "changed",
-	                  G_CALLBACK (combobox_changed), NULL);			
-	      	
-}
-
-static void
-setup_local_tab (void)
-{
-	setup_local_plain_settings ();
-	setup_local_themed_settings ();
-	setup_local_html_themed_settings();
-}
-
 static GtkWidget *
 setup_gui (void)
 {
@@ -3532,9 +3419,53 @@ setup_gui (void)
 	glade_helper_tagify_label (xml, "timedlogin", "b");	
 	
 	/* Setup preference tabs */
-	setup_general_tab ();
-	setup_local_tab (); 	
-	setup_security_tab ();	
+	setup_default_session();	
+	setup_local_plain_settings ();
+	setup_local_themed_settings ();
+	setup_local_html_themed_settings();	
+	
+	GtkWidget *checkbox;
+	GtkWidget *label;
+
+	/* Setup user preselection */
+	setup_notify_toggle ("select_last_login", MDM_KEY_SELECT_LAST_LOGIN);
+
+	/* Setup Enable NumLock */
+	GtkWidget *numlock = setup_notify_toggle ("enable_numlock", MDM_KEY_NUMLOCK);
+	if (!g_file_test ("/usr/bin/numlockx", G_FILE_TEST_IS_EXECUTABLE)) {
+		gtk_widget_set_sensitive (numlock, FALSE);
+		gtk_widget_set_tooltip_text (numlock, _("Please install 'numlockx' to enable this feature"));
+	}
+
+	/* Setup Local administrator login setttings */
+	setup_notify_toggle ("allowroot", MDM_KEY_ALLOW_ROOT);
+
+	/* Setup Enable debug message to system log */
+	setup_notify_toggle ("enable_debug", MDM_KEY_DEBUG);
+
+	/* Setup 24h clock */
+	setup_notify_toggle ("enable_24h_clock", MDM_KEY_USE_24_CLOCK);
+
+	/* Bold the Enable automatic login label */
+	checkbox = glade_xml_get_widget (xml, "autologin");
+	label = gtk_bin_get_child (GTK_BIN (checkbox));
+	g_object_set (G_OBJECT (label), "use_markup", TRUE, NULL);
+
+	/* Bold the Enable timed login label */
+	checkbox = glade_xml_get_widget (xml, "timedlogin");
+	label = gtk_bin_get_child (GTK_BIN (checkbox));
+	g_object_set (G_OBJECT (label), "use_markup", TRUE, NULL);
+
+	/* Setup Enable automatic login */
+ 	setup_user_combobox ("autologin_combo",
+			     MDM_KEY_AUTOMATIC_LOGIN);
+	setup_notify_toggle ("autologin", MDM_KEY_AUTOMATIC_LOGIN_ENABLE);
+
+	/* Setup Enable timed login */
+ 	setup_user_combobox ("timedlogin_combo",
+			     MDM_KEY_TIMED_LOGIN);
+	setup_intspin ("timedlogin_seconds", MDM_KEY_TIMED_LOGIN_DELAY);
+	setup_notify_toggle ("timedlogin", MDM_KEY_TIMED_LOGIN_ENABLE);	
 
 	return (dialog);
 }

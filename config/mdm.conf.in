@@ -383,7 +383,7 @@ GraphicalThemedColor=#000000
 # where the session saving stuff is disabled in MDM
 #ShowLastSession=true
 # Always use 24 hour clock no matter what the locale.
-#Use24Clock=auto
+#Use24Clock=true
 # Do not show any visible feedback in the password field. This is standard for
 # instance in console, xdm and ssh.
 #UseInvisibleInEntry=false
