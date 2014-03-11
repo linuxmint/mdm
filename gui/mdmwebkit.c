@@ -74,6 +74,13 @@ extern gchar *default_session;
 extern const gchar *current_session;
 extern gint mdm_timed_delay;
 
+enum {
+    MDM_BACKGROUND_NONE = 0,
+    MDM_BACKGROUND_IMAGE_AND_COLOR = 1,
+    MDM_BACKGROUND_COLOR = 2,
+    MDM_BACKGROUND_IMAGE = 3,
+};
+
 static void process_operation (guchar op_code, const gchar *args);
 static gboolean mdm_login_ctrl_handler (GIOChannel *source, GIOCondition cond, gint fd);
 
@@ -956,6 +963,123 @@ static void webkit_init (void) {
     g_signal_connect(G_OBJECT(webView), "navigation-policy-decision-requested", G_CALLBACK(webkit_on_navigation_policy_decision_requested), NULL);
 }
 
+
+static GdkPixbuf *
+render_scaled_back (const GdkPixbuf *pb)
+{
+    int i;
+    int width, height;
+
+    GdkPixbuf *back = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                      gdk_pixbuf_get_has_alpha (pb),
+                      8,
+                      gdk_screen_width (),
+                      gdk_screen_height ());
+
+    width = gdk_pixbuf_get_width (pb);
+    height = gdk_pixbuf_get_height (pb);
+
+    for (i = 0; i < mdm_wm_num_monitors; i++) {
+        gdk_pixbuf_scale (pb, back,
+                  mdm_wm_all_monitors[i].x,
+                  mdm_wm_all_monitors[i].y,
+                  mdm_wm_all_monitors[i].width,
+                  mdm_wm_all_monitors[i].height,
+                  mdm_wm_all_monitors[i].x /* offset_x */,
+                  mdm_wm_all_monitors[i].y /* offset_y */,
+                  (double) mdm_wm_all_monitors[i].width / width,
+                  (double) mdm_wm_all_monitors[i].height / height,
+                  GDK_INTERP_BILINEAR);
+    }
+
+    return back;
+}
+
+static void
+add_color_to_pb (GdkPixbuf *pb, GdkColor *color)
+{
+    int width = gdk_pixbuf_get_width (pb);
+    int height = gdk_pixbuf_get_height (pb);
+    int rowstride = gdk_pixbuf_get_rowstride (pb);
+    guchar *pixels = gdk_pixbuf_get_pixels (pb);
+    gboolean has_alpha = gdk_pixbuf_get_has_alpha (pb);
+    int i;
+    int cr = color->red >> 8;
+    int cg = color->green >> 8;
+    int cb = color->blue >> 8;
+
+    if ( ! has_alpha)
+        return;
+
+    for (i = 0; i < height; i++) {
+        int ii;
+        guchar *p = pixels + (rowstride * i);
+        for (ii = 0; ii < width; ii++) {
+            int r = p[0];
+            int g = p[1];
+            int b = p[2];
+            int a = p[3];
+
+            p[0] = (r * a + cr * (255 - a)) >> 8;
+            p[1] = (g * a + cg * (255 - a)) >> 8;
+            p[2] = (b * a + cb * (255 - a)) >> 8;
+            p[3] = 255;
+
+            p += 4;
+        }
+    }
+}
+
+
+/* setup background color/image */
+static void
+setup_background (void)
+{
+    GdkColor color;
+    GdkPixbuf *pb = NULL;
+    gchar *bg_color = mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
+    gchar *bg_image = mdm_config_get_string (MDM_KEY_BACKGROUND_IMAGE);
+    gint   bg_type  = mdm_config_get_int    (MDM_KEY_BACKGROUND_TYPE); 
+
+    if ((bg_type == MDM_BACKGROUND_IMAGE ||
+         bg_type == MDM_BACKGROUND_IMAGE_AND_COLOR) &&
+        ! ve_string_empty (bg_image))
+        pb = gdk_pixbuf_new_from_file (bg_image, NULL);
+
+    /* Load background image */
+    if (pb != NULL) {
+        if (gdk_pixbuf_get_has_alpha (pb)) {
+            if (bg_type == MDM_BACKGROUND_IMAGE_AND_COLOR) {
+                if (bg_color == NULL ||
+                    bg_color[0] == '\0' ||
+                    ! gdk_color_parse (bg_color,
+                           &color)) {
+                    gdk_color_parse ("#000000", &color);
+                }
+                add_color_to_pb (pb, &color);
+            }
+        }
+        
+        GdkPixbuf *spb = render_scaled_back (pb);
+        g_object_unref (G_OBJECT (pb));
+        pb = spb;       
+
+        /* paranoia */
+        if (pb != NULL) {
+            mdm_common_set_root_background (pb);
+            g_object_unref (G_OBJECT (pb));
+        }
+    /* Load background color */
+    } else if (bg_type != MDM_BACKGROUND_NONE &&
+               bg_type != MDM_BACKGROUND_IMAGE) {
+        mdm_common_setup_background_color (bg_color);
+    /* Load default background */
+    } else {
+        gchar *blank_color = g_strdup ("#000000");
+        mdm_common_setup_background_color (blank_color);
+    }
+}
+
 static void mdm_login_gui_init (void) {      
     gint i;
     const gchar *theme_name;
@@ -1025,7 +1149,6 @@ int main (int argc, char *argv[]) {
     struct sigaction term;
     sigset_t mask;    
     guint sid;
-    char *bg_color;
 
     if (g_getenv ("DOING_MDM_DEVELOPMENT") != NULL) {
         DOING_MDM_DEVELOPMENT = TRUE;
@@ -1043,12 +1166,8 @@ int main (int argc, char *argv[]) {
     setlocale (LC_ALL, "");
 
     mdm_wm_screen_init (mdm_config_get_int (MDM_KEY_XINERAMA_SCREEN));
-   
-    bg_color = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMED_COLOR);
-    if (ve_string_empty (bg_color)) {
-        bg_color = mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
-    }
-    mdm_common_setup_background_color (bg_color);
+       
+    setup_background();
        
     defface = mdm_common_get_face (NULL, mdm_config_get_string (MDM_KEY_DEFAULT_FACE), mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH), mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
 

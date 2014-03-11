@@ -2836,7 +2836,6 @@ setup_local_themed_settings (void)
 	GtkTreeViewColumn *column;
 	GtkTreeSelection *selection;
 	GtkTreeIter *select_iter = NULL;
-	GtkWidget *color_colorbutton;
 	GtkWidget *style_label;
 	GtkWidget *theme_label;
 	GtkSizeGroup *size_group;
@@ -2851,15 +2850,7 @@ setup_local_themed_settings (void)
 	size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 	gtk_size_group_add_widget (size_group, style_label);
 	gtk_size_group_add_widget (size_group, theme_label);
-	
-	color_colorbutton = glade_xml_get_widget (xml, "local_background_theme_colorbutton");
-
-	g_object_set_data (G_OBJECT (color_colorbutton), "key",
-	                   MDM_KEY_GRAPHICAL_THEMED_COLOR);
-
-	setup_greeter_color ("local_background_theme_colorbutton", 
-	                     MDM_KEY_GRAPHICAL_THEMED_COLOR);
-
+		
 	theme_dir = get_theme_dir ();
 
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (theme_list), TRUE);

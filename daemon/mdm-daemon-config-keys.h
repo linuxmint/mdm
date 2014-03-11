@@ -142,7 +142,6 @@ G_BEGIN_DECLS
 #define MDM_KEY_ENTRY_INVISIBLE "greeter/UseInvisibleInEntry=false"
 #define MDM_KEY_GRAPHICAL_THEME "greeter/GraphicalTheme=circles"
 #define MDM_KEY_GRAPHICAL_THEME_DIR "greeter/GraphicalThemeDir=" DATADIR "/mdm/themes/"
-#define MDM_KEY_GRAPHICAL_THEMED_COLOR "greeter/GraphicalThemedColor=#000000"
 #define MDM_KEY_HTML_THEME "greeter/HTMLTheme=mdm"
 #define MDM_KEY_INFO_MSG_FILE "greeter/InfoMsgFile="
 #define MDM_KEY_INFO_MSG_FONT "greeter/InfoMsgFont="

@@ -674,7 +674,6 @@ mdm_read_config (void)
 	mdm_config_get_string (MDM_KEY_INFO_MSG_FILE);
 	mdm_config_get_string (MDM_KEY_INFO_MSG_FONT);
 	mdm_config_get_string (MDM_KEY_TIMED_LOGIN);
-	mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMED_COLOR);
 	mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
 	mdm_config_get_string (MDM_KEY_DEFAULT_FACE);
 	mdm_config_get_string (MDM_KEY_DEFAULT_SESSION);
@@ -738,7 +737,6 @@ greeter_reread_config (int sig, gpointer data)
 	    mdm_config_reload_string (MDM_KEY_INFO_MSG_FILE) ||
 	    mdm_config_reload_string (MDM_KEY_INFO_MSG_FONT) ||
 	    mdm_config_reload_string (MDM_KEY_TIMED_LOGIN) ||
-	    mdm_config_reload_string (MDM_KEY_GRAPHICAL_THEMED_COLOR) ||
 	    mdm_config_reload_string (MDM_KEY_BACKGROUND_COLOR) ||
 	    mdm_config_reload_string (MDM_KEY_DEFAULT_FACE) ||
 	    mdm_config_reload_string (MDM_KEY_DEFAULT_SESSION) ||
@@ -1009,11 +1007,7 @@ main (int argc, char *argv[])
   /* Load the background as early as possible so MDM does not leave  */
   /* the background unfilled.   The cursor should be a watch already */
   /* but just in case */
-  bg_color = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEMED_COLOR);
-  /* If a graphical theme color does not exist fallback to the plain color */
-  if (ve_string_empty (bg_color)) {
-    bg_color = mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);
-  }
+  bg_color = mdm_config_get_string (MDM_KEY_BACKGROUND_COLOR);  
   mdm_common_setup_background_color (bg_color);
   greeter_session_init ();
   mdm_lang_initialize_model (mdm_config_get_string (MDM_KEY_LOCALE_FILE));

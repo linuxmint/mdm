@@ -29,9 +29,12 @@ mdmwhich () {
 XSETROOT=`mdmwhich xsetroot`
 if [ "x$XSETROOT" != "x" ] ; then
 
-	CHECKBACKCOLOR="OK"
-	if [ "x$MDM_GREETER_TYPE" = "xTHEMED" ]; then
-		BACKCOLOR=`mdmflexiserver --command="GET_CONFIG greeter/GraphicalThemedColor $DISPLAY"`
+	# Background type can be 0=None, 1=Image & Color, 2=Color, or 3=Image 
+	BACKTYPE=`mdmflexiserver --command="GET_CONFIG greeter/BackgroundType $DISPLAY"`
+
+	# Skip if background type does not include a color
+	if [ "x$BACKTYPE" = "xOK 1" ] || [ "x$BACKTYPE" = "xOK 2" ]; then
+		BACKCOLOR=`mdmflexiserver --command="GET_CONFIG greeter/BackgroundColor $DISPLAY"`
 
 		CHECKBACKCOLOR=`echo $BACKCOLOR | sed 's/^\([^ ]*\) .*$/\1/'`
 		if [ "x$CHECKBACKCOLOR" = "xOK" ]; then
@@ -40,26 +43,7 @@ if [ "x$XSETROOT" != "x" ] ; then
 			BACKCOLOR=""
 		fi
 	fi
-
-	# If we tried to load the themed backgroundcolor, but failed, then try loading plain color
-	if [ "x$CHECKBACKCOLOR" != "xOK" ] || [ "x$MDM_GREETER_TYPE" = "xPLAIN" ]; then
-
-		# Background type can be 0=None, 1=Image & Color, 2=Color, or 3=Image 
-		BACKTYPE=`mdmflexiserver --command="GET_CONFIG greeter/BackgroundType $DISPLAY"`
-
-		# Skip if background type does not include a color
-		if [ "x$BACKTYPE" = "xOK 1" ] || [ "x$BACKTYPE" = "xOK 2" ]; then
-			BACKCOLOR=`mdmflexiserver --command="GET_CONFIG greeter/BackgroundColor $DISPLAY"`
-
-			CHECKBACKCOLOR=`echo $BACKCOLOR | sed 's/^\([^ ]*\) .*$/\1/'`
-			if [ "x$CHECKBACKCOLOR" = "xOK" ]; then
-				BACKCOLOR=`echo $BACKCOLOR | sed 's/^.* \(.*\)$/\1/'`
-			else
-				BACKCOLOR=""
-			fi
-		fi
-	fi
-
+	
 	# Default value
  	if [ "x$BACKCOLOR" = "x" ]; then
  		BACKCOLOR="#000000"

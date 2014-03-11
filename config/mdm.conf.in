@@ -354,11 +354,8 @@ DefaultWelcome=true
 # Type can be 0=None, 1=Image & Color, 2=Color, 3=Image
 #BackgroundType=2
 #BackgroundImage=
-# The Standard greeter (mdmlogin) uses BackgroundColor as the background
-# color, while the themed greeter (mdmgreeter) uses GraphicalThemedColor
-# as the background color.
+# The background color
 BackgroundColor=#000000
-GraphicalThemedColor=#000000
 
 # Program to run to draw the background in the standard greeter.  Perhaps
 # something like an xscreensaver hack or some such.
