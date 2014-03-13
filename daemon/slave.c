@@ -964,10 +964,8 @@ mdm_screen_init (MdmDisplay *display)
 		if G_UNLIKELY (screen_num <= 0)
 			mdm_fail ("Xinerama active, but <= 0 screens?");
 
-		if (screen_num <= mdm_daemon_config_get_value_int (MDM_KEY_XINERAMA_SCREEN))
-			mdm_daemon_config_set_value_int (MDM_KEY_XINERAMA_SCREEN, 0);
-
-		xineramascreen = mdm_daemon_config_get_value_int (MDM_KEY_XINERAMA_SCREEN);
+		
+		xineramascreen = 0;
 
 		display->screenx = xscreens[xineramascreen].x_org;
 		display->screeny = xscreens[xineramascreen].y_org;
@@ -1012,11 +1010,8 @@ mdm_screen_init (MdmDisplay *display)
 		 */
 		if G_UNLIKELY (result <= 0)
 			mdm_fail ("Xinerama active, but <= 0 screens?");
-
-		if (n_monitors <= mdm_daemon_config_get_value_int (MDM_KEY_XINERAMA_SCREEN))
-			mdm_daemon_config_set_value_int (MDM_KEY_XINERAMA_SCREEN, 0);
-
-		xineramascreen = mdm_daemon_config_get_value_int (MDM_KEY_XINERAMA_SCREEN);
+		
+		xineramascreen = 0;
 		display->screenx = monitors[xineramascreen].x;
 		display->screeny = monitors[xineramascreen].y;
 		display->screenwidth = monitors[xineramascreen].width;

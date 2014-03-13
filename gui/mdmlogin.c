@@ -2344,7 +2344,7 @@ mdm_read_config (void)
 	mdm_config_get_int    (MDM_KEY_MAX_ICON_WIDTH);
 	mdm_config_get_int    (MDM_KEY_MINIMAL_UID);
 	mdm_config_get_int    (MDM_KEY_TIMED_LOGIN_DELAY);
-	mdm_config_get_int    (MDM_KEY_XINERAMA_SCREEN);
+	mdm_config_get_string    (MDM_KEY_PRIMARY_MONITOR);
 
 	mdm_config_get_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);	
@@ -2409,7 +2409,7 @@ mdm_reread_config (int sig, gpointer data)
 	    mdm_config_reload_int    (MDM_KEY_MAX_ICON_HEIGHT) ||
 	    mdm_config_reload_int    (MDM_KEY_MINIMAL_UID) ||
 	    mdm_config_reload_int    (MDM_KEY_TIMED_LOGIN_DELAY) ||
-	    mdm_config_reload_int    (MDM_KEY_XINERAMA_SCREEN) ||
+	    mdm_config_reload_string    (MDM_KEY_PRIMARY_MONITOR) ||
 
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
@@ -2516,7 +2516,7 @@ main (int argc, char *argv[])
     
     setlocale (LC_ALL, "");
 
-    mdm_wm_screen_init (mdm_config_get_int (MDM_KEY_XINERAMA_SCREEN));   
+    mdm_wm_screen_init (mdm_config_get_string (MDM_KEY_PRIMARY_MONITOR));   
 
     /* Load the background as early as possible so MDM does not leave  */
     /* the background unfilled.   The cursor should be a watch already */

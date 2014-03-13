@@ -1661,9 +1661,6 @@ validate_cb (MdmConfig          *config,
         case MDM_ID_PASSWORD_REQUIRED:
 		res = validate_password_required (config, source, value);
 		break;
-	case MDM_ID_XINERAMA_SCREEN:
-		res = validate_at_least_int (config, source, value, 0, 0);
-		break;
 	case MDM_ID_TIMED_LOGIN_DELAY:
 		res = validate_at_least_int (config, source, value, 5, 5);
 		break;

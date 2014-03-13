@@ -72,6 +72,9 @@ static gchar     *custom_config_file;
 /* Used to store all available sessions */
 static GList *sessions = NULL;
 
+/* Used to store all available monitors */
+static GList *monitors = NULL;
+
 enum {
 	THEME_COLUMN_SELECTED,	
 	THEME_COLUMN_DIR,
@@ -538,6 +541,26 @@ combobox_timeout (GtkWidget *combo_box)
 		
 		val = mdm_config_get_string ((gchar *)key);
 		new_val = g_strdup ((gchar*) g_list_nth_data (sessions, selected));
+		
+		if (strcmp (ve_sure_string (val), ve_sure_string (new_val)) != 0)
+			mdm_setup_config_set_string (key,  ve_sure_string (new_val));
+
+		g_free (new_val);
+		g_free (val);		
+	}
+	/* Primary monitor combobox*/
+	else if (strcmp (ve_sure_string (key), MDM_KEY_PRIMARY_MONITOR) == 0) {
+		/* First we get the selected index. Next we lookup the actual
+		   filename in the List of sessions */
+		gchar *val;
+		gchar *new_val = NULL;
+		
+		val = mdm_config_get_string ((gchar *)key);
+		new_val = g_strdup ((gchar*) g_list_nth_data (monitors, selected-1));
+
+		if (new_val == NULL || new_val == " ") {
+			new_val = "None";
+		}
 		
 		if (strcmp (ve_sure_string (val), ve_sure_string (new_val)) != 0)
 			mdm_setup_config_set_string (key,  ve_sure_string (new_val));
@@ -3383,6 +3406,45 @@ setup_default_session (void)
 	
 }
 
+static void
+setup_monitors (void)
+{
+	GtkWidget  *primary_monitor_combobox = glade_xml_get_widget (xml, "primary_monitor_combobox");
+	GtkWidget  *primary_monitor_label = glade_xml_get_widget (xml, "primary_monitor_label");
+
+	gtk_widget_set_sensitive (primary_monitor_combobox, TRUE);	
+	
+	GdkScreen *screen = gdk_screen_get_default ();
+	int mdm_wm_num_monitors = gdk_screen_get_n_monitors (screen);	
+
+	if (mdm_wm_num_monitors > 1) {
+		gint active = 0;
+		int i;
+		gchar * org_val = mdm_config_get_string (MDM_KEY_PRIMARY_MONITOR);
+		for (i = 0; i < mdm_wm_num_monitors; i++) {
+			char * plugname = gdk_screen_get_monitor_plug_name (screen, i);		
+			if (!ve_string_empty (plugname)) {			
+				gtk_combo_box_append_text (GTK_COMBO_BOX (primary_monitor_combobox), plugname);
+				monitors = g_list_prepend (monitors, plugname);
+				if (strcmp(plugname, org_val) == 0) {
+					active = i+1;				
+				}
+			}		
+		}
+		if (active > 0) {		
+			gtk_combo_box_set_active (GTK_COMBO_BOX (primary_monitor_combobox), active);
+		}
+		monitors = g_list_reverse (monitors);				
+		g_object_set_data_full (G_OBJECT (primary_monitor_combobox), "key", g_strdup (MDM_KEY_PRIMARY_MONITOR), (GDestroyNotify) g_free);
+		g_signal_connect (primary_monitor_combobox, "changed", G_CALLBACK (combobox_changed), NULL);	
+		g_free (org_val);
+	}
+	else {
+		gtk_widget_hide (primary_monitor_combobox);
+		gtk_widget_hide (primary_monitor_label);
+	}	
+}
+
 static GtkWidget *
 setup_gui (void)
 {
@@ -3411,6 +3473,7 @@ setup_gui (void)
 	
 	/* Setup preference tabs */
 	setup_default_session();	
+	setup_monitors();
 	setup_local_plain_settings ();
 	setup_local_themed_settings ();
 	setup_local_html_themed_settings();	
@@ -3575,6 +3638,7 @@ mdm_event (GSignalInvocationHint *ihint,
 int 
 main (int argc, char *argv[])
 {
+
 	GtkWidget *dialog;
 
 	mdm_config_never_cache (TRUE);

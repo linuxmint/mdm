@@ -1201,7 +1201,7 @@ int main (int argc, char *argv[]) {
     
     setlocale (LC_ALL, "");
 
-    mdm_wm_screen_init (mdm_config_get_int (MDM_KEY_XINERAMA_SCREEN));
+    mdm_wm_screen_init (mdm_config_get_string (MDM_KEY_PRIMARY_MONITOR));
        
     setup_background();
 

@@ -40,6 +40,7 @@
 #include "mdmconfig.h"
 
 #include "mdm-common.h"
+#include "mdm-log.h"
 
 typedef struct _MdmWindow MdmWindow;
 struct _MdmWindow {
@@ -82,7 +83,7 @@ static Window strut_owners[4] = {None, None, None, None};
 static guint save_struts[4] = {0, 0, 0, 0};
 
 void 
-mdm_wm_screen_init (int current_monitor_num)
+mdm_wm_screen_init (gchar * monitor_plug_name)
 {
 	GdkScreen *screen;
 	int i;
@@ -110,10 +111,16 @@ mdm_wm_screen_init (int current_monitor_num)
 
 	mdm_wm_all_monitors = g_new (GdkRectangle, mdm_wm_num_monitors);
 
-	for (i = 0; i < mdm_wm_num_monitors; i++)
-		gdk_screen_get_monitor_geometry (screen, i, mdm_wm_all_monitors + i);	
+	int current_monitor_num = gdk_screen_get_primary_monitor (screen);
 
-	current_monitor_num = gdk_screen_get_primary_monitor (screen);
+	for (i = 0; i < mdm_wm_num_monitors; i++) {
+		gdk_screen_get_monitor_geometry (screen, i, mdm_wm_all_monitors + i);        
+		mdm_debug("mdm_wm_screen_init: Found monitor %d '%s'.", i, gdk_screen_get_monitor_plug_name (screen, i));
+		if (strcmp(gdk_screen_get_monitor_plug_name (screen, i), monitor_plug_name) == 0) {
+			current_monitor_num = i;
+			mdm_debug("mdm_wm_screen_init: Using monitor '%s' to render greeter.", gdk_screen_get_monitor_plug_name (screen, i));
+		}
+	}
 	
 	mdm_wm_screen = mdm_wm_all_monitors[current_monitor_num];	
 }

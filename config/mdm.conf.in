@@ -314,9 +314,9 @@ LocaleFile=/etc/mdm/locale.conf
 DefaultWelcome=true
 #Welcome=Welcome
 
-# Xinerama screen we use to display the greeter on.  Not for true multihead,
-# currently only works for Xinerama.
-#XineramaScreen=0
+# Which monitor to use as primary. The value should be the plug name, 
+# for instance HDMI-0, DVI-I-0 etc.. you can try and run xrandr to list your monitors.
+#PrimaryMonitor=None
 # Background settings for the standard greeter:
 # Type can be 0=None, 1=Image & Color, 2=Color, 3=Image
 #BackgroundType=2

@@ -689,7 +689,7 @@ mdm_read_config (void)
         mdm_config_get_string (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS);
         mdm_config_get_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU);
 
-	mdm_config_get_int    (MDM_KEY_XINERAMA_SCREEN);
+	mdm_config_get_string    (MDM_KEY_PRIMARY_MONITOR);
 	mdm_config_get_int    (MDM_KEY_TIMED_LOGIN_DELAY);
 	mdm_config_get_int    (MDM_KEY_FLEXI_REAP_DELAY_MINUTES);
 	mdm_config_get_int    (MDM_KEY_MAX_ICON_HEIGHT);
@@ -748,7 +748,7 @@ greeter_reread_config (int sig, gpointer data)
             mdm_config_reload_string (MDM_KEY_RBAC_SYSTEM_COMMAND_KEYS) ||
             mdm_config_reload_string (MDM_KEY_SYSTEM_COMMANDS_IN_MENU) ||
 
-	    mdm_config_reload_int    (MDM_KEY_XINERAMA_SCREEN) ||
+	    mdm_config_reload_string    (MDM_KEY_PRIMARY_MONITOR) ||
 	    mdm_config_reload_int    (MDM_KEY_TIMED_LOGIN_DELAY) ||
 	    mdm_config_reload_int    (MDM_KEY_FLEXI_REAP_DELAY_MINUTES) ||
 	    mdm_config_reload_int    (MDM_KEY_MAX_ICON_HEIGHT) ||
@@ -1007,7 +1007,7 @@ main (int argc, char *argv[])
 	  mdm_set_theme (mdm_gtk_theme);
   }
 
-  mdm_wm_screen_init (mdm_config_get_int (MDM_KEY_XINERAMA_SCREEN)); 
+  mdm_wm_screen_init (mdm_config_get_string (MDM_KEY_PRIMARY_MONITOR)); 
 
   /* Load the background as early as possible so MDM does not leave  */
   /* the background unfilled.   The cursor should be a watch already */
