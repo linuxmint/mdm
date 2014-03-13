@@ -76,14 +76,88 @@ static gboolean did_setcred    = FALSE;
 
 extern char *mdm_ack_question_response;
 
+gboolean mdm_verify_check_selectable_user (const char * user) {		
+	
+	// Return if the username is null or empty
+	if (user == NULL || strcmp (user, "") == 0) {
+		mdm_debug("mdm_verify_check_selectable_user: invalid username.");
+		return FALSE;
+	}
+
+	// Return if the username is "oem"
+	if (strcmp (user, "oem") == 0) {
+		mdm_debug("mdm_verify_check_selectable_user: username is 'oem'.");
+		return FALSE;
+	}
+
+	char * home_dir = g_strdup_printf("/home/%s", user);
+	char * accounts_service = g_strdup_printf("/var/lib/AccountsService/users/%s", user);
+
+	// Return if the user doesn't exist (check /home and AccountsService)
+	if ( !(g_file_test(home_dir, G_FILE_TEST_EXISTS) || g_file_test(accounts_service, G_FILE_TEST_EXISTS)) ) {
+		mdm_debug("mdm_verify_check_selectable_user: user '%s' doesn't exist.", user);
+		return FALSE;
+	}
+
+	// Return if the user belongs to the nopasswdlogin group
+	char result[255];
+	char * command = g_strdup_printf("id '%s' 2>/dev/null | grep nopasswdlogin | wc -l", user);
+	FILE *fp = popen(command, "r");
+	fscanf(fp, "%s", result);
+	pclose(fp);
+	if (strcmp(result, "0") != 0) {
+		mdm_debug("mdm_verify_check_selectable_user: user '%s' is part of the nopasswdlogin group.", user);
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+void mdm_verify_set_user_settings (const char *user) {
+	char * session;
+	char * language;
+	gboolean savesess = FALSE;
+
+	if (mdm_verify_check_selectable_user(user)) {
+		mdm_debug("mdm_verify_set_user_settings: Checking settings for '%s'", user);
+		char * home_dir = g_strdup_printf("/home/%s", user);
+		if ( !(g_file_test(home_dir, G_FILE_TEST_EXISTS))) {
+			mdm_debug("mdm_verify_set_user_settings: user '%s' doesn't exist.", user);
+			return;
+		}
+		mdm_daemon_config_get_user_session_lang (&session, &language, home_dir, &savesess);
+		if (!ve_string_empty(session)) {
+			mdm_debug("mdm_verify_set_user_settings: Found session '%s'.", session);
+			mdm_slave_greeter_ctl_no_ret (MDM_SETSESS, session);
+		}
+		else {
+			mdm_debug("mdm_verify_set_user_settings: No session found, setting to default '%s'.", "Last");
+			mdm_slave_greeter_ctl_no_ret (MDM_SETSESS, "Last"); // Do not translate "Last" here, it's a value
+		}
+		if (!ve_string_empty(language)) {
+			mdm_debug("mdm_verify_set_user_settings: Found language '%s'.", language);
+			mdm_slave_greeter_ctl_no_ret (MDM_SETLANG, language);
+		}
+		else {
+			const char * mdmlang = g_getenv ("LANG");
+			if (mdmlang) {				
+				mdm_debug("mdm_verify_set_user_settings: No language found, setting to default '%s'.", mdmlang);
+				mdm_slave_greeter_ctl_no_ret (MDM_SETLANG, mdmlang);
+			}
+		}
+	}
+}
+
 void
 mdm_verify_select_user (const char *user)
 {
 	g_free (selected_user);
 	if (ve_string_empty (user))
 		selected_user = NULL;
-	else
+	else {
 		selected_user = g_strdup (user);
+		mdm_verify_set_user_settings (user);		
+	}
 }
 
 static const char *
@@ -414,45 +488,20 @@ static void mdm_preselect_user (int *pamerr) {
 	fscanf(fp, "%s", last_username);
 	pclose(fp);
 
-	// Return if the username is null or empty
-	if (last_username == NULL || strcmp (last_username, "") == 0) {
-		mdm_debug("mdm_preselect_user: invalid username, not presetting user.");
+	// If for any reason the user isn't selectable, don't preset.
+	if (!mdm_verify_check_selectable_user(last_username)) {
 		return;
-	}
-
-	// Return if the username is "oem"
-	if (strcmp (last_username, "oem") == 0) {
-		mdm_debug("mdm_preselect_user: username is 'oem', not presetting user.");
-		return;
-	}
-
-	char * home_dir = g_strdup_printf("/home/%s", last_username);
-	char * accounts_service = g_strdup_printf("/var/lib/AccountsService/users/%s", last_username);
-
-	// Return if the user doesn't exist (check /home and AccountsService)
-	if ( !(g_file_test(home_dir, G_FILE_TEST_EXISTS) || g_file_test(accounts_service, G_FILE_TEST_EXISTS)) ) {
-		mdm_debug("mdm_preselect_user: user '%s' doesn't exist, not presetting user.", last_username);
-		return;
-	}
-
-	// Return if the user belongs to the nopasswdlogin group
-	char result[255];
-	char * command = g_strdup_printf("id '%s' 2>/dev/null | grep nopasswdlogin | wc -l", last_username);
-	fp = popen(command, "r");
-	fscanf(fp, "%s", result);
-	pclose(fp);
-	if (strcmp(result, "0") != 0) {
-		mdm_debug("mdm_preselect_user: user '%s' is part of the nopasswdlogin group, not presetting user.", last_username);
-		return;
-	}
+	}	
 
 	// Preset the user
 	mdm_debug("mdm_verify_user: presetting user to '%s'", last_username);
-	if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {
+	if ((*pamerr = pam_set_item (pamh, PAM_USER, last_username)) != PAM_SUCCESS) {		
 		if (mdm_slave_action_pending ()) {
 			mdm_error ("Can't set PAM_USER='%s'", last_username);
 		}
 	}
+
+	mdm_verify_set_user_settings (last_username);
 
 }
 

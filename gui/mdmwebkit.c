@@ -43,6 +43,7 @@
 #include "misc.h"
 
 #include "mdm-common.h"
+#include "mdm-log.h"
 #include "mdm-socket-protocol.h"
 #include "mdm-daemon-config-keys.h"
 
@@ -53,7 +54,7 @@ gboolean DOING_MDM_DEVELOPMENT = FALSE;
 static WebKitWebView *webView;
 static gboolean webkit_ready = FALSE;
 static gchar * mdm_msg = "";
-
+static gchar *current_language;
 static GtkWidget *login;
 static guint err_box_clear_handler = 0;
 
@@ -154,11 +155,12 @@ static char * html_encode(const char *string) {
 void webkit_execute_script(const gchar * function, const gchar * arguments) {
     if (webkit_ready) {
         gchar * tmp;
+
         if (arguments == NULL) {            
-            tmp = g_strdup_printf("%s()", function);            
+            tmp = g_strdup_printf("if ((typeof %s) === 'function') { %s(); }", function, function);
         }
         else {
-            tmp = g_strdup_printf("%s(\"%s\")", function, str_replace(arguments, "\n", ""));                            
+            tmp = g_strdup_printf("if ((typeof %s) === 'function') { %s(\"%s\"); }", function, function, str_replace(arguments, "\n", ""));
         }
         webkit_web_view_execute_script(webView, tmp);
         g_free (tmp);
@@ -173,10 +175,11 @@ gboolean webkit_on_message(WebKitWebView *view, WebKitWebFrame *frame, gchar *me
         fflush (stdout);
     }   
     else if (strcmp(command, "LANGUAGE") == 0) {
-        gchar *language = message_parts[1];
-        printf ("%c%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_SELECT_LANG, 0, language);
-        fflush (stdout);
-        g_free (language);
+        current_language = message_parts[1];
+        //gchar *language = message_parts[1];
+        //printf ("%c%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_SELECT_LANG, 0, language);
+        //fflush (stdout);
+        //g_free (language);
     }
     else if (strcmp(command, "SESSION") == 0) {
         current_session = message_parts[2];     
@@ -359,9 +362,7 @@ void mdm_login_session_init () {
         gchar * args = g_strdup_printf("%s\", \"%s", _("Last"), LAST_SESSION);
         webkit_execute_script("mdm_add_session", args);
         g_free (args);            
-    }
-
-    mdm_session_list_init ();
+    }    
 
     for (tmp = sessions; tmp != NULL; tmp = tmp->next) {
         MdmSession *session;
@@ -501,7 +502,7 @@ void process_operation (guchar op_code, const gchar *args) {
     gint dont_save_session = GTK_RESPONSE_YES;
     switch (op_code) {
 
-        case MDM_SETLOGIN:  
+        case MDM_SETLOGIN:
             webkit_execute_script("mdm_set_current_user", args);
             printf ("%c\n", STX);
             fflush (stdout);
@@ -664,8 +665,8 @@ void process_operation (guchar op_code, const gchar *args) {
             break;
 
         case MDM_LANG:
-            //mdm_lang_op_lang (args);
-            printf ("%c%s\n", STX, g_getenv("LANG"));
+            //mdm_lang_op_lang (args);            
+            printf ("%c%s\n", STX, current_language);
             fflush (stdout);
             break;
 
@@ -685,9 +686,42 @@ void process_operation (guchar op_code, const gchar *args) {
             fflush (stdout);
             break;
 
+        case MDM_SETSESS:
+            current_session = args;
+            gchar * session_file = g_strdup_printf("%s.desktop", args);
+            gchar * wargs = g_strdup_printf("%s\", \"%s", mdm_session_name(session_file), session_file);
+            webkit_execute_script("mdm_set_current_session", wargs);
+            g_free (wargs);
+            mdm_debug("mdm_verify_set_user_settings: mdm_set_current_session '%s'.", args);        
+            printf ("%c\n", STX);
+            fflush (stdout);
+            break;
+
         case MDM_SETLANG:
-            //mdm_lang_op_setlang (args);
-            webkit_execute_script("mdm_set_current_language", args);
+            if (args) { 
+                current_language = args;
+                char *name;
+                char *untranslated;
+                if (mdm_common_locale_is_displayable (args)) {
+                    name = mdm_lang_name (args, FALSE, TRUE, FALSE, FALSE);
+
+                    untranslated = mdm_lang_untranslated_name (args, TRUE);
+
+                    if (untranslated != NULL) {
+                        gchar * wargs = g_strdup_printf("%s\", \"%s", untranslated, args);
+                        webkit_execute_script("mdm_set_current_language", wargs);
+                        g_free (wargs);
+                    }
+                    else {
+                        gchar * wargs = g_strdup_printf("%s\", \"%s", name, args);
+                        webkit_execute_script("mdm_set_current_language", wargs);
+                        g_free (wargs);
+                    }       
+                }
+                g_free (name);
+                g_free (untranslated);
+            }
+            
             printf ("%c\n", STX);
             fflush (stdout);
             break;
@@ -1168,6 +1202,8 @@ int main (int argc, char *argv[]) {
     mdm_wm_screen_init (mdm_config_get_int (MDM_KEY_XINERAMA_SCREEN));
        
     setup_background();
+
+    current_language = g_getenv("LANG");
        
     defface = mdm_common_get_face (NULL, mdm_config_get_string (MDM_KEY_DEFAULT_FACE), mdm_config_get_int (MDM_KEY_MAX_ICON_WIDTH), mdm_config_get_int (MDM_KEY_MAX_ICON_HEIGHT));
 
@@ -1175,6 +1211,7 @@ int main (int argc, char *argv[]) {
         mdm_common_warning ("mdmwebkit: Could not open DefaultFace: %s!", mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
     } 
 
+    mdm_session_list_init ();
     mdm_users_init (&users, &users_string, NULL, defface, &size_of_users, TRUE, !DOING_MDM_DEVELOPMENT);    
 
     webkit_init();

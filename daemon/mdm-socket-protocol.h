@@ -44,6 +44,7 @@
 #define MDM_SSESS      'C'
 #define MDM_SLANG      'R'
 #define MDM_SETLANG    'L'
+#define MDM_SETSESS    'Z'
 #define MDM_RESET      'A'
 #define MDM_QUIT       'P'
 /* Well these aren't as nice as above, oh well */

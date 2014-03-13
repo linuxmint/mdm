@@ -1300,6 +1300,11 @@ process_operation (guchar       op_code,
 	mdm_lang_op_slang (args);
 	break;
 
+    case MDM_SETSESS:    	
+    	printf ("%c\n", STX);
+    	fflush (stdout);
+    	break;
+
     case MDM_SETLANG:
 	mdm_lang_op_setlang (args);
 	break;
