@@ -29,6 +29,8 @@
 #include <unistd.h>
 #include <errno.h>
 #include <strings.h>
+ #include <syslog.h>
+
 
 int out = 0;
 
@@ -77,6 +79,8 @@ doin (char *s)
 int
 main (int argc, char *argv[])
 {
+	openlog ("mdmprefetch", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
+	syslog (LOG_INFO, "Starting...");
 	FILE *fp = 0;
 	int c, errflg = 0;
 	extern int optind, optopt;
@@ -96,8 +100,8 @@ main (int argc, char *argv[])
 	}
 
 	if (errflg) {
-		fprintf (stderr, "usage: %s [-o] filename [filename]\n",
-			argv[0]);
+		fprintf (stderr, "usage: %s [-o] filename [filename]\n", argv[0]);
+		syslog (LOG_INFO, "usage: %s [-o] filename [filename]\n", argv[0]);
 		exit (1);
 	}
 
@@ -108,6 +112,7 @@ main (int argc, char *argv[])
 
 			if ((fp = fopen (&(argv[optind][1]), "r")) == 0) {
 				fprintf (stderr, "fopen: %s %s\n", strerror (errno), &argv[optind][1]);
+				syslog (LOG_INFO, "fopen: %s %s\n", strerror (errno), &argv[optind][1]);
 				continue;
 			}
 			while (fgets (path, sizeof (path), fp) != 0) {
@@ -139,6 +144,8 @@ main (int argc, char *argv[])
 			}
 		}
 	}
+	syslog (LOG_INFO, "Finished...");
+	closelog ();
 	exit (0);
 }
 

@@ -1,46 +1,13 @@
 # MDM System Defaults Configuration file.
 #
-# This file should not be updated by hand.  Since MDM 2.13.0.4, configuration
-# choices in the MDM System Configuration file (/etc/mdm/mdm.conf) will
-# override the default values specified in this file.
+# This file provides the default settings for MDM. It should not be modified.
 #
-# If you were using an older version of MDM, your system may have the the older
-# mdm.conf configuration file on the system.  If so, then this file is used
-# instead of the MDM Custom Configuration file for backwards support.  If you
-# make changes to the MDM Custom Configuration file and they seem to not be
-# taking effect, this is likely the problem.  Consider migrating your
-# configuration to the new configuration file and removing the mdm.conf file.
+# Distributions can override these settings in /usr/share/mdm/distro.conf.
 #
-# You can use the mdmsetup program to graphically edit the mdm.conf-custom
-# file.  Note that mdmsetup does not support every option in this file, just
-# the most common ones that users want to change.  If you feel that mdmsetup
-# should support additional configuration options, please file a bug report at
-# http://bugzilla.gnome.org/.
-#
-# If you hand-edit the MDM configuration, you should run the following command
-# to get the MDM daemon to recognize the change.  Any running MDM GUI programs
-# will also be notified to update with the new configuration.
-#
-# mdmflexiserver --command="UPDATE_CONFIG <configuration key>"
-#
-# e.g, the "Enable" key in the "[debug]" section would be "debug/Enable".
-#
-# You can also run invoke-rc.d mdm reload or invoke-rc.d mdm restart
-# to cause MDM to restart and re-read the new configuration settings. 
-# You can also restart MDM by sending a HUP or USR1 signal to the
-# daemon.  HUP behaves like restart and causes any user session
-# started by MDM to exit immediately while USR1 behaves like
-# reload and will wait until all users log out before
-# restarting MDM.
-#
-# For full reference documentation see the GNOME help browser under
-# GNOME|System category.  You can also find the docs in HTML form on
-# http://www.gnome.org/projects/mdm/
+# Users can override them in /etc/mdm/mdm.conf or graphically (for some settings) by running mdmsetup.
 #
 # NOTE: Some values are commented out, but show their default values.  Lines
 # that begin with "#" are considered comments.
-#
-# Have fun!
 
 [daemon]
 # Automatic login, if true the first attached screen will automatically logged
