@@ -170,8 +170,10 @@ void webkit_execute_script(const gchar * function, const gchar * arguments) {
 gboolean webkit_on_message(WebKitWebView *view, WebKitWebFrame *frame, gchar *message, gpointer user_data) {    
     gchar ** message_parts = g_strsplit (message, "###", -1);
     gchar * command = message_parts[0];
-    if (strcmp(command, "LOGIN") == 0) {
-        printf ("%c%s\n", STX, message_parts[1]);
+    if (strcmp(command, "LOGIN") == 0) {        
+        char string[255];        
+        sscanf(message, "LOGIN###%255[^\n]s", string);
+        printf ("%c%s\n", STX, string);
         fflush (stdout);
     }   
     else if (strcmp(command, "LANGUAGE") == 0) {
@@ -213,7 +215,7 @@ gboolean webkit_on_message(WebKitWebView *view, WebKitWebFrame *frame, gchar *me
     else if (strcmp(command, "QUIT") == 0) {
         gtk_main_quit();
     }   
-    else if (strcmp(command, "USER") == 0) {
+    else if (strcmp(command, "USER") == 0) {        
         printf ("%c%c%c%s\n", STX, BEL, MDM_INTERRUPT_SELECT_USER, message_parts[1]);
         fflush (stdout);
     }
