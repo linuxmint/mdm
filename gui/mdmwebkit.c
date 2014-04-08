@@ -988,10 +988,7 @@ static void webkit_init (void) {
     g_object_set (G_OBJECT(settings), "enable-webgl", TRUE, NULL);  
     g_object_set (G_OBJECT(settings), "enable-universal-access-from-file-uris", TRUE, NULL);    
     g_object_set (G_OBJECT(settings), "enable-developer-extras", TRUE, NULL);   
-
-    g_object_set (G_OBJECT(webView), "full-content-zoom", TRUE, NULL);
-    webkit_web_view_set_zoom_level (webView, (float) 2);
-
+    
     webkit_web_view_set_settings (WEBKIT_WEB_VIEW(webView), settings);  
     webkit_web_view_set_transparent (webView, TRUE);
     
