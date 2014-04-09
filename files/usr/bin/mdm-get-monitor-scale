@@ -1,0 +1,52 @@
+#!/usr/bin/env python
+
+from gi.repository import Gdk
+import sys
+import tempfile
+import os
+
+DPI_FALLBACK = 96
+HIDPI_LIMIT = (DPI_FALLBACK * 2)
+CURSOR_SIZE = 24
+
+window_scale = 1
+
+try:
+    display = Gdk.Display.get_default()
+    screen = display.get_default_screen()
+    primary = screen.get_primary_monitor()
+
+    rect = screen.get_monitor_geometry(primary)
+    width_mm = screen.get_monitor_width_mm(primary)
+    height_mm = screen.get_monitor_height_mm(primary)
+    monitor_scale = screen.get_monitor_scale_factor(primary)
+
+    if width_mm > 0 and height_mm > 0:
+        dpi_x = rect.width * monitor_scale / (width_mm / 25.4)
+        dpi_y = rect.height * monitor_scale / (height_mm / 25.4)
+        if dpi_x > HIDPI_LIMIT and dpi_y > HIDPI_LIMIT:
+            window_scale = 2
+except:
+    print 1
+    quit()
+
+print window_scale
+quit()
+
+# dpi = DPI_FALLBACK * 1024
+# scaled_dpi = DPI_FALLBACK * window_scale * 1024
+# cursor_size = CURSOR_SIZE * window_scale
+
+# resfile = "\
+# Xft/DPI:                   %d\n\
+# Gdk/WindowScalingFactor:   %d\n\
+# Gdk/UnscaledDPI:           %d\n\
+# Gtk/CursorThemeSize:       %d\n" % \
+#            (scaled_dpi, window_scale, dpi, cursor_size)
+
+# tmp = tempfile.NamedTemporaryFile(delete = False)
+# tmp.seek(0)
+# tmp.write(resfile)
+# tmp.flush()
+# os.system("xrdb -merge %s" % tmp.name)
+

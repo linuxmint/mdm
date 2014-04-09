@@ -988,7 +988,25 @@ static void webkit_init (void) {
     g_object_set (G_OBJECT(settings), "enable-webgl", TRUE, NULL);  
     g_object_set (G_OBJECT(settings), "enable-universal-access-from-file-uris", TRUE, NULL);    
     g_object_set (G_OBJECT(settings), "enable-developer-extras", TRUE, NULL);   
-    
+
+    int scale = 0;
+    gchar *out = NULL;
+    g_spawn_command_line_sync ("mdm-get-monitor-scale",
+                               &out,
+                               NULL,
+                               NULL,
+                               NULL);
+    if (out) {
+        scale = atoi (out);
+        scale = CLAMP (scale, 1, 2);
+        g_free (out);
+    }
+
+    if (scale > 1) {
+        g_object_set (G_OBJECT(webView), "full-content-zoom", TRUE, NULL);
+        webkit_web_view_set_zoom_level (webView, (float) scale);
+    }
+
     webkit_web_view_set_settings (WEBKIT_WEB_VIEW(webView), settings);  
     webkit_web_view_set_transparent (webView, TRUE);
     
