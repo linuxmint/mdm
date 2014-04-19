@@ -4141,6 +4141,12 @@ mdm_slave_session_start (void)
 		language = g_strdup (usrlang);
 	}
 
+	if (session == NULL) {
+		mdm_debug ("Session is NULL, setting it to default.desktop");
+		session = g_strdup ("default.desktop");
+	}
+
+	
 	tmp = mdm_strip_extension (session, ".desktop");
 	g_free (session);
 	session = tmp;
@@ -4161,8 +4167,7 @@ mdm_slave_session_start (void)
 
 	g_free (usrsess);
 
-	mdm_debug ("Initial setting: session: '%s' language: '%s'\n",
-		   session, ve_sure_string (language));
+	mdm_debug ("Initial setting: session: '%s' language: '%s'\n", session, ve_sure_string (language));
 
 	/* save this session as the users session */
 	save_session = g_strdup (session);
@@ -4310,8 +4315,8 @@ mdm_slave_session_start (void)
 	ck_session_cookie = open_ck_session (pwent, d, session);
 #endif
 
-	mdm_debug ("Forking user session");
-
+	mdm_debug ("Forking user session %s", session);
+	
 	/* Start user process */
 	mdm_sigchld_block_push ();
 	mdm_sigterm_block_push ();

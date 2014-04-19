@@ -131,8 +131,8 @@ void mdm_verify_set_user_settings (const char *user) {
 			mdm_slave_greeter_ctl_no_ret (MDM_SETSESS, session);
 		}
 		else {
-			mdm_debug("mdm_verify_set_user_settings: No session found, setting to default '%s'.", "Last");
-			mdm_slave_greeter_ctl_no_ret (MDM_SETSESS, "Last"); // Do not translate "Last" here, it's a value
+			mdm_debug("mdm_verify_set_user_settings: No session found, setting to default '%s'.", "default");
+			mdm_slave_greeter_ctl_no_ret (MDM_SETSESS, "default"); // Do not translate "default" here, it's a value
 		}
 		if (!ve_string_empty(language)) {
 			mdm_debug("mdm_verify_set_user_settings: Found language '%s'.", language);
