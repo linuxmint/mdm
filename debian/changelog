@@ -1,3 +1,9 @@
+mdm (1.6.0) qiana; urgency=medium
+
+  * 1.6.0
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sat, 19 Apr 2014 03:44:08 +0100
+
 mdm (1.5.1) debian; urgency=low
 
   * 1.5.1
