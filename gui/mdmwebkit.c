@@ -225,6 +225,20 @@ gboolean webkit_on_message(WebKitWebView *view, WebKitWebFrame *frame, gchar *me
     return TRUE;
 }
 
+gboolean webkit_on_console_message (WebKitWebView *web_view, gchar *message, gint line, gchar *source_id, gpointer user_data) {
+    mdm_debug("webkit_on_console_message: line #%d '%s' '%s'.", line, source_id, message);
+    return FALSE;
+}
+
+gboolean webkit_on_error (WebKitWebView *web_view, WebKitWebFrame *web_frame, gchar *uri, GError *error, gpointer user_data) {
+    mdm_debug("webkit_on_error: '%s'.", error->message);  
+    return FALSE;
+}
+
+void webkit_on_resource_failed (WebKitWebView *web_view, WebKitWebFrame *web_frame, WebKitWebResource *web_resource, GError *error, gpointer user_data) {
+    mdm_debug("webkit_on_resource_failed: '%s' '%s'.", webkit_web_resource_get_uri (web_resource), error->message);
+}   
+
 void webkit_on_loaded(WebKitWebView *view, WebKitWebFrame *frame, gpointer user_data) {    
     GIOChannel *ctrlch; 
     webkit_ready = TRUE;
@@ -1014,6 +1028,9 @@ static void webkit_init (void) {
 
     g_signal_connect(G_OBJECT(webView), "script-alert", G_CALLBACK(webkit_on_message), NULL);
     g_signal_connect(G_OBJECT(webView), "load-finished", G_CALLBACK(webkit_on_loaded), NULL);
+    g_signal_connect(G_OBJECT(webView), "load-error", G_CALLBACK(webkit_on_error), NULL);
+    g_signal_connect(G_OBJECT(webView), "resource-load-failed", G_CALLBACK(webkit_on_resource_failed), NULL);
+    g_signal_connect(G_OBJECT(webView), "console-message", G_CALLBACK(webkit_on_console_message), NULL);
     g_signal_connect(G_OBJECT(webView), "navigation-policy-decision-requested", G_CALLBACK(webkit_on_navigation_policy_decision_requested), NULL);
 }
 
