@@ -50,10 +50,10 @@ Depends: ${shlibs:Depends},
          librsvg2-common,
          gir1.2-webkit-3.0,
          gir1.2-gtk-3.0,
-         python
+         python,
+         mdm-themes
 Recommends: whiptail | dialog,
             zenity,
-            mdm-themes,
             xserver-xorg
 Suggests: locales,
           pm-utils,
