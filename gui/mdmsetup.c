@@ -504,7 +504,7 @@ combobox_timeout (GtkWidget *combo_box)
 					if (mdm_user_uid (new_val) == 0)
 						str = g_strdup (_("Autologin or timed login to the root account is forbidden."));
 					else 
-						str = g_strdup_printf (_("The \"%s\" user UID is lower than allowed MinimalUID."), new_val);				
+						str = g_strdup_printf (_("The %s user UID is lower than 'MinimalUID'."), new_val);				
 					setup_dialog = glade_xml_get_widget(xml, "setup_dialog");
 										
 					dialog = hig_dialog_new (GTK_WINDOW (setup_dialog),
@@ -1945,7 +1945,7 @@ install_theme_file (gchar *filename, GtkListStore *store, GtkWindow *parent)
 		GtkWidget *dialog;
 		gchar *msg;
 
-		msg = g_strdup_printf (_("%s"), error);
+		msg = g_strdup_printf ("%s", error);
 
 		dialog = hig_dialog_new (GTK_WINDOW (parent),
 					 GTK_DIALOG_MODAL | 
@@ -2486,8 +2486,7 @@ delete_theme (GtkWidget *button, gpointer data)
 	dir = g_strdup (g_value_get_string (&value));
 	g_value_unset (&value);
 
-	s = g_strdup_printf (_("Remove the \"%s\" theme?"),
-			     name);
+	s = g_strdup_printf (_("Remove the %s theme?"), name);
 	dlg = hig_dialog_new (GTK_WINDOW (setup_dialog),
 			      GTK_DIALOG_MODAL | 
 			      GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -3696,7 +3695,7 @@ main (int argc, char *argv[])
 					 GTK_DIALOG_MODAL /* flags */,
 					 GTK_MESSAGE_ERROR,
 					 GTK_BUTTONS_OK,
-					 _("Could not access configuration file (custom.conf)"),
+					 _("Could not access configuration file"),
 					 _("Make sure that the file exists before launching login manager config utility."));
 
 		gtk_dialog_run (GTK_DIALOG (dialog));
@@ -3744,7 +3743,7 @@ main (int argc, char *argv[])
 					      GTK_DIALOG_MODAL /* flags */,
 					      GTK_MESSAGE_ERROR,
 					      GTK_BUTTONS_OK,
-					      _("You must be the root user to configure MDM."),
+					      _("You must be root to configure MDM."),
 					      "");
 		if (RUNNING_UNDER_MDM)
 			setup_cursor (GDK_LEFT_PTR);

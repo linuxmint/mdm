@@ -187,7 +187,7 @@ gboolean webkit_on_message(WebKitWebView *view, WebKitWebFrame *frame, gchar *me
         current_session = message_parts[2];     
     }   
     else if (strcmp(command, "SHUTDOWN") == 0) {
-        if (mdm_wm_warn_dialog (_("Are you sure you want to Shut Down the computer?"), "", _("Shut _Down"), NULL, TRUE) == GTK_RESPONSE_YES) {
+        if (mdm_wm_warn_dialog (_("Are you sure you want to shut down the computer?"), "", _("Shut _Down"), NULL, TRUE) == GTK_RESPONSE_YES) {
             _exit (DISPLAY_HALT);
         }
     }
@@ -657,8 +657,9 @@ void process_operation (guchar op_code, const gchar *args) {
                         break;
 
                     case SESSION_LOOKUP_USE_SWITCHDESK:
-                        firstmsg = g_strdup_printf (_("You have chosen %s for this session"), mdm_session_name (session));
-                        secondmsg = g_strdup_printf (_("If you wish to make %s the default for future sessions, run the 'switchdesk' utility (System->Desktop Switching Tool from the panel menu)."), mdm_session_name (session));
+                        //TODO Remove switchdesk..
+                        firstmsg = g_strdup_printf ("You have chosen %s for this session", mdm_session_name (session));
+                        secondmsg = g_strdup_printf ("If you wish to make %s the default for future sessions, run the 'switchdesk' utility (System->Desktop Switching Tool from the panel menu).", mdm_session_name (session));
                         mdm_wm_message_dialog (firstmsg, secondmsg);
                         g_free (firstmsg);
                         g_free (secondmsg);
@@ -1283,7 +1284,7 @@ int main (int argc, char *argv[]) {
     sigaddset (&mask, SIGINT);
     
     if G_UNLIKELY (sigprocmask (SIG_UNBLOCK, &mask, NULL) == -1) {
-        mdm_common_fail_greeter (_("Could not set signal mask!"));
+        mdm_common_fail_greeter ("Could not set signal mask!");
     }
 
     /* if in timed mode, delay timeout on keyboard or menu

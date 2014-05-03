@@ -538,7 +538,7 @@ HTML</property>
                                         <property name="visible">True</property>
                                         <property name="sensitive">False</property>
                                         <property name="can_focus">False</property>
-                                        <property name="title" translatable="yes">Select Background Image</property>
+                                        <property name="title" translatable="yes">Select background image</property>
                                       </widget>
                                       <packing>
                                         <property name="left_attach">1</property>
@@ -551,7 +551,7 @@ HTML</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">False</property>
-                                        <property name="title" translatable="yes">Pick Background Color</property>
+                                        <property name="title" translatable="yes">Pick background color</property>
                                         <property name="color">#000000000000</property>
                                       </widget>
                                       <packing>
@@ -654,7 +654,7 @@ HTML</property>
                                     <property name="spacing">3</property>
                                     <child>
                                       <widget class="GtkRadioButton" id="sg_defaultwelcome">
-                                        <property name="label" translatable="yes">_Default: "Welcome"</property>
+                                        <property name="label" translatable="yes">_Default: 'Welcome'</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">False</property>
@@ -683,7 +683,7 @@ HTML</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
-                                            <property name="tooltip" translatable="yes">Controls which text to display next to the logo image in the standard greeter. This string is only used for local logins.</property>
+                                            <property name="tooltip" translatable="yes">Controls which text to display next to the logo image in the standard greeter.</property>
                                             <property name="use_underline">True</property>
                                             <property name="draw_indicator">True</property>
                                             <property name="group">sg_defaultwelcome</property>
@@ -792,7 +792,7 @@ HTML</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
-                            <property name="tooltip" translatable="yes">Given user should be logged in upon first bootup.  No password will be asked.  This is useful for single user workstations where local console security is not an issue.</property>
+                            <property name="tooltip" translatable="yes">Given user should be logged in upon first bootup. No password will be asked.</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
                           </widget>
@@ -892,7 +892,7 @@ HTML</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
-                            <property name="tooltip" translatable="yes">Given user should be logged in after a number of seconds (set with Pause before login) of inactivity on the login screen.  This is useful for public access terminals or perhaps even home use.</property>
+                            <property name="tooltip" translatable="yes">Given user should be logged in after a number of seconds of inactivity on the login screen.</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
                           </widget>
@@ -972,7 +972,7 @@ HTML</property>
                                             <property name="visible">True</property>
                                             <property name="sensitive">False</property>
                                             <property name="can_focus">True</property>
-                                            <property name="tooltip" translatable="yes">Delay in seconds before the Timed login user will be logged in.</property>
+                                            <property name="tooltip" translatable="yes">Delay in seconds before the timed login user will be logged in.</property>
                                             <property name="primary_icon_activatable">False</property>
                                             <property name="secondary_icon_activatable">False</property>
                                             <property name="primary_icon_sensitive">True</property>
@@ -1135,7 +1135,7 @@ HTML</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="has_tooltip">True</property>
-                        <property name="tooltip" translatable="yes">Sends debug output to the syslog.  This can be useful for tracking down problems with MDM.  This output tends to be verbose so should not be turned on for general use.</property>
+                        <property name="tooltip" translatable="yes">Sends debug output to the syslog.</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                       </widget>

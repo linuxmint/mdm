@@ -1,3 +1,8 @@
 #!/bin/bash
-xgettext --language=C --keyword=_ --output=mdm.pot gui/mdmwebkit.c
+
+intltool-extract --type=gettext/glade gui/mdmsetup.glade
+
+xgettext --language=C --from-code=UTF-8 --keyword=_ --keyword=N_ --output=mdm.pot gui/mdmwebkit.c gui/mdmsetup.c gui/mdmsetup.glade.h
+
+rm -f gui/mdmsetup.glade.h
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-19 12:16+0100\n"
+"POT-Creation-Date: 2014-05-03 22:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,214 +17,449 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gui/mdmwebkit.c:247
-msgid "Are you sure you want to Shut Down the computer?"
+#: gui/mdmwebkit.c:190
+msgid "Are you sure you want to shut down the computer?"
 msgstr ""
 
-#: gui/mdmwebkit.c:248
+#: gui/mdmwebkit.c:190
 msgid "Shut _Down"
 msgstr ""
 
-#: gui/mdmwebkit.c:255
+#: gui/mdmwebkit.c:195
 msgid "Are you sure you want to suspend the computer?"
 msgstr ""
 
-#: gui/mdmwebkit.c:256
+#: gui/mdmwebkit.c:195
 msgid "_Suspend"
 msgstr ""
 
-#: gui/mdmwebkit.c:265
+#: gui/mdmwebkit.c:201
 msgid "Are you sure you want to restart the computer?"
 msgstr ""
 
-#: gui/mdmwebkit.c:266
+#: gui/mdmwebkit.c:201
 msgid "_Restart"
 msgstr ""
 
-#: gui/mdmwebkit.c:429
+#: gui/mdmwebkit.c:329
 msgid "User %u will login in %t"
 msgstr ""
 
-#: gui/mdmwebkit.c:499
+#: gui/mdmwebkit.c:378
 msgid "Last"
 msgstr ""
 
-#: gui/mdmwebkit.c:735 gui/mdmwebkit.c:739
+#: gui/mdmwebkit.c:530 gui/mdmwebkit.c:532
 msgid "Username:"
 msgstr ""
 
-#: gui/mdmwebkit.c:758 gui/mdmwebkit.c:759
+#: gui/mdmwebkit.c:549 gui/mdmwebkit.c:550
 msgid "Password:"
 msgstr ""
 
-#: gui/mdmwebkit.c:862 gui/mdmwebkit.c:876
+#: gui/mdmwebkit.c:642 gui/mdmwebkit.c:651
 #, c-format
 msgid "Do you wish to make %s the default for future sessions?"
 msgstr ""
 
-#: gui/mdmwebkit.c:865
+#: gui/mdmwebkit.c:643
 #, c-format
 msgid "Your preferred session type %s is not installed on this computer."
 msgstr ""
 
-#: gui/mdmwebkit.c:869
+#: gui/mdmwebkit.c:644
 msgid "Just _Log In"
 msgstr ""
 
-#: gui/mdmwebkit.c:869 gui/mdmwebkit.c:885
+#: gui/mdmwebkit.c:644 gui/mdmwebkit.c:653
 msgid "Make _Default"
 msgstr ""
 
-#: gui/mdmwebkit.c:879
+#: gui/mdmwebkit.c:652
 #, c-format
 msgid "You have chosen %s for this session, but your default setting is %s."
 msgstr ""
 
-#: gui/mdmwebkit.c:885
+#: gui/mdmwebkit.c:653
 msgid "Just For _This Session"
 msgstr ""
 
-#: gui/mdmwebkit.c:892
-#, c-format
-msgid "You have chosen %s for this session"
-msgstr ""
-
-#: gui/mdmwebkit.c:895
-#, c-format
-msgid ""
-"If you wish to make %s the default for future sessions, run the 'switchdesk' "
-"utility (System->Desktop Switching Tool from the panel menu)."
-msgstr ""
-
-#: gui/mdmwebkit.c:1119
+#: gui/mdmwebkit.c:881
 msgid "Already logged in"
 msgstr ""
 
-#: gui/mdmwebkit.c:1207
+#: gui/mdmwebkit.c:951
 #, c-format
 msgid "There was an error loading the theme %s"
 msgstr ""
 
-#: gui/mdmwebkit.c:1235
+#: gui/mdmwebkit.c:979
 msgid "Login"
 msgstr ""
 
-#: gui/mdmwebkit.c:1236
+#: gui/mdmwebkit.c:980
 msgid "OK"
 msgstr ""
 
-#: gui/mdmwebkit.c:1237
+#: gui/mdmwebkit.c:981
 msgid "Cancel"
 msgstr ""
 
-#: gui/mdmwebkit.c:1238
+#: gui/mdmwebkit.c:982
 msgid "Please enter your username"
 msgstr ""
 
-#: gui/mdmwebkit.c:1239
+#: gui/mdmwebkit.c:983
 msgid "Please enter your password"
 msgstr ""
 
-#: gui/mdmwebkit.c:1242
+#: gui/mdmwebkit.c:985
 msgid "Shutdown"
 msgstr ""
 
-#: gui/mdmwebkit.c:1243
+#: gui/mdmwebkit.c:986
 msgid "Suspend"
 msgstr ""
 
-#: gui/mdmwebkit.c:1244
+#: gui/mdmwebkit.c:987
 msgid "Quit"
 msgstr ""
 
-#: gui/mdmwebkit.c:1245 gui/mdmwebkit.c:1713
+#: gui/mdmwebkit.c:988
 msgid "Restart"
 msgstr ""
 
-#: gui/mdmwebkit.c:1246
-msgid "Remote Login via XDMCP..."
-msgstr ""
-
-#: gui/mdmwebkit.c:1248
+#: gui/mdmwebkit.c:989
 msgid "Session"
 msgstr ""
 
-#: gui/mdmwebkit.c:1249
+#: gui/mdmwebkit.c:990
 msgid "Select a session"
 msgstr ""
 
-#: gui/mdmwebkit.c:1250
+#: gui/mdmwebkit.c:991
 msgid "Default session"
 msgstr ""
 
-#: gui/mdmwebkit.c:1252
+#: gui/mdmwebkit.c:992
 msgid "Language"
 msgstr ""
 
-#: gui/mdmwebkit.c:1253
+#: gui/mdmwebkit.c:993
 msgid "Select a language"
 msgstr ""
 
-#: gui/mdmwebkit.c:1255
+#: gui/mdmwebkit.c:994
 msgid "Are you sure you want to quit?"
 msgstr ""
 
-#: gui/mdmwebkit.c:1256
+#: gui/mdmwebkit.c:995
 msgid "Close"
 msgstr ""
 
-#: gui/mdmwebkit.c:1664 gui/mdmwebkit.c:1698
+#: gui/mdmsetup.c:252
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+
+#: gui/mdmsetup.c:505
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr ""
+
+#: gui/mdmsetup.c:507
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr ""
+
+#: gui/mdmsetup.c:514
+msgid "User not allowed"
+msgstr ""
+
+#: gui/mdmsetup.c:763
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+
+#: gui/mdmsetup.c:1766
+msgid "Archive is not of a subdirectory"
+msgstr ""
+
+#: gui/mdmsetup.c:1774
+msgid "Archive is not of a single subdirectory"
+msgstr ""
+
+#: gui/mdmsetup.c:1805 gui/mdmsetup.c:1882
+msgid "File not a tar.gz or tar archive"
+msgstr ""
+
+#: gui/mdmsetup.c:1807
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr ""
+
+#: gui/mdmsetup.c:1829
+msgid "File does not exist"
+msgstr ""
+
+#: gui/mdmsetup.c:1955 gui/mdmsetup.c:2143
+msgid "Not a theme archive"
+msgstr ""
+
+#: gui/mdmsetup.c:1977 gui/mdmsetup.c:2165
 #, c-format
 msgid ""
-"The greeter version (%s) does not match the daemon version. You have "
-"probably just upgraded MDM. Please restart the MDM daemon or the computer."
+"Theme directory '%s' seems to be already installed. Install again anyway?"
 msgstr ""
 
-#: gui/mdmwebkit.c:1674 gui/mdmwebkit.c:1708 gui/mdmwebkit.c:1756
-msgid "Cannot start the greeter"
+#: gui/mdmsetup.c:2069 gui/mdmsetup.c:2257
+msgid "Some error occurred when installing the theme"
 msgstr ""
 
-#: gui/mdmwebkit.c:1746
+#: gui/mdmsetup.c:2136
 #, c-format
-msgid ""
-"The greeter version (%s) does not match the daemon version (%s).  You have "
-"probably just upgraded MDM.  Please restart the MDM daemon or the computer."
+msgid "%s"
 msgstr ""
 
-#: gui/mdmwebkit.c:1761
-msgid "Restart MDM"
+#: gui/mdmsetup.c:2312 gui/mdmsetup.c:2389
+msgid "No file selected"
 msgstr ""
 
-#: gui/mdmwebkit.c:1763
-msgid "Restart computer"
+#: gui/mdmsetup.c:2334 gui/mdmsetup.c:2411
+msgid "Select Theme Archive"
 msgstr ""
 
-#: gui/mdmwebkit.c:1816 gui/mdmwebkit.c:1826 gui/mdmwebkit.c:1831
+#: gui/mdmsetup.c:2338 gui/mdmsetup.c:2415 gui/mdmsetup.c:2755
+#: gui/mdmsetup.c:2808
+msgid "_Install"
+msgstr ""
+
+#: gui/mdmsetup.c:2342 gui/mdmsetup.c:2419
+msgid "Theme archives"
+msgstr ""
+
+#: gui/mdmsetup.c:2489
 #, c-format
-msgid "%s: Error setting up %s signal handler: %s"
+msgid "Remove the %s theme?"
 msgstr ""
 
-#: gui/mdmwebkit.c:1841
-msgid "Could not set signal mask!"
+#: gui/mdmsetup.c:2496 gui/mdmsetup.c:2614
+msgid "If you choose to remove the theme, it will be permanently lost."
 msgstr ""
 
-#: gui/mdmwebkit.c:1932
-msgid "Session directory is missing"
+#: gui/mdmsetup.c:2504 gui/mdmsetup.c:2622
+msgid "_Remove Theme"
 msgstr ""
 
-#: gui/mdmwebkit.c:1933
+#: gui/mdmsetup.c:2606
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr ""
+
+#: gui/mdmsetup.c:2744 gui/mdmsetup.c:2797
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr ""
+
+#: gui/mdmsetup.c:2745 gui/mdmsetup.c:2798
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr ""
+
+#: gui/mdmsetup.c:3213
+msgid "Images"
+msgstr ""
+
+#: gui/mdmsetup.c:3218
+msgid "All Files"
+msgstr ""
+
+#: gui/mdmsetup.c:3490
+msgid "Please install 'numlockx' to enable this feature"
+msgstr ""
+
+#: gui/mdmsetup.c:3681
+msgid "Could not access configuration file (defaults.conf)"
+msgstr ""
+
+#: gui/mdmsetup.c:3682 gui/mdmsetup.c:3699
 msgid ""
-"Your session directory is missing or empty!  There are two available "
-"sessions you can use, but you should log in and correct the MDM "
-"configuration."
+"Make sure that the file exists before launching login manager config utility."
 msgstr ""
 
-#: gui/mdmwebkit.c:1956
-msgid "Configuration is not correct"
+#: gui/mdmsetup.c:3698
+msgid "Could not access configuration file"
 msgstr ""
 
-#: gui/mdmwebkit.c:1957
+#: gui/mdmsetup.c:3746
+msgid "You must be root to configure MDM."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:2
+msgid "_Style:"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:3
 msgid ""
-"The configuration file contains an invalid command line for the login "
-"dialog, so running the default command.  Please fix your configuration."
+"GTK\n"
+"GDM\n"
+"HTML"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:6
+msgid "_Add..."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:7
+msgid "_Remove..."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:8
+msgid "Background"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:9
+msgid "_Image:"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:10
+msgid "Displays this image as the background in the greeter."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:11
+msgid "Select background image"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:12
+msgid "Pick background color"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:13
+msgid "Co_lor:"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:14
+msgid "Background color of the greeter."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:15
+msgid "Welcome Message"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:16
+msgid "_Default: 'Welcome'"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:17
+msgid "C_ustom:"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:20
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:21
+msgid "Theme"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:22
+msgid "_Enable Automatic Login"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:23
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:24
+msgid "_User:"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:25
+msgid "dummy"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:26
+msgid "Enable _Timed Login"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:27
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:28
+msgid "U_ser:"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:29
+msgid "_Pause before login:"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:30
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:31
+msgid "seconds"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:32
+msgid "Auto login"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:33
+msgid "De_fault session:"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:34
+msgid ""
+"The session that is used by default if the user does not have a saved "
+"preference and has picked 'Last' from the list of sessions."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:35
+msgid "Allow root login"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:36
+msgid "Log debug information to /var/log/syslog"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:37
+msgid "Sends debug output to the syslog."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:38
+msgid "Automatically select the last logged in user"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:39
+msgid "Enable NumLock"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:40
+msgid "Use 24 Hour Clock"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:41
+msgid "Primary monitor:"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:42
+msgid " "
+msgstr ""
+
+#: gui/mdmsetup.glade.h:43
+msgid "Options"
 msgstr ""
