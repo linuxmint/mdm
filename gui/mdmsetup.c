@@ -3647,7 +3647,7 @@ main (int argc, char *argv[])
 	if (g_getenv ("RUNNING_UNDER_MDM") != NULL)
 		RUNNING_UNDER_MDM = TRUE;
 
-	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	bindtextdomain (GETTEXT_PACKAGE, "/usr/share/mdm/locale");
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 

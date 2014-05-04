@@ -1226,7 +1226,7 @@ int main (int argc, char *argv[]) {
         DOING_MDM_DEVELOPMENT = TRUE;
     }
 
-    bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+    bindtextdomain (GETTEXT_PACKAGE, "/usr/share/mdm/locale");
     bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
     textdomain (GETTEXT_PACKAGE);
 
