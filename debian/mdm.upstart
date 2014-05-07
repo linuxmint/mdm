@@ -9,8 +9,7 @@ author          "Linux Mint <root@linuxmint.com>"
 start on ((filesystem
            and runlevel [!06]
            and started dbus
-           and (drm-device-added card0 PRIMARY_DEVICE_FOR_DISPLAY=1
-                or stopped udev-fallback-graphics))
+           and plymouth-ready)
           or runlevel PREVLEVEL=S)
 
 stop on runlevel [016]
