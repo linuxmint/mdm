@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+
+import os, sys, signal
+
+def signal_handler(signal, frame):        
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
+
+print """
+    WELCOME TO MDM RECOVERY
+    -----------------------
+
+    This utility will perform the following actions:
+
+        - Make a backup copy of your login screen configuration in /etc/mdm/mdm.recovery-backup
+        - Set your login screen to use a safe configuration
+        - Reboot your computer
+
+    Note: This utility requires root permission and might ask you for your password.
+
+    Please press [Enter] to continue or [CTRL+C] to cancel.
+
+"""  
+raw_input('')
+
+if os.path.exists("/etc/mdm/mdm.conf"):
+    os.system("sudo cp /etc/mdm/mdm.conf /etc/mdm/mdm.recovery-backup")
+
+os.system("sudo mv /usr/share/mdm/recovery/mdm.conf /etc/mdm/mdm.conf")
+
+os.system("sudo sync")
+
+os.system("sudo reboot")
