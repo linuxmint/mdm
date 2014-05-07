@@ -6,6 +6,10 @@
 PATH=@X_PATH@:$PATH
 OLD_IFS=$IFS
 
+if test -x "/sbin/initctl" ; then
+  /sbin/initctl -q emit login-session-start DISPLAY_MANAGER=mdm
+fi
+
 mdmwhich () {
   COMMAND="$1"
   OUTPUT=
