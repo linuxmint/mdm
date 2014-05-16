@@ -27,7 +27,7 @@ raw_input('')
 if os.path.exists("/etc/mdm/mdm.conf"):
     os.system("sudo cp /etc/mdm/mdm.conf /etc/mdm/mdm.recovery-backup")
 
-os.system("sudo mv /usr/share/mdm/recovery/mdm.conf /etc/mdm/mdm.conf")
+os.system("sudo cp /usr/share/mdm/recovery/mdm.conf /etc/mdm/mdm.conf")
 
 os.system("sudo sync")
 
