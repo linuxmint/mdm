@@ -149,6 +149,7 @@ static char * html_encode(const char *string) {
     ret = str_replace(ret, ";", "&#59");
     ret = str_replace(ret, "<", "&#60");
     ret = str_replace(ret, ">", "&#62");
+    ret = str_replace(ret, "\n", "<br/>");
     return ret;
 }
 
