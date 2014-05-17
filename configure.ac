@@ -1240,6 +1240,7 @@ po/Makefile.in
 common/Makefile
 docs/Makefile
 config/Init
+config/SuperInit
 config/PreSession
 config/PostSession
 config/mdmprefetchlist

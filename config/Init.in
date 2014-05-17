@@ -1,7 +1,5 @@
 #!/bin/sh
-# Stolen from the debian kdm setup, aren't I sneaky
-# Plus a lot of fun stuff added
-#  -George
+# Run as mdm user just before starting the greeter
 
 PATH="@X_PATH@:$PATH"
 OLD_IFS=$IFS

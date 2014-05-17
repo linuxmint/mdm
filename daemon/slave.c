@@ -916,8 +916,8 @@ setup_automatic_session (MdmDisplay *display, const char *name)
 
 	/* Run the init script. mdmslave suspends until script
 	 * has terminated */
-	mdm_slave_exec_script (display, mdm_daemon_config_get_value_string (MDM_KEY_DISPLAY_INIT_DIR),
-			       NULL, NULL, FALSE /* pass_stdout */);
+	mdm_slave_exec_script (display, "/etc/mdm/SuperInit", "root", getpwnam("root"), FALSE /* pass_stdout */);
+	mdm_slave_exec_script (display, mdm_daemon_config_get_value_string (MDM_KEY_DISPLAY_INIT_DIR), NULL, NULL, FALSE /* pass_stdout */);
 
 	mdm_debug ("setup_automatic_session: DisplayInit script finished");
 
@@ -2468,8 +2468,8 @@ mdm_slave_greeter (void)
 	mdm_debug ("mdm_slave_greeter: Running greeter on %s", d->name);
 
 	/* Run the init script. mdmslave suspends until script has terminated */
-	mdm_slave_exec_script (d, mdm_daemon_config_get_value_string (MDM_KEY_DISPLAY_INIT_DIR),
-			       NULL, NULL, FALSE /* pass_stdout */);
+	mdm_slave_exec_script (d, "/etc/mdm/SuperInit", "root", getpwnam("root"), FALSE /* pass_stdout */);
+	mdm_slave_exec_script (d, mdm_daemon_config_get_value_string (MDM_KEY_DISPLAY_INIT_DIR), NULL, NULL, FALSE /* pass_stdout */);
 
 	/* Open a pipe for greeter communications */
 	if G_UNLIKELY (pipe (pipe1) < 0)

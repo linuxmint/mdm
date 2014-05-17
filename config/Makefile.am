@@ -4,6 +4,7 @@ mdmlocaledir = $(mdmconfdir)
 bisessdir = $(datadir)/mdm/BuiltInSessions
 instsessdir = $(datadir)/xsessions
 initdir = $(mdmconfdir)/Init
+superinitdir = $(mdmconfdir)/SuperInit
 authdir = $(localstatedir)/mdm
 gnomercdir = $(mdmconfdir)
 postdir = $(mdmconfdir)/PostSession
@@ -28,6 +29,7 @@ EXTRA_DIST = \
 	mdm-autologin \
 	locale.alias \
 	Init.in \
+	SuperInit.in \
 	PreSession.in \
 	PostSession.in \
 	PostLogin \
@@ -36,7 +38,7 @@ EXTRA_DIST = \
 	mdmprefetchlist.in \
 	extract-shell.sh
 
-CLEANFILES = Xsession mdm.conf mdm.conf-custom default.desktop gnome.desktop CDE.desktop ssh.desktop Init PreSession PostSession mdmprefetchlist
+CLEANFILES = Xsession mdm.conf mdm.conf-custom default.desktop gnome.desktop CDE.desktop ssh.desktop Init SuperInit PreSession PostSession mdmprefetchlist
 
 Xsession: $(srcdir)/Xsession.in
 	sed	-e 's,[@]XSESSION_SHELL[@],$(XSESSION_SHELL),g' \
@@ -98,11 +100,12 @@ uninstall-hook:
 	$(DESTDIR)$(confdir)/mdmprefetchlist \
 	$(DESTDIR)$(mdmlocaledir)/locale.alias \
 	$(DESTDIR)$(initdir)/Default \
+	$(DESTDIR)$(superinitdir)/Default \
 	$(DESTDIR)$(postlogindir)/Default.sample \
 	$(DESTDIR)$(predir)/Default \
 	$(DESTDIR)$(postdir)/Default
 
-install-data-hook: mdm.conf mdm.conf-custom Xsession Init PostSession PreSession $(DESKTOP_FILES) $(MDMPREFETCHLIST)
+install-data-hook: mdm.conf mdm.conf-custom Xsession Init SuperInit PostSession PreSession $(DESKTOP_FILES) $(MDMPREFETCHLIST)
 	if test '!' -d $(DESTDIR)$(confdir); then \
 		$(mkinstalldirs) $(DESTDIR)$(confdir); \
 		chmod 755 $(DESTDIR)$(confdir); \
@@ -190,6 +193,15 @@ install-data-hook: mdm.conf mdm.conf-custom Xsession Init PostSession PreSession
 		cp -f $(DESTDIR)$(initdir)/Default $(DESTDIR)$(initdir)/Default.orig; \
 	fi
 	$(INSTALL_SCRIPT) Init $(DESTDIR)$(initdir)/Default
+
+	if test '!' -d $(DESTDIR)$(superinitdir); then \
+		$(mkinstalldirs) $(DESTDIR)$(superinitdir); \
+		chmod 755 $(DESTDIR)$(superinitdir); \
+	fi
+	-if test -f $(DESTDIR)$(superinitdir)/Default; then \
+		cp -f $(DESTDIR)$(superinitdir)/Default $(DESTDIR)$(superinitdir)/Default.orig; \
+	fi
+	$(INSTALL_SCRIPT) SuperInit $(DESTDIR)$(superinitdir)/Default
 
 	if test '!' -d $(DESTDIR)$(postlogindir); then \
 		$(mkinstalldirs) $(DESTDIR)$(postlogindir); \

@@ -1,0 +1,22 @@
+#!/bin/sh
+# Run as root user just before starting the greeter
+
+logger -i -tag mdm-superinit "Starting..."
+
+primeswitch=/sbin/prime-switch
+if [ -f "$primeswitch" ]; then
+    logger -i -tag mdm-superinit "Running prime-switch..."
+    $primeswitch
+    logger -i -tag mdm-superinit "Finished running prime-switch."
+fi
+
+primeoffload=/sbin/prime-offload
+if [ -f "$primeoffload" ]; then
+    logger -i -tag mdm-superinit "Running prime-offload..."
+    $primeoffload
+    logger -i -tag mdm-superinit "Finished running prime-offload."
+fi
+
+logger -i -tag mdm-superinit "Finished"
+
+exit 0

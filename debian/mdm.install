@@ -4,6 +4,7 @@ debian/Xsession                         etc/mdm
 debian/insserv.conf.d			etc
 debian/tmp/etc/dm
 debian/tmp/etc/mdm/Init
+debian/tmp/etc/mdm/SuperInit
 debian/tmp/etc/mdm/PreSession
 debian/tmp/etc/mdm/PostSession
 debian/tmp/etc/mdm/mdm.conf
