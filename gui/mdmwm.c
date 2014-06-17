@@ -116,7 +116,7 @@ mdm_wm_screen_init (gchar * monitor_plug_name)
 	for (i = 0; i < mdm_wm_num_monitors; i++) {
 		gdk_screen_get_monitor_geometry (screen, i, mdm_wm_all_monitors + i);        
 		mdm_debug("mdm_wm_screen_init: Found monitor %d '%s'.", i, gdk_screen_get_monitor_plug_name (screen, i));
-		if (strcmp(gdk_screen_get_monitor_plug_name (screen, i), monitor_plug_name) == 0) {
+		if (g_strcmp0(gdk_screen_get_monitor_plug_name (screen, i), monitor_plug_name) == 0) {
 			current_monitor_num = i;
 			mdm_debug("mdm_wm_screen_init: Using monitor '%s' to render greeter.", gdk_screen_get_monitor_plug_name (screen, i));
 		}
