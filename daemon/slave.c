@@ -3258,7 +3258,6 @@ session_child_run (struct passwd *pwent,
 	g_setenv ("DESKTOP_SESSION", session, TRUE);
 	g_setenv ("SHELL", pwent->pw_shell, TRUE);
 
-    g_setenv ("XDG_CURRENT_DESKTOP", session, TRUE);
     g_setenv ("XDG_SESSION_DESKTOP", session, TRUE);
 
 	if (d->type == TYPE_STATIC) {
