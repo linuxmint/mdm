@@ -40,4 +40,6 @@ if [ "x$XMODMAP" != "x" ] ; then
   fi
 fi
 
+DISPLAY=:0 /usr/bin/syndaemon -d -i 1.0 -t -K -R
+
 exit 0
