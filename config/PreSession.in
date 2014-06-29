@@ -9,6 +9,8 @@ if test -x "/sbin/initctl" ; then
     /sbin/initctl -q emit desktop-session-start DISPLAY_MANAGER=mdm
 fi
 
+killall syndaemon
+
 mdmwhich () {
   COMMAND="$1"
   OUTPUT=
