@@ -63,7 +63,7 @@ G_BEGIN_DECLS
 #define MDM_KEY_SERV_AUTHDIR "daemon/ServAuthDir=" AUTHDIR
 #define MDM_KEY_SESSION_DESKTOP_DIR "daemon/SessionDesktopDir=/etc/X11/sessions/:" DMCONFDIR "/Sessions/:" DATADIR "/mdm/BuiltInSessions/:" DATADIR "/xsessions/"
 #define MDM_KEY_BASE_XSESSION "daemon/BaseXsession=" MDMCONFDIR "/Xsession"
-#define MDM_KEY_DEFAULT_SESSION "daemon/DefaultSession=gnome.desktop"
+#define MDM_KEY_DEFAULT_SESSION "daemon/DefaultSession=mate.desktop"
 #define MDM_KEY_SUSPEND "daemon/SuspendCommand=" SUSPEND_COMMAND
 #define MDM_KEY_USER_AUTHDIR "daemon/UserAuthDir="
 #define MDM_KEY_USER_AUTHDIR_FALLBACK "daemon/UserAuthFBDir=/tmp"
@@ -126,7 +126,7 @@ G_BEGIN_DECLS
 #define MDM_KEY_SYSTEM_MENU "greeter/SystemMenu=true"
 #define MDM_KEY_CONFIGURATOR "daemon/Configurator=" SBINDIR "/mdmsetup --disable-sound --disable-crash-dialog"
 #define MDM_KEY_CONFIG_AVAILABLE "greeter/ConfigAvailable=true"
-#define MDM_KEY_DEFAULT_WELCOME "greeter/DefaultWelcome="
+#define MDM_KEY_DEFAULT_WELCOME "greeter/DefaultWelcome=true"
 #define MDM_KEY_WELCOME "greeter/Welcome=" MDM_DEFAULT_WELCOME_MSG
 #define MDM_KEY_PRIMARY_MONITOR "greeter/PrimaryMonitor=0"
 #define MDM_KEY_BACKGROUND_PROGRAM "greeter/BackgroundProgram="

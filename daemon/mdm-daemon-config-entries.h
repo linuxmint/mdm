@@ -272,7 +272,7 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_DAEMON, "ServAuthDir", MDM_CONFIG_VALUE_STRING, AUTHDIR, MDM_ID_SERV_AUTHDIR },
 	{ MDM_CONFIG_GROUP_DAEMON, "SessionDesktopDir", MDM_CONFIG_VALUE_STRING, "/etc/X11/sessions/:" DMCONFDIR "/Sessions/:" DATADIR "/mdm/BuiltInSessions/:" DATADIR "/xsessions/", MDM_ID_SESSION_DESKTOP_DIR },
 	{ MDM_CONFIG_GROUP_DAEMON, "BaseXsession", MDM_CONFIG_VALUE_STRING, MDMCONFDIR "/Xsession", MDM_ID_BASE_XSESSION },
-	{ MDM_CONFIG_GROUP_DAEMON, "DefaultSession", MDM_CONFIG_VALUE_STRING, "gnome.desktop", MDM_ID_DEFAULT_SESSION },
+	{ MDM_CONFIG_GROUP_DAEMON, "DefaultSession", MDM_CONFIG_VALUE_STRING, "mate.desktop", MDM_ID_DEFAULT_SESSION },
 
 	{ MDM_CONFIG_GROUP_DAEMON, "UserAuthDir", MDM_CONFIG_VALUE_STRING, "", MDM_ID_USER_AUTHDIR },
 	{ MDM_CONFIG_GROUP_DAEMON, "UserAuthFBDir", MDM_CONFIG_VALUE_STRING, "/tmp", MDM_ID_USER_AUTHDIR_FALLBACK },
@@ -352,7 +352,7 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	 * default string.  We set the default values of MDM_ID_WELCOME so that the default value is returned when
 	 * you run GET_CONFIG on these keys.
 	 */
-	{ MDM_CONFIG_GROUP_GREETER, "DefaultWelcome", MDM_CONFIG_VALUE_BOOL, "", MDM_ID_DEFAULT_WELCOME },
+	{ MDM_CONFIG_GROUP_GREETER, "DefaultWelcome", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_DEFAULT_WELCOME },
 	{ MDM_CONFIG_GROUP_GREETER, "Welcome", MDM_CONFIG_VALUE_LOCALE_STRING, MDM_DEFAULT_WELCOME_MSG, MDM_ID_WELCOME },
 	{ MDM_CONFIG_GROUP_GREETER, "PrimaryMonitor", MDM_CONFIG_VALUE_STRING, "None", MDM_ID_PRIMARY_MONITOR },
 	{ MDM_CONFIG_GROUP_GREETER, "BackgroundProgram", MDM_CONFIG_VALUE_STRING, "", MDM_ID_BACKGROUND_PROGRAM },
