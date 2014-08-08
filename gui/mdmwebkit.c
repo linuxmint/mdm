@@ -520,7 +520,7 @@ void process_operation (guchar op_code, const gchar *args) {
     switch (op_code) {
 
         case MDM_SETLOGIN:
-            webkit_execute_script("mdm_set_current_user", args);
+            webkit_execute_script("mdm_set_current_user", html_encode(args));
             printf ("%c\n", STX);
             fflush (stdout);
             break;
