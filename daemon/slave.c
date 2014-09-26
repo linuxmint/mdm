@@ -2706,7 +2706,7 @@ mdm_slave_greeter (void)
 
 		/* If no greeter we really have to disable the display */
 		mdm_child_exit (DISPLAY_ABORT,
-				_("mdm_slave_greeter: Error starting greeter on display %s"),
+				_("%s: Error starting greeter on display %s"),
 				"mdm_slave_greeter",
 				d->name ? d->name : "(null)");
 
