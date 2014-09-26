@@ -2852,6 +2852,17 @@ mdm_daemon_config_get_user_session_lang (char      **usrsess,
 			session = tmp;
 		}
 
+		/* If .dmrc points to an invalid session (for instance when the user has upgraded the OS and kept his/her home or when the last used DE was removed) 
+		 * fallback to the default session
+		 */
+		char * sessionexec = mdm_daemon_config_get_session_exec (session, FALSE /* check_try_exec */);
+		if G_UNLIKELY (sessionexec == NULL) {
+			mdm_error (".dmrc pointed to an invalid session '%s', reverting it to the default session", session);
+			session = g_strdup ("default");
+			save    = TRUE;
+		}
+		g_free (sessionexec);
+
 		/* Ugly workaround for migration */
 		if (strcmp (session, "Default") == 0 ||
 		    strcmp (session, "Default.desktop") == 0) {
