@@ -154,7 +154,7 @@
         in this document and in the MDM Configuration files.
       </para> 
 
-      <para>För ytterligare information om MDM, se <ulink type="http" url="http://www.gnome.org/projects/mdm/"> MDM-projektets webbsida</ulink>. Skicka in eventuella felrapporter eller förslag på förbättringar till "mdm"-kategorin på <ulink type="http" url="http://bugzilla.gnome.org/">bugzilla.gnome.org</ulink>. Du kan även skicka ett meddelande till sändlistan <address><email>mdm-list@gnome.org</email></address> för att diskutera tankar eller problem med MDM-programmet.</para>
+      <para>För ytterligare information om MDM, se <ulink type="http" url="https://github.com/linuxmint/mdm/"> MDM-projektets webbsida</ulink>. Skicka in eventuella felrapporter eller förslag på förbättringar till "mdm"-kategorin på <ulink type="http" url="http://bugzilla.gnome.org/">bugzilla.gnome.org</ulink>. Du kan även skicka ett meddelande till sändlistan <address><email>mdm-list@gnome.org</email></address> för att diskutera tankar eller problem med MDM-programmet.</para>
     </sect2>
 
     <sect2 id="stability">

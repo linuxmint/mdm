@@ -208,8 +208,8 @@ msgid "The MDM Display Manager (MDM) is a display manager that implements all si
 msgstr ""
 
 #: C/mdm.xml:154(para)
-msgid "For further information about MDM, see the <ulink type=\"http\" url=\"http://www.gnome.org/projects/mdm/\"> the MDM project website</ulink>. Please submit any bug reports or enhancement requests to the \"mdm\" category in <ulink type=\"http\" url=\"http://bugzilla.gnome.org/\">bugzilla.gnome.org</ulink>. You can also send a message to the <address><email>mdm-list@gnome.org</email></address> mail list to discuss any issues or concerns with the MDM program."
-msgstr "För ytterligare information om MDM, se <ulink type=\"http\" url=\"http://www.gnome.org/projects/mdm/\"> MDM-projektets webbsida</ulink>. Skicka in eventuella felrapporter eller förslag på förbättringar till \"mdm\"-kategorin på <ulink type=\"http\" url=\"http://bugzilla.gnome.org/\">bugzilla.gnome.org</ulink>. Du kan även skicka ett meddelande till sändlistan <address><email>mdm-list@gnome.org</email></address> för att diskutera tankar eller problem med MDM-programmet."
+msgid "For further information about MDM, see the <ulink type=\"http\" url=\"https://github.com/linuxmint/mdm/\"> the MDM project website</ulink>. Please submit any bug reports or enhancement requests to the \"mdm\" category in <ulink type=\"http\" url=\"http://bugzilla.gnome.org/\">bugzilla.gnome.org</ulink>. You can also send a message to the <address><email>mdm-list@gnome.org</email></address> mail list to discuss any issues or concerns with the MDM program."
+msgstr "För ytterligare information om MDM, se <ulink type=\"http\" url=\"https://github.com/linuxmint/mdm/\"> MDM-projektets webbsida</ulink>. Skicka in eventuella felrapporter eller förslag på förbättringar till \"mdm\"-kategorin på <ulink type=\"http\" url=\"http://bugzilla.gnome.org/\">bugzilla.gnome.org</ulink>. Du kan även skicka ett meddelande till sändlistan <address><email>mdm-list@gnome.org</email></address> för att diskutera tankar eller problem med MDM-programmet."
 
 #: C/mdm.xml:167(title)
 msgid "Interface Stability"

@@ -164,8 +164,6 @@
  * You can only send a few commands at a time, so if you keep getting error
  * 200 try opening a new socket for every command you send.
  *
- * For a descriptions of the commands see:
- * http://www.gnome.org/projects/mdm/docs/2.18/controlling.htlm
  *
  */
 /* The user protocol, using /tmp/.mdm_socket */

@@ -119,7 +119,7 @@
 
       <para>Note que el MDM es altamente configurable y muchos ajustes de configuración pueden afectar a la seguridad. Los temas sobre los que debe prestar atención están resaltados en este documento y en los archivos de configuración del MDM.</para> 
 
-      <para>Para más información acerca de MDM, vea <ulink type="http" url="http://www.gnome.org/projects/mdm/"> el sitio web del proyecto MDM</ulink>. Por favor envíe cualquier informe de fallos o peticiones de mejoras a la categoría «mdm» en <ulink type="http" url="http://bugzilla.gnome.org/">bugzilla.gnome.org</ulink>. También puede enviar un mensaje a la lista de correo <address><email>mdm-list@gnome.org</email></address> para tratar sobre cualquier problema o cuestión con el programa MDM.</para>
+      <para>Para más información acerca de MDM, vea <ulink type="http" url="https://github.com/linuxmint/mdm/"> el sitio web del proyecto MDM</ulink>. Por favor envíe cualquier informe de fallos o peticiones de mejoras a la categoría «mdm» en <ulink type="http" url="http://bugzilla.gnome.org/">bugzilla.gnome.org</ulink>. También puede enviar un mensaje a la lista de correo <address><email>mdm-list@gnome.org</email></address> para tratar sobre cualquier problema o cuestión con el programa MDM.</para>
     </sect2>
 
     <sect2 id="stability">

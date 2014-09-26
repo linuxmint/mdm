@@ -2497,8 +2497,7 @@ Other Changes:
 
 2.8.0.3 stuff:
 
-- The MDM website has moved to a new location
-  http://www.gnome.org/projects/mdm/, and the MDM mail alias has moved from
+- The MDM website has moved to a new location and the MDM mail alias has moved from
   mdm@sunsite.dk to mdm-list@gnome.org.  README, and MDM docs updated with the
   new information and corrected broken link to the MDM Theme section at
   http://art.gnome.org/ (Brian Cameron)

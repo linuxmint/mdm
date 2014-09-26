@@ -723,8 +723,7 @@
 
 2005-08-15  Brian Cameron  <brian.cameron@sun.com>
 
-	* C/mdm.xml: Updated links to point to the new
-	  http://www.gnome.org/projects/mdm/ for the project page.  Updated
+	* C/mdm.xml: Updated links to point to the new project page.  Updated
 	  Commands section of the docs so they look better.  Fixed
 	  art.gnome.org link.
 

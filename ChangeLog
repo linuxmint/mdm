@@ -5832,8 +5832,7 @@
 
 2005-08-15  Brian Cameron  <brian.cameron@sun.com>
 
-	* README.install, config/mdm.conf.in: Updated links to point to the
-	  new http://www.gnome.org/projects/mdm/ for the project page.  Fixed
+	* README.install, config/mdm.conf.in: Updated links to point to the new project page.  Fixed
 	  art.gnome.org link.
 	* gui/mdmflexiserver.c: Fix bug #313197.
 	* gui/mdm.conf.in: Added comments to better explain how

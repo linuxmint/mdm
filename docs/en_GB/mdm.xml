@@ -137,7 +137,7 @@
         in this document and in the MDM Configuration files.
       </para> 
 
-      <para>For further information about MDM, see the <ulink type="http" url="http://www.gnome.org/projects/mdm/"> the MDM project website</ulink>. Please submit any bug reports or enhancement requests to the "mdm" category in <ulink type="http" url="http://bugzilla.gnome.org/">bugzilla.gnome.org</ulink>. You can also send a message to the <address><email>mdm-list@gnome.org</email></address> mail list to discuss any issues or concerns with the MDM program.</para>
+      <para>For further information about MDM, see the <ulink type="http" url="https://github.com/linuxmint/mdm/"> the MDM project website</ulink>. Please submit any bug reports or enhancement requests to the "mdm" category in <ulink type="http" url="http://bugzilla.gnome.org/">bugzilla.gnome.org</ulink>. You can also send a message to the <address><email>mdm-list@gnome.org</email></address> mail list to discuss any issues or concerns with the MDM program.</para>
     </sect2>
 
     <sect2 id="stability">
