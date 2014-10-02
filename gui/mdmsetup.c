@@ -62,8 +62,6 @@ static gboolean  mdm_running           = FALSE;
 static GladeXML  *xml;
 static GtkWidget *setup_notebook;
 static GList     *timeout_widgets = NULL;
-static gchar     *last_theme_installed = NULL;
-static gchar     *last_html_theme_installed = NULL;
 static char      *selected_theme  = NULL;
 static char      *selected_html_theme  = NULL;
 static gchar     *config_file;
@@ -82,8 +80,22 @@ enum {
 	THEME_COLUMN_SCREENSHOT,
 	THEME_COLUMN_MARKUP,
 	THEME_COLUMN_NAME,
-	THEME_COLUMN_DESCRIPTION,	
+	THEME_COLUMN_DESCRIPTION,
+	THEME_COLUMN_TYPE,
 	THEME_NUM_COLUMNS
+};
+
+enum {
+	ICONS_ID,
+	ICONS_NAME,	
+	ICONS_PIC,
+	ICONS_NUM
+};
+
+enum {
+	THEME_TYPE_GTK,	
+	THEME_TYPE_HTML,
+	THEME_TYPE_GDM
 };
 
 enum {
@@ -797,7 +809,7 @@ setup_user_combobox_list (const char *name, const char *key)
 	selected_user  = mdm_config_get_string ((gchar *)key);
 
 	/* normally empty */
-	users_string = g_list_append (users_string, g_strdup (""));
+	//users_string = g_list_append (users_string, g_strdup (""));
 
 	if ( ! ve_string_empty (selected_user))
 		users_string = g_list_append (users_string, g_strdup (selected_user));
@@ -1116,59 +1128,6 @@ glade_helper_tagify_label (GladeXML *xml,
 	g_free (s);
 }
 
-static void
-setup_greeter_combobox (const char *name,
-                        const char *key)
-{
-	GtkWidget *combobox = glade_xml_get_widget (xml, name);
-	char *greetval      = g_strdup (mdm_config_get_string ((gchar *)key));
-
-	if (greetval != NULL &&
-	    strcmp (ve_sure_string (greetval),
-	    LIBEXECDIR "/mdmlogin --disable-sound --disable-crash-dialog") == 0) {
-		g_free (greetval);
-		greetval = g_strdup (LIBEXECDIR "/mdmlogin");
-	}
-
-	/* Set initial state of local style combo box. */
-	if (strcmp (ve_sure_string (key), MDM_KEY_GREETER) == 0) {
-		GtkWidget *local_plain_vbox;
-		GtkWidget *local_themed_vbox;			
-		GtkWidget *local_html_vbox;
-
-		local_plain_vbox = glade_xml_get_widget (xml, "local_plain_properties_vbox");
-		local_themed_vbox = glade_xml_get_widget (xml, "local_themed_properties_vbox");
-		local_html_vbox = glade_xml_get_widget (xml, "local_html_properties_vbox");
-		
-		if (strstr (greetval, "/mdmgreeter") != NULL) {						
-			gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_THEMED);
-			gtk_widget_hide (local_plain_vbox);
-			gtk_widget_show (local_themed_vbox);
-			gtk_widget_hide (local_html_vbox);
-		}
-		else if (strstr (greetval, "/mdmwebkit") != NULL) {			
-            gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_HTML);				
-			gtk_widget_hide (local_plain_vbox);
-			gtk_widget_hide (local_themed_vbox);
-			gtk_widget_show (local_html_vbox);
-		}
-		else {						
-			gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), LOCAL_PLAIN);			
-			gtk_widget_show (local_plain_vbox);
-			gtk_widget_hide (local_themed_vbox);
-			gtk_widget_hide (local_html_vbox);
-		}		
-	}
-	
-
-	g_object_set_data_full (G_OBJECT (combobox), "key",
-	                        g_strdup (key), (GDestroyNotify) g_free);
-	g_signal_connect (G_OBJECT (combobox), "changed",
-	                  G_CALLBACK (combobox_changed), NULL);
-
-	g_free (greetval);
-}
-
 static char *
 get_theme_dir (void)
 {
@@ -1188,155 +1147,272 @@ get_theme_dir (void)
 	return theme_dir;
 }
 
-/* Sets up the preview section of Themed Greeter page
-   after a theme has been selected */
-static void
-gg_selection_changed (GtkTreeSelection *selection, gpointer data)
-{
-	GtkWidget *theme_list;		
-	GtkWidget *delete_button;	
-	GtkTreeModel *model;
-	GtkTreeIter iter;	
-	GValue value  = {0, };			
-
-	delete_button = glade_xml_get_widget (xml, "gg_delete_theme");	
-
-	if ( !gtk_tree_selection_get_selected (selection, &model, &iter)) {
-		gtk_widget_set_sensitive (delete_button, FALSE);		
-		return;
-	}
-
-	/* Default to allow deleting of themes */	
-	gtk_widget_set_sensitive (delete_button, TRUE);
-			
-	theme_list = glade_xml_get_widget (xml, "gg_theme_list");	
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (theme_list));			
-	
-	/* Determine if the theme selected is currently active */	
-	gtk_tree_model_get_value (model, &iter, THEME_COLUMN_SELECTED, &value);
-	
-	/* Do not allow deleting of active themes */
-	if (g_value_get_boolean (&value)) {
-		gtk_widget_set_sensitive (delete_button, FALSE);
-	}
-	g_value_unset (&value);
-}
-
 static GtkTreeIter *
-read_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
-	     const char *select_item)
+read_themes (GtkListStore *store)
 {
-	struct dirent *dent;
-	GtkTreeIter *select_iter = NULL;
+	gtk_list_store_clear (store);
+
 	GdkPixbuf *pb = NULL;
-	gchar *markup = NULL;	
+	GtkTreeIter iter;
+	gchar *markup = NULL;
+	gboolean selected = FALSE;
+
+	char * active_greeter = mdm_config_get_string(MDM_KEY_GREETER);	
+
+	pb = gdk_pixbuf_new_from_file ("/usr/share/mdm/gtk-preview.png", NULL);
+	if (pb != NULL) {
+		if (gdk_pixbuf_get_width (pb) > 64 ||
+		    gdk_pixbuf_get_height (pb) > 50) {
+			GdkPixbuf *pb2;
+			pb2 = gdk_pixbuf_scale_simple
+				(pb, 64, 50,
+				 GDK_INTERP_BILINEAR);
+			g_object_unref (G_OBJECT (pb));
+			pb = pb2;
+		}
+	} 
+
+	markup = g_markup_printf_escaped ("<b>GTK</b> <sup><span fgcolor='#5C5C5C' font_size='x-small'>GTK</span></sup>\n<small>%s</small>", _("No theme, just pure GTK"));
 	
-	while ((dent = readdir (dir)) != NULL) {
-		char *n, *file, *name, *desc, *ss;
-		char *full;
-		GtkTreeIter iter;
-		gboolean sel_theme;
-		GKeyFile *theme_file;
+	if (g_strcmp0 (active_greeter, g_strdup (LIBEXECDIR "/mdmlogin")) == 0) {
+		selected = TRUE;
+	}
 
-		if (dent->d_name[0] == '.')
-			continue;
-		n = g_strconcat (theme_dir, "/", dent->d_name,
-				 "/GdmGreeterTheme.desktop", NULL);
-		if (g_access (n, R_OK) != 0) {
-			g_free (n);
+	gtk_list_store_append (store, &iter);
+	gtk_list_store_set (store, &iter,
+			    THEME_COLUMN_SELECTED, selected,
+			    THEME_COLUMN_DIR, "",
+			    THEME_COLUMN_FILE, "",
+			    THEME_COLUMN_SCREENSHOT, pb,
+			    THEME_COLUMN_MARKUP, markup,
+			    THEME_COLUMN_NAME, "gtk",
+			    THEME_COLUMN_DESCRIPTION, "gtk",
+			    THEME_COLUMN_TYPE, THEME_TYPE_GTK,
+			    -1);	
+	
+	g_free(markup);
+
+	char *theme_dir = get_theme_dir();
+	DIR * dir = opendir(theme_dir);
+
+	if (dir != NULL) {
+
+		struct dirent *dent;
+		GtkTreeIter *select_iter = NULL;
+		GdkPixbuf *pb = NULL;
+		gchar *markup = NULL;	
+		
+		while ((dent = readdir (dir)) != NULL) {
+			char *n, *file, *name, *desc, *ss;
+			char *full;
+			GtkTreeIter iter;
+			gboolean sel_theme;
+			GKeyFile *theme_file;
+
+			if (dent->d_name[0] == '.')
+				continue;
 			n = g_strconcat (theme_dir, "/", dent->d_name,
-					 "/GdmGreeterTheme.info", NULL);
-		}
-		if (g_access (n, R_OK) != 0) {
-			g_free (n);
-			continue;
-		}
+					 "/GdmGreeterTheme.desktop", NULL);
+			if (g_access (n, R_OK) != 0) {
+				g_free (n);
+				n = g_strconcat (theme_dir, "/", dent->d_name,
+						 "/GdmGreeterTheme.info", NULL);
+			}
+			if (g_access (n, R_OK) != 0) {
+				g_free (n);
+				continue;
+			}
 
-		file = mdm_get_theme_greeter (n, dent->d_name);
-		full = g_strconcat (theme_dir, "/", dent->d_name,
-				    "/", file, NULL);
-		if (g_access (full, R_OK) != 0) {
+			file = mdm_get_theme_greeter (n, dent->d_name);
+			full = g_strconcat (theme_dir, "/", dent->d_name,
+					    "/", file, NULL);
+			if (g_access (full, R_OK) != 0) {
+				g_free (file);
+				g_free (full);
+				g_free (n);
+				continue;
+			}
+			g_free (full);
+
+			if (g_strcmp0(active_greeter, g_strdup (LIBEXECDIR "/mdmgreeter")) == 0 && 
+				g_strcmp0 (ve_sure_string (dent->d_name), ve_sure_string (selected_theme)) == 0)
+				sel_theme = TRUE;
+			else
+				sel_theme = FALSE;
+
+			theme_file = mdm_common_config_load (n, NULL);
+			name = NULL;
+			mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Name", &name, NULL);
+			if (ve_string_empty (name)) {
+				g_free (name);
+				name = g_strdup (dent->d_name);
+			}
+
+			desc = ss = NULL;
+			mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Description", &desc, NULL);		
+			mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Screenshot", &ss, NULL);
+
+			g_key_file_free (theme_file);
+
+			if (ss != NULL)
+				full = g_strconcat (theme_dir, "/", dent->d_name,
+						    "/", ss, NULL);
+			else
+				full = NULL;
+
+			if ( ! ve_string_empty (full) &&
+			    g_access (full, R_OK) == 0) {
+
+				pb = gdk_pixbuf_new_from_file (full, NULL);
+				if (pb != NULL) {
+					if (gdk_pixbuf_get_width (pb) > 64 ||
+					    gdk_pixbuf_get_height (pb) > 50) {
+						GdkPixbuf *pb2;
+						pb2 = gdk_pixbuf_scale_simple
+							(pb, 64, 50,
+							 GDK_INTERP_BILINEAR);
+						g_object_unref (G_OBJECT (pb));
+						pb = pb2;
+					}
+				}
+			}			   
+						   
+			markup = g_markup_printf_escaped ("<b>%s</b> <sup><span fgcolor='#5C5C5C' font_size='x-small'>GDM</span></sup>\n<small>%s</small>", name ? name : "(null)", desc ? desc : "(null)");
+			gtk_list_store_append (store, &iter);
+			gtk_list_store_set (store, &iter,
+					    THEME_COLUMN_SELECTED, sel_theme,			
+					    THEME_COLUMN_DIR, dent->d_name,
+					    THEME_COLUMN_FILE, file,
+					    THEME_COLUMN_SCREENSHOT, pb,
+					    THEME_COLUMN_MARKUP, markup,
+					    THEME_COLUMN_NAME, name,
+					    THEME_COLUMN_DESCRIPTION, desc,
+					    THEME_COLUMN_TYPE, THEME_TYPE_GDM,
+					    -1);
+
+			if (mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME) != NULL &&
+			    strcmp (ve_sure_string (dent->d_name), ve_sure_string (mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME))) == 0) {
+				/* anality */ g_free (select_iter);
+				select_iter = g_new0 (GtkTreeIter, 1);
+				*select_iter = iter;
+			}
+
 			g_free (file);
+			g_free (name);
+			g_free (markup);
+			g_free (desc);		
+			g_free (ss);
 			g_free (full);
 			g_free (n);
-			continue;
-		}
-		g_free (full);
+		}	
+		closedir(dir);
+		//return select_iter;
+	}
 
-		if (selected_theme != NULL &&
-		    strcmp (ve_sure_string (dent->d_name), ve_sure_string (selected_theme)) == 0)
-			sel_theme = TRUE;
-		else
-			sel_theme = FALSE;
+	theme_dir = "/usr/share/mdm/html-themes";
+	dir = opendir(theme_dir);
 
-		theme_file = mdm_common_config_load (n, NULL);
-		name = NULL;
-		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Name", &name, NULL);
-		if (ve_string_empty (name)) {
-			g_free (name);
-			name = g_strdup (dent->d_name);
-		}
+	if (dir != NULL) {
 
-		desc = ss = NULL;
-		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Description", &desc, NULL);		
-		mdm_common_config_get_translated_string (theme_file, "GdmGreeterTheme/Screenshot", &ss, NULL);
+		struct dirent *dent;
+		GtkTreeIter *select_iter = NULL;
+		GdkPixbuf *pb = NULL;
+		gchar *markup = NULL;	
+		
+		while ((dent = readdir (dir)) != NULL) {
+			char *n, *name, *desc, *ss;		
+			GtkTreeIter iter;
+			gboolean sel_theme;
+			GKeyFile *theme_file;
+			gchar * full;
+			
+			if (dent->d_name[0] == '.')
+				continue;
+			n = g_strconcat (theme_dir, "/", dent->d_name,
+					 "/theme.info", NULL);		
+					 		
+			if (g_access (n, R_OK) != 0) {
+				g_free (n);
+				continue;
+			}			
+			
+			if (g_strcmp0(active_greeter, g_strdup (LIBEXECDIR "/mdmwebkit")) == 0 &&
+			    g_strcmp0(ve_sure_string (dent->d_name), ve_sure_string (selected_html_theme)) == 0)
+				sel_theme = TRUE;
+			else
+				sel_theme = FALSE;
+			
+			theme_file = mdm_common_config_load (n, NULL);
+			name = NULL;
+			mdm_common_config_get_translated_string (theme_file, "Theme/Name", &name, NULL);
+			if (ve_string_empty (name)) {
+				g_free (name);
+				name = g_strdup (dent->d_name);
+			}		
 
-		g_key_file_free (theme_file);
+			desc = ss = NULL;
+			mdm_common_config_get_translated_string (theme_file, "Theme/Description", &desc, NULL);		
+			mdm_common_config_get_translated_string (theme_file, "Theme/Screenshot", &ss, NULL);
 
-		if (ss != NULL)
-			full = g_strconcat (theme_dir, "/", dent->d_name,
-					    "/", ss, NULL);
-		else
-			full = NULL;
+			g_key_file_free (theme_file);
 
-		if ( ! ve_string_empty (full) &&
-		    g_access (full, R_OK) == 0) {
+			if (ss != NULL)
+				full = g_strconcat (theme_dir, "/", dent->d_name,
+						    "/", ss, NULL);
+			else
+				full = NULL;
 
-			pb = gdk_pixbuf_new_from_file (full, NULL);
-			if (pb != NULL) {
-				if (gdk_pixbuf_get_width (pb) > 64 ||
-				    gdk_pixbuf_get_height (pb) > 50) {
-					GdkPixbuf *pb2;
-					pb2 = gdk_pixbuf_scale_simple
-						(pb, 64, 50,
-						 GDK_INTERP_BILINEAR);
-					g_object_unref (G_OBJECT (pb));
-					pb = pb2;
+			if ( ! ve_string_empty (full) &&
+			    g_access (full, R_OK) == 0) {
+
+				pb = gdk_pixbuf_new_from_file (full, NULL);
+				if (pb != NULL) {
+					if (gdk_pixbuf_get_width (pb) > 64 ||
+					    gdk_pixbuf_get_height (pb) > 50) {
+						GdkPixbuf *pb2;
+						pb2 = gdk_pixbuf_scale_simple
+							(pb, 64, 50,
+							 GDK_INTERP_BILINEAR);
+						g_object_unref (G_OBJECT (pb));
+						pb = pb2;
+					}
 				}
+			}			   
+						   
+			markup = g_markup_printf_escaped ("<b>%s</b> <sup><span fgcolor='#5C5C5C' font_size='x-small'>HTML</span></sup>\n<small>%s</small>",
+	                   name ? name : "(null)",
+	                   desc ? desc : "(null)");
+	                                 
+			gtk_list_store_append (store, &iter);
+			gtk_list_store_set (store, &iter,
+					    THEME_COLUMN_SELECTED, sel_theme,			
+					    THEME_COLUMN_DIR, dent->d_name,
+					    THEME_COLUMN_FILE, "",
+					    THEME_COLUMN_SCREENSHOT, pb,
+					    THEME_COLUMN_MARKUP, markup,
+					    THEME_COLUMN_NAME, name,
+					    THEME_COLUMN_DESCRIPTION, desc,
+					    THEME_COLUMN_TYPE, THEME_TYPE_HTML,
+					    -1);
+
+			if (mdm_config_get_string (MDM_KEY_HTML_THEME) != NULL && strcmp (ve_sure_string (dent->d_name), ve_sure_string (mdm_config_get_string (MDM_KEY_HTML_THEME))) == 0) {
+				/* anality */ g_free (select_iter);
+				select_iter = g_new0 (GtkTreeIter, 1);
+				*select_iter = iter;
 			}
-		}			   
-					   
-		markup = g_markup_printf_escaped ("<b>%s</b>\n<small>%s</small>",
-                   name ? name : "(null)",
-                   desc ? desc : "(null)");
-		gtk_list_store_append (store, &iter);
-		gtk_list_store_set (store, &iter,
-				    THEME_COLUMN_SELECTED, sel_theme,			
-				    THEME_COLUMN_DIR, dent->d_name,
-				    THEME_COLUMN_FILE, file,
-				    THEME_COLUMN_SCREENSHOT, pb,
-				    THEME_COLUMN_MARKUP, markup,
-				    THEME_COLUMN_NAME, name,
-				    THEME_COLUMN_DESCRIPTION, desc,				    
-				    -1);
 
-		if (select_item != NULL &&
-		    strcmp (ve_sure_string (dent->d_name), ve_sure_string (select_item)) == 0) {
-			/* anality */ g_free (select_iter);
-			select_iter = g_new0 (GtkTreeIter, 1);
-			*select_iter = iter;
-		}
+			g_free (name);
+			g_free (markup);
+			g_free (desc);		
+			g_free (ss);
+			g_free (n);
+			g_free (full);
+		}	
+		closedir(dir);
+	}
 
-		g_free (file);
-		g_free (name);
-		g_free (markup);
-		g_free (desc);		
-		g_free (ss);
-		g_free (full);
-		g_free (n);
-	}	
 
-	return select_iter;
+
 }
 
 /* Enable/disable the delete button when an HTML theme is selected */
@@ -1362,247 +1438,81 @@ gg_html_selection_changed (GtkTreeSelection *selection, gpointer data)
 		
 	theme_list = glade_xml_get_widget (xml, "gg_html_theme_list");	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (theme_list));			
-	
-	/* Determine if the theme selected is currently active */	
-	gtk_tree_model_get_value (model, &iter, THEME_COLUMN_SELECTED, &value);
-	
+		
 	/* Do not allow deleting of active themes */
+	gtk_tree_model_get_value (model, &iter, THEME_COLUMN_SELECTED, &value);
 	if (g_value_get_boolean (&value)) {
+		gtk_widget_set_sensitive (delete_button, FALSE);
+	}
+	g_value_unset (&value);
+
+	/* Do not allow deleting the GTK greeter */
+	gtk_tree_model_get_value (model, &iter, THEME_COLUMN_TYPE, &value);
+	if (g_value_get_int (&value) == THEME_TYPE_GTK) {
 		gtk_widget_set_sensitive (delete_button, FALSE);
 	}
 	g_value_unset (&value);
 }
 
-static GtkTreeIter *
-read_html_themes (GtkListStore *store, const char *theme_dir, DIR *dir,
-	     const char *select_item)
-{
-	struct dirent *dent;
-	GtkTreeIter *select_iter = NULL;
-	GdkPixbuf *pb = NULL;
-	gchar *markup = NULL;	
-	
-	while ((dent = readdir (dir)) != NULL) {
-		char *n, *name, *desc, *ss;		
-		GtkTreeIter iter;
-		gboolean sel_theme;
-		GKeyFile *theme_file;
-		gchar * full;
-		
-		if (dent->d_name[0] == '.')
-			continue;
-		n = g_strconcat (theme_dir, "/", dent->d_name,
-				 "/theme.info", NULL);		
-				 		
-		if (g_access (n, R_OK) != 0) {
-			g_free (n);
-			continue;
-		}			
-		
-		if (selected_html_theme != NULL &&
-		    strcmp (ve_sure_string (dent->d_name), ve_sure_string (selected_html_theme)) == 0)
-			sel_theme = TRUE;
-		else
-			sel_theme = FALSE;	
-		
-		theme_file = mdm_common_config_load (n, NULL);
-		name = NULL;
-		mdm_common_config_get_translated_string (theme_file, "Theme/Name", &name, NULL);
-		if (ve_string_empty (name)) {
-			g_free (name);
-			name = g_strdup (dent->d_name);
-		}		
-
-		desc = ss = NULL;
-		mdm_common_config_get_translated_string (theme_file, "Theme/Description", &desc, NULL);		
-		mdm_common_config_get_translated_string (theme_file, "Theme/Screenshot", &ss, NULL);
-
-		g_key_file_free (theme_file);
-
-		if (ss != NULL)
-			full = g_strconcat (theme_dir, "/", dent->d_name,
-					    "/", ss, NULL);
-		else
-			full = NULL;
-
-		if ( ! ve_string_empty (full) &&
-		    g_access (full, R_OK) == 0) {
-
-			pb = gdk_pixbuf_new_from_file (full, NULL);
-			if (pb != NULL) {
-				if (gdk_pixbuf_get_width (pb) > 64 ||
-				    gdk_pixbuf_get_height (pb) > 50) {
-					GdkPixbuf *pb2;
-					pb2 = gdk_pixbuf_scale_simple
-						(pb, 64, 50,
-						 GDK_INTERP_BILINEAR);
-					g_object_unref (G_OBJECT (pb));
-					pb = pb2;
-				}
-			}
-		}			   
-					   
-		markup = g_markup_printf_escaped ("<b>%s</b>\n<small>%s</small>",
-                   name ? name : "(null)",
-                   desc ? desc : "(null)");
-                                 
-		gtk_list_store_append (store, &iter);
-		gtk_list_store_set (store, &iter,
-				    THEME_COLUMN_SELECTED, sel_theme,			
-				    THEME_COLUMN_DIR, dent->d_name,
-				    THEME_COLUMN_FILE, "",
-				    THEME_COLUMN_SCREENSHOT, pb,
-				    THEME_COLUMN_MARKUP, markup,
-				    THEME_COLUMN_NAME, name,
-				    THEME_COLUMN_DESCRIPTION, desc,				    
-				    -1);
-
-		if (select_item != NULL &&
-		    strcmp (ve_sure_string (dent->d_name), ve_sure_string (select_item)) == 0) {
-			/* anality */ g_free (select_iter);
-			select_iter = g_new0 (GtkTreeIter, 1);
-			*select_iter = iter;
-		}
-
-		g_free (name);
-		g_free (markup);
-		g_free (desc);		
-		g_free (ss);
-		g_free (n);
-		g_free (full);
-	}	
-
-	return select_iter;
-}
-
-static gboolean
-greeter_theme_timeout (GtkWidget *toggle)
-{
-	char *theme;	
-
-	theme  = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);	
-	
-	/* If themes have changed from the custom_config file, update it. */
-	if (strcmp (ve_sure_string (theme),
-		ve_sure_string (selected_theme)) != 0) {
-
-		mdm_setup_config_set_string (MDM_KEY_GRAPHICAL_THEME,
-			selected_theme);
-		update_greeters ();
-	}
-	
-	return FALSE;
-}
-
-static gboolean
-html_greeter_theme_timeout (GtkWidget *toggle)
-{
-	char *theme;	
-
-	theme  = mdm_config_get_string (MDM_KEY_HTML_THEME);	
-	
-	/* If themes have changed from the custom_config file, update it. */
-	if (strcmp (ve_sure_string (theme),
-		ve_sure_string (selected_html_theme)) != 0) {
-
-		mdm_setup_config_set_string (MDM_KEY_HTML_THEME,
-			selected_html_theme);
-		update_greeters ();
-	}
-	
-	return FALSE;
-}
-
 static void
-selected_toggled (GtkCellRendererToggle *cell,
-		  char                  *path_str,
-		  gpointer               data)
+selected_html_toggled (GtkCellRendererToggle *cell, char *path_str, gpointer data)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL (data);
 	GtkTreeIter selected_iter;
 	GtkTreeIter iter;
 	GtkTreePath *path;
 	GtkTreePath *sel_path = gtk_tree_path_new_from_string (path_str);
-	GtkWidget *theme_list = glade_xml_get_widget (xml, "gg_theme_list");
-	GtkWidget *del_button = glade_xml_get_widget (xml, "gg_delete_theme");	
-
-	gtk_tree_model_get_iter (model, &selected_iter, sel_path);
-	path     = gtk_tree_path_new_first ();
-	
-	/* Clear list of all selected themes */
-	g_free (selected_theme);
-
-	/* Get the new selected theme */
-	gtk_tree_model_get (model, &selected_iter,
-				THEME_COLUMN_DIR, &selected_theme, -1);
-
-	/* Loop through all themes in list */
-	while (gtk_tree_model_get_iter (model, &iter, path)) {
-		/* If this toggle was just toggled */
-		if (gtk_tree_path_compare (path, sel_path) == 0) {
-			gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-				THEME_COLUMN_SELECTED, TRUE,
-				-1); /* Toggle ON */
-			gtk_widget_set_sensitive (del_button, FALSE);			
-		} else {
-			gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-				THEME_COLUMN_SELECTED, FALSE,
-				-1); /* Toggle OFF */
-		}
-
-		gtk_tree_path_next (path);
-	}
-
-	gtk_tree_path_free (path);
-	gtk_tree_path_free (sel_path);
-
-	run_timeout (theme_list, 500, greeter_theme_timeout);
-}
-
-static void
-selected_html_toggled (GtkCellRendererToggle *cell,
-		  char                  *path_str,
-		  gpointer               data)
-{
-	GtkTreeModel *model = GTK_TREE_MODEL (data);
-	GtkTreeIter selected_iter;
-	GtkTreeIter iter;
-	GtkTreePath *path;
-	GtkTreePath *sel_path = gtk_tree_path_new_from_string (path_str);
-	GtkWidget *theme_list = glade_xml_get_widget (xml, "gg_html_theme_list");
 	GtkWidget *del_button = glade_xml_get_widget (xml, "gg_delete_html_theme");		
 
 	gtk_tree_model_get_iter (model, &selected_iter, sel_path);
-	path     = gtk_tree_path_new_first ();	
+	path = gtk_tree_path_new_first ();	
 		
 	/* Clear list of all selected themes */
 	g_free (selected_html_theme);
 
 	/* Get the new selected theme */
-	gtk_tree_model_get (model, &selected_iter,
-				THEME_COLUMN_DIR, &selected_html_theme, -1);
+	gtk_tree_model_get (model, &selected_iter, THEME_COLUMN_DIR, &selected_html_theme, -1);
 
 	/* Loop through all themes in list */
 	while (gtk_tree_model_get_iter (model, &iter, path)) {
 		/* If this toggle was just toggled */
 		if (gtk_tree_path_compare (path, sel_path) == 0) {
-			gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-				THEME_COLUMN_SELECTED, TRUE,
-				-1); /* Toggle ON */
-			gtk_widget_set_sensitive (del_button, FALSE);			
+			gtk_list_store_set (GTK_LIST_STORE (model), &iter, THEME_COLUMN_SELECTED, TRUE, -1); /* Toggle ON */
+			gtk_widget_set_sensitive (del_button, FALSE);
 		} else {
-			gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-				THEME_COLUMN_SELECTED, FALSE,
-				-1); /* Toggle OFF */
+			gtk_list_store_set (GTK_LIST_STORE (model), &iter, THEME_COLUMN_SELECTED, FALSE, -1); /* Toggle OFF */
 		}
-
 		gtk_tree_path_next (path);
-	}	
-
+	}
 	gtk_tree_path_free (path);
 	gtk_tree_path_free (sel_path);
+	
 
-	run_timeout (theme_list, 500, html_greeter_theme_timeout);
+	GValue value  = {0, };
+
+	gtk_tree_model_get_value (model, &selected_iter, THEME_COLUMN_TYPE, &value);
+	int greeter_type = g_value_get_int (&value);
+	g_value_unset (&value);
+
+	switch (greeter_type) {
+		case THEME_TYPE_GTK:
+			mdm_setup_config_set_string (MDM_KEY_GREETER, g_strdup (LIBEXECDIR "/mdmlogin"));
+			break;
+		case THEME_TYPE_HTML:
+			mdm_setup_config_set_string (MDM_KEY_GREETER, g_strdup (LIBEXECDIR "/mdmwebkit"));
+			gtk_tree_model_get_value (model, &selected_iter, THEME_COLUMN_NAME, &value);
+			mdm_setup_config_set_string (MDM_KEY_HTML_THEME, g_value_get_string (&value));
+			g_value_unset (&value);
+			break;
+		case THEME_TYPE_GDM:
+			mdm_setup_config_set_string (MDM_KEY_GREETER, g_strdup (LIBEXECDIR "/mdmgreeter"));
+			gtk_tree_model_get_value (model, &selected_iter, THEME_COLUMN_NAME, &value);
+			mdm_setup_config_set_string (MDM_KEY_GRAPHICAL_THEME, g_value_get_string (&value));
+			g_value_unset (&value);
+			break;
+	}
+			
+	update_greeters ();	
 }
 
 static gboolean
@@ -1620,123 +1530,8 @@ is_ext (gchar *filename, const char *ext)
 		return FALSE;
 }
 
-/* sense the right unzip program */
 static char *
-find_unzip (gchar *filename)
-{
-	char *prog;
-	char *tryg[] = {
-		"/bin/gunzip",
-		"/usr/bin/gunzip",
-		NULL };
-	char *tryb[] = {
-		"/bin/bunzip2",
-		"/usr/bin/bunzip2",
-		NULL };
-	int i;
-
-	if (is_ext (filename, ".bz2")) {
-		prog = g_find_program_in_path ("bunzip2");
-		if (prog != NULL)
-			return prog;
-
-		for (i = 0; tryb[i] != NULL; i++) {
-			if (g_access (tryb[i], X_OK) == 0)
-				return g_strdup (tryb[i]);
-		}
-	}
-
-	prog = g_find_program_in_path ("gunzip");
-	if (prog != NULL)
-		return prog;
-
-	for (i = 0; tryg[i] != NULL; i++) {
-		if (g_access (tryg[i], X_OK) == 0)
-			return g_strdup (tryg[i]);
-	}
-	/* Hmmm, fallback */
-	return g_strdup ("/bin/gunzip");
-}
-
-static char *
-find_tar (void)
-{
-	char *tar_prog;
-	char *try[] = {
-		"/bin/gtar",
-		"/bin/tar",
-		"/usr/bin/gtar",
-		"/usr/bin/tar",
-		NULL };
-	int i;
-
-	tar_prog = g_find_program_in_path ("gtar");
-	if (tar_prog != NULL)
-		return tar_prog;
-
-	tar_prog = g_find_program_in_path ("tar");
-	if (tar_prog != NULL)
-		return tar_prog;
-
-	for (i = 0; try[i] != NULL; i++) {
-		if (g_access (try[i], X_OK) == 0)
-			return g_strdup (try[i]);
-	}
-	/* Hmmm, fallback */
-	return g_strdup ("/bin/tar");
-}
-
-static char *
-find_chmod (void)
-{
-	char *chmod_prog;
-	char *try[] = {
-		"/bin/chmod",
-		"/sbin/chmod",
-		"/usr/bin/chmod",
-		"/usr/sbin/chmod",
-		NULL };
-	int i;
-
-	chmod_prog = g_find_program_in_path ("chmod");
-	if (chmod_prog != NULL)
-		return chmod_prog;
-
-	for (i = 0; try[i] != NULL; i++) {
-		if (g_access (try[i], X_OK) == 0)
-			return g_strdup (try[i]);
-	}
-	/* Hmmm, fallback */
-	return g_strdup ("/bin/chmod");
-}
-
-static char *
-find_chown (void)
-{
-	char *chown_prog;
-	char *try[] = {
-		"/bin/chown",
-		"/sbin/chown",
-		"/usr/bin/chown",
-		"/usr/sbin/chown",
-		NULL };
-	int i;
-
-	chown_prog = g_find_program_in_path ("chown");
-	if (chown_prog != NULL)
-		return chown_prog;
-
-	for (i = 0; try[i] != NULL; i++) {
-		if (g_access (try[i], X_OK) == 0)
-			return g_strdup (try[i]);
-	}
-	/* Hmmm, fallback */
-	return g_strdup ("/bin/chown");
-}
-
-
-static char *
-get_the_dir (FILE *fp, char **error)
+get_the_dir (FILE *fp, char **destination_dir, char **error)
 {
 	char buf[2048];
 	char *dir = NULL;
@@ -1762,9 +1557,7 @@ get_the_dir (FILE *fp, char **error)
 			dirlen = strlen (dir);
 
 			if (dirlen < 1) {
-				*error =
-					_("Archive is not of a subdirectory");
-
+				*error = _("Archive is not of a subdirectory");
 				g_free (dir);
 				return NULL;
 			}
@@ -1775,11 +1568,13 @@ get_the_dir (FILE *fp, char **error)
 			g_free (dir);
 			return NULL;
 		}
-
+		
 		if ( ! got_info) {
 			s = g_strconcat (dir, "/GdmGreeterTheme.info", NULL);
-			if (strcmp (ve_sure_string (buf), ve_sure_string (s)) == 0)
+			if (strcmp (ve_sure_string (buf), ve_sure_string (s)) == 0) {
 				got_info = TRUE;
+				*destination_dir = get_theme_dir();
+			}
 			g_free (s);
 		}
 
@@ -1787,6 +1582,7 @@ get_the_dir (FILE *fp, char **error)
 			s = g_strconcat (dir, "/GdmGreeterTheme.desktop", NULL);
 			if (strcmp (ve_sure_string (buf), ve_sure_string (s)) == 0)
 				got_info = TRUE;
+				*destination_dir = get_theme_dir();
 			g_free (s);
 		}
 		
@@ -1794,34 +1590,38 @@ get_the_dir (FILE *fp, char **error)
 			s = g_strconcat (dir, "/theme.info", NULL);
 			if (strcmp (ve_sure_string (buf), ve_sure_string (s)) == 0)
 				got_info = TRUE;
+				*destination_dir = "/usr/share/mdm/html-themes";
 			g_free (s);
 		}
 	}
 
+
 	if (got_info)
 		return dir;
 
-	if ( ! read_a_line)
+	if ( ! read_a_line) {
 		*error = _("File not a tar.gz or tar archive");
+	}
 	else
-		*error = _("Archive does not include a "
-			   "GdmGreeterTheme.info file");
+	{
+		*error = _("Archive does not include a GdmGreeterTheme.info file");
+	}
 
 	g_free (dir);
 	return NULL;
 }
 
 static char *
-get_archive_dir (gchar *filename, char **untar_cmd, char **error)
+get_archive_dir (gchar *filename, char **untar_cmd, char ** destination_dir, char **error)
 {
 	char *quoted;
-	char *tar;
 	char *unzip;
 	char *cmd;
 	char *dir;
 	FILE *fp;
 
 	*untar_cmd = NULL;
+	*destination_dir = NULL;
 
 	*error = NULL;
 
@@ -1830,50 +1630,48 @@ get_archive_dir (gchar *filename, char **untar_cmd, char **error)
 		return NULL;
 	}
 
-	quoted = g_shell_quote (filename);
-	tar = find_tar ();
-	unzip = find_unzip (filename);
+	quoted = g_shell_quote (filename);	
 
-	cmd = g_strdup_printf ("%s -c %s | %s -tf -", unzip, quoted, tar);
+	if (is_ext (filename, ".bz2")) {
+		unzip = g_strdup("bunzip2");
+	}
+	else {
+		unzip = g_strdup("gunzip");
+	}
+	
+	cmd = g_strdup_printf ("%s -c %s | tar -tf -", unzip, quoted);	
 	fp = popen (cmd, "r");
+	printf ("%s\n", cmd);
 	g_free (cmd);
 	if (fp != NULL) {
 		int ret;
-		dir = get_the_dir (fp, error);
-		ret = pclose (fp);
+		dir = get_the_dir (fp, destination_dir, error);		
+		ret = pclose (fp);		
 		if (ret == 0 && dir != NULL) {
-			*untar_cmd = g_strdup_printf ("%s -c %s | %s -xf -",
-						      unzip, quoted, tar);
-			g_free (tar);
+			*untar_cmd = g_strdup_printf ("%s -c %s | tar -xf -", unzip, quoted);
 			g_free (unzip);
 			g_free (quoted);
 			return dir;
-		} else {
-			*error = NULL;
-		}
+		} 
 		g_free (dir);
 	}
 
 	/* error due to command failing */
-	if (*error == NULL) {
+	if (*error != NULL) {
 		/* Try uncompressed? */
-		cmd = g_strdup_printf ("%s -tf %s", tar, quoted);
+		cmd = g_strdup_printf ("tar -tf %s", quoted);
 		fp = popen (cmd, "r");
 		g_free (cmd);
 		if (fp != NULL) {
 			int ret;
-			dir = get_the_dir (fp, error);
+			dir = get_the_dir (fp, destination_dir, error);
 			ret = pclose (fp);
 			if (ret == 0 && dir != NULL) {
-				*untar_cmd = g_strdup_printf ("%s -xf %s",
-							      tar, quoted);
-				g_free (tar);
+				*untar_cmd = g_strdup_printf ("tar -xf %s", quoted);
 				g_free (unzip);
 				g_free (quoted);
 				return dir;
-			} else {
-				*error = NULL;
-			}
+			} 
 			g_free (dir);
 		}
 	}
@@ -1881,7 +1679,6 @@ get_archive_dir (gchar *filename, char **untar_cmd, char **error)
 	if (*error == NULL)
 		*error = _("File not a tar.gz or tar archive");
 
-	g_free (tar);
 	g_free (unzip);
 	g_free (quoted);
 
@@ -1908,211 +1705,21 @@ dir_exists (const char *parent, const char *dir)
 }
 
 static void
-install_theme_file (gchar *filename, GtkListStore *store, GtkWindow *parent)
-{
-	GtkTreeSelection *selection;
-	GtkTreeIter *select_iter = NULL;
-	GtkWidget *theme_list;
-	DIR *dp;
-	gchar *cwd;
-	gchar *dir;
-	gchar *error;
-	gchar *theme_dir;
-	gchar *untar_cmd;
-	gboolean success = FALSE;
-
-	theme_list = glade_xml_get_widget (xml, "gg_theme_list");
-
-	cwd = g_get_current_dir ();
-	theme_dir = get_theme_dir ();
-
-	if ( !g_path_is_absolute (filename)) {
-
-		gchar *temp;
-		
-		temp = g_build_filename (cwd, filename, NULL);
-		g_free (filename);
-		filename = temp;
-	}
-	
-	dir = get_archive_dir (filename, &untar_cmd, &error);
-
-	/* FIXME: perhaps do a little bit more sanity checking of
-	 * the archive */
-
-	if (dir == NULL) {
-
-		GtkWidget *dialog;
-		gchar *msg;
-
-		msg = g_strdup_printf ("%s", error);
-
-		dialog = hig_dialog_new (GTK_WINDOW (parent),
-					 GTK_DIALOG_MODAL | 
-					 GTK_DIALOG_DESTROY_WITH_PARENT,
-					 GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_OK,
-					 _("Not a theme archive"),
-					 msg);
-		gtk_dialog_run (GTK_DIALOG (dialog));
-		gtk_widget_destroy (dialog);
-		g_free (theme_dir);
-		g_free (untar_cmd);
-		g_free (cwd);
-		g_free (msg);
-		return;
-	}
-
-	if (dir_exists (theme_dir, dir)) {
-
-		GtkWidget *button;
-		GtkWidget *dialog;
-		gchar *fname;
-		gchar *s;
-
-		fname = ve_filename_to_utf8 (dir);
-
-		/* FIXME: if exists already perhaps we could also have an
-		 * option to change the dir name */
-		s = g_strdup_printf (_("Theme directory '%s' seems to be already "
-				       "installed. Install again anyway?"),
-				     fname);
-		
-		dialog = hig_dialog_new (GTK_WINDOW (parent),
-					 GTK_DIALOG_MODAL | 
-					 GTK_DIALOG_DESTROY_WITH_PARENT,
-					 GTK_MESSAGE_QUESTION,
-					 GTK_BUTTONS_NONE,
-					 s,
-					 "");
-		g_free (fname);
-		g_free (s);
-
-		button = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-		gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, GTK_RESPONSE_NO);
-		GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-		gtk_widget_show (button);
-
-		button = gtk_button_new_from_stock ("_Install Anyway");
-		gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, GTK_RESPONSE_YES);
-		GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-		gtk_widget_show (button);
-
-		gtk_dialog_set_default_response (GTK_DIALOG (dialog),
-						 GTK_RESPONSE_YES);
-
-		gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
-
-		if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_YES) {
-			gtk_widget_destroy (dialog);
-			g_free (theme_dir);
-			g_free (untar_cmd);
-			g_free (cwd);
-			g_free (dir);
-			return;
-		}
-		gtk_widget_destroy (dialog);
-	}
-
-	g_assert (untar_cmd != NULL);
-
-	if (g_chdir (theme_dir) == 0 &&
-	    /* this is a security sanity check */
-	    strchr (dir, '/') == NULL &&
-	    system (untar_cmd) == 0) {
-
-		gchar *argv[5];
-		gchar *quoted;
-		gchar *chown;
-		gchar *chmod;
-
-		quoted = g_strconcat ("./", dir, NULL);
-		chown = find_chown ();
-		chmod = find_chmod ();
-		success = TRUE;
-
-		/* HACK! */
-		argv[0] = chown;
-		argv[1] = "-R";
-		argv[2] = "root:root";
-		argv[3] = quoted;
-		argv[4] = NULL;
-		simple_spawn_sync (argv);
-
-		argv[0] = chmod;
-		argv[1] = "-R";
-		argv[2] = "a+r";
-		argv[3] = quoted;
-		argv[4] = NULL;
-		simple_spawn_sync (argv);
-
-		argv[0] = chmod;
-		argv[1] = "a+x";
-		argv[2] = quoted;
-		argv[3] = NULL;
-		simple_spawn_sync (argv);
-
-		g_free (quoted);
-		g_free (chown);
-		g_free (chmod);
-	}
-
-	if (!success) {
-	
-		GtkWidget *dialog;
-		
-		dialog = hig_dialog_new (GTK_WINDOW (parent),
-					 GTK_DIALOG_MODAL | 
-					 GTK_DIALOG_DESTROY_WITH_PARENT,
-					 GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_OK,
-					 _("Some error occurred when "
-					   "installing the theme"),
-					 "");
-		gtk_dialog_run (GTK_DIALOG (dialog));
-		gtk_widget_destroy (dialog);
-	}
-
-	gtk_list_store_clear (store);
-
-	dp = opendir (theme_dir);
-
-	if (dp != NULL) {
-		select_iter = read_themes (store, theme_dir, dp, dir);
-		closedir (dp);
-	}
-
-	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (theme_list));
-
-	if (select_iter != NULL) {
-		gtk_tree_selection_select_iter (selection, select_iter);
-		g_free (select_iter);
-	}
-	
-	g_free (untar_cmd);
-	g_free (theme_dir);
-	g_free (dir);
-	g_free (cwd);
-}
-
-static void
 html_install_theme_file (gchar *filename, GtkListStore *store, GtkWindow *parent)
 {
 	GtkTreeSelection *selection;
 	GtkTreeIter *select_iter = NULL;
-	GtkWidget *theme_list;
-	DIR *dp;
+	GtkWidget *theme_list;	
 	gchar *cwd;
 	gchar *dir;
 	gchar *error;
 	gchar *theme_dir;
-	gchar *untar_cmd;
-	gboolean success = FALSE;
+	gchar *untar_cmd;	
+	gboolean success = FALSE;	
 
 	theme_list = glade_xml_get_widget (xml, "gg_html_theme_list");
 
-	cwd = g_get_current_dir ();
-	theme_dir = "/usr/share/mdm/html-themes";
+	cwd = g_get_current_dir ();	
 
 	if ( !g_path_is_absolute (filename)) {
 
@@ -2123,8 +1730,8 @@ html_install_theme_file (gchar *filename, GtkListStore *store, GtkWindow *parent
 		filename = temp;
 	}
 	
-	dir = get_archive_dir (filename, &untar_cmd, &error);
-		
+	dir = get_archive_dir (filename, &untar_cmd, &theme_dir, &error);
+	
 	/* FIXME: perhaps do a little bit more sanity checking of
 	 * the archive */
 
@@ -2210,39 +1817,33 @@ html_install_theme_file (gchar *filename, GtkListStore *store, GtkWindow *parent
 	    system (untar_cmd) == 0) {
 
 		gchar *argv[5];
-		gchar *quoted;
-		gchar *chown;
-		gchar *chmod;
+		gchar *quoted;		
 
-		quoted = g_strconcat ("./", dir, NULL);
-		chown = find_chown ();
-		chmod = find_chmod ();
+		quoted = g_strconcat ("./", dir, NULL);		
 		success = TRUE;
 
 		/* HACK! */
-		argv[0] = chown;
+		argv[0] = "chown";
 		argv[1] = "-R";
 		argv[2] = "root:root";
 		argv[3] = quoted;
 		argv[4] = NULL;
 		simple_spawn_sync (argv);
 
-		argv[0] = chmod;
+		argv[0] = "chmod";
 		argv[1] = "-R";
 		argv[2] = "a+r";
 		argv[3] = quoted;
 		argv[4] = NULL;
 		simple_spawn_sync (argv);
 
-		argv[0] = chmod;
+		argv[0] = "chmod";
 		argv[1] = "a+x";
 		argv[2] = quoted;
 		argv[3] = NULL;
 		simple_spawn_sync (argv);
 
-		g_free (quoted);
-		g_free (chown);
-		g_free (chmod);
+		g_free (quoted);		
 	}
 	
 	if (!success) {
@@ -2261,14 +1862,7 @@ html_install_theme_file (gchar *filename, GtkListStore *store, GtkWindow *parent
 		gtk_widget_destroy (dialog);
 	}
 
-	gtk_list_store_clear (store);
-		
-	dp = opendir (theme_dir);
-		
-	if (dp != NULL) {
-		select_iter = read_html_themes (store, theme_dir, dp, dir);
-		closedir (dp);
-	}
+	select_iter = read_themes (store);
 		
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (theme_list));
 
@@ -2283,83 +1877,6 @@ html_install_theme_file (gchar *filename, GtkListStore *store, GtkWindow *parent
 }
 
 static void
-theme_install_response (GtkWidget *chooser, gint response, gpointer data)
-{
-	GtkListStore *store = data;
-	gchar *filename;
-
-	if (response != GTK_RESPONSE_OK) {
-		gtk_widget_destroy (chooser);
-		return;
-	}
-
-	if (last_theme_installed != NULL) {
-		g_free (last_theme_installed);
-	}
-
-	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));	
-	last_theme_installed = g_strdup (filename);
-	
-	if (filename == NULL) {
-	
-		GtkWidget *dialog;
-
-		dialog = hig_dialog_new (GTK_WINDOW (chooser),
-					 GTK_DIALOG_MODAL | 
-					 GTK_DIALOG_DESTROY_WITH_PARENT,
-					 GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_OK,
-					 _("No file selected"),
-					 "");
-		gtk_dialog_run (GTK_DIALOG (dialog));
-		gtk_widget_destroy (dialog);
-		return;
-	}
-
-	install_theme_file (filename, store, GTK_WINDOW (chooser));
-	gtk_widget_destroy (chooser);
-	g_free (filename);
-}
-
-static void
-install_new_theme (GtkWidget *button, gpointer data)
-{
-	GtkListStore *store = data;
-	static GtkWidget *chooser = NULL;
-	GtkWidget *setup_dialog;
-	GtkFileFilter *filter;
-	
-	setup_dialog = glade_xml_get_widget (xml, "setup_dialog");
-	
-	chooser = gtk_file_chooser_dialog_new (_("Select Theme Archive"),
-					       GTK_WINDOW (setup_dialog),
-					       GTK_FILE_CHOOSER_ACTION_OPEN,
-					       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-					       _("_Install"), GTK_RESPONSE_OK,
-					       NULL);
-	
-	filter = gtk_file_filter_new ();
-	gtk_file_filter_set_name (filter, _("Theme archives"));
-	gtk_file_filter_add_mime_type (filter, "application/x-tar");
-	gtk_file_filter_add_mime_type (filter, "application/x-compressed-tar");
-	
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (chooser), filter);
-	
-	gtk_file_chooser_set_show_hidden (GTK_FILE_CHOOSER (chooser), FALSE);
-
-	g_signal_connect (G_OBJECT (chooser), "destroy",
-			  G_CALLBACK (gtk_widget_destroyed), &chooser);
-	g_signal_connect (G_OBJECT (chooser), "response",
-			  G_CALLBACK (theme_install_response), store);
-
-	if (last_theme_installed != NULL) {
-		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (chooser),
-		                               last_theme_installed);
-	}
-	gtk_widget_show (chooser);
-}
-
-static void
 html_theme_install_response (GtkWidget *chooser, gint response, gpointer data)
 {
 	GtkListStore *store = data;
@@ -2368,14 +1885,9 @@ html_theme_install_response (GtkWidget *chooser, gint response, gpointer data)
 	if (response != GTK_RESPONSE_OK) {
 		gtk_widget_destroy (chooser);
 		return;
-	}
-
-	if (last_html_theme_installed != NULL) {
-		g_free (last_html_theme_installed);
-	}
+	}	
 
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));	
-	last_html_theme_installed = g_strdup (filename);
 	
 	if (filename == NULL) {
 	
@@ -2424,143 +1936,28 @@ install_new_html_theme (GtkWidget *button, gpointer data)
 	
 	gtk_file_chooser_set_show_hidden (GTK_FILE_CHOOSER (chooser), FALSE);
 
-	g_signal_connect (G_OBJECT (chooser), "destroy",
-			  G_CALLBACK (gtk_widget_destroyed), &chooser);
-	g_signal_connect (G_OBJECT (chooser), "response",
-			  G_CALLBACK (html_theme_install_response), store);
-
-	if (last_html_theme_installed != NULL) {
-		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (chooser),
-		                               last_html_theme_installed);
-	}
+	g_signal_connect (G_OBJECT (chooser), "destroy", G_CALLBACK (gtk_widget_destroyed), &chooser);
+	g_signal_connect (G_OBJECT (chooser), "response", G_CALLBACK (html_theme_install_response), store);
+	
 	gtk_widget_show (chooser);
 }
 
 static void
-delete_theme (GtkWidget *button, gpointer data)
+preview_mdm (GtkWidget *button)
 {
-	GtkListStore *store = data;
-	GtkWidget *theme_list;	
-	GtkWidget *setup_dialog;
-	GtkTreeSelection *selection;
-    char *dir, *name;
-	GtkTreeModel *model;
-	GtkTreeIter iter;
-	GValue value = {0, };
-	GtkWidget *dlg;
-	char *s;	
-
-	setup_dialog = glade_xml_get_widget (xml, "setup_dialog");
-	theme_list = glade_xml_get_widget (xml, "gg_theme_list");	
-
-	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (theme_list));	
-
-	if ( ! gtk_tree_selection_get_selected (selection, &model, &iter)) {
-		/* should never get here since the button shuld not be
-		 * enabled */
-		return;
-	}
-
-	gtk_tree_model_get_value (model, &iter,
-							  THEME_COLUMN_SELECTED,
-							  &value);
-						
-	/* Do not allow deleting of selected theme */
-	if (g_value_get_boolean (&value)) {
-		/* should never get here since the button shuld not be
-		 * enabled */
-		g_value_unset (&value);
-		return;
-	}
-	g_value_unset (&value);
-
-	gtk_tree_model_get_value (model, &iter,
-				  THEME_COLUMN_NAME,
-				  &value);
-	name = g_strdup (g_value_get_string (&value));
-	g_value_unset (&value);
-
-	gtk_tree_model_get_value (model, &iter,
-				  THEME_COLUMN_DIR,
-				  &value);
-	dir = g_strdup (g_value_get_string (&value));
-	g_value_unset (&value);
-
-	s = g_strdup_printf (_("Remove the %s theme?"), name);
-	dlg = hig_dialog_new (GTK_WINDOW (setup_dialog),
-			      GTK_DIALOG_MODAL | 
-			      GTK_DIALOG_DESTROY_WITH_PARENT,
-			      GTK_MESSAGE_WARNING,
-			      GTK_BUTTONS_NONE,
-			      s,
-		 _("If you choose to remove the theme, it will be permanently lost."));
-	g_free (s);
-
-	button = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-	gtk_dialog_add_action_widget (GTK_DIALOG (dlg), button, GTK_RESPONSE_NO);
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_widget_show (button);
-
-	button = gtk_button_new_from_stock (_("_Remove Theme"));
-	gtk_dialog_add_action_widget (GTK_DIALOG (dlg), button, GTK_RESPONSE_YES);
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_widget_show (button);
-	
-	gtk_dialog_set_default_response (GTK_DIALOG (dlg),
-					 GTK_RESPONSE_YES);
-
-	if (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_YES) {
-		char *theme_dir = get_theme_dir ();
-		char *cwd = g_get_current_dir ();
-		if (g_chdir (theme_dir) == 0 &&
-		    /* this is a security sanity check, since we're doing rm -fR */
-		    strchr (dir, '/') == NULL) {
-			/* HACK! */
-			DIR *dp;
-			char *argv[4];
-			GtkTreeIter *select_iter = NULL;
-			argv[0] = "/bin/rm";
-			argv[1] = "-fR";
-			argv[2] = g_strconcat ("./", dir, NULL);
-			argv[3] = NULL;
-			simple_spawn_sync (argv);
-			g_free (argv[2]);
-
-			/* Update the list */
-			gtk_list_store_clear (store);
-
-			dp = opendir (theme_dir);
-
-			if (dp != NULL) {
-				select_iter = read_themes (store, theme_dir, dp, 
-							   selected_theme);
-				closedir (dp);
-			}
-
-			if (select_iter != NULL) {
-				gtk_tree_selection_select_iter (selection, select_iter);
-				g_free (select_iter);
-			}
-
-		}
-		g_chdir (cwd);
-		g_free (cwd);
-		g_free (theme_dir);
-	}
-	gtk_widget_destroy (dlg);
-
-	g_free (name);
-	g_free (dir);
+	system ("mdmflexiserver &");
 }
 
 static void
 delete_html_theme (GtkWidget *button, gpointer data)
 {
 	GtkListStore *store = data;
-	GtkWidget *theme_list;	
+	GtkWidget *theme_list;
 	GtkWidget *setup_dialog;
 	GtkTreeSelection *selection;
-    char *dir, *name;
+    char *dir, *name, * theme_dir;
+    gboolean selected;
+	int type;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 	GValue value = {0, };
@@ -2570,41 +1967,31 @@ delete_html_theme (GtkWidget *button, gpointer data)
 	setup_dialog = glade_xml_get_widget (xml, "setup_dialog");
 	theme_list = glade_xml_get_widget (xml, "gg_html_theme_list");	
 
-	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (theme_list));	
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (theme_list));
+	gtk_tree_selection_get_selected (selection, &model, &iter);			
 
-	if ( ! gtk_tree_selection_get_selected (selection, &model, &iter)) {
-		/* should never get here since the button shuld not be
-		 * enabled */
-		return;
-	}
-
-	gtk_tree_model_get_value (model, &iter,
-							  THEME_COLUMN_SELECTED,
-							  &value);
-						
-	/* Do not allow deleting of selected theme */
-	if (g_value_get_boolean (&value)) {
-		/* should never get here since the button shuld not be
-		 * enabled */
-		g_value_unset (&value);
-		return;
-	}
+	gtk_tree_model_get_value (model, &iter, THEME_COLUMN_SELECTED, &value);
+	selected = g_value_get_boolean (&value);
 	g_value_unset (&value);
 
-	gtk_tree_model_get_value (model, &iter,
-				  THEME_COLUMN_NAME,
-				  &value);
+	gtk_tree_model_get_value (model, &iter, THEME_COLUMN_TYPE, &value);
+	type = g_value_get_int (&value);
+	g_value_unset (&value);
+
+	gtk_tree_model_get_value (model, &iter, THEME_COLUMN_NAME, &value);
 	name = g_strdup (g_value_get_string (&value));
 	g_value_unset (&value);
 
-	gtk_tree_model_get_value (model, &iter,
-				  THEME_COLUMN_DIR,
-				  &value);
+	gtk_tree_model_get_value (model, &iter, THEME_COLUMN_DIR, &value);
 	dir = g_strdup (g_value_get_string (&value));
 	g_value_unset (&value);
 
-	s = g_strdup_printf (_("Remove the \"%s\" theme?"),
-			     name);
+	if (selected || type == THEME_TYPE_GTK) {		
+		// Don't allow the deletion of GTK greeter or the active theme
+		return;
+	}
+
+	s = g_strdup_printf (_("Remove the \"%s\" theme?"), name);
 	dlg = hig_dialog_new (GTK_WINDOW (setup_dialog),
 			      GTK_DIALOG_MODAL | 
 			      GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -2624,37 +2011,33 @@ delete_html_theme (GtkWidget *button, gpointer data)
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_widget_show (button);
 	
-	gtk_dialog_set_default_response (GTK_DIALOG (dlg),
-					 GTK_RESPONSE_YES);
+	gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_YES);
 
 	if (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_YES) {		
 		char *cwd = g_get_current_dir ();
-		if (g_chdir ("/usr/share/mdm/html-themes") == 0 &&
+
+		if (type == THEME_TYPE_HTML) {
+			theme_dir = "/usr/share/mdm/html-themes";
+		}
+		else {
+			theme_dir = get_theme_dir();
+		}
+
+		if (g_chdir (theme_dir) == 0 &&
 		    /* this is a security sanity check, since we're doing rm -fR */
 		    strchr (dir, '/') == NULL) {
-			/* HACK! */
-			DIR *dp;
+			/* HACK! */			
 			char *argv[4];
 			GtkTreeIter *select_iter = NULL;
 			argv[0] = "/bin/rm";
 			argv[1] = "-fR";
-			argv[2] = g_strconcat ("./", dir, NULL);
-			printf (argv[2]);
+			argv[2] = g_strconcat ("./", dir, NULL);			
 			argv[3] = NULL;
 			simple_spawn_sync (argv);
-			g_free (argv[2]);
+			g_free (argv[2]);			
 
-			/* Update the list */
-			gtk_list_store_clear (store);
-
-			dp = opendir ("/usr/share/mdm/html-themes");
-
-			if (dp != NULL) {
-				select_iter = read_html_themes (store, "/usr/share/mdm/html-themes", dp, 
-							   selected_html_theme);
-				closedir (dp);
-			}
-
+			select_iter = read_themes (store);
+			
 			if (select_iter != NULL) {
 				gtk_tree_selection_select_iter (selection, select_iter);
 				g_free (select_iter);
@@ -2709,59 +2092,6 @@ get_file_list_from_uri_list (gchar *uri_list)
 	}
 	g_strfreev (uris);
 	return g_list_reverse (list);
-}
-
-static void  
-theme_list_drag_data_received  (GtkWidget        *widget,
-                                GdkDragContext   *context,
-                                gint              x,
-                                gint              y,
-                                GtkSelectionData *data,
-                                guint             info,
-                                guint             time,
-                                gpointer          extra_data)
-{
-	GtkWidget *parent;
-	GtkWidget *theme_list;
-	GtkListStore *store;
-	GList *list;
-	
-	parent = glade_xml_get_widget (xml, "setup_dialog");
-	theme_list = glade_xml_get_widget (xml, "gg_theme_list");
-	store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (theme_list)));
-
-	gtk_drag_finish (context, TRUE, FALSE, time);
-
-	for (list = get_file_list_from_uri_list ((gchar *)data->data); list != NULL; list = list-> next) {
-
-		GtkWidget *prompt;
-		gchar *base;
-		gchar *mesg;
-		gchar *detail;
-		gint response;
-
-		base = g_path_get_basename ((gchar *)list->data);
-		mesg = g_strdup_printf (_("Install the theme from '%s'?"), base);
-		detail = g_strdup_printf (_("Select install to add the theme from the file '%s'."), (gchar *)list->data); 
-		
-		prompt = hig_dialog_new (GTK_WINDOW (parent),
-					 GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-					 GTK_MESSAGE_QUESTION,
-					 GTK_BUTTONS_NONE,
-					 mesg,
-					 detail);
-
-		gtk_dialog_add_button (GTK_DIALOG (prompt), "gtk-cancel", GTK_RESPONSE_CANCEL); 
-		gtk_dialog_add_button (GTK_DIALOG (prompt), _("_Install"), GTK_RESPONSE_OK);
-
-		response = gtk_dialog_run (GTK_DIALOG (prompt));
-		gtk_widget_destroy (prompt);
-		g_free (mesg);
-
-		if (response == GTK_RESPONSE_OK) {
-			install_theme_file (list->data, store, GTK_WINDOW (parent));
-		}
-	}
 }
 
 static void  
@@ -2848,132 +2178,9 @@ theme_list_equal_func (GtkTreeModel * model,
 	return results;
 }
 
-
 static void
-setup_local_themed_settings (void)
-{	
-	DIR *dir;
-	GtkListStore *store;
-	GtkCellRenderer *renderer;
-	GtkTreeViewColumn *column;
-	GtkTreeSelection *selection;
-	GtkTreeIter *select_iter = NULL;
-	GtkWidget *style_label;
-	GtkWidget *theme_label;
-	GtkSizeGroup *size_group;
-	char *theme_dir;
-	
-	GtkWidget *theme_list = glade_xml_get_widget (xml, "gg_theme_list");
-	GtkWidget *button = glade_xml_get_widget (xml, "gg_install_new_theme");
-	GtkWidget *del_button = glade_xml_get_widget (xml, "gg_delete_theme");	
-
-	style_label = glade_xml_get_widget (xml, "local_stylelabel");
-	theme_label = glade_xml_get_widget (xml, "local_theme_label");
-	size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-	gtk_size_group_add_widget (size_group, style_label);
-	gtk_size_group_add_widget (size_group, theme_label);
-		
-	theme_dir = get_theme_dir ();
-
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (theme_list), TRUE);
-
-	selected_theme  = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);	
-
-	/* FIXME: If a theme directory contains the string MDM_DELIMITER_THEMES
-		  in the name, then this theme won't work when trying to load as it
-		  will be perceived as two different themes seperated by
-		  MDM_DELIMITER_THEMES.  This can be fixed by setting up an escape
-		  character for it, but I'm not sure if directories can have the
-		  slash (/) character in them, so I just made MDM_DELIMITER_THEMES
-		  equal to "/:" instead. */
-	
-	/* create list store */
-	store = gtk_list_store_new (THEME_NUM_COLUMNS,
-				    G_TYPE_BOOLEAN /* selected theme */,				  
-				    G_TYPE_STRING /* dir */,
-				    G_TYPE_STRING /* file */,
-				    GDK_TYPE_PIXBUF /* preview */,
-				    G_TYPE_STRING /* markup */,
-				    G_TYPE_STRING /* name */,
-				    G_TYPE_STRING /* desc */);
-		
-	g_signal_connect (button, "clicked",
-			  G_CALLBACK (install_new_theme), store);
-	g_signal_connect (del_button, "clicked",
-			  G_CALLBACK (delete_theme), store);
-
-	/* Init controls */
-	gtk_widget_set_sensitive (del_button, FALSE);	
-
-	/* Read all Themes from directory and store in tree */
-	dir = opendir (theme_dir);
-	if (dir != NULL) {
-		select_iter = read_themes (store, theme_dir, dir,
-					   selected_theme);
-		closedir (dir);
-	}
-	g_free (theme_dir);
-	gtk_tree_view_set_model (GTK_TREE_VIEW (theme_list), 
-				 GTK_TREE_MODEL (store));
-
-	/* The radio toggle column */
-	column = gtk_tree_view_column_new ();
-	renderer = gtk_cell_renderer_toggle_new ();
-	gtk_cell_renderer_toggle_set_radio (GTK_CELL_RENDERER_TOGGLE (renderer),
-					    TRUE);
-	g_signal_connect (G_OBJECT (renderer), "toggled",
-			  G_CALLBACK (selected_toggled), store);
-	gtk_tree_view_column_pack_start (column, renderer, FALSE);
-	gtk_tree_view_column_set_attributes (column, renderer,
-		"active", THEME_COLUMN_SELECTED, NULL);
-	gtk_tree_view_append_column (GTK_TREE_VIEW (theme_list), column);
-	gtk_tree_view_column_set_visible(column, TRUE);
-	
-	/* The preview column */
-	column   = gtk_tree_view_column_new ();
-	renderer = gtk_cell_renderer_pixbuf_new ();
-	gtk_tree_view_column_pack_start (column, renderer, FALSE);
-        gtk_tree_view_column_set_attributes (column, renderer,
-                                             "pixbuf", THEME_COLUMN_SCREENSHOT,
-                                             NULL);
-	/* The markup column */
-	renderer = gtk_cell_renderer_text_new ();
-	gtk_tree_view_column_pack_start (column, renderer, FALSE);
-	gtk_tree_view_column_set_attributes (column, renderer,
-		"markup", THEME_COLUMN_MARKUP, NULL);
-	gtk_tree_view_column_set_spacing (column, 6);
-	gtk_tree_view_append_column (GTK_TREE_VIEW (theme_list), column);
-
-	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store),
-	                                      THEME_COLUMN_MARKUP, GTK_SORT_ASCENDING);
-
-	gtk_tree_view_set_search_equal_func (GTK_TREE_VIEW (theme_list),
-	                                     theme_list_equal_func, NULL, NULL);
-
-	/* Selection setup */
-	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (theme_list));
-	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
-	g_signal_connect (selection, "changed",
-		G_CALLBACK (gg_selection_changed), NULL);
-
-	gtk_drag_dest_set (theme_list,
-			   GTK_DEST_DEFAULT_ALL,
-			   target_table, n_targets,
-			   GDK_ACTION_COPY);
-			   
-	g_signal_connect (theme_list, "drag_data_received",
-		G_CALLBACK (theme_list_drag_data_received), NULL);
-
-	if (select_iter != NULL) {
-		gtk_tree_selection_select_iter (selection, select_iter);
-		g_free (select_iter);
-	}
-}
-
-static void
-setup_local_html_themed_settings (void)
+setup_themes (void)
 {		
-	DIR *dir;
 	GtkListStore *store;
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
@@ -2983,10 +2190,12 @@ setup_local_html_themed_settings (void)
 	GtkWidget *theme_list = glade_xml_get_widget (xml, "gg_html_theme_list");
 	GtkWidget *button = glade_xml_get_widget (xml, "gg_install_new_html_theme");
 	GtkWidget *del_button = glade_xml_get_widget (xml, "gg_delete_html_theme");				
+	GtkWidget *preview_button = glade_xml_get_widget (xml, "button_preview");	
 	
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (theme_list), TRUE);
 
 	selected_html_theme  = mdm_config_get_string (MDM_KEY_HTML_THEME);	
+	selected_theme  = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);
 		
 	/* create list store */
 	store = gtk_list_store_new (THEME_NUM_COLUMNS,
@@ -2996,36 +2205,29 @@ setup_local_html_themed_settings (void)
 				    GDK_TYPE_PIXBUF /* preview */,
 				    G_TYPE_STRING /* markup */,
 				    G_TYPE_STRING /* name */,
-				    G_TYPE_STRING /* desc */);
+				    G_TYPE_STRING /* desc */,
+					G_TYPE_INT /* theme type */
+		);
 		
-	g_signal_connect (button, "clicked",
-			  G_CALLBACK (install_new_html_theme), store);
-	g_signal_connect (del_button, "clicked",
-			  G_CALLBACK (delete_html_theme), store);
+	g_signal_connect (button, "clicked", G_CALLBACK (install_new_html_theme), store);
+	g_signal_connect (del_button, "clicked", G_CALLBACK (delete_html_theme), store);
+	g_signal_connect (preview_button, "clicked", G_CALLBACK (preview_mdm), NULL);
 
 	/* Init controls */
-	gtk_widget_set_sensitive (del_button, FALSE);	
+	gtk_widget_set_sensitive (del_button, FALSE);		
 
-	/* Read all Themes from directory and store in tree */
-	dir = opendir ("/usr/share/mdm/html-themes");
-	if (dir != NULL) {		
-		select_iter = read_html_themes (store, "/usr/share/mdm/html-themes", dir,
-					   selected_html_theme);
-		closedir (dir);
-	}	
-	gtk_tree_view_set_model (GTK_TREE_VIEW (theme_list), 
-				 GTK_TREE_MODEL (store));
+	/* Add themes */	
+	select_iter = read_themes (store);
+	
+	gtk_tree_view_set_model (GTK_TREE_VIEW (theme_list), GTK_TREE_MODEL (store));
 
 	/* The radio toggle column */
 	column = gtk_tree_view_column_new ();
 	renderer = gtk_cell_renderer_toggle_new ();
-	gtk_cell_renderer_toggle_set_radio (GTK_CELL_RENDERER_TOGGLE (renderer),
-					    TRUE);
-	g_signal_connect (G_OBJECT (renderer), "toggled",
-			  G_CALLBACK (selected_html_toggled), store);
+	gtk_cell_renderer_toggle_set_radio (GTK_CELL_RENDERER_TOGGLE (renderer), TRUE);
+	g_signal_connect (G_OBJECT (renderer), "toggled", G_CALLBACK (selected_html_toggled), store);
 	gtk_tree_view_column_pack_start (column, renderer, FALSE);
-	gtk_tree_view_column_set_attributes (column, renderer,
-		"active", THEME_COLUMN_SELECTED, NULL);
+	gtk_tree_view_column_set_attributes (column, renderer, "active", THEME_COLUMN_SELECTED, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (theme_list), column);
 	gtk_tree_view_column_set_visible(column, TRUE);
 	
@@ -3033,36 +2235,28 @@ setup_local_html_themed_settings (void)
 	column   = gtk_tree_view_column_new ();
 	renderer = gtk_cell_renderer_pixbuf_new ();
 	gtk_tree_view_column_pack_start (column, renderer, FALSE);
-        gtk_tree_view_column_set_attributes (column, renderer,
-                                             "pixbuf", THEME_COLUMN_SCREENSHOT,
-                                             NULL);
+    gtk_tree_view_column_set_attributes (column, renderer, "pixbuf", THEME_COLUMN_SCREENSHOT, NULL);
+
 	/* The markup column */
 	renderer = gtk_cell_renderer_text_new ();
 	gtk_tree_view_column_pack_start (column, renderer, FALSE);
-	gtk_tree_view_column_set_attributes (column, renderer,
-		"markup", THEME_COLUMN_MARKUP, NULL);
+	gtk_tree_view_column_set_attributes (column, renderer, "markup", THEME_COLUMN_MARKUP, NULL);
 	gtk_tree_view_column_set_spacing (column, 6);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (theme_list), column);
 
-	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store),
-	                                      THEME_COLUMN_MARKUP, GTK_SORT_ASCENDING);
+	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store), THEME_COLUMN_MARKUP, GTK_SORT_ASCENDING);
+	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store), THEME_COLUMN_TYPE, GTK_SORT_ASCENDING);
 
-	gtk_tree_view_set_search_equal_func (GTK_TREE_VIEW (theme_list),
-	                                     theme_list_equal_func, NULL, NULL);
+	gtk_tree_view_set_search_equal_func (GTK_TREE_VIEW (theme_list), theme_list_equal_func, NULL, NULL);
 
 	/* Selection setup */
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (theme_list));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
-	g_signal_connect (selection, "changed",
-		G_CALLBACK (gg_html_selection_changed), NULL);
+	g_signal_connect (selection, "changed", G_CALLBACK (gg_html_selection_changed), NULL);
 
-	gtk_drag_dest_set (theme_list,
-			   GTK_DEST_DEFAULT_ALL,
-			   target_table, n_targets,
-			   GDK_ACTION_COPY);
+	gtk_drag_dest_set (theme_list, GTK_DEST_DEFAULT_ALL, target_table, n_targets, GDK_ACTION_COPY);
 			   
-	g_signal_connect (theme_list, "drag_data_received",
-		G_CALLBACK (html_theme_list_drag_data_received), NULL);
+	g_signal_connect (theme_list, "drag_data_received", G_CALLBACK (html_theme_list_drag_data_received), NULL);
 
 	if (select_iter != NULL) {
 		gtk_tree_selection_select_iter (selection, select_iter);
@@ -3076,15 +2270,6 @@ delete_event (GtkWidget *w)
 	timeout_remove_all ();
 	gtk_main_quit ();
 	return FALSE;
-}
-
-static void
-dialog_response (GtkWidget *dlg, int response, gpointer data)
-{
-	if (response == GTK_RESPONSE_CLOSE) {
-		timeout_remove_all ();
-		gtk_main_quit ();
-	} 
 }
 
 static void
@@ -3143,11 +2328,10 @@ create_preview_pixbuf (gchar *uri)
 		}
 		
 		if (file != NULL) {
-			GdkPixbufFormat *info = NULL;
 			gint width;
 			gint height;
 			
-			info = gdk_pixbuf_get_file_info (file, &width, &height);
+			gdk_pixbuf_get_file_info (file, &width, &height);
 
 			if (width > 128 || height > 128) {
 				pixbuf = gdk_pixbuf_new_from_file_at_size (file, 128, 128, NULL);
@@ -3312,11 +2496,7 @@ setup_local_welcome_message (void)
 
 static void
 setup_local_plain_settings (void)
-{
-	/* Style setting */
-	setup_greeter_combobox ("local_greeter",
-	                        MDM_KEY_GREETER);
-	
+{		
 	/* Plain background settings */
 	hookup_plain_background ();	
 	
@@ -3444,24 +2624,83 @@ setup_monitors (void)
 	}	
 }
 
+static void
+icon_selected (GtkWidget *iconview)
+{
+	GtkTreeModel *model;
+	GList *list;
+	int len;
+	GtkTreeIter iter;
+	int * id;
+
+	model = gtk_icon_view_get_model (iconview);
+	list = gtk_icon_view_get_selected_items (iconview);
+	if (list == NULL) {
+		return;
+	}
+
+	len = g_list_length (list);
+	if (len >= 1) {
+		gtk_tree_model_get_iter (model, &iter, list->data);
+		gtk_tree_model_get (model, &iter, ICONS_ID, &id, -1);
+		gtk_notebook_set_page(setup_notebook, id);
+	}
+
+	g_list_foreach (list, (GFunc)gtk_tree_path_free, NULL);
+	g_list_free (list);	
+}
+
 static GtkWidget *
 setup_gui (void)
 {
-	GtkWidget *dialog;
+	GtkWidget *window;
 
-	xml = glade_xml_new (MDM_GLADE_DIR "/mdmsetup.glade", "setup_dialog", NULL);
+	xml = glade_xml_new (MDM_GLADE_DIR "/mdmsetup.glade", "main_window", NULL);
 
-	dialog = glade_xml_get_widget (xml, "setup_dialog");
+	window = glade_xml_get_widget (xml, "main_window");
 
-	g_signal_connect (G_OBJECT (dialog), "delete_event",
-			  G_CALLBACK (delete_event), NULL);
-	g_signal_connect (G_OBJECT (dialog), "response",
-			  G_CALLBACK (dialog_response), NULL);
-
+	g_signal_connect (G_OBJECT (window), "delete_event", G_CALLBACK (delete_event), NULL);
+	
 	setup_notebook = glade_xml_get_widget (xml, "setup_notebook");
 
-	/* Markup glade labels */
+	GtkWidget *iconview = glade_xml_get_widget (xml, "iconview");
+	GtkListStore *iconstore = gtk_list_store_new (ICONS_NUM, GTK_TYPE_INT, GTK_TYPE_STRING, GDK_TYPE_PIXBUF);
+	
+	GtkIconTheme *theme = gtk_icon_theme_get_default();
+    GtkTreeIter iter;
+	
+	gtk_list_store_append (iconstore, &iter);
+	gtk_list_store_set(iconstore, &iter,
+		ICONS_ID, 0,
+		ICONS_NAME, _("Theme"),
+		ICONS_PIC, gtk_icon_theme_load_icon (theme, "preferences-desktop-theme", 36, GTK_ICON_LOOKUP_NO_SVG, NULL), 
+		-1);
+
+	gtk_list_store_append (iconstore, &iter);
+	gtk_list_store_set(iconstore, &iter,
+		ICONS_ID, 1,
+		ICONS_NAME, _("Auto login"),
+		ICONS_PIC, gtk_icon_theme_load_icon (theme, "gnome-logout", 36, GTK_ICON_LOOKUP_NO_SVG, NULL), 
+		-1);
+
+	gtk_list_store_append (iconstore, &iter);
+	gtk_list_store_set(iconstore, &iter,
+		ICONS_ID, 2,
+		ICONS_NAME, _("Options"),
+		ICONS_PIC, gtk_icon_theme_load_icon (theme, "preferences-desktop", 36, GTK_ICON_LOOKUP_NO_SVG, NULL), 
+		-1);
+
+	gtk_icon_view_set_text_column(iconview, ICONS_NAME);
+	gtk_icon_view_set_pixbuf_column(iconview, ICONS_PIC);
+    gtk_icon_view_set_model(iconview, iconstore);
+    gtk_icon_view_select_path(iconview, gtk_tree_path_new_first());
+    g_signal_connect (G_OBJECT (iconview), "selection_changed",	G_CALLBACK (icon_selected), NULL);
+
+	gtk_widget_show_all (iconview);
+
+	/* Markup glade labels */	
 	glade_helper_tagify_label (xml, "themes_label", "b");
+	glade_helper_tagify_label (xml, "local_style_label", "b");	
 	glade_helper_tagify_label (xml, "local_background_label", "b");	
 	glade_helper_tagify_label (xml, "local_menubar_label", "b");
 	glade_helper_tagify_label (xml, "local_welcome_message_label", "b");
@@ -3469,13 +2708,16 @@ setup_gui (void)
 	glade_helper_tagify_label (xml, "label_welcome_note", "small");		
 	glade_helper_tagify_label (xml, "autologin", "b");
 	glade_helper_tagify_label (xml, "timedlogin", "b");	
+
+	gtk_widget_set_tooltip_text (glade_xml_get_widget (xml, "gg_install_new_html_theme"), _("Add a new theme"));
+	gtk_widget_set_tooltip_text (glade_xml_get_widget (xml, "gg_delete_html_theme"), _("Remove the selected theme"));
+	gtk_widget_set_tooltip_text (glade_xml_get_widget (xml, "button_preview"), _("Launch the login screen to preview the theme"));
 	
 	/* Setup preference tabs */
 	setup_default_session();	
 	setup_monitors();
 	setup_local_plain_settings ();
-	setup_local_themed_settings ();
-	setup_local_html_themed_settings();	
+	setup_themes();	
 	
 	GtkWidget *checkbox;
 	GtkWidget *label;
@@ -3520,7 +2762,7 @@ setup_gui (void)
 	setup_intspin ("timedlogin_seconds", MDM_KEY_TIMED_LOGIN_DELAY);
 	setup_notify_toggle ("timedlogin", MDM_KEY_TIMED_LOGIN_ENABLE);	
 
-	return (dialog);
+	return (window);
 }
 
 static gboolean
@@ -3638,7 +2880,7 @@ int
 main (int argc, char *argv[])
 {
 
-	GtkWidget *dialog;
+	GtkWidget *window;
 
 	mdm_config_never_cache (TRUE);
 
@@ -3754,9 +2996,9 @@ main (int argc, char *argv[])
 	/* Done using socket */
 	mdmcomm_close_connection_to_daemon ();	
 	
-	dialog = setup_gui ();
+	window = setup_gui ();
 	
-	gtk_widget_show (dialog);
+	gtk_widget_show (window);
 
 	if (RUNNING_UNDER_MDM) {
 		guint sid;
