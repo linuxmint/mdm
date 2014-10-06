@@ -63,10 +63,14 @@
     </copyright><copyright><year>2007</year><holder>David Lodge (dave@cirt.net)</holder></copyright>
 
       <legalnotice id="legalnotice">
-	<para>Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation Licence (GFDL), Version 1.1 or any later version published by the Free Software Foundation with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You can find a copy of the GFDL at this <ulink type="help" url="ghelp:fdl">link</ulink> or in the file COPYING-DOCS distributed with this manual.</para>
-         <para>This manual is part of a collection of GNOME manuals distributed under the GFDL. If you want to distribute this manual separately from the collection, you can do so by adding a copy of the licence to the manual, as described in section 6 of the licence.</para>
+	<para>Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation Licence (GFDL), Version 1.1 or any later version published by the Free Software Foundation with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You can find a copy of the GFDL at this <ulink type="help" url="ghelp:fdl">link</ulink> or in the file COPYING-DOCS distributed with this manual.</para>        
 
-	<para>Many of the names used by companies to distinguish their products and services are claimed as trademarks. Where those names appear in any GNOME documentation, and the members of the GNOME Documentation Project are made aware of those trademarks, then the names are in capital letters or initial capital letters.</para>
+	<para>
+	  Many of the names used by companies to distinguish their
+	  products and services are claimed as trademarks. Where those
+	  names appear in any documentation the names are in capital 
+          letters or initial capital letters.
+	</para>
 
 	<para>DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS OF THE GNU FREE DOCUMENTATION LICENCE WITH THE FURTHER UNDERSTANDING THAT: <orderedlist>
 		<listitem>
@@ -94,26 +98,24 @@
       It was last updated on 03/10/2008.
     </para>  
 
-    <para>
-      Chooser - A program used to select a remote host for managing a
-      display remotely on the attached display (<command>mdmchooser</command>).
-    </para>
-
     <para>Configurator - The configuration application (<command>mdmsetup</command>).</para>
 
     <para>MDM - MDM Display Manager. Used to describe the software package as a whole. Sometimes also referred to as MDM2.</para>
 
     <para>mdm - The MDM Display Manager daemon (<command>mdm</command>).</para>
 
-    <para>Greeter - The graphical login window (<command>mdmlogin</command> or <command>mdmgreeter</command>).</para>
+    <para>
+      Greeter - The graphical login window (<command>mdmlogin</command> or
+      <command>mdmgreeter</command> or <command>mdmwebkit</command>).
+    </para>
 
     <para>GTK+ Greeter - The standard login window (<command>mdmlogin</command>).</para>
 
     <para>PAM - Pluggable Authentication Mechanism</para>
 
-    <para>Themed Greeter - The themable login window ( <command>mdmgreeter</command>).</para>
-
-    <para>XDMCP - X Display Manage Protocol</para>
+    <para>
+      Themed Greeter - The themable login window (<command>mdmgreeter</command>).
+    </para>   
 
     <para>Paths that start with a word in angle brackets are relative to the installation prefix. I.e. <filename>&lt;share&gt;/pixmaps/</filename> refers to <filename>&lt;share&gt;/pixmaps</filename> if MDM was configured with <command>--prefix=/usr</command>. Normally also note that MDM is installed with <command>--sysconfigdir=&lt;etc&gt;/X11</command>, meaning any path to which we refer to as <filename>&lt;etc&gt;/mdm/PreSession</filename> usually means <filename>&lt;etc/X11&gt;/mdm/PreSession</filename>. Note that for interoperability it is recommended that you use a --prefix of <filename>/usr</filename> and a --sysconfdir of <filename>&lt;etc&gt;/X11</filename>.</para>
   </sect1>
@@ -136,8 +138,7 @@
         settings can affect security.  Issues to be aware of are highlighted
         in this document and in the MDM Configuration files.
       </para> 
-
-      <para>For further information about MDM, see the <ulink type="http" url="https://github.com/linuxmint/mdm/"> the MDM project website</ulink>. Please submit any bug reports or enhancement requests to the "mdm" category in <ulink type="http" url="http://bugzilla.gnome.org/">bugzilla.gnome.org</ulink>. You can also send a message to the <address><email>mdm-list@gnome.org</email></address> mail list to discuss any issues or concerns with the MDM program.</para>
+      
     </sect2>
 
     <sect2 id="stability">
@@ -164,10 +165,7 @@
         if there are any distribution-specific changes to these MDM interfaces
         and what support exists for them.
       </para>
-
-      <para>As of the MDM 2.15 development series, some one-dash arguments are no longer supported. This includes the "-xdmaddress", "-clientaddress", and "-connectionType" arguments used by <command>mdmchooser</command>. These arguments have been changed to use two dashes.</para>
-
-      <para>If issues are discovered that break compatibility, please file a bug with an "urgent" priority.</para>
+         
     </sect2>
 
     <sect2 id="daemonov">
@@ -191,7 +189,18 @@
 
       <para>The login GUI dialogue screen allows the user to select which session they wish to start and which language they wish to use. Sessions are defined by files that end in the .desktop extension and more information about these files can be found in the "Configuration" section. The user enters their name and password and if these successfully authenticate, MDM will start the requested session for the user. It is possible to configure MDM to avoid the authentication process by turning on the Automatic or Timed Login features in the MDM configuration. The login GUI can also be configured to provide additional features to the user, such as the Face Browser; the ability to halt, restart or suspend the system; and/or edit the login configuration (after entering the root password).</para>
 
-      <para>MDM, by default, will use Pluggable Authentication Modules (PAM) for authentication, but can also support regular crypt and shadow passwords on legacy systems. After authenticating a user, the daemon runs the <filename>PostLogin</filename> script as root, and forks a slave process to start the requested session. This slave process runs the <filename>PreSession</filename> script as root, sets up the user's environment, and starts the requested session. MDM keeps track of the user's default session and language in the user's <filename>~/.dmrc</filename> and will use these defaults if the user did not pick a session or language in the login GUI. On Solaris, MDM (since version 2.8.0.3) uses the SDTLOGIN interface after user authentication to tell the X server to be restarted as the user instead of as root for added security. When the user's session exits, the MDM daemon will run the <filename>PostSession</filename> script as root.</para>
+      <para> 
+        MDM uses Pluggable Authentication Modules (PAM) for
+        authentication. After authenticating a user, the daemon runs the
+        <filename>PostLogin</filename> script as root, and forks a slave
+        process to start the requested session.  This slave process runs the
+        <filename>PreSession</filename> script as root, sets up the user's
+        environment, and starts the requested session.  MDM keeps track of the
+        user's default session and language in the user's
+        <filename>~/.dmrc</filename> and will use these defaults if the user
+        did not pick a session or language in the login GUI. When the user's session exits, the MDM
+        daemon will run the <filename>PostSession</filename> script as root.
+      </para>
 
       <para>Note that, by default, MDM uses the "mdm" service name for normal login and the "mdm-autologin" service name for automatic login. The <filename>PamStack</filename> configuration option can be used to specify a different service name. For example, if "foo" is specified, then MDM will use the "foo" service name for normal login and "foo-autologin" for automatic login.</para>
 
@@ -238,12 +247,9 @@
         <command>mdmflexiserver</command> command, or via calling the MDM
         socket protocol directly.  Some lock screen programs provide a button
         to start a new flexible session.  This allows a user to start a new
-        session even if the screen was left locked.  The GNOME Fast User
-        Switch applet also uses the socket protocol to provide an applet
-        interface on the GNOME panel for managing user displays quickly.
-        Flexible displays are not restarted when the user session ends.
-        Flexible displays require virtual terminal (VT) support in the kernel,
-        and will not be available if not supported (such as on Solaris). 
+        session even if the screen was left locked. Flexible displays are not 
+        restarted when the user session ends. Flexible displays require virtual 
+        terminal (VT) support in the kernel. 
        </para>
 
        <para>
@@ -3587,9 +3593,7 @@ Answers:
           <command>mdmXnestchooser somehost</command> will run the XDMCP
           chooser from host <command>somehost</command> inside a nested
           X server session.  You can make this command do a direct query
-          instead by passing the <command>-d</command> option as well.  In
-          addition to the following options, this command also supports
-          standard GNOME options.
+          instead by passing the <command>-d</command> option as well.
         </para>
 
         <variablelist>
@@ -3672,9 +3676,7 @@ Answers:
          as secure as a flexible server started via virtual terminals.
         </para>
 
-        <para>The <command>mdmflexiserver --command</command> option provides a way to send commands to the MDM daemon and can be used to debug problems or to change the MDM configuration.</para>
-
-        <para>In addition to the following options, <command>mdmflexiserver</command> also supports standard GNOME options.</para>
+        <para>The <command>mdmflexiserver --command</command> option provides a way to send commands to the MDM daemon and can be used to debug problems or to change the MDM configuration.</para>        
 
         <variablelist>
         <title><command>mdmflexichooser</command> Command Line Options</title>
@@ -3816,25 +3818,8 @@ Answers:
           </varlistentry>
         
         </variablelist>
-      </sect3>
+      </sect3>      
 
-      <sect3 id="mdmphotosetupcommandline">
-        <title><command>mdmphotosetup</command> Command Line Options</title>
-
-        <para>Allows the user to select an image that will be used as the user's photo by MDM's face browser, if enabled by MDM. The selected file is stored as <filename>~/.face</filename>. This command accepts the standard GNOME options.</para>
-      </sect3>
-
-      <sect3 id="mdmthemetestercommandline">
-        <title><command>mdmthemetester</command> Command Line Options</title>
-
-        <para><command>mdmthemetester</command> takes two parameters. The first parameter specifies the environment and the second parameter specifies the path name or the name of a theme to view. This is a tool for viewing a theme outside of MDM. It is useful for testing or viewing themes. <command>mdmthemetester</command> requires that the system support <command>mdmXnest</command>. Note that themes can display differently depending on the theme's "Show mode". <command>mdmthemetester</command> allows viewing the themes in different modes via the environment option. Valid environment values and their meanings follow: <screen>
-console       - In console mode.
-console-timed - In console non-flexi mode.
-flexi         - In flexi mode.
-xdmcp         - In remote (XDMCP) mode.
-remote-flexi  - In remote (XDMCP) &amp; flexi mode.
-</screen></para>
-      </sect3>
     </sect2>
 
     <sect2 id="sbindir_binaries">
@@ -3922,7 +3907,14 @@ remote-flexi  - In remote (XDMCP) &amp; flexi mode.
       <sect3 id="mdmsetupcommandline">
         <title><command>mdmsetup</command> Command Line Options</title>
 
-        <para><command>mdmsetup</command> runs a graphical application for modifying the MDM configuration file. Normally on systems that support the PAM user helper, this is set up such that when you run <command>mdmsetup</command> as an ordinary user, it will first ask you for your root password before starting. Otherwise, this application may only be run as root. This application supports standard GNOME options.</para>
+        <para>
+         <command>mdmsetup</command> runs a graphical application for modifying
+         the MDM configuration file.  Normally on systems that support
+         the PAM userhelper, this is setup such that when you run
+         <command>mdmsetup</command> as an ordinary user, it will first
+         ask you for your root password before starting.  Otherwise, this
+         application may only be run as root.
+        </para>
       </sect3>
 
       <sect3 id="mdmrestartcommandline">
@@ -5260,10 +5252,7 @@ HALT:solaris.system.shutdown;REBOOT:solaris.system.shutdown
     <para>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the <citetitle>GNU General Public Licence</citetitle> for more details.</para>
     <para>
       A copy of the <citetitle>GNU General Public License</citetitle> is
-      included as an appendix to the <citetitle>GNOME Users
-      Guide</citetitle>.  You may also obtain a copy of the
-      <citetitle>GNU General Public License</citetitle> from the Free
-      Software Foundation by visiting <ulink type="http" url="http://www.fsf.org">their Web site</ulink> or by writing to
+      available at <ulink type="http" url="http://www.fsf.org">their Web site</ulink> or by writing to
       <address>
       Free Software Foundation, Inc.
       <street>51 Franklin Street, Fifth Floor</street>

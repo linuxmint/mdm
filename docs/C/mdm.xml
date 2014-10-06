@@ -477,10 +477,10 @@
     </sect2>
 
     <sect2 id="themedgreeter">
-      <title>The Themed Greeter</title>
+      <title>The GDM Greeter</title>
 
       <para>
-        The Themed Greeter is a greeter interface that takes up the whole
+        The GDM Greeter is a greeter interface that takes up the whole
         screen and is very themable.  Themes can be selected and new themes
         can be installed by the configuration application or by setting the
         <filename>GraphicalTheme</filename> configuration key.  The Themed
@@ -5456,318 +5456,30 @@ Answers:
 
       <para>
         The MDM package provides the following different commands in
-        <filename>bindir</filename> intended to be used by the end-user:
+        <filename>/usr/bin</filename> intended to be used by the end-user:
       </para>
 
-      <sect3 id="mdmxnestchoosercommandline">
-        <title><command>mdmXnestchooser</command> and
-               <command>mdmXnest</command> Command Line Options</title>
+      <sect3 id="mdmrecoverycommandline">
+          <title><command>mdm-recovery</command></title>
+          <para><command>mdm-recovery</command> gives MDM a safe configuration. Its purpose is to prevent most common issues from happening and helping the user successfully log in. Launch this command if you are unable to log in.</para>
+      </sect3>     
 
-        <para>
-          The <command>mdmXnestchooser</command> command automatically gets
-          the correct display number, sets up access, and runs the nested
-          X server command with the &quot;-indirect localhost&quot; argument.
-          This provides an XDMCP chooser program. You can also supply as an
-          argument the hostname whose chooser should be displayed, so
-          <command>mdmXnestchooser somehost</command> will run the XDMCP
-          chooser from host <command>somehost</command> inside a nested
-          X server session.  You can make this command do a direct query
-          instead by passing the <command>-d</command> option as well.
-        </para>
-
-        <variablelist>
-        <title><command>mdmXnestchooser</command> Command Line Options</title>
-
-          <varlistentry>
-            <term>-x, --xnest=STRING</term>
-            <listitem>
-              <para>
-                Nested X server command line, default is defined by the
-                <filename>Xnest</filename> configuration option.
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-o, --xnest-extra-options=OPTIONS</term>
-            <listitem>
-              <para>
-                Extra options for nested X server, default is no options.
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-n, --no-query</term>
-            <listitem>
-              <para>
-                Just run nested X server, no query (no chooser)
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-d, --direct</term>
-            <listitem>
-              <para>
-                Do direct query instead of indirect (chooser)
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-B, --broadcast</term>
-            <listitem>
-              <para>
-                Run broadcast instead of indirect (chooser)
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-b, --background</term>
-            <listitem>
-              <para>
-                Run in background
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>--no-mdm-check</term>
-            <listitem>
-              <para>
-                Don't check for running MDM
-              </para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
+      <sect3 id="mdmthemeemulatorcommandline">
+          <title><command>mdm-theme-emulator</command></title>
+          <para><command>mdm-theme-emulator</command> is an emulator for HTML theme artists. It is able to open HTML themes and emulate MDM to a certain extent.</para>
       </sect3>
 
-      <sect3 id="mdmflexichoosercommandline">
-        <title><command>mdmflexichooser</command> Command Line Options</title>
 
-        <para>
-         The <command>mdmflexiserver</command> command provides three 
-         features.  It can be used to run flexible (on demand) X displays,
-         to run a flexible display via nested X server, and to send commands to
-         the MDM daemon process.
-        </para>
+      <sect3 id="mdmflexiservercommandline">
+          <title><command>mdmflexiserver</command></title>
+          <para><command>mdmflexiserver</command> locks the session and invokes a greeter (i.e. a login screen). It is the command used by the screensaver to switch users. If a greeter is already running, mdmflexiserver switches to it. Otherwise it asks MDM to start a new one.</para>
 
-        <para>
-         Starting a flexible X display will normally lock the current session
-         with a screensaver and will redisplay the MDM login screen so a second
-         user can log in.   This feature is only available on systems that
-         support virtual terminals and have them enabled.  This feature is
-         useful if you are logged in as user A, and user B wants to log in
-         quickly but user A does not wish to log out.  The X server takes
-         care of the virtual terminal switching so it works transparently.
-         If there is more than one running display defined with flexible=true,
-         then the user is shown a dialog that displays the currently running
-         sessions.  The user can then pick which session to continue and will
-         normally have to enter the password to unlock the screen. 
-        </para>
+          <para><command>mdmflexiserver</command> can also be used with the -c argument to launch a command on the MDM daemon.</para>
 
-        <para>
-         Nested displays works on systems that do not support virtual 
-         terminals.  This option starts a flexible display in a window in the
-         current session.  This does not lock the current session, so is not
-         as secure as a flexible server started via virtual terminals.
-        </para>
+          <para>For instance <command>mdmflexiserver -c "GET_CONFIG daemon/Greeter"</command> returns the value of the active greeter.</para>
 
-        <para>
-         The <command>mdmflexiserver --command</command> option provides a way
-         to send commands to the MDM daemon and can be used to debug problems
-         or to change the MDM configuration.
-        </para>        
-
-        <variablelist>
-        <title><command>mdmflexichooser</command> Command Line Options</title>
-
-          <varlistentry>
-            <term>-c, --command=COMMAND</term>
-            <listitem>
-              <para>
-                Send the specified protocol command to MDM
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-n, --xnest</term>
-            <listitem>
-              <para>
-                Start a flexible X display in Nested mode
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-l, --no-lock</term>
-            <listitem>
-              <para>
-                Do not lock current screen
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-d, --debug</term>
-            <listitem>
-              <para>
-                Turns on debugging output which gets sent to syslog.  Same as
-                turning on debug in the configuration file.
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-a, --authenticate</term>
-            <listitem>
-              <para>
-                Authenticate before running --command
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-s, --startnew</term>
-            <listitem>
-              <para>
-                Starts a new flexible display without displaying a dialog
-                asking the user if they wish to continue any existing
-                sessions.
-              </para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </sect3>
-
-      <sect3 id="mdmdynamiccommandline">
-        <title><command>mdmdynamic</command> Command Line Options</title>
-
-        <para>
-        <command>mdmdynamic</command> allows the management of displays in a
-        dynamic fashion.  It is typically used in environments where it is not
-        possible to list the possible displays in the MDM configuration files.
-        The <command>mdmdynamic</command> command can be used to create a new
-        display on a particular display number, run all newly created displays,
-        or remove a display.  The <command>mdmdynamic</command> command can also
-        be used to list all attached displays or only those attached displays
-        that match a pattern.  The -a option is used to add a display, the -r
-        option is used to run (or release) a display, the -d option is used to
-        delete a display, and the -l option lists existing displays.  Only one
-        of these four options can be specified at a time, so in the life cycle
-        of a particular display, the command will be run once to add, again to
-        release (run) the display, and finally to delete when the session is to
-        be terminated.
-        </para>
-
-        <para>
-        This program is designed to manage multiple simultaneous requests and
-        tries to avoid flooding the daemon with requests.  If the sockets
-        connection is busy, it will sleep and retry a certain number of times
-        that can be tuned with the -s and -t options.
-        </para>
-
-        <variablelist>
-          <title><command>mdmdynamic</command> Command Line Options</title>
-
-          <varlistentry>
-            <term>-a display=server</term>
-            <listitem>
-              <para>
-              Add a new display configuration, leaving it in the DISPLAY_CONFIG
-              state.  For example,
-              <command>&quot;-a 2=StandardServerTwo&quot;</command>
-              <command>&quot;-a 3=/usr/X11R6/bin/X -dev /dev/fb2&quot;</command>
-              </para>
-              <para>
-              The display will not actually be started until the display is released
-              by calling <command>mdmdynamic</command> again with the -r option.
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-r</term>
-            <listitem>
-              <para>
-              Release (run) all displays waiting in the DISPLAY_CONFIG state.
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-d display</term>
-            <listitem>
-              <para>
-              Delete a display, killing the X server and purging the
-              display configuration. For example, &quot;-d 3&quot;.
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-l [pattern]</term>
-            <listitem>
-              <para>
-              List displays via the ATTACHED_SERVERS
-              <command>mdmflexiserver</command> command. Without a pattern
-              lists all attached displays.  With a pattern will match using
-              glob characters '*', '?', and '[]'. For example:
-              <command>&quot;-l Standard*&quot;</command>
-              <command>&quot;-l *Xorg*&quot;</command>
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-v</term>
-            <listitem>
-              <para>
-              Verbose mode.  Prints diagnostic messages.
-              to MDM.
-              </para>
-            </listitem>
-          </varlistentry>
-        
-          <varlistentry>
-            <term>-b</term>
-            <listitem>
-              <para>
-              Background mode. Fork child to do the work and return immediately.
-              </para>
-            </listitem>
-          </varlistentry>
-        
-          <varlistentry>
-            <term>-t RETRY</term>
-            <listitem>
-              <para>
-              If the daemon socket is busy, <command>mdmdynamic</command> will
-              retry to open the connection the specified RETRY number of times.
-              Default value is 15.
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>-s SLEEP</term>
-            <listitem>
-              <para>
-              If the daemon socket is busy, <command>mdmdynamic</command> will
-              sleep an amount of time between retries.  A random number of 
-              seconds 0-5 is added to the SLEEP value to help ensure that
-              multiple calls to mdmdynamic do not all try to restart at the
-              same time.  A SLEEP value of zero causes the sleep time to be
-              1 second.  Default value is 8 seconds.
-              </para>
-            </listitem>
-          </varlistentry>
-        
-        </variablelist>
-      </sect3>      
+          <para>And <command>mdmflexiserver -c "ATTACHED_SERVERS"</command> returns a list of active MDM servers (i.e. sessions and greeters).</para>
+      </sect3>     
 
     </sect2>
 
@@ -5776,28 +5488,14 @@ Answers:
 
       <para>
         The MDM package provides the following different commands in
-        <filename>sbindir</filename> intended to be used by the root user:
+        <filename>/usr/sbin</filename> intended to be used by the root user:
       </para>
 
       <sect3 id="mdmcommandline">
-        <title><command>mdm</command> and <command>mdm-binary</command>
-               Command Line Options</title>
-
-        <para>
-          The <command>mdm</command> command is really just a script which
-          runs the <command>mdm-binary</command>, passing along any options.
-          Before launching <command>mdm-binary</command>, the mdm wrapper script
-          will source the <filename>&lt;etc&gt;/profile</filename> file to set 
-          the standard system environment variables.  In order to better support
-          internationalization, it will also set the LC_MESSAGES environment
-          variable to LANG if neither LC_MESSAGES or LC_ALL are set.  If you
-          really need to set some additional environment before launching MDM,
-          you can do so in this script.
-        </para>
+        <title><command>mdm</command></title>
 
         <variablelist>
-          <title><command>mdm</command> and <command>mdm-binary</command>
-                 Command Line Options</title>
+          <title>Command Line Options</title>
 
           <varlistentry>
             <term>--help</term>
@@ -5883,46 +5581,14 @@ Answers:
       </sect3>
 
       <sect3 id="mdmsetupcommandline">
-        <title><command>mdmsetup</command> Command Line Options</title>
+        <title><command>mdmsetup</command></title>
 
         <para>
          <command>mdmsetup</command> runs a graphical application for modifying
-         the MDM configuration file.  Normally on systems that support
-         the PAM userhelper, this is setup such that when you run
-         <command>mdmsetup</command> as an ordinary user, it will first
-         ask you for your root password before starting.  Otherwise, this
-         application may only be run as root.
+         the MDM configuration file.
         </para>
       </sect3>
-
-      <sect3 id="mdmrestartcommandline">
-        <title><command>mdm-restart</command> Command Line Options</title>
-
-        <para>
-          <command>mdm-restart</command> stops and restarts MDM by sending
-          the MDM daemon a HUP signal.  This command will immediately terminate
-          all sessions and log out users currently logged in with MDM.
-        </para>
-      </sect3>
-
-      <sect3 id="mdmsaferestartcommandline">
-        <title><command>mdm-safe-restart</command> Command Line Options</title>
-  
-        <para>
-          <command>mdm-safe-restart</command> stops and restarts MDM by
-          sending the MDM daemon a USR1 signal.  MDM will be restarted as soon
-          as all users log out.
-        </para>
-      </sect3>
-
-      <sect3 id="mdmstopcommandline">
-        <title><command>mdm-stop</command> Command Line Options</title>
-
-        <para>
-          <command>mdm-stop</command> stops MDM by sending the MDM daemon
-          a TERM signal. 
-        </para>
-      </sect3>
+      
     </sect2>
 
     <sect2 id="libexecdir_binaries">
@@ -5930,66 +5596,18 @@ Answers:
 
       <para>
         The MDM package provides the following different commands in
-        <filename>libexecdir</filename> intended to be used by the mdm
+        <filename>/usr/lib/mdm/</filename> intended to be used by the mdm
         daemon process.
       </para>
 
       <sect3 id="mdmgreeterlogincommandline">
-        <title><command>mdmchooser</command> and <command>mdmlogin</command>
-               Command Line Options</title>
+        <title><command>mdmlogin</command>, <command>mdmgreeter</command> and <command>mdmwebkit</command></title>
 
         <para>
-          The <command>mdmgreeter</command> and <command>mdmlogin</command>
-          are two different login applications, either can be used by MDM.  
-          <command>mdmgreeter</command> is themeable with MDM themes while
-          <command>mdmlogin</command> is themable with GTK+ themes.  These
-          applications are normally executed by the MDM daemon.  Both commands
-          support standard GNOME options. 
+          The <command>mdmlogin</command>, <command>mdmgreeter</command> and <command>mdmwebkit</command>
+          are three different login applications which can be used by MDM. <command>mdmlogin</command> is a simple GTK login screen, while <command>mdmgreeter</command> and <command>mdmwebkit</command> are respectively themed with GDM and HTML themes. These
+          applications are normally executed by the MDM daemon.
         </para>
-      </sect3>
-
-      <sect3 id="mdmchoosercommandline">
-        <title><command>mdmchooser</command> Command Line Options</title>
-
-        <para>
-          The <command>mdmchooser</command> is the XDMCP chooser application.  
-          The <command>mdmchooser</command> is normally executed by the MDM
-          daemon.  It supports the following options for XDM compatibility.
-          This command supports standard GNOME options.
-        </para>
-
-        <variablelist>
-          <title><command>mdmchooser</command> Command Line Options</title>
-
-          <varlistentry>
-            <term>--xdmaddress=SOCKET</term>
-            <listitem>
-             <para>
-                 Socket for XDM communication.
-             </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>--clientaddress=ADDRESS</term>
-            <listitem>
-             <para>
-               Client address to return in response to XDM.  This option is for
-               running mdmchooser with XDM, and is not used within MDM.
-             </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>--connectionType=TYPE</term>
-            <listitem>
-             <para>
-               Connection type to return in response to XDM.  This option is for
-               running mdmchooser with XDM, and is not used within MDM.
-             </para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
       </sect3>
 
       <sect3 id="mdm-ssh-session">
@@ -6007,39 +5625,32 @@ Answers:
   <!-- ============= Theme manual ============================= -->
 
   <sect1 id="thememanual">
-    <title>Themed Greeter</title>
+    <title>GDM Themes</title>
 
     <para>
-      This section describes the creation of themes for the Themed
-      Greeter.  For examples including screenshots, see the standard installed
-      themes and the themes from
-      <ulink type="http" url="http://art.gnome.org/themes/mdm_greeter/">
-      the theme website</ulink>.
+      This section describes the creation of GDM themes. For examples of themes, visit 
+      <ulink type="http" url="http://gnome-look.org">
+      gnome-look.org</ulink> and select "GDM Themes".
     </para>
 
     <sect2 id="themeover">
       <title>Theme Overview</title>
 
       <para>
-        MDM Themes can be created by creating an XML file that follows the
-        specification in gui/greeter/greeter.dtd.  Theme files are stored
-        in the directory
-        <filename>&lt;share&gt;/mdm/themes/&lt;theme_name&gt;</filename>.
-        Usually this would be under <filename>/usr/share</filename>.  The theme
-        directory should contain a file called
-        <filename>MdmGreeterTheme.desktop</filename> which has similar format
-        to other .desktop files and looks like:
+        GDM Themes are located in <filename>/usr/share/mdm/themes</filename>. They contain a file called
+        <filename>GdmGreeterTheme.desktop</filename> which has a similar format
+        to other .desktop files and looks like this:
       </para>
 
 <screen>
-[MdmGreeterTheme]
+[GdmGreeterTheme]
 Encoding=UTF-8
-Greeter=circles.xml
-Name=Circles
-Description=Theme with blue circles
-Author=Bond, James Bond
-Copyright=(c) 2002 Bond, James Bond
-Screenshot=screenshot.png
+Greeter=configuration.xml
+Name=Mytheme
+Description=My Theme
+Author=My name
+Copyright=GPL
+Screenshot=screenshot.jpg
 </screen>
 
       <para>
@@ -6047,58 +5658,20 @@ Screenshot=screenshot.png
         just like the other <filename>.desktop</filename>files.  All the files
         that are mentioned should be in the theme directory itself.  The
         Screenshot field points to a file which should be a 200x150 screenshot
-        of the theme in action (it is OK not to have one, but it makes it nicer
-        for user).  The Greeter field points to an XML file that contains the
-        description of the theme.  The description will be given later.
-      </para>
-
-      <para>
-        Once a theme is installed, it can be tested with the
-        <command>mdmthemetester</command> program.  This program assumes that
-        the X server supports a nested server command.  This command takes two
-        arguments, first the environment that should be used.  The environment
-        can be one of the following values: console, console-timed, flexi,
-        remote-flexi, or xdmcp.  The &quot;console&quot; option tests the
-        theme as it would be shown on an attached display.  The
-        &quot;console-timed&quot; option tests the theme as it would be shown
-        on an attached display with timed login enabled.  The &quot;flexi&quot;
-        option tests the theme as it would be shown on an attached flexible
-        display (such as started via Xnest).  Finally, the &quot;xdmcp&quot;
-        option tests the theme as it would be shown for remote XDMCP 
-        displays.  The second argument is the theme name.  For example, to 
-        test how the circles theme would look in XDMP remote display mode,
-        you would run the following command:
-      </para>
-
-<screen>
-<command>mdmthemetester xdmcp circles</command>
-</screen>
-
-      <para>
-        When developing a theme, make sure to test all the environments, and
-        make sure to test how the caps lock warning looks by pressing the caps
-        lock key.  Running <command>mdmthemetester</command> is also a good way
-        to take screenshots of MDM themes.  Simply take a screenshot of the
-        theme running in the nested display window.  This can be done in GNOME
-        by focusing the nested login window and pressing Alt-PrintScreen.
-      </para>
-
-      <para>
-        Once a theme has been fully tested, then make a tarball that contains
-        the directory as it would be insatlled to the
-        <filename>&lt;share&gt;/mdm/themes</filename> directory.  This is
-        the standard format for distributing MDM themes.
-      </para>
+        of the theme in action. The Greeter field points to an XML file that contains the
+        structure of the theme itself.
+      </para>   
+     
     </sect2>
 
     <sect2 id="descofthemeformat">
-      <title>Detailed Description of Theme XML format</title>
+      <title>Detailed Description of the Theme XML format</title>
 
       <sect3 id="greetertag">
         <title>greeter tag</title>
 
           <para>
-            The MDM theme format is specified in XML format contained
+            The GDM theme format is specified in XML format contained
             within a &lt;greeter&gt; tag.  You may specify a GTK+ theme to
             be used with this theme by using the gtk-theme element in the
             greeter tag as in the following example.
@@ -6175,7 +5748,7 @@ homogeneous=&quot;bool&quot;&gt;
         <title>Item Nodes</title>
 
         <para>
-          A MDM Theme is created by specifying a hierarchy of item and box
+          A GDM Theme is created by specifying a hierarchy of item and box
           nodes.  Item nodes can have the following value for
           &quot;type&quot;:
         </para>
@@ -6188,9 +5761,9 @@ homogeneous=&quot;bool&quot;&gt;
                 A button field.  This field uses a GTK+ button.  It is also
                 possible to make a "rect" item act like a button by setting
                 its button element to true.  However it is better to use
-                GTK+ buttons in MDM themes since these are accessible to
+                GTK+ buttons in GDM themes since these are accessible to
                 users with disabilities.  Also, GTK+ buttons can be
-                themed.  This feature is supported in MDM 2.14.6 and later.
+                themed.
               </para>
             </listitem>
           </varlistentry>
@@ -6284,7 +5857,7 @@ homogeneous=&quot;bool&quot;&gt;
         <para>
           List items by default display as lists, but the
           combo=&quot;true&quot; attribute can be used to specify combo box
-          style (combo style supported since MDM 2.16.2).  Some predefined
+          style.  Some predefined
           lists may be included in a theme by using the following id values.
           Customized lists may also be defined, which are explained below.
         </para>
@@ -6295,7 +5868,7 @@ homogeneous=&quot;bool&quot;&gt;
             <listitem>
               <para>
                 A list of available sessions, which allows the user to pick
-                the session to use.  Supported since MDM 2.16.2.
+                the session to use.
               </para>
             </listitem>
           </varlistentry>
@@ -6307,7 +5880,7 @@ homogeneous=&quot;bool&quot;&gt;
             <listitem>
               <para>
                 A list of available languages, which allows the user to pick
-                the language to use.  Supported since MDM 2.16.2.
+                the language to use.
               </para>
             </listitem>
           </varlistentry>
@@ -6338,7 +5911,6 @@ homogeneous=&quot;bool&quot;&gt;
                 will not be shown.  This allows the theme to define something
                 like an area with a different color and/or alpha to surround
                 the userlist, but only if there are users to display.
-                Supported since 2.16.2.
               </para>
             </listitem>
           </varlistentry>
@@ -6391,8 +5963,7 @@ homogeneous=&quot;bool&quot;&gt;
               <para>
                 An image that will be displayed only when a pam-error message
                 is being displayed.  This is useful for displaying an
-                &quot;Attention&quot; icon, for example.  This feature is
-                supported in MDM 2.14.6 and later.
+                &quot;Attention&quot; icon, for example.
               </para>
             </listitem>
           </varlistentry>
@@ -6447,34 +6018,7 @@ homogeneous=&quot;bool&quot;&gt;
           Possible values for button ids are as follows.  
         </para>
 
-        <variablelist>
-          <varlistentry>
-            <term>chooser_button</term>
-            <listitem>
-              <para>
-                Runs the XDMCP chooser.
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>config_button</term>
-            <listitem>
-              <para>
-                Runs the MDM configuration application.
-              </para>
-            </listitem>
-          </varlistentry>
-
-          <varlistentry>
-            <term>custom_cmd_button[0-9]</term>
-            <listitem>
-              <para>
-                Runs the <filename>n-th</filename> custom command.
-              </para>
-            </listitem>
-          </varlistentry>
-          
+        <variablelist>                    
           <varlistentry>
             <term>disconnect_button</term>
             <listitem>
@@ -6551,7 +6095,7 @@ homogeneous=&quot;bool&quot;&gt;
           will cause MDM to remove all non-background items from the display
           and render the remaining &quot;background&quot; items to the root
           window.  This can be used to create a smooth transition between the
-          login screen and the session.  For example, if the MDM theme and the
+          login screen and the session.  For example, if the GDM theme and the
           session use the same background, then this will make the background
           apear seamless.
         </para>
@@ -6949,16 +6493,7 @@ homogeneous=&quot;bool&quot;&gt;
         <para>
           <filename>caps-lock-warning</filename>,
           _(&quot;Caps Lock is on.&quot; 
-        </para>
-        <para>
-          <filename>chooser</filename>, _(&quot;Remote Login via _XDMCP&quot;
-        </para>
-        <para>
-          <filename>config</filename>, _(&quot;_Configure&quot;
-        </para>
-        <para>
-          <filename>custom_cmd[0-9]</filename>, getting label from config file
-        </para>
+        </para>                
         <para>
           <filename>disconnect</filename>, _(&quot;D_isconnect&quot;
         </para>
@@ -7046,7 +6581,7 @@ homogeneous=&quot;bool&quot;&gt;
 </screen>
 
         <para>
-          Using MDM 2.20, the file is created in INI format.  The group value
+          The file is created in INI format.  The group value
           is &quot;GreeterInfo&quot;, and the &quot;custom-config&quot; key
           will specify the id of the chosen listitem.  For example, if the user
           chooses &quot;Foo&quot; (which has an id value of &quot;foo&quot;,
@@ -7056,771 +6591,53 @@ homogeneous=&quot;bool&quot;&gt;
 [GreeterInfo]
 custom-config=foo
 </screen>
-        </para>
-        <para>
-          Using MDM 2.18 and earlier, the file is not saved in INI format, so
-          the &quot;GreeterInfo&quot; group will not be in the file.  In other
-          words, the file will contain only the following:
-<screen>
-custom-config=foo
-</screen>
-        </para>
+        </para>        
       </sect3>
     </sect2>
   </sect1>
 
-  <sect1 id="accessibility">
-    <title>Accessibility</title>
-      <para>
-        MDM supports &quot;Accessible Login&quot;, allowing users to log into
-        their desktop session even if they cannot easily use the screen, mouse,
-        or keyboard in the usual way.  Accessible Technology (AT) programs
-        such as <command>GOK</command> (on-screen keyboard) and
-        <command>orca</command> (magnifier and text-to-speech) are supported.
-        The &quot;GTK+ Greeter&quot; best supports accessibility, so it is
-        recommended for accessibility support.  The &quot;Themed Greeter&quot;
-        supports some accessibility features and may be usable by some users.
-        But some AT programs, such as <command>GOK</command>, do not yet work
-        with the &quot;Themed Greeter&quot;.
-      </para>
-
-      <para>
-        Accessibility is enabled by specifying the &quot;GTK+ Greeter&quot;
-        in the &quot;Local&quot; tab for the console display and specifying
-        the &quot;GTK+ Greeter&quot; in the &quot;Remote&quot; tab for 
-        remote displays.  Or you can modify the <filename>Greeter</filename>
-        and <filename>RemoteGreeter</filename> configuration options by hand
-        to be <command>/usr/lib/mdmlogin</command>.
-      </para>
-
-      <para>
-        The MDM greeter programs support the ability to launch AT's at login
-        time via configurable &quot;gestures&quot;.  These gestures can be
-        defined to be standard keyboard hotkeys, switch device event, or
-        mouse motion events.  When using the &quot;GTK+ Greeter&quot;, the
-        user may also change the visual appearance of the login UI.  For
-        example, to use a higher-contrast color scheme for better visibility.  
-      </para>
-
-      <para>
-        Note that <command>mdmsetup</command> does not yet work with
-        accessibility, so that users who require AT programs should only
-        configure MDM by editing the ASCII files directly.
-      </para>
-
-       <sect2 id="accessibilityconfig">
-          <title>Accessibility Configuration</title>
-
-          <para>
-            In order to enable Accessible Login, the system administrator must
-            make some changes to the default login configuration by manually
-            modifying three human-readable configuration files, stored in
-            the MDM Custom Configuration File, AccessKeyMouseEvents File, and
-            AccessDwellMouseEvents File.  The AccessKeyMouseEvents and
-            AccessDwellMouseEvents contain reasonable default gestures for
-            launching <command>GOK</command> and <command>orca</command>, but
-            some users may require these gestures to be configured to best
-            meet their needs.  For example, shorter or longer duration for
-            holding down a button or hotkey might make the login experience
-            more usable for some users.  Also, additional AT programs may be
-            added to the configuration file if needed.
-          </para>
-
-          <sect3 id="accessibilitytheming">
-            <title>Accessibile Theming</title>
-
-            <para>
-              If using the &quot;GTK+ Greeter&quot; users can easily 
-              switch the color and contrast scheme of the dialog.  To do this,
-              ensure the <filename>AllowGtkThemeChange</filename> parameter in
-              the MDM configuration is set to &quot;true&quot;.  This should
-              be the default value.  When true, the &quot;Standard
-              Greeter&quot; contains a menu allowing the user to change to a
-              different GTK+ theme.  The <filename>GtkThemesToAllow</filename>
-              configuration choice can also be used to limit the choices
-              available as desired.  For example:
-            </para>
-
-<screen>
-GtkThemesToAllow=HighContrast,HighContrastInverse
-</screen>
-
-            <para>
-              If using the &quot;Themed Greeter&quot; there may be suitable
-              MDM themes available that provide needed color and contrast 
-              schemes, but these are not yet shipped with the MDM program.
-              Some distributions may ship such themes.  There is not yet any
-              mechanism to switch between themes in the &quot;Themed
-              Greeter&quot;, so if an accessible theme is required by one
-              user, then all users would need to use the same theme.
-            </para>
-          </sect3>
-
-          <sect3 id="accessibilityatprograms">
-            <title>AT Program Support</title>
-
-            <para>
-              To enable user to launch AT such as the <command>GOK</command>
-              or <command>orca</command>, the
-              <filename>AddGtkModules</filename> parameter in the MDM
-              configuration must be set to &quot;true&quot;.
-              Also the <filename>GtkModulesList</filename> parameter must be
-              uncommented and set as follows:
-            </para>
-
-<screen>
-GtkModulesList=gail:atk-bridge:/usr/lib/gtk-2.0/modules/libdwellmouselistener:/usr/lib/gtk-2.0/modules/libkeymouselistener
-</screen>
-
-            <para>
-              This causes all MDM GUI programs to be run with the appropriate
-              GTK modules for launching AT programs.  The use of assistive
-              technologies and the atk-bridge module requires the registry
-              daemon, <command>at-spi-registryd</command>, to be running. 
-              This is handled by the MDM GUI starting with version 2.17.
-            </para>
-
-            <para>
-              System administrators may wish to load only the minimum subset
-              of these modules which is required to support their user base.
-              The &quot;libkeymouselistener&quot; provides hotkey and switch
-              gesture support while the &quot;libdwellmouselistener&quot;
-              provides mouse motion gesture support.  If your user base only
-              requires one or the other, it is only necessary to include the
-              gesture listener that is needed.  Also, some AT programs may not
-              require gail or atk-bridge.  If you find the AT programs you
-              need works fine without including these, then they may be
-              omitted.  Note that some AT programs work with a reduced feature
-              set if gail and/or atk-bridge are not present.  However, for
-              general accessibility use, including all four is suitable.
-            </para>
-
-            <para>
-              Once &quot;keymouselistener&quot; and/or
-              &quot;dwellmouselistener&quot; have been added to the
-              <filename>AddGtkModules</filename> loaded by MDM, then you may
-              need to modiify the gesture configurations to meet your user's
-              needs.  Default gestures are provided for launching
-              <command>GOK</command> and <command>orca</command>, but it is
-              recommended to modify these gestures so they work best for your
-              user base.  These gesture associations are contained in files
-              <filename>AccessKeyMouseEvents</filename> and
-              <filename>AccessDwellMouseEvents</filename>, respectively.  Both
-              files are located in the
-              <filename>&lt;etc&gt;/mdm/modules</filename> directory.  The
-              gesture configuration format is described in the comment section
-              of the two configuration files.
-            </para>
-
-            <para>
-              The AccessKeyMouseEvents file controls the keymouselistener
-              Gesture Listener and is used to define key-press, mouse button,
-              or XInput device sequences that can be used to launch
-              applications needed for accessibility.  In order to reduce the
-              likelihood of unintentional launch, these &quot;gestures&quot;
-              may be associated with multiple switch presses and/or minimum
-              durations.  Note that the XKB extension is needed for key
-              gestures to work, so you may need to add +xkb to your X server
-              command line for gestures to work properly.  The X server command
-              line is specified in the MDM configuration file in the
-              <filename>server-foo</filename> sections.
-            </para>
-
-            <para>
-              The DwellKeyMouseEvents file controls the dwellmouselistner and
-              supports gestures that involve the motion of a pointing device
-              such as the system mouse of an alternative pointing device such
-              as a head pointer or trackball may also be defined.  Motion
-              gestures are defined as &quot;crossing events&quot; into and out
-              of the login dialog window.  If the
-              &quot;dwellmouselistener&quot; gesture listener is loaded, then
-              alternative pointing devices are temporarily &quot;latched&quot;
-              to the core pointer, such that motion from alternative devices
-              results in movement of the onscreen pointer.  All gestures are
-              specified by the same syntax; that is, there is no distinction
-              between a &quot;core mouse&quot; gesture and motion from an
-              alternate input device.
-            </para>
-
-            <para>
-              On some operating systems, it is necessary to make sure that the
-              MDM user is a member of the &quot;audio&quot; group for AT
-              programs that require audio output (such as text-to-speech) to
-              be functional.
-            </para>
-
-            <para>
-              Currently MDM does not remember what accessible technology
-              programs have been started when switching applications.  So if
-              the user switches between the login program and the chooser, for
-              example, then it is necessary for the user to redo the gesture.
-              Users may need to also set up their default session so that the
-              assistive technologies required are started automatically (or
-              have appropriate key-bindings defined to start them) after the
-              user session has started.
-            </para>
-          </sect3>
-
-          <sect3 id="accessibilitytroubleshooting">
-            <title>AT Troubleshooting</title>
-
-            <para>
-              There are some common issues that cause users to have problems
-              getting the gesture listeners to work.  It is recommended that
-              people use MDM version 2.18.0 or later for best results.
-            </para>
-
-            <para>
-              Some older X servers have a bug which causes detectable
-              autorepeat to fail when XEVIE is enabled (which happens when
-              atk-bridge is included as a GTK Module).  This bug causes key
-              gestures with a duration greater than 0 to always fail.  A
-              workaround is to simply redefine all key gestures so they have
-              zero length duration, or upgrade your X server.
-            </para>
-
-            <para>
-              Some versions of <command>GOK</command> and
-              <command>orca</command> will not launch unless the
-              &quot;mdm&quot; user has a writable home directory.  This has
-              been fixed in GNOME 2.18, but if using an older version of
-              GNOME, then making sure that the MDM user has a writable home
-              directory should make these programs functional.
-            </para>
-
-            <para>
-              If you see an hourglass cursor when you complete a gesture but
-              the program does not start, then this indicates that the gesture 
-              was received, but that there was a problem starting the program.
-              Most likely the issue may be the lack of a writable mdm home
-              directory.
-            </para>
-
-            <para>
-              Also note that some input devices require X server configuration
-              before MDM will recognize them.
-            </para>
-          </sect3>
-
-          <sect3 id="accessibilitysound">
-            <title>Accessibility Login Sound Configuration</title>
-
-            <para>
-              By default, MDM requires a media application such as
-              &quot;play&quot; to be present to play sounds for successful or
-              failed login.  MDM defaults
-              the location of this application to
-              <filename>&lt;bin&gt;/play</filename> (or
-              <filename>&lt;bin&gt;/audioplay</filename> on Solaris.  This can
-              be changed via the <filename>SoundProgram</filename> MDM
-              configuration option.  Typically most text-to-speech programs
-              (such as <command>orca</command>) use a separate mechanism to
-              play audio, so this configuration setting is not needed for
-              them to work.
-            </para>
-          </sect3>
-       </sect2>
-  </sect1>
-
-  <sect1 id="solaris">
-    <title>Solaris Specific Features</title>
-
-       <sect2 id="solarisusing">
-          <title>Using MDM on Solaris</title>
-
-          <para>
-             MDM is not yet the default login program on Solaris.  If you wish
-             to switch to using MDM, then you need to turn off CDE login and
-             start the MDM service.  Note that turning off or disabiling CDE
-             login will cause any running sessions to immediately exit, and any
-             unsaved data will be lost.  Only run these commands if you are
-             sure there is no unsaved data in your running sessions.  It would
-             be best to run these commands from console login, or a Failsafe
-             Terminal rather than from a running GUI session.  The first step
-             is to run the following command to see if CDE login is running as
-             an SMF service.
-          </para>
-
-<screen>
-svcs cde-login
-</screen>
-
-          <para> 
-             If the <command>svcs</command> command responds that this 
-             service is enabled, then run this command to disable CDE login:
-          </para>
-
-<screen>
-svcadm disable cde-login
-</screen>
-
-          <para> 
-             If the <command>svcs</command> command responds that this pattern
-             doesn't match any instances, then run these commands to stop
-             CDE login:
-          </para>
-
-<screen>
-/usr/dt/config/dtconfig -d
-Either reboot, or kill any running dtlogin processes.
-</screen>
-
-          <para>
-             At this point you will be presented with a console login.  Login
-             as root, and run the following command.  If on Solaris 10 the
-             servicename is &quot;mdm2-login&quot;, if on Solaris Nevada the
-             servicename is &quot;mdm&quot;.
-          </para>
-
-<screen>
-svcadm enable servicename
-</screen>
-       </sect2>
-
-       <sect2 id="solarisconfiguration">
-          <title>Solaris Configuration</title>
-             <para>
-               On Solaris, the following configuration is recommended.
-               This turns on IPv6 and also turns on PreFetch for
-               performance benefit.
-
-<screen>
-./autogen.sh --prefix=/usr --sysconfdir=/etc/X11 --localstatedir=/var
-   --libexecdir=/usr/lib --enable-ipv6=yes --with-at-bindir=/usr/sfw/bin
-   --with-prefetch --with-post-path=/usr/openwin/bin --with-pam-prefix=/etc
-   --with-lang-file=/etc/default/init
-</screen>
-             </para>
-
-             <para>
-               Configuring MDM with the
-               &quot;--with-post-path=/usr/openwin/bin&quot; on Solaris is
-               recommended for accessing X server programs.
-             </para>
-       </sect2>
-
-       <sect2 id="solarislogindevperm">
-          <title>Solaris /etc/logindevperm</title>
-             <para>
-               MDM supports /etc/logindevperm, but only on Solaris 10 and
-               higher.  Refer to the logindevperm.4 man page for more
-               information.
-             </para>
-
-             <para>
-               To make /etc/logindevperm functionality work on Solaris 9 or
-               earlier you would have to hack the MDM PreSession and
-               PostSession script to chmod the device permissions directly.  In
-               other words, if /etc/logindevperm had a listing like this:
-             </para>
-
-<screen>
-/dev/console    0600    /dev/sound/*            # audio devices
-</screen>
-     
-             <para>
-               Then the PreSession script would need to be modified to chown
-               /dev/console to the user:group who is logging into the console
-               and ensure whatever permissions is specified in /etc/logindevperm
-               (0600 for the line above).  Then in the PostSession script chmod
-               the device back to root:root and ensure 0600 this time (do not
-               use the value in the /etc/logindevperm file).  Linux uses a
-               different mechanism for managing device permissions, so this
-               extra scripting is not needed.
-             </para>
-       </sect2>
-
-       <sect2 id="solarisautomaticlogin">
-          <title>Solaris Automatic Login</title>
-             <para>
-               Automatic login does not work on Solaris 10 and earlier because
-               PAM is not configured to support this feature by default.
-               Automatic login is a MDM feature that is not enabled by default,
-               so you would only notice this problem if you try to make use of
-               it.  Turning this feature on causes your computer to login to a
-               specified username on startup without asking for username
-               and password.  This is an insecure way to set up your
-               computer. 
-             </para>
-
-             <para>
-               If using Solaris 10 or lower, then you need to compile the
-               pam_allow.c code provided with the MDM release and install it
-               to /usr/lib/security (or provide the full path in /etc/pam.conf)
-               and ensure it is owned by uid 0 and not group or world writable.
-             </para>
-
-             <para>
-               The following are reasonable pam.conf values for turning on
-               automatic login in MDM.  Make sure to read the PAM documentation
-               (e.g. pam.d/pam.conf man page) and be comfortable with the
-               security implications of any changes you intend to make to
-               your configuration.
-             </para>
-
-<screen>
-       mdm-autologin auth  required    pam_unix_cred.so.1
-       mdm-autologin auth  sufficient  pam_allow.so.1
-       mdm-autologin account  sufficient  pam_allow.so.1
-       mdm-autologin session  sufficient  pam_allow.so.1
-       mdm-autologin password  sufficient  pam_allow.so.1
-</screen>
-
-             <para>
-               The above setup will cause no lastlog entry to be generated.  If
-               a lastlog entry is desired, then use the following for session:
-             </para>
-
-<screen>
-       mdm-autologin session required pam_unix_session.so.1
-</screen>
-       </sect2>
-
-       <sect2 id="solarisrbac">
-          <title>Solaris RBAC support for Shutdown, Reboot, and Suspend</title>
-
-             <para>
-               Starting with MDM 2.19, MDM supports RBAC (Role Based 
-               Access Control) for enabling the system commands (Shutdown,
-               Reboot, Suspend, etc.) that appear in the greeter system
-               menu and via the <command>mdmflexiserver</command> 
-               QUERY_LOGOUT_ACTION, SET_LOGOUT_ACTION, and
-               SET_SAFE_LOGOUT_ACTION commands.
-             </para>
-
-             <para>
-               On Solaris MDM has the following value specified for the
-              <filename>RBACSystemCommandKeys</filename> configuration
-              option.
-             </para>
-
-<screen>
-HALT:solaris.system.shutdown;REBOOT:solaris.system.shutdown
-</screen>
-
-             <para>
-               This will cause the SHUTDOWN and REBOOT features to only be
-               enabled for users who have RBAC authority.  In other words,
-               those users who have the &quot;solaris.system.shutdown&quot;
-               authorization name specified.  The MDM greeter will only 
-               display these options if the mdm user (specified in the
-               <filename>User</filename> configuration option, "mdm" by
-               default) has such RBAC permissions.
-             </para>
-
-             <para>
-               Therefore, add the &quot;solaris.system.shutdown&quot;
-               authorization name to the <filename>/etc/user_attr</filename>
-               for all users who should have authority to shutdown and
-               reboot the system.  If you want these options to appear in
-               the greeter program, also add this authorization name to
-               the mdm user.  If you don't want to use RBAC, then you may
-               unset the <filename>RBACSystemCommandKeys</filename> MDM
-               configuration key, and this will make the system commands
-               available for all users.  Refer to the
-               <filename>user_attr</filename> man page for more information
-               about setting RBAC privileges.
-             </para>
-
-             <para>
-               Note that on Solaris there are two programs that can be used
-               to shutdown the system.  These are MDM and
-               <command>gnome-sys-suspend</command>.
-               <command>gnome-sys-suspend</command> is a GUI front-end for
-               the <command>sys-suspend</command>.
-             </para>
-             
-             <para>
-               If MDM is being used as the login program and the user has
-               RBAC permissions to shutdown the machine (or RBAC support
-               is disabled in MDM), then the GNOME panel
-               &quot;Shut Down..&quot; option will use MDM to shutdown, reboot,
-               and suspend the machine.  This is a bit nicer than using
-               <command>gnome-sys-suspend</command> since MDM will wait until
-               the user session has finished (including running the
-               PostSession script, etc.) before running the
-               shutdown/reboot/suspend command.  Also the
-               <command>gnome-sys-suspend</command> command is less functional
-               since it does not support a reboot option, only shutdown and
-               suspend.
-             </para>
-
-             <para>
-               If MDM is not being used to manage shutdown, reboot, and
-               suspend; then the GNOME panel uses
-               <command>gnome-sys-suspend</command> when you select the
-               &quot;Shut Down...&quot; option from the application menu.
-               If the pop-up that appears when you select this only 
-               shows the suspend and shutdown options, then you are
-               likely using <command>gnome-sys-suspend</command>.  If 
-               you are using this, then refer to the
-               <command>sys-suspend</command> man page for information
-               about how to configure it.  Or consider using MDM and
-               configuring it to provide these options.
-             </para>
-       </sect2>
-
-       <sect2 id="solarisother">
-          <title>Other Solaris Features</title>
-             <para>
-               MDM supports a few features specific to Solaris, as follows:
-             </para>
-
-             <para>
-               MDM supports Solaris Auditing if running on Solaris 10 or
-               higher.  MDM should not be used if auditing is needed and
-               running Solaris 9 or older.
-            </para>
-
-            <para>
-              MDM supports a security feature which causes the X server to
-              run as the user instead of as the root user.  MDM must be using
-              PAM for this feature to be enabled, which is the normal case
-              for Solaris.  This second feature has the side-effect of
-              causing the X server to always restart between sessions, which
-              disables the AlwaysRestartServer configuration option.  
-            </para>
-
-            <para>
-              Solaris supports the <filename>/etc/default/login</filename>
-              interface, which affects the <filename>DefaultPath</filename>,
-              <filename>RootPath</filename>,
-              <filename>PasswordRequired</filename>, and
-              <filename>AllowRemoteRoot</filename> options as described in the
-              &quot;Configuration&quot; section.
-            </para>
-       </sect2>
-  </sect1>
-
-  <sect1 id="exampleconf">
-    <title>Example Configurations</title>
-
-    <sect2 id="customcommand">
-      <title>Defining Custom Commands</title>
-      
-      <para>
-        Suppose you want to add a custom command to the MDM menu that will give
-        you the opportunity to boot into other operating system such as Windoze.
-        Just add the following options into the
-        <filename>[customcommand]</filename> section of the MDM configuration
-        file.
-        
-        <screen>
-          [customcommand]
-          CustomCommand0=/sbin/rebootwindoze;/usr/local/sbin/rebootwindoze
-          CustomCommandLabel0=_Windoze
-          CustomCommandLRLabel0=Reboot into _Windoze
-          CustomCommandText0=Are you sure you want to restart the computer into Windoze?
-          CustomCommandTooltip0=Restarts the computer into Windoze
-          CustomCommandIsPersistent0=true
-        </screen>
-
-        CustomCommand0 specifies two commands separated by a semicolon:
-        <filename>/sbin/rebootwindoze</filename> and 
-        <filename>/usr/local/sbin/rebootwindoze</filename>.  MDM will use
-        the first valid command in the list.  This allows different 
-        commands for different operating systems to be included.
-      </para>
-      <para>
-        Note, that besides being able to customise this option to reboot into
-        different operating systems you can also use it to define your own
-        custom behaviours that you wish to run from the MDM menu.  Suppose you
-        want to give users the opportunity to run system update scripts from the
-        login screen. Add the following options into the
-        <filename>[customcommand]</filename> section of your MDM configuration
-        file.
-        
-        <screen>
-          [customcommand]
-          CustomCommand0=/sbin/updatesystem;/usr/local/sbin/updatesystem
-          CustomCommandLabel0=_Update Me
-          CustomCommandLRLabel0=Update the system
-          CustomCommandText0=Are you sure you want to update the system software?
-          CustomCommandTooltip0=Updates the system
-          CustomCommandNoRestart0=true
-        </screen>
-      </para>
-      
-      <para>
-        Both custom commands could be defined as follows.
-
-        <screen>
-          [customcommand]
-          CustomCommand0=/sbin/rebootwindoze;/usr/local/sbin/rebootwindoze
-          CustomCommandLabel0=_Windoze
-          CustomCommandLRLabel0=Reboot into _Windoze
-          CustomCommandText0=Are you sure you want to restart the computer into Windoze?
-          CustomCommandTooltip0=Restarts the computer into Windoze
-          CustomCommandIsPersistent0=true
-          
-          CustomCommand1=/sbin/updatesystem;/usr/local/sbin/updatesystem
-          CustomCommandLabel1=_Update Me
-          CustomCommandLRLabel1=Update the system
-          CustomCommandText1=Are you sure you want to update the system software?
-          CustomCommandTooltip1=Updates the system
-          CustomCommandNoRestart1=true
-        </screen>
-        </para>
-      
-      <para>
-        There can be up to 10 custom commands numbered 0-9.
-
-        <screen>
-          [customcommand]
-          CustomCommand0=/sbin/rebootwindoze;/usr/local/sbin/rebootwindoze
-          CustomCommandLabel0=_Windoze
-          CustomCommandLRLabel0=Reboot into _Windoze
-          CustomCommandText0=Are you sure you want to restart the computer into Windoze?
-          CustomCommandTooltip0=Restarts the computer into Windoze
-          CustomCommandIsPersistent0=true
-          
-          CustomCommand1=/sbin/updatesystem;/usr/local/sbin/updatesystem
-          CustomCommandLabel1=_Update Me
-          CustomCommandLRLabel1=Update the system
-          CustomCommandText1=Are you sure you want to update the system software?
-          CustomCommandTooltip1=Updates the system
-          CustomCommandNoRestart1=true
-          
-          CustomCommand3=/sbin/do_something
-          .
-          .
-          .
-          
-          CustomCommand4=/sbin/do_something_else
-          .
-          .
-          .
-        </screen>
-      </para>
-    </sect2>
-  </sect1>
+  
 
   <sect1 id="troubleshooting">
     <title>Troubleshooting</title>
 
     <para>
-      This section discusses helpful tips for getting MDM working.  In general,
-      if you have a problem using MDM, you can submit a bug to the
-      &quot;mdm&quot; category in
-      <ulink type="http"
-       url="http://bugzilla.gnome.org/">bugzilla.gnome.org</ulink>
-      or send an email to the
-      <address><email>mdm-list@gnome.org</email></address> mail list.
+      This section discusses helpful tips for getting MDM working.
     </para>
 
     <para>
       If MDM is failing to work properly, it is always a good idea to include
       debug information.  Use the <command>mdmsetup</command> command to turn
-      on debug (&quot;Enable debug messages to system log&quot; checkbox in the
-      &quot;Security&quot; tab), then use MDM to the point where it fails, and
+      on debug (&quot;Log debug information to /var/log/syslog&quot; in the 
+      &quot;Options&quot; tab), reboot and then use MDM to the point where it fails, and
       include the MDM output sent to your system log
-      (<filename>&lt;var&gt;/log/messages</filename> or
-      <filename>&lt;var&gt;/adm/messages</filename> depending on your operating
-      system).  Since the system log can be large, please only include the MDM
-      debug information and do not sent the entire file.  If you do not see any
-      MDM syslog output, you may need to configure syslog (see syslog.3c man
-      page).
+      (<filename>&lt;var&gt;/log/syslog</filename>). Since the system log can be large, please only include the MDM
+      debug information and do not sent the entire file.
+    </para>    
+
+    <para>
+       If MDM fails to start or you can't log in, reset MDM to its default configuration by using the command <command>mdm-recovery</command>.
+       This usually solves the most common issues or the ones related to configuration or a faulty theme.
     </para>
 
     <para>
-      You should not leave debug on after collecting data.  It will clutter your
-      syslog and slow system performance.
+       If you face an issue with one particular greeter, try to run that greeter on its own with the command 
+       <command>DOING_MDM_DEVELOPMENT=1 /usr/lib/mdm/mdmlogin</command> (for the GTK greeter),
+       <command>DOING_MDM_DEVELOPMENT=1 /usr/lib/mdm/mdmgreeter</command> (for the GDM greeter) or
+       <command>DOING_MDM_DEVELOPMENT=1 /usr/lib/mdm/mdmwebkit</command> (for the HTML greeter).
+       Any error messages echoed to the terminal will likely highlight the problem.  Also,
+       turning on debug and checking the output sent to the system log will often highlight the problem.
     </para>
 
-    <sect2 id="wontstart">
-      <title>MDM Will Not Start</title>
-
-      <para>
-         There are a many problems that can cause MDM to fail to start, but
-         this section will discuss a few common problems and how to approach
-         tracking down a problem with MDM starting.   Some problems will 
-         cause MDM to respond with an error message or dialog when it tries
-         to start, but it can be difficult to track down problems when MDM
-         fails silently.
-      </para>
-
-      <para>
-         First make sure that the X server is configured properly.  The 
-         MDM configuration file contains a command in the [server-Standard]
-         section that is used for starting the X server.  Verify that this
-         command works on your system.  Running this command from the 
-         console should start the X server.  If it fails, then the problem
-         is likely with your X server configuration.  Refer to your X server
-         error log for an idea of what the problem may be.  The problem may
-         also be that your X server requires different command-line options.
-         If so, then modify the X server command in the MDM configuration file
-         so that it is correct for your system.
-      </para>
-
-      <para>
-         Another common problem is that the MDM greeter program is having
-         trouble starting.  This can happen, for example, if MDM cannot find
-         a needed library or other resource.  Try starting the X server and
-         a terminal program, set the shell environment variable 
-         DOING_MDM_DEVELOPMENT=1 and run
-         <command>&lt;lib&gt;/mdmlogin</command>
-         or <command>&lt;lib&gt;/mdmgreeter</command>.  Any error messages
-         echoed to the terminal will likely highlight the problem.  Also,
-         turning on debug and checking the output sent to the system log 
-         will often highlight the problem.
-      </para>
-
-      <para>
-         Also make sure that the <filename>/tmp</filename> directory has
-         reasonable ownership and permissions, and that the machine's file
-         system is not full.  These problems will cause MDM to fail to start.
-      </para>
-    </sect2>
-
-    <sect2 id="notaccessfile">
-      <title>MDM Will Not Access User Settings</title>
-
-      <para>
-         MDM saves user settings, such as your default session and default
-         language, in the <filename>~/.dmrc</filename>.  Other files, such
-         as the user's <filename>~/.Xauthority</filename> file will also
-         affect login.  MDM, by default, is strict about how it tries to
-         access files in the user's home directory, and will ignore the file if
-         they do not conform to certain rules.  You can use the 
-         <filename>RelaxPermissions</filename> configuration option to
-         make MDM less strict about how it accesses files in the user's
-         home directory, or correct the permissions issues that cause MDM
-         to ignore the file.  This is discussed in detail described in the
-         &quot;File Access&quot; section of the &quot;Overview&quot;. 
-      </para>
-    </sect2>
+    <para>
+       Also make sure that the <filename>/tmp</filename> directory has
+       reasonable ownership and permissions, and that the machine's file
+       system is not full.  These problems will cause MDM to fail to start.
+    </para>
+      
   </sect1>
 
-  <!-- ============= Application License ============================= -->
-
-  <sect1 id="license">
-    <title>License</title>
-    <para>
-      This program is free software; you can redistribute it and/or
-      modify it under the terms of the  <ulink type="help" url="gnome-help:gpl">
-      <citetitle>GNU General Public License</citetitle></ulink> as
-      published by the Free Software Foundation; 
-      either version 2 of the License, or (at your option) any later
-      version.
-    </para>
-    <para>
-      This program is distributed in the hope that it will be useful, but
-      WITHOUT ANY WARRANTY; without even the implied warranty of
-      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-      <citetitle>GNU General Public License</citetitle> for more details.
-    </para>
-    <para>
-      A copy of the <citetitle>GNU General Public License</citetitle> is
-      available at <ulink type="http"
-      url="http://www.fsf.org">their Web site</ulink> or by writing to
-      <address>
-      Free Software Foundation, Inc.
-      <street>51 Franklin Street, Fifth Floor</street>
-      <city>Boston</city>, <state>MA</state> <postcode>02110-1301</postcode>
-      <country>USA</country>
-      </address>
-    </para>
-  </sect1>
+  
 </article>
 
 <!-- Keep this comment at the end of the file
