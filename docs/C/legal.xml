@@ -8,21 +8,13 @@
 	  a copy of the GFDL at this <ulink type="help"
 	  url="ghelp:fdl">link</ulink> or in the file COPYING-DOCS
 	  distributed with this manual.
-         </para>
-         <para> This manual is part of a collection of GNOME manuals
-          distributed under the GFDL.  If you want to distribute this
-          manual separately from the collection, you can do so by
-          adding a copy of the license to the manual, as described in
-          section 6 of the license.
-	</para>
+         </para>        
 
 	<para>
 	  Many of the names used by companies to distinguish their
 	  products and services are claimed as trademarks. Where those
-	  names appear in any GNOME documentation, and the members of
-	  the GNOME Documentation Project are made aware of those
-	  trademarks, then the names are in capital letters or initial
-	  capital letters.
+	  names appear in any documentation the names are in capital 
+          letters or initial capital letters.
 	</para>
 
 	<para>

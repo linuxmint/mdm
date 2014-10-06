@@ -83,11 +83,6 @@
     </para>  
 
     <para>
-      Chooser - A program used to select a remote host for managing a
-      display remotely on the attached display (<command>mdmchooser</command>).
-    </para>
-
-    <para>
       Configurator - The configuration application
       (<command>mdmsetup</command>).
     </para>
@@ -103,7 +98,7 @@
 
     <para>
       Greeter - The graphical login window (<command>mdmlogin</command> or
-      <command>mdmgreeter</command>).
+      <command>mdmgreeter</command> or <command>mdmwebkit</command>).
     </para>
 
     <para>
@@ -115,13 +110,8 @@
     </para>
 
     <para>
-      Themed Greeter - The themable login window (
-      <command>mdmgreeter</command>).
-    </para>
-
-    <para>
-      XDMCP - X Display Manage Protocol
-    </para>
+      Themed Greeter - The themable login window (<command>mdmgreeter</command>).
+    </para>   
 
     <para>
       Paths that start with a word in angle brackets are relative to the
@@ -158,17 +148,7 @@
         settings can affect security.  Issues to be aware of are highlighted
         in this document and in the MDM Configuration files.
       </para> 
-
-      <para>
-        For further information about MDM, see the
-        <ulink type="http" url="https://github.com/linuxmint/mdm/">
-        the MDM project website</ulink>.  Please submit any bug reports or
-        enhancement requests to the &quot;mdm&quot; category in
-        <ulink type="http" url="http://bugzilla.gnome.org/">bugzilla.gnome.org</ulink>.
-        You can also send a message to the 
-        <address><email>mdm-list@gnome.org</email></address> mail list to
-        discuss any issues or concerns with the MDM program.
-      </para>
+      
     </sect2>
 
     <sect2 id="stability">
@@ -197,19 +177,7 @@
         if there are any distribution-specific changes to these MDM interfaces
         and what support exists for them.
       </para>
-
-      <para>
-        As of the MDM 2.15 development series, some one-dash arguments are no
-        longer supported.  This includes the &quot;-xdmaddress&quot;,
-        &quot;-clientaddress&quot;, and &quot;-connectionType&quot; arguments
-        used by <command>mdmchooser</command>.  These arguments have been
-        changed to now use two dashes.
-      </para>
-
-      <para>
-        If issues are discovered that break compatibility, please file a bug
-        with an &quot;urgent&quot; priority.
-      </para>
+         
     </sect2>
 
     <sect2 id="daemonov">
@@ -276,19 +244,15 @@
       </para>
 
       <para> 
-        MDM, by default, will use Pluggable Authentication Modules (PAM) for
-        authentication, but can also support regular crypt and shadow passwords
-        on legacy systems.  After authenticating a user, the daemon runs the
+        MDM uses Pluggable Authentication Modules (PAM) for
+        authentication. After authenticating a user, the daemon runs the
         <filename>PostLogin</filename> script as root, and forks a slave
         process to start the requested session.  This slave process runs the
         <filename>PreSession</filename> script as root, sets up the user's
         environment, and starts the requested session.  MDM keeps track of the
         user's default session and language in the user's
         <filename>~/.dmrc</filename> and will use these defaults if the user
-        did not pick a session or language in the login GUI.  On Solaris, MDM
-        (since version 2.8.0.3) uses the SDTLOGIN interface after user
-        authentication to tell the X server to be restarted as the user instead
-        of as root for added security.  When the user's session exits, the MDM
+        did not pick a session or language in the login GUI. When the user's session exits, the MDM
         daemon will run the <filename>PostSession</filename> script as root.
       </para>
 
@@ -349,12 +313,9 @@
         <command>mdmflexiserver</command> command, or via calling the MDM
         socket protocol directly.  Some lock screen programs provide a button
         to start a new flexible session.  This allows a user to start a new
-        session even if the screen was left locked.  The GNOME Fast User
-        Switch applet also uses the socket protocol to provide an applet
-        interface on the GNOME panel for managing user displays quickly.
-        Flexible displays are not restarted when the user session ends.
-        Flexible displays require virtual terminal (VT) support in the kernel,
-        and will not be available if not supported (such as on Solaris). 
+        session even if the screen was left locked. Flexible displays are not 
+        restarted when the user session ends. Flexible displays require virtual 
+        terminal (VT) support in the kernel. 
        </para>
 
        <para>
@@ -5511,9 +5472,7 @@ Answers:
           <command>mdmXnestchooser somehost</command> will run the XDMCP
           chooser from host <command>somehost</command> inside a nested
           X server session.  You can make this command do a direct query
-          instead by passing the <command>-d</command> option as well.  In
-          addition to the following options, this command also supports
-          standard GNOME options.
+          instead by passing the <command>-d</command> option as well.
         </para>
 
         <variablelist>
@@ -5620,13 +5579,7 @@ Answers:
          The <command>mdmflexiserver --command</command> option provides a way
          to send commands to the MDM daemon and can be used to debug problems
          or to change the MDM configuration.
-        </para>
-
-        <para>
-         In addition to the following options,
-         <command>mdmflexiserver</command> also supports standard GNOME
-         options.
-        </para>
+        </para>        
 
         <variablelist>
         <title><command>mdmflexichooser</command> Command Line Options</title>
@@ -5814,45 +5767,8 @@ Answers:
           </varlistentry>
         
         </variablelist>
-      </sect3>
+      </sect3>      
 
-      <sect3 id="mdmphotosetupcommandline">
-        <title><command>mdmphotosetup</command> Command Line Options</title>
-
-        <para>
-         Allows the user to select an image that will be used as the user's
-         photo by MDM's face browser, if enabled by MDM.  The selected file
-         is stored as <filename>~/.face</filename>.  This command accepts
-         standard GNOME options.
-        </para>
-      </sect3>
-
-      <sect3 id="mdmthemetestercommandline">
-        <title><command>mdmthemetester</command> Command Line Options</title>
-
-        <para>
-         <command>mdmthemetester</command> takes two parameters.  The first
-         parameter specifies the environment and the second parameter
-         specifies the path name or the name of a theme to view.
-
-         This is a tool for viewing a theme outside of MDM.  It is useful for
-         testing or viewing themes.  <command>mdmthemetester</command> requires
-         that the system support <command>mdmXnest</command>.
-
-         Note that themes can display differently depending on the theme's
-         &quot;Show mode&quot;.  <command>mdmthemetester</command> allows
-         viewing the themes in different modes via the environment option.
-         Valid environment values and their meanings follow:
-
-<screen>
-console       - In console mode.
-console-timed - In console non-flexi mode.
-flexi         - In flexi mode.
-xdmcp         - In remote (XDMCP) mode.
-remote-flexi  - In remote (XDMCP) &amp; flexi mode.
-</screen>
-        </para>
-      </sect3>
     </sect2>
 
     <sect2 id="sbindir_binaries">
@@ -5975,8 +5891,7 @@ remote-flexi  - In remote (XDMCP) &amp; flexi mode.
          the PAM userhelper, this is setup such that when you run
          <command>mdmsetup</command> as an ordinary user, it will first
          ask you for your root password before starting.  Otherwise, this
-         application may only be run as root.  This application supports
-         standard GNOME options.
+         application may only be run as root.
         </para>
       </sect3>
 
@@ -7896,10 +7811,7 @@ HALT:solaris.system.shutdown;REBOOT:solaris.system.shutdown
     </para>
     <para>
       A copy of the <citetitle>GNU General Public License</citetitle> is
-      included as an appendix to the <citetitle>GNOME Users
-      Guide</citetitle>.  You may also obtain a copy of the
-      <citetitle>GNU General Public License</citetitle> from the Free
-      Software Foundation by visiting <ulink type="http"
+      available at <ulink type="http"
       url="http://www.fsf.org">their Web site</ulink> or by writing to
       <address>
       Free Software Foundation, Inc.
