@@ -3,102 +3,11 @@
 
 The MDM Display Manager (MDM) is a display manager that
 implements all significant features required for managing
-local and remote displays.   For full information about 
-MDM features, refer to the documentation.  In summary,
-features include:
+local displays.
 
-MDM daemon:
+Documentation:
 
- o X Authentication
- o XDMCP (Remote Login) including TCP Wrappers for access
-   control and improved security.
- o Machine-specific and system-wide configuration support.
- o Default and per-display initialization scripts.
- o PreSession, PostSession, Init, and PostLogin scripts.
- o Pluggable Authentication Modules (PAM)
- o IPv6 support (optional, use --enable-ipv6=yes to enable)
- o Autologin for single user workstations (off by default)
- o Timed login for kiosks and public terminals (off by
-   default).
- o On-demand local servers (mdmflexiserver) and dynamic
-   servers (mdmdynamic).  For example, dynamic servers are
-   used to support SRSS (Sun Ray) environments.
- o Can manage X servers without a login window (Such as
-   for XDMCP terminal client machines)
- o Many other features ...
-
-mdmlogin and mdmgreeter:
-
- o Supports accessibility and the ability to launch AT
-   programs like orca or GOK.  Currently mdmlogin 
-   has more complete accessibility support than
-   mdmgreeter.
- o Can launch the XDMCP chooser program (Remote Login)
- o Can launch the Setup program (off by default)
- o Can halt, reboot, or suspend the machine (off by
-   default)
- o Session selection support
- o Language selection support
-
-mdmlogin:
-
- o Logo image
- o Background image/color
- o Face browser
- o Background program support
- o Xinerama support
-
-mdmgreeter:
-
- o Themable with many themes at http://gnome-look.org/
- o Xinerama support
- o Face browser (if supported by the theme)
-
-mdmwebkit:
-
- o Themable with many HTML themes
- o Xinerama support
- o Face browser (if supported by the theme)
-
-mdmchooser:
-
- o XDMCP
- o Visual host browser 
- o Type in extra host names
- o Customizable icons
-
-mdmsetup:
-
- o GUI to edit the MDM configuration.  Refer to the documentation
-   for more information about how to configure MDM.
-
-Availability:
-
-   https://github.com/linuxmint/mdm/tags
-
-Reporting Bugs:
-
-  Please submit bug reports, enhancement requests, and patches at:
-
-     https://github.com/linuxmint/mdm/issues
-
-  When reporting bugs you should first turn on debugging on the
-  "Security" tab of mdmsetup or editing custom.conf as described in
-  the documentation.  This causes debug messages to be sent to the
-  system log (/var/log/messages or /var/adm/messages) and include
-  the MDM output sent to syslog.
-
-  You should not have to configure syslog for this to work, but if
-  you do not see MDM messages in your syslog it may require
-  configuration.
-
-  You should not leave "debug" on after collecting data.  It will
-  clutter your syslog and slow system performance.
-
-Installation:
-
-  Please consult README.install for instructions on how to
-  configure and install MDM.
+  yelp ghelp:mdm
 
 Contact:
 
