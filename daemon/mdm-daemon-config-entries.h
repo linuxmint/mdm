@@ -329,7 +329,8 @@ static const MdmConfigEntry mdm_daemon_config_entries [] = {
 
 	{ MDM_CONFIG_GROUP_GUI, "AllowGtkThemeChange", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_ALLOW_GTK_THEME_CHANGE },
 	{ MDM_CONFIG_GROUP_GUI, "GtkThemesToAllow", MDM_CONFIG_VALUE_STRING, "all", MDM_ID_GTK_THEMES_TO_ALLOW },
-	
+	{ MDM_CONFIG_GROUP_GREETER, "Browser", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_BROWSER },
+
 	{ MDM_CONFIG_GROUP_GREETER, "Include", MDM_CONFIG_VALUE_STRING, "", MDM_ID_INCLUDE },
 	{ MDM_CONFIG_GROUP_GREETER, "Exclude", MDM_CONFIG_VALUE_STRING, "bin,daemon,adm,lp,sync,shutdown,halt,mail,news,uucp,operator,nobody,mdm,postgres,pvm,rpm,nfsnobody,pcap", MDM_ID_EXCLUDE },
 	{ MDM_CONFIG_GROUP_GREETER, "IncludeAll", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_INCLUDE_ALL },

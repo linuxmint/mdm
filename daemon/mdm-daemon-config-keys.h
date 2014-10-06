@@ -115,6 +115,7 @@ G_BEGIN_DECLS
 #define MDM_KEY_MAX_ICON_HEIGHT "gui/MaxIconHeight=128"
 #define MDM_KEY_ALLOW_GTK_THEME_CHANGE "gui/AllowGtkThemeChange=true"
 #define MDM_KEY_GTK_THEMES_TO_ALLOW "gui/GtkThemesToAllow=all"
+#define MDM_KEY_BROWSER "greeter/Browser=true"
 #define MDM_KEY_INCLUDE "greeter/Include="
 #define MDM_KEY_EXCLUDE "greeter/Exclude=bin,daemon,adm,lp,sync,shutdown,halt,mail,news,uucp,operator,nobody,mdm,postgres,pvm,rpm,nfsnobody,pcap"
 #define MDM_KEY_INCLUDE_ALL "greeter/IncludeAll=false"

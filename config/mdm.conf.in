@@ -262,6 +262,12 @@ GtkTheme=Clearlooks
 
 [greeter]
 
+# Enable the Face browser. Note that the Browser key is only used by the
+# standard login (mdmlogin) program. The Face Browser is enabled in
+# the Graphical greeter by selecting a theme that includes the Face
+# Browser.
+Browser=true
+
 # The default picture in the browser.
 DefaultFace=@pixmapdir@/nobody.png
 # User ID's less than the MinimalUID value will not be included in the face

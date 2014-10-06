@@ -1064,8 +1064,10 @@ process_operation (guchar       op_code,
 	/* somebody is trying to fool us this is the user that
 	 * wants to log in, and well, we are the gullible kind */
 	g_free (curuser);
-	curuser = g_strdup (args);	
-    browser_set_user (curuser);
+	curuser = g_strdup (args);
+	if (mdm_config_get_bool (MDM_KEY_BROWSER)) {
+    	browser_set_user (curuser);
+    }
 	printf ("%c\n", STX);
 	fflush (stdout);
 	break;
@@ -1345,7 +1347,9 @@ process_operation (guchar       op_code,
 	gtk_widget_set_sensitive (entry, TRUE);
 	gtk_widget_set_sensitive (ok_button, FALSE);
 	gtk_widget_set_sensitive (start_again_button, FALSE);
-    gtk_widget_set_sensitive (GTK_WIDGET (browser), TRUE);
+	if (mdm_config_get_bool (MDM_KEY_BROWSER)) {
+    	gtk_widget_set_sensitive (GTK_WIDGET (browser), TRUE);
+    }
 
 	tmp = ve_locale_to_utf8 (args);
 	gtk_label_set_text (GTK_LABEL (msg), tmp);
@@ -1779,10 +1783,11 @@ mdm_login_gui_init (void)
                       G_CALLBACK (key_press_event), NULL);
 
     gtk_window_set_title (GTK_WINDOW (login), _("MDM Login"));
-    /* connect for fingering */
     
-	g_signal_connect (G_OBJECT (login), "event",
-                    G_CALLBACK (window_browser_event), NULL);
+    /* connect for fingering */    
+    if (mdm_config_get_bool (MDM_KEY_BROWSER)) {
+		g_signal_connect (G_OBJECT (login), "event", G_CALLBACK (window_browser_event), NULL);
+	}
 
     frame1 = gtk_frame_new (NULL);
     gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_OUT);
@@ -1918,57 +1923,59 @@ mdm_login_gui_init (void)
     gtk_table_set_row_spacings (GTK_TABLE (table), 10);
     gtk_table_set_col_spacings (GTK_TABLE (table), 10);
     
-    int height;
-    GtkTreeViewColumn *column;
+    if (mdm_config_get_bool (MDM_KEY_BROWSER)) {
+	    int height;
+	    GtkTreeViewColumn *column;
 
-    browser = gtk_tree_view_new ();
-    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (browser), FALSE);
-    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (browser),
-                       FALSE);
-    gtk_tree_view_set_enable_search (GTK_TREE_VIEW (browser),
-                     FALSE);
-    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
-    gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+	    browser = gtk_tree_view_new ();
+	    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (browser), FALSE);
+	    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (browser),
+	                       FALSE);
+	    gtk_tree_view_set_enable_search (GTK_TREE_VIEW (browser),
+	                     FALSE);
+	    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
+	    gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
-    g_signal_connect (selection, "changed",
-              G_CALLBACK (user_selected),
-              NULL);
+	    g_signal_connect (selection, "changed",
+	              G_CALLBACK (user_selected),
+	              NULL);
 
-    g_signal_connect (browser, "button_release_event",
-              G_CALLBACK (browser_change_focus),
-              NULL);
+	    g_signal_connect (browser, "button_release_event",
+	              G_CALLBACK (browser_change_focus),
+	              NULL);
 
-    browser_model = (GtkTreeModel *)gtk_list_store_new (3,
-             GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING);
+	    browser_model = (GtkTreeModel *)gtk_list_store_new (3,
+	             GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING);
 
-    gtk_tree_view_set_model (GTK_TREE_VIEW (browser), browser_model);
-    column = gtk_tree_view_column_new_with_attributes
-        (_("Icon"),
-         gtk_cell_renderer_pixbuf_new (),
-         "pixbuf", GREETER_ULIST_ICON_COLUMN,
-         NULL);
-    gtk_tree_view_append_column (GTK_TREE_VIEW (browser), column);
-  
-    column = gtk_tree_view_column_new_with_attributes
-        (_("Username"),
-         gtk_cell_renderer_text_new (),
-         "markup", GREETER_ULIST_LABEL_COLUMN,
-         NULL);
-    gtk_tree_view_append_column (GTK_TREE_VIEW (browser), column);
-   
-    bbox = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (bbox),
-                     GTK_SHADOW_IN);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (bbox),
-                    GTK_POLICY_NEVER,
-                    GTK_POLICY_AUTOMATIC);
-    gtk_container_add (GTK_CONTAINER (bbox), browser);
+	    gtk_tree_view_set_model (GTK_TREE_VIEW (browser), browser_model);
+	    column = gtk_tree_view_column_new_with_attributes
+	        (_("Icon"),
+	         gtk_cell_renderer_pixbuf_new (),
+	         "pixbuf", GREETER_ULIST_ICON_COLUMN,
+	         NULL);
+	    gtk_tree_view_append_column (GTK_TREE_VIEW (browser), column);
+	  
+	    column = gtk_tree_view_column_new_with_attributes
+	        (_("Username"),
+	         gtk_cell_renderer_text_new (),
+	         "markup", GREETER_ULIST_LABEL_COLUMN,
+	         NULL);
+	    gtk_tree_view_append_column (GTK_TREE_VIEW (browser), column);
+	   
+	    bbox = gtk_scrolled_window_new (NULL, NULL);
+	    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (bbox),
+	                     GTK_SHADOW_IN);
+	    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (bbox),
+	                    GTK_POLICY_NEVER,
+	                    GTK_POLICY_AUTOMATIC);
+	    gtk_container_add (GTK_CONTAINER (bbox), browser);
 
-    height = size_of_users + 4 /* some padding */;
-    if (height > mdm_wm_screen.height * 0.25)
-        height = mdm_wm_screen.height * 0.25;
+	    height = size_of_users + 4 /* some padding */;
+	    if (height > mdm_wm_screen.height * 0.25)
+	        height = mdm_wm_screen.height * 0.25;
 
-    gtk_widget_set_size_request (GTK_WIDGET (bbox), -1, height);    
+	    gtk_widget_set_size_request (GTK_WIDGET (bbox), -1, height);   
+	} 
                
     stack = gtk_table_new (7, 1, FALSE);
     gtk_widget_ref (stack);
@@ -2161,12 +2168,14 @@ mdm_login_gui_init (void)
 
     gtk_widget_show_all (GTK_WIDGET (login));    
 
-    /* Make sure userlist has no users selected */
-    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
-    gtk_tree_selection_unselect_all (selection);
-    if (selected_user)
-    g_free (selected_user);
-    selected_user = NULL;
+    if (mdm_config_get_bool (MDM_KEY_BROWSER)) {
+	    /* Make sure userlist has no users selected */
+	    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser));
+	    gtk_tree_selection_unselect_all (selection);
+	    if (selected_user)
+	    g_free (selected_user);
+	    selected_user = NULL;
+	}
 }
 
 static GdkPixbuf *
@@ -2348,6 +2357,7 @@ mdm_read_config (void)
 
 	mdm_config_get_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE);
 	mdm_config_get_bool   (MDM_KEY_ALLOW_ROOT);	
+	mdm_config_get_bool   (MDM_KEY_BROWSER);
 	mdm_config_get_bool   (MDM_KEY_CONFIG_AVAILABLE);
 	mdm_config_get_bool   (MDM_KEY_DEFAULT_WELCOME);
 	mdm_config_get_bool   (MDM_KEY_ENTRY_CIRCLES);
@@ -2413,6 +2423,7 @@ mdm_reread_config (int sig, gpointer data)
 
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_GTK_THEME_CHANGE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ALLOW_ROOT) ||
+	    mdm_config_reload_bool   (MDM_KEY_BROWSER) ||	    
 	    mdm_config_reload_bool   (MDM_KEY_CONFIG_AVAILABLE) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_CIRCLES) ||
 	    mdm_config_reload_bool   (MDM_KEY_ENTRY_INVISIBLE) ||
@@ -2533,11 +2544,15 @@ main (int argc, char *argv[])
         mdm_common_warning ("Could not open DefaultFace: %s!", mdm_config_get_string (MDM_KEY_DEFAULT_FACE));
     }
 
-    mdm_users_init (&users, &users_string, NULL, defface, &size_of_users, login_is_local, !DOING_MDM_DEVELOPMENT);    
+    if (mdm_config_get_bool (MDM_KEY_BROWSER)) {
+    	mdm_users_init (&users, &users_string, NULL, defface, &size_of_users, login_is_local, !DOING_MDM_DEVELOPMENT);
+    }
 
     mdm_login_gui_init ();
 
-	mdm_login_browser_populate ();
+    if (mdm_config_get_bool (MDM_KEY_BROWSER)) {
+		mdm_login_browser_populate ();
+	}
 
     ve_signal_add (SIGHUP, mdm_reread_config, NULL);
 

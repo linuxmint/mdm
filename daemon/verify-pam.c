@@ -482,6 +482,12 @@ static void mdm_preselect_user (int *pamerr) {
 		return;
 	}
 
+        // Return if the user list is disabled (relevant to mdmlogin)
+        if (!mdm_daemon_config_get_value_bool (MDM_KEY_BROWSER)) {
+		mdm_debug("mdm_preselect_user: User list disabled, not presetting user.");
+                return;
+        }
+
 	// Find the name of the last logged in user
 	char last_username[255];
 	FILE *fp = popen("last -w | grep tty | head -1 | awk {'print $1;'}", "r");
