@@ -890,6 +890,7 @@ mdm_cleanup_children (void)
 
 		/* This is a static server so we start a new slave */
 		if (d->type == TYPE_STATIC) {
+			mdm_debug ("mdm_child_action: Static server died, starting a new slave");
 			if ( ! mdm_display_manage (d)) {
 				mdm_display_unmanage (d);
 				/* If there are some pending statics,
@@ -897,6 +898,20 @@ mdm_cleanup_children (void)
 				mdm_start_first_unborn_local (3 /* delay */);
 			}
 		} else if (d->type == TYPE_FLEXI) {
+			/* A flexi server is dying, scan for a greeter.
+			 * If there's one, chvt() into it			 
+			 */			
+			mdm_debug ("mdm_child_action: Flexible server died, scanning for a greeter");
+			GSList *li;
+			for (li = mdm_daemon_config_get_display_list (); li != NULL; li = li->next) {
+				MdmDisplay *disp = li->data;
+				if (disp->greetpid > 0) {
+					mdm_debug ("mdm_child_action: Found a greeter on %d, changing VT.", disp->vt);
+					mdm_change_vt (disp->vt);							
+					break;
+				}
+			}
+
 			/*
 			 * If this was a chooser session and we have chosen a
 			 * host, then we don't want to unmanage, we want to
