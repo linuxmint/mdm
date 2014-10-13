@@ -1944,8 +1944,10 @@ install_new_html_theme (GtkWidget *button, gpointer data)
 
 static void
 preview_mdm (GtkWidget *button)
-{
-	system ("mdmflexiserver &");
+{	
+	gchar * command = g_strdup_printf ("DOING_MDM_DEVELOPMENT=1 %s &", mdm_config_get_string(MDM_KEY_GREETER));		
+	system (command);
+	g_free(command);
 }
 
 static void
