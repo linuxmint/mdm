@@ -34,7 +34,8 @@ Build-Depends: libpam0g-dev,
                xserver-xorg,
                libwebkitgtk-dev,
                gnome-common,
-               libxml2-utils
+               libxml2-utils,
+               dh-systemd (>= 1.5)
 Standards-Version: 3.9.0
 
 Package: mdm
