@@ -96,6 +96,8 @@ gboolean mdm_verify_check_selectable_user (const char * user) {
 	// Return if the user doesn't exist (check /home and AccountsService)
 	if ( !(g_file_test(home_dir, G_FILE_TEST_EXISTS) || g_file_test(accounts_service, G_FILE_TEST_EXISTS)) ) {
 		mdm_debug("mdm_verify_check_selectable_user: user '%s' doesn't exist.", user);
+		g_free (home_dir);
+		g_free (accounts_service);
 		return FALSE;
 	}
 
@@ -107,9 +109,15 @@ gboolean mdm_verify_check_selectable_user (const char * user) {
 	pclose(fp);
 	if (strcmp(result, "0") != 0) {
 		mdm_debug("mdm_verify_check_selectable_user: user '%s' is part of the nopasswdlogin group.", user);
+		g_free (home_dir);
+		g_free (accounts_service);
+		g_free (command);
 		return FALSE;
 	}
 
+	g_free (home_dir);
+	g_free (accounts_service);
+	g_free (command);
 	return TRUE;
 }
 
@@ -123,6 +131,7 @@ void mdm_verify_set_user_settings (const char *user) {
 		char * home_dir = g_strdup_printf("/home/%s", user);
 		if ( !(g_file_test(home_dir, G_FILE_TEST_EXISTS))) {
 			mdm_debug("mdm_verify_set_user_settings: user '%s' doesn't exist.", user);
+			g_free (home_dir);
 			return;
 		}
 		mdm_daemon_config_get_user_session_lang (&session, &language, home_dir, &savesess);
@@ -145,6 +154,8 @@ void mdm_verify_set_user_settings (const char *user) {
 				mdm_slave_greeter_ctl_no_ret (MDM_SETLANG, mdmlang);
 			}
 		}
+
+		g_free (home_dir);
 	}
 }
 
