@@ -1988,8 +1988,10 @@ delete_html_theme (GtkWidget *button, gpointer data)
 	dir = g_strdup (g_value_get_string (&value));
 	g_value_unset (&value);
 
-	if (selected || type == THEME_TYPE_GTK) {		
+	if (selected || type == THEME_TYPE_GTK) {
 		// Don't allow the deletion of GTK greeter or the active theme
+		g_free (name);
+		g_free (dir);
 		return;
 	}
 
