@@ -2143,7 +2143,9 @@ html_theme_list_drag_data_received  (GtkWidget        *widget,
 
 		response = gtk_dialog_run (GTK_DIALOG (prompt));
 		gtk_widget_destroy (prompt);
+		g_free (base);
 		g_free (mesg);
+		g_free (detail);
 
 		if (response == GTK_RESPONSE_OK) {
 			html_install_theme_file (list->data, store, GTK_WINDOW (parent));
