@@ -1174,7 +1174,7 @@ read_themes (GtkListStore *store)
 
 	markup = g_markup_printf_escaped ("<b>GTK</b> <sup><span fgcolor='#5C5C5C' font_size='x-small'>GTK</span></sup>\n<small>%s</small>", _("No theme, just pure GTK"));
 	
-	if (g_strcmp0 (active_greeter, g_strdup (LIBEXECDIR "/mdmlogin")) == 0) {
+	if (g_strcmp0 (active_greeter, LIBEXECDIR "/mdmlogin") == 0) {
 		selected = TRUE;
 	}
 
@@ -1234,7 +1234,7 @@ read_themes (GtkListStore *store)
 			}
 			g_free (full);
 
-			if (g_strcmp0(active_greeter, g_strdup (LIBEXECDIR "/mdmgreeter")) == 0 && 
+			if (g_strcmp0(active_greeter, LIBEXECDIR "/mdmgreeter") == 0 &&
 				g_strcmp0 (ve_sure_string (dent->d_name), ve_sure_string (selected_theme)) == 0)
 				sel_theme = TRUE;
 			else
@@ -1336,7 +1336,7 @@ read_themes (GtkListStore *store)
 				continue;
 			}			
 			
-			if (g_strcmp0(active_greeter, g_strdup (LIBEXECDIR "/mdmwebkit")) == 0 &&
+			if (g_strcmp0(active_greeter, LIBEXECDIR "/mdmwebkit") == 0 &&
 			    g_strcmp0(ve_sure_string (dent->d_name), ve_sure_string (selected_html_theme)) == 0)
 				sel_theme = TRUE;
 			else
