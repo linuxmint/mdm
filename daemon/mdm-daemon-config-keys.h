@@ -155,6 +155,8 @@ G_BEGIN_DECLS
 #define MDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE "greeter/SoundOnLoginFailureFile="
 #define MDM_KEY_SOUND_PROGRAM "daemon/SoundProgram=" SOUND_PROGRAM
 #define MDM_KEY_DEBUG "debug/Enable=false"
+#define MDM_KEY_LIMIT_SESSION_OUTPUT "debug/LimitSessionOutput=true"
+#define MDM_KEY_FILTER_SESSION_OUTPUT "debug/FilterSessionOutput=false"
 #define MDM_KEY_DEBUG_GESTURES "debug/Gestures=false"
 #define MDM_KEY_SECTION_GREETER "greeter"
 #define MDM_KEY_SECTION_SERVERS "servers"

@@ -42,6 +42,8 @@ G_BEGIN_DECLS
 typedef enum {
 	MDM_ID_NONE,
 	MDM_ID_DEBUG,
+	MDM_ID_LIMIT_SESSION_OUTPUT,
+	MDM_ID_FILTER_SESSION_OUTPUT,
 	MDM_ID_DEBUG_GESTURES,
 	MDM_ID_AUTOMATIC_LOGIN_ENABLE,
 	MDM_ID_AUTOMATIC_LOGIN,
@@ -237,6 +239,8 @@ typedef enum {
 /* These are processed in order so debug should always be first */
 static const MdmConfigEntry mdm_daemon_config_entries [] = {
 	{ MDM_CONFIG_GROUP_DEBUG, "Enable", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_DEBUG },
+	{ MDM_CONFIG_GROUP_DEBUG, "LimitSessionOutput", MDM_CONFIG_VALUE_BOOL, "true", MDM_ID_LIMIT_SESSION_OUTPUT },
+	{ MDM_CONFIG_GROUP_DEBUG, "FilterSessionOutput", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_FILTER_SESSION_OUTPUT },
 	{ MDM_CONFIG_GROUP_DEBUG, "Gestures", MDM_CONFIG_VALUE_BOOL, "false", MDM_ID_DEBUG_GESTURES },
 
 

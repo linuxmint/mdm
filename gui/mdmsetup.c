@@ -2740,6 +2740,12 @@ setup_gui (void)
 	/* Setup Enable debug message to system log */
 	setup_notify_toggle ("enable_debug", MDM_KEY_DEBUG);
 
+	/* Setup session output limit */
+	setup_notify_toggle ("limit_session_output", MDM_KEY_LIMIT_SESSION_OUTPUT);
+
+	/* Setup session output filtering */
+	setup_notify_toggle ("filter_session_output", MDM_KEY_FILTER_SESSION_OUTPUT);
+
 	/* Setup 24h clock */
 	setup_notify_toggle ("enable_24h_clock", MDM_KEY_USE_24_CLOCK);
 

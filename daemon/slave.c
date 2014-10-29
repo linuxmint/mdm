@@ -317,9 +317,12 @@ run_session_output (gboolean read_until_eof)
 		}
 	}
 
+	gboolean limit_output = mdm_daemon_config_get_value_bool (MDM_KEY_LIMIT_SESSION_OUTPUT);
+	gboolean filter_output = mdm_daemon_config_get_value_bool (MDM_KEY_FILTER_SESSION_OUTPUT);
+
 	/* the fd is non-blocking */
 	for (;;) {
-		VE_IGNORE_EINTR (r = read (d->session_output_fd, buf, sizeof (buf)));
+		VE_IGNORE_EINTR (r = read (d->session_output_fd, buf, sizeof (buf)));		
 
 		/* EOF */
 		if G_UNLIKELY (r == 0) {
@@ -344,12 +347,32 @@ run_session_output (gboolean read_until_eof)
 			break;
 		}
 
+		if G_UNLIKELY (limit_output && d->xsession_errors_bytes >= MAX_XSESSION_ERRORS_BYTES || got_xfsz_signal) {
+			continue;
+		}
+
+		if G_UNLIKELY (filter_output &&
+			(  g_strrstr(buf, "Gtk-WARNING") != NULL 
+			|| g_strrstr(buf, "Gtk-CRITICAL") != NULL
+			|| g_strrstr(buf, "Clutter-WARNING") != NULL 
+			|| g_strrstr(buf, "Clutter-CRITICAL") != NULL 
+			|| g_strrstr(buf, "GLib-GObject-WARNING") != NULL
+			|| g_strrstr(buf, "GLib-GObject-CRITICAL") != NULL
+			|| g_strrstr(buf, "GLib-GIO-WARNING") != NULL
+			|| g_strrstr(buf, "GLib-GIO-CRITICAL") != NULL
+			|| g_strrstr(buf, "libglade-WARNING") != NULL
+			|| g_strrstr(buf, "libglade-CRITICAL") != NULL
+			|| g_strrstr(buf, "GStreamer-WARNING") != NULL
+			|| g_strrstr(buf, "GStreamer-CRITICAL") != NULL)) {
+		 	continue;
+		}
+
 		/* write until we succeed in writing something */
 		VE_IGNORE_EINTR (written = write (d->xsession_errors_fd, buf, r));
 		if G_UNLIKELY (written < 0 || got_xfsz_signal) {
 			/* evil! */
 			break;
-		}
+		}		
 
 		/* write until we succeed in writing everything */
 		while G_UNLIKELY (written < r) {
@@ -363,6 +386,12 @@ run_session_output (gboolean read_until_eof)
 		}
 
 		d->xsession_errors_bytes += r;
+
+		if G_UNLIKELY (limit_output && d->xsession_errors_bytes >= MAX_XSESSION_ERRORS_BYTES && ! got_xfsz_signal) {
+			VE_IGNORE_EINTR (write (d->xsession_errors_fd,
+				        "\n\n --- MDM: .xsession-errors output limit reached. No more output will be written. ---\n --- Set 'LimitSessionOutput=false' in the [debug] section of /etc/mdm/mdm.conf to disable this limit. ---\n\n",
+				strlen ("\n\n --- MDM: .xsession-errors output limit reached. No more output will be written. ---\n --- Set 'LimitSessionOutput=false' in the [debug] section of /etc/mdm/mdm.conf to disable this limit. ---\n\n")));
+		}
 
 		/* there wasn't more then buf available, so no need to try reading
 		 * again, unless we really want to */
