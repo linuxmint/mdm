@@ -82,7 +82,9 @@ binary-arch: build install
 	dh_installpam -a
 	# additional PAM file to install
 	dh_installpam -pmdm --name=mdm-autologin
+	dh_systemd_enable
 	dh_installinit -a --noscripts
+	dh_systemd_start
 	dh_installman -a
 	dh_installchangelogs -a ChangeLog
 	dh_strip -a
