@@ -1,3 +1,19 @@
+mdm (1.8.0) rebecca; urgency=medium
+
+  * Added syndaemon to Init
+  * mdmwebkit: Sanitize username before sending it back to the greeter
+  * If .dmrc points to an invalid session name, revert to default.session and update .dmrc
+  * MDM Setup redesign
+  * Bring back the option to disable the userlist in the GTK greeter ([Greeter]Browser=false)
+  * Updated documentation
+  * When a flexible server dies, scan for a greeter and change VT into it (solves https://github.com/linuxmint/mdm/issues/90)
+  * Added systemd service file and build hooks for mdm.
+  * Fixed memory leaks
+  * Addeded options to limit (enabled by default) and filter (disabled by default) output in .xsession-errors, so it doesn't get bigger than 200KB and/or doesn't show Gtk/Glib/Gio/Glade/GObject warnings/errors
+  * Added pam_kwallet to pam configs. (LP: #1305307) (https://github.com/linuxmint/mdm/issues/117)
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 05 Nov 2014 21:12:55 +0100
+
 mdm (1.6.9) qiana; urgency=medium
 
   * Updated German translation for "Please enter your username"
