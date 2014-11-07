@@ -867,6 +867,7 @@ key_file_get_value (MdmConfig            *config,
 		if (error != NULL) {
 			g_debug ("%s", error->message);
 			g_error_free (error);
+			error = NULL;
 		}
 		if (val == NULL) {
 			error = NULL;
