@@ -1483,7 +1483,7 @@ mdm_config_get_string_for_id (MdmConfig       *config,
 	const char *str;
 
 	res = mdm_config_peek_string_for_id (config, id, &str);
-	if (strp != NULL) {
+	if (res && strp != NULL) {
 		*strp = g_strdup (str);
 	}
 
