@@ -369,6 +369,7 @@ unlock_ck_session (const char *user,
 	sessions = get_sessions_for_user (connection, user, x11_display);
 	if (sessions == NULL || sessions[0] == NULL) {
 		mdm_debug ("ConsoleKit: no sessions found");
+		g_strfreev (sessions);
 		return;
 	}
 
