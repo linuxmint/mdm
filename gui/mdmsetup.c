@@ -571,6 +571,7 @@ combobox_timeout (GtkWidget *combo_box)
 		new_val = g_strdup ((gchar*) g_list_nth_data (monitors, selected-1));
 
 		if (new_val == NULL || new_val == " ") {
+			g_free (new_val);
 			new_val = "None";
 		}
 		
@@ -1141,6 +1142,7 @@ get_theme_dir (void)
 	if (theme_dir == NULL ||
 	    theme_dir[0] == '\0' ||
 	    g_access (theme_dir, R_OK) != 0) {
+		g_free (theme_dir);
 		theme_dir = g_strdup (DATADIR "/mdm/themes/");
 	}
 
