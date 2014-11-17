@@ -1500,13 +1500,13 @@ selected_html_toggled (GtkCellRendererToggle *cell, char *path_str, gpointer dat
 			break;
 		case THEME_TYPE_HTML:
 			mdm_setup_config_set_string (MDM_KEY_GREETER, g_strdup (LIBEXECDIR "/mdmwebkit"));
-			gtk_tree_model_get_value (model, &selected_iter, THEME_COLUMN_NAME, &value);
+			gtk_tree_model_get_value (model, &selected_iter, THEME_COLUMN_DIR, &value);
 			mdm_setup_config_set_string (MDM_KEY_HTML_THEME, g_value_get_string (&value));
 			g_value_unset (&value);
 			break;
 		case THEME_TYPE_GDM:
 			mdm_setup_config_set_string (MDM_KEY_GREETER, g_strdup (LIBEXECDIR "/mdmgreeter"));
-			gtk_tree_model_get_value (model, &selected_iter, THEME_COLUMN_NAME, &value);
+			gtk_tree_model_get_value (model, &selected_iter, THEME_COLUMN_DIR, &value);
 			mdm_setup_config_set_string (MDM_KEY_GRAPHICAL_THEME, g_value_get_string (&value));
 			g_value_unset (&value);
 			break;
