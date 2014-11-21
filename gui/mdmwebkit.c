@@ -1179,8 +1179,15 @@ static void mdm_login_gui_init (void) {
     color.blue = 0;    
     gtk_widget_modify_bg(login, GTK_STATE_NORMAL, &color);
 
-    gtk_window_set_decorated (GTK_WINDOW (login), FALSE);
-    gtk_window_set_default_size (GTK_WINDOW (login), mdm_wm_screen.width, mdm_wm_screen.height);
+    if G_LIKELY ( ! DOING_MDM_DEVELOPMENT) {
+        gtk_window_set_decorated (GTK_WINDOW (login), FALSE);
+        gtk_window_set_default_size (GTK_WINDOW (login), mdm_wm_screen.width, mdm_wm_screen.height);
+    }
+    else {
+        gtk_window_set_icon_name (GTK_WINDOW (login), "mdmsetup");
+        gtk_window_set_title (GTK_WINDOW (login), theme_name);
+        gtk_window_maximize (GTK_WINDOW (login));
+    }
     
     g_object_ref (login);
     g_object_set_data_full (G_OBJECT (login), "login", login, (GDestroyNotify) g_object_unref);
@@ -1319,7 +1326,7 @@ int main (int argc, char *argv[]) {
     gtk_widget_queue_resize (login);
     gtk_widget_show_now (login);
 
-    mdm_wm_center_window (GTK_WINDOW (login));    
+    mdm_wm_center_window (GTK_WINDOW (login));        
 
     /* can it ever happen that it'd be NULL here ??? */
     if G_UNLIKELY (login->window != NULL) {
@@ -1333,7 +1340,7 @@ int main (int argc, char *argv[]) {
    
     mdm_common_setup_cursor (GDK_LEFT_PTR);  
     
-    mdm_wm_center_cursor ();
+    mdm_wm_center_cursor ();    
 
     gtk_main ();
 

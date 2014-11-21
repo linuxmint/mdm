@@ -1782,7 +1782,14 @@ mdm_login_gui_init (void)
     g_signal_connect (G_OBJECT (login), "key_press_event",
                       G_CALLBACK (key_press_event), NULL);
 
-    gtk_window_set_title (GTK_WINDOW (login), _("MDM Login"));
+    if G_LIKELY ( ! DOING_MDM_DEVELOPMENT) {
+    	gtk_window_set_title (GTK_WINDOW (login), _("MDM Login"));
+    }
+    else {    	
+    	gtk_window_set_icon_name (GTK_WINDOW (login), "mdmsetup");
+        gtk_window_set_title (GTK_WINDOW (login), ("GTK"));
+        gtk_window_set_default_size (GTK_WINDOW (login), 640, 400);
+    }
     
     /* connect for fingering */    
     if (mdm_config_get_bool (MDM_KEY_BROWSER)) {

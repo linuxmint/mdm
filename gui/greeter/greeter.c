@@ -1072,10 +1072,23 @@ main (int argc, char *argv[])
 				  0.0, 0.0,
 				  (double) mdm_wm_screen.width,
 				  (double) mdm_wm_screen.height);
-  gtk_window_set_decorated (GTK_WINDOW (window), FALSE);
-  gtk_window_set_default_size (GTK_WINDOW (window), 
-			       mdm_wm_screen.width, 
-			       mdm_wm_screen.height);
+  
+  if (g_getenv ("MDM_THEME") != NULL)
+     mdm_graphical_theme = g_strdup (g_getenv ("MDM_THEME"));  
+  else
+     mdm_graphical_theme = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);
+
+
+  	if G_LIKELY ( ! DOING_MDM_DEVELOPMENT) {
+	    gtk_window_set_decorated (GTK_WINDOW (window), FALSE);
+	    gtk_window_set_default_size (GTK_WINDOW (window), mdm_wm_screen.width, mdm_wm_screen.height);
+	}
+	else {
+	    gtk_window_set_icon_name (GTK_WINDOW (window), "mdmsetup");
+	    gtk_window_set_title (GTK_WINDOW (window), mdm_graphical_theme);
+	    gtk_window_maximize (GTK_WINDOW (window));
+	}
+
   gtk_container_add (GTK_CONTAINER (window), canvas);
 
  /*
@@ -1089,11 +1102,7 @@ main (int argc, char *argv[])
   MdmSuspendFound         = mdm_working_command_exists (mdm_config_get_string (MDM_KEY_SUSPEND));
   MdmConfiguratorFound    = mdm_working_command_exists (mdm_config_get_string (MDM_KEY_CONFIGURATOR));
   
-  if (g_getenv ("MDM_THEME") != NULL)
-     mdm_graphical_theme = g_strdup (g_getenv ("MDM_THEME"));  
-  else
-     mdm_graphical_theme = mdm_config_get_string (MDM_KEY_GRAPHICAL_THEME);
-
+  
   theme_file = get_theme_file (mdm_graphical_theme, &theme_dir);
   
   error = NULL;
