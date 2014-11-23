@@ -1,3 +1,12 @@
+mdm (1.8.3) rebecca; urgency=medium
+
+  * mdmsetup: Use theme directory instead of theme name in mdm.conf
+  * mdmsetup: Align welcome options
+  * mdmsetup: Added icon, title, window decorations to greeters in preview/debug mode.
+  * Updated translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun, 23 Nov 2014 14:02:41 +0100
+
 mdm (1.8.2) rebecca; urgency=medium
 
   * Added missing gtk-preview.png (used in mdmsetup)
