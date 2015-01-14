@@ -1282,8 +1282,6 @@ main (int argc, char *argv[])
 	/* Initialize runtime environment */
 	umask (022);
 
-	g_type_init ();
-
 	ctx = g_option_context_new (_("- The MDM login manager"));
 	g_option_context_add_main_entries (ctx, options, _("main options"));
 
