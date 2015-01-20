@@ -76,9 +76,6 @@ binary-arch: build install
 	dh_installdebconf -a
 	dh_installdocs -a
 	dh_installmenu -a
-	#dh_installlogrotate -a
-	dh_scrollkeeper -a
-	dh_desktop -a
 	dh_installpam -a
 	# additional PAM file to install
 	dh_installpam -pmdm --name=mdm-autologin
