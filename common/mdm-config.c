@@ -867,6 +867,7 @@ key_file_get_value (MdmConfig            *config,
 		if (error != NULL) {
 			g_debug ("%s", error->message);
 			g_error_free (error);
+			error = NULL;
 		}
 		if (val == NULL) {
 			error = NULL;
@@ -1482,7 +1483,7 @@ mdm_config_get_string_for_id (MdmConfig       *config,
 	const char *str;
 
 	res = mdm_config_peek_string_for_id (config, id, &str);
-	if (strp != NULL) {
+	if (res && strp != NULL) {
 		*strp = g_strdup (str);
 	}
 
