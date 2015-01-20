@@ -366,8 +366,6 @@ main (int argc, char *argv[])
 
 	/* Process --command option */
 
-	g_type_init ();
-
 	if (send_command != NULL) {
 
 		/* gdk_init is needed for cookie code to get display */
