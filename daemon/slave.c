@@ -2952,29 +2952,23 @@ is_session_valid (const char *session_name)
 static char *
 find_a_session (void)
 {
-	char *try[] = {
-		"cinnamon",
-		"mate",
-		"default"
-	};
-
 	char *session;
-
 	const char *default_session = mdm_daemon_config_get_value_string (MDM_KEY_DEFAULT_SESSION);
-
 	if (is_session_valid (default_session)) {
 		mdm_debug ("find_a_session: Applied default session '%s'", default_session);
 		session = g_strdup (default_session);
 	}
 	else {
+		char ** default_sessions = g_strsplit (mdm_daemon_config_get_value_string (MDM_KEY_DEFAULT_SESSIONS), ",", -1);
 		int i;
-		for (i = 0; try[i] != NULL && session == NULL; i++) {
-			if (is_session_valid (try[i])) {
-				mdm_debug ("find_a_session: Detected and applied valid session '%s'", try[i]);
-				session = g_strdup (try[i]);
+		for (i = 0; default_sessions != NULL && default_sessions[i] != NULL; i++) {
+			if (is_session_valid (default_sessions[i])) {
+				mdm_debug ("find_a_session: Detected and applied valid session '%s'", default_sessions[i]);
+				session = g_strdup (default_sessions[i]);
 				break;
 			}
 		}
+		g_strfreev (default_sessions);
 	}
 	return session;
 }
