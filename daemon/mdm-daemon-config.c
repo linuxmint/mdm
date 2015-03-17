@@ -2608,14 +2608,7 @@ mdm_daemon_config_get_session_exec (const char *session_name,
 	g_free (cached);
 	cached = g_strdup (session_name);
 
-	/* Some ugly special casing for legacy "Default.desktop", oh well,
-	 * we changed to "default.desktop" */
-	if (g_ascii_strcasecmp (session_name, "default") == 0 ||
-	    g_ascii_strcasecmp (session_name, "default.desktop") == 0) {
-		session_filename = g_strdup ("default.desktop");
-	} else {
-		session_filename = mdm_ensure_extension (session_name, ".desktop");
-	}
+	session_filename = mdm_ensure_extension (session_name, ".desktop");
 
 	path_str = mdm_daemon_config_get_value_string (MDM_KEY_SESSION_DESKTOP_DIR);
 	if (path_str == NULL) {
@@ -2631,12 +2624,8 @@ mdm_daemon_config_get_session_exec (const char *session_name,
 	g_strfreev (search_dirs);
 
 	if (cfg == NULL) {
-		if (mdm_is_session_magic (session_name)) {
-			exec = g_strdup (session_name);
-		} else {
-			g_free (exec);
-			exec = NULL;
-		}
+		g_free (exec);
+		exec = NULL;
 		goto out;
 	}
 

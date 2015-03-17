@@ -793,7 +793,6 @@ mdm_login_session_init (GtkWidget *menu)
     GSList *sessgrp = NULL;
     GList *tmp;
     GtkWidget *item;
-    int num = 1;
     char *label;
 
     current_session = NULL;
@@ -806,14 +805,7 @@ mdm_login_session_init (GtkWidget *menu)
 
 	    file = (char *) tmp->data;
 	    session = g_hash_table_lookup (sessnames, file);
-
-	    if (num < 10 && 
-	       (strcmp (file, MDM_SESSION_FAILSAFE_GNOME) != 0) &&
-	       (strcmp (file, MDM_SESSION_FAILSAFE_XTERM) != 0))
-		    label = g_strdup_printf ("_%d. %s", num, session->name);
-	    else
-		    label = g_strdup (session->name);
-	    num++;
+		label = g_strdup (session->name);
 
 	    item = gtk_radio_menu_item_new_with_mnemonic (sessgrp, label);
 	    g_free (label);

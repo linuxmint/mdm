@@ -48,13 +48,6 @@ enum {
 /* The dreaded miscellaneous category */
 #define PIPE_SIZE 4096
 
-#define MDM_SESSION_FAILSAFE_GNOME "MDM_Failsafe.GNOME"
-#define MDM_SESSION_FAILSAFE_XTERM "MDM_Failsafe.XTERM"
-
-/* FIXME: will support these builtin types later */
-#define MDM_SESSION_DEFAULT "default"
-#define MDM_SESSION_CUSTOM "custom"
-#define MDM_SESSION_FAILSAFE "failsafe"
 #define MDM_SESSION_AUTO "auto"
 
 #define MDM_STANDARD "Standard"

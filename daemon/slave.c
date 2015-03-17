@@ -2911,13 +2911,6 @@ mdm_slave_send_string (const char *opcode, const char *str)
 	g_free (msg);
 }
 
-gboolean
-mdm_is_session_magic (const char *session_name)
-{
-	return (strcmp (session_name, MDM_SESSION_CUSTOM) == 0 ||
-			strcmp (session_name, MDM_SESSION_FAILSAFE) == 0);
-}
-
 static gboolean
 is_session_valid (const char *session_name)
 {
@@ -2931,12 +2924,6 @@ is_session_valid (const char *session_name)
 	if (strcmp (session_name, MDM_SESSION_AUTO) == 0) {
 		mdm_debug ("is_session_valid: Rejecting auto session");
 		return FALSE;
-	}
-
-	// Magic sessions are ok
-	if (mdm_is_session_magic (session_name)) {
-		mdm_debug ("is_session_valid: Accepting magic session");
-		return TRUE;
 	}
 
 	// For other sessions we check the session file to see if Exec and Try_Exec are in the path
@@ -3061,7 +3048,6 @@ wipe_xsession_errors (struct passwd *pwent,
 
 static int
 open_xsession_errors (struct passwd *pwent,
-		      gboolean failsafe,
 		      const char *home_dir,
 		      gboolean home_dir_ok)
 {
@@ -3073,7 +3059,7 @@ open_xsession_errors (struct passwd *pwent,
         /* Log all output from session programs to a file,
 	 * unless in failsafe mode which needs to work when there is
 	 * no diskspace as well */
-	if G_LIKELY ( ! failsafe && home_dir_ok) {
+	if G_LIKELY (home_dir_ok) {
 		char *filename = g_build_filename (home_dir,
 						   ".xsession-errors",
 						   NULL);
@@ -3174,7 +3160,6 @@ mdm_selinux_setup (const char *login)
 static void
 session_child_run (struct passwd *pwent,
 		   int logfd,
-		   gboolean failsafe,
 		   const char *home_dir,
 		   gboolean home_dir_ok,
 #ifdef WITH_CONSOLE_KIT
@@ -3250,9 +3235,7 @@ session_child_run (struct passwd *pwent,
 	/* Run the PreSession script */
 	if G_UNLIKELY (mdm_slave_exec_script (d, mdm_daemon_config_get_value_string (MDM_KEY_PRESESSION),
                                               pwent->pw_name, pwent,
-					      TRUE /* pass_stdout */) != EXIT_SUCCESS &&
-		       /* ignore errors in failsafe modes */
-		       ! failsafe)
+					      TRUE /* pass_stdout */) != EXIT_SUCCESS)
 		/* If script fails reset X server and restart greeter */
 		mdm_child_exit (DISPLAY_REMANAGE,
 				_("%s: Execution of PreSession script returned > 0. Aborting."),
@@ -3435,32 +3418,7 @@ session_child_run (struct passwd *pwent,
 
 	mdm_log_init ();
 
-	sessionexec = NULL;
-	if (strcmp (session, MDM_SESSION_FAILSAFE_XTERM) != 0 &&
-	    strcmp (session, MDM_SESSION_FAILSAFE_GNOME) != 0) {
-
-		sessionexec = mdm_daemon_config_get_session_exec (session,
-			FALSE /* check_try_exec */);
-
-		if G_UNLIKELY (sessionexec == NULL) {
-			gchar *msg = g_strdup_printf (
-						      _("No Exec line in the session file: %s.  Running the GNOME failsafe session instead"),
-						      session);
-
-			mdm_error ("session_child_run: %s", msg);
-			mdm_errorgui_error_box (d, GTK_MESSAGE_ERROR, msg);
-			g_free (msg);
-
-			session = MDM_SESSION_FAILSAFE_GNOME;
-		} else {
-			/* HACK!, if failsafe, we really wish to run the
-			   internal one */
-			if (strcmp (sessionexec, "failsafe") == 0) {
-				session = MDM_SESSION_FAILSAFE_XTERM;
-				sessionexec    = NULL;
-			}
-		}
-	}
+	sessionexec = mdm_daemon_config_get_session_exec (session, FALSE /* check_try_exec */);
 
 	fullexec = g_string_new (NULL);
 
@@ -3468,97 +3426,32 @@ session_child_run (struct passwd *pwent,
 		const char *basexsession = mdm_daemon_config_get_value_string (MDM_KEY_BASE_XSESSION);
 		char **bxvec = g_strsplit (basexsession, " ", -1);
 
-		/* cannot be possibly failsafe */
 		if G_UNLIKELY (bxvec == NULL || g_access (bxvec[0], X_OK) != 0) {
-			mdm_error ("session_child_run: Cannot find or run the base Xsession script.  Running the GNOME failsafe session instead.");
-			session = MDM_SESSION_FAILSAFE_GNOME;
-			sessionexec = NULL;
-			mdm_errorgui_error_box
-				(d, GTK_MESSAGE_ERROR,
-				 _("Cannot find or run the base session script.  Running the GNOME failsafe session instead."));
-		} else {
-			/*
-			 * This is where the session is OK, and note that
-			 * we really DON'T care about leaks, we are going to
-			 * exec in just a bit
-			 */
-			g_string_append (fullexec, bxvec[0]);
-			g_string_append (fullexec, " ");
-
-			//If we find space chars in the session Exec, and there's no quotes around them, add quotes.
-			if ((strchr (sessionexec, ' ') != NULL) && (strchr (sessionexec, '"') == NULL)) {
-				// Exec line doesn't contain quotes, let's add them
-				mdm_debug ("Warning, session Exec line did not contain quotes: %s", sessionexec);
-				g_string_append (fullexec, "\"");
-				g_string_append (fullexec, sessionexec);
-				g_string_append (fullexec, "\"");								
-			} 
-			else {
-				g_string_append (fullexec, sessionexec);
-			}
+			mdm_error ("session_child_run: Cannot find or run the base Xsession script.");
 		}
+
+
+		/*
+		 * This is where the session is OK, and note that
+		 * we really DON'T care about leaks, we are going to
+		 * exec in just a bit
+		 */
+		g_string_append (fullexec, bxvec[0]);
+		g_string_append (fullexec, " ");
+
+		//If we find space chars in the session Exec, and there's no quotes around them, add quotes.
+		if ((strchr (sessionexec, ' ') != NULL) && (strchr (sessionexec, '"') == NULL)) {
+			// Exec line doesn't contain quotes, let's add them
+			mdm_debug ("Warning, session Exec line did not contain quotes: %s", sessionexec);
+			g_string_append (fullexec, "\"");
+			g_string_append (fullexec, sessionexec);
+			g_string_append (fullexec, "\"");
+		}
+		else {
+			g_string_append (fullexec, sessionexec);
+		}
+
 		g_strfreev (bxvec);
-	}
-
-	if (strcmp (session, MDM_SESSION_FAILSAFE_GNOME) == 0) {
-		gchar *test_exec = NULL;
-
-		test_exec = find_prog ("cinnamon-session");
-		if G_UNLIKELY (test_exec == NULL) {
-			/* yaikes */
-			mdm_error ("session_child_run: cinnamon-session not found for a failsafe GNOME session, trying xterm");
-			session = MDM_SESSION_FAILSAFE_XTERM;
-			mdm_errorgui_error_box
-				(d, GTK_MESSAGE_ERROR,
-				 _("Could not find the GNOME installation, "
-				   "will try running the \"Failsafe xterm\" "
-				   "session."));
-		} else {
-			g_string_append (fullexec, test_exec);
-			g_string_append (fullexec, " --failsafe");
-			mdm_errorgui_error_box
-				(d, GTK_MESSAGE_INFO,
-				 _("This is the Failsafe GNOME session.  "
-				   "You will be logged into the 'Default' "
-				   "session of GNOME without the startup scripts "
-				   "being run.  This should be used to fix problems "
-				   "in your installation."));
-		}
-		failsafe = TRUE;
-	}
-
-	/* This is an if and not an else, we could have done a fall-through
-	 * to here in the above code if we can't find cinnamon-session */
-	if (strcmp (session, MDM_SESSION_FAILSAFE_XTERM) == 0) {
-		gchar *test_exec;
-		gchar *geometry = g_strdup_printf (" -geometry 80x24-%d-%d",
-						   d->lrh_offsetx,
-						   d->lrh_offsety);
-		test_exec = find_prog ("xterm");
-		if (test_exec == NULL) {
-			mdm_errorgui_error_box (d, GTK_MESSAGE_ERROR,
-				       _("Cannot find \"xterm\" to start "
-					 "a failsafe session."));
-			/* nyah nyah nyah nyah nyah */
-			/* 66 means no "session crashed" examine .xsession-errors dialog */
-			_exit (66);
-		} else {
-			gchar *failsafe_msg = NULL;
-			g_string_append (fullexec, test_exec);
-			g_string_append (fullexec, geometry);
-
-			failsafe_msg = _("This is the Failsafe xterm session.  "
-					 "You will be logged into a terminal "
-					 "console so that you may fix your system "
-					 "if you cannot log in any other way.  "
-					 "To exit the terminal emulator, type "
-					 "'exit' and an enter into the window.");
-
-			mdm_errorgui_error_box (d, GTK_MESSAGE_INFO, failsafe_msg);
-			focus_first_x_window ("xterm");
-		}
-		g_free (geometry);
-		failsafe = TRUE;
 	}
 
 	mdm_debug ("Running %s for %s on %s", fullexec->str, login_user, d->name);
@@ -4004,7 +3897,6 @@ mdm_slave_session_start (void)
 	gboolean savesess = FALSE, savelang = FALSE;
 	gboolean usrcfgok = FALSE, authok = FALSE;
 	gboolean home_dir_ok = FALSE;
-	gboolean failsafe = FALSE;
 	time_t session_start_time, end_time; 
 	pid_t pid;
 	MdmWaitPid *wp;
@@ -4032,9 +3924,7 @@ mdm_slave_session_start (void)
 	/* Run the PostLogin script */
 	if G_UNLIKELY (mdm_slave_exec_script (d, mdm_daemon_config_get_value_string (MDM_KEY_POSTLOGIN),
 					      login_user, pwent,
-					      TRUE /* pass_stdout */) != EXIT_SUCCESS &&
-		       /* ignore errors in failsafe modes */
-		       ! failsafe) {
+					      TRUE /* pass_stdout */) != EXIT_SUCCESS) {
 		mdm_verify_cleanup (d);
 		mdm_error ("mdm_slave_session_start: Execution of PostLogin script returned > 0. Aborting.");
 		/* script failed so just try again */
@@ -4287,19 +4177,6 @@ mdm_slave_session_start (void)
 		mdm_slave_quick_exit (DISPLAY_REMANAGE);
 	}
 
-	if G_UNLIKELY (strcmp (session, MDM_SESSION_FAILSAFE_GNOME) == 0 ||
-		       strcmp (session, MDM_SESSION_FAILSAFE_XTERM) == 0 ||
-		       g_ascii_strcasecmp (session, "failsafe") == 0 /* hack */)
-		failsafe = TRUE;
-
-	if G_LIKELY ( ! failsafe) {
-		char *exec = mdm_daemon_config_get_session_exec (session, FALSE /* check_try_exec */);
-		if ( ! ve_string_empty (exec) &&
-		     strcmp (exec, "failsafe") == 0)
-			failsafe = TRUE;
-		g_free (exec);
-	}
-
 	/* Write out the Xservers file */
 	mdm_slave_send_num (MDM_SOP_WRITE_X_SERVERS, 0 /* bogus */);
 
@@ -4324,7 +4201,6 @@ mdm_slave_session_start (void)
 	d->session_output_fd = -1;
 
 	logfilefd = open_xsession_errors (pwent,
-					  failsafe,
 					  home_dir,
 					  home_dir_ok);
 	if G_UNLIKELY (logfilefd < 0 ||
@@ -4377,7 +4253,6 @@ mdm_slave_session_start (void)
 			/* Never returns */
 			session_child_run (pwent,
 					   logpipe[1],
-					   failsafe,
 					   home_dir,
 					   home_dir_ok,
 #ifdef WITH_CONSOLE_KIT

@@ -75,7 +75,6 @@ greeter_session_init (void)
   static GtkTooltips *tooltips = NULL;
   GtkRequisition req;
   char *s;
-  int num = 1;
   char *label;
 
   greeter_set_session (NULL);
@@ -135,15 +134,8 @@ greeter_session_init (void)
  
 	file = (char *) tmp->data;
 	session = g_hash_table_lookup (sessnames, file);
- 
-	if (num < 10 &&
-	   (strcmp (file, MDM_SESSION_FAILSAFE_GNOME) != 0) &&
-	   (strcmp (file, MDM_SESSION_FAILSAFE_XTERM) != 0))
-		label = g_strdup_printf ("_%d. %s", num, session->name);
-	else
-		label = g_strdup (session->name);
-	num++;
- 
+	label = g_strdup (session->name);
+
 	radio = gtk_radio_button_new_with_mnemonic (session_group, label);
 	g_free (label);
 	g_object_set_data_full (G_OBJECT (radio), SESSION_NAME,

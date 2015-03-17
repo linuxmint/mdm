@@ -256,32 +256,6 @@ _mdm_session_list_init (GHashTable **sessnames, GList **sessions, gchar **defaul
     }
 }
 
-static gboolean
-mdm_login_list_lookup (GList *l, const gchar *data)
-{
-    GList *list = l;
-
-    if (list == NULL || data == NULL) {
-        return FALSE;
-    }
-
-    /* FIXME: Hack, will support these builtin types later */
-    if (strcmp (data, MDM_SESSION_DEFAULT ".desktop") == 0 ||
-        strcmp (data, MDM_SESSION_CUSTOM ".desktop") == 0 ||
-        strcmp (data, MDM_SESSION_FAILSAFE ".desktop") == 0) {
-        return TRUE;
-    }
-
-    while (list) {
-        if (strcmp (list->data, data) == 0) {
-            return TRUE;
-        }
-        list = list->next;
-    }
-
-    return FALSE;
-}
-
 const char* mdm_get_default_session (void) {
     return default_session;
 }
