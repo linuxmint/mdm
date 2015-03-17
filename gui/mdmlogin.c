@@ -560,34 +560,6 @@ mdm_login_done (int sig)
 	_exit (EXIT_SUCCESS);
 }
 
-static void
-set_screen_pos (GtkWidget *widget, int x, int y)
-{
-	int width, height;
-
-	g_return_if_fail (widget != NULL);
-	g_return_if_fail (GTK_IS_WIDGET (widget));
-
-	gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
-
-	/* allow negative values, to be like standard X geometry ones */
-	if (x < 0)
-		x = mdm_wm_screen.width + x - width;
-	if (y < 0)
-		y = mdm_wm_screen.height + y - height;
-
-	if (x < mdm_wm_screen.x)
-		x = mdm_wm_screen.x;
-	if (y < mdm_wm_screen.y)
-		y = mdm_wm_screen.y;
-	if (x > mdm_wm_screen.x + mdm_wm_screen.width - width)
-		x = mdm_wm_screen.x + mdm_wm_screen.width - width;
-	if (y > mdm_wm_screen.y + mdm_wm_screen.height - height)
-		y = mdm_wm_screen.y + mdm_wm_screen.height - height;
-
-	gtk_window_move (GTK_WINDOW (widget), x, y);
-}
-
 static guint set_pos_id = 0;
 
 static gboolean
