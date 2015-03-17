@@ -41,7 +41,6 @@
 #define MDM_PROMPT     'N'
 #define MDM_SESS       'G'
 #define MDM_LANG       '&'
-#define MDM_SSESS      'C'
 #define MDM_SLANG      'R'
 #define MDM_SETLANG    'L'
 #define MDM_SETSESS    'Z'

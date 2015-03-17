@@ -2713,15 +2713,6 @@ mdm_daemon_config_get_session_xserver_args (const char *session_name)
 	g_free (cached);
 	cached = g_strdup (session_name);
 
-	/* Some ugly special casing for legacy "Default.desktop", oh well,
-	 * we changed to "default.desktop" */
-	if (g_ascii_strcasecmp (session_name, "default") == 0 ||
-	    g_ascii_strcasecmp (session_name, "default.desktop") == 0) {
-		session_filename = g_strdup ("default.desktop");
-	} else {
-		session_filename = mdm_ensure_extension (session_name, ".desktop");
-	}
-
 	path_str = mdm_daemon_config_get_value_string (MDM_KEY_SESSION_DESKTOP_DIR);
 	if (path_str == NULL) {
 		mdm_error ("No session desktop directories defined");
@@ -2814,79 +2805,37 @@ mdm_daemon_config_set_user_session_lang (gboolean savesess,
 void
 mdm_daemon_config_get_user_session_lang (char      **usrsess,
 					 char      **usrlang,
-					 const char *home_dir,
-					 gboolean   *savesess)
+					 const char *home_dir)
 {
 	char *p;
 	char *cfgfile;
 	GKeyFile *cfg;
-	char *session;
-	char *lang;
-	gboolean save;
+	char *session = NULL;
+	char *lang = NULL;
 
 	cfgfile = g_build_filename (home_dir, ".dmrc", NULL);
 	cfg = mdm_common_config_load (cfgfile, NULL);
 	g_free (cfgfile);
 
-	save    = FALSE;
-	session = NULL;
-	lang    = NULL;
-
-	if (cfg == NULL) {
-		session = g_strdup ("");
-		lang    = g_strdup ("");
-	} else {
+	if (cfg != NULL) {
 		mdm_common_config_get_string (cfg, "Desktop/Session", &session, NULL);
-		if (session == NULL) {
-			session = g_strdup ("");
-		}
-
-		/*
-		 * This is just being truly anal about what users give us, and in case
-		 * it looks like they may have included a path whack it.
-		 */
-		p = strrchr (session, '/');
-		if (p != NULL) {
-			char *tmp = g_strdup (p + 1);
-			g_free (session);
-			session = tmp;
-		}
-
-		/* If .dmrc points to an invalid session (for instance when the user has upgraded the OS and kept his/her home or when the last used DE was removed) 
-		 * fallback to the default session
-		 */
-		char * sessionexec = mdm_daemon_config_get_session_exec (session, FALSE /* check_try_exec */);
-		if G_UNLIKELY (sessionexec == NULL) {
-			mdm_error (".dmrc pointed to an invalid session '%s', reverting it to the default session", session);
-			session = g_strdup ("default");
-			save    = TRUE;
-		}
-		g_free (sessionexec);
-
-		/* Ugly workaround for migration */
-		if (strcmp (session, "Default") == 0 ||
-		    strcmp (session, "Default.desktop") == 0) {
-			g_free (session);
-			session = g_strdup ("default");
-			save    = TRUE;
-		}
-
 		mdm_common_config_get_string (cfg, "Desktop/Language", &lang, NULL);
-		if (lang == NULL) {
-			lang = g_strdup ("");
-		}
-
 		g_key_file_free (cfg);
 	}
 
+	if (session == NULL || strcmp(session, "default") == 0) {
+		// Don't allow .dmrc to specify the session as 'default'
+		// This was allowed in MDM <= 1.8.
+		// After this version MDM uses x-session-manager only as a last resort when no configuration/detection is working
+		session = g_strdup ("");
+	}
 	if (usrsess != NULL) {
 		*usrsess = g_strdup (session);
 	}
 
-	if (savesess != NULL) {
-		*savesess = save;
+	if (lang == NULL) {
+		lang = g_strdup ("");
 	}
-
 	if (usrlang != NULL) {
 		*usrlang = g_strdup (lang);
 	}

@@ -62,8 +62,9 @@ G_BEGIN_DECLS
 #define MDM_KEY_ROOT_PATH "daemon/RootPath=/sbin:/usr/sbin:" MDM_USER_PATH
 #define MDM_KEY_SERV_AUTHDIR "daemon/ServAuthDir=" AUTHDIR
 #define MDM_KEY_SESSION_DESKTOP_DIR "daemon/SessionDesktopDir=/etc/X11/sessions/:" DMCONFDIR "/Sessions/:" DATADIR "/mdm/BuiltInSessions/:" DATADIR "/xsessions/"
+#define MDM_KEY_DEFAULT_SESSIONS "daemon/DefaultSessions=cinnamon.desktop,mate.desktop,xfce.desktop,kde-plasma.desktop,kde.desktop"
 #define MDM_KEY_BASE_XSESSION "daemon/BaseXsession=" MDMCONFDIR "/Xsession"
-#define MDM_KEY_DEFAULT_SESSION "daemon/DefaultSession=mate.desktop"
+#define MDM_KEY_DEFAULT_SESSION "daemon/DefaultSession=auto"
 #define MDM_KEY_SUSPEND "daemon/SuspendCommand=" SUSPEND_COMMAND
 #define MDM_KEY_USER_AUTHDIR "daemon/UserAuthDir="
 #define MDM_KEY_USER_AUTHDIR_FALLBACK "daemon/UserAuthFBDir=/tmp"
@@ -160,9 +161,6 @@ G_BEGIN_DECLS
 #define MDM_KEY_DEBUG_GESTURES "debug/Gestures=false"
 #define MDM_KEY_SECTION_GREETER "greeter"
 #define MDM_KEY_SECTION_SERVERS "servers"
-#define MDM_KEY_SHOW_GNOME_FAILSAFE "greeter/ShowGnomeFailsafeSession=true"
-#define MDM_KEY_SHOW_XTERM_FAILSAFE "greeter/ShowXtermFailsafeSession=true"
-#define MDM_KEY_SHOW_LAST_SESSION "greeter/ShowLastSession=true"
 /* END LEGACY KEYS */
 
 /* Notification protocol */

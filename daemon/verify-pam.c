@@ -124,7 +124,6 @@ gboolean mdm_verify_check_selectable_user (const char * user) {
 void mdm_verify_set_user_settings (const char *user) {
 	char * session;
 	char * language;
-	gboolean savesess = FALSE;
 
 	if (mdm_verify_check_selectable_user(user)) {
 		mdm_debug("mdm_verify_set_user_settings: Checking settings for '%s'", user);
@@ -134,7 +133,7 @@ void mdm_verify_set_user_settings (const char *user) {
 			g_free (home_dir);
 			return;
 		}
-		mdm_daemon_config_get_user_session_lang (&session, &language, home_dir, &savesess);
+		mdm_daemon_config_get_user_session_lang (&session, &language, home_dir);
 		if (!ve_string_empty(session)) {
 			mdm_debug("mdm_verify_set_user_settings: Found session '%s'.", session);
 			mdm_slave_greeter_ctl_no_ret (MDM_SETSESS, session);
@@ -149,7 +148,7 @@ void mdm_verify_set_user_settings (const char *user) {
 		}
 		else {
 			const char * mdmlang = g_getenv ("LANG");
-			if (mdmlang) {				
+			if (mdmlang) {
 				mdm_debug("mdm_verify_set_user_settings: No language found, setting to default '%s'.", mdmlang);
 				mdm_slave_greeter_ctl_no_ret (MDM_SETLANG, mdmlang);
 			}

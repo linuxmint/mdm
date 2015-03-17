@@ -3806,44 +3806,6 @@ mdm:.my.domain
           </varlistentry>        
 
           <varlistentry>
-            <term>ShowGnomeFailsafeSession</term>
-            <listitem>
-              <synopsis>ShowGnomeFailsafeSession=true</synopsis>
-              <para>
-                Should the greeter show the Gnome Failsafe session in th
-                sessions list.
-              </para>
-            </listitem>
-          </varlistentry>        
-
-          <varlistentry>
-            <term>ShowLastSession</term>
-            <listitem>
-              <synopsis>ShowLastSession=true</synopsis>
-              <para>
-                Should the greeter show the 'Last' session in the session list.
-                If this is off, then MDM is in the so called 'switchdesk' mode
-                which for example Red Hat uses.  That is, the users can't pick
-                the last session and will just then get the default session
-                (see <filename>DefaultSession</filename>) unless then pick
-                something else for this session only.  So if this is off, this
-                really circumvents saving of the last session.
-              </para>
-            </listitem>
-          </varlistentry>        
-
-          <varlistentry>
-            <term>ShowXtermFailsafeSession</term>
-            <listitem>
-              <synopsis>ShowXtermFailsafeSession=true</synopsis>
-              <para>
-                Should the greeter show the Xterm Failsafe session in the
-                sessions list.
-              </para>
-            </listitem>
-          </varlistentry>        
-
-          <varlistentry>
             <term>SoundOnLogin</term>
             <listitem>
               <synopsis>SoundOnLogin=true</synopsis>

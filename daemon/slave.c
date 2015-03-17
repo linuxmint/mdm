@@ -2914,64 +2914,61 @@ mdm_slave_send_string (const char *opcode, const char *str)
 gboolean
 mdm_is_session_magic (const char *session_name)
 {
-	return (strcmp (session_name, MDM_SESSION_DEFAULT) == 0 ||
-		strcmp (session_name, MDM_SESSION_CUSTOM) == 0 ||
-		strcmp (session_name, MDM_SESSION_FAILSAFE) == 0);
+	return (strcmp (session_name, MDM_SESSION_CUSTOM) == 0 ||
+			strcmp (session_name, MDM_SESSION_FAILSAFE) == 0);
 }
 
-/* Note that this does check TryExec! while normally we don't check
- * it */
 static gboolean
-is_session_ok (const char *session_name)
+is_session_valid (const char *session_name)
 {
-	char *exec;
-	gboolean ret = TRUE;
+	// Empty sessions aren't valid
+	if (ve_string_empty(session_name)) {
+		mdm_debug ("is_session_valid: Rejecting empty session");
+		return FALSE;
+	}
 
-	/* these are always OK */
-	if (strcmp (session_name, MDM_SESSION_FAILSAFE_GNOME) == 0 ||
-	    strcmp (session_name, MDM_SESSION_FAILSAFE_XTERM) == 0)
+	// Autodetect session, by definition, isn't valid (used to delegate selection to session detection)
+	if (strcmp (session_name, MDM_SESSION_AUTO) == 0) {
+		mdm_debug ("is_session_valid: Rejecting auto session");
+		return FALSE;
+	}
+
+	// Magic sessions are ok
+	if (mdm_is_session_magic (session_name)) {
+		mdm_debug ("is_session_valid: Accepting magic session");
 		return TRUE;
+	}
 
-	if (ve_string_empty (mdm_daemon_config_get_value_string (MDM_KEY_SESSION_DESKTOP_DIR)))
-		return mdm_is_session_magic (session_name);
-
-	exec = mdm_daemon_config_get_session_exec (session_name, TRUE /* check_try_exec */);
-	if (exec == NULL)
-		ret = FALSE;
+	// For other sessions we check the session file to see if Exec and Try_Exec are in the path
+	gboolean valid = FALSE;
+	char * exec = mdm_daemon_config_get_session_exec (session_name, TRUE /* check_try_exec */);
+	if (exec != NULL) {
+		valid = TRUE;
+	}
 	g_free (exec);
-	return ret;
+	return valid;
 }
 
 static char *
 find_a_session (void)
 {
-	char *try[] = {
-		"Default",
-		"default",
-		"Gnome",
-		"gnome",
-		"GNOME",
-		"Custom",
-		"custom",
-		"kde",
-		"KDE",
-		"failsafe",
-		"Failsafe",
-		NULL
-	};
-	int i;
 	char *session;
-	const char *defaultsession = mdm_daemon_config_get_value_string (MDM_KEY_DEFAULT_SESSION);
-
-	if (!ve_string_empty (defaultsession) &&
-	    is_session_ok (defaultsession))
-		session = g_strdup (defaultsession);
-	else
-		session = NULL;
-
-	for (i = 0; try[i] != NULL && session == NULL; i++) {
-		if (is_session_ok (try[i]))
-			session = g_strdup (try[i]);
+	const char *default_session = mdm_daemon_config_get_value_string (MDM_KEY_DEFAULT_SESSION);
+	if (is_session_valid (default_session)) {
+		mdm_debug ("find_a_session: Applied default session '%s'", default_session);
+		session = g_strdup (default_session);
+	}
+	else {
+		char ** default_sessions = g_strsplit (mdm_daemon_config_get_value_string (MDM_KEY_DEFAULT_SESSIONS), ",", -1);
+		int i;
+		for (i = 0; default_sessions != NULL && default_sessions[i] != NULL; i++) {
+			if (is_session_valid (default_sessions[i])) {
+				mdm_debug ("find_a_session: Detected and applied valid session '%s'", default_sessions[i]);
+				session = g_strdup (default_sessions[i]);
+				break;
+			}
+		}
+		g_strfreev (default_sessions);
 	}
 	return session;
 }
@@ -4121,7 +4118,7 @@ mdm_slave_session_start (void)
 	}
 
 	if G_LIKELY (usrcfgok) {
-		mdm_daemon_config_get_user_session_lang (&usrsess, &usrlang, home_dir, &savesess);
+		mdm_daemon_config_get_user_session_lang (&usrsess, &usrlang, home_dir);
 	} else {
 		/* This won't get displayed if the .dmrc file simply doesn't
 		 * exist since we pass absentok=TRUE when we call mdm_file_check
@@ -4139,12 +4136,28 @@ mdm_slave_session_start (void)
 		usrlang = g_strdup ("");
 	}
 
+	mdm_debug ("mdm_slave_session_start: .dmrc SESSION == '%s'", usrsess);
+
+	if (! is_session_valid (usrsess) ) {
+		g_free (usrsess);
+		usrsess = find_a_session ();
+	}
+
 	NEVER_FAILS_root_set_euid_egid (0, mdm_daemon_config_get_mdmgid ());
 
 	if (greet) {
 		tmp = mdm_ensure_extension (usrsess, ".desktop");
-		session = mdm_slave_greeter_ctl (MDM_SESS, tmp);
+		char * greeter_session = mdm_slave_greeter_ctl (MDM_SESS, tmp);
+		if (is_session_valid(greeter_session) && strcmp(greeter_session, "default.desktop") != 0) {
+			// If the greeter chooses a valid session (not default.desktop.. in that case we use the session we detected already)
+			session = g_strdup (greeter_session);
+			mdm_debug ("mdm_slave_session_start: Greeter set SESSION to '%s'", session);
+		}
+		else {
+			session = g_strdup (usrsess);
+		}
 		g_free (tmp);
+		g_free (greeter_session);
 
 		if (session != NULL &&
 		    strcmp (session, MDM_RESPONSE_CANCEL) == 0) {
@@ -4169,24 +4182,15 @@ mdm_slave_session_start (void)
 		language = g_strdup (usrlang);
 	}
 
-	if (session == NULL) {
+	if (ve_string_empty(session)) {
+		g_free (session);
 		mdm_debug ("Session is NULL, setting it to default.desktop");
 		session = g_strdup ("default.desktop");
 	}
 
-	
 	tmp = mdm_strip_extension (session, ".desktop");
 	g_free (session);
 	session = tmp;
-
-	if (ve_string_empty (session)) {
-		g_free (session);
-		session = find_a_session ();
-		if (session == NULL) {
-			/* we're running out of options */
-			session = g_strdup (MDM_SESSION_FAILSAFE_GNOME);
-		}
-	}
 
 	if G_LIKELY (ve_string_empty (language)) {
 		g_free (language);
@@ -4201,18 +4205,13 @@ mdm_slave_session_start (void)
 	save_session = g_strdup (session);
 
 	if (greet) {
-		char *ret = mdm_slave_greeter_ctl (MDM_SSESS, "");
-		if ( ! ve_string_empty (ret))
-			savesess = TRUE;
-		g_free (ret);
-
-		ret = mdm_slave_greeter_ctl (MDM_SLANG, "");
+		savesess = TRUE;
+		char *ret = mdm_slave_greeter_ctl (MDM_SLANG, "");
 		if ( ! ve_string_empty (ret))
 			savelang = TRUE;
 		g_free (ret);
 
 		mdm_debug ("mdm_slave_session_start: Authentication completed. Whacking greeter");
-
 		mdm_slave_whack_greeter ();
 	}
 

@@ -1246,7 +1246,6 @@ config/PreSession
 config/PostSession
 config/mdmprefetchlist
 config/default.desktop.in
-config/gnome.desktop.in
 config/ssh.desktop.in
 files/Makefile
 ])
