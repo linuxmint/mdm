@@ -174,7 +174,6 @@ _mdm_session_list_init (GHashTable **sessnames, GList **sessions, gchar **defaul
 			    if (full == NULL) {
 				    session = g_new0 (MdmSession, 1);
 				    session->name      = g_strdup (dent->d_name);
-				    session->clearname = NULL;
 				    g_hash_table_insert (*sessnames, g_strdup (dent->d_name),
 					 session);
 				    g_free (tryexec);
@@ -198,7 +197,6 @@ _mdm_session_list_init (GHashTable **sessnames, GList **sessions, gchar **defaul
 		    if G_UNLIKELY (ve_string_empty (exec) || ve_string_empty (name)) {
 			    session = g_new0 (MdmSession, 1);
 			    session->name      = g_strdup (dent->d_name);
-			    session->clearname = NULL;
 			    g_hash_table_insert (*sessnames, g_strdup (dent->d_name), session);
 			    g_free (exec);
 			    g_free (name);
@@ -226,7 +224,6 @@ _mdm_session_list_init (GHashTable **sessnames, GList **sessions, gchar **defaul
 
 		    session = g_new0 (MdmSession, 1);
 		    session->name      = g_strdup (name);
-		    session->clearname = NULL;
 		    session->comment   = g_strdup (comment);
 		    g_hash_table_insert (*sessnames, g_strdup (dent->d_name), session);
 		    g_free (exec);

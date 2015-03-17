@@ -29,7 +29,6 @@
 
 typedef struct {
         char *name;
-        char *clearname;
         char *comment;
 } MdmSession;
 
@@ -43,7 +42,7 @@ enum {
 void		mdm_session_list_init		(void);
 void		_mdm_session_list_init		(GHashTable **sessnames,
 						 GList **sessions,
-						 gchar **default_session, 
+						 gchar **default_session,
 						 const gchar **current_session);
 gint		mdm_session_sort_func		(const char *a, const char *b);
 const char *	mdm_session_name 		(const char *name);

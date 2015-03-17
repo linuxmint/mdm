@@ -282,10 +282,7 @@ populate_session (GObject * object)
 
       if (GTK_IS_COMBO_BOX (object))
         {
-          if (session->clearname != NULL)
-             gtk_combo_box_append_text (GTK_COMBO_BOX (object), (session->clearname));
-          else
-             gtk_combo_box_append_text (GTK_COMBO_BOX (object), (session->name));
+          gtk_combo_box_append_text (GTK_COMBO_BOX (object), (session->name));
         }
       else if (GTK_IS_TREE_MODEL (object))
         {
@@ -294,10 +291,7 @@ populate_session (GObject * object)
           gchar *to_display;
 
           gtk_list_store_append (GTK_LIST_STORE (tm), &loopiter);
-          if (session->clearname != NULL)
-             to_display = session->clearname;
-          else
-             to_display = session->name;
+          to_display = session->name;
 
           gtk_list_store_set (GTK_LIST_STORE (tm), &loopiter,
              GREETER_LIST_TEXT, to_display,
@@ -373,17 +367,10 @@ combo_session_selected (char *session_val)
       for (tmp = sessions; tmp != NULL; tmp = tmp->next)
         {
           MdmSession *session;
-          char *name;
-
           file    = tmp->data;
           session = g_hash_table_lookup (sessnames, file);
 
-          if (session->clearname)
-             name = session->clearname;
-          else
-             name = session->name;
-
-          if (strcmp (name, session_val) == 0)
+          if (strcmp (session->name, session_val) == 0)
             {
               greeter_set_session (file);
               break;
