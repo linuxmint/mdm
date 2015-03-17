@@ -1035,11 +1035,7 @@ process_operation (guchar       op_code,
     GtkWidget *dlg;
     static gboolean replace_msg = TRUE;
     static gboolean messages_to_give = FALSE;
-    gint lookup_status = SESSION_LOOKUP_SUCCESS;
-    gchar *firstmsg = NULL;
-    gchar *secondmsg = NULL;
-    gint dont_save_session = GTK_RESPONSE_YES;
-    
+
     /* Parse opcode */
     switch (op_code) {
     case MDM_SETLOGIN:

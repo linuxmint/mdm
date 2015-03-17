@@ -173,10 +173,6 @@ process_operation (guchar       op_code,
     char *session;
     GreeterItemInfo *conversation_info;
     static GnomeCanvasItem *disabled_cover = NULL;
-    gint lookup_status = SESSION_LOOKUP_SUCCESS;
-    gchar *firstmsg = NULL;
-    gchar *secondmsg = NULL;
-    gint dont_save_session = GTK_RESPONSE_YES;
 
     /* Parse opcode */
     switch (op_code) {

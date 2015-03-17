@@ -32,13 +32,6 @@ typedef struct {
         char *comment;
 } MdmSession;
 
-enum {
-	SESSION_LOOKUP_SUCCESS,
-	SESSION_LOOKUP_PREFERRED_MISSING,
-	SESSION_LOOKUP_DEFAULT_MISMATCH,
-	SESSION_LOOKUP_USE_SWITCHDESK
-};
-
 void		mdm_session_list_init		(void);
 void		_mdm_session_list_init		(GHashTable **sessnames,
 						 GList **sessions,
@@ -51,12 +44,6 @@ void		mdm_session_list_from_hash_table_func (const char *key,
 						GList **sessions);
 gint		mdm_session_sort_func		(const char *a,
 						 const char *b);
-char *		mdm_session_lookup 		(const char *saved_session, gint *lookup_status);
-
-gint		mdm_get_save_session 		(void);
-
-void		mdm_set_save_session 		(const gint session);
-
 const char *    mdm_get_default_session         (void);
 
 #endif /* MDM_SESSION_H */
