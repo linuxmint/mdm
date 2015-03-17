@@ -402,6 +402,9 @@
                                             <property name="n_columns">2</property>
                                             <property name="column_spacing">12</property>
                                             <child>
+                                              <placeholder/>
+                                            </child>
+                                            <child>
                                               <widget class="GtkRadioButton" id="sg_customwelcome">
                                                 <property name="label" translatable="yes">C_ustom:</property>
                                                 <property name="visible">True</property>
@@ -455,9 +458,6 @@
                                                 <property name="x_options">GTK_FILL</property>
                                                 <property name="y_options"/>
                                               </packing>
-                                            </child>
-                                            <child>
-                                              <placeholder/>
                                             </child>
                                             <child>
                                               <widget class="GtkRadioButton" id="sg_defaultwelcome">
@@ -831,23 +831,9 @@
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="right_attach">2</property>
+                            <property name="top_attach">7</property>
+                            <property name="bottom_attach">8</property>
                             <property name="y_options">GTK_FILL</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkCheckButton" id="default_session_checkbutton">
-                            <property name="label" translatable="yes">De_fault session:</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="has_tooltip">True</property>
-                            <property name="tooltip" translatable="yes">The session that is used by default if the user does not have a saved preference and has picked 'Last' from the list of sessions.</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_indicator">True</property>
-                          </widget>
-                          <packing>
-                            <property name="x_options">GTK_FILL</property>
-                            <property name="y_options"/>
                           </packing>
                         </child>
                         <child>
@@ -861,8 +847,8 @@
                           </widget>
                           <packing>
                             <property name="right_attach">2</property>
-                            <property name="top_attach">4</property>
-                            <property name="bottom_attach">5</property>
+                            <property name="top_attach">3</property>
+                            <property name="bottom_attach">4</property>
                             <property name="y_options"/>
                           </packing>
                         </child>
@@ -879,8 +865,8 @@
                           </widget>
                           <packing>
                             <property name="right_attach">2</property>
-                            <property name="top_attach">5</property>
-                            <property name="bottom_attach">6</property>
+                            <property name="top_attach">4</property>
+                            <property name="bottom_attach">5</property>
                             <property name="y_options"/>
                           </packing>
                         </child>
@@ -894,8 +880,8 @@
                           </widget>
                           <packing>
                             <property name="right_attach">2</property>
-                            <property name="top_attach">2</property>
-                            <property name="bottom_attach">3</property>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
                             <property name="y_options"/>
                           </packing>
                         </child>
@@ -909,8 +895,8 @@
                           </widget>
                           <packing>
                             <property name="right_attach">2</property>
-                            <property name="top_attach">3</property>
-                            <property name="bottom_attach">4</property>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
                             <property name="y_options"/>
                           </packing>
                         </child>
@@ -924,8 +910,6 @@
                           </widget>
                           <packing>
                             <property name="right_attach">2</property>
-                            <property name="top_attach">1</property>
-                            <property name="bottom_attach">2</property>
                             <property name="y_options">GTK_FILL</property>
                           </packing>
                         </child>
@@ -967,8 +951,8 @@
                           </widget>
                           <packing>
                             <property name="right_attach">2</property>
-                            <property name="top_attach">6</property>
-                            <property name="bottom_attach">7</property>
+                            <property name="top_attach">5</property>
+                            <property name="bottom_attach">6</property>
                             <property name="y_options"/>
                           </packing>
                         </child>
@@ -983,9 +967,23 @@
                           </widget>
                           <packing>
                             <property name="right_attach">2</property>
+                            <property name="top_attach">6</property>
+                            <property name="bottom_attach">7</property>
+                            <property name="y_options"/>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="default_session_label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Default session:</property>
+                          </widget>
+                          <packing>
                             <property name="top_attach">7</property>
                             <property name="bottom_attach">8</property>
-                            <property name="y_options"/>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options">GTK_FILL</property>
                           </packing>
                         </child>
                       </widget>

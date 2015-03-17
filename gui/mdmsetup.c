@@ -2525,11 +2525,11 @@ setup_default_session (void)
 	gchar      *org_val;
 
 	_mdm_session_list_init (&sessnames, &org_sessions, NULL, NULL);
-	
+
 	default_session_combobox = glade_xml_get_widget (xml, "default_session_combobox");
 
 	org_val = mdm_config_get_string (MDM_KEY_DEFAULT_SESSION);
-	
+
 	for (tmp = org_sessions; tmp != NULL; tmp = tmp->next, i++) {
 		MdmSession *session;
 		gchar *file;
@@ -2537,60 +2537,40 @@ setup_default_session (void)
 		file = (gchar *) tmp->data;
 		if (strcmp (ve_sure_string (org_val), ve_sure_string (file)) == 0)		
 			active = i;
-		
+
 		session = g_hash_table_lookup (sessnames, file);
-		
-		if (!ve_string_empty (session->clearname)) {
-			gtk_combo_box_append_text (GTK_COMBO_BOX (default_session_combobox), 
-						   session->clearname);
-			sessions = g_list_prepend (sessions, file);
+
+		if (!ve_string_empty (session->name)) {
+			if ( strcmp(file, "default.desktop") == 0 ){
+				gtk_combo_box_append_text (GTK_COMBO_BOX (default_session_combobox), _("Automatically detected"));
+				sessions = g_list_prepend (sessions, "auto");
+			}
+			else {
+				gtk_combo_box_append_text (GTK_COMBO_BOX (default_session_combobox), session->name);
+				sessions = g_list_prepend (sessions, file);
+			}
 		}
-		/* This is a sort of safety fallback
-		   if session does not have the clearname defined
-		   we will use name instead*/		
-		else if (!ve_string_empty (session->name)) {
-			gtk_combo_box_append_text (GTK_COMBO_BOX (default_session_combobox), 
-						   session->name);
-			sessions = g_list_prepend (sessions, file);
-		}
-		
+
 	}
 
-	sessions = g_list_reverse (sessions);	
+	sessions = g_list_reverse (sessions);
 
-	/* some cleanup */	
+	/* some cleanup */
 	g_list_free (org_sessions);
 	g_hash_table_remove_all (sessnames);
-	
+
 	if (!ve_string_empty (org_val)) {
-		gtk_widget_set_sensitive (default_session_combobox, TRUE);		
 		gtk_combo_box_set_active (GTK_COMBO_BOX (default_session_combobox), active);
 	}
-	else
-		gtk_widget_set_sensitive (default_session_combobox, FALSE);
-	
+
 	g_object_set_data_full (G_OBJECT (default_session_combobox), "key",
 	                        g_strdup (MDM_KEY_DEFAULT_SESSION),
 				(GDestroyNotify) g_free);
-	
+
 	g_signal_connect (default_session_combobox, "changed",
 		          G_CALLBACK (combobox_changed), NULL);
-	
-	default_session_checkbox = glade_xml_get_widget (xml, "default_session_checkbutton");
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (default_session_checkbox), !ve_string_empty (org_val));
-	
-	g_object_set_data_full (G_OBJECT (default_session_checkbox),
-				"key", g_strdup (MDM_KEY_DEFAULT_SESSION),
-				(GDestroyNotify) g_free);       
-	
-	g_signal_connect (G_OBJECT (default_session_checkbox), "toggled",
-			  G_CALLBACK (toggle_toggled), default_session_checkbox);
-	g_signal_connect (G_OBJECT (default_session_checkbox), "toggled",
-			  G_CALLBACK (toggle_toggled_sensitivity_positive), default_session_combobox);
-	
 	g_free (org_val);
-	
 }
 
 static void
