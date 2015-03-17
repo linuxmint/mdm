@@ -126,23 +126,6 @@ greeter_session_init (void)
   vbox = gtk_vbox_new (FALSE, 6);
   /* we will pack this later depending on size */
 
-  if (mdm_config_get_bool (MDM_KEY_SHOW_LAST_SESSION))
-    {
-      greeter_set_session (LAST_SESSION);
-
-      radio = gtk_radio_button_new_with_mnemonic (session_group, _("_Last session"));
-      g_object_set_data (G_OBJECT (radio),
-			 SESSION_NAME,
-			 LAST_SESSION);
-      session_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio));
-      gtk_tooltips_set_tip (tooltips, radio,
-			    _("Log in using the session that you have used "
-			      "last time you logged in"),
-			    NULL);
-      gtk_box_pack_start (GTK_BOX (vbox), radio, FALSE, FALSE, 0);
-      gtk_widget_show (radio);
-    }
-
     mdm_session_list_init ();
 
     for (tmp = sessions; tmp != NULL; tmp = tmp->next)

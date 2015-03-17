@@ -797,24 +797,6 @@ mdm_login_session_init (GtkWidget *menu)
     char *label;
 
     current_session = NULL;
-    
-    if (mdm_config_get_bool (MDM_KEY_SHOW_LAST_SESSION)) {
-            current_session = LAST_SESSION;
-            item = gtk_radio_menu_item_new_with_mnemonic (NULL, _("_Last"));
-            g_object_set_data (G_OBJECT (item),
-			       SESSION_NAME,
-			       LAST_SESSION);
-            sessgrp = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
-            gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-            g_signal_connect (G_OBJECT (item), "activate",
-			      G_CALLBACK (mdm_login_session_handler),
-			      NULL);
-            gtk_widget_show (GTK_WIDGET (item));
-            item = gtk_menu_item_new ();
-            gtk_widget_set_sensitive (item, FALSE);
-            gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-            gtk_widget_show (GTK_WIDGET (item));
-    }
 
     mdm_session_list_init ();
 
@@ -1221,67 +1203,7 @@ process_operation (guchar       op_code,
 	break;
 
     case MDM_SESS:
-	tmp = ve_locale_to_utf8 (args);
-	session = mdm_session_lookup (tmp, &lookup_status);
-	if (lookup_status != SESSION_LOOKUP_SUCCESS) {				
-		switch (lookup_status) {
-		case SESSION_LOOKUP_PREFERRED_MISSING:
-			firstmsg = g_strdup_printf (_("Do you wish to make %s the default for "
-						      "future sessions?"),
-						      mdm_session_name (mdm_get_default_session ()));
-			secondmsg = g_strdup_printf (_("Your preferred session type %s is not "
-						       "installed on this computer."),
-						       mdm_session_name (tmp));	    
-			dont_save_session = mdm_wm_query_dialog (firstmsg, secondmsg,
-							_("Just _Log In"), _("Make _Default"), TRUE);              
-			g_free (firstmsg);
-			g_free (secondmsg);
-			mdm_set_save_session (dont_save_session);			
-			break;
-			
-		case SESSION_LOOKUP_DEFAULT_MISMATCH:
-			firstmsg = g_strdup_printf (_("Do you wish to make %s the default for "
-						      "future sessions?"),
-						    mdm_session_name (session));
-			secondmsg = g_strdup_printf (_("You have chosen %s for this "
-						       "session, but your default "
-						       "setting is %s."),
-						     mdm_session_name (session),
-						     mdm_session_name (tmp));
-			dont_save_session = mdm_wm_query_dialog (firstmsg, secondmsg,
-							    _("Just For _This Session"), _("Make _Default"), TRUE);
-			
-			g_free (firstmsg);
-			g_free (secondmsg);
-			mdm_set_save_session (dont_save_session);			
-			break;
-		case SESSION_LOOKUP_USE_SWITCHDESK:
-			firstmsg = g_strdup_printf (_("You have chosen %s for this "
-						      "session"),
-						    mdm_session_name (session));
-			secondmsg = g_strdup_printf (_("If you wish to make %s "
-						       "the default for future sessions, "
-						       "run the 'switchdesk' utility "
-						       "(System->Desktop Switching Tool from "
-						       "the panel menu)."),
-						     mdm_session_name (session));			 
-			mdm_wm_message_dialog (firstmsg, secondmsg);			 
-			g_free (firstmsg);
-			g_free (secondmsg);
-			break;
-			
-		default:
-			break;
-		}	
-	}
-	g_free (tmp);
-	if (mdm_get_save_session () == GTK_RESPONSE_CANCEL) {
-	    printf ("%c%s\n", STX, MDM_RESPONSE_CANCEL);
-	} else {
-	    tmp = ve_locale_from_utf8 (session);
-	    printf ("%c%s\n", STX, tmp);
-	    g_free (tmp);
-	}
+	printf ("%c%s\n", STX, current_session);
 	fflush (stdout);
 	break;
 
@@ -1289,20 +1211,12 @@ process_operation (guchar       op_code,
 	mdm_lang_op_lang (args);
 	break;
 
-    case MDM_SSESS:
-	if (mdm_get_save_session () == GTK_RESPONSE_NO)
-	    printf ("%cY\n", STX);
-	else
-	    printf ("%c\n", STX);
-	fflush (stdout);
-	
-	break;
-
     case MDM_SLANG:
 	mdm_lang_op_slang (args);
 	break;
 
-    case MDM_SETSESS:    	
+    case MDM_SETSESS:
+    	current_session = args;
     	printf ("%c\n", STX);
     	fflush (stdout);
     	break;
@@ -2372,9 +2286,6 @@ mdm_read_config (void)
 	mdm_config_get_bool   (MDM_KEY_INCLUDE_ALL);	
 	mdm_config_get_bool   (MDM_KEY_RUN_BACKGROUND_PROGRAM_ALWAYS);
 	mdm_config_get_bool   (MDM_KEY_RESTART_BACKGROUND_PROGRAM);
-	mdm_config_get_bool   (MDM_KEY_SHOW_GNOME_FAILSAFE);
-	mdm_config_get_bool   (MDM_KEY_SHOW_LAST_SESSION);
-	mdm_config_get_bool   (MDM_KEY_SHOW_XTERM_FAILSAFE);
 	mdm_config_get_bool   (MDM_KEY_SOUND_ON_LOGIN);
 	mdm_config_get_bool   (MDM_KEY_SYSTEM_MENU);
 	mdm_config_get_bool   (MDM_KEY_TIMED_LOGIN_ENABLE);	
@@ -2437,9 +2348,6 @@ mdm_reread_config (int sig, gpointer data)
 	    mdm_config_reload_bool   (MDM_KEY_INCLUDE_ALL) ||	    
 	    mdm_config_reload_bool   (MDM_KEY_RESTART_BACKGROUND_PROGRAM) ||
 	    mdm_config_reload_bool   (MDM_KEY_RUN_BACKGROUND_PROGRAM_ALWAYS) ||
-	    mdm_config_reload_bool   (MDM_KEY_SHOW_GNOME_FAILSAFE) ||
-	    mdm_config_reload_bool   (MDM_KEY_SHOW_LAST_SESSION) ||
-	    mdm_config_reload_bool   (MDM_KEY_SHOW_XTERM_FAILSAFE) ||
 	    mdm_config_reload_bool   (MDM_KEY_SYSTEM_MENU) ||
 	    mdm_config_reload_bool   (MDM_KEY_TIMED_LOGIN_ENABLE) ||	    
 	    mdm_config_reload_bool   (MDM_KEY_ADD_GTK_MODULES)) {

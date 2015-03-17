@@ -6,7 +6,6 @@ instsessdir = $(datadir)/xsessions
 initdir = $(mdmconfdir)/Init
 superinitdir = $(mdmconfdir)/SuperInit
 authdir = $(localstatedir)/mdm
-gnomercdir = $(mdmconfdir)
 postdir = $(mdmconfdir)/PostSession
 predir = $(mdmconfdir)/PreSession
 postlogindir = $(mdmconfdir)/PostLogin
@@ -14,15 +13,13 @@ postlogindir = $(mdmconfdir)/PostLogin
 
 noinst_DATA = mdm.conf
 
-DESKTOP_FILES = default.desktop CDE.desktop gnome.desktop @SSHDESKTOP@
+DESKTOP_FILES = default.desktop @SSHDESKTOP@
 
 EXTRA_DIST = \
 	mdm.conf.in \
 	mdm.conf-custom.in \
 	$(DESKTOP_FILES) \
 	default.desktop.in.in \
-	gnome.desktop.in.in \
-	CDE.desktop.in \
 	ssh.desktop.in.in \
 	Xsession.in \
 	mdm \
@@ -38,7 +35,7 @@ EXTRA_DIST = \
 	mdmprefetchlist.in \
 	extract-shell.sh
 
-CLEANFILES = Xsession mdm.conf mdm.conf-custom default.desktop gnome.desktop CDE.desktop ssh.desktop Init SuperInit PreSession PostSession mdmprefetchlist
+CLEANFILES = Xsession mdm.conf mdm.conf-custom default.desktop ssh.desktop Init SuperInit PreSession PostSession mdmprefetchlist
 
 Xsession: $(srcdir)/Xsession.in
 	sed	-e 's,[@]XSESSION_SHELL[@],$(XSESSION_SHELL),g' \
@@ -85,13 +82,9 @@ clean-local:
 	rm -f $(DESKTOP_FILES)
 
 uninstall-hook:
-	rm -f $(DESTDIR)$(bisessdir)/gnome.desktop \
-	$(DESTDIR)$(bisessdir)/default.desktop \
-	$(DESTDIR)$(bisessdir)/CDE.desktop \
-	$(DESTDIR)$(instsessdir)/gnome.desktop \
+	rm -f $(DESTDIR)$(bisessdir)/default.desktop \
 	$(DESTDIR)$(instsessdir)/default.desktop \
 	$(DESTDIR)$(instsessdir)/ssh.desktop \
-	$(DESTDIR)$(instsessdir)/CDE.desktop \
 	$(DESTDIR)$(MDM_DEFAULTS_CONF) \
 	$(DESTDIR)$(MDM_CUSTOM_CONF) \
 	`dirname $(DESTDIR)$(MDM_DEFAULTS_CONF)`/factory-`basename $(DESTDIR)$(MDM_DEFAULTS_CONF)` \
@@ -166,25 +159,6 @@ install-data-hook: mdm.conf mdm.conf-custom Xsession Init SuperInit PostSession 
 	$(INSTALL_DATA) default.desktop $(DESTDIR)$(bisessdir)/default.desktop
 	chmod 644 $(DESTDIR)$(bisessdir)/default.desktop
 
-	-if test -f $(DESTDIR)$(bisessdir)/gnome.desktop; then \
-		mv -f $(DESTDIR)$(bisessdir)/gnome.desktop $(DESTDIR)$(bisessdir)/gnome.desktop.orig; \
-	fi
-	-if test -f $(DESTDIR)$(instsessdir)/gnome.desktop; then \
-		cp -f $(DESTDIR)$(instsessdir)/gnome.desktop $(DESTDIR)$(instsessdir)/gnome.desktop.orig; \
-	fi
-	$(INSTALL_DATA) gnome.desktop $(DESTDIR)$(instsessdir)/gnome.desktop
-	chmod 644 $(DESTDIR)$(instsessdir)/gnome.desktop
-
-	-if test -f /usr/dt/bin/Xsession; then \
-	   if test -f $(DESTDIR)$(bisessdir)/CDE.desktop; then \
-		mv -f $(DESTDIR)$(bisessdir)/CDE.desktop $(DESTDIR)$(bisessdir)/CDE.desktop.orig; \
-	   fi; \
-	   if test -f $(DESTDIR)$(instsessdir)/CDE.desktop; then \
-		cp -f $(DESTDIR)$(instsessdir)/CDE.desktop $(DESTDIR)$(instsessdir)/CDE.desktop.orig; \
-	   fi; \
-	   $(INSTALL_DATA) CDE.desktop $(DESTDIR)$(instsessdir)/CDE.desktop; \
-	fi
-
 	if test '!' -d $(DESTDIR)$(initdir); then \
 		$(mkinstalldirs) $(DESTDIR)$(initdir); \
 		chmod 755 $(DESTDIR)$(initdir); \
@@ -226,11 +200,6 @@ install-data-hook: mdm.conf mdm.conf-custom Xsession Init SuperInit PostSession 
 		cp -f $(DESTDIR)$(postdir)/Default $(DESTDIR)$(postdir)/Default.orig; \
 	fi
 	$(INSTALL_SCRIPT) PostSession $(DESTDIR)$(postdir)/Default
-
-	if test '!' -d $(DESTDIR)$(gnomercdir); then \
-		$(mkinstalldirs) $(DESTDIR)$(gnomercdir); \
-		chmod 755 $(DESTDIR)$(gnomercdir); \
-	fi
 
 	if test '!' -d $(DESTDIR)$(logdir); then \
 		$(mkinstalldirs) $(DESTDIR)$(logdir); \

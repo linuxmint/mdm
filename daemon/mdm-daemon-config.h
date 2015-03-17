@@ -94,8 +94,7 @@ char *         mdm_daemon_config_get_facefile_from_gnome_accounts_service (const
                                                            guint uid);
 void           mdm_daemon_config_get_user_session_lang (char **usrsess,
                                                         char **usrlang,
-                                                        const char *homedir,
-                                                        gboolean *savesess);
+                                                        const char *homedir);
 void	       mdm_daemon_config_set_user_session_lang (gboolean savesess,
                                                         gboolean savelang,
                                                         const char *home_dir,

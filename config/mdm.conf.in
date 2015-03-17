@@ -114,7 +114,8 @@ BaseXsession=@mdmconfdir@/Xsession
 # with KDM.
 SessionDesktopDir=@datadir@/mdm/BuiltInSessions/:@datadir@/xsessions/:/etc/dm/Sessions/
 # This is the default .desktop session.  One of the ones in SessionDesktopDir
-DefaultSession=default.desktop
+# If it's set to "auto" MDM will try to detect a session
+DefaultSession=auto
 # Better leave this blank and HOME will be used.  You can use syntax ~/ below
 # to indicate home directory of the user.  You can also set this to something
 # like /tmp if you don't want the authorizations to be in home directories.
@@ -343,15 +344,6 @@ BackgroundColor=#000000
 # Delay before restarting background program
 #BackgroundProgramRestartDelay=30
 
-# Show the Failsafe sessions.  These are much MUCH nicer (focus for xterm for
-# example) and more failsafe then those supplied by scripts so distros should
-# use this rather then just running an xterm from a script.
-#ShowGnomeFailsafeSession=true
-#ShowXtermFailsafeSession=true
-# Normally there is a session type called 'Last' that is shown which refers to
-# the last session the user used.  If off, we will be in 'switchdesk' mode
-# where the session saving stuff is disabled in MDM
-#ShowLastSession=true
 # Always use 24 hour clock no matter what the locale.
 #Use24Clock=true
 # Do not show any visible feedback in the password field. This is standard for

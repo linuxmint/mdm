@@ -780,8 +780,8 @@ mdm_lang_check_language (const char *old_language)
 	  g_free (current_name);
 	  g_free (saved_name);
 
-	  dont_savelang = mdm_wm_query_dialog (primary_message, secondary_message,
-		_("Just For _This Session"), _("Make _Default"), TRUE);
+	  //dont_savelang = mdm_wm_query_dialog (primary_message, secondary_message, _("Just For _This Session"), _("Make _Default"), TRUE);
+	  dont_savelang = GTK_RESPONSE_YES;
 	  g_free (primary_message);
 	  g_free (secondary_message);
 	}

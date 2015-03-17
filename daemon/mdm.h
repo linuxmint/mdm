@@ -55,6 +55,7 @@ enum {
 #define MDM_SESSION_DEFAULT "default"
 #define MDM_SESSION_CUSTOM "custom"
 #define MDM_SESSION_FAILSAFE "failsafe"
+#define MDM_SESSION_AUTO "auto"
 
 #define MDM_STANDARD "Standard"
 
