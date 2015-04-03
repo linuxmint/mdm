@@ -45,6 +45,9 @@ script
         fi
     fi
 
+    # Ignore errors temporarily (we don't want to fail if something in the environment isn't set properly
+    set +e 
+
     test -f /etc/profile && . /etc/profile
 
     if [ -r /etc/default/locale ]; then
@@ -54,6 +57,8 @@ script
         . /etc/environment
         export LANG LANGUAGE LC_MESSAGES LC_ALL
     fi    
+
+    set -e
     
     exec mdm
 end script
