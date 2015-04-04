@@ -272,9 +272,11 @@ whack_old_slave (MdmDisplay *d, gboolean kill_connection)
 	    int ret;
 wait_again:
 		
-	    if (waitsleep)
+	    if (waitsleep) {
 		    /* wait for some signal, yes this is a race */
+		    mdm_debug ("mdm whack_old_slave: sleeping for 10 seconds");
 		    sleep (10);
+		  }
 	    waitsleep = TRUE;
 	    errno = 0;
 	    ret = waitpid (d->slavepid, &exitstatus, WNOHANG);

@@ -1580,6 +1580,8 @@ mdm_root_user (void)
 void
 mdm_sleep_no_signal (int secs)
 {
+
+        mdm_debug("mdm_sleep_no_signal %d", secs);
 	time_t endtime = time (NULL)+secs;
 
 	while (secs > 0) {
@@ -1844,8 +1846,10 @@ mdm_fail (const gchar *format, ...)
     }
 
     /* Slow down respawning if we're started from init */
-    if (getppid () == 1)
+    if (getppid () == 1) {
+        mdm_debug ("mdm_fail sleeping for 30 seconds");
         sleep (30);
+    }
 
     exit (EXIT_FAILURE);
 }

@@ -421,8 +421,10 @@ deal_with_x_crashes (MdmDisplay *d)
 				ret = waitpid (extra_process, &status, WNOHANG);
 				do {
 					/* wait for some signal, yes this is a race */
-					if (ret <= 0)
+					if (ret <= 0) {
+						mdm_debug("mdm deal_with_x_crashes: sleeping for 10 seconds");
 						sleep (10);
+					}
 					errno = 0;
 					ret = waitpid (extra_process, &status, WNOHANG);
 					storeerrno = errno;
