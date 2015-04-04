@@ -1242,19 +1242,16 @@ mdm_slave_check_user_wants_to_log_in (const char *user)
 
 	/* Must be that r == 1, that is return to previous login */
 
+#ifdef WITH_CONSOLE_KIT
+	unlock_ck_session (user, migrate_to);
+#endif
+
 	if (d->type == TYPE_FLEXI) {
 		mdm_slave_whack_greeter ();
 		mdm_server_stop (d);
 		mdm_slave_send_num (MDM_SOP_XPID, 0);
-
-		/* wait for a few seconds to avoid any vt changing race
-		 */
-		mdm_sleep_no_signal (1);
 	}
 
-#ifdef WITH_CONSOLE_KIT
-	unlock_ck_session (user, migrate_to);
-#endif
 	mdm_slave_send_string (MDM_SOP_MIGRATE, migrate_to);
 	g_free (migrate_to);
 
