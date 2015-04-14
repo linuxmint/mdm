@@ -2494,9 +2494,7 @@ mdm_slave_greeter (void)
 		mdm_slave_send_num (MDM_SOP_GREETPID, d->greetpid);
 
 		// Append pictures to greeter (except for mdmwebkit)
-		if (strstr (command, "mdmwebkit") == NULL) {
-			run_pictures ();
-		}
+		run_pictures ();
 		
 		if (always_restart_greeter)
 			mdm_slave_greeter_ctl_no_ret (MDM_ALWAYS_RESTART, "Y");

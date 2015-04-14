@@ -811,16 +811,18 @@ void mdm_login_browser_populate (void) {
     GList *li;
     for (li = users; li != NULL; li = li->next) {
         MdmUser *usr = li->data;                
-        char *login, *gecos, *status;
+        char *login, *gecos, *status, *facefile;
+        facefile = mdm_common_get_facefile(usr->homedir, usr->login, usr->uid);
         login = mdm_common_text_to_escaped_utf8 (usr->login);
-        gecos = mdm_common_text_to_escaped_utf8 (usr->gecos);                          
+        gecos = mdm_common_text_to_escaped_utf8 (usr->gecos);
+
         if (g_hash_table_lookup (displays_hash, usr->login)) {
             status = _("Already logged in");
         }
         else {
             status = "";
         }
-        gchar * args = g_strdup_printf("%s\", \"%s\", \"%s", login, gecos, status);
+        gchar * args = g_strdup_printf("%s\", \"%s\", \"%s\", \"%s", login, gecos, status, facefile);
         webkit_execute_script("mdm_add_user", args);
         g_free (args);
         g_free (login);
