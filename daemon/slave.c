@@ -2082,10 +2082,6 @@ run_pictures (void)
 		}
 
 		if (! picfile) {
-			picfile = mdm_daemon_config_get_facefile_from_global (pwent->pw_name, pwent->pw_uid);
-		}
-
-		if (! picfile) {
 			NEVER_FAILS_root_set_euid_egid (0, mdm_daemon_config_get_mdmgid ());
 			mdm_slave_greeter_ctl_no_ret (MDM_READPIC, "");
 			continue;

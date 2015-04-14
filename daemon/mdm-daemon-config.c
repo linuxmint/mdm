@@ -2273,10 +2273,8 @@ mdm_daemon_config_signal_terminthup_was_notified (void)
  * check_user_file
  * check_global_file
  * is_in_trusted_pic_dir
- * get_facefile_from_gnome2_dir_config 
  * path_is_local
  * mdm_daemon_config_get_facefile_from_home
- * mdm_daemon_config_get_facefile_from_global
  *
  * These functions are used for accessing the user's face image from their
  * home directory.
@@ -2324,83 +2322,6 @@ check_global_file (const char *path,
         return TRUE;
 }
 
-/* If path starts with a "trusted" directory, don't sanity check things */
-/* This is really somewhat "outdated" as we now really want things in
- * the picture dir or in ~/.gnome2/photo */
-static gboolean
-is_in_trusted_pic_dir (const char *path)
-{
-        /* our own pixmap dir is trusted */
-        if (strncmp (path, PIXMAPDIR, sizeof (PIXMAPDIR)) == 0)
-                return TRUE;
-
-        return FALSE;
-}
-
-static gchar *
-get_facefile_from_gnome2_dir_config (const char *homedir,
-                                     guint       uid)
-{
-	char *picfile = NULL;
-	char *cfgdir;
-
-	/* Sanity check on ~user/.gnome2/mdm */
-	cfgdir = g_build_filename (homedir, ".gnome2", "mdm", NULL);
-	if (G_LIKELY (check_user_file (cfgdir, uid))) {
-		GKeyFile *cfg;
-		char *cfgfile;
-
-		cfgfile = g_build_filename (homedir, ".gnome2", "mdm", NULL);
-		cfg = mdm_common_config_load (cfgfile, NULL);
-		g_free (cfgfile);
-
-		if (cfg != NULL) {
-			mdm_common_config_get_string (cfg, "face/picture=", &picfile, NULL);
-			g_key_file_free (cfg);
-		}
-
-		/* must exist and be absolute (note that this check
-		 * catches empty strings)*/
-		/* Note that these days we just set ~/.face */
-		if G_UNLIKELY (picfile != NULL &&
-			       (picfile[0] != '/' ||
-				/* this catches readability by user */
-				g_access (picfile, R_OK) != 0)) {
-			g_free (picfile);
-			picfile = NULL;
-		}
-
-		if (picfile != NULL) {
-			char *buf;
-			if ((buf = realpath (picfile, NULL)) == NULL) {
-				g_free (picfile);
-				picfile = NULL;
-			} else {
-				g_free (picfile);
-				picfile = buf;
-			}
-		}
-
-		if G_UNLIKELY (picfile != NULL) {
-			if (! is_in_trusted_pic_dir (picfile)) {
-				/* if not in trusted dir, check it out */
-
-				/* Note that strict permissions checking is done
-				 * on this file.  Even if it may not even be owned by the
-				 * user.  This setting should ONLY point to pics in trusted
-				 * dirs. */
-				if (! check_user_file (picfile, uid)) {
-					g_free (picfile);
-					picfile = NULL;
-				}
-			}
-		}
-	}
-	g_free (cfgdir);
-
-	return picfile;
-}
-
 static GHashTable *fstype_hash = NULL;
 extern char *filesystem_type (char *path, char *relpath, struct stat *statp);
 
@@ -2436,8 +2357,7 @@ path_is_local (const char *path)
 }
 
 gchar *
-mdm_daemon_config_get_facefile_from_home (const char *homedir,
-					  guint       uid)
+mdm_daemon_config_get_facefile_from_home (const char *homedir, guint uid)
 {
 	char    *picfile = NULL;
 	char    *path;
@@ -2468,67 +2388,6 @@ mdm_daemon_config_get_facefile_from_home (const char *homedir,
 		picfile = NULL;
 	}
 
-	picfile = g_build_filename (homedir, ".face.icon", NULL);
-
-	if (check_user_file (picfile, uid))
-		return picfile;
-	else {
-		g_free (picfile);
-		picfile = NULL;
-	}
-
-	picfile = get_facefile_from_gnome2_dir_config (homedir, uid);
-	if (check_user_file (picfile, uid))
-		return picfile;
-	else {
-		g_free (picfile);
-		picfile = NULL;
-	}
-
-	/* Nothing found yet, try the old locations */
-
-	picfile = g_build_filename (homedir, ".gnome2", "photo", NULL);
-	if (check_user_file (picfile, uid))
-		return picfile;
-	else {
-		g_free (picfile);
-		picfile = NULL;
-	}
-
-	picfile = g_build_filename (homedir, ".gnome", "photo", NULL);
-	if (check_user_file (picfile, uid))
-		return picfile;
-	else {
-		g_free (picfile);
-		picfile = NULL;
-	}
-
-	return NULL;
-}
-
-gchar *
-mdm_daemon_config_get_facefile_from_global (const char *username,
-					    guint       uid)
-{
-	char       *picfile = NULL;
-	const char *facedir;
-
-	facedir = mdm_daemon_config_get_value_string (MDM_KEY_GLOBAL_FACE_DIR);
-
-	/* Try the global face directory */
-
-	picfile = g_build_filename (facedir, username, NULL);
-
-	if (check_global_file (picfile, uid))
-		return picfile;
-
-	g_free (picfile);
-	picfile = mdm_make_filename (facedir, username, ".png");
-
-	if (check_global_file (picfile, uid))
-		return picfile;
-
-	g_free (picfile);
 	return NULL;
 }
 
