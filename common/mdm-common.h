@@ -76,6 +76,8 @@ pid_t          ve_waitpid_no_signal (pid_t pid, int *status, int options);
 /* Testing for existance of a certain locale */
 gboolean       ve_locale_exists (const char *loc);
 
+char *         mdm_common_get_facefile (const char *homedir, const char *username, guint uid);
+
 #define VE_IGNORE_EINTR(expr) \
 	do {		\
 		errno = 0;	\

@@ -27,6 +27,8 @@
 #include <locale.h>
 #include <netinet/in.h>
 
+
+
 #ifdef HAVE_CRT_EXTERNS_H
 #include <crt_externs.h>
 #endif
@@ -302,3 +304,55 @@ mdm_vector_len (char * const *v)
 	return i;
 }
 
+static gboolean
+check_file (const char *path, guint uid)
+{
+        if (path == NULL) {
+            return FALSE;
+        }
+
+        if (g_access (path, R_OK) != 0) {
+            return FALSE;
+        }
+
+        return TRUE;
+}
+
+gchar *
+mdm_common_get_facefile (const char *homedir, const char *username, guint uid)
+{
+	char  *picfile = NULL;
+	char *cfgfile;
+	GKeyFile *cfg;
+
+	// Try to read ~/.face first
+	picfile = g_build_filename (homedir, ".face", NULL);
+	if (check_file (picfile, uid))
+		return picfile;
+
+	// Try to parse the User/Icon field of /var/lib/AccountsService/users/username
+	cfgfile = g_build_filename ("/var/lib/AccountsService/users/", username, NULL);
+	cfg = mdm_common_config_load (cfgfile, NULL);
+	g_free (cfgfile);
+	if (cfg != NULL) {
+		mdm_common_config_get_string (cfg, "User/Icon", &picfile, NULL);
+		g_key_file_free (cfg);
+	}
+	if (check_file (picfile, uid))
+        return picfile;
+
+    // Try /var/lib/AccountsServices/icons/username
+    g_free (picfile);
+	picfile = g_build_filename ("/var/lib/AccountsService/icons/", username, NULL);
+    if (check_file (picfile, uid))
+       	return picfile;
+
+    // Try /var/lib/AccountsServices/icons/username.png then
+    g_free (picfile);
+    picfile = g_build_filename ("/var/lib/AccountsService/icons/", username, ".png");
+    if (check_file (picfile, uid))
+        return picfile;
+
+    g_free (picfile);
+    return NULL;
+}

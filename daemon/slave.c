@@ -2075,11 +2075,7 @@ run_pictures (void)
 			continue;
 		}
 
-		picfile = mdm_daemon_config_get_facefile_from_home (pwent->pw_dir, pwent->pw_uid);
-
-		if (! picfile) {
-			picfile = mdm_daemon_config_get_facefile_from_accounts_service (pwent->pw_name, pwent->pw_uid);
-		}
+		picfile = mdm_common_get_facefile (pwent->pw_dir, pwent->pw_name, pwent->pw_uid);
 
 		if (! picfile) {
 			NEVER_FAILS_root_set_euid_egid (0, mdm_daemon_config_get_mdmgid ());
@@ -2496,8 +2492,12 @@ mdm_slave_greeter (void)
 		mdm_debug ("mdm_slave_greeter: Greeter on pid %d", (int)pid);
 
 		mdm_slave_send_num (MDM_SOP_GREETPID, d->greetpid);
-		run_pictures (); /* Append pictures to greeter if browsing is on */
 
+		// Append pictures to greeter (except for mdmwebkit)
+		if (strstr (command, "mdmwebkit") == NULL) {
+			run_pictures ();
+		}
+		
 		if (always_restart_greeter)
 			mdm_slave_greeter_ctl_no_ret (MDM_ALWAYS_RESTART, "Y");
 		else

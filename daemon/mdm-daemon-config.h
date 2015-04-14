@@ -85,11 +85,6 @@ int            mdm_daemon_config_compare_displays     (gconstpointer a,
                                                        gconstpointer b);
 gboolean       mdm_daemon_config_is_valid_key         (const char *key);
 gboolean       mdm_daemon_config_signal_terminthup_was_notified  (void);
-
-char *         mdm_daemon_config_get_facefile_from_home (const char *homedir,
-                                                         guint uid);
-char *         mdm_daemon_config_get_facefile_from_accounts_service (const char *username,
-                                                           guint uid);
 void           mdm_daemon_config_get_user_session_lang (char **usrsess,
                                                         char **usrlang,
                                                         const char *homedir);
