@@ -2533,22 +2533,35 @@ mdm_daemon_config_get_facefile_from_global (const char *username,
 }
 
 gchar *
-mdm_daemon_config_get_facefile_from_gnome_accounts_service (const char *username,
-                        guint       uid)
+mdm_daemon_config_get_facefile_from_accounts_service (const char *username, guint uid)
 {
-    char       *picfile = NULL;
-    const char *facedir;
+	const char *facedir;
+	char *cfgfile;
+	char  *picfile = NULL;
+	GKeyFile *cfg;
+
+	// Try to parse the User/Icon field of /var/lib/AccountsService/users/username first
+	cfgfile = g_build_filename ("/var/lib/AccountsService/users/", username, NULL);
+	cfg = mdm_common_config_load (cfgfile, NULL);
+	g_free (cfgfile);
+	if (cfg != NULL) {
+		mdm_common_config_get_string (cfg, "User/Icon", &picfile, NULL);
+		g_key_file_free (cfg);
+	}
+	if (check_global_file (picfile, uid))
+        return picfile;
 
     facedir = mdm_daemon_config_get_value_string (MDM_KEY_GNOME_ACCOUNTS_SERVICE_FACE_DIR);
 
-    picfile = g_build_filename (facedir, username, NULL);
-
+    // Try /var/lib/AccountsServices/icons/username then
+    g_free (picfile);
+	picfile = g_build_filename (facedir, username, NULL);
     if (check_global_file (picfile, uid))
-        return picfile;
+       	return picfile;
 
+    // Try /var/lib/AccountsServices/icons/username.png then
     g_free (picfile);
     picfile = mdm_make_filename (facedir, username, ".png");
-
     if (check_global_file (picfile, uid))
         return picfile;
 

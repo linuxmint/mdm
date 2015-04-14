@@ -90,7 +90,7 @@ char *         mdm_daemon_config_get_facefile_from_home (const char *homedir,
                                                          guint uid);
 char *         mdm_daemon_config_get_facefile_from_global (const char *username,
                                                            guint uid);
-char *         mdm_daemon_config_get_facefile_from_gnome_accounts_service (const char *username,
+char *         mdm_daemon_config_get_facefile_from_accounts_service (const char *username,
                                                            guint uid);
 void           mdm_daemon_config_get_user_session_lang (char **usrsess,
                                                         char **usrlang,
