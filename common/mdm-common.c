@@ -27,26 +27,18 @@
 #include <locale.h>
 #include <netinet/in.h>
 
-
-
 #ifdef HAVE_CRT_EXTERNS_H
 #include <crt_externs.h>
 #endif
 
 #include "mdm-common.h"
 
-static gboolean
-v4_v4_equal (const struct sockaddr_in *a,
-         const struct sockaddr_in *b)
-{
+static gboolean v4_v4_equal (const struct sockaddr_in *a, const struct sockaddr_in *b) {
     return a->sin_addr.s_addr == b->sin_addr.s_addr;
 }
 
 #ifdef ENABLE_IPV6
-static gboolean
-v6_v6_equal (struct sockaddr_in6 *a,
-         struct sockaddr_in6 *b)
-{
+static gboolean v6_v6_equal (struct sockaddr_in6 *a, struct sockaddr_in6 *b) {
     return IN6_ARE_ADDR_EQUAL (&a->sin6_addr, &b->sin6_addr);
 }
 #endif
@@ -55,19 +47,13 @@ v6_v6_equal (struct sockaddr_in6 *a,
 #define SIN(__s)   ((struct sockaddr_in *) __s)
 #define SIN6(__s)  ((struct sockaddr_in6 *) __s)
 
-gboolean
-mdm_address_equal (struct sockaddr_storage *sa,
-           struct sockaddr_storage *sb)
-{
+gboolean mdm_address_equal (struct sockaddr_storage *sa, struct sockaddr_storage *sb) {
     guint8 fam_a;
-        guint8 fam_b;
-
+    guint8 fam_b;
     g_return_val_if_fail (sa != NULL, FALSE);
     g_return_val_if_fail (sb != NULL, FALSE);
-
     fam_a = sa->ss_family;
     fam_b = sb->ss_family;
-
     if (fam_a == AF_INET && fam_b == AF_INET) {
         return v4_v4_equal (SIN (sa), SIN (sb));
     }
@@ -79,41 +65,28 @@ mdm_address_equal (struct sockaddr_storage *sa,
     return FALSE;
 }
 
-gboolean
-mdm_address_is_loopback (struct sockaddr_storage *sa)
-{
+gboolean mdm_address_is_loopback (struct sockaddr_storage *sa) {
     switch(sa->ss_family){
 #ifdef  AF_INET6
-    case AF_INET6:
-        return IN6_IS_ADDR_LOOPBACK (&((struct sockaddr_in6 *)sa)->sin6_addr);
-        break;
+        case AF_INET6:
+            return IN6_IS_ADDR_LOOPBACK (&((struct sockaddr_in6 *)sa)->sin6_addr);
+            break;
 #endif
-    case AF_INET:
-        return (INADDR_LOOPBACK == htonl (((struct sockaddr_in *)sa)->sin_addr.s_addr));
-        break;
-    default:
-        break;
+        case AF_INET:
+            return (INADDR_LOOPBACK == htonl (((struct sockaddr_in *)sa)->sin_addr.s_addr));
+            break;
+        default:
+            break;
     }
-
     return FALSE;
 }
 
-void
-mdm_address_get_info (struct sockaddr_storage *ss,
-              char                   **hostp,
-              char                   **servp)
-{
+void mdm_address_get_info (struct sockaddr_storage *ss, char **hostp, char **servp) {
     char host [NI_MAXHOST];
     char serv [NI_MAXSERV];
-
     host [0] = '\0';
     serv [0] = '\0';
-    getnameinfo ((const struct sockaddr *)ss,
-             mdm_sockaddr_len(ss),
-             host, sizeof (host),
-             serv, sizeof (serv),
-             NI_NUMERICHOST | NI_NUMERICSERV);
-
+    getnameinfo ((const struct sockaddr *)ss, mdm_sockaddr_len(ss), host, sizeof (host), serv, sizeof (serv), NI_NUMERICHOST | NI_NUMERICSERV);
     if (servp != NULL) {
         *servp = g_strdup (serv);
     }
@@ -131,80 +104,67 @@ mdm_address_get_info (struct sockaddr_storage *ss,
  * of environment.
  *
  **/
-void
-ve_clearenv (void)
-{
+void ve_clearenv (void) {
 #ifdef HAVE_CLEARENV
     clearenv ();
 #else
-
 #ifdef HAVE__NSGETENVIRON
 #define environ (*_NSGetEnviron())
 #else
-        extern char **environ;
+    extern char **environ;
 #endif
-
-    if (environ != NULL)
+    if (environ != NULL){
         environ[0] = NULL;
+    }
 #endif
 }
 
-char *
-ve_first_word (const char *s)
-{
+char * ve_first_word (const char *s) {
     int argc;
     char **argv;
     char *ret;
-
-    if (s == NULL)
+    if (s == NULL) {
         return NULL;
-
+    }
     if ( ! g_shell_parse_argv (s, &argc, &argv, NULL)) {
         char *p;
         ret = g_strdup (s);
         p = strchr (ret, ' ');
-        if (p != NULL)
+        if (p != NULL) {
             *p = '\0';
+        }
         return ret;
     }
-
     ret = g_strdup (argv[0]);
-
     g_strfreev (argv);
-
     return ret;
 }
 
-gboolean
-ve_first_word_executable (const char *s, gboolean only_existance)
-{
+gboolean ve_first_word_executable (const char *s, gboolean only_existance) {
     char *bin = ve_first_word (s);
-    if (bin == NULL)
+    if (bin == NULL) {
         return FALSE;
+    }
     if (g_access (bin, only_existance ? F_OK : X_OK) == 0) {
         g_free (bin);
         return TRUE;
-    } else {
+    } 
+    else {
         g_free (bin);
         return FALSE;
     }
 }
 
-char *
-ve_get_first_working_command (const char *list,
-                  gboolean only_existance)
-{
+char * ve_get_first_working_command (const char *list, gboolean only_existance) {
     int i;
     char **vector;
     char *ret = NULL;
-
-    if (list == NULL)
+    if (list == NULL){
         return NULL;
-
+    }
     vector = g_strsplit (list, ";", -1);
     for (i = 0; vector[i] != NULL; i++) {
-        if (ve_first_word_executable (vector[i],
-                          only_existance)) {
+        if (ve_first_word_executable (vector[i], only_existance)) {
             ret = g_strdup (vector[i]);
             break;
         }
@@ -213,35 +173,29 @@ ve_get_first_working_command (const char *list,
     return ret;
 }
 
-char *
-ve_locale_to_utf8 (const char *str)
-{
+char * ve_locale_to_utf8 (const char *str) {
     char *ret = g_locale_to_utf8 (str, -1, NULL, NULL, NULL);
-
     if (ret == NULL) {
         g_warning ("string not in proper locale encoding: \"%s\"", str);
         return g_strdup (str);
-    } else {
+    } 
+    else {
         return ret;
     }
 }
 
-char *
-ve_locale_from_utf8 (const char *str)
-{
+char * ve_locale_from_utf8 (const char *str) {
     char *ret = g_locale_from_utf8 (str, -1, NULL, NULL, NULL);
-
     if (ret == NULL) {
         g_warning ("string not in proper utf8 encoding: \"%s\"", str);
         return g_strdup (str);
-    } else {
+    } 
+    else {
         return ret;
     }
 }
 
-char *
-ve_filename_to_utf8 (const char *str)
-{
+char * ve_filename_to_utf8 (const char *str) {
     char *ret = g_filename_to_utf8 (str, -1, NULL, NULL, NULL);
     if (ret == NULL) {
         g_warning ("string not in proper locale encoding: \"%s\"", str);
@@ -251,9 +205,7 @@ ve_filename_to_utf8 (const char *str)
     }
 }
 
-char *
-ve_filename_from_utf8 (const char *str)
-{
+char * ve_filename_from_utf8 (const char *str) {
     char *ret = g_filename_from_utf8 (str, -1, NULL, NULL, NULL);
     if (ret == NULL) {
         g_warning ("string not in proper utf8 encoding: \"%s\"", str);
@@ -263,72 +215,60 @@ ve_filename_from_utf8 (const char *str)
     }
 }
 
-pid_t
-ve_waitpid_no_signal (pid_t pid, int *status, int options)
-{
+pid_t ve_waitpid_no_signal (pid_t pid, int *status, int options) {
     pid_t ret;
-
     for (;;) {
         ret = waitpid (pid, status, options);
-        if (ret == 0)
+        if (ret == 0) {
             return 0;
-        if (errno != EINTR)
+        }
+        if (errno != EINTR) {
             return ret;
+        }
     }
 }
 
-gboolean
-ve_locale_exists (const char *loc)
-{
+gboolean ve_locale_exists (const char *loc) {
     gboolean ret;
     char *old = g_strdup (setlocale (LC_MESSAGES, NULL));
-    if (setlocale (LC_MESSAGES, loc) != NULL)
+    if (setlocale (LC_MESSAGES, loc) != NULL) {
         ret = TRUE;
-    else
+    }
+    else {
         ret = FALSE;
+    }
     setlocale (LC_MESSAGES, old);
     g_free (old);
     return ret;
 }
 
-int
-mdm_vector_len (char * const *v)
-{
-    int i;
-
-    if (v == NULL)
+int mdm_vector_len (char * const *v) {
+    if (v == NULL) {
         return 0;
-
-    i = g_strv_length (v);
-
-    return i;
+    }    
+    else {
+        return g_strv_length (v);
+    }
 }
 
-static gboolean
-check_file (const char *path, guint uid)
-{
-    if (path == NULL) {
+static gboolean check_file (const char *path, guint uid) {
+    if (path == NULL || (g_access (path, R_OK) != 0)) {
         return FALSE;
     }
-
-    if (g_access (path, R_OK) != 0) {
-        return FALSE;
-    }
-
     return TRUE;
 }
 
-gchar *
-mdm_common_get_facefile (const char *homedir, const char *username, guint uid)
-{
+gchar * mdm_common_get_facefile (const char *homedir, const char *username, guint uid) {
     char  *picfile = NULL;
     char *cfgfile;
     GKeyFile *cfg;
 
     // Try to read ~/.face first
     picfile = g_build_filename (homedir, ".face", NULL);
-    if (check_file (picfile, uid))
+    if (check_file (picfile, uid)) {
         return picfile;
+    }
+    g_free (picfile);
 
     // Try to parse the User/Icon field of /var/lib/AccountsService/users/username
     cfgfile = g_build_filename ("/var/lib/AccountsService/users/", username, NULL);
@@ -338,21 +278,24 @@ mdm_common_get_facefile (const char *homedir, const char *username, guint uid)
         mdm_common_config_get_string (cfg, "User/Icon", &picfile, NULL);
         g_key_file_free (cfg);
     }
-    if (check_file (picfile, uid))
+    if (check_file (picfile, uid)) {
         return picfile;
-
+    }
+    g_free (picfile);
+    
     // Try /var/lib/AccountsServices/icons/username
-    g_free (picfile);
     picfile = g_build_filename ("/var/lib/AccountsService/icons/", username, NULL);
-    if (check_file (picfile, uid))
+    if (check_file (picfile, uid)) {
         return picfile;
-
+    }
+    g_free (picfile);
+    
     // Try /var/lib/AccountsServices/icons/username.png then
-    g_free (picfile);
     picfile = g_build_filename ("/var/lib/AccountsService/icons/", username, ".png", NULL);
-    if (check_file (picfile, uid))
+    if (check_file (picfile, uid)) {
         return picfile;
-
+    }
     g_free (picfile);
+    
     return NULL;
 }
