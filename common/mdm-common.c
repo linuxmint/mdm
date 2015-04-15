@@ -349,7 +349,7 @@ mdm_common_get_facefile (const char *homedir, const char *username, guint uid)
 
     // Try /var/lib/AccountsServices/icons/username.png then
     g_free (picfile);
-    picfile = g_build_filename ("/var/lib/AccountsService/icons/", username, ".png");
+    picfile = g_build_filename ("/var/lib/AccountsService/icons/", username, ".png", NULL);
     if (check_file (picfile, uid))
         return picfile;
 
