@@ -258,9 +258,9 @@ static gboolean check_file (const char *path, guint uid) {
     return TRUE;
 }
 
-gchar * mdm_common_get_facefile (const char *homedir, const char *username, guint uid) {
+char * mdm_common_get_facefile (const char *homedir, const char *username, guint uid) {
     char  *picfile = NULL;
-    char *cfgfile;
+    char *cfgfile = NULL;
     GKeyFile *cfg;
 
     // Try to read ~/.face first
@@ -268,7 +268,7 @@ gchar * mdm_common_get_facefile (const char *homedir, const char *username, guin
     if (check_file (picfile, uid)) {
         return picfile;
     }
-    g_free (picfile);
+    g_clear_pointer (&picfile, g_free);
 
     // Try to parse the User/Icon field of /var/lib/AccountsService/users/username
     cfgfile = g_build_filename ("/var/lib/AccountsService/users/", username, NULL);
@@ -281,21 +281,21 @@ gchar * mdm_common_get_facefile (const char *homedir, const char *username, guin
     if (check_file (picfile, uid)) {
         return picfile;
     }
-    g_free (picfile);
+    g_clear_pointer (&picfile, g_free);
     
     // Try /var/lib/AccountsServices/icons/username
     picfile = g_build_filename ("/var/lib/AccountsService/icons/", username, NULL);
     if (check_file (picfile, uid)) {
         return picfile;
     }
-    g_free (picfile);
+    g_clear_pointer (&picfile, g_free);
     
     // Try /var/lib/AccountsServices/icons/username.png then
     picfile = g_build_filename ("/var/lib/AccountsService/icons/", username, ".png", NULL);
     if (check_file (picfile, uid)) {
         return picfile;
     }
-    g_free (picfile);
+    g_clear_pointer (&picfile, g_free);
     
     return NULL;
 }
