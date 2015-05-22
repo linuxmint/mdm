@@ -1,0 +1,32 @@
+#!/usr/bin/python
+
+from gi.repository import Gio
+
+import sys
+import syslog
+
+(sys_executable, sys_username, sys_display) = sys.argv
+
+syslog.syslog("Trying to unlock logind session for %s on %s" % (sys_username, sys_display))
+
+# Get the system bus
+bus = Gio.bus_get_sync(Gio.BusType.SYSTEM, None)
+
+# Get the Manager interface
+manager_proxy = Gio.DBusProxy.new_sync(bus, Gio.DBusProxyFlags.NONE, None, 'org.freedesktop.login1', '/org/freedesktop/login1', 'org.freedesktop.login1.Manager', None)
+
+# List all sessions
+logind_sessions = manager_proxy.ListSessions()
+for logind_session in logind_sessions:
+	(session_id, user_id, user_name, seat_id, session_object_path) = logind_session
+	if (user_name == sys_username):
+		# Get the Session interface if it belongs to the required username
+		session_properties_proxy = Gio.DBusProxy.new_sync(bus, Gio.DBusProxyFlags.NONE, None, 'org.freedesktop.login1', session_object_path, 'org.freedesktop.DBus.Properties', None)
+		display = session_properties_proxy.Get('(ss)', 'org.freedesktop.login1.Session', 'Display')
+		if (display == sys_display):
+			syslog.syslog("Found session %s" % session_id)
+			# If the display matches the one we're looking for, unlock the session
+			#manager_proxy.UnlockSession('(s)', session_object_path)
+			session_proxy = Gio.DBusProxy.new_sync(bus, Gio.DBusProxyFlags.NONE, None, 'org.freedesktop.login1', session_object_path, 'org.freedesktop.login1.Session', None)
+			session_proxy.Unlock()
+			syslog.syslog("Session is now unlocked")

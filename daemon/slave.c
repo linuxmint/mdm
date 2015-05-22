@@ -1243,8 +1243,14 @@ mdm_slave_check_user_wants_to_log_in (const char *user)
 	/* Must be that r == 1, that is return to previous login */
 
 #ifdef WITH_CONSOLE_KIT
+	// Unlock the session with consolekit
 	unlock_ck_session (user, migrate_to);
 #endif
+
+	// Unlock the session with logind
+	char * unlock_logind_command = g_strdup_printf ("/usr/bin/mdm-unlock-logind %s %s &", user, migrate_to);
+	system(unlock_logind_command);
+	g_free(unlock_logind_command);
 
 	if (d->type == TYPE_FLEXI) {
 		mdm_slave_whack_greeter ();
