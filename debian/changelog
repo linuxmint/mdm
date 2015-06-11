@@ -1,3 +1,42 @@
+mdm (2.0.0) rafaela; urgency=medium
+
+  [ Monsta ]
+  * do NULL-assignment-after-free to avoid double-free later
+  * don't leak memory
+  * let's check for a return value before passing the string outside
+  * don't leak memory
+  * bumped some deps and build-deps
+  * don't use obsolete function (from GLib < 2.36)
+  * don't call obsolete dh_* stuff that does nothing these days
+  * remove generated files
+
+  [ Clement Lefebvre ]
+  * Changed the way session selection/detection works. Using x-session-manager (default.desktop built-in session) is now a last-resort.
+  * Adapted MDMSetup to new session management
+  * Made list of default sessions configurable
+  * Removed unused clearname session attribute
+  * Removed code no longer in use
+  * Removed unused failsafe session management
+  * Removed unused code
+  * Upstart: Don't bail when something in the environment isn't right
+  * Log calls to sleep() to better monitor delays
+  * User switching: Unlock session before whacking greeter and don't wait for 1 second
+  * Fixed accountsservice avatar support (didn't parse user file, now supports user file and icons dir) for mdmlogin and mdmgreeter
+  * Removed support for old face dirs/paths which aren't used anymore
+  * Simplified facefile code, moved it from daemon/ to common/
+  * Fixed regression in mdmwebkit, pass avatar info to mdmwebkit
+  * Fixed regression in previous commits causing slave to segfault
+  * mdm-common.c: Fixed indentation
+  * mdm-common.c: Improved code readability and g_free usage
+  * Unlock logind session when the user logs in again
+  * Updated translations
+  * Updated pot file
+
+  [ Michael Webster ]
+  * mdm-common.c: Initialize cfgfile string to NULL, NULL out picfile before re-using it..  this was causing the slave to repeatedly crash on my machine.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 11 Jun 2015 02:01:21 +0200
+
 mdm (1.8.3) rebecca; urgency=medium
 
   * mdmsetup: Use theme directory instead of theme name in mdm.conf
