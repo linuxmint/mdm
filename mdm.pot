@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-19 11:46+0100\n"
+"POT-Creation-Date: 2015-06-11 01:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,115 +45,84 @@ msgstr ""
 msgid "User %u will login in %t"
 msgstr ""
 
-#: gui/mdmwebkit.c:379
-msgid "Last"
-msgstr ""
-
-#: gui/mdmwebkit.c:531 gui/mdmwebkit.c:533
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
 msgid "Username:"
 msgstr ""
 
-#: gui/mdmwebkit.c:550 gui/mdmwebkit.c:551
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
 msgid "Password:"
 msgstr ""
 
-#: gui/mdmwebkit.c:643 gui/mdmwebkit.c:652
-#, c-format
-msgid "Do you wish to make %s the default for future sessions?"
-msgstr ""
-
-#: gui/mdmwebkit.c:644
-#, c-format
-msgid "Your preferred session type %s is not installed on this computer."
-msgstr ""
-
-#: gui/mdmwebkit.c:645
-msgid "Just _Log In"
-msgstr ""
-
-#: gui/mdmwebkit.c:645 gui/mdmwebkit.c:654
-msgid "Make _Default"
-msgstr ""
-
-#: gui/mdmwebkit.c:653
-#, c-format
-msgid "You have chosen %s for this session, but your default setting is %s."
-msgstr ""
-
-#: gui/mdmwebkit.c:654
-msgid "Just For _This Session"
-msgstr ""
-
-#: gui/mdmwebkit.c:882
+#: gui/mdmwebkit.c:820
 msgid "Already logged in"
 msgstr ""
 
-#: gui/mdmwebkit.c:952
+#: gui/mdmwebkit.c:890
 #, c-format
 msgid "There was an error loading the theme %s"
 msgstr ""
 
-#: gui/mdmwebkit.c:980
+#: gui/mdmwebkit.c:918
 msgid "Login"
 msgstr ""
 
-#: gui/mdmwebkit.c:981
+#: gui/mdmwebkit.c:919
 msgid "OK"
 msgstr ""
 
-#: gui/mdmwebkit.c:982
+#: gui/mdmwebkit.c:920
 msgid "Cancel"
 msgstr ""
 
-#: gui/mdmwebkit.c:983
+#: gui/mdmwebkit.c:921
 msgid "Please enter your username"
 msgstr ""
 
-#: gui/mdmwebkit.c:984
+#: gui/mdmwebkit.c:922
 msgid "Please enter your password"
 msgstr ""
 
-#: gui/mdmwebkit.c:986
+#: gui/mdmwebkit.c:924
 msgid "Shutdown"
 msgstr ""
 
-#: gui/mdmwebkit.c:987
+#: gui/mdmwebkit.c:925
 msgid "Suspend"
 msgstr ""
 
-#: gui/mdmwebkit.c:988
+#: gui/mdmwebkit.c:926
 msgid "Quit"
 msgstr ""
 
-#: gui/mdmwebkit.c:989
+#: gui/mdmwebkit.c:927
 msgid "Restart"
 msgstr ""
 
-#: gui/mdmwebkit.c:990
+#: gui/mdmwebkit.c:928
 msgid "Session"
 msgstr ""
 
-#: gui/mdmwebkit.c:991
+#: gui/mdmwebkit.c:929
 msgid "Select a session"
 msgstr ""
 
-#: gui/mdmwebkit.c:992
+#: gui/mdmwebkit.c:930
 msgid "Default session"
 msgstr ""
 
-#: gui/mdmwebkit.c:993
+#: gui/mdmwebkit.c:931
 msgid "Language"
 msgstr ""
 
-#: gui/mdmwebkit.c:994
+#: gui/mdmwebkit.c:932
 msgid "Select a language"
 msgstr ""
 
-#: gui/mdmwebkit.c:995
+#: gui/mdmwebkit.c:933
 msgid "Are you sure you want to quit?"
 msgstr ""
 
-#: gui/mdmwebkit.c:996
+#: gui/mdmwebkit.c:934
 msgid "Close"
 msgstr ""
 
@@ -176,142 +145,146 @@ msgstr ""
 msgid "User not allowed"
 msgstr ""
 
-#: gui/mdmsetup.c:775
+#: gui/mdmsetup.c:776
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr ""
 
-#: gui/mdmsetup.c:1175
+#: gui/mdmsetup.c:1177
 msgid "No theme, just pure GTK"
 msgstr ""
 
-#: gui/mdmsetup.c:1560
+#: gui/mdmsetup.c:1562
 msgid "Archive is not of a subdirectory"
 msgstr ""
 
-#: gui/mdmsetup.c:1567
+#: gui/mdmsetup.c:1569
 msgid "Archive is not of a single subdirectory"
 msgstr ""
 
-#: gui/mdmsetup.c:1603 gui/mdmsetup.c:1680
+#: gui/mdmsetup.c:1605 gui/mdmsetup.c:1682
 msgid "File not a tar.gz or tar archive"
 msgstr ""
 
-#: gui/mdmsetup.c:1607
+#: gui/mdmsetup.c:1609
 msgid "Archive does not include a GdmGreeterTheme.info file"
 msgstr ""
 
-#: gui/mdmsetup.c:1629
+#: gui/mdmsetup.c:1631
 msgid "File does not exist"
 msgstr ""
 
-#: gui/mdmsetup.c:1743
+#: gui/mdmsetup.c:1745
 #, c-format
 msgid "%s"
 msgstr ""
 
-#: gui/mdmsetup.c:1750
+#: gui/mdmsetup.c:1752
 msgid "Not a theme archive"
 msgstr ""
 
-#: gui/mdmsetup.c:1772
+#: gui/mdmsetup.c:1774
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
 msgstr ""
 
-#: gui/mdmsetup.c:1858
+#: gui/mdmsetup.c:1860
 msgid "Some error occurred when installing the theme"
 msgstr ""
 
-#: gui/mdmsetup.c:1901
+#: gui/mdmsetup.c:1903
 msgid "No file selected"
 msgstr ""
 
-#: gui/mdmsetup.c:1923
+#: gui/mdmsetup.c:1925
 msgid "Select Theme Archive"
 msgstr ""
 
-#: gui/mdmsetup.c:1927 gui/mdmsetup.c:2142
+#: gui/mdmsetup.c:1929 gui/mdmsetup.c:2144
 msgid "_Install"
 msgstr ""
 
-#: gui/mdmsetup.c:1931
+#: gui/mdmsetup.c:1933
 msgid "Theme archives"
 msgstr ""
 
-#: gui/mdmsetup.c:1998
+#: gui/mdmsetup.c:2000
 #, c-format
 msgid "Remove the \"%s\" theme?"
 msgstr ""
 
-#: gui/mdmsetup.c:2005
+#: gui/mdmsetup.c:2007
 msgid "If you choose to remove the theme, it will be permanently lost."
 msgstr ""
 
-#: gui/mdmsetup.c:2013
+#: gui/mdmsetup.c:2015
 msgid "_Remove Theme"
 msgstr ""
 
-#: gui/mdmsetup.c:2131
+#: gui/mdmsetup.c:2133
 #, c-format
 msgid "Install the theme from '%s'?"
 msgstr ""
 
-#: gui/mdmsetup.c:2132
+#: gui/mdmsetup.c:2134
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
 msgstr ""
 
-#: gui/mdmsetup.c:2403
+#: gui/mdmsetup.c:2405
 msgid "Images"
 msgstr ""
 
-#: gui/mdmsetup.c:2408
+#: gui/mdmsetup.c:2410
 msgid "All Files"
 msgstr ""
 
-#: gui/mdmsetup.c:2681 gui/mdmsetup.glade.h:2
+#: gui/mdmsetup.c:2545
+msgid "Automatically detected"
+msgstr ""
+
+#: gui/mdmsetup.c:2663 gui/mdmsetup.glade.h:2
 msgid "Theme"
 msgstr ""
 
-#: gui/mdmsetup.c:2688 gui/mdmsetup.glade.h:28
+#: gui/mdmsetup.c:2670 gui/mdmsetup.glade.h:28
 msgid "Auto login"
 msgstr ""
 
-#: gui/mdmsetup.c:2695 gui/mdmsetup.glade.h:43
+#: gui/mdmsetup.c:2677 gui/mdmsetup.glade.h:42
 msgid "Options"
 msgstr ""
 
-#: gui/mdmsetup.c:2718
+#: gui/mdmsetup.c:2700
 msgid "Add a new theme"
 msgstr ""
 
-#: gui/mdmsetup.c:2719
+#: gui/mdmsetup.c:2701
 msgid "Remove the selected theme"
 msgstr ""
 
-#: gui/mdmsetup.c:2720
+#: gui/mdmsetup.c:2702
 msgid "Launch the login screen to preview the theme"
 msgstr ""
 
-#: gui/mdmsetup.c:2738
+#: gui/mdmsetup.c:2720
 msgid "Please install 'numlockx' to enable this feature"
 msgstr ""
 
-#: gui/mdmsetup.c:2935
+#: gui/mdmsetup.c:2917
 msgid "Could not access configuration file (defaults.conf)"
 msgstr ""
 
-#: gui/mdmsetup.c:2936 gui/mdmsetup.c:2953
+#: gui/mdmsetup.c:2918 gui/mdmsetup.c:2935
 msgid ""
 "Make sure that the file exists before launching login manager config utility."
 msgstr ""
 
-#: gui/mdmsetup.c:2952
+#: gui/mdmsetup.c:2934
 msgid "Could not access configuration file"
 msgstr ""
 
-#: gui/mdmsetup.c:3000
+#: gui/mdmsetup.c:2982
 msgid "You must be root to configure MDM."
 msgstr ""
 
@@ -422,63 +395,57 @@ msgid "dummy"
 msgstr ""
 
 #: gui/mdmsetup.glade.h:29
-msgid "De_fault session:"
-msgstr ""
-
-#: gui/mdmsetup.glade.h:30
-msgid ""
-"The session that is used by default if the user does not have a saved "
-"preference and has picked 'Last' from the list of sessions."
-msgstr ""
-
-#: gui/mdmsetup.glade.h:31
 msgid "Allow root login"
 msgstr ""
 
-#: gui/mdmsetup.glade.h:32
+#: gui/mdmsetup.glade.h:30
 msgid "Log debug information to /var/log/syslog"
 msgstr ""
 
-#: gui/mdmsetup.glade.h:33
+#: gui/mdmsetup.glade.h:31
 msgid "Sends debug output to the syslog."
 msgstr ""
 
-#: gui/mdmsetup.glade.h:34
+#: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"
 msgstr ""
 
-#: gui/mdmsetup.glade.h:35
+#: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
 msgstr ""
 
-#: gui/mdmsetup.glade.h:36
+#: gui/mdmsetup.glade.h:34
 msgid "Use 24 Hour Clock"
 msgstr ""
 
-#: gui/mdmsetup.glade.h:37
+#: gui/mdmsetup.glade.h:35
 msgid "Primary monitor:"
 msgstr ""
 
-#: gui/mdmsetup.glade.h:38
+#: gui/mdmsetup.glade.h:36
 msgid " "
 msgstr ""
 
-#: gui/mdmsetup.glade.h:39
+#: gui/mdmsetup.glade.h:37
 msgid "Limit the session output"
 msgstr ""
 
-#: gui/mdmsetup.glade.h:40
+#: gui/mdmsetup.glade.h:38
 msgid ""
 "This prevents .xsession-errors from getting too big (200KB, a few thousand "
 "lines)."
 msgstr ""
 
-#: gui/mdmsetup.glade.h:41
+#: gui/mdmsetup.glade.h:39
 msgid "Filter the session output"
 msgstr ""
 
-#: gui/mdmsetup.glade.h:42
+#: gui/mdmsetup.glade.h:40
 msgid ""
 "This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
 "Glade...etc) from getting in .xsession-errors."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
 msgstr ""
