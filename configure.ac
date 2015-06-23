@@ -1242,6 +1242,7 @@ common/Makefile
 docs/Makefile
 config/Init
 config/SuperInit
+config/SuperPost
 config/PreSession
 config/PostSession
 config/mdmprefetchlist

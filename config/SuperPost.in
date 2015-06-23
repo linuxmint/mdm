@@ -1,0 +1,16 @@
+#!/bin/sh
+# This script is run as root after a slave dies (server/greeter/session are killed by then. Xorg is not running for that particular slave).
+
+logger -i -tag mdm-superpost "Starting..."
+
+# NVIDIA prime support
+primeswitch=/sbin/prime-switch
+if [ -f "$primeswitch" ]; then
+    logger -i -tag mdm-superpost "Running prime-switch..."
+    $primeswitch
+    logger -i -tag mdm-superpost "Finished running prime-switch."
+fi
+
+logger -i -tag mdm-superpost "Finished"
+
+exit 0

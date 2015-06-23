@@ -615,6 +615,133 @@ restart_machine (void)
 	}
 }
 
+static gint
+mdm_exec_script (const gchar *dir,
+           const char *login,
+           struct passwd *pwent,
+           gboolean pass_stdout)
+{
+  pid_t pid;
+  gid_t save_gid;
+  gid_t save_egid;
+  char *script;
+  gchar **argv = NULL;
+  gint status;
+
+  if G_UNLIKELY (ve_string_empty (dir))
+    return 0;
+
+  script = g_build_filename (dir, "Default", NULL);
+  if (g_access (script, R_OK|X_OK) != 0) {
+    g_free (script);
+    script = NULL;
+  }
+
+  if (script == NULL) {
+    return 0;
+  }
+
+  /*
+   * Make sure that gid/egid are set to 0 when running the scripts, so
+   * that the scripts are run with standard permisions.  Reset gid/egid
+   * back to their original values after running the script.
+   */
+  save_egid = getegid ();
+  save_gid  = getgid ();
+  setegid (0);
+  setgid (0);
+
+  mdm_debug ("Forking extra process: %s", script);
+
+  pid = mdm_fork_extra ();
+
+  switch (pid) {
+  case 0:
+    mdm_log_shutdown ();
+
+    VE_IGNORE_EINTR (close (0));
+    mdm_open_dev_null (O_RDONLY); /* open stdin - fd 0 */
+
+    if ( ! pass_stdout) {
+      VE_IGNORE_EINTR (close (1));
+      VE_IGNORE_EINTR (close (2));
+      /* No error checking here - if it's messed the best response
+       * is to ignore & try to continue */
+      mdm_open_dev_null (O_RDWR); /* open stdout - fd 1 */
+      mdm_open_dev_null (O_RDWR); /* open stderr - fd 2 */
+    }
+
+    mdm_close_all_descriptors (3 /* from */, -1 /* except */, -1 /* except2 */);
+
+    mdm_log_init ();
+
+    if (login != NULL) {
+      g_setenv ("LOGNAME", login, TRUE);
+      g_setenv ("USER", login, TRUE);
+      g_setenv ("USERNAME", login, TRUE);
+    } else {
+      const char *mdmuser = mdm_daemon_config_get_value_string (MDM_KEY_USER);
+      g_setenv ("LOGNAME", mdmuser, TRUE);
+      g_setenv ("USER", mdmuser, TRUE);
+      g_setenv ("USERNAME", mdmuser, TRUE);
+    }
+    if (pwent != NULL) {
+      if (ve_string_empty (pwent->pw_dir)) {
+        g_setenv ("HOME", "/", TRUE);
+        g_setenv ("PWD", "/", TRUE);
+        VE_IGNORE_EINTR (g_chdir ("/"));
+      } else {
+        g_setenv ("HOME", pwent->pw_dir, TRUE);
+        g_setenv ("PWD", pwent->pw_dir, TRUE);
+        VE_IGNORE_EINTR (g_chdir (pwent->pw_dir));
+        if (errno != 0) {
+          VE_IGNORE_EINTR (g_chdir ("/"));
+          g_setenv ("PWD", "/", TRUE);
+        }
+      }
+      g_setenv ("SHELL", pwent->pw_shell, TRUE);
+    } else {
+      g_setenv ("HOME", "/", TRUE);
+      g_setenv ("PWD", "/", TRUE);
+      VE_IGNORE_EINTR (g_chdir ("/"));
+      g_setenv ("SHELL", "/bin/sh", TRUE);
+    }   
+
+    g_unsetenv ("XAUTHORITY");
+    g_setenv ("PATH", mdm_daemon_config_get_value_string (MDM_KEY_ROOT_PATH), TRUE);
+    g_setenv ("RUNNING_UNDER_MDM", "true", TRUE);
+    g_shell_parse_argv (script, NULL, &argv, NULL);
+
+    VE_IGNORE_EINTR (execv (argv[0], argv));
+    g_strfreev (argv);
+    g_error (_("%s: Failed starting: %s"),
+       "mdm_exec_script",
+       script);
+    _exit (0);
+
+  case -1:
+    g_free (script);
+    g_error (_("%s: Can't fork script process!"), "mdm_exec_script");
+
+    setgid (save_gid);
+    setegid (save_egid);
+
+    return 0;
+
+  default:
+    mdm_wait_for_extra (pid, &status);
+    g_free (script);
+
+    setgid (save_gid);
+    setegid (save_egid);
+
+    if (WIFEXITED (status))
+      return WEXITSTATUS (status);
+    else
+      return 0;
+  }
+}
+
 static gboolean
 mdm_cleanup_children (void)
 {
@@ -703,6 +830,9 @@ mdm_cleanup_children (void)
 	/* Declare the display dead */
 	d->slavepid = 0;
 	d->dispstat = DISPLAY_DEAD;
+
+	/* Run SuperPost script */
+	mdm_exec_script ("/etc/mdm/SuperPost", "root", getpwnam("root"), FALSE /* pass_stdout */);
 
 	if (status == DISPLAY_RESTARTMDM ||
 	    status == DISPLAY_REBOOT     ||

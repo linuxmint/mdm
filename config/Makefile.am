@@ -5,6 +5,7 @@ bisessdir = $(datadir)/mdm/BuiltInSessions
 instsessdir = $(datadir)/xsessions
 initdir = $(mdmconfdir)/Init
 superinitdir = $(mdmconfdir)/SuperInit
+superpostdir = $(mdmconfdir)/SuperPost
 authdir = $(localstatedir)/mdm
 postdir = $(mdmconfdir)/PostSession
 predir = $(mdmconfdir)/PreSession
@@ -27,6 +28,7 @@ EXTRA_DIST = \
 	locale.alias \
 	Init.in \
 	SuperInit.in \
+	SuperPost.in \
 	PreSession.in \
 	PostSession.in \
 	PostLogin \
@@ -35,7 +37,7 @@ EXTRA_DIST = \
 	mdmprefetchlist.in \
 	extract-shell.sh
 
-CLEANFILES = Xsession mdm.conf mdm.conf-custom default.desktop ssh.desktop Init SuperInit PreSession PostSession mdmprefetchlist
+CLEANFILES = Xsession mdm.conf mdm.conf-custom default.desktop ssh.desktop Init SuperInit SuperPost PreSession PostSession mdmprefetchlist
 
 Xsession: $(srcdir)/Xsession.in
 	sed	-e 's,[@]XSESSION_SHELL[@],$(XSESSION_SHELL),g' \
@@ -94,11 +96,12 @@ uninstall-hook:
 	$(DESTDIR)$(mdmlocaledir)/locale.alias \
 	$(DESTDIR)$(initdir)/Default \
 	$(DESTDIR)$(superinitdir)/Default \
+	$(DESTDIR)$(superpostdir)/Default \
 	$(DESTDIR)$(postlogindir)/Default.sample \
 	$(DESTDIR)$(predir)/Default \
 	$(DESTDIR)$(postdir)/Default
 
-install-data-hook: mdm.conf mdm.conf-custom Xsession Init SuperInit PostSession PreSession $(DESKTOP_FILES) $(MDMPREFETCHLIST)
+install-data-hook: mdm.conf mdm.conf-custom Xsession Init SuperInit SuperPost PostSession PreSession $(DESKTOP_FILES) $(MDMPREFETCHLIST)
 	if test '!' -d $(DESTDIR)$(confdir); then \
 		$(mkinstalldirs) $(DESTDIR)$(confdir); \
 		chmod 755 $(DESTDIR)$(confdir); \
@@ -176,6 +179,15 @@ install-data-hook: mdm.conf mdm.conf-custom Xsession Init SuperInit PostSession 
 		cp -f $(DESTDIR)$(superinitdir)/Default $(DESTDIR)$(superinitdir)/Default.orig; \
 	fi
 	$(INSTALL_SCRIPT) SuperInit $(DESTDIR)$(superinitdir)/Default
+
+	if test '!' -d $(DESTDIR)$(superpostdir); then \
+		$(mkinstalldirs) $(DESTDIR)$(superpostdir); \
+		chmod 755 $(DESTDIR)$(superpostdir); \
+	fi
+	-if test -f $(DESTDIR)$(superpostdir)/Default; then \
+		cp -f $(DESTDIR)$(superpostdir)/Default $(DESTDIR)$(superpostdir)/Default.orig; \
+	fi
+	$(INSTALL_SCRIPT) SuperPost $(DESTDIR)$(superpostdir)/Default
 
 	if test '!' -d $(DESTDIR)$(postlogindir); then \
 		$(mkinstalldirs) $(DESTDIR)$(postlogindir); \
