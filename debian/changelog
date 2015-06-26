@@ -1,3 +1,9 @@
+mdm (2.0.2) rafaela; urgency=medium
+
+  * Updated translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 26 Jun 2015 17:00:01 +0200
+
 mdm (2.0.1) rafaela; urgency=medium
 
   * SuperPost: Added the ability to run scripts as root after Session/Greeter/Xorg NVIDIA prime support: added the ability to switch between cards simply by logging out
