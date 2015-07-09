@@ -3606,7 +3606,7 @@ msgstr "Vous devez être administrateur (root) pour configurer MDM."
 #: ../gui/mdmsetup.desktop.in.in.h:1
 msgid "Configure MDM login window appearance and behavior"
 msgstr ""
-"Configurer l'apparence et le comportement de la fenêtre de connexion GNOME"
+"Configurer l'apparence et le comportement de la fenêtre de connexion"
 
 #: ../gui/mdmsetup.desktop.in.in.h:2
 msgid "Login Window"

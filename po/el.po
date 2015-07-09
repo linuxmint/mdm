@@ -3654,8 +3654,7 @@ msgstr "Πρέπει να είστε υπερχρήστης (root) για να �
 #: ../gui/mdmsetup.desktop.in.in.h:1
 msgid "Configure MDM login window appearance and behavior"
 msgstr ""
-"Ρύθμιση εμφάνισης και συμπεριφοράς του παραθύρου εισόδου (Gnome Display "
-"Manager)"
+"Ρύθμιση εμφάνισης και συμπεριφοράς του παραθύρου εισόδου"
 
 #: ../gui/mdmsetup.desktop.in.in.h:2
 msgid "Login Window"

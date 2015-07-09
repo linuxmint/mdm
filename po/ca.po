@@ -3557,7 +3557,7 @@ msgstr "Heu de ser el superusuari (root) per configurar el MDM."
 #. EOF
 #: ../gui/mdmsetup.desktop.in.in.h:1
 msgid "Configure MDM login window appearance and behavior"
-msgstr "Configureu la pantalla d'entrada (el gestor d'entrades del GNOME)"
+msgstr "Configureu la pantalla d'entrada"
 
 #: ../gui/mdmsetup.desktop.in.in.h:2
 msgid "Login Window"
