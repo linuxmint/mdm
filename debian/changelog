@@ -1,3 +1,9 @@
+mdm (2.0.4) rafaela; urgency=medium
+
+  * Removed a few remaining references to GNOME in localized comments
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 09 Jul 2015 15:29:57 +0200
+
 mdm (2.0.3) rafaela; urgency=medium
 
   * Added mdmsetup to Xfce settings
