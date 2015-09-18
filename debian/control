@@ -37,7 +37,7 @@ Build-Depends: libpam0g-dev (>= 0.99.7.1),
                gnome-common,
                libxml2-utils,
                dh-systemd (>= 1.5)
-Standards-Version: 3.9.0
+Standards-Version: 3.9.5
 
 Package: mdm
 Architecture: any
