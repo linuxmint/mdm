@@ -3,13 +3,13 @@
 from gi.repository import Gdk
 import sys
 import os
+import syslog
 
-DPI_FALLBACK = 96
-HIDPI_LIMIT = (DPI_FALLBACK * 2)
+IDEAL_DPI = 170
 CURSOR_SIZE = 24
 
 def get_window_scale():
-    window_scale = 1
+    window_scale = 1.0
     try:
         display = Gdk.Display.get_default()
         screen = display.get_default_screen()
@@ -21,14 +21,19 @@ def get_window_scale():
         monitor_scale = screen.get_monitor_scale_factor(primary)
 
         if width_mm > 0 and height_mm > 0:
-            dpi_x = rect.width * monitor_scale / (width_mm / 25.4)
-            dpi_y = rect.height * monitor_scale / (height_mm / 25.4)
-            if dpi_x > HIDPI_LIMIT and dpi_y > HIDPI_LIMIT:
-                window_scale = 2
-    except:
-        pass # best-effort
+            witdh_inch = width_mm / 25.4
+            height_inch = height_mm / 25.4
+            dpi_x = rect.width * monitor_scale / witdh_inch
+            dpi_y = rect.height * monitor_scale / height_inch
+            if dpi_x > IDEAL_DPI and dpi_y > IDEAL_DPI:
+                window_scale = round(dpi_x / IDEAL_DPI, 1)
+                syslog.syslog("Detected hidpi dpi %d, resolution %dx%d dimensions %dx%d. Applying scale: %s, res: %dx%d." % (dpi_x, rect.width, rect.height, witdh_inch, height_inch, window_scale, rect.width / window_scale, rect.height /  window_scale))
+    except Exception, detail:
+        syslog.syslog("Error while detecting hidpi mode: %s" % detail)
+
     return window_scale
 
 if __name__ == '__main__':
-    print get_window_scale()
+    window_scale = get_window_scale() * 10; # points/commas fail to be interpreted properly depending on the locale, so we pass an int instead.
+    print window_scale
     sys.exit(0)
