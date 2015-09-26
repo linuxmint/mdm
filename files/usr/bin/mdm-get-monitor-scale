@@ -20,6 +20,17 @@ def get_window_scale():
         height_mm = screen.get_monitor_height_mm(primary)
         monitor_scale = screen.get_monitor_scale_factor(primary)
 
+        # Return 1.0 if the screen size isn't available (some TVs report their aspect ratio instead ... 16/9 or 16/10)
+        if ((width_mm == 160 and height_mm == 90) \
+            or (width_mm == 160 and height_mm == 100) \
+            or (width_mm == 16 and height_mm == 9) \
+            or (width_mm == 16 and height_mm == 10)):
+            return 1.0
+
+        # Return if the resolution isn't high enough
+        if rect.width < 2000 or rect.height < 1200:
+            return 1.0
+
         if width_mm > 0 and height_mm > 0:
             witdh_inch = width_mm / 25.4
             height_inch = height_mm / 25.4
