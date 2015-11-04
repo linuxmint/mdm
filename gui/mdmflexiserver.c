@@ -195,20 +195,28 @@ maybe_lock_screen (void)
 	GdkScreen *screen;
 	
 	screen = gdk_screen_get_default ();
-	
-	if (is_program_in_path ("cinnamon-screensaver-command")) {
+
+	const char * desktop = g_getenv ("XDG_CURRENT_DESKTOP") ? g_getenv ("XDG_CURRENT_DESKTOP") : "NONE";
+
+	if (is_program_in_path ("cinnamon-screensaver-command")
+		&& (g_strcmp0 (desktop, "X-Cinnamon") == 0 || g_strcmp0 (desktop, "Cinnamon") == 0)) {
+		printf ("Locking cinnamon-screensaver\n");
 		command = g_strdup ("cinnamon-screensaver-command --lock");
 	}
-	else if (is_program_in_path ("mate-screensaver-command")) {
+	else if (is_program_in_path ("mate-screensaver-command") && g_strcmp0 (desktop, "MATE") == 0) {
+		printf ("Locking mate-screensaver\n");
 		command = g_strdup ("mate-screensaver-command --lock");
 	}
 	else if (is_program_in_path ("xscreensaver-command")) {
+		printf ("Locking xscreensaver\n");
 		command = g_strdup ("xscreensaver-command -lock");
 	}
     else if( access( "/usr/lib/kde4/libexec/kscreenlocker_greet", X_OK ) != -1 ) {
+		printf ("Locking kscreenlocker\n");
         command = g_strdup ("/usr/lib/kde4/libexec/kscreenlocker_greet");
     }
     else if (is_program_in_path ("gnome-screensaver-command")) {
+		printf ("Locking gnome-screensaver\n");
 		command = g_strdup ("gnome-screensaver-command --lock");
 	}	
 	else {		
