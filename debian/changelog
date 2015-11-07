@@ -1,3 +1,18 @@
+mdm (2.0.5) rosa; urgency=medium
+
+  [ darealshinji ]
+  * bump Standards-Version to 3.9.5
+
+  [ Clement Lefebvre ]
+  * hidpi: refactor python code
+  * hidpi: Work towards an ideal DPI value rather than arbitrarily double the zoom passed a certain DPI
+  * hidpi: Added missing changes in last commit
+  * hidpi: Don't change zoom level when the display size isn't known, or when the resolution's width/height are less than 2000/1200px.
+  * mdmflexiserver: Check XDG_CURRENT_DESKTOP to identify the right screensaver
+  * Updated translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sat, 07 Nov 2015 16:47:14 +0000
+
 mdm (2.0.4) rafaela; urgency=medium
 
   * Removed a few remaining references to GNOME in localized comments
