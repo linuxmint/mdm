@@ -1,3 +1,9 @@
+mdm (2.0.6) rosa; urgency=medium
+
+  * Don't allow automatic/timed login for users with encrypted home directories
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 20 Nov 2015 10:57:50 +0000
+
 mdm (2.0.5) rosa; urgency=medium
 
   [ darealshinji ]
