@@ -789,6 +789,25 @@ users_string_compare_func (gconstpointer a, gconstpointer b)
 	return strcmp(a, b);
 }
 
+static gboolean
+dir_exists (const char *parent, const char *dir)
+{
+	DIR *dp = opendir (parent);
+	struct dirent *dent;
+	
+	if (dp == NULL)
+		return FALSE;
+
+	while ((dent = readdir (dp)) != NULL) {
+		if (strcmp (ve_sure_string (dent->d_name), ve_sure_string (dir)) == 0) {
+			closedir (dp);
+			return TRUE;
+		}
+	}
+	closedir (dp);
+	return FALSE;
+}
+
 /* Sets up Automatic Login Username and Timed Login User entry comboboxes
  * from the general configuration tab. */
 static void
@@ -827,11 +846,13 @@ setup_user_combobox_list (const char *name, const char *key)
 
 	cnt=0;
 	for (li = users_string; li != NULL; li = li->next) {
-		if (strcmp (li->data, ve_sure_string (selected_user)) == 0)
-			selected=cnt;
-		gtk_list_store_append (combobox_store, &iter);
-		gtk_list_store_set(combobox_store, &iter, USERLIST_NAME, li->data, -1);
-		cnt++;
+		if (!dir_exists ("/home/.ecryptfs", li->data)) {
+			if (strcmp (li->data, ve_sure_string (selected_user)) == 0)
+				selected=cnt;
+			gtk_list_store_append (combobox_store, &iter);
+			gtk_list_store_set(combobox_store, &iter, USERLIST_NAME, li->data, -1);
+			cnt++;
+		}
 	}
 
 	gtk_combo_box_set_model (GTK_COMBO_BOX (combobox_entry),
@@ -1685,25 +1706,6 @@ get_archive_dir (gchar *filename, char **untar_cmd, char ** destination_dir, cha
 	g_free (quoted);
 
 	return NULL;
-}
-
-static gboolean
-dir_exists (const char *parent, const char *dir)
-{
-	DIR *dp = opendir (parent);
-	struct dirent *dent;
-	
-	if (dp == NULL)
-		return FALSE;
-
-	while ((dent = readdir (dp)) != NULL) {
-		if (strcmp (ve_sure_string (dent->d_name), ve_sure_string (dir)) == 0) {
-			closedir (dp);
-			return TRUE;
-		}
-	}
-	closedir (dp);
-	return FALSE;
 }
 
 static void
