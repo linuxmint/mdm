@@ -572,14 +572,14 @@ combobox_timeout (GtkWidget *combo_box)
 
 		if (new_val == NULL || new_val == " ") {
 			g_free (new_val);
-			new_val = "None";
+			new_val = g_strdup ("None");
 		}
-		
+
 		if (strcmp (ve_sure_string (val), ve_sure_string (new_val)) != 0)
 			mdm_setup_config_set_string (key,  ve_sure_string (new_val));
 
 		g_free (new_val);
-		g_free (val);		
+		g_free (val);
 	}
 	return FALSE;
 }
