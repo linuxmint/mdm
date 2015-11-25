@@ -1,3 +1,9 @@
+mdm (2.0.7) rosa; urgency=medium
+
+  * mdmsetup: Fixed crash when selecting 'blank' primary monitor option
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 25 Nov 2015 15:04:03 +0000
+
 mdm (2.0.6) rosa; urgency=medium
 
   * Don't allow automatic/timed login for users with encrypted home directories
