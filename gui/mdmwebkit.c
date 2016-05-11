@@ -928,6 +928,8 @@ static void webkit_init (void) {
     html = str_replace(html, "$session", html_encode(_("Session")));
     html = str_replace(html, "$selectsession", html_encode(_("Select a session")));
     html = str_replace(html, "$defaultsession", html_encode(_("Default session")));
+    html = str_replace(html, "$selectuser", html_encode(_("Please select a user.")));
+    html = str_replace(html, "$pressf1toenterusername", html_encode(_("Press F1 to enter a username.")));
     html = str_replace(html, "$language", html_encode(_("Language")));
     html = str_replace(html, "$selectlanguage", html_encode(_("Select a language")));
     html = str_replace(html, "$areyousuretoquit", html_encode(_("Are you sure you want to quit?")));

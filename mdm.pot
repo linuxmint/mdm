@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-11 01:59+0200\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,18 +111,26 @@ msgid "Default session"
 msgstr ""
 
 #: gui/mdmwebkit.c:931
-msgid "Language"
+msgid "Please select a user."
 msgstr ""
 
 #: gui/mdmwebkit.c:932
-msgid "Select a language"
+msgid "Press F1 to enter a username."
 msgstr ""
 
 #: gui/mdmwebkit.c:933
-msgid "Are you sure you want to quit?"
+msgid "Language"
 msgstr ""
 
 #: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr ""
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr ""
+
+#: gui/mdmwebkit.c:936
 msgid "Close"
 msgstr ""
 
@@ -149,142 +157,142 @@ msgstr ""
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr ""
 
-#: gui/mdmsetup.c:1177
+#: gui/mdmsetup.c:1198
 msgid "No theme, just pure GTK"
 msgstr ""
 
-#: gui/mdmsetup.c:1562
+#: gui/mdmsetup.c:1583
 msgid "Archive is not of a subdirectory"
 msgstr ""
 
-#: gui/mdmsetup.c:1569
+#: gui/mdmsetup.c:1590
 msgid "Archive is not of a single subdirectory"
 msgstr ""
 
-#: gui/mdmsetup.c:1605 gui/mdmsetup.c:1682
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
 msgid "File not a tar.gz or tar archive"
 msgstr ""
 
-#: gui/mdmsetup.c:1609
+#: gui/mdmsetup.c:1630
 msgid "Archive does not include a GdmGreeterTheme.info file"
 msgstr ""
 
-#: gui/mdmsetup.c:1631
+#: gui/mdmsetup.c:1652
 msgid "File does not exist"
 msgstr ""
 
-#: gui/mdmsetup.c:1745
+#: gui/mdmsetup.c:1747
 #, c-format
 msgid "%s"
 msgstr ""
 
-#: gui/mdmsetup.c:1752
+#: gui/mdmsetup.c:1754
 msgid "Not a theme archive"
 msgstr ""
 
-#: gui/mdmsetup.c:1774
+#: gui/mdmsetup.c:1776
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
 msgstr ""
 
-#: gui/mdmsetup.c:1860
+#: gui/mdmsetup.c:1862
 msgid "Some error occurred when installing the theme"
 msgstr ""
 
-#: gui/mdmsetup.c:1903
+#: gui/mdmsetup.c:1905
 msgid "No file selected"
 msgstr ""
 
-#: gui/mdmsetup.c:1925
+#: gui/mdmsetup.c:1927
 msgid "Select Theme Archive"
 msgstr ""
 
-#: gui/mdmsetup.c:1929 gui/mdmsetup.c:2144
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
 msgid "_Install"
 msgstr ""
 
-#: gui/mdmsetup.c:1933
+#: gui/mdmsetup.c:1935
 msgid "Theme archives"
 msgstr ""
 
-#: gui/mdmsetup.c:2000
+#: gui/mdmsetup.c:2002
 #, c-format
 msgid "Remove the \"%s\" theme?"
 msgstr ""
 
-#: gui/mdmsetup.c:2007
+#: gui/mdmsetup.c:2009
 msgid "If you choose to remove the theme, it will be permanently lost."
 msgstr ""
 
-#: gui/mdmsetup.c:2015
+#: gui/mdmsetup.c:2017
 msgid "_Remove Theme"
 msgstr ""
 
-#: gui/mdmsetup.c:2133
+#: gui/mdmsetup.c:2135
 #, c-format
 msgid "Install the theme from '%s'?"
 msgstr ""
 
-#: gui/mdmsetup.c:2134
+#: gui/mdmsetup.c:2136
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
 msgstr ""
 
-#: gui/mdmsetup.c:2405
+#: gui/mdmsetup.c:2407
 msgid "Images"
 msgstr ""
 
-#: gui/mdmsetup.c:2410
+#: gui/mdmsetup.c:2412
 msgid "All Files"
 msgstr ""
 
-#: gui/mdmsetup.c:2545
+#: gui/mdmsetup.c:2547
 msgid "Automatically detected"
 msgstr ""
 
-#: gui/mdmsetup.c:2663 gui/mdmsetup.glade.h:2
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
 msgid "Theme"
 msgstr ""
 
-#: gui/mdmsetup.c:2670 gui/mdmsetup.glade.h:28
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
 msgid "Auto login"
 msgstr ""
 
-#: gui/mdmsetup.c:2677 gui/mdmsetup.glade.h:42
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
 msgid "Options"
 msgstr ""
 
-#: gui/mdmsetup.c:2700
+#: gui/mdmsetup.c:2702
 msgid "Add a new theme"
 msgstr ""
 
-#: gui/mdmsetup.c:2701
+#: gui/mdmsetup.c:2703
 msgid "Remove the selected theme"
 msgstr ""
 
-#: gui/mdmsetup.c:2702
+#: gui/mdmsetup.c:2704
 msgid "Launch the login screen to preview the theme"
 msgstr ""
 
-#: gui/mdmsetup.c:2720
+#: gui/mdmsetup.c:2722
 msgid "Please install 'numlockx' to enable this feature"
 msgstr ""
 
-#: gui/mdmsetup.c:2917
+#: gui/mdmsetup.c:2919
 msgid "Could not access configuration file (defaults.conf)"
 msgstr ""
 
-#: gui/mdmsetup.c:2918 gui/mdmsetup.c:2935
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
 msgid ""
 "Make sure that the file exists before launching login manager config utility."
 msgstr ""
 
-#: gui/mdmsetup.c:2934
+#: gui/mdmsetup.c:2936
 msgid "Could not access configuration file"
 msgstr ""
 
-#: gui/mdmsetup.c:2982
+#: gui/mdmsetup.c:2984
 msgid "You must be root to configure MDM."
 msgstr ""
 
