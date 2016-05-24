@@ -1,0 +1,480 @@
+# Ukrainian translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2016-05-14 13:58+0000\n"
+"Last-Translator: Микола Ткач <Stuartlittle1970@gmail.com>\n"
+"Language-Team: Ukrainian <uk@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Ви справді бажаєте вимкнути комп’ютер?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "Вимкнути"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Бажаєте перевести комп'ютер у режим очікування?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "Перевести у режим _очікування"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Ви впевнені, що бажаєте перезавантажити комп’ютер?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "Перезавантажити"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "Користувач %u увійде у сеанс через %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Ім'я користувача:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Пароль:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Вже увійшов"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Сталася помилка при завантажені теми \"%s\""
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Увійти"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "Гаразд"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Будь ласка, уведіть Ваше ім'я користувача"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Будь ласка, уведіть Ваш пароль"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Вимкнути"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Перевести у режим очікування"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Вийти"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Перезавантажити"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Сеанс"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Обрати сеанс"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Типовий сеанс"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr "Будь ласка виберіть користувача."
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr "Натисніть клявішу F1, щоб увійти"
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Мова"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Обрати мову"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Ви справді бажаєте вийти?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Закрити"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Помилка під час встановлення зв'язку з екраном входу. Можливо було вжито не "
+"усі оновлення."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr ""
+"Автоматичний вхід чи вхід після призупинки в обліковий запис адміністратора "
+"(root) не дозволяється."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "%s користувацького UID ничже мінімального UID"
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Не дозволений користувач"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+"Автоматичний вхід чи вхід після призупинки в обліковий запис адміністратора "
+"(root) не дозволяється."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Без теми, просто чистий GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Архів не з підкаталогу"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Архів не з одного підкаталогу"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Файл не є архівом формату tar.gz чи tar"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Архів не містить файл GdmGreeterTheme.info"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Файлу не існує"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Не є архівом теми"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr "Каталог теми '%s' здається вже встановлено, встановити все одно?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "При встановленні теми виникла деяка помилка"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Не вибрано файлу"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Вибір архіву теми"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Встановити"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Архіви тем"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Вилучити тему \"%s\"?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Якщо Ви виберете вилучення цієї теми, її буде остаточно втрачено."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "Вилучити тему"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Встановити тему з '%s'?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Виберіть \"Встановити\", щоб додати тему з файлу \"%s\"."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Зображення"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Усі файли"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Автоматично визначено"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Тема"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Автоматичний вхід"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Параметри"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Додати нову тему"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Вилучити вибрану тему"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Запуск екрану входу для попереднього перегляду теми"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Будь ласка, встановіть 'numlockx', щоб увімкнути цю функцію"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr ""
+"Не вдається отримати доступ до конфігураційного файлу (defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Перед запуском засобу налаштовування екрану входу у систему перевірте, що "
+"файл існує."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Не доступний файл конфігурації"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Ви повинні працювати під root для налаштування MDM."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Параметри вікна входу у систему"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Тло"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Зображення:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Відображати це зображення як тло проґрами-привітання."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Вибрати зображення тла"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Вибрати колір тла"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "Ко_лір:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Колір тла вікна привітання"
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Привітання"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "Ін_ше:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Вкажіть текст, який буде показуватися поряд з зображенням логотипу у "
+"стандартному вікні привітання."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n буде замінено на назву вузла"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_Типовий:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'Ласкаво просимо'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "_Дозволити автоматичний вхід у систему"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Даний користувач повинен бути зареєстрований при першому завантаженні. "
+"Пароль не знадобиться."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Користувач:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Порожньо"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "_Увімкнути автоматичний вхід після затримки"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Даний користувач повинен бути зареєстрований після декількох секунд "
+"бездіяльности на екрані входу у систему."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "_Користувач:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "Зат_римка перед входом:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+"Затримка у секундах перед уведенням ім’я користувача для виконання входу у "
+"систему."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "секунд(и)"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "неробочий"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Дозволити вхід під root'ом"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Журнал зневаджувальної інформації для /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Відсилати зневаджувальні дані у системний журнал."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Автоматично обирати останнього зареєстрованого користувача."
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Увімкнути NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Використовувати 24-часовий формат часу"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Основний монітор:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Обмежити вихід сеансу"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Це не дає помилкам .xsession ставати надто великими (200кб, кілька тисяч "
+"рядків)"
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Фільтр на виході сеансу"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Це не дає попередженням зі звичайних бібліотек та інструментаріїв (Gtk, "
+"Glib, Gio, Glade... тощо) потрапляти до помилок .xsession"
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Типова сесія:"

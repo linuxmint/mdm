@@ -1,0 +1,461 @@
+# Arabic translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2014-12-08 13:19+0000\n"
+"Last-Translator: Faissal Chamekh <Unknown>\n"
+"Language-Team: Arabic <ar@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "هل تريد إطفاء الحاسوب بالفعل؟"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "إطفا_ء"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "هل أنت متأكد من أنك تريد تعليق الحاسوب؟"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_علّق"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "هل أنت متأكد من أنك تريد إعادة تشغيل الحاسوب؟"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_أعد التشغيل"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "المستخدم %u سيلِج في %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "اسم المستخدم:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "كلمة المرور:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "المستخدم والج حاليّاً"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "حدث خطأ عند تحميل السِمة %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "لِج"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "موافق"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "ألغِ"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "فضلًا أدخل اسم المستخدم"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "فضلًا أدخل كلمة المرور"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "إطفاء"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "علّق"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "اخرج"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "أعِد التشغيل"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "الجلسة"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "اختر الجلسة"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "الجلسة الإفتراضية"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr ""
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr ""
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "اللُّغة"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "اختر اللُّغة"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "أمتأكد أنك تريد الخروج؟"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "أغلق"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr "حصل خطأ عند الاتصال بشاشات الولوج. يُحتمل عدم نجاح كل التحديثات."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr "لا يسمح بالولوج التلقائي أو المؤقت لحساب المستخدم الجذر."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr ""
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "هذا المستخدم غير مسموح له"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr "لا يسمح بالولوج التلقائي أو المؤقت لحساب المستخدم الجذر."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "بدون سمة، سمة GTK الأصلية"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "الأرشيف ليس ذو دليل ثانوي"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "الأرشيف ليس ذو دليل ثانوي واحد"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "الملف ليس أرشيف tar.gz أو tar"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "لا يحتوي الأرشيف على ملف GdmGreeterTheme.info"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "الملف غير موجود"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "ليس أرشيف سِمة"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"يبدو أن دليل السِمة '%s' مثبت بالفعل، هل ترغب في  إعادة تثيبته على أي حال؟"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "حدث خطأ ما أثناء تثبيت السمة"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "لم يتم تحديد الملف"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "اختر أرشيف سِمة"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_ثَبِّت"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "أرشيفات السِمات"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "هل أحذف سمة \"%s\" ؟"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "إذا اخترت حذف السمة فستفقدها نهائيًا."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "ا_حذف السمة"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "أتريد تثبيت السمة من '%s'؟"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "اختر 'تثبيت' لتضيف السمة من الملف '%s'."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "صور"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "كل الملفّات"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr ""
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "السمة"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "وُلوج تلقائي"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "خيارات"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "أضف سمة جديدة"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "احذف السمة المحدّدة"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "شغّل شاشة الترحيب لاستعراض السمة"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "الرجاء تثبيت 'numlockx' لتفعيل هذه الخاصية"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "لا تستطيع الوصول لملف الإعدادات (defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr "تأكد من وجود الملف قبل تشغيل أداة إعداد مدير الولوج."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "لا يمكن الوصول إلى ملف الإعداد"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "يجب أن تكون جذرًا للتمكن من تخصيص MDM."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "تفضيلات نافذة الولوج"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "الخلفية"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_صورة:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "اعرض هذه الصورة كخلفيّة في المُرحِّب."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "اختر صورة كخلفية"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "الل_ون:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "لون خلفية المرحِّب."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "رسالة الترحيب"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "م_خصص:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n ستستبدل باسم المستضيف"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "الا_فتراضي:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'مرحبا'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "_فعّل الولوج التلقائي"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "ال_مستخدم:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "وهمي"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "فعِّل ال_ولوج المؤقت"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "ال_مستخدم:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "ال_مهلة قبل الولوج:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "ثوانٍ"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "زائف"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "السماح بالولوج كجذر"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "ولوج آخر مستخدم تلقائيًا"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "استعمل نمط 24 سا"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "الشاشة الأساسيىة"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"هذه تمنع الملف .xsession-errors من أن يصبح كبيرًا (200كب، بضعة آلاف سطر)"
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr ""

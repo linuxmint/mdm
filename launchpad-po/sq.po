@@ -1,0 +1,475 @@
+# Albanian translation for linuxmint
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2016-04-28 17:24+0000\n"
+"Last-Translator: Indrit Bashkimi <indrit.bashkimi@gmail.com>\n"
+"Language-Team: Albanian <sq@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Dëshironi me vërtetë të fikni kompjuterin?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "_Fik"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Dëshironi me vërtetë të pezulloni kompjuterin?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Pezullo"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Dëshironi me vërtetë të rindizni kompjuterin?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Rindiz"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "Përdoruesi %u do të futet mbas %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Përdoruesi:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Fjalëkalimi:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Tashmë i lidhur"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Gabim gjatë ngarkimit të temës %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Hyrje"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "OK"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Anulo"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Shkruani emrin e përdoruesit"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Shkruani fjalëkalimin tuaj"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Fik"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Pezullo"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Dil"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Rindiz"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Seancë"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Zgjidhni një seancë"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Seanca e parazgjedhur"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr ""
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr ""
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Gjuha"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Zgjidhni një gjuhë"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Dëshironi me vërtetë të dilni?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Mbyll"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Gabim gjatë përpjekjes për të kontaktuar dritaren e hyrjes.  Jo të gjithë "
+"ndryshimet mund të jenë efektivë."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr ""
+"Hyrja automatike ose hyrja e kronometruar tek profili root nuk lejohet."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "UID-ja e përdoruesit %s është me i ulët se 'MinimalUID'."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Përdorues jo i lejuar"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+"Hyrja automatike ose hyrja e kronometruar e profilit root nuk lejohet."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Asnjë temë, thjesht puro GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Arkivi nuk përmban vetëm një nën-directory"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Arkivi duhet të përmbajë vetëm një nën-directory"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Skedari nuk është një arkiv tar.gz apo tar"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Arkivi nuk përmban një skedar GdmGreeterTheme.info"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Skedari nuk ekziston"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Nuk është arkiv i një teme"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr "Directory e temës '%s' ekziston. Ta instaloj edhe njëherë?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Gabime gjatë instalimit të temës"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Asnjë skedar i zgjedhur"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Zgjidh arkivin e temës"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Instalo"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Arkivët e temave"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Të hiqet tema \"%s\"?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Nëse zgjidhni heqjen e temës, do ta humbni përgjithmonë."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_Hiq temën"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Të instalohet tema nga '%s'?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Zgjidhni instalo për të shtuar temën nga skedari '%s'."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Imazhet"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Të gjithë skedarët"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Zbuluar automatikisht"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Tema"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Hyrje automatike"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Opsionet"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Shtoni një temë të re"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Hiq temën e përzgjedhur"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Nis ekranin e hyrjes për një shikim paraprak të temës"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Instaloni 'numlockx' për të aktivuar këtë funksionalitet"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "E pamundur hyrja tek skedari i konfigurimit (defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Sigurohuni që skedari të ekzistojë para se të nisni mjetin për konfigurimin "
+"e menaxherit të hyrjes."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Nuk mund të hapet skedari i konfigurimit"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Duhet të jeni root për të konfiguruar MDM."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Preferimet e dritares së hyrjes"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Sfondi"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Imazhi:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Shfaq këtë figurë si sfond në ekranin e hyrjes."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Zgjidhni një imazh për sfondin"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Zgjidhni ngjyrën e sfondit"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "Ngj_yra:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Ngjyra e sfondit e ekranit të hyrjes."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Mesazhi i mirëseardhjes"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "E personaliz_uar:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Kontrollon cilin tekst të shfaqë pranë figurës logo në ekranin e hyrjes "
+"standarde."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n do të zëvendësohet nga hostname"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_E parazgjedhur:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'Mirëserdhët'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "Aktivo hyrjen automatik_e"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Përdoruesi i dhënë do të bëjë hyrjes automatikisht kur të niset kompjuteri. "
+"Nuk do i kërkohet ndonjë fjalëkalim."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Përdorues:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Bedel"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Aktivo hyrjen e kronome_truar"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Përdoruesi i dhënë do të hyjë pas numrit të caktuar të sekondave të jo-"
+"aktivitetit në ekranin e hyrjes."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "Përdorue_si:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Pritja para hyrjes:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr "Vonesa në sekonda para se përdoruesi i kronometruar të hyjë."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "sekonda"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "imagjinar"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Lejo hyrjen si root"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Regjistro informacione debug në /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Dërgon dalje debug në syslog."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Zgjidh automatikisht përdoruesin e fundit që ka hyrë"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Aktivizo NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Përdor orën me 24 orë"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Ekrani kryesor:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Kufizo output-in e seancës"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Kjo parandalon që skedari .xsession-errors të bëhet tepër i madh (200KB, pak "
+"mijë rreshta)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Filtro output-in e seancës"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Kjo parandalon që paralajmërimet nga libraritë e përbashkëta dhe toolkit-et "
+"(Gtk, Glib, Gio, Glade etj.) të përfundojnë në skedarin .xsession-errors."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Seanca e parazgjedhur:"

@@ -1,0 +1,479 @@
+# Italian translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2015-08-18 09:37+0000\n"
+"Last-Translator: lang-it <Unknown>\n"
+"Language-Team: Italian <it@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Spegnere il computer?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "_Arresta"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Sei sicuro di voler mettere il computer in sospensione?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Sospendi"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Sei sicuro di voler riavviare il computer?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Riavvia"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "L'utente %u effettuerà l'accesso tra %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Nome utente:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Password:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Hai già effettuato l'accesso"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "C'è stato un errore nel caricamento de tema %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Accedi"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "OK"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Cancel"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Inserisci il nome utente"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Inserisci la password"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Spegni"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Sospendi"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Chiudi"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Riavvia"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Sessione"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Scegli una sessione"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Sessione predefinita"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr ""
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr ""
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Lingua"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Scegli una lingua"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Sei sicuro di voler chiudere?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Chiudi"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Errore nel tentativo di contattare gli schermi di accesso. Non tutti gli "
+"aggiornamenti potrebbero avere avuto effetto."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr "Accesso automatico o temporizzato per l'account root non ammesso."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "L'UID dell'utente %s è minore del 'MinimalUID'."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Utente non permesso"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+"L'accesso automatico o temporizzato dell'account root non è permesso."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Nessun tema, solo puro GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "L'archivio non contiene una sotto-directory"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "L'archivio deve contenere solo una sotto-directory"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Il file non è né un archivio tar.gz né un archivio tar"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "L'archivio non contiene un file GdmGreeterTheme.info"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Il file non esiste"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Non è l'archivio di un tema"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"La directory del tema \"%s\" sembra essere già installata. Installarla "
+"nuovamente?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Si è verificato qualche errore nell'installare il tema"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Nessun file selezionato"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Seleziona l'archivio di un tema"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Installa"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Archivi tema"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Rimuovere il tema \"%s\"?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr ""
+"Se si sceglie di rimuovere il tema, questo verrà perso permanentemente."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_Rimuovi Tema"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Installare il tema da '%s'?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Selezionare Installa per aggiungere il tema dal file '%s'."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Immagini"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Tutti i file"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Rilevato automaticamente"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Tema"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Accesso automatico"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Opzioni"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Aggiungi nuovo tema"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Rimuovi il tema selezionato"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr ""
+"Lancia la schermata di autenticazione per vedere l'anteprima del tema"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Installare 'numlockx' per abilitare questa funzionalità"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "Impossibile accedere al file di configurazione (defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Assicurarsi che il file esista prima di avviare l'utilità di configurazione "
+"del gestore di accesso."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Impossibile accedere al file di configurazione"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Devi essere root per configurare MDM"
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Preferenze finestra di accesso"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Sfondo"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Immagine:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Visualizza quest'immagine come sfondo nella schermata di benvenuto."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Seleziona l'immagine di sfondo"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Seleziona il colore di sfondo"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "Co_lore:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Colore di sfondo della schermata di benvenuto."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Messaggio di benvenuto"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "_Personalizzata:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Controlla che testo visualizzare vicino al logo nella schermata di benvenuto "
+"standard"
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n sarà sostituito con il nome del sistema"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_Predefinito:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'Benvenuto'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "Abilitar_e accesso automatico"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"L'utente indicato accederà automaticamente all'avvio del computer. Non verrà "
+"chiesta nessuna password."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Utente:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Dummy"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Abilitare accesso _temporizzato"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"L'utente indicato accederà dopo il numero specificato di secondi di "
+"inattività della schermata di accesso."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "Ute_nte:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Pausa prima dell'accesso:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+"Ritardo in secondi  prima che l'utente temporizzato acceda automaticamente"
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "secondi"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "fittizio"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Permetti l'accesso a root"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Registra informazioni di debug in /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Invia l'output di debug al syslog"
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Seleziona automaticamente l'ultimo utente autenticato"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Abilita NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Usa orologio 24 ore"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Schermo primario"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Limita l'output della sessione"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Questo impedisce che il file .xsession-errors diventi troppo grande (200KB, "
+"poche migliaia di righe)"
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Filtra l'output della sessione"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Questo evita che segnalazioni dalle librerie comuni e toolkits (Gtk, Glib, "
+"Gio, Glade ecc.) finiscano nel file .xsession-errors."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Sessione predefinita:"

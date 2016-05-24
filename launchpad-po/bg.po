@@ -1,0 +1,480 @@
+# Bulgarian translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2016-05-12 18:53+0000\n"
+"Last-Translator: spacy01 <Unknown>\n"
+"Language-Team: Bulgarian <bg@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Действително ли искате да изключите компютъра?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "_Изключване"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Сигурни ли сте, че искате да приспите компютъра?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Приспиване"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Наистина ли искате да рестартирате машината?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Рестарт"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "Потребителят %u ще влезе след %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Потребител:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Парола:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "В момента е влязъл"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Грешка при зареждането на темата %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Вход"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "ОК"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Отмяна"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Въведете Вашето потребителско име"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Моля, въведете паролата си"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Изключване"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Приспиване"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Изход"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Рестарт"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Сесия"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Избор на сесия"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Стандартна сесия"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr "Моля изберете потребител."
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr "Натиснете F1 за да въведете име на потребител."
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Език"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Избор на език"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Сигурни ли сте, че искате да излезете?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Затваряне"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Появи се грешка при опит за контакт с екрана за вход в системата. Не всички "
+"обновявания са влезли в сила."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr ""
+"На системния администратор (root) не е позволено да влиза автоматично или по "
+"определено време."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "UID на потрбителя  %s е по-ниско от 'MinimalUID'."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Потребителят не е допуснат"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+"На системния администратор (root) не е позволено да влиза автоматично или по "
+"определено време."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Без тема, чисто GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Архивът не е на подпапка"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Архивът не е на една подпапка"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Файлът не е във формат tar.gz или tar"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "В архива липсва файл GdmGreeterTheme.info"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Файлът не съществува"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Не е архив с тема"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"Папката на тема „%s“ изглежда вече е инсталирана. Да бъде ли проведена "
+"повторна инсталация?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Появи се някаква грешка при инсталиране на темата"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Не е избран файл"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Избор на архив с тема"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Инсталиране"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Архиви с теми"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Премахване на темата „%s“?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Темата ще бъде окончателно изтрита, ако я премахнете."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "П_ремахване на тема"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Инсталиране на темата от „%s“?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Чрез инсталиране ще добавите темата от файла „%s“."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Изображения"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Всички файлове"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Автоматично откриване"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Тема"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Автоматично вписване"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Опции"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Добавяне на нова тема"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Премахване на избраната тема"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Преглед на темата"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Моля инсталирайте 'numlockx', за да включите тази възможност"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "Конфигурационният файл (defaults.conf) не може да бъде достъпен."
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Проверете дали файлът съществува, преди да стартирате програмата за "
+"настройки на мениджъра."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Конфигурационният файл не е достъпен"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Трябва да сте администратор, за да конфигурирате MDM."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Настройки на екрана за идентификация"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Фон"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Изображение:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Ползване на това изображение като фон в програмата за посрещане."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Избор на фоново изображение"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Избор на цвят на фона"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "_Цвят:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "_Цвят за фон на програмата за посрещане."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Съобщение за добре дошли"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "Потре_бителско:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Настройте какъв текст да се показва до логото в стандартното привествие."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n ще бъде заменено с името на хоста"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_По подразбиране"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "\"Добре дошли\""
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "Включване на _автоматичното влизане"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Даденият потребител ще бъде вписан при първото стартиране. Няма да бъде "
+"искана парола."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Потребител:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Фиктивен"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Включване на влизането по _определено време"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Даденият потребител ще бъде вписан след опеделено време на неактивност на "
+"екрана за вписване."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "Потре_бител:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Пауза преди влизане в системата:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+"Секунди на забавяне, преди потребителя, който се вписва след определено "
+"време, да бъде всписан."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "секунди"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "фиктивен"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Разрешаване на влизане като администратор"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Записване на информация за грешките в /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Изпращане на изходящите грешки в syslog."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Автоматично избиране на последно вписания потребител"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Включване на NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Използване на 24-часов часовник"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Основен монитор:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Лимит на изхода на сесията"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Това предпазва .xsession-errors да не стане твърде голям (200КБ са няколко "
+"хиляди реда)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Филтриране на изхода на сесията"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Това предпазва съобщенията на много библиотеки и инструменти (Gtk, Glib, "
+"Gio, Glade...etc) да попадат в .xsession-errors."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Стандартна сесия:"

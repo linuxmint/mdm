@@ -1,0 +1,474 @@
+# Indonesian translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2015-09-20 04:23+0000\n"
+"Last-Translator: Deny Suhardi <mail@denys.web.id>\n"
+"Language-Team: Indonesian <id@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Apakah anda yakin ingin mematikan komputer?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "Ma_tikan"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Apakah kamu yakin untuk menangguhkan komputer?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Tunda"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Apakah kamu yakin untuk memuat ulang / restart komputer?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Mulai Ulang"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "User %u akan login dalam %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Nama pengguna:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Kata sandi:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Sudah masuk"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Ada kesalahan saat memuat tema %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Masuk"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "OK"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Batal"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Silahkan masukkan nama penggunamu"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Silahkan masukkan kata sandimu"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Matikan"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Tangguhkan"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Berhenti"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Nyalakan ulang"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Sesi"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Pilih sebuah sesi"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Sesi bawaan"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr ""
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr ""
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Bahasa"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Pilih sebuah bahasa"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Apakah kamu yakin untuk menghentikan?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Tutup"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Ada kesalahan saat mencoba mengontak layar login. Mungkin tidak semua "
+"pembaruan telah berdampak."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr "Autologin atau login berjangka ke pengguna root adalah terlarang."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "UID pengguna %s lebih rendah dari 'MinimalUID'."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Pengguna tidak diijinkan"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr "Autologin atau login berwaktu untuk root tidak diijinkan."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Tidak ada tema, hanya murni GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Arsip bukan subdirektori."
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Arsip bukan subdirektori tunggal"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "File bukan arsip tar.gz atau tar"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Arsip tidak memiliki berkas GdmGreeterTheme.info"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Berkas tidak ada"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Bukan arsip tema"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr "Direktori tema '%s' kelihatan telah di pasang. Pasang lagi?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Ada beberapa kesalahan saat menginstal tema"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Tidak ada berkas yang dipilih"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Pilih Arsip Tema"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Pasang"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Arsip Tema"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Buang Tema \"%s\"?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Jika anda memilih untuk membuang temanya, dia akan hilang selamanya."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_Buang Tema"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Pasang tema dari '%s'?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Pilih pasang untuk menambahkan tema dari berkas '%s'."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Citra"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Semua Berkas"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Deteksi otomatis"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Tema"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Log masuk oto"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Opsi"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Tambah sebuah tema baru"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Hapus tema terpilih"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Jalankan layar login untuk meninjau tema"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Silakan instal 'numlockx' untuk mengaktifkan fitur ini"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "TIdak dapat mengakses berkas konfigurasi (defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Pastikan berkas telah ada sebelum menjalankan utilitas konfigurasi manajer "
+"login."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Tidak dapat mengakses berkas konfigurasi"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Anda harus menjadi untuk mengkonfigurasi MDM"
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Preferensi Jendela Login"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Latar Belakang"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Gambar:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Tampilkan citra ini sebagai latar pada greeter."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Pilih gambar latar belakang"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Ambil warna latar belakang"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "War_na:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Warna latar belakang dari greeter."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Kalimat Sambutan"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "_Ubahan:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Kendalikan teks mana yang akan ditampilkan di sebelah citra logo dalam "
+"greeter standar."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n akan digantikan oleh hostname"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_Standar:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'Selamat Datang'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "_Aktifkan Login Automatis"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Pengguna yang diberikan mesti dilog masuk saat boot pertama. Sandi tak akan "
+"ditanyakan."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Pengguna:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Model"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Ak_tifkan Login Berwaktu"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Pengguna yang diberikan mesti dilog masuk setelah sekian detik tanpa "
+"aktivitas pada layar log masuk."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "P_engguna:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Jeda sebelum login:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+"Tundaan dalam detik sebelum pengguna log masuk berwaktu akan dilogmasukkan."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "detik"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "kosong"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Ijinkan login root"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Log informasi debug pada /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Kirim keluaran debug ke syslog."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Pilih secara otomatis pengguna yang terakhir log in"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Aktifkan NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Gunakan waktu 24 jam"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Monitor primer:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Batasi output sesi"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Ini mencegah .xsession-errors dari menjadi terlalu besar (200KB, beberapa "
+"ribu baris)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Saring output sesi"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Ini mencegah peringatan dari library dan toolkit umum (Gtk, Glib, Gio, Glade "
+"... dll) dari masuk dalam .xsession-errors."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "sesi baku"

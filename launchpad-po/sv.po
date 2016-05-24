@@ -1,0 +1,477 @@
+# Swedish translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2016-05-11 19:25+0000\n"
+"Last-Translator: kristian <Unknown>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Är du säker på att du vill stänga av datorn?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "Stäng _av"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Är du säker på att du vill försätta datorn i viloläge?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Viloläge"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Är du säker på att du vill starta om datorn?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Starta om"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "Användaren %u kommer att logga in om %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Användarnamn"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Lösenord:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Redan inloggad"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Ett fel uppstod vid inläsning av temat %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Logga in"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "OK"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Vänligen skriv in ditt användarnamn"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Vänligen skriv in ditt lösenord"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Stäng av"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Viloläge"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Avsluta"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Starta om"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Session"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Välj en session"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Standardsession"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr "Var god och välj en användare."
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr "Tryck F1 för att ange ett användarnamn."
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Språk"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Välj ett språk"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Är du säker på att du vill avsluta?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Stäng"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Ett fel inträffade vid försök att kontakta inloggningsskärmarna. Alla "
+"uppdateringar har kanske inte trätt i kraft."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr ""
+"Varken automatisk eller tidsbaserad inloggning får göras till "
+"administratörskontot."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "%s användar UID är lägre än 'MinimalUID'."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Användare tillåts inte"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+"Automatisk inloggning eller tidsbaserad inloggning till rootkontot är inte "
+"tillåtet."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Inget tema, bara äkta GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Arkivet är inte av en underkatalog"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Arkivet är inte av en ensam underkatalog"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Filen är inget arkiv av typen tar eller tar.gz"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Arkivet innehåller ingen GdmGreeterTheme.info-fil"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Filen finns inte"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Inte ett temaarkiv"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"Temakatalogen \"%s\" verkar redan vara installerad. Installera igen ändå?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Något gick fel när temat skulle installeras"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Ingen fil vald"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Välj temaarkiv"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Installera"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Temaarkiv"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Ta bort temat \"%s\"?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Om du väljer att ta bort temat kommer det att tas bort permanent."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_Ta bort tema"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Installera temat från \"%s\"?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Välj installera för att lägga till temat från filen \"%s\"."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Bilder"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Alla filer"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Automatiskt upptäckt"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Tema"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Automatisk inloggning"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Alternativ"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Lägg till ett nytt tema"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Ta bort det valda temat"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Starta inloggningsskärmen för att ta en snabbtitt på temat"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Vänligen installera 'numlockx' för att aktivera denna egenskap"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "Kunde inte komma åt konfigurationsfilen (defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Försäkra dig om att filen finns innan du startar verktyget för "
+"inloggningshanterarens konfiguration."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Kunde inte få tillgång till konfigurationsfilen"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Du måste vara \"root\" för att konfigurera MDM."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Inställningar för inloggningsfönstret"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Bakgrund"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Bild:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Visar den här bilden som bakgrund i inloggningsskärmen."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Välj bakgrundsbild"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Välj bakgrundsfärg"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "Fä_rg:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Bakgrundsfärg i inloggningsskärmen."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Välkomstmeddelande"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "A_npassad:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Bestämmer vilken text som visas intill logon i standard inloggningsskärmen."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n kommer att ersättas av värdnamn"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_Standard:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'Välkommen'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "Aktivera _automatisk inloggning"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Med tanke på användaren som ska loggas in vid första uppstart kommer inget "
+"lösenord att efterfrågas."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Användare:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Attrapp"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Aktivera _tidsbaserad inloggning"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Användaren ska loggas in efter några sekunders inaktivitet på "
+"inloggningsskärmen."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "A_nvändare:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Paus före inloggning:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr "Fördröjning i sekunder innan användaren loggas in."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "sekund(er)"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "test"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Tillåt att loggas in som administratör"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Logga avlusningsinformation till /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Skickar avlusningsutmatningen till systemloggen."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Välj senaste inloggade användare automatiskt"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Aktivera NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Använd 24-timmars klocka"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Huvudskärm:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Begränsa sessionsloggning"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Detta förhindrar \".xsession-errors\" att växa sig för stor (200KB, några "
+"tusen rader)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Filtrera sessionsloggningen"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Detta förhindrar att varningar från vanliga bibliotek och verktyg (Gtk, "
+"Glib, Gio, Glade...etc) slipper in i .xsession-errors."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Standardsession"

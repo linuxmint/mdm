@@ -1,0 +1,474 @@
+# Lithuanian translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2015-09-30 19:37+0000\n"
+"Last-Translator: Moo <hazap@hotmail.com>\n"
+"Language-Team: Lithuanian <lt@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Ar tikrai norite išjungti kompiuterį?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "Iš_jungti"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Ar tikrai norite pristabdyti kompiuterį?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "Pri_stabdyti"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Ar tikrai norite paleisti kompiuterį iš naujo?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Paleisti iš naujo"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "Naudotojas %u prisijungs po %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Naudotojo vardas:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Slaptažodis:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Jau prisijungęs"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Įkeliant stilių %s įvyko klaida"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Prisijungti"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "Gerai"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Atšaukti"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Prašome įvesti savo naudotojo vardą"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Prašome įvesti savo slaptažodį"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Išjungti kompiuterį"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Pristabdyti"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Baigti"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Paleisti iš naujo"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Seansas"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Pasirinkite seansą"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Numatytasis seansas"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr ""
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr ""
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Kalba"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Pasirinkite kalbą"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Ar tikrai norite baigti?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Uždaryti"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Bandant susisiekti su prisijungimo ekranais įvyko klaida. Galbūt įsigalėjo "
+"ne visi atnaujinimai."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr "Automatinis arba uždelstas prisijungimas kaip root neleidžiamas."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "Naudotojo %s UID yra mažesnis nei „MinimalUID“"
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Naudotojui neleidžiama prisijungti"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr "Automatinis arba uždelstas prisijungimas kaip root neleidžiamas."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Nėra stiliaus, tik grynas GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Archyvas nėra iš paaplankio"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Archyvas nėra iš vieno paaplankio"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Failas nėra tar.gz ar tar archyvas"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Archyve nėra GdmGreeterTheme.info failo"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Failas neegzistuoja"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Ne stiliaus archyvas"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"Atrodo, kad stiliaus aplankas „%s“ jau įdiegtas. Ar  įdiegti dar kartą?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Stiliaus įdiegimo metu įvyko kažkokia klaida"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Nepasirinktas joks failas"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Pasirinkite stiliaus archyvą"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "Įd_iegti"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Stilių archyvai"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Pašalinti stilių „%s“?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Jeigu pasirinksite pašalinti stilių, jis bus negrįžtamai prarastas."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_Pašalinti stilių"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Įdiegti stilių iš „%s“?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Norėdami įdiegti stilių iš failo „%s“ spauskite „Įdiegti“."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Atvaizdai"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Visi failai"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Automatiškai aptinkamas"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Stilius"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Automatinis prisijungimas"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Parinktys"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Pridėti naują stilių"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Pašalinti pažymėtą stilių"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Paleisti prisijungimo ekraną, kad peržiūrėtumėte stilių"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Įdiekite „numlockx“ šiai funkcijai įjungti"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "Nepavyko pasiekti konfigūracijos failo (defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Prieš paleisdami prisijungimo tvarkytuvės konfigūravimo įrankį, "
+"įsitikinkite, jog šis failas yra."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Nepavyko pasiekti konfigūracijos failo"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Turite būti root, kad galėtumėte konfigūruoti MDM"
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Prisijungimo lango nuostatos"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Fonas"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "Atva_izdas"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Rodo šį paveikslėlį kaip pasveikintuvo foną."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Pasirinkite fono atvaizdą"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Pasirinkite fono spalvą"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "Spa_lva:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Pasveikintuvo fono spalva."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Pasveikinimo žinutė"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "_Kita:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Valdo, kokį tekstą rodyti šalia logotipo standartiniame pasveikintuve."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n bus pakeista kompiuterio vardu"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_Numatytasis:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "\"Sveiki,\""
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "Į_jungti automatinį prisijungimą"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Šis naudotojas turi prisijungti per pirmąjį pakrovimą. Slaptažodžio nebus "
+"klausiama."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Naudotojas:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Butaforinis"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Įjungti _uždelstus prijungimus"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Šis naudotojas turi prisijungti per tam tikrą skaičių sekundžių neaktyvumo "
+"prisijungimo lange."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "Naudotoja_s:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Delsa prieš prisijungiant:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+"Delsa sekundėmis, po kurios uždelsto prisijungimo naudotojas bus prijungtas."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "sek."
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "netikras"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Leisti administratoriaus (root) prisijungimą"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Registruoti informaciją problemoms šalinti į /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Nusiunčia problemų šalinimo informaciją į sisteminį žurnalą."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Automatiškai parinkti paskutinį prisijungusį naudotoją"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Įjungti NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Naudoti 24-ių valandų laikrodį"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Pirminis monitorius:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Apriboti seanso išvestį"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Tai neleidžia failui .xsession-errors tapti pernelyg dideliu (200KB, keli "
+"tūkstančiai eilučių)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Filtruoti seanso išvestį"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Tai neleidžia bendrų bibliotekų ir įrankių rinkinių (Gtk, Glib, Gio, "
+"Glade...ir t. t.) įspėjimams pateikti į .xsession-errors."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Numatytasis seansas:"

@@ -1,0 +1,474 @@
+# Thai translation for linuxmint
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2016-03-05 10:02+0000\n"
+"Last-Translator: Rockworld <sumoisrock@gmail.com>\n"
+"Language-Team: Thai <th@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "คุณแน่ใจหรือไม่ที่จะปิดเครื่องคอมพิวเตอร์"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "_ปิดเครื่อง"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "คุณแน่ใจหรือไม่ ว่าจะหยุดทำงานเครื่องชั่วคราว?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_พักเครื่อง"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "คุณแน่ใจหรือไม่ ว่าจะเริ่มเปิดระบบคอมพิวเตอร์ใหม่?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "เ_ริ่มระบบใหม่"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "ผู้ใช้ %u จะเข้าระบบภายใน %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "ชื่อผู้ใช้:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "รหัสผ่าน:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "เข้าระบบอยู่"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "เกิดความผิดพลาดขณะโหลดชุดตกแต่ง %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "เข้าสู่ระบบ"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "ตกลง"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "กรุณาป้อนชื่อผู้ใช้ของคุณ"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "กรุณาใส่รหัสผ่านของคุณ"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "ปิดเครื่อง"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "พักเครื่อง"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "จบการทำงาน"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "เริ่มระบบใหม่"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "วาระ"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "เลือกวาระ"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "วาระปริยาย"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr ""
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr ""
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "ภาษา"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "เลือกภาษา"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการออกจากโปรแกรม?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "ปิด"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"เกิดความผิดพลาดขณะพยายามติดต่อกับหน้าจอเข้าระบบ  "
+"อาจเกิดจากการไม่ได้ปรับปรุงครบทั้งหมด"
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr "ไม่อนุญาตให้เข้าระบบเป็น root โดยอัตโนมัติหรือผ่านการตั้งเวลา"
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "UID %s ผู้ใช้นี้ต่ำกว่า 'MinimalUID'."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "ผู้ใช้ไม่ได้รับอนุญาต"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr "ไม่อนุญาตให้เข้าระบบเป็น root โดยอัตโนมัติหรือผ่านการตั้งเวลา"
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "ไม่มีธีม มีเพียง pure GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "แฟ้มจัดเก็บไม่ได้เก็บข้อมูลในตำแหน่งย่อย"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "แฟ้มจัดเก็บไม่ได้เก็บข้อมูลในตำแหน่งย่อยเดียว"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "ไม่ใช่แฟ้มนามสกุล tar.gz หรือแฟ้มจัดเก็บข้อมูลแบบ tar"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "แฟ้มจัดเก็บข้อมูลไม่มีแฟ้ม GdmGreeterTheme.info อยู่ด้วย"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "ไม่มีแฟ้มอยู่"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "ไม่ใช่แฟ้มจัดเก็บชุดตกแต่ง"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"ดูเหมือนว่าตำแหน่งของชุดตกแต่ง '%s' ได้ติดตั้งไว้แล้ว "
+"จะติดตั้งอีกครั้งหรือไม่?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "เกิดความผิดพลาดบางอย่างขณะติดตั้งชุดตกแต่ง"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "ไม่ได้เลือกแฟ้ม"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "เลือกแฟ้มจัดเก็บชุดตกแต่ง"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_ติดตั้ง"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "แฟ้มจัดเก็บชุดตกแต่ง"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "ต้องการลบชุดตกแต่ง \"%s\" หรือไม่?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "ถ้าคุณเลือกที่จะลบ ชุดตกแต่งจะสูญหายอย่างถาวร"
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_ลบชุดตกแต่ง"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "ต้องการติดตั้งชุดตกแต่งจาก '%s' หรือไม่?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "เลือก 'ติดตั้ง' เพื่อเพิ่มชุดตกแต่งจากแฟ้ม '%s'"
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "รูปภาพ"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "ทุกแฟ้ม"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "ถูกตรวจพบโดยอัตโนมัติ"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "ชุดตกแต่ง"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "เข้าสู่ระบบอัตโนมัติ"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "ตัวเลือก"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "เพิ่มธีมใหม่"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "ลบชุดตกแต่งที่เลือกไว้"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "ต้องเข้าหน้าจอเข้าระบบเพื่อดูตัวอย่างชุดตกแต่ง"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "กรุณาติดตั้ง 'numlockx' เพื่อเปิดใช้งานคุณสมบัตินี้"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "ไม่สามารถเข้าใช้แฟ้มค่าตั้ง (defaults.conf) ได้"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"กรุณาตรวจดูให้แน่ใจว่ามีแฟ้มดังกล่าวอยู่ก่อนที่จะเรียกเครื่องมือตั้งค่าโปรแกร"
+"มจัดการการเข้าระบบ"
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "ไม่สามารถเข้าถึงแฟ้มการกำหนดค่า"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "คุณต้องทำฐานะให้เป็น root หรือฐานะขั้นสูงสุดเพื่อกำหนดค่า MDM ได้"
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "ปรับแต่งหน้าจอเข้าระบบ"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "พื้นหลัง"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_รูปภาพ:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "แสดงภาพนี้เป็นพื้นหลังของหน้าต่างต้อนรับ"
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "เลือกภาพพื้นหลัง"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "เลือกสีพื้นหลัง"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "_สี:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "สีพื้นหลังของหน้าต่างต้อนรับ"
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "ข้อความต้อนรับ"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "_กำหนดเอง:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr "ปรับว่าข้อความไหนที่จะแสดงถัดจากรูปโลโก้ในหน้าจอต้อนรับแบบมาตรฐาน"
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n จะถูกแทนด้วยชื่อโฮสต์"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_ค่าปริยาย:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'ยินดีต้อนรับ'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "เ_ปิดใช้การเข้าระบบอัตโนมัติ"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"ควรจะให้ผู้ใช้ที่ได้ให้ไว้ได้เข้าระบบในการเริ่มระบบครั้งแรก "
+"และจะไม่มีการถามรหัสผ่านใด ๆ"
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_ผู้ใช้:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "หุ่น"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "เปิดใช้การ_ตั้งเวลาเข้าระบบ"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"ควรให้ผู้ใช้ที่ได้ให้ไว้ได้เข้าระบบหลังจากไม่ได้ใช้เครื่องสองสามนาทีบนหน้าจอเ"
+"ข้าระบบ"
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "ผู้ใ_ช้:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_รอก่อนเข้าระบบ:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+"หน่วงเวลากี่วินาทีก่อนที่ผู้ใช้ที่มีการตั้งเวลาเข้าระบบไว้ จะได้เข้าระบบ"
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "วินาที"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "dummy"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "อนุญาตให้เข้าระบบขั้น root หรือขั้นสูงสุดได้"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "บันทึกข้อมูลการแก้ปัญหาไปยัง /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "ส่งข้อมูลการแก้ปัญหาที่ออกมาไปยังบันทึกระบบ"
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "เลือกผู้ใช้ที่เพิ่งเข้าสู่ระบบล่าสุดอัตโนมัติ"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "เปิดใช้งานแป้น NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "ใช้เวลา 24 ชั่วโมง"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "หน้าจอหลัก:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "จำกัดเอาต์พุตของวาระ"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"สิ่งนี้ป้องกัน .xsession-errors ไม่ให้มีขนาดใหญ่เกินไป (200KB, "
+"ประมาณหลายพันบรรทัด)"
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "ตัวกรองของเอาต์พุตของวาระ"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"สิ่งนี้ป้องกันคำเตือนจากคลังและชุดเครื่องมือทั่วไป (Gtk, Glib, Gio, "
+"Glade...etc) ไม่ให้บันทึกลงใน .xsession-errors"
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "วาระปริยาย"

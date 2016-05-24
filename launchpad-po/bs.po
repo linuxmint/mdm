@@ -1,0 +1,473 @@
+# Bosnian translation for linuxmint
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2014-08-19 13:58+0000\n"
+"Last-Translator: Clement Lefebvre <root@linuxmint.com>\n"
+"Language-Team: Bosnian <bs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Da li ste sigurni da želite ugasiti računar?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "_Ugasi"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Da li ste sigurni da želite da suspendujete računar?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Obustavi"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Da li ste sigurni da želite ponovo pokrenuti računar?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "Ponovo pok_reni"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "Korisnik %u će biti prijavljen u %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Korisničko ime:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Šifra:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Već ste prijavljeni"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Desila se greška prilikom učitavanja teme %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Prijava"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "U redu"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Prekini"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Molimo upišite vaše korisničko ime"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Molimo upišite vašu šifru"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Ugasi"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Suspenduj"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Napusti"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Ponovo pokreni"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Sesija"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Odaberite sesiju"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Zadana sesija"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr ""
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr ""
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Jezik"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Odaberite jezik"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Da li ste sigurni da želite da završite?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Zatvori"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Dogodila se greška prilikom pokušaja kontaktiranja ekrana za prijavu. Sve "
+"promjene nisu postale važeće."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr "Automatska ili tempirana prijava na root račun je zabranjena."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "%s korisnički UID je manji nego 'MinimalUID'."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Korisnik nije dozvoljen"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr "Automatska ili tempirana prijava na root račun je zabranjena."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr ""
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "U arhivi ne postoji poddirektorij"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "U arhivi ne postoji jedan poddirektorij"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Datoteka nije tar.gz ili tar arhiva"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Arhiva nema GdmGreeterTheme.info datoteku"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Datoteka ne postoji"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Nije arhiva sa temom"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"Izgleda da je direktorij sa temom '%s' već instaliran. Svejedno instalirati "
+"ponovo?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Desile su se greške prilikom instaliranja teme"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Nijedna datoteka nije odabrana"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Odaberite arhivu teme"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Instaliraj"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Arhive tema"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Ukloni temu \"%s\"?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Ako odlučite da uklonite temu, ona će biti trajno izgubljena."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "U_kloni temu"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Da li želite instalirati temu sa '%s'?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Odaberite instaliraj kako bi dodali temu iz datoteke \" %sâ€ś."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Slike"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Sve datoteke"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr ""
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Tema"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Automatska prijava"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Opcije"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr ""
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr ""
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr ""
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Molimo instalirajte 'numlockx' da bi ste omogućili ovo svojstvo"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "Konfiguracijskoj datoteci (defaults.conf) se ne može pristupiti"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Osigurajte da datoteka postoji prije pokretanja konfiguracijskom programu "
+"upravljača prijavom."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Konfiguracijskoj datoteci se ne može pristupiti"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Morate biti root da konfigurišete MDM"
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Postavke prozora za prijavu"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Pozadina"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Slika:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Prikazuje ovu sliku kao pozadinu aplikacije dobrodošlice."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Odaberite pozadinsku sliku"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Odaberite boju pozadine"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "_Boja:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Pozadinska boja aplikacije dobrodošlice."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Poruka dobrodošlice"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "Prila_gođeno"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Određuje koji tekst da se prikaže pored logo slike na standardnoj aplikaciji "
+"dobrodošlice."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n se mijenja imenom hosta"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "Omogući automatsku prijavu"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Zadani korisnik bi se trebao prijaviti prilikom prvog pokretanja. Šifra neće "
+"biti potrebna."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Korisnik:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Omogući _tempiranu prijavu"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Zadani korisnik bi se trebao prijaviti nakon broja sekundi neaktivnosti na "
+"ekranu za prijavu."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "_Korisnik:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Pauza prije prijave:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+"Kašnjenje u sekundama prije nego što se korisnik sa tempiranom prijavom "
+"prijavi."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "sekundi"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "lažno"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Dopusti root login"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Zapiši infromacije o debagiranju u log datoteku /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Šalje povratne informacije o debagiranju u syslog."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Automatski odaberi zadnjeg prijavljenog korisnika."
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Omogući numeričku tastaturu"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Koristi 24 satno vrijeme"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Primarni monitor"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr ""
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr ""

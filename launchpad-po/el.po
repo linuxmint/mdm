@@ -1,0 +1,483 @@
+# Greek translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2015-12-08 05:35+0000\n"
+"Last-Translator: Panagiotis Mantzios <Unknown>\n"
+"Language-Team: Greek <el@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr ""
+"Είστε σίγουρος ότι θέλετε να τερματίσετε τη λειτουργία του υπολογιστή;"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "Τερματισμός _Λειτουργίας"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr ""
+"Είστε σίγουρος ότι θέλετε να αναστείλετε την λειτουργία του υπολογιστή;"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Αναστολή λειτουργίας"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Είστε σίγουρος ότι θέλετε να επανεκκινήσετε τον υπολογιστή;"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Επανεκκίνηση"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "Ο χρήστης %u θα συνδεθεί σε %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Όνομα χρήστη:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Κωδικός πρόσβασης:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Ήδη συνδεδεμένος"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Υπήρξε ένα σφάλμα κατά τη φόρτωση του θέματος %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Σύνδεση"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "OK"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Παρακαλώ εισάγετε το όνομα χρήστη σας"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Παρακαλώ εισάγετε τον κωδικό πρόσβασής σας"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Τερματισμός λειτουργίας"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Αναστολή λειτουργίας"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Έξοδος"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Επανεκκίνηση"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Συνεδρία"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Επιλέξτε συνεδρία"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Προεπιλεγμένη συνεδρία"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr ""
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr ""
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Γλώσσα"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Επιλέξτε μια γλώσσα"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Είστε σίγουρος ότι θέλετε να εξέλθετε;"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Κλείσιμο"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Προέκυψε σφάλμα κατά την προσπάθεια επαφής με τις οθόνες εισόδου. Μπορεί να "
+"μην εφαρμόστηκαν όλες οι ενημερώσεις."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr ""
+"Δεν επιτρέπεται η αυτόματη είσοδος ή η χρονομετρημένη είσοδος στον "
+"λογαριασμό διαχειριστή (root)."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "Το UID του χρήστη %s είναι μικρότερο από το 'MinimalUID'."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Μη επιτρεπτός χρήστης"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+"Δεν επιτρέπεται η αυτόματη είσοδος ή η χρονομετρημένη είσοδος στον "
+"λογαριασμό διαχειριστή (root)."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Χωρίς θέμα, απλό GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Το αρχείο δεν είναι από υποκατάλογο"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Το αρχείο δεν είναι από ένα μονό υποκατάλογο"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Το αρχείο δεν είναι ένα αρχείο tar.gz ή tar"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Το αρχείο δεν περιλαμβάνει ένα αρχείο dmGreeterTheme.info"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Το αρχείο δεν υπάρχει"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Δεν είναι αρχείο θέματος"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"Ο κατάλογος θέματος '%s' φαίνεται ότι έχει ήδη εγκατασταθεί. Να εγκατασταθεί "
+"ξανά ούτως ή άλλως;"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Παρουσιάστηκε σφάλμα κατά την εγκατάσταση του θέματος"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Δεν επιλέχθηκε κανένα αρχείο"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Επιλέξτε Αρχείο Θέματος"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Εγκατάσταση"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Αρχεία θεμάτων"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Αφαίρεση του θέματος \"%s\";"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Αν επιλέξετε να αφαιρεθεί το θέμα, θα χαθεί οριστικά."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_Αφαίρεση Θέματος"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Εγκατάσταση του θέματος από '%s';"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Επιλέξτε εγκατάσταση για να προσθέσετε το θέμα από το αρχείο '%s'."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Εικόνες"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Όλα τα Αρχεία"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Εντοπίστηκε αυτόματα"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Θέμα"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Αυτόματη σύνδεση"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Επιλογές"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Προσθήκη νέου θέματος"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Αφαίρεση του επιλεγμένου θέματος"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Εκκινήστε την οθόνη σύνδεσης για προεπισκόπιση θέματος"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr ""
+"Παρακαλώ εγκαταστήστε το 'numlockx' για να ενεργοποιήσετε αυτή τη λειτουργία"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "Αδυναμία πρόσβασης στο αρχείο ρυθμίσεων(defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Βεβαιωθείτε ότι αυτό το αρχείο υπάρχει πριν εκκινήσετε το εργαλείο ρύθμισης "
+"διαχειριστή εισόδου."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Αδυναμία πρόσβασης στο αρχείο ρυθμίσεων"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Πρέπει να έχετε δικαιώματα διαχειριστή για να ρυθμίσετε το MDM."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Προτιμήσεις Παραθύρου Εισόδου"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Φόντο"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Εικόνα:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Εμφανίζει αυτή την εικόνα ως το φόντο στην υποδοχή."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Επιλέξτε εικόνα φόντου"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Επιλέξτε χρώμα φόντου"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "Χρώ_μα:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Χρώμα φόντου της υποδοχής."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Μήνυμα Καλωσορίσματος"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "Προ_σαρμοσμένο:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Ελέγχει ποιο κείμενο θα εμφανίζεται δίπλα στην εικόνα του λογότυπου στην "
+"τυπική υποδοχή."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "Το %n θα αντικατασταθεί από το hostname"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_Προεπιλογή:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'Καλώς ορίσατε'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "_Ενεργοποίηση Αυτόματης Εισόδου"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Ο χρήστης που δόθηκε θα πρέπει να συνδεθεί κατά την πρώτη εκκίνηση. Δε θα "
+"ζητηθεί ο κωδικός πρόσβασης."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Χρήστης:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Ομοίωμα"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Ενεργοποίηση _Χρονομετρημένης Εισόδου"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Ο χρήστης που δόθηκε θα πρέπει να συνδεθεί μετά από έναν αριθμό "
+"δευτερολέπτων αδράνειας στην οθόνη σύνδεσης."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "Χρ_ήστης:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Παύση  πριν την είσοδο:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+"Καθυστέρηση σε δευτερόλεπτα πριν ο χρήστης χρονομετρημένης σύνδεσης συνδεθεί."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "δευτερόλεπτα"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "ομοίωμα"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Να επιτρέπεται σύνδεση διαχειριστή"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Κατέγραφε πληροφορίες αποσφαλμάτωσης στο  /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Πληροφορίες αποσφαλμάτωσης στο syslog"
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Αυτόματη επιλογή του τελευταία συνδεδεμένου χρήστη"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Ενεργοποίηση πλήκτρου NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Χρήση 24ωρου Ρολογιού"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Πρωταρχική οθόνη:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Περιορισμός εξόδου συνεδρίας"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Αυτό εμποδίζει το .xsession-errors από το να γίνει πολύ μεγάλο (200KB, "
+"μερικές χιλιάδες γραμμές)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Φιλτράρισμα εξόδου συνεδρίας"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Αυτό εμποδίζει προειδοποιήσεις από κοινές βιβλιοθήκες και εργαλεία (Gtk, "
+"Glib, Gio, Glade...κλπ) από το να μπουν στο .xsession-errors."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Προκαθορισμένη συνεδρία:"

@@ -1,0 +1,473 @@
+# Slovak translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2016-05-15 07:48+0000\n"
+"Last-Translator: Dusan Kazik <prescott66@gmail.com>\n"
+"Language-Team: Slovak <sk@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Ste si istý, že chcete vypnúť počítač?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "_Vypnúť"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Naozaj chcete uspať počítač?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Uspať"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Naozaj chcete reštartovať počítač?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Reštartovať"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "Používateľ %u sa prihlási za %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Meno používateľa:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Heslo:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Už je prihlásený"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Pri načítavaní témy %s nastala chyba"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Prihlásenie"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "Ok"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Prosím, zadajte vaše používateľské meno"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Prosím zadajte svoje heslo"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Vypnúť"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Uspať"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Ukončiť"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Reštartovať"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Relácia"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Vyberte reláciu"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Predvolená relácia"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr "Prosím, vyberte používateľa."
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr "Stlačením klávesu F1 zadáte meno používateľa."
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Jazyk"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Zvoľte si jazyk"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Naozaj chcete skončiť?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Zavrieť"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Počas pokusu o kontakt s prihlasovacím dialógom nastala chyba. Môže sa stať, "
+"že niektoré aktualizácie sa neprejavia."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr "Automatické alebo časované prihlásenie na účet správcu je zakázané."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "UID používateľa %s je nižšie ako 'MinimalUID'."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Používateľ nie je povolený"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+"Automatické alebo časované prihlásenie na účet správcu nie je povolené."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Žiadna téma, iba čisté GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Archív nie je podadresárom"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Archív nie je z jediného podadresára"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Súbor nie je archívom tar.gz alebo tar"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Archív neobsahuje súbor GdmGreeterTheme.info"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Súbor neexistuje"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Toto nie je archív s témou."
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"Adresár témy „%s“ už existuje. Chcete aj napriek tomu túto tému inštalovať?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Počas inštalácie témy nastala chyba"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Nie je vybraný žiadny súbor"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Zvoliť archív tém"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Nainštalovať"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Archívy s témou"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Odstrániť tému „%s“?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Ak zvolíte odstránenie témy, bude navždy stratená."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_Odstrániť tému"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Inštalovať tému z „%s“?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Na pridanie témy zo súboru „%s“ zvoľte inštalovať."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Obrázky"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Všetky súbory"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Automaticky detekované"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Téma"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Automatické prihlásenie"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Možnosti"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Pridať novú tému"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Odstrániť vybranú tému"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Spustiť prihlasovaciu obrazovku na prehliadnutie témy"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Pre povolenie tejto funkcie prosím nainštalujte „numlockx“"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "Nepodarilo sa pristúpiť ku konfiguračnému súboru (defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Uistite sa, že súbor existuje ešte pred spustením konfiguračného nástroja."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Nepodarilo sa otvoriť konfiguračný súbor"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Pre nastavenie MDM musíte byť používateľ root."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Predvoľby prihlasovacieho okna"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Pozadie"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Obrázok:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Zobrazí obrázok ako pozadie privítania."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Vyberte obrázok pre pozadie"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Vyberte farbu pozadia"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "_Farba:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Farba pozadia privítania."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Uvítacia správa"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "Vl_astné:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Kontroluje, ktorý text má byť zobrazený vedľa obrázku loga privítania."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n bude nahradené názvom hostiteľa"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_Východzia:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'Vitajte'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "_Povoliť automatické prihlásenie"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Daný používateľ by mal byť prihlásený pri prvom spustení. Nebude požadované "
+"žiadne heslo."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Používateľ:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Prázdny"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Povoliť ča_sované prihlásenie"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Daný používateľ by mal byť prihlásený po istom počte sekúnd neaktivity na "
+"prihlasovacej obrazovke"
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "Používa_teľ:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "Pau_za pred prihlásením:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr "Oneskorenie v sekundách, pred prihlásením daného používateľa."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "sekúnd"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "prázdne"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Povoliť prihlásenie ako root"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Zaznamenávať ladiace informácie do /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Pošle výstup ladenia do syslogu."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Automaticky zvoliť naposledy prihláseného používateľa"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Povoliť NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Používať 24 hodinový režim času"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Primárny monitor:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Obmedziť výstup relácie"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Toto predíde nárastu príliš veľkého .xsession-error (200KB, niekoľko tisíc "
+"riadkov)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Filtrovať výstup relácie"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Toto predíde upozorneniam z bežných knižníc a výskytu chýb .xsession-errors "
+"pri niektorých nástrojoch (Gtk, Glib, Gio, Glade...)."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Predvolená relácia:"

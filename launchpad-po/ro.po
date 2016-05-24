@@ -1,0 +1,478 @@
+# Romanian translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2015-11-08 12:45+0000\n"
+"Last-Translator: CD <Unknown>\n"
+"Language-Team: Romanian <ro@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Sigur doriți să opriți computerul?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "_Oprire"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Sigur doriţi să suspendaţi computerul?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Suspendare"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Sigur doriţi să reporniţi computerul?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Repornire"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "Utilizatorul %u se va autentifica în %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Nume utilizator:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Parolă:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Deja autentificat"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "A apărut o eroare la încărcarea temei %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Autentificare"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "OK"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Renunță"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Introduceţi numele de utilizator"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Introduceți parola"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Oprește"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Suspendă"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Ieși"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Reporneşte"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Sesiune"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Selectați o sesiune"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Sesiune implicită"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr ""
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr ""
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Limbă"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Selectați o limbă"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Sigur doriţi să ieşiţi?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Închide"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"A intervenit o eroare la contactarea ecranelor de autentificare. Nu toate "
+"actualizările au avut efect."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr ""
+"Autentificările automate și cronometrate nu sunt permise în cazul contului "
+"root."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "UID-ul utilizatorului %s este mai mic decât „UIDMinim”."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Utilizator nepermis"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+"Autentificările automate sau cronometrate nu sunt permise pentru contul root."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Nicio temă, doar GTK pur"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Arhiva nu este a unui subdirector"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Arhiva nu este a unui singur subdirector"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Fișierul nu este o arhivă „tar.gz” sau „tar“"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Arhiva nu include un fișier „GdmGreeterTheme.info“"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Fișier inexistent"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Nu este o temă arhivată"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"Directorul temei „%s” pare să fie instalat deja. Să fie instalat din nou "
+"oricum?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "A intervenit o eroare la instalarea temei"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Niciun fișier selectat"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Selectare arhivă temă"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Instalare"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Arhive temă"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Eliminați tema „%s”?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Dacă alegeți să eliminați o temă, ea nu va putea fi recuperată."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "Eli_mină tema"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Instalați tema din „%s”?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Adăugați tema de instalat din fișierul „%s”."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Imagini"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Toate fișierele"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Detectare automată"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Temă"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Autentificare automată"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Opțiuni"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Adaugă o nouă temă"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Elimină tema selectată"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Lansează ecranul de autentificare pentru a previzualiza tema"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Instalați 'numlockx' pentru a activa această caracteristică"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "Nu se poate accesa fișierul de configurare (defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Asigurați-vă că fișierul există înainte de lansarea utilitarului de "
+"administrare a autentificării."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Nu se poate accesa fișierul de configuare"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Trebuie să fiți root pentrua a configura MDM."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Preferințe fereastră de autentificare"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Fundal"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Imagine:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Afişează această imagine ca fundal pe ecranul de întâmpinare"
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Selectează imaginea de fundal"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Alegeți culoarea de fundal"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "Cu_loare:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Culoare de fundal a ecranului de întâmpinare"
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Mesaj de întâmpinare"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "_Personalizat:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Controlează ce text să fie afișat lângă imaginea siglă în aplicația de "
+"întâmpinare standard."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n va fi înlocuit cu numele de gazdă"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "I_mplicit:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "Bine ați venit"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "Activ_ează autentificarea automată"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Utilizatorul ar trebui să fie autentificat la prima pornire. Nu se va cere "
+"nicio parolă."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Utilizator:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Dummy"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Activează autentificarea cronome_trată"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Utilizatorul ar trebui să fie autentificat după un număr de secunde de "
+"inactivitate pe ecranul de autentificare."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "Ut_ilizator:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Pauză înainte de autentificare:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr "Întârziere în secunde înainte de autentificarea cronometrată."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "secunde"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "dummy"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Permite autentificarea ca root"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Înregistrează informațiile de debug în /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Trimite ieșirea de debug în syslog."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Selectează automat ultimul utilizator autentificat"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Activează NumLock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Utilizează formatul de 24 de ore"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Monitor primar:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Limitează ieșirea de sesiune"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Aceasta previne .xsession-errors să devină prea mare (200 KiB, câteva mii de "
+"linii)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Filtrează ieșirea de sesiune"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Acest lucru previne avertismentele din biblioteci și pachetele de "
+"instrumente comune (Gtk, Glib, Gio, Glade...etc.) în erorri .xsession."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Sesiune standard"

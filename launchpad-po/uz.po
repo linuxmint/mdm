@@ -1,0 +1,487 @@
+# Uzbek translation for linuxmint
+# Copyright (c) 2015 Rosetta Contributors and Canonical Ltd 2015
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2015-09-21 11:01+0000\n"
+"Last-Translator: mnishonov <mnishonov@gmail.com>\n"
+"Language-Team: Uzbek <uz@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Компьютерни ўчиришни ҳалиям ҳоҳлайсизми?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "Компьютерни ўчириш"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Компьютерни вақтинчалик ишлашдан тўхтатишни ҳоҳлайсизми?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Компьютерни вақтинчалик ишлашдан тўхтатиш"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Компьютерни ўчириб ёқишни ҳоҳлайсизми?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Ўчириб-ёқиш"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "%u фойдаланувчи %t дан сўнг тизимга киради"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Фойдаланувчи номи:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Парол:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Аллақачон тизимга кирилган"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Ташқи кўриниш мавзуси %s ни юклашда хато содир бўлди"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Тизимга кириш"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "OK"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Бекор қилиш"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Фойдаланувчи номини киритинг"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Паролингизни киритинг"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Компьютерни ўчириш"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Вақтинчалик ўчириш"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Тизимдан чиқиш"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Ўчириб-ёқиш"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Сеанс"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Сеансни танлаш"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Ноошкор (default) сеанс"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr ""
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr ""
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Тил"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Тилни танлаш"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Тизимдан чиқишни ҳоҳлайсизми?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Ёпиш"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Тизимга кириш экранига уланиш вақтида хато содир бўлди. Дастурларни "
+"янгилашда янгилашларнинг баъзилари ишга тушмаган бўлиши мумкин."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr ""
+"root учун тизимга автоматик кириш ва бир оздан кейин тизимга кириш "
+"тақиқланган."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "%s нинг UID и 'MinimalUID' дан кичик."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Фойдаланувчига рухсат берилмаган"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+"root га тизимга автоматик кириш ёки вақт ўтиши билан кириш рухсат этилмайди."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Ташқи кўриниш мавзуси йўқ, тоза GTK холос"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Архив ички директория эмас"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Архив ягона ички директория эмас"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Файл ё tar.gz ёки  tar архив хам эмас"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Архивда GdmGreeterTheme.info файл йўқ"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Файл мавжуд эмас"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Ташқи кўриниш мавзуси архиви эмас"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"'%s' ташқи кўриниш мавзуси директорияси аллақачон ўрнатилган. Шундай бўлса "
+"хам яна ўрнатмоқчимисиз?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Ушбу ташқи кўриниш мавзусини ўрнатишда хато содир бўлди"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Хеч қайси бир файл танланмаган"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Ташқи кўриниш мавзуси архивини танлаш"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Ўрнатиш"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Ташқи кўриниш мавзуси архивлари"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "\"%s\" ташқи кўриниш мавзусини тизимдан олиб ташлаш"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr ""
+"Агар ушбу ташқи кўриниш мавзусини тизимдан олиб ташлаш учун танласангиз у "
+"бутунлай йўқотилади."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_Ташқи кўриниш мавзусини тизимдан олиб ташлаш"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Ташқи кўриниш мавзусини '%s' дан ўрнатасизми?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr ""
+"'%s' файлдан ташқи кўриниш мавзусини тизимга қўшиш учун ўрнатишни танланг."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Расмлар"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Барча файллар"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Автомат равишда топилган"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Ташқи кўриниш мавзуси"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Тизимга автоматик равишда кириш"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Хосса вариантлари"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Янги ташқи кўриниш мавзусини қўшиш"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Танланган ташқи кўриниш мавзусини тизимдан олиб ташлаш"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr ""
+"Ташқи кўриниш мавзусини кўриб чиқиш учун тизимга кириш экранини ишга туширинг"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Ушбу имкониятни ёқиш учун  'numlockx' ни тизимга ўрнатинг"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "Созламалар файли (defaults.conf) ни очишга рухсат олиб бўлмади"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Тизимга кириш менежерини созловчи иловани ишга туширишдан олдин ушбу файл "
+"мавжудлигини текшириб кўринг."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "Созламалар файлини очишга рухсат олиб бўлмади"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "MDM ни созлашингиз учун сиз root бўлишингиз лозим."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Тизимга кириш ойнаси учун танланган хоссалар"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Фон"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Расм"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "greeter да ушбу расмни фон сифатида кўрсатади."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Фон учун расм танлаш"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Фон рангини тутинг"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "Ранг:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "greeter учун фон ранги."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Тизимга кирганда кутиб олишдаги хабар"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "Танланган"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Стандарт greeter да тизимга киришда кўринувчи расм ёнида пайдо бўладиган "
+"матнни назорат қилади."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n компьютер номи билан алмаштирилади"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_Ноошкор (default):"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'Хуш келибсиз'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "_Тизимга автоматик киришни ёқиш"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Ушбу фойдаланувчи компьютер биринчи марта ёқилганда тизимга киради. Парол "
+"сўралмайди."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Фойдаланувчи:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Мавхум фойдаланувчи"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Вақт ўтиши билан тизимга киришни ёқиш"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"Ушбу фойдаланувчи тизимга кириш экрани бир неча сонияларда фаол бўлмагандан "
+"кейин тизимга киради."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "Фойдаланувчи"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Тизимга киришдан аввалги танаффус:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+"Вақти тугаган фойдаланувчини тизимга киришидан аввал ўтиши керак бўлган вақт "
+"(сонияларда)."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "сониялар"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "Мавхум фойдаланувчи"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "root сифатида тизимга киришга рухсат бериш"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr ""
+"Содир бўлган ходисалар хақидаги маълумотларни  /var/log/syslog га ёзиш"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Содир бўлган ходисалар хақидаги маълумотни syslog га юборади."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr ""
+"Тизимга энг охирги бўлиб кирган фойдаланувчини автоматик равишда танлаш"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "NumLock ни ёқиш"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "24 ли Соатни ишлатиш"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Бирламчи монитор:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Сеансдаги чиқиш маълумотларининг чегараси"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Ушбу амал .xsession-errors жуда катта бўлиб кетишини олдини олади (200 КБ, "
+"бир неча минг сатрлар)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Сеансда чиқишдаги маълумотларни саралаш"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Ушбу амал .xsession-errors дан олинувчи кўп ишлатиладиган библиотекалар ва "
+"ускуналар (Gtk, Glib, Gio, Glade...ва х.к.) дан келувчи огоҳлантиришларнинг "
+"олдини олади."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Ноошкор (default) сеанс:"

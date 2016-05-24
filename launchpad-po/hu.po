@@ -1,0 +1,482 @@
+# Hungarian translation of mdm.
+# Copyright (C) 2013 Free Software Foundation, Inc.
+# This file is distributed under the same license as the mdm package.
+# KAMI <kami911@gmail.com>, 2013-2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mdm\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2016-05-16 16:25+0000\n"
+"Last-Translator: KAMI <kami911@gmail.com>\n"
+"Language-Team: Hungarian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
+"Language: hu\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Biztosan ki akarja kapcsolni a számítógépet?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "_Leállítás"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Biztosan energiatakarékos módba helyezi a számítógépet?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Felfüggesztés"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Biztosan újra szeretné indítani a számítógépet?"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "Ú_jraindítás"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "%u felhasználó bejelentkeztetése %t múlva"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Felhasználónév:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Jelszó:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Már be van jelentkezve"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Hiba történt a(z) %s téma betöltése közben"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Bejelentkezés"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "OK"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Mégse"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Adja meg a felhasználónevét"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Adja meg a jelszavát"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Leállítás"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Felfüggesztés"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Kilépés"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Újraindítás"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Környezet"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Válasszon környezetet"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Alapértelmezett környezet"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr "Kérem válasszon egy felhasználót."
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr "Nyomja meg az F1 billentyűt a felhasználónév berásához"
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Nyelv"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Válasszon nyelvet"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Biztos benne, hogy kilép?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Bezárás"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Hiba történt a bejelentkező képernyőkhöz csatlakozás közben. Lehet, hogy nem "
+"minden frissítésnek lesz hatása."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr ""
+"Az automatikus vagy időzített bejelentkezés a rendszergazda (root) fiókhoz "
+"nem engedélyezett."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr ""
+"A(z) „%s” felhasználói azonosító kisebb a minimális felhasználói "
+"azonosítónál."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "A felhasználó nem engedélyezett"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr ""
+"Az automatikus vagy időzített bejelentkezés a rendszergazda (root) fiókhoz "
+"nem engedélyezett."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Nincs téma, csak az alap GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Az archívum nem egy almappából áll"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Az archívum nem egyetlen almappából áll"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "A fájl nem tar.gz vagy tar archívum"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Az archívum nem tartalmazza a „GdmGreeterTheme.info” fájlt"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "A fájl nem létezik"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "Ez nem téma fájl"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr "A(z) „%s” témamappa már telepítve van. Mégis újra kívánja telepíti?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Hiba történt a téma telepítésekor"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Nincs fájl kiválasztva"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Válasszon témaarchívumot"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Telepítés"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Témaarchívumok"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "„%s” téma eltávolítása?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Ha a téma törlését választja, az véglegesen elvész."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_Téma eltávolítása"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Telepíti a témát innen: „%s”?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Válassza a Telepítést a téma hozzáadásához a következő fájlból: „%s”"
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Képek"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Minden fájl"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Automatikusan érzékelt"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Téma"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Automatikus bejelentkezés"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Beállítások"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Új téma hozzáadása"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Kijelölt téma eltávolítása"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Bejelentkező képernyő elindítása a téma előnézetének megtekintéséhez"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Telepítse az „numlockx” csomagot a szolgáltatás engedélyezéséhez"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "A beállítófájl (defaults.conf) nem érhető el"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"A bejelentkezéskezelő beállítóeszközének indítása előtt győződjön meg róla, "
+"hogy a fájl létezik."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "A beállítófájl nem érhető el"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Csak rendszergazda (root) jogosultságokkal állíthatja be a MDM-et."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Bejelentkezési ablak tulajdonságai"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Háttér"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_Kép:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Ez a kép kerül megjelenítésre az üdvözlő háttereként."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Válasszon háttérszínt"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Válasszon háttérszínt"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "_Szín:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Az üdvözlő háttérszíne."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Üdvözlőüzenet"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "_Egyéni:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Alapértelmezett üdvözlő használata esetén az üdvözlőlogó mellett megjelenő "
+"szöveg."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "A %n a gép nevével lesz helyettesítve"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_Alapértelmezett:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "„Üdvözöljük”"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "A_utomatikus bejelentkezés engedélyezése"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"Az adott felhasználót be kell jelentkeztetni az első indításkor. A rendszer "
+"nem kér jelszót."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Felhasználó:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Üres"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "I_dőzített bejelentkeztetés engedélyezése"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"A megadott felhasználó bejelentkeztetése a bejelentkezési felületen "
+"inaktívan töltött másodpercben megadott idő után."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "_Felhasználó:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "Várak_ozás a bejelentkezés előtt:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr ""
+"Az időzített bejelentkezéssel bejelentkező felhasználó bejelentkezéséig "
+"eltelő idő."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "másodperc"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "üres"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Automatikus rendszergazda (root) bejelentkezés"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Hibakeresési információk naplózása a „/var/log/syslog” fájlba"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Hibakereső kimenetet küld a rendszernaplóba."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Az utolsó bejelentkezett felhasználó automatikus kiválasztása"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "NumLock bekapcsolása"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "24 órás formátum használata"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Elsődleges kijelző:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "A környezet naplózásának korlátozása"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Megakadályozza, hogy a „.xsession-errors” naplófájl túl nagy legyen. (200 "
+"KiB, néhány ezer sor)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Környezet naplófájljának szűrése"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Megakadályozza a közös mappákból és eszköztárakból (Gtk, Glib, Gio, Glade, "
+"stb.) származó figyelmeztetések „.xsession-errors” naplófájlba írását."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Alapértelmezett környezet:"
