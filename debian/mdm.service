@@ -2,7 +2,7 @@
 Description=MDM Display Manager
 Documentation=man:mdm(1)
 Conflicts=getty@tty7.service
-After=systemd-user-sessions.service getty@tty7.service
+After=systemd-user-sessions.service getty@tty7.service plymouth-quit.service
 
 [Service]
 ExecStart=/usr/sbin/mdm --nodaemon
