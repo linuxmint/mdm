@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2015-09-20 04:23+0000\n"
-"Last-Translator: Deny Suhardi <mail@denys.web.id>\n"
+"PO-Revision-Date: 2016-05-31 15:20+0000\n"
+"Last-Translator: Aldi Halim <namuhin@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
-"X-Generator: Launchpad (build 18053)\n"
+"X-Launchpad-Export-Date: 2016-06-25 09:29+0000\n"
+"X-Generator: Launchpad (build 18111)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -112,11 +112,11 @@ msgstr "Sesi bawaan"
 
 #: gui/mdmwebkit.c:931
 msgid "Please select a user."
-msgstr ""
+msgstr "Silakan pilih pengguna"
 
 #: gui/mdmwebkit.c:932
 msgid "Press F1 to enter a username."
-msgstr ""
+msgstr "Tekan F1 untuk masuk pada nama pengguna"
 
 #: gui/mdmwebkit.c:933
 msgid "Language"

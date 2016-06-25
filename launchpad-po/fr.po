@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-05-23 12:02+0000\n"
+"PO-Revision-Date: 2016-06-23 12:57+0000\n"
 "Last-Translator: Phan Hoang <phahoatho@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-05-24 09:34+0000\n"
-"X-Generator: Launchpad (build 18053)\n"
+"X-Launchpad-Export-Date: 2016-06-25 09:29+0000\n"
+"X-Generator: Launchpad (build 18111)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -376,7 +376,7 @@ msgstr "Activer la connexion auto_matique"
 msgid ""
 "Given user should be logged in upon first bootup. No password will be asked."
 msgstr ""
-"L'utilisateur sera loggé automatiquement, sans demande de mot de passe."
+"L'utilisateur sera logué automatiquement, sans demande de mot de passe."
 
 #: gui/mdmsetup.glade.h:19
 msgid "_User:"
@@ -394,7 +394,7 @@ msgstr "Activer la connexion _différée"
 msgid ""
 "Given user should be logged in after a number of seconds of inactivity on "
 "the login screen."
-msgstr "L'utilisateur sera loggé après un nombre de secondes d'inactivité."
+msgstr "L'utilisateur sera logué après un nombre de secondes d'inactivité."
 
 #: gui/mdmsetup.glade.h:23
 msgid "U_ser:"
@@ -406,7 +406,7 @@ msgstr "_Pause avant connexion :"
 
 #: gui/mdmsetup.glade.h:25
 msgid "Delay in seconds before the timed login user will be logged in."
-msgstr "Délai en secondes avant de logger un utilisateur en différé."
+msgstr "Délai en secondes avant de loguer un utilisateur en différé."
 
 #: gui/mdmsetup.glade.h:26
 msgid "seconds"
@@ -418,7 +418,7 @@ msgstr "fictif"
 
 #: gui/mdmsetup.glade.h:29
 msgid "Allow root login"
-msgstr "Permettre à root de se logger"
+msgstr "Permettre à root de se loguer"
 
 #: gui/mdmsetup.glade.h:30
 msgid "Log debug information to /var/log/syslog"
@@ -430,7 +430,7 @@ msgstr "Envoie les informations de débogage vers /var/log/syslog."
 
 #: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"
-msgstr "Sélectionner automatiquement le dernier utilisateur à s'être loggé"
+msgstr "Sélectionner automatiquement le dernier utilisateur à s'être logué"
 
 #: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
