@@ -2885,7 +2885,6 @@ session_child_run (struct passwd *pwent,
 		   gboolean savesess,
 		   gboolean savelang)
 {
-	const char *old_system_data_dirs;
 	char *sessionexec = NULL;
 	GString *fullexec = NULL;
 	const char *shell = NULL;
@@ -2953,10 +2952,6 @@ session_child_run (struct passwd *pwent,
 				_("%s: Execution of PreSession script returned > 0. Aborting."),
 				"session_child_run");
 
-	old_system_data_dirs = g_getenv ("XDG_DATA_DIRS") ?
-			       g_getenv ("XDG_DATA_DIRS") :
-			       "/usr/local/share/:/usr/share/";
-
 	ve_clearenv ();
 
 	/* Prepare user session */
@@ -3001,24 +2996,6 @@ session_child_run (struct passwd *pwent,
 		g_setenv ("PATH", mdm_daemon_config_get_value_string (MDM_KEY_ROOT_PATH), TRUE);
 	else
 		g_setenv ("PATH", mdm_daemon_config_get_value_string (MDM_KEY_PATH), TRUE);
-
-	/*
-	 * Install MDM desktop files to a non-default desktop file 
-	 * location (/usr/share/mdm/applications) and MDM appends 
-	 * this directory to the end of the XDG_DATA_DIR environment
-	 * variable.  This way, MDM menu choices never appear if
-	 * using a different display manager.
-	 */
-	{
-		char *new_system_data_dirs;
-
-		new_system_data_dirs = g_build_path (":",
-			 old_system_data_dirs, DATADIR "/mdm/", NULL);
-
-		g_setenv ("XDG_DATA_DIRS", new_system_data_dirs, TRUE);
-
-		g_free (new_system_data_dirs);
-	}	
 
 	/* Now still as root make the system authfile not readable by others,
 	   and therefore not by the mdm user */

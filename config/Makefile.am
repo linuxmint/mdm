@@ -41,7 +41,8 @@ CLEANFILES = Xsession mdm.conf mdm.conf-custom default.desktop ssh.desktop Init 
 
 Xsession: $(srcdir)/Xsession.in
 	sed	-e 's,[@]XSESSION_SHELL[@],$(XSESSION_SHELL),g' \
-		-e 's,[@]libexecdir[@],$(libexecdir),g' \
+        -e 's,[@]libexecdir[@],$(libexecdir),g' \
+		-e 's,[@]DATADIR[@],$(DATADIR),g' \
 		<$(srcdir)/Xsession.in >Xsession
 
 mdm.conf: $(srcdir)/mdm.conf.in
