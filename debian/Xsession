@@ -116,7 +116,7 @@ test -f "$HOME/.xprofile" && . "$HOME/.xprofile"
 # variable.  This way, MDM menu choices never appear if
 # using a different display manager.
 
-XDG_DATA_DIRS="$XDG_DATA_DIRS":"usr/share/mdm/"
+XDG_DATA_DIRS="$XDG_DATA_DIRS":"/usr/share/mdm/"
 export XDG_DATA_DIRS
 
 # Translation stuff
