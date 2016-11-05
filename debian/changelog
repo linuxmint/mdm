@@ -1,3 +1,14 @@
+mdm (2.0.11) serena; urgency=medium
+
+  [ Michael Webster ]
+  * Append /usr/share/mdm to the XDG_DATA_DIRS variable *after* parsing /etc/profile, otherwise we ended up replacing it with an obsolete version of the variable with the mdm path added.
+  * debian/Xsession: fix typo
+
+  [ Clement Lefebvre ]
+  * Identify monitors by index when their plugname isn't available.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sat, 05 Nov 2016 13:10:04 +0000
+
 mdm (2.0.10) sarah; urgency=medium
 
   * Systemd: Don't conflict with getty@tty1
