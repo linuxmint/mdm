@@ -2581,37 +2581,58 @@ setup_monitors (void)
 	GtkWidget  *primary_monitor_combobox = glade_xml_get_widget (xml, "primary_monitor_combobox");
 	GtkWidget  *primary_monitor_label = glade_xml_get_widget (xml, "primary_monitor_label");
 
-	gtk_widget_set_sensitive (primary_monitor_combobox, TRUE);	
-	
+	gtk_widget_set_sensitive (primary_monitor_combobox, TRUE);
+
 	GdkScreen *screen = gdk_screen_get_default ();
-	int mdm_wm_num_monitors = gdk_screen_get_n_monitors (screen);	
+
+	int mdm_wm_num_monitors = gdk_screen_get_n_monitors (screen);
+
+	printf("Number of monitors: %d\n", mdm_wm_num_monitors);
 
 	if (mdm_wm_num_monitors > 1) {
 		gint active = 0;
 		int i;
 		gchar * org_val = mdm_config_get_string (MDM_KEY_PRIMARY_MONITOR);
+		printf("Monitor found in configuration: '%s'\n", org_val);
 		for (i = 0; i < mdm_wm_num_monitors; i++) {
-			char * plugname = gdk_screen_get_monitor_plug_name (screen, i);		
-			if (!ve_string_empty (plugname)) {			
-				gtk_combo_box_append_text (GTK_COMBO_BOX (primary_monitor_combobox), plugname);
-				monitors = g_list_prepend (monitors, plugname);
-				if (strcmp(plugname, org_val) == 0) {
-					active = i+1;				
-				}
-			}		
+			GdkRectangle geometry;
+			gdk_screen_get_monitor_geometry (screen, i, &geometry);
+			gchar * plugname = gdk_screen_get_monitor_plug_name (screen, i);
+			gchar * monitor_index = g_strdup_printf ("%d", i);
+			printf("Found monitor #%s with plug name: '%s'\n", monitor_index, plugname);
+			gchar * monitor_label;
+			gchar * monitor_id;
+			if (ve_string_empty (plugname)) {
+				monitor_id = g_strdup (monitor_index);
+				monitor_label = g_strdup_printf ("#%s - %dx%d", monitor_index, geometry.width, geometry.height);
+			}
+			else {
+				monitor_id = g_strdup (plugname);
+				monitor_label = g_strdup_printf ("#%s - %s - %dx%d", monitor_index, plugname, geometry.width, geometry.height);
+			}
+
+			gtk_combo_box_append_text (GTK_COMBO_BOX (primary_monitor_combobox), monitor_label);
+			monitors = g_list_prepend (monitors, monitor_id);
+
+			if (g_strcmp0(monitor_id, org_val) == 0) {
+				active = i + 1;
+			}
+
+			g_free (plugname);
+			g_free (monitor_index);
 		}
-		if (active > 0) {		
+		if (active > 0) {
 			gtk_combo_box_set_active (GTK_COMBO_BOX (primary_monitor_combobox), active);
 		}
-		monitors = g_list_reverse (monitors);				
+		monitors = g_list_reverse (monitors);
 		g_object_set_data_full (G_OBJECT (primary_monitor_combobox), "key", g_strdup (MDM_KEY_PRIMARY_MONITOR), (GDestroyNotify) g_free);
-		g_signal_connect (primary_monitor_combobox, "changed", G_CALLBACK (combobox_changed), NULL);	
+		g_signal_connect (primary_monitor_combobox, "changed", G_CALLBACK (combobox_changed), NULL);
 		g_free (org_val);
 	}
 	else {
 		gtk_widget_hide (primary_monitor_combobox);
 		gtk_widget_hide (primary_monitor_label);
-	}	
+	}
 }
 
 static void

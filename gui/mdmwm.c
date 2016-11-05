@@ -83,7 +83,7 @@ static Window strut_owners[4] = {None, None, None, None};
 static guint save_struts[4] = {0, 0, 0, 0};
 
 void 
-mdm_wm_screen_init (gchar * monitor_plug_name)
+mdm_wm_screen_init (gchar * monitor_id)
 {
 	GdkScreen *screen;
 	int i;
@@ -114,15 +114,19 @@ mdm_wm_screen_init (gchar * monitor_plug_name)
 	int current_monitor_num = gdk_screen_get_primary_monitor (screen);
 
 	for (i = 0; i < mdm_wm_num_monitors; i++) {
-		gdk_screen_get_monitor_geometry (screen, i, mdm_wm_all_monitors + i);        
-		mdm_debug("mdm_wm_screen_init: Found monitor %d '%s'.", i, gdk_screen_get_monitor_plug_name (screen, i));
-		if (g_strcmp0(gdk_screen_get_monitor_plug_name (screen, i), monitor_plug_name) == 0) {
+		gdk_screen_get_monitor_geometry (screen, i, mdm_wm_all_monitors + i);
+		gchar * plugname = gdk_screen_get_monitor_plug_name (screen, i);
+		gchar * monitor_index = g_strdup_printf ("%d", i);
+		mdm_debug("mdm_wm_screen_init: Found monitor #%s with plug name: '%s'.", monitor_index, plugname);
+		if (g_strcmp0(plugname, monitor_id) == 0 || g_strcmp0(monitor_index, monitor_id) == 0) {
 			current_monitor_num = i;
-			mdm_debug("mdm_wm_screen_init: Using monitor '%s' to render greeter.", gdk_screen_get_monitor_plug_name (screen, i));
+			mdm_debug("mdm_wm_screen_init: Using monitor '%s' to render greeter.", monitor_id);
 		}
+		g_free (plugname);
+		g_free (monitor_index);
 	}
-	
-	mdm_wm_screen = mdm_wm_all_monitors[current_monitor_num];	
+
+	mdm_wm_screen = mdm_wm_all_monitors[current_monitor_num];
 }
 
 /* Not really a WM function, center a gtk window by setting uposition */
