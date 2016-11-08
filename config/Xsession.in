@@ -36,15 +36,6 @@ test -f "$HOME/.profile" && . "$HOME/.profile"
 test -f /etc/xprofile && . /etc/xprofile
 test -f "$HOME/.xprofile" && . "$HOME/.xprofile"
 
-# Install MDM desktop files to a non-default desktop file
-# location (/usr/share/mdm/applications) and MDM appends
-# this directory to the end of the XDG_DATA_DIR environment
-# variable.  This way, MDM menu choices never appear if
-# using a different display manager.
-
-XDG_DATA_DIRS="$XDG_DATA_DIRS":"@DATADIR@/mdm/"
-export XDG_DATA_DIRS
-
 # Translation stuff
 if [ -x "@libexecdir@/mdmtranslate" ] ; then
   mdmtranslate="@libexecdir@/mdmtranslate"

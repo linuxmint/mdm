@@ -12,6 +12,7 @@ debian/tmp/etc/mdm/mdm.conf
 debian/tmp/etc/mdm/XKeepsCrashing
 debian/tmp/etc/mdm/PostLogin
 debian/tmp/etc/mdm/modules
+debian/tmp/etc/X11/Xsession.d
 debian/tmp/usr/bin
 debian/tmp/usr/lib/mdm
 debian/tmp/usr/lib/gtk-2.0/modules/*.so
