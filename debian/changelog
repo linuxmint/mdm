@@ -1,3 +1,9 @@
+mdm (2.0.12) serena; urgency=medium
+
+  * Don't set XDG_DATA_DIRS in Xsession
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 08 Nov 2016 00:56:17 +0000
+
 mdm (2.0.11) serena; urgency=medium
 
   [ Michael Webster ]
