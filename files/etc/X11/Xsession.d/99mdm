@@ -6,6 +6,10 @@
 # using a different display manager.
 
 if [ -n "$MDMSESSION" ]; then
-    XDG_DATA_DIRS="$XDG_DATA_DIRS":"/usr/share/mdm/"
+    if [ -n "$XDG_DATA_DIRS" ]; then
+        XDG_DATA_DIRS="$XDG_DATA_DIRS":"/usr/share/mdm/"
+    else
+        XDG_DATA_DIRS="/usr/local/share/:/usr/share/:/usr/share/mdm/"
+    fi
     export XDG_DATA_DIRS
 fi
