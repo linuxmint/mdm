@@ -1,3 +1,10 @@
+mdm (2.0.13) serena; urgency=medium
+
+  * Xsession.d/99mdm: Set default XDG_DATA_DIRS if the variable is not set
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 09 Nov 2016 17:47:50 +0000
+
 mdm (2.0.12) serena; urgency=medium
 
   * Don't set XDG_DATA_DIRS in Xsession
