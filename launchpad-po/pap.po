@@ -1,16 +1,16 @@
-# Dutch translation for linuxmint
-# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# Papiamento translation for linuxmint
+# Copyright (c) 2016 Rosetta Contributors and Canonical Ltd 2016
 # This file is distributed under the same license as the linuxmint package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-05-14 10:54+0000\n"
-"Last-Translator: Pjotr12345 <Unknown>\n"
-"Language-Team: Dutch <nl@li.org>\n"
+"PO-Revision-Date: 2016-07-17 13:55+0000\n"
+"Last-Translator: Frank <f.boye@hotmail.nl>\n"
+"Language-Team: Papiamento <pap@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,52 +19,52 @@ msgstr ""
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
-msgstr "Weet u zeker dat u de computer wilt afsluiten?"
+msgstr "Bo tin sigur ku bo ke paga e kòmpiuter?"
 
 #: gui/mdmwebkit.c:191
 msgid "Shut _Down"
-msgstr "_Uitschakelen"
+msgstr "Paga"
 
 #: gui/mdmwebkit.c:196
 msgid "Are you sure you want to suspend the computer?"
-msgstr "Weet u zeker dat u de computer in de pauzestand wilt zetten?"
+msgstr "Bo tin sigur ku bo ke suspende e kòmpiuter?"
 
 #: gui/mdmwebkit.c:196
 msgid "_Suspend"
-msgstr "_Pauzestand"
+msgstr "_Suspende"
 
 #: gui/mdmwebkit.c:202
 msgid "Are you sure you want to restart the computer?"
-msgstr "Weet u zeker dat u de computer wilt herstarten?"
+msgstr "Bo tin sigur ko bo ke"
 
 #: gui/mdmwebkit.c:202
 msgid "_Restart"
-msgstr "_Herstarten"
+msgstr "_Rekomienso"
 
 #: gui/mdmwebkit.c:330
 msgid "User %u will login in %t"
-msgstr "Gebruiker %u wordt aangemeld over %t"
+msgstr "Usado %u lo login na %t"
 
 #: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
 msgid "Username:"
-msgstr "Gebruikersnaam:"
+msgstr "Usuario:"
 
 #: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
 msgid "Password:"
-msgstr "Wachtwoord:"
+msgstr "Kontraseña:"
 
 #: gui/mdmwebkit.c:820
 msgid "Already logged in"
-msgstr "Al aangemeld"
+msgstr "Di login kaba"
 
 #: gui/mdmwebkit.c:890
 #, c-format
 msgid "There was an error loading the theme %s"
-msgstr "Er is een fout opgetreden bij het laden van het thema %s"
+msgstr "Un eror a sugeri durante kargamentu di e tema %s"
 
 #: gui/mdmwebkit.c:918
 msgid "Login"
-msgstr "Aanmelden"
+msgstr "Login"
 
 #: gui/mdmwebkit.c:919
 msgid "OK"
@@ -72,120 +72,116 @@ msgstr "OK"
 
 #: gui/mdmwebkit.c:920
 msgid "Cancel"
-msgstr "Annuleren"
+msgstr "Kanselá"
 
 #: gui/mdmwebkit.c:921
 msgid "Please enter your username"
-msgstr "Voer alstublieft uw gebruikersnaam in"
+msgstr "Por fabor yena e usuario"
 
 #: gui/mdmwebkit.c:922
 msgid "Please enter your password"
-msgstr "Voer alstublieft uw wachtwoord in"
+msgstr "Por fabor yena bo kontraseña"
 
 #: gui/mdmwebkit.c:924
 msgid "Shutdown"
-msgstr "Afsluiten"
+msgstr "Paga"
 
 #: gui/mdmwebkit.c:925
 msgid "Suspend"
-msgstr "Pauzestand"
+msgstr "Suspende"
 
 #: gui/mdmwebkit.c:926
 msgid "Quit"
-msgstr "Afsluiten"
+msgstr "Sali"
 
 #: gui/mdmwebkit.c:927
 msgid "Restart"
-msgstr "Herstarten"
+msgstr "Rekuminsa"
 
 #: gui/mdmwebkit.c:928
 msgid "Session"
-msgstr "Sessie"
+msgstr "Seshon"
 
 #: gui/mdmwebkit.c:929
 msgid "Select a session"
-msgstr "Kies een sessie"
+msgstr "Selekta e seshon"
 
 #: gui/mdmwebkit.c:930
 msgid "Default session"
-msgstr "Standaardsessie"
+msgstr "Seshon standard"
 
 #: gui/mdmwebkit.c:931
 msgid "Please select a user."
-msgstr "Kies a.u.b. een gebruiker."
+msgstr "Por fabor selekta e usuario."
 
 #: gui/mdmwebkit.c:932
 msgid "Press F1 to enter a username."
-msgstr "Druk op F1 om een gebruikersnaam in te geven."
+msgstr "Primi F1 pa yena e usuario."
 
 #: gui/mdmwebkit.c:933
 msgid "Language"
-msgstr "Taal"
+msgstr "Idioma"
 
 #: gui/mdmwebkit.c:934
 msgid "Select a language"
-msgstr "Kies een taal"
+msgstr "Selektá un idioma"
 
 #: gui/mdmwebkit.c:935
 msgid "Are you sure you want to quit?"
-msgstr "Weet u zeker dat u wilt afsluiten?"
+msgstr "Bo tin sigur ku bo ke sali?"
 
 #: gui/mdmwebkit.c:936
 msgid "Close"
-msgstr "Sluiten"
+msgstr "Sera"
 
 #: gui/mdmsetup.c:264
 msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
 msgstr ""
-"Er is een fout opgetreden bij het contact maken met de aanmeldschermen. "
-"Waarschijnlijk zijn niet alle opwaarderingen geactiveerd."
+"Un eror a sugeri turesten tabata purba kontakta e pantaya pa login. No tur "
+"update lo a hasi efekto."
 
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
-msgstr ""
-"Automatisch of tijdgeschakeld aanmelden is niet toegestaan voor het "
-"rootaccount."
+msgstr "Login automatiko of login di time  na e akòunt root ta prohibi."
 
 #: gui/mdmsetup.c:519
 #, c-format
 msgid "The %s user UID is lower than 'MinimalUID'."
-msgstr "De %s gebruikers-UID is lager dan 'MinimalUID'."
+msgstr "E usuario %s su UID ta menos ku e 'MinimalUID'."
 
 #: gui/mdmsetup.c:526
 msgid "User not allowed"
-msgstr "Gebruiker niet toegestaan"
+msgstr "Usuario no tin pèrmit"
 
 #: gui/mdmsetup.c:776
 msgid "Autologin or timed login to the root account is not allowed."
-msgstr ""
-"Automatisch en tijdgeschakeld aanmelden is niet toegestaan voor het "
-"rootaccount."
+msgstr "Login automatiko of login di time  na e akòunt root no tin mag."
 
 #: gui/mdmsetup.c:1198
 msgid "No theme, just pure GTK"
-msgstr "Geen thema, gewoon pure GTK"
+msgstr "Sin tema, solamente puru GTK"
 
 #: gui/mdmsetup.c:1583
 msgid "Archive is not of a subdirectory"
-msgstr "Archief bevat geen submap"
+msgstr "Argif  no ta di un submap(map den un map)"
 
 #: gui/mdmsetup.c:1590
 msgid "Archive is not of a single subdirectory"
-msgstr "Archief bevat niet slechts één submap"
+msgstr "Argif  no ta di solamente un submap(map den un map)"
 
 #: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
 msgid "File not a tar.gz or tar archive"
-msgstr "Bestand is geen archief van het type tar.gz of tar"
+msgstr "Dokumento no ta tar.gz of tar argif"
 
 #: gui/mdmsetup.c:1630
 msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr "Archief bevat geen bestand van het type GdmGreeterTheme.info"
+msgstr "Argif no ta inklui  un dokumento GdmGreeterTheme.Info"
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
-msgstr "Bestand bestaat niet"
+msgstr "Dokumento no ta eksisti"
 
 #: gui/mdmsetup.c:1747
 #, c-format
@@ -194,195 +190,191 @@ msgstr "%s"
 
 #: gui/mdmsetup.c:1754
 msgid "Not a theme archive"
-msgstr "Geen thema-archief"
+msgstr "No ta un argif di tema"
 
 #: gui/mdmsetup.c:1776
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
-msgstr ""
-"Themamap '%s' lijkt al geïnstalleerd te zijn. Toch opnieuw installeren?"
+msgstr "Map di tema '%s' ta parse di ta instala kaba. Instala atrobe?"
 
 #: gui/mdmsetup.c:1862
 msgid "Some error occurred when installing the theme"
-msgstr "Er is een fout opgetreden bij het installeren van het thema"
+msgstr "Algun eror a okuri durante instalashon di e tema"
 
 #: gui/mdmsetup.c:1905
 msgid "No file selected"
-msgstr "Geen bestand geselecteerd"
+msgstr "Niun dokumento selekta"
 
 #: gui/mdmsetup.c:1927
 msgid "Select Theme Archive"
-msgstr "Thema-archief kiezen"
+msgstr "Selekta e Tema Argif"
 
 #: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
 msgid "_Install"
-msgstr "_Installeren"
+msgstr "_Install"
 
 #: gui/mdmsetup.c:1935
 msgid "Theme archives"
-msgstr "Thema-archieven"
+msgstr "Thema argifnan"
 
 #: gui/mdmsetup.c:2002
 #, c-format
 msgid "Remove the \"%s\" theme?"
-msgstr "Het thema '%s' verwijderen?"
+msgstr "Kita e \"%s\" tema?"
 
 #: gui/mdmsetup.c:2009
 msgid "If you choose to remove the theme, it will be permanently lost."
-msgstr ""
-"Indien u ervoor kiest om het thema te verwijderen, zal het definitief "
-"verloren gaan."
+msgstr "Si bo skohe pa kita e tema e lo ta permanentemente pèrdi."
 
 #: gui/mdmsetup.c:2017
 msgid "_Remove Theme"
-msgstr "_Thema verwijderen"
+msgstr "_Kita Tema"
 
 #: gui/mdmsetup.c:2135
 #, c-format
 msgid "Install the theme from '%s'?"
-msgstr "Het thema installeren vanuit '%s' ?"
+msgstr "Instala e tema for di '%s'?"
 
 #: gui/mdmsetup.c:2136
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
-msgstr ""
-"Kies 'installeren' om het thema vanuit het bestand '%s' toe te voegen."
+msgstr "Selekta instala pa añadi e tema for di file '%s'."
 
 #: gui/mdmsetup.c:2407
 msgid "Images"
-msgstr "Afbeeldingen"
+msgstr "Imagennan"
 
 #: gui/mdmsetup.c:2412
 msgid "All Files"
-msgstr "Alle bestanden"
+msgstr "Tur Dokumentonan"
 
 #: gui/mdmsetup.c:2547
 msgid "Automatically detected"
-msgstr "Automatisch gedetecteerd"
+msgstr "Detekta automatikamente"
 
 #: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
 msgid "Theme"
-msgstr "Thema"
+msgstr "Tema"
 
 #: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
 msgid "Auto login"
-msgstr "Automatisch aanmelden"
+msgstr "Login automatiko"
 
 #: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
 msgid "Options"
-msgstr "Opties"
+msgstr "Opshonnan"
 
 #: gui/mdmsetup.c:2702
 msgid "Add a new theme"
-msgstr "Een nieuw thema toevoegen"
+msgstr "Añadi un tema nobo"
 
 #: gui/mdmsetup.c:2703
 msgid "Remove the selected theme"
-msgstr "Het geselecteerde thema verwijderen"
+msgstr "Kita e tema selekta"
 
 #: gui/mdmsetup.c:2704
 msgid "Launch the login screen to preview the theme"
-msgstr "Start het aanmeldscherm voor een voorbeeldweergave van het thema"
+msgstr "Lansa e pantaya di login pa premira e tema"
 
 #: gui/mdmsetup.c:2722
 msgid "Please install 'numlockx' to enable this feature"
-msgstr "Installeer a.u.b. 'numlockx' om deze functie in te schakelen"
+msgstr "Por fabor instala 'numlockx' pa aktiva e feature aki"
 
 #: gui/mdmsetup.c:2919
 msgid "Could not access configuration file (defaults.conf)"
-msgstr "Kon instellingenbestand (defaults.conf) niet benaderen"
+msgstr "No por a aksesa e dokumento di konfigurashon (defaults.conf)"
 
 #: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
 msgid ""
 "Make sure that the file exists before launching login manager config utility."
 msgstr ""
-"Zorg ervoor dat het bestand bestaat voordat u het hulpprogramma opstart voor "
-"het instellen van de aanmeldbeheerder."
+"Sigura bo mes ku e dokumento ta eksisti prome ku bo lansa e login manager "
+"config utility."
 
 #: gui/mdmsetup.c:2936
 msgid "Could not access configuration file"
-msgstr "Kon instellingenbestand niet benaderen"
+msgstr "No por aksesa e dokumento di konfigurashon"
 
 #: gui/mdmsetup.c:2984
 msgid "You must be root to configure MDM."
-msgstr "U dient root te zijn om MDM in te stellen."
+msgstr "Bo mester ta root pa por konfigura MDM."
 
 #: gui/mdmsetup.glade.h:1
 msgid "Login Window Preferences"
-msgstr "Voorkeuren van aanmeldvenster"
+msgstr "Login Window Preferences"
 
 #: gui/mdmsetup.glade.h:3
 msgid "Background"
-msgstr "Achtergrond"
+msgstr "Fondo"
 
 #: gui/mdmsetup.glade.h:4
 msgid "_Image:"
-msgstr "_Afbeelding:"
+msgstr "_imagennan:"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
-msgstr "Toont deze afbeelding als de achtergrond in het begroetingsscherm."
+msgstr "Ta mustra e imagen aki komo fondo di e kumindado."
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
-msgstr "Achtergrondafbeelding kiezen"
+msgstr "Selekta e imagen di fondo"
 
 #: gui/mdmsetup.glade.h:7
 msgid "Pick background color"
-msgstr "Achtergrondkleur kiezen"
+msgstr "Skohe kolo di fondo"
 
 #: gui/mdmsetup.glade.h:8
 msgid "Co_lor:"
-msgstr "_Kleur:"
+msgstr "Co_lor:"
 
 #: gui/mdmsetup.glade.h:9
 msgid "Background color of the greeter."
-msgstr "Achtergrondkleur van het begroetingsscherm."
+msgstr "Kolo di fondo pa e kumindado."
 
 #: gui/mdmsetup.glade.h:10
 msgid "Welcome Message"
-msgstr "Welkomstbericht"
+msgstr "Mensahe di Bon Bini"
 
 #: gui/mdmsetup.glade.h:11
 msgid "C_ustom:"
-msgstr "_Aangepast:"
+msgstr "C_ustom:"
 
 #: gui/mdmsetup.glade.h:12
 msgid ""
 "Controls which text to display next to the logo image in the standard "
 "greeter."
 msgstr ""
-"Bepaalt welke tekst er wordt getoond naast de logo-afbeelding in het "
-"standaardbegroetingsscherm."
+"Kontrola kua teksto ta aparese banda di e imagen logo den e kumindado "
+"standard."
 
 #: gui/mdmsetup.glade.h:14
 #, no-c-format
 msgid "%n will be replaced by hostname"
-msgstr "%n zal worden vervangen door de computernaam"
+msgstr "%n lo wòrdu remplasa dor di e hostname"
 
 #: gui/mdmsetup.glade.h:15
 msgid "_Default:"
-msgstr "_Standaard:"
+msgstr "_Default:"
 
 #: gui/mdmsetup.glade.h:16
 msgid "'Welcome'"
-msgstr "'Welkom'"
+msgstr "'Bon bini'"
 
 #: gui/mdmsetup.glade.h:17
 msgid "_Enable Automatic Login"
-msgstr "_Automatische aanmelding inschakelen"
+msgstr "_Aktiva Login Automatiko"
 
 #: gui/mdmsetup.glade.h:18
 msgid ""
 "Given user should be logged in upon first bootup. No password will be asked."
 msgstr ""
-"Opgegeven gebruiker zou moeten worden aangemeld bij eerste opstart. Er zal "
-"niet om een wachtwoord worden gevraagd."
+"E usuario mester ta di login durante e prome bootup. Niun kontraseña lo "
+"wòrdu pidi."
 
 #: gui/mdmsetup.glade.h:19
 msgid "_User:"
-msgstr "_Gebruiker:"
+msgstr "_Usuario:"
 
 #: gui/mdmsetup.glade.h:20
 msgid "Dummy"
@@ -390,65 +382,63 @@ msgstr "Dummy"
 
 #: gui/mdmsetup.glade.h:21
 msgid "Enable _Timed Login"
-msgstr "_Tijdgeschakelde aanmelding gebruiken"
+msgstr "Aktiva _Timed Login"
 
 #: gui/mdmsetup.glade.h:22
 msgid ""
 "Given user should be logged in after a number of seconds of inactivity on "
 "the login screen."
 msgstr ""
-"Opgegeven gebruiker zou moeten worden aangemeld na een aantal seconden "
-"inactiviteit op het aanmeldscherm."
+"E usuario mester ta di login despues di par di sekòndenan di inaktividat na "
+"e pantaya di login."
 
 #: gui/mdmsetup.glade.h:23
 msgid "U_ser:"
-msgstr "_Gebruiker:"
+msgstr "U_ser:"
 
 #: gui/mdmsetup.glade.h:24
 msgid "_Pause before login:"
-msgstr "_Wachttijd voor aanmelding:"
+msgstr "_Pause prome ku e login:"
 
 #: gui/mdmsetup.glade.h:25
 msgid "Delay in seconds before the timed login user will be logged in."
-msgstr ""
-"Vertraging in seconden voordat de gebruiker met tijdgeschakelde aanmelding "
-"zal worden aangemeld."
+msgstr "Retraso den sekònde prome e timed login usuario lo wòrdu di login."
 
 #: gui/mdmsetup.glade.h:26
 msgid "seconds"
-msgstr "seconden"
+msgstr "sekòndenan"
 
 #: gui/mdmsetup.glade.h:27
 msgid "dummy"
-msgstr "proef"
+msgstr "dummy"
 
 #: gui/mdmsetup.glade.h:29
 msgid "Allow root login"
-msgstr "Aanmelding met rootaccount toestaan"
+msgstr "Permiti login root"
 
 #: gui/mdmsetup.glade.h:30
 msgid "Log debug information to /var/log/syslog"
-msgstr "Sla foutopsporingsinformatie op in /var/log/syslog"
+msgstr "Warda e informashon debug na  /var/log/syslog"
 
 #: gui/mdmsetup.glade.h:31
 msgid "Sends debug output to the syslog."
-msgstr "Stuurt foutopsporingsuitvoer naar het syslog."
+msgstr "Ta manda e debug output na e syslog."
 
 #: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"
-msgstr "Kies automatisch de laatst aangemelde gebruiker"
+msgstr "Selekta e usuario ku a login lastu automatikamente"
 
 #: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
-msgstr "NumLock inschakelen"
+msgstr "Aktiva Numlock"
 
 #: gui/mdmsetup.glade.h:34
 msgid "Use 24 Hour Clock"
-msgstr "24-uursklok gebruiken"
+msgstr "Usa Oloshi di 24 ora"
 
 #: gui/mdmsetup.glade.h:35
 msgid "Primary monitor:"
-msgstr "Primair beeldscherm:"
+msgstr "Pantaya prinsipal:"
 
 #: gui/mdmsetup.glade.h:36
 msgid " "
@@ -456,29 +446,28 @@ msgstr " "
 
 #: gui/mdmsetup.glade.h:37
 msgid "Limit the session output"
-msgstr "Beperk de sessie-uitvoer"
+msgstr "Limita e output di e seshon"
 
 #: gui/mdmsetup.glade.h:38
 msgid ""
 "This prevents .xsession-errors from getting too big (200KB, a few thousand "
 "lines)."
 msgstr ""
-"Dit voorkomt dat .xsession-errors te groot wordt (maximaal 200 KB, enkele "
-"duizenden regels)"
+"Esaki ta preveni .xsession-errors di bira muchu grandi (200KB, un par di mil "
+"liñanan)."
 
 #: gui/mdmsetup.glade.h:39
 msgid "Filter the session output"
-msgstr "Filter de sessie-uitvoer"
+msgstr "Filtra e output di e seshon"
 
 #: gui/mdmsetup.glade.h:40
 msgid ""
 "This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
 "Glade...etc) from getting in .xsession-errors."
 msgstr ""
-"Dit voorkomt dat waarschuwingen van gemeenschappelijke bibliotheekbestanden "
-"en gereedschappen (zoals Gtk, Glib, Gio, Glade, enzovoorts) in .xsession-"
-"errors terechtkomen."
+"Esaki ta preveni atvertenshanan di e bibliotekanan i kahanan di hèrmènt "
+"komun (Gtk, Glib, Gio, Glade...etc) di drenta .xsession-errors."
 
 #: gui/mdmsetup.glade.h:41
 msgid "Default session:"
-msgstr "Standaardsessie:"
+msgstr "Seshon default:"

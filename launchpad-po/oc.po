@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-04-08 18:16+0000\n"
+"PO-Revision-Date: 2016-09-29 20:09+0000\n"
 "Last-Translator: Cédric VALMARY (Tot en òc) <cvalmary@yahoo.fr>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-06-25 09:29+0000\n"
-"X-Generator: Launchpad (build 18111)\n"
+"X-Launchpad-Export-Date: 2016-11-09 17:14+0000\n"
+"X-Generator: Launchpad (build 18255)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -35,7 +35,7 @@ msgstr "Me_tre en velha"
 
 #: gui/mdmwebkit.c:202
 msgid "Are you sure you want to restart the computer?"
-msgstr "Sètz segur que volètz tornar amodar l'ordenador ?"
+msgstr "Sètz segur que volètz reaviar l'ordenador ?"
 
 #: gui/mdmwebkit.c:202
 msgid "_Restart"
@@ -60,7 +60,7 @@ msgstr "Ja connectat"
 #: gui/mdmwebkit.c:890
 #, c-format
 msgid "There was an error loading the theme %s"
-msgstr "Una error s'es produsida al cargament del tèma %s"
+msgstr "Una error s'es produita al cargament del tèma %s"
 
 #: gui/mdmwebkit.c:918
 msgid "Login"
@@ -96,27 +96,27 @@ msgstr "Quitar"
 
 #: gui/mdmwebkit.c:927
 msgid "Restart"
-msgstr "Tornar amodar"
+msgstr "Reaviar"
 
 #: gui/mdmwebkit.c:928
 msgid "Session"
-msgstr "Sesilha"
+msgstr "Session"
 
 #: gui/mdmwebkit.c:929
 msgid "Select a session"
-msgstr "Seleccionatz una sesilha"
+msgstr "Seleccionatz una session"
 
 #: gui/mdmwebkit.c:930
 msgid "Default session"
-msgstr "Sesilha per defaut"
+msgstr "Session per defaut"
 
 #: gui/mdmwebkit.c:931
 msgid "Please select a user."
-msgstr ""
+msgstr "Seleccionatz un utilizaire."
 
 #: gui/mdmwebkit.c:932
 msgid "Press F1 to enter a username."
-msgstr ""
+msgstr "Quichatz sus F1 per entrar un nom d’utilizaire."
 
 #: gui/mdmwebkit.c:933
 msgid "Language"
@@ -139,43 +139,49 @@ msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
 msgstr ""
+"Una error s'es produita pendent la temptativa de contacte d'ecrans de "
+"connexion. Totas las mesas a jorn an pas pogut prene efièit."
 
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
 msgstr ""
+"La connexion automatica o la connexion diferida sul compte administrator "
+"(root) es pas autorizada."
 
 #: gui/mdmsetup.c:519
 #, c-format
 msgid "The %s user UID is lower than 'MinimalUID'."
-msgstr ""
+msgstr "L'UID de l'utilizairer %s es inferior a 'MinimalUID'."
 
 #: gui/mdmsetup.c:526
 msgid "User not allowed"
-msgstr ""
+msgstr "Utilizaire pas autorizat"
 
 #: gui/mdmsetup.c:776
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr ""
+"La connexion automatica o la connexion diferida sul compte administrator "
+"(root) es pas autorizada."
 
 #: gui/mdmsetup.c:1198
 msgid "No theme, just pure GTK"
-msgstr ""
+msgstr "Pas de tèma, GTK a l'estat pur"
 
 #: gui/mdmsetup.c:1583
 msgid "Archive is not of a subdirectory"
-msgstr ""
+msgstr "L'archiu es pas un sosrepertòri"
 
 #: gui/mdmsetup.c:1590
 msgid "Archive is not of a single subdirectory"
-msgstr ""
+msgstr "L'archiu es pas un unic sosrepertòri"
 
 #: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
 msgid "File not a tar.gz or tar archive"
-msgstr ""
+msgstr "Lo fichièr es pas un archiu tar.gz o tar"
 
 #: gui/mdmsetup.c:1630
 msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr ""
+msgstr "L'archiu inclutz pas de fichièr GdmGreeterTheme.info"
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
@@ -188,7 +194,7 @@ msgstr "%s"
 
 #: gui/mdmsetup.c:1754
 msgid "Not a theme archive"
-msgstr ""
+msgstr "Es pas un archiu de tèma"
 
 #: gui/mdmsetup.c:1776
 #, c-format
@@ -257,7 +263,7 @@ msgstr "Tèma"
 
 #: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
 msgid "Auto login"
-msgstr ""
+msgstr "Connexion automatica"
 
 #: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
 msgid "Options"
@@ -265,7 +271,7 @@ msgstr "Opcions"
 
 #: gui/mdmsetup.c:2702
 msgid "Add a new theme"
-msgstr ""
+msgstr "Apondre un tèma novèl"
 
 #: gui/mdmsetup.c:2703
 msgid "Remove the selected theme"
@@ -290,15 +296,15 @@ msgstr ""
 
 #: gui/mdmsetup.c:2936
 msgid "Could not access configuration file"
-msgstr ""
+msgstr "Impossible d'accedir al fichièr de configuracion"
 
 #: gui/mdmsetup.c:2984
 msgid "You must be root to configure MDM."
-msgstr ""
+msgstr "Vos cal èsser root per configurar MDM."
 
 #: gui/mdmsetup.glade.h:1
 msgid "Login Window Preferences"
-msgstr ""
+msgstr "Preferéncias de la fenèstra de connexion"
 
 #: gui/mdmsetup.glade.h:3
 msgid "Background"
@@ -314,11 +320,11 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
-msgstr ""
+msgstr "Seleccionar un imatge de rèireplan"
 
 #: gui/mdmsetup.glade.h:7
 msgid "Pick background color"
-msgstr ""
+msgstr "Seleccionar una color de rèireplan"
 
 #: gui/mdmsetup.glade.h:8
 msgid "Co_lor:"
@@ -330,7 +336,7 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:10
 msgid "Welcome Message"
-msgstr ""
+msgstr "Messatge d'acuèlh"
 
 #: gui/mdmsetup.glade.h:11
 msgid "C_ustom:"
@@ -353,11 +359,11 @@ msgstr "_Defaut :"
 
 #: gui/mdmsetup.glade.h:16
 msgid "'Welcome'"
-msgstr ""
+msgstr "\"Benvenguda\""
 
 #: gui/mdmsetup.glade.h:17
 msgid "_Enable Automatic Login"
-msgstr ""
+msgstr "Activar la connexion auto_matica"
 
 #: gui/mdmsetup.glade.h:18
 msgid ""
@@ -374,7 +380,7 @@ msgstr "Factici"
 
 #: gui/mdmsetup.glade.h:21
 msgid "Enable _Timed Login"
-msgstr ""
+msgstr "Activar la connexion _diferida"
 
 #: gui/mdmsetup.glade.h:22
 msgid ""
@@ -384,11 +390,11 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:23
 msgid "U_ser:"
-msgstr "U_tilizaire :"
+msgstr "U_tilizaire :"
 
 #: gui/mdmsetup.glade.h:24
 msgid "_Pause before login:"
-msgstr ""
+msgstr "_Pausa abans connexion :"
 
 #: gui/mdmsetup.glade.h:25
 msgid "Delay in seconds before the timed login user will be logged in."
@@ -420,7 +426,7 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
-msgstr ""
+msgstr "Activar NumLock"
 
 #: gui/mdmsetup.glade.h:34
 msgid "Use 24 Hour Clock"
@@ -428,7 +434,7 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:35
 msgid "Primary monitor:"
-msgstr ""
+msgstr "Monitor principal :"
 
 #: gui/mdmsetup.glade.h:36
 msgid " "
@@ -446,7 +452,7 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:39
 msgid "Filter the session output"
-msgstr ""
+msgstr "Filtrar la sortida de la session"
 
 #: gui/mdmsetup.glade.h:40
 msgid ""
@@ -456,4 +462,4 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:41
 msgid "Default session:"
-msgstr ""
+msgstr "Session per defaut :"

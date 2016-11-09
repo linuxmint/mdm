@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2015-08-29 18:59+0000\n"
+"PO-Revision-Date: 2016-10-28 12:57+0000\n"
 "Last-Translator: Kamala Kannan <Unknown>\n"
 "Language-Team: Tamil <ta@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-06-25 09:29+0000\n"
-"X-Generator: Launchpad (build 18111)\n"
+"X-Launchpad-Export-Date: 2016-11-09 17:14+0000\n"
+"X-Generator: Launchpad (build 18255)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -112,11 +112,11 @@ msgstr "முன்னிருப்பு அமர்வு"
 
 #: gui/mdmwebkit.c:931
 msgid "Please select a user."
-msgstr ""
+msgstr "ஒரு பயனரை தேர்வு செய்யவும்"
 
 #: gui/mdmwebkit.c:932
 msgid "Press F1 to enter a username."
-msgstr ""
+msgstr "பயனர்பெயரை உள்ளிட F1ஐ அழுத்தவும்"
 
 #: gui/mdmwebkit.c:933
 msgid "Language"
@@ -179,7 +179,7 @@ msgstr ""
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
-msgstr ""
+msgstr "கோப்பு இருப்பில் இல்லை"
 
 #: gui/mdmsetup.c:1747
 #, c-format
@@ -241,7 +241,7 @@ msgstr ""
 
 #: gui/mdmsetup.c:2407
 msgid "Images"
-msgstr ""
+msgstr "படங்கள்"
 
 #: gui/mdmsetup.c:2412
 msgid "All Files"
@@ -249,7 +249,7 @@ msgstr "அனைத்து கோப்புகள்"
 
 #: gui/mdmsetup.c:2547
 msgid "Automatically detected"
-msgstr ""
+msgstr "தானாக கண்டறியப்பட்டது"
 
 #: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
 msgid "Theme"
@@ -298,7 +298,7 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:1
 msgid "Login Window Preferences"
-msgstr ""
+msgstr "நுழைவாயில் விருப்பங்கள்"
 
 #: gui/mdmsetup.glade.h:3
 msgid "Background"
@@ -306,7 +306,7 @@ msgstr "பின்னணி"
 
 #: gui/mdmsetup.glade.h:4
 msgid "_Image:"
-msgstr ""
+msgstr "படம் (_I):"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
@@ -314,11 +314,11 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
-msgstr ""
+msgstr "பின்னணி படத்தை தேர்வுசெய்"
 
 #: gui/mdmsetup.glade.h:7
 msgid "Pick background color"
-msgstr ""
+msgstr "பின்னணி நிறத்தை தேர்வு செய்"
 
 #: gui/mdmsetup.glade.h:8
 msgid "Co_lor:"
@@ -420,7 +420,7 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
-msgstr ""
+msgstr "நம்லாக் இயலச்செய்"
 
 #: gui/mdmsetup.glade.h:34
 msgid "Use 24 Hour Clock"

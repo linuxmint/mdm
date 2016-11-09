@@ -8,26 +8,26 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-05-11 17:42+0000\n"
-"Last-Translator: Isidro Pisa <isidro@utils.info>\n"
+"PO-Revision-Date: 2016-08-18 13:57+0000\n"
+"Last-Translator: Robert Antoni Buj Gelonch <Unknown>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-06-25 09:29+0000\n"
-"X-Generator: Launchpad (build 18111)\n"
+"X-Launchpad-Export-Date: 2016-11-09 17:14+0000\n"
+"X-Generator: Launchpad (build 18255)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
-msgstr "Segur que voleu aturar l'ordinador?"
+msgstr "Esteu segur que voleu apagar l'ordinador?"
 
 #: gui/mdmwebkit.c:191
 msgid "Shut _Down"
-msgstr "Atura"
+msgstr "_Apaga"
 
 #: gui/mdmwebkit.c:196
 msgid "Are you sure you want to suspend the computer?"
-msgstr "Esteu segur que voleu suspendre la màquina?"
+msgstr "Esteu segur que voleu suspendre l'ordinador?"
 
 #: gui/mdmwebkit.c:196
 msgid "_Suspend"
@@ -35,7 +35,7 @@ msgstr "_Suspèn"
 
 #: gui/mdmwebkit.c:202
 msgid "Are you sure you want to restart the computer?"
-msgstr "Esteu segur que voleu reiniciar la màquina?"
+msgstr "Esteu segur que voleu reiniciar l'ordinador?"
 
 #: gui/mdmwebkit.c:202
 msgid "_Restart"
@@ -43,7 +43,7 @@ msgstr "_Reinicia"
 
 #: gui/mdmwebkit.c:330
 msgid "User %u will login in %t"
-msgstr "L'usuari %u entrarà d'aquí a %t"
+msgstr "L'usuari %u iniciarà la sessió d'aquí a %t"
 
 #: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
 msgid "Username:"
@@ -55,7 +55,7 @@ msgstr "Contrasenya:"
 
 #: gui/mdmwebkit.c:820
 msgid "Already logged in"
-msgstr "Ja ha entrat"
+msgstr "Ja ha iniciat la sessió"
 
 #: gui/mdmwebkit.c:890
 #, c-format
@@ -64,7 +64,7 @@ msgstr "S'ha produït un error en carregar el tema %s"
 
 #: gui/mdmwebkit.c:918
 msgid "Login"
-msgstr "Inicia sessió"
+msgstr "Inicia la sessió"
 
 #: gui/mdmwebkit.c:919
 msgid "OK"
@@ -72,7 +72,7 @@ msgstr "D’acord"
 
 #: gui/mdmwebkit.c:920
 msgid "Cancel"
-msgstr "Cancel·lar"
+msgstr "Cancel·la"
 
 #: gui/mdmwebkit.c:921
 msgid "Please enter your username"
@@ -92,11 +92,11 @@ msgstr "Suspèn"
 
 #: gui/mdmwebkit.c:926
 msgid "Quit"
-msgstr "Sortir"
+msgstr "Surt"
 
 #: gui/mdmwebkit.c:927
 msgid "Restart"
-msgstr "Reiniciar"
+msgstr "Reinicia"
 
 #: gui/mdmwebkit.c:928
 msgid "Session"
@@ -104,7 +104,7 @@ msgstr "Sessió"
 
 #: gui/mdmwebkit.c:929
 msgid "Select a session"
-msgstr "Selecciona una sessió"
+msgstr "Seleccioneu una sessió"
 
 #: gui/mdmwebkit.c:930
 msgid "Default session"
@@ -124,7 +124,7 @@ msgstr "Idioma"
 
 #: gui/mdmwebkit.c:934
 msgid "Select a language"
-msgstr "Selecciona un idioma"
+msgstr "Seleccioneu un idioma"
 
 #: gui/mdmwebkit.c:935
 msgid "Are you sure you want to quit?"
@@ -139,19 +139,19 @@ msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
 msgstr ""
-"S'ha produït un error en intentar contactar les finestres d'entrada. "
-"Possiblement no s'hagin fet totes les actualitzacions."
+"S'ha produït un error en intentar contactar amb les pantalles d'inici de "
+"sessió. Possiblement no s'hagin fet totes les actualitzacions."
 
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
 msgstr ""
-"No es permeten les entrades automàtiques o temporitzades al compte del "
-"superusuari (root)."
+"Els inicis de sessió automàtics o programats al compte de root estan "
+"prohibits."
 
 #: gui/mdmsetup.c:519
 #, c-format
 msgid "The %s user UID is lower than 'MinimalUID'."
-msgstr "El UID d'usuari %s es menor que 'MinimalUID'."
+msgstr "L'UID de l'usuari %s és menor que 'MinimalUID'."
 
 #: gui/mdmsetup.c:526
 msgid "User not allowed"
@@ -160,8 +160,8 @@ msgstr "Usuari no autoritzat"
 #: gui/mdmsetup.c:776
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr ""
-"No es permeten les entrades automàtiques o temporitzades al compte del "
-"superusuari (root)."
+"No es permeten els inicis de sessió automàtics o programats al compte de "
+"root."
 
 #: gui/mdmsetup.c:1198
 msgid "No theme, just pure GTK"
@@ -218,7 +218,7 @@ msgstr "Seleccioneu un arxiu de tema"
 
 #: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
 msgid "_Install"
-msgstr "_Instaŀlar"
+msgstr "_Instal·la"
 
 #: gui/mdmsetup.c:1935
 msgid "Theme archives"
@@ -227,11 +227,11 @@ msgstr "Arxius de tema"
 #: gui/mdmsetup.c:2002
 #, c-format
 msgid "Remove the \"%s\" theme?"
-msgstr "Suprimir el tema \"%s\"?"
+msgstr "Voleu suprimir el tema «%s»?"
 
 #: gui/mdmsetup.c:2009
 msgid "If you choose to remove the theme, it will be permanently lost."
-msgstr "Si escolliu eliminar el tema, aquest es perdrà permanentment."
+msgstr "Si escolliu suprimir el tema, aquest es perdrà permanentment."
 
 #: gui/mdmsetup.c:2017
 msgid "_Remove Theme"
@@ -240,12 +240,12 @@ msgstr "_Suprimeix el tema"
 #: gui/mdmsetup.c:2135
 #, c-format
 msgid "Install the theme from '%s'?"
-msgstr "Voleu instal·lar el tema de '%s'?"
+msgstr "Voleu instal·lar el tema de «%s»?"
 
 #: gui/mdmsetup.c:2136
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
-msgstr "Seleccioneu «Instal·la» per a afegir el tema del fitxer «%s»."
+msgstr "Seleccioneu «Instal·la» per a afegir el tema des del fitxer «%s»."
 
 #: gui/mdmsetup.c:2407
 msgid "Images"
@@ -281,8 +281,7 @@ msgstr "Elimina el tema seleccionat"
 
 #: gui/mdmsetup.c:2704
 msgid "Launch the login screen to preview the theme"
-msgstr ""
-"Obri la pantalla d'inici de sessió per obtenir una vista prèvia del tema"
+msgstr "Llança la pantalla d'inici de sessió per a una vista prèvia del tema"
 
 #: gui/mdmsetup.c:2722
 msgid "Please install 'numlockx' to enable this feature"
@@ -305,7 +304,7 @@ msgstr "No s'ha pogut accedir al fitxer de configuració"
 
 #: gui/mdmsetup.c:2984
 msgid "You must be root to configure MDM."
-msgstr "Heu de ser administrador (root) per configurar MDM"
+msgstr "Heu de ser root per configurar MDM"
 
 #: gui/mdmsetup.glade.h:1
 msgid "Login Window Preferences"
@@ -321,7 +320,7 @@ msgstr "_Imatge:"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
-msgstr "Mostra aquesta imatge com a fons de pantalla de benvinguda."
+msgstr "Mostra aquesta imatge com a fons de pantalla a la benvinguda."
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
@@ -352,13 +351,13 @@ msgid ""
 "Controls which text to display next to the logo image in the standard "
 "greeter."
 msgstr ""
-"Controla quin text es mostra al costat del logotip en la finestra de "
-"benvinguda estàndar"
+"Controla quin text es mostra al costat del logotip a la finestra de la "
+"benvinguda estàndard."
 
 #: gui/mdmsetup.glade.h:14
 #, no-c-format
 msgid "%n will be replaced by hostname"
-msgstr "Se substituirà %n pel nom de l'ordinador"
+msgstr "Se substituirà %n amb el nom d'amfitrió"
 
 #: gui/mdmsetup.glade.h:15
 msgid "_Default:"
@@ -370,14 +369,14 @@ msgstr "'Benvingut'"
 
 #: gui/mdmsetup.glade.h:17
 msgid "_Enable Automatic Login"
-msgstr "_Habilitar l'inici de sessió automàtic"
+msgstr "_Habilita l'inici de sessió automàtic"
 
 #: gui/mdmsetup.glade.h:18
 msgid ""
 "Given user should be logged in upon first bootup. No password will be asked."
 msgstr ""
-"L'usuari indicat iniciarà sessió en la primera arrencada. No es demanarà "
-"contrasenya."
+"L'usuari indicat iniciarà la sessió a la primera arrencada. No es demanarà "
+"cap contrasenya."
 
 #: gui/mdmsetup.glade.h:19
 msgid "_User:"
@@ -389,14 +388,14 @@ msgstr "Prova"
 
 #: gui/mdmsetup.glade.h:21
 msgid "Enable _Timed Login"
-msgstr "Habilitar l'inici de sessió _temporitzat"
+msgstr "Habilitar l'inici de sessió programa_t"
 
 #: gui/mdmsetup.glade.h:22
 msgid ""
 "Given user should be logged in after a number of seconds of inactivity on "
 "the login screen."
 msgstr ""
-"L'usuari indicat iniciarà sessió després d'uns de segons d'inactivitat en la "
+"L'usuari indicat iniciarà sessió després d'uns de segons d'inactivitat a la "
 "pantalla d'inici de sessió."
 
 #: gui/mdmsetup.glade.h:23
@@ -409,7 +408,7 @@ msgstr "_Pausa abans d'iniciar sessió:"
 
 #: gui/mdmsetup.glade.h:25
 msgid "Delay in seconds before the timed login user will be logged in."
-msgstr "Retard en segons abans de l'inici de sessió temporitzat."
+msgstr "Retard en segons abans de l'inici de sessió programat."
 
 #: gui/mdmsetup.glade.h:26
 msgid "seconds"
@@ -421,19 +420,19 @@ msgstr "de prova"
 
 #: gui/mdmsetup.glade.h:29
 msgid "Allow root login"
-msgstr "Permetre inici de sessió com a administrador (root)"
+msgstr "Permet l'inici de sessió de root"
 
 #: gui/mdmsetup.glade.h:30
 msgid "Log debug information to /var/log/syslog"
-msgstr "Registrar l'informació de depuració a /var/log/syslog"
+msgstr "Registra la informació de depuració a /var/log/syslog"
 
 #: gui/mdmsetup.glade.h:31
 msgid "Sends debug output to the syslog."
-msgstr "Envia resultats de depuració al syslog"
+msgstr "Envia la sortida de depuració al syslog"
 
 #: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"
-msgstr "Sel·leccionar automàticament el darrer usuari que ha iniciat sessió"
+msgstr "Selecciona automàticament l'usuari que ha iniciat l'última sessió"
 
 #: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
@@ -441,7 +440,7 @@ msgstr "Habilitar NumLock"
 
 #: gui/mdmsetup.glade.h:34
 msgid "Use 24 Hour Clock"
-msgstr "Usar el format 24 hores"
+msgstr "Utilitza el rellotge de 24 hores"
 
 #: gui/mdmsetup.glade.h:35
 msgid "Primary monitor:"
@@ -453,14 +452,15 @@ msgstr " "
 
 #: gui/mdmsetup.glade.h:37
 msgid "Limit the session output"
-msgstr "Limitar les sortides de la sessió"
+msgstr "Limita la sortida de la sessió"
 
 #: gui/mdmsetup.glade.h:38
 msgid ""
 "This prevents .xsession-errors from getting too big (200KB, a few thousand "
 "lines)."
 msgstr ""
-"Això evita que .xsession-errors creixi massa (200KB, uns milers de línies)."
+"Això evita que .xsession-errors creixi massa (200KB, alguns milers de "
+"línies)."
 
 #: gui/mdmsetup.glade.h:39
 msgid "Filter the session output"
@@ -471,9 +471,10 @@ msgid ""
 "This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
 "Glade...etc) from getting in .xsession-errors."
 msgstr ""
-"Això evita que els avisos de les llibreries i kits d'eines comunes (Gtk, "
-"Glib, Gio, Glade ... etc) s'incloguin en .xsession-errors."
+"Això evita que les advertències de les biblioteques comunes i dels conjunts "
+"d'eines comuns (Gtk, Glib, Gio, Glade ... etc) s'incloguin a .xsession-"
+"errors."
 
 #: gui/mdmsetup.glade.h:41
 msgid "Default session:"
-msgstr "Sessió predeterminada"
+msgstr "Sessió predeterminada:"
