@@ -980,7 +980,7 @@ case "$host" in
 	HOST_XSESSION_SHELL=/bin/sh
 	HOST_SOUND_PROGRAM=/usr/bin/paplay
 	HOST_MDMGNOMESESSIONCMD=cinnamon-session
-	HOST_UTMP_LINE_ATTACHED="/dev/console"
+	HOST_UTMP_LINE_ATTACHED="/dev/tty0"
 	HOST_UTMP_PSEUDO_DEVICE="false"
 	;;
 esac

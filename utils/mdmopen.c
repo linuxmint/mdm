@@ -51,7 +51,7 @@
 #define VTNAME "/dev/tty%d"
 #endif
 
-#define MDMCONSOLEDEVICE "/dev/console"
+#define MDMCONSOLEDEVICE "/dev/tty0"
 
 #ifdef ESIX_5_3_2_D
 #define	VTBASE		"/dev/vt%02d"

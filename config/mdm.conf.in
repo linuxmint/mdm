@@ -440,13 +440,13 @@ Gestures=false
 # using VT, then MDM will use the value specified by this optional argument.
 # If the device argument is not defined, then MDM will use the default setting
 # for attached displays defined in the UtmpLineAttached configuration option.
-# For the main display (typically DISPLAY ":0"), "/dev/console" is a reasonable
+# For the main display (typically DISPLAY ":0"), "/dev/tty0" is a reasonable
 # value.  For other displays it is probably best to not include this argument
 # unless you know the specific device associated with the DISPLAY.  The device
 # value can contain "%d" which is translated to the DISPLAY value or %h which
 # is translated to the hostname.
 #
-0=Standard device=/dev/console
+0=Standard device=/dev/tty0
 
 # Example of how to set up DISPLAY :1 to also use Standard.
 #1=Standard
