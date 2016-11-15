@@ -1171,13 +1171,14 @@ mainloop_sig_callback (int sig, gpointer data)
 	switch (sig)
 		{
 		case SIGCHLD:
+			mdm_debug ("mainloop_sig_callback: Got SIGCHLD!");
 			while (mdm_cleanup_children ())
 				;
 			break;
 
 		case SIGINT:
 		case SIGTERM:
-			mdm_debug ("mainloop_sig_callback: Got TERM/INT. Going down!");
+			mdm_debug ("mainloop_sig_callback: Got SIGTERM/SIGINT. Going down!");
 			mdm_final_cleanup ();
 			exit (EXIT_SUCCESS);
 			break;
@@ -1197,15 +1198,18 @@ mainloop_sig_callback (int sig, gpointer data)
 #endif
 
 		case SIGHUP:
+			mdm_debug ("mainloop_sig_callback: Got SIGHUP!");
 			//mdm_restart_now ();
 			break;
 
 		case SIGUSR1:
+			mdm_debug ("mainloop_sig_callback: Got SIGUSR1!");
 			mdm_restart_mode = TRUE;
 			mdm_safe_restart ();
 			break;
 
 		default:
+			mdm_debug ("mainloop_sig_callback: Unkown signal!");
 			break;
 		}
 
