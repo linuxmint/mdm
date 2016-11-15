@@ -1,3 +1,13 @@
+mdm (2.0.14) serena; urgency=medium
+
+  * VT: Switch from /dev/console to /dev/tty0
+  * mdm: Don't exit on SIGHUP
+  * mdm: Add more debug info when receiving signals
+  * slave: Don't call mdm_slave_quick_exit() on shutdown/restart
+  * hidpi, mdm-get-monitor-scale: Specify Gdk version in gi import
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 15 Nov 2016 14:03:08 +0000
+
 mdm (2.0.13) serena; urgency=medium
 
   * Xsession.d/99mdm: Set default XDG_DATA_DIRS if the variable is not set
