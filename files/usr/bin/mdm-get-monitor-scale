@@ -1,5 +1,7 @@
 #!/usr/bin/python2
 
+import gi
+gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk
 import sys
 import os
