@@ -1,3 +1,9 @@
+mdm (2.0.15) serena; urgency=medium
+
+  * greeter: Explicitly set the keyboard layout
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 15 Nov 2016 16:02:42 +0000
+
 mdm (2.0.14) serena; urgency=medium
 
   * VT: Switch from /dev/console to /dev/tty0
