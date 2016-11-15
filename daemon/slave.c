@@ -694,7 +694,7 @@ term_session_stop_and_quit (void)
 	 * may just get us an XIOError */
 	d->dsp = NULL;
 
-	mdm_slave_quick_exit (exit_code_to_use);
+	//mdm_slave_quick_exit (exit_code_to_use);
 }
 
 static void
