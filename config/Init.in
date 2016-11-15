@@ -42,4 +42,8 @@ fi
 
 DISPLAY=:0 /usr/bin/syndaemon -d -i 1.0 -t -K -R
 
+# Apply the keyboard configuration from /etc/default/keyboard
+# This is needed on some computers using Logitech USB keyboards
+/usr/bin/mdm-set-keyboard-layout
+
 exit 0
