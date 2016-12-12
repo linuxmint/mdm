@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: mdm\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-05-16 16:25+0000\n"
+"PO-Revision-Date: 2016-11-20 08:54+0000\n"
 "Last-Translator: KAMI <kami911@gmail.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-11-09 17:14+0000\n"
-"X-Generator: Launchpad (build 18255)\n"
+"X-Launchpad-Export-Date: 2016-12-12 12:14+0000\n"
+"X-Generator: Launchpad (build 18292)\n"
 "Language: hu\n"
 
 #: gui/mdmwebkit.c:191
@@ -228,7 +228,7 @@ msgstr "Témaarchívumok"
 #: gui/mdmsetup.c:2002
 #, c-format
 msgid "Remove the \"%s\" theme?"
-msgstr "„%s” téma eltávolítása?"
+msgstr "El kívánja távolítani a következő témát: „%s”?"
 
 #: gui/mdmsetup.c:2009
 msgid "If you choose to remove the theme, it will be permanently lost."
@@ -305,7 +305,8 @@ msgstr "A beállítófájl nem érhető el"
 
 #: gui/mdmsetup.c:2984
 msgid "You must be root to configure MDM."
-msgstr "Csak rendszergazda (root) jogosultságokkal állíthatja be a MDM-et."
+msgstr ""
+"Kizárólag rendszergazda (root) jogosultságokkal állíthatja be a MDM-et."
 
 #: gui/mdmsetup.glade.h:1
 msgid "Login Window Preferences"
@@ -396,8 +397,8 @@ msgid ""
 "Given user should be logged in after a number of seconds of inactivity on "
 "the login screen."
 msgstr ""
-"A megadott felhasználó bejelentkeztetése a bejelentkezési felületen "
-"inaktívan töltött másodpercben megadott idő után."
+"A megadott felhasználó bejelentkeztetése a bejelentkezési felületen tétlenül "
+"töltött másodpercben megadott idő után."
 
 #: gui/mdmsetup.glade.h:23
 msgid "U_ser:"
@@ -431,7 +432,7 @@ msgstr "Hibakeresési információk naplózása a „/var/log/syslog” fájlba"
 
 #: gui/mdmsetup.glade.h:31
 msgid "Sends debug output to the syslog."
-msgstr "Hibakereső kimenetet küld a rendszernaplóba."
+msgstr "Hibakeresési információk naplózása a rendszernaplóba."
 
 #: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"

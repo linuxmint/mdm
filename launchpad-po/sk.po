@@ -8,18 +8,18 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-05-15 07:48+0000\n"
+"PO-Revision-Date: 2016-12-10 17:47+0000\n"
 "Last-Translator: Dusan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-11-09 17:14+0000\n"
-"X-Generator: Launchpad (build 18255)\n"
+"X-Launchpad-Export-Date: 2016-12-12 12:14+0000\n"
+"X-Generator: Launchpad (build 18292)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
-msgstr "Ste si istý, že chcete vypnúť počítač?"
+msgstr "Naozaj chcete vypnúť počítač?"
 
 #: gui/mdmwebkit.c:191
 msgid "Shut _Down"
@@ -60,7 +60,7 @@ msgstr "Už je prihlásený"
 #: gui/mdmwebkit.c:890
 #, c-format
 msgid "There was an error loading the theme %s"
-msgstr "Pri načítavaní témy %s nastala chyba"
+msgstr "Pri načítavaní motívu %s nastala chyba"
 
 #: gui/mdmwebkit.c:918
 msgid "Login"
@@ -80,7 +80,7 @@ msgstr "Prosím, zadajte vaše používateľské meno"
 
 #: gui/mdmwebkit.c:922
 msgid "Please enter your password"
-msgstr "Prosím zadajte svoje heslo"
+msgstr "Prosím, zadajte vaše heslo"
 
 #: gui/mdmwebkit.c:924
 msgid "Shutdown"
@@ -124,7 +124,7 @@ msgstr "Jazyk"
 
 #: gui/mdmwebkit.c:934
 msgid "Select a language"
-msgstr "Zvoľte si jazyk"
+msgstr "Vyberte jazyk"
 
 #: gui/mdmwebkit.c:935
 msgid "Are you sure you want to quit?"
@@ -144,7 +144,7 @@ msgstr ""
 
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
-msgstr "Automatické alebo časované prihlásenie na účet správcu je zakázané."
+msgstr "Automatické alebo časované prihlásenie účtu správcu je zakázané."
 
 #: gui/mdmsetup.c:519
 #, c-format
@@ -191,18 +191,19 @@ msgstr "%s"
 
 #: gui/mdmsetup.c:1754
 msgid "Not a theme archive"
-msgstr "Toto nie je archív s témou."
+msgstr "Toto nie je archív s motívom."
 
 #: gui/mdmsetup.c:1776
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
 msgstr ""
-"Adresár témy „%s“ už existuje. Chcete aj napriek tomu túto tému inštalovať?"
+"Adresár motívu „%s“ už existuje. Chcete aj napriek tomu tento motív "
+"nainštalovať?"
 
 #: gui/mdmsetup.c:1862
 msgid "Some error occurred when installing the theme"
-msgstr "Počas inštalácie témy nastala chyba"
+msgstr "Počas inštalácie motívu nastala chyba"
 
 #: gui/mdmsetup.c:1905
 msgid "No file selected"
@@ -210,7 +211,7 @@ msgstr "Nie je vybraný žiadny súbor"
 
 #: gui/mdmsetup.c:1927
 msgid "Select Theme Archive"
-msgstr "Zvoliť archív tém"
+msgstr "Vybrať archív s motívom"
 
 #: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
 msgid "_Install"
@@ -218,30 +219,30 @@ msgstr "_Nainštalovať"
 
 #: gui/mdmsetup.c:1935
 msgid "Theme archives"
-msgstr "Archívy s témou"
+msgstr "Archívy s motívmi"
 
 #: gui/mdmsetup.c:2002
 #, c-format
 msgid "Remove the \"%s\" theme?"
-msgstr "Odstrániť tému „%s“?"
+msgstr "Odstrániť motív „%s“?"
 
 #: gui/mdmsetup.c:2009
 msgid "If you choose to remove the theme, it will be permanently lost."
-msgstr "Ak zvolíte odstránenie témy, bude navždy stratená."
+msgstr "Ak zvolíte odstránenie motívu, bude navždy stratený."
 
 #: gui/mdmsetup.c:2017
 msgid "_Remove Theme"
-msgstr "_Odstrániť tému"
+msgstr "_Odstrániť motív"
 
 #: gui/mdmsetup.c:2135
 #, c-format
 msgid "Install the theme from '%s'?"
-msgstr "Inštalovať tému z „%s“?"
+msgstr "Inštalovať motív z „%s“?"
 
 #: gui/mdmsetup.c:2136
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
-msgstr "Na pridanie témy zo súboru „%s“ zvoľte inštalovať."
+msgstr "Na pridanie motívu zo súboru „%s“ zvoľte inštalovať."
 
 #: gui/mdmsetup.c:2407
 msgid "Images"
@@ -253,11 +254,11 @@ msgstr "Všetky súbory"
 
 #: gui/mdmsetup.c:2547
 msgid "Automatically detected"
-msgstr "Automaticky detekované"
+msgstr "Automaticky rozpoznané"
 
 #: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
 msgid "Theme"
-msgstr "Téma"
+msgstr "Motív"
 
 #: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
 msgid "Auto login"
@@ -265,19 +266,19 @@ msgstr "Automatické prihlásenie"
 
 #: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
 msgid "Options"
-msgstr "Možnosti"
+msgstr "Voľby"
 
 #: gui/mdmsetup.c:2702
 msgid "Add a new theme"
-msgstr "Pridať novú tému"
+msgstr "Pridať nový motív"
 
 #: gui/mdmsetup.c:2703
 msgid "Remove the selected theme"
-msgstr "Odstrániť vybranú tému"
+msgstr "Odstrániť vybraný motív"
 
 #: gui/mdmsetup.c:2704
 msgid "Launch the login screen to preview the theme"
-msgstr "Spustiť prihlasovaciu obrazovku na prehliadnutie témy"
+msgstr "Spustiť prihlasovaciu obrazovku na prehliadnutie motívu"
 
 #: gui/mdmsetup.c:2722
 msgid "Please install 'numlockx' to enable this feature"
@@ -319,7 +320,7 @@ msgstr "Zobrazí obrázok ako pozadie privítania."
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
-msgstr "Vyberte obrázok pre pozadie"
+msgstr "Vyberte obrázok pozadia"
 
 #: gui/mdmsetup.glade.h:7
 msgid "Pick background color"
@@ -355,7 +356,7 @@ msgstr "%n bude nahradené názvom hostiteľa"
 
 #: gui/mdmsetup.glade.h:15
 msgid "_Default:"
-msgstr "_Východzia:"
+msgstr "_Predvolená:"
 
 #: gui/mdmsetup.glade.h:16
 msgid "'Welcome'"

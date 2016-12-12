@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-10-24 15:52+0000\n"
+"PO-Revision-Date: 2016-12-06 16:54+0000\n"
 "Last-Translator: Микола Ткач <Stuartlittle1970@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-11-09 17:14+0000\n"
-"X-Generator: Launchpad (build 18255)\n"
+"X-Launchpad-Export-Date: 2016-12-12 12:14+0000\n"
+"X-Generator: Launchpad (build 18292)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -51,7 +51,7 @@ msgstr "Ім'я користувача:"
 
 #: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
 msgid "Password:"
-msgstr "Потайслово:"
+msgstr "Гасло:"
 
 #: gui/mdmwebkit.c:820
 msgid "Already logged in"
@@ -80,7 +80,7 @@ msgstr "Будь ласка, уведіть Ваше ім'я користува�
 
 #: gui/mdmwebkit.c:922
 msgid "Please enter your password"
-msgstr "Будь ласка, уведіть Ваше потайслово"
+msgstr "Будь ласка, уведіть Ваше гасло"
 
 #: gui/mdmwebkit.c:924
 msgid "Shutdown"
@@ -279,7 +279,7 @@ msgstr "Вилучити вибрану тему"
 
 #: gui/mdmsetup.c:2704
 msgid "Launch the login screen to preview the theme"
-msgstr "Запуск екрану входу для попереднього перегляду теми"
+msgstr "Запуск екрану входу для передогляду теми"
 
 #: gui/mdmsetup.c:2722
 msgid "Please install 'numlockx' to enable this feature"
@@ -374,8 +374,8 @@ msgstr "_Дозволити самочинний вхід у систему"
 msgid ""
 "Given user should be logged in upon first bootup. No password will be asked."
 msgstr ""
-"Даний користувач повинен бути зареєстрований при першому завантаженні. "
-"Потайслово не знадобиться."
+"Даний користувач повинен бути зареєстрований при першому завантаженні. Гасло "
+"не знадобиться."
 
 #: gui/mdmsetup.glade.h:19
 msgid "_User:"
