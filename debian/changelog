@@ -1,3 +1,9 @@
+mdm (2.0.16) serena; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 12 Dec 2016 13:11:01 +0000
+
 mdm (2.0.15) serena; urgency=medium
 
   * greeter: Explicitly set the keyboard layout
