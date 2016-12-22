@@ -801,7 +801,6 @@ mdm_slave_start (MdmDisplay *display)
 	/* Ignore SIGUSR1/SIGPIPE, and especially ignore it
 	   before the Setjmp */
 	mdm_signal_ignore (SIGUSR1);
-	mdm_signal_ignore (SIGHUP);
 	mdm_signal_ignore (SIGPIPE);
 
 	/* ignore power failures, up to user processes to
@@ -817,7 +816,6 @@ mdm_slave_start (MdmDisplay *display)
 	sigaddset (&mask, SIGCHLD);
 	sigaddset (&mask, SIGUSR2);
 	sigaddset (&mask, SIGUSR1); /* normally we ignore USR1 */
-	sigaddset (&mask, SIGHUP);
 
 	/* must set signal mask before the Setjmp as it will be
 	   restored, and we're only interested in catching the above signals */
@@ -5117,11 +5115,11 @@ mdm_slave_handle_notify (const char *msg)
 	} else if (sscanf (msg, MDM_NOTIFY_SYSTEM_MENU " %d", &val) == 1) {
 		mdm_daemon_config_set_value_bool (MDM_KEY_SYSTEM_MENU, val);
 		if (d->greetpid > 1)
-			kill (d->greetpid, SIGTERM);
+			kill (d->greetpid, SIGHUP);
 	} else if (sscanf (msg, MDM_NOTIFY_CONFIG_AVAILABLE " %d", &val) == 1) {
 		mdm_daemon_config_set_value_bool (MDM_KEY_CONFIG_AVAILABLE, val);
 		if (d->greetpid > 1)
-			kill (d->greetpid, SIGTERM);
+			kill (d->greetpid, SIGHUP);
 	} else if (sscanf (msg, MDM_NOTIFY_RETRY_DELAY " %d", &val) == 1) {
 		mdm_daemon_config_set_value_int (MDM_KEY_RETRY_DELAY, val);
 	} else if (sscanf (msg, MDM_NOTIFY_DISALLOW_TCP " %d", &val) == 1) {
@@ -5166,19 +5164,19 @@ mdm_slave_handle_notify (const char *msg)
 		mdm_daemon_config_set_value_string (MDM_KEY_SOUND_ON_LOGIN_FILE,
 						    (gchar *)(&msg[strlen (MDM_NOTIFY_SOUND_ON_LOGIN_FILE) + 1]));
 		if (d->greetpid > 1)
-			kill (d->greetpid, SIGTERM);
+			kill (d->greetpid, SIGHUP);
 	} else if (strncmp (msg, MDM_NOTIFY_SOUND_ON_LOGIN_SUCCESS_FILE " ",
 			    strlen (MDM_NOTIFY_SOUND_ON_LOGIN_SUCCESS_FILE) + 1) == 0) {
 		mdm_daemon_config_set_value_string (MDM_KEY_SOUND_ON_LOGIN_SUCCESS_FILE,
 						    (gchar *)(&msg[strlen (MDM_NOTIFY_SOUND_ON_LOGIN_SUCCESS_FILE) + 1]));
 		if (d->greetpid > 1)
-			kill (d->greetpid, SIGTERM);
+			kill (d->greetpid, SIGHUP);
 	} else if (strncmp (msg, MDM_NOTIFY_SOUND_ON_LOGIN_FAILURE_FILE " ",
 			    strlen (MDM_NOTIFY_SOUND_ON_LOGIN_FAILURE_FILE) + 1) == 0) {
 		mdm_daemon_config_set_value_string (MDM_KEY_SOUND_ON_LOGIN_FAILURE_FILE,
 						    (gchar *)(&msg[strlen (MDM_NOTIFY_SOUND_ON_LOGIN_FAILURE_FILE) + 1]));
 		if (d->greetpid > 1)
-			kill (d->greetpid, SIGTERM);
+			kill (d->greetpid, SIGHUP);
 	} else if (strncmp (msg, MDM_NOTIFY_GTK_MODULES_LIST " ",
 			    strlen (MDM_NOTIFY_GTK_MODULES_LIST) + 1) == 0) {
 		mdm_daemon_config_set_value_string (MDM_KEY_GTK_MODULES_LIST,

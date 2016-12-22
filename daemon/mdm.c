@@ -1199,7 +1199,7 @@ mainloop_sig_callback (int sig, gpointer data)
 
 		case SIGHUP:
 			mdm_debug ("mainloop_sig_callback: Got SIGHUP!");
-			//mdm_restart_now ();
+			mdm_restart_now ();
 			break;
 
 		case SIGUSR1:
