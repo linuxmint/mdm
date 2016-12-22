@@ -1,3 +1,9 @@
+mdm (2.0.17) serena; urgency=medium
+
+  * Revert "mdm: Don't exit on SIGHUP"
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 22 Dec 2016 12:24:29 +0000
+
 mdm (2.0.16) serena; urgency=medium
 
   * l10n: Update translations
