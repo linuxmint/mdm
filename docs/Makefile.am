@@ -1,10 +1,9 @@
-include $(top_srcdir)/gnome-doc-utils.make
-dist-hook: doc-dist-hook
+@YELP_HELP_RULES@
 
-DOC_MODULE = mdm
-DOC_ENTITIES = legal.xml
-DOC_INCLUDES =
-DOC_LINGUAS = en_GB
+HELP_ID = mdm
+HELP_FILES = mdm.xml legal.xml
+HELP_MEDIA =
+HELP_LINGUAS = en_GB
 # it ja zh_CN zh_HK zh_TW need to be transitioned to gnome-doc-utils
 
 man_MANS = mdm.1

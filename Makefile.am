@@ -23,11 +23,9 @@ EXTRA_DIST = \
 	README.install		\
 	intltool-extract.in	\
 	intltool-merge.in	\
-	intltool-update.in	\
-	gnome-doc-utils.make
+	intltool-update.in
 
 DISTCLEANFILES = \
-	gnome-doc-utils.make	\
 	intltool-extract	\
 	intltool-merge		\
 	intltool-update

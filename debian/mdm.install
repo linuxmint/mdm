@@ -26,9 +26,7 @@ debian/tmp/usr/share/mdm/*.glade
 debian/tmp/usr/share/mdm/locale
 debian/tmp/usr/share/mdm/recovery
 debian/tmp/usr/share/mdm/gtk-preview.png
-debian/tmp/usr/share/gnome/help/mdm
 debian/tmp/usr/share/icons/hicolor
 debian/tmp/usr/share/locale
-debian/tmp/usr/share/man
-debian/tmp/usr/share/omf/mdm
+debian/tmp/usr/share/help
 debian/tmp/usr/share/pixmaps
