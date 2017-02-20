@@ -30,3 +30,4 @@ debian/tmp/usr/share/icons/hicolor
 debian/tmp/usr/share/locale
 debian/tmp/usr/share/help
 debian/tmp/usr/share/pixmaps
+debian/tmp/usr/share/polkit-1/actions

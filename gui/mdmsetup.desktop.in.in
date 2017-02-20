@@ -2,8 +2,8 @@
 Encoding=UTF-8
 _Name=Login Window
 _Comment=Configure MDM login window appearance and behavior
-TryExec=@sbindir@/mdmsetup
-Exec=gksu @sbindir@/mdmsetup
+TryExec=@bindir@/mdmsetup-wrapper
+Exec=gksu @bindir@/mdmsetup-wrapper
 Icon=mdmsetup
 StartupNotify=true
 Terminal=false

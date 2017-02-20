@@ -3,6 +3,7 @@
 intltool-extract --type=gettext/glade gui/mdmsetup.glade
 
 xgettext --language=C --from-code=UTF-8 --keyword=_ --keyword=N_ --output=mdm.pot gui/mdmwebkit.c gui/mdmsetup.c gui/mdmsetup.glade.h
+xgettext --language=PolkitPolicy --its=polkit.its --join-existing --output=mdm.pot files/usr/share/polkit-1/actions/*.policy
 
 rm -f gui/mdmsetup.glade.h
 

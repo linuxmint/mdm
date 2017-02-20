@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+
+""" Launch the MDM "Login Window" configuration utility
+"""
+
+import os
+import subprocess
+
+def get_output_uni(*args):  # uni = Unicode 
+  return subprocess.check_output(*args, universal_newlines=True).rstrip()
+# We set "universal_newlines" in order to handle Unicode properly.  
+
+tool = "/usr/sbin/mdmsetup"
+
+launcher = get_output_uni("/usr/lib/linuxmint/common/mint-which-launcher.py")
+command = "{0} {1}".format(launcher, tool)
+os.system(command)
+
