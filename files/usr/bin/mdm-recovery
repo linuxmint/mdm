@@ -1,27 +1,32 @@
 #!/usr/bin/env python
 
 import os, sys, signal
+import gettext
+
+gettext.install('mdm', '/usr/share/locale')
 
 def signal_handler(signal, frame):        
     sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
 
-print """
-    WELCOME TO MDM RECOVERY
-    -----------------------
+print _("""
 
-    This utility will perform the following actions:
+WELCOME TO MDM RECOVERY
+-----------------------
 
-        - Make a backup copy of your login screen configuration in /etc/mdm/mdm.recovery-backup
-        - Set your login screen to use a safe configuration
-        - Reboot your computer
+This utility will perform the following actions:
 
-    Note: This utility requires root permission and might ask you for your password.
+    - Make a backup copy of your login screen configuration in 
+          /etc/mdm/mdm.recovery-backup
+    - Set your login screen to use a safe configuration
+    - Reboot your computer
 
-    Please press [Enter] to continue or [CTRL+C] to cancel.
+Note: This utility requires root permission and might ask you for your password.
 
-"""  
+Please press [Enter] to continue or [CTRL+C] to cancel.
+
+""")  
 raw_input('')
 
 if os.path.exists("/etc/mdm/mdm.conf"):

@@ -8,6 +8,8 @@ xgettext --language=C --from-code=UTF-8 --keyword=_ --keyword=N_ \
   gui/mdmsetup.c \
   gui/mdmsetup.glade.h
 xgettext --language=Python --keyword=_ --join-existing --output=mdm.pot \
+  files/usr/bin/mdm-recovery \
+  files/usr/bin/mdm-theme-emulator \
   files/usr/bin/mdmsetup-wrapper
 xgettext --language=PolkitPolicy --its=polkit.its --join-existing \
   --output=mdm.pot \
