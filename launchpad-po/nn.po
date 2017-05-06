@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2013-09-05 08:26+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2017-02-18 01:56+0000\n"
+"Last-Translator: Øystein Alværvik <Unknown>\n"
 "Language-Team: Norwegian Nynorsk <nn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-12-12 12:14+0000\n"
-"X-Generator: Launchpad (build 18292)\n"
+"X-Launchpad-Export-Date: 2017-05-06 12:38+0000\n"
+"X-Generator: Launchpad (build 18366)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -23,7 +23,7 @@ msgstr ""
 
 #: gui/mdmwebkit.c:191
 msgid "Shut _Down"
-msgstr ""
+msgstr "_Slå av"
 
 #: gui/mdmwebkit.c:196
 msgid "Are you sure you want to suspend the computer?"
@@ -47,11 +47,11 @@ msgstr ""
 
 #: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
 msgid "Username:"
-msgstr ""
+msgstr "Brukarnamn:"
 
 #: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
 msgid "Password:"
-msgstr ""
+msgstr "Passord:"
 
 #: gui/mdmwebkit.c:820
 msgid "Already logged in"
@@ -72,19 +72,19 @@ msgstr ""
 
 #: gui/mdmwebkit.c:920
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: gui/mdmwebkit.c:921
 msgid "Please enter your username"
-msgstr ""
+msgstr "Skriv inn brukarnamnet ditt"
 
 #: gui/mdmwebkit.c:922
 msgid "Please enter your password"
-msgstr ""
+msgstr "Skriv inn passordet ditt"
 
 #: gui/mdmwebkit.c:924
 msgid "Shutdown"
-msgstr ""
+msgstr "Slå av"
 
 #: gui/mdmwebkit.c:925
 msgid "Suspend"
@@ -104,7 +104,7 @@ msgstr ""
 
 #: gui/mdmwebkit.c:929
 msgid "Select a session"
-msgstr ""
+msgstr "Vel ei økt"
 
 #: gui/mdmwebkit.c:930
 msgid "Default session"
@@ -171,7 +171,7 @@ msgstr ""
 
 #: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
 msgid "File not a tar.gz or tar archive"
-msgstr ""
+msgstr "Fila er ikkje eit tar.gz- eller tar-arkiv"
 
 #: gui/mdmsetup.c:1630
 msgid "Archive does not include a GdmGreeterTheme.info file"
@@ -179,12 +179,12 @@ msgstr ""
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
-msgstr ""
+msgstr "Fila finst ikkje"
 
 #: gui/mdmsetup.c:1747
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: gui/mdmsetup.c:1754
 msgid "Not a theme archive"
@@ -241,7 +241,7 @@ msgstr ""
 
 #: gui/mdmsetup.c:2407
 msgid "Images"
-msgstr ""
+msgstr "Bilete"
 
 #: gui/mdmsetup.c:2412
 msgid "All Files"

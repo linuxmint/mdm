@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-11-22 18:31+0000\n"
+"PO-Revision-Date: 2017-04-30 19:43+0000\n"
 "Last-Translator: Belkacem Mohammed <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle <kab@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-12-12 12:14+0000\n"
-"X-Generator: Launchpad (build 18292)\n"
+"X-Launchpad-Export-Date: 2017-05-06 12:38+0000\n"
+"X-Generator: Launchpad (build 18366)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -60,85 +60,87 @@ msgstr "Yekcem yakan di"
 #: gui/mdmwebkit.c:890
 #, c-format
 msgid "There was an error loading the theme %s"
-msgstr ""
+msgstr "Teḍra-d tuccḍa deg usali n usentel %s"
 
 #: gui/mdmwebkit.c:918
 msgid "Login"
-msgstr ""
+msgstr "Anekcum"
 
 #: gui/mdmwebkit.c:919
 msgid "OK"
-msgstr ""
+msgstr "IH"
 
 #: gui/mdmwebkit.c:920
 msgid "Cancel"
-msgstr ""
+msgstr "Sefsex"
 
 #: gui/mdmwebkit.c:921
 msgid "Please enter your username"
-msgstr ""
+msgstr "Sekcem isem-ik n useqdac"
 
 #: gui/mdmwebkit.c:922
 msgid "Please enter your password"
-msgstr ""
+msgstr "Sekcem awal-k  uffir"
 
 #: gui/mdmwebkit.c:924
 msgid "Shutdown"
-msgstr ""
+msgstr "Sexsi"
 
 #: gui/mdmwebkit.c:925
 msgid "Suspend"
-msgstr ""
+msgstr "Seḥbes"
 
 #: gui/mdmwebkit.c:926
 msgid "Quit"
-msgstr ""
+msgstr "Ffeɣ"
 
 #: gui/mdmwebkit.c:927
 msgid "Restart"
-msgstr ""
+msgstr "Ales tanekra"
 
 #: gui/mdmwebkit.c:928
 msgid "Session"
-msgstr ""
+msgstr "Tiẓimit"
 
 #: gui/mdmwebkit.c:929
 msgid "Select a session"
-msgstr ""
+msgstr "Fren tiɣimt"
 
 #: gui/mdmwebkit.c:930
 msgid "Default session"
-msgstr ""
+msgstr "Tiɣimit tamezwert"
 
 #: gui/mdmwebkit.c:931
 msgid "Please select a user."
-msgstr ""
+msgstr "Fren aseqdac."
 
 #: gui/mdmwebkit.c:932
 msgid "Press F1 to enter a username."
-msgstr ""
+msgstr "Senned ɣef F1 akken ad tferneḍ aseqdac."
 
 #: gui/mdmwebkit.c:933
 msgid "Language"
-msgstr ""
+msgstr "Tutlayt"
 
 #: gui/mdmwebkit.c:934
 msgid "Select a language"
-msgstr ""
+msgstr "Fren tutlayt"
 
 #: gui/mdmwebkit.c:935
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "Tebɣiḍ ad teffɣeḍ?"
 
 #: gui/mdmwebkit.c:936
 msgid "Close"
-msgstr ""
+msgstr "Mdel"
 
 #: gui/mdmsetup.c:264
 msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
 msgstr ""
+"Teḍra-d tuccḍa deg uɛraḍ n unermes n igdilen n usedac. Ileqman ur ddin ara "
+"meṛṛa."
 
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
@@ -179,12 +181,12 @@ msgstr ""
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
-msgstr ""
+msgstr "Ulac afaylu"
 
 #: gui/mdmsetup.c:1747
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: gui/mdmsetup.c:1754
 msgid "Not a theme archive"
@@ -210,7 +212,7 @@ msgstr ""
 
 #: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
 msgid "_Install"
-msgstr ""
+msgstr "_Sebded"
 
 #: gui/mdmsetup.c:1935
 msgid "Theme archives"
@@ -219,7 +221,7 @@ msgstr ""
 #: gui/mdmsetup.c:2002
 #, c-format
 msgid "Remove the \"%s\" theme?"
-msgstr ""
+msgstr "Kkes asentel \"%s\"?"
 
 #: gui/mdmsetup.c:2009
 msgid "If you choose to remove the theme, it will be permanently lost."
@@ -227,45 +229,45 @@ msgstr ""
 
 #: gui/mdmsetup.c:2017
 msgid "_Remove Theme"
-msgstr ""
+msgstr "_Kkes asentel"
 
 #: gui/mdmsetup.c:2135
 #, c-format
 msgid "Install the theme from '%s'?"
-msgstr ""
+msgstr "Sebded asentel si  '%s'?"
 
 #: gui/mdmsetup.c:2136
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
-msgstr ""
+msgstr "Fren sebded akken ad ternuḍ asentel seg ufaylu '%s'."
 
 #: gui/mdmsetup.c:2407
 msgid "Images"
-msgstr ""
+msgstr "Tugniwin"
 
 #: gui/mdmsetup.c:2412
 msgid "All Files"
-msgstr ""
+msgstr "Akk ifuyla"
 
 #: gui/mdmsetup.c:2547
 msgid "Automatically detected"
-msgstr ""
+msgstr "Yettwaf s wudem awurman"
 
 #: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
 msgid "Theme"
-msgstr ""
+msgstr "Asentel"
 
 #: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
 msgid "Auto login"
-msgstr ""
+msgstr "Anekcum awurman"
 
 #: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
 msgid "Options"
-msgstr ""
+msgstr "Iɣewwaṛen"
 
 #: gui/mdmsetup.c:2702
 msgid "Add a new theme"
-msgstr ""
+msgstr "Rnu asentel amaynut"
 
 #: gui/mdmsetup.c:2703
 msgid "Remove the selected theme"
@@ -302,11 +304,11 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:3
 msgid "Background"
-msgstr ""
+msgstr "Agilal"
 
 #: gui/mdmsetup.glade.h:4
 msgid "_Image:"
-msgstr ""
+msgstr "_Tugna:"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
@@ -349,11 +351,11 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:15
 msgid "_Default:"
-msgstr ""
+msgstr "_Amezwer:"
 
 #: gui/mdmsetup.glade.h:16
 msgid "'Welcome'"
-msgstr ""
+msgstr "'Anṣuf'"
 
 #: gui/mdmsetup.glade.h:17
 msgid "_Enable Automatic Login"
@@ -366,7 +368,7 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:19
 msgid "_User:"
-msgstr ""
+msgstr "A_seqdac:"
 
 #: gui/mdmsetup.glade.h:20
 msgid "Dummy"
@@ -384,7 +386,7 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:23
 msgid "U_ser:"
-msgstr ""
+msgstr "Ase_qdac:"
 
 #: gui/mdmsetup.glade.h:24
 msgid "_Pause before login:"

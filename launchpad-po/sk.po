@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-12-10 17:47+0000\n"
+"PO-Revision-Date: 2016-12-12 18:48+0000\n"
 "Last-Translator: Dusan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-12-12 12:14+0000\n"
-"X-Generator: Launchpad (build 18292)\n"
+"X-Launchpad-Export-Date: 2017-05-06 12:38+0000\n"
+"X-Generator: Launchpad (build 18366)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -347,12 +347,12 @@ msgid ""
 "Controls which text to display next to the logo image in the standard "
 "greeter."
 msgstr ""
-"Kontroluje, ktorý text má byť zobrazený vedľa obrázku loga privítania."
+"Ovláda, aký text bude zobrazený vedľa obrázku loga v štandardnom privítaní."
 
 #: gui/mdmsetup.glade.h:14
 #, no-c-format
 msgid "%n will be replaced by hostname"
-msgstr "%n bude nahradené názvom hostiteľa"
+msgstr "Premenná %n bude nahradená názvom hostiteľa"
 
 #: gui/mdmsetup.glade.h:15
 msgid "_Default:"
@@ -360,7 +360,7 @@ msgstr "_Predvolená:"
 
 #: gui/mdmsetup.glade.h:16
 msgid "'Welcome'"
-msgstr "'Vitajte'"
+msgstr "„Vitajte“"
 
 #: gui/mdmsetup.glade.h:17
 msgid "_Enable Automatic Login"
@@ -435,11 +435,11 @@ msgstr "Povoliť NumLock"
 
 #: gui/mdmsetup.glade.h:34
 msgid "Use 24 Hour Clock"
-msgstr "Používať 24 hodinový režim času"
+msgstr "Použiť 24 hodinový formát hodín"
 
 #: gui/mdmsetup.glade.h:35
 msgid "Primary monitor:"
-msgstr "Primárny monitor:"
+msgstr "Hlavný monitor:"
 
 #: gui/mdmsetup.glade.h:36
 msgid " "

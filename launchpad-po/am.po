@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-10-22 18:11+0000\n"
+"PO-Revision-Date: 2017-02-20 18:29+0000\n"
 "Last-Translator: samson <Unknown>\n"
 "Language-Team: Amharic <am@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-12-12 12:14+0000\n"
-"X-Generator: Launchpad (build 18292)\n"
+"X-Launchpad-Export-Date: 2017-05-06 12:38+0000\n"
+"X-Generator: Launchpad (build 18366)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -142,12 +142,12 @@ msgstr "ስህተት ተፈጥሯል የ መግቢያ መመልከቻ በ መገ
 
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
-msgstr ""
+msgstr "በራሱ መግቢያ ወይንም በ ተወሰነ ጊዜ መግቢያ በ root መግለጫ የ ተከለከለ ነው"
 
 #: gui/mdmsetup.c:519
 #, c-format
 msgid "The %s user UID is lower than 'MinimalUID'."
-msgstr ""
+msgstr "የ %s ተጠቃሚ UID አነስተኛ ነው ከ 'MinimalUID'."
 
 #: gui/mdmsetup.c:526
 msgid "User not allowed"
@@ -155,11 +155,11 @@ msgstr "ይህ ተጠቃሚ ተከልክሏል"
 
 #: gui/mdmsetup.c:776
 msgid "Autologin or timed login to the root account is not allowed."
-msgstr ""
+msgstr "በራሱ መግቢያ ወይንም በ ተወሰነ ጊዜ መግቢያ በ root መግለጫ የ ተከለከለ ነው"
 
 #: gui/mdmsetup.c:1198
 msgid "No theme, just pure GTK"
-msgstr ""
+msgstr "ገጽታ የለም: ንፁህ GTK ብቻ"
 
 #: gui/mdmsetup.c:1583
 msgid "Archive is not of a subdirectory"
@@ -171,11 +171,11 @@ msgstr "ማህደሩ አንድ ንዑስ ዳይሬክቶሪ አይደለም"
 
 #: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
 msgid "File not a tar.gz or tar archive"
-msgstr ""
+msgstr "ፋይሉ የ tar.gz ወይንም የ tar archive አይደለም"
 
 #: gui/mdmsetup.c:1630
 msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr ""
+msgstr "ማህደር አያካትትም የ GdmGreeterTheme.info file"
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
@@ -194,7 +194,7 @@ msgstr "የገጽታ ማህደር አይደለም"
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
-msgstr ""
+msgstr "የ ገጽታ ዳይሬክቶሪ '%s' ቀደም ብሎ ተገጥሟል: ለማንኛውም ልግጠመው?"
 
 #: gui/mdmsetup.c:1862
 msgid "Some error occurred when installing the theme"
@@ -281,20 +281,20 @@ msgstr "እባክዎን ይግጠሙ የ 'numlockx' ይህን ገጽታ ለማ�
 
 #: gui/mdmsetup.c:2919
 msgid "Could not access configuration file (defaults.conf)"
-msgstr ""
+msgstr "ማሰናጃ ፋይል ጋር መድረስ አልተቻለም (defaults.conf)"
 
 #: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
 msgid ""
 "Make sure that the file exists before launching login manager config utility."
-msgstr ""
+msgstr "እርግጠኛ ይሁኑ ፋይሉ መኖሩን ከ ማስጀመርዎት በፊት የ መግቢያ አስተዳዳሪ ማሰናጃ መገልገያ"
 
 #: gui/mdmsetup.c:2936
 msgid "Could not access configuration file"
-msgstr ""
+msgstr "ማሰናጃ ፋይል ጋር መድረስ አልተቻለም"
 
 #: gui/mdmsetup.c:2984
 msgid "You must be root to configure MDM."
-msgstr ""
+msgstr "እርስዎ root መሆን አለብዎት ለማሰናዳት MDM."
 
 #: gui/mdmsetup.glade.h:1
 msgid "Login Window Preferences"
@@ -310,7 +310,7 @@ msgstr "_ምስል:"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
-msgstr ""
+msgstr "በ ሰላምታ መደብ ውስጥ ይህን ምስል ማሳያ"
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
@@ -340,7 +340,7 @@ msgstr "ማ_ስተካከያ:"
 msgid ""
 "Controls which text to display next to the logo image in the standard "
 "greeter."
-msgstr ""
+msgstr "የትኛው ጽሁፍ እንደሚታይ መቆጣጠሪያ ከ አርማው ምስል አጠገብ በ መደበኛ ሰላምታ ጊዜ"
 
 #: gui/mdmsetup.glade.h:14
 #, no-c-format
@@ -362,7 +362,7 @@ msgstr "ራሱ በራሱ መግቢያ _ማስቻያ"
 #: gui/mdmsetup.glade.h:18
 msgid ""
 "Given user should be logged in upon first bootup. No password will be asked."
-msgstr ""
+msgstr "ተጠቃሚው መግባት አለበት በ መጀመሪያው ማስነሻ: የ መግቢያ ቃል አይጠየቅም"
 
 #: gui/mdmsetup.glade.h:19
 msgid "_User:"
@@ -374,13 +374,13 @@ msgstr "አሻንጉሊት"
 
 #: gui/mdmsetup.glade.h:21
 msgid "Enable _Timed Login"
-msgstr ""
+msgstr "ማስቻያ በ _ተወሰነ ጊዜ መግቢያ"
 
 #: gui/mdmsetup.glade.h:22
 msgid ""
 "Given user should be logged in after a number of seconds of inactivity on "
 "the login screen."
-msgstr ""
+msgstr "ተጠቃሚው መግባት አለበት በ ጥቂት ሰከንዶች በ መግቢያ መመልከቻ ውስጥ"
 
 #: gui/mdmsetup.glade.h:23
 msgid "U_ser:"
@@ -388,11 +388,11 @@ msgstr "ተ_ጠቃሚ:"
 
 #: gui/mdmsetup.glade.h:24
 msgid "_Pause before login:"
-msgstr ""
+msgstr "_ማስቆሚያ ከ መግቢያ በፊት:"
 
 #: gui/mdmsetup.glade.h:25
 msgid "Delay in seconds before the timed login user will be logged in."
-msgstr ""
+msgstr "Delay in seconds before the timed login user will be logged in."
 
 #: gui/mdmsetup.glade.h:26
 msgid "seconds"
@@ -404,19 +404,19 @@ msgstr "አሻንጉሊት"
 
 #: gui/mdmsetup.glade.h:29
 msgid "Allow root login"
-msgstr ""
+msgstr "የ root መግቢያ ማስቻያ"
 
 #: gui/mdmsetup.glade.h:30
 msgid "Log debug information to /var/log/syslog"
-msgstr ""
+msgstr "የ መግቢያ መረጃ ማስተካከያ ወደ /var/log/syslog"
 
 #: gui/mdmsetup.glade.h:31
 msgid "Sends debug output to the syslog."
-msgstr ""
+msgstr "የ ችግሩን ውጤት ወደ ስርአት መግቢያ መላኪያ"
 
 #: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"
-msgstr ""
+msgstr "ራሱ በራሱ ይመርጣል መጨረሻ የ ገባውን ተጠቃሚ"
 
 #: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
@@ -436,23 +436,26 @@ msgstr " "
 
 #: gui/mdmsetup.glade.h:37
 msgid "Limit the session output"
-msgstr ""
+msgstr "የ ክፍለ ጊዜውን ውጤት መመጠኛ"
 
 #: gui/mdmsetup.glade.h:38
 msgid ""
 "This prevents .xsession-errors from getting too big (200KB, a few thousand "
 "lines)."
 msgstr ""
+"ይህ የሚከለክለው የ .xsession-errors በጣም ትልቅ ከ መሆን ነው (200KB, በ ጥቂቱ ሺ መስመሮች)."
 
 #: gui/mdmsetup.glade.h:39
 msgid "Filter the session output"
-msgstr ""
+msgstr "የ ክፍለ ጊዜ ማጣሪያ"
 
 #: gui/mdmsetup.glade.h:40
 msgid ""
 "This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
 "Glade...etc) from getting in .xsession-errors."
 msgstr ""
+"ይህ ማስጠንቀቂያ የሚከለክለው መደበኛ የ መጽሀፍት ቤት የ እቃዎች ጥቅል ነው (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
 
 #: gui/mdmsetup.glade.h:41
 msgid "Default session:"

@@ -8,18 +8,18 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2014-05-03 20:28+0000\n"
-"Last-Translator: Clement Lefebvre <root@linuxmint.com>\n"
+"PO-Revision-Date: 2017-01-25 03:07+0000\n"
+"Last-Translator: Siddharth Belbase <Unknown>\n"
 "Language-Team: Nepali <ne@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-12-12 12:14+0000\n"
-"X-Generator: Launchpad (build 18292)\n"
+"X-Launchpad-Export-Date: 2017-05-06 12:38+0000\n"
+"X-Generator: Launchpad (build 18366)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
-msgstr ""
+msgstr "के तपाईँ कम्प्युटर बन्द गर्न चाहनुहुन्छ ?"
 
 #: gui/mdmwebkit.c:191
 msgid "Shut _Down"
@@ -55,32 +55,32 @@ msgstr "गोप्यशब्द"
 
 #: gui/mdmwebkit.c:820
 msgid "Already logged in"
-msgstr ""
+msgstr "प्रबेशआज्ञा प्राप्त"
 
 #: gui/mdmwebkit.c:890
 #, c-format
 msgid "There was an error loading the theme %s"
-msgstr ""
+msgstr "विषयवस्तु %s लाई लोड गर्दा त्रुटि भएको छ ।"
 
 #: gui/mdmwebkit.c:918
 msgid "Login"
-msgstr ""
+msgstr "लगईन"
 
 #: gui/mdmwebkit.c:919
 msgid "OK"
-msgstr ""
+msgstr "ठीक छ"
 
 #: gui/mdmwebkit.c:920
 msgid "Cancel"
-msgstr ""
+msgstr "रद्द गर्नुहोस्"
 
 #: gui/mdmwebkit.c:921
 msgid "Please enter your username"
-msgstr ""
+msgstr "कृपया तपाईँको प्रयोगकर्ता नाम प्रविष्ट गर्नुहोस् ।"
 
 #: gui/mdmwebkit.c:922
 msgid "Please enter your password"
-msgstr ""
+msgstr "कृपया आफ्नो पास्वोर्ड राख्नुहोस"
 
 #: gui/mdmwebkit.c:924
 msgid "Shutdown"

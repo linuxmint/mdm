@@ -8,18 +8,18 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2014-05-03 21:39+0000\n"
-"Last-Translator: Clement Lefebvre <root@linuxmint.com>\n"
+"PO-Revision-Date: 2016-12-13 07:40+0000\n"
+"Last-Translator: ttv20 <ttv200@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-12-12 12:14+0000\n"
-"X-Generator: Launchpad (build 18292)\n"
+"X-Launchpad-Export-Date: 2017-05-06 12:38+0000\n"
+"X-Generator: Launchpad (build 18366)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
-msgstr ""
+msgstr "אתה בטוח שאתה רוצה לכבות את המחשב?"
 
 #: gui/mdmwebkit.c:191
 msgid "Shut _Down"
@@ -112,11 +112,11 @@ msgstr "ברירת מחדל"
 
 #: gui/mdmwebkit.c:931
 msgid "Please select a user."
-msgstr ""
+msgstr "נא לבחור משתמש."
 
 #: gui/mdmwebkit.c:932
 msgid "Press F1 to enter a username."
-msgstr ""
+msgstr "לחץ F1 כדי להקלדת שם המשתמש"
 
 #: gui/mdmwebkit.c:933
 msgid "Language"
@@ -139,15 +139,16 @@ msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
 msgstr ""
+"חלה שגיאה בניסיון יצירת הקשר עם מסכי ההתחברות. לא כל העדכונים בהכרח חלו."
 
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
-msgstr ""
+msgstr "התחברות אוטומטית או מתוזמנת למשתמש root אסורה."
 
 #: gui/mdmsetup.c:519
 #, c-format
 msgid "The %s user UID is lower than 'MinimalUID'."
-msgstr ""
+msgstr "קוד ה־UID‏ %s של המשתמש קטן מהקוד המינימלי המותר"
 
 #: gui/mdmsetup.c:526
 msgid "User not allowed"
@@ -155,11 +156,11 @@ msgstr ""
 
 #: gui/mdmsetup.c:776
 msgid "Autologin or timed login to the root account is not allowed."
-msgstr ""
+msgstr "התחברות אוטומטית או מתוזמנת למשתמש root אסורה."
 
 #: gui/mdmsetup.c:1198
 msgid "No theme, just pure GTK"
-msgstr ""
+msgstr "ללא ערכת נושא, רק GTK טהור"
 
 #: gui/mdmsetup.c:1583
 msgid "Archive is not of a subdirectory"
@@ -167,28 +168,28 @@ msgstr ""
 
 #: gui/mdmsetup.c:1590
 msgid "Archive is not of a single subdirectory"
-msgstr ""
+msgstr "הארכיון איננו תת-ספרייה יחידה"
 
 #: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
 msgid "File not a tar.gz or tar archive"
-msgstr ""
+msgstr "הקובץ איננו ארכיון tar.gz או tar"
 
 #: gui/mdmsetup.c:1630
 msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr ""
+msgstr "הארכיון איננו כולל את הקובץ GdmGreeterTheme.info"
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
-msgstr ""
+msgstr "הקובץ אינו קיים."
 
 #: gui/mdmsetup.c:1747
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: gui/mdmsetup.c:1754
 msgid "Not a theme archive"
-msgstr ""
+msgstr "זה לא ארכיון של ערכת נושא"
 
 #: gui/mdmsetup.c:1776
 #, c-format
@@ -202,111 +203,111 @@ msgstr ""
 
 #: gui/mdmsetup.c:1905
 msgid "No file selected"
-msgstr ""
+msgstr "לא נבחר קובץ"
 
 #: gui/mdmsetup.c:1927
 msgid "Select Theme Archive"
-msgstr ""
+msgstr "בחר ארכיון של ערכת נושא"
 
 #: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
 msgid "_Install"
-msgstr ""
+msgstr "_התקנה"
 
 #: gui/mdmsetup.c:1935
 msgid "Theme archives"
-msgstr ""
+msgstr "ארכיון ערכת הנושא"
 
 #: gui/mdmsetup.c:2002
 #, c-format
 msgid "Remove the \"%s\" theme?"
-msgstr ""
+msgstr "להסיר את ערכת הנושא \"%s\"?"
 
 #: gui/mdmsetup.c:2009
 msgid "If you choose to remove the theme, it will be permanently lost."
-msgstr ""
+msgstr "אם תבחר להסיר את ערכת הנושא, היא תאבד לנצח."
 
 #: gui/mdmsetup.c:2017
 msgid "_Remove Theme"
-msgstr ""
+msgstr "_ערכת נושא מרוחקת"
 
 #: gui/mdmsetup.c:2135
 #, c-format
 msgid "Install the theme from '%s'?"
-msgstr ""
+msgstr "התקן ערכת נושא חדשה מ־'%s'?"
 
 #: gui/mdmsetup.c:2136
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
-msgstr ""
+msgstr "בחר \"התקן\" בכדי להוסיף את ערכת הנושא מהקובץ '%s'."
 
 #: gui/mdmsetup.c:2407
 msgid "Images"
-msgstr ""
+msgstr "תמונות"
 
 #: gui/mdmsetup.c:2412
 msgid "All Files"
-msgstr ""
+msgstr "כל הקבצים"
 
 #: gui/mdmsetup.c:2547
 msgid "Automatically detected"
-msgstr ""
+msgstr "זוהה אוטומטית"
 
 #: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
 msgid "Theme"
-msgstr ""
+msgstr "ערכת נושא"
 
 #: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
 msgid "Auto login"
-msgstr ""
+msgstr "התחברות אוטומטית"
 
 #: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
 msgid "Options"
-msgstr ""
+msgstr "אפשרויות"
 
 #: gui/mdmsetup.c:2702
 msgid "Add a new theme"
-msgstr ""
+msgstr "הוסף ערכת נושא חדשה"
 
 #: gui/mdmsetup.c:2703
 msgid "Remove the selected theme"
-msgstr ""
+msgstr "הסר את הערכה הנבחרת"
 
 #: gui/mdmsetup.c:2704
 msgid "Launch the login screen to preview the theme"
-msgstr ""
+msgstr "הפעל את מסך ההתחברות לתצוגה מקדימה"
 
 #: gui/mdmsetup.c:2722
 msgid "Please install 'numlockx' to enable this feature"
-msgstr ""
+msgstr "נא התקן 'numlockx' להפעלת אפשרות זו"
 
 #: gui/mdmsetup.c:2919
 msgid "Could not access configuration file (defaults.conf)"
-msgstr ""
+msgstr "לא יכול לגשת לקובץ ההגדרות (defaults.conf)"
 
 #: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
 msgid ""
 "Make sure that the file exists before launching login manager config utility."
-msgstr ""
+msgstr "וודא שהקובץ קיים לפני פתיחת הכלי לניהול מסך התחברות"
 
 #: gui/mdmsetup.c:2936
 msgid "Could not access configuration file"
-msgstr ""
+msgstr "לא יכול לגשת לקובץ ההגדרות"
 
 #: gui/mdmsetup.c:2984
 msgid "You must be root to configure MDM."
-msgstr ""
+msgstr "אתה חייב להיות root כדי להגדיר את MDM"
 
 #: gui/mdmsetup.glade.h:1
 msgid "Login Window Preferences"
-msgstr ""
+msgstr "העדפות חלון ההתחברות"
 
 #: gui/mdmsetup.glade.h:3
 msgid "Background"
-msgstr ""
+msgstr "רקע"
 
 #: gui/mdmsetup.glade.h:4
 msgid "_Image:"
-msgstr ""
+msgstr "_תמונה:"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
@@ -314,15 +315,15 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
-msgstr ""
+msgstr "בחר תמונת רקע"
 
 #: gui/mdmsetup.glade.h:7
 msgid "Pick background color"
-msgstr ""
+msgstr "בחר צבע רקע"
 
 #: gui/mdmsetup.glade.h:8
 msgid "Co_lor:"
-msgstr ""
+msgstr "צ_בע:"
 
 #: gui/mdmsetup.glade.h:9
 msgid "Background color of the greeter."
@@ -330,11 +331,11 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:10
 msgid "Welcome Message"
-msgstr ""
+msgstr "הודעת ברוכים הבאים"
 
 #: gui/mdmsetup.glade.h:11
 msgid "C_ustom:"
-msgstr ""
+msgstr "מו_תאם אישית:"
 
 #: gui/mdmsetup.glade.h:12
 msgid ""
@@ -345,36 +346,36 @@ msgstr ""
 #: gui/mdmsetup.glade.h:14
 #, no-c-format
 msgid "%n will be replaced by hostname"
-msgstr ""
+msgstr "%n יוחלף ב-hostname"
 
 #: gui/mdmsetup.glade.h:15
 msgid "_Default:"
-msgstr ""
+msgstr "_בררת מחדל:"
 
 #: gui/mdmsetup.glade.h:16
 msgid "'Welcome'"
-msgstr ""
+msgstr "'ברוכים הבאים'"
 
 #: gui/mdmsetup.glade.h:17
 msgid "_Enable Automatic Login"
-msgstr ""
+msgstr "אפשר ה_תחברות אוטומטי"
 
 #: gui/mdmsetup.glade.h:18
 msgid ""
 "Given user should be logged in upon first bootup. No password will be asked."
-msgstr ""
+msgstr "המשתמש הנתון יחובר בהפעלה הראשונית, לא תתבקש סיסמה."
 
 #: gui/mdmsetup.glade.h:19
 msgid "_User:"
-msgstr ""
+msgstr "מ_שתמש:"
 
 #: gui/mdmsetup.glade.h:20
 msgid "Dummy"
-msgstr ""
+msgstr "דמה"
 
 #: gui/mdmsetup.glade.h:21
 msgid "Enable _Timed Login"
-msgstr ""
+msgstr "אפשר התחברות לאחר _זמן"
 
 #: gui/mdmsetup.glade.h:22
 msgid ""
@@ -384,19 +385,19 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:23
 msgid "U_ser:"
-msgstr ""
+msgstr "מ_שתמש:"
 
 #: gui/mdmsetup.glade.h:24
 msgid "_Pause before login:"
-msgstr ""
+msgstr "השהיה לפני התחברות:"
 
 #: gui/mdmsetup.glade.h:25
 msgid "Delay in seconds before the timed login user will be logged in."
-msgstr ""
+msgstr "מספר השניות לפני שהמשתמש הנבחר יחובר למערכת"
 
 #: gui/mdmsetup.glade.h:26
 msgid "seconds"
-msgstr ""
+msgstr "שניות"
 
 #: gui/mdmsetup.glade.h:27
 msgid "dummy"
@@ -404,7 +405,7 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:29
 msgid "Allow root login"
-msgstr ""
+msgstr "אפשר התחברות מנהל (root)"
 
 #: gui/mdmsetup.glade.h:30
 msgid "Log debug information to /var/log/syslog"
@@ -416,23 +417,23 @@ msgstr ""
 
 #: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"
-msgstr ""
+msgstr "בחר אוטומטית את המשתמש האחרון שהתחבר"
 
 #: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
-msgstr ""
+msgstr "אפשר את NumLock"
 
 #: gui/mdmsetup.glade.h:34
 msgid "Use 24 Hour Clock"
-msgstr ""
+msgstr "השתמש בשעון של 24 שעות"
 
 #: gui/mdmsetup.glade.h:35
 msgid "Primary monitor:"
-msgstr ""
+msgstr "מסך ראשי:"
 
 #: gui/mdmsetup.glade.h:36
 msgid " "
-msgstr ""
+msgstr " "
 
 #: gui/mdmsetup.glade.h:37
 msgid "Limit the session output"
