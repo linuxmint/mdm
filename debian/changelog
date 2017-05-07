@@ -1,3 +1,13 @@
+mdm (2.0.18) sonya; urgency=medium
+
+  [ Michael Webster ]
+  * Fix build for yakkety (remove use of gnome-doc-utils)
+
+  [ Clement Lefebvre ]
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun, 07 May 2017 16:55:51 +0100
+
 mdm (2.0.17) serena; urgency=medium
 
   * Revert "mdm: Don't exit on SIGHUP"
