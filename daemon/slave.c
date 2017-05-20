@@ -45,6 +45,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <sys/socket.h>
+#include <sys/prctl.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string.h>
@@ -170,6 +171,8 @@ static int extra_status                = 0;
 static int slave_waitpid_r             = -1;
 static int slave_waitpid_w             = -1;
 static GSList *slave_waitpids          = NULL;
+static GPid syndaemon_pid              = -1;
+static gboolean syndaemon_spawned      = FALSE;
 
 extern gboolean mdm_first_login;
 
@@ -282,6 +285,85 @@ slave_waitpid_setpid (pid_t pid)
 
 	slave_waitpids = g_slist_prepend (slave_waitpids, wp);
 	return wp;
+}
+
+/* Ensure that syndaemon dies together with us, to avoid running several of
+ * them */
+static void
+setup_syndaemon (gpointer user_data)
+{
+        prctl (PR_SET_PDEATHSIG, SIGHUP);
+}
+
+static gboolean
+have_program_in_path (const char *name)
+{
+        gchar *path;
+        gboolean result;
+
+        path = g_find_program_in_path (name);
+        result = (path != NULL);
+        g_free (path);
+        return result;
+}
+
+static void
+syndaemon_died (GPid pid, gint status, gpointer user_data)
+{
+        mdm_error ("syndaemon stopped with status %i", status);
+        g_spawn_close_pid (pid);
+        syndaemon_spawned = FALSE;
+}
+
+static int
+set_disable_w_typing (gboolean state)
+{
+        if (state) {
+                GError *error = NULL;
+                GPtrArray *args;
+
+                if (syndaemon_spawned)
+                    return 0;
+
+                if (!have_program_in_path ("syndaemon"))
+                    return 0;
+
+                args = g_ptr_array_new ();
+
+                g_ptr_array_add (args, "syndaemon");
+                g_ptr_array_add (args, "-i");
+                g_ptr_array_add (args, "1.0");
+                g_ptr_array_add (args, "-t");
+                g_ptr_array_add (args, "-K");
+                g_ptr_array_add (args, "-R");
+                g_ptr_array_add (args, NULL);
+
+                /* we must use G_SPAWN_DO_NOT_REAP_CHILD to avoid
+                 * double-forking, otherwise syndaemon will immediately get
+                 * killed again through (PR_SET_PDEATHSIG when the intermediate
+                 * process dies */
+                g_spawn_async (g_get_home_dir (), (char **) args->pdata, NULL,
+                                G_SPAWN_SEARCH_PATH|G_SPAWN_DO_NOT_REAP_CHILD, setup_syndaemon, NULL,
+                                &syndaemon_pid, &error);
+
+                syndaemon_spawned = (error == NULL);
+                g_ptr_array_free (args, FALSE);
+
+                if (error) {
+                        mdm_error ("Failed to launch syndaemon: %s", error->message);
+                        g_error_free (error);
+                } else {
+                        g_child_watch_add (syndaemon_pid, syndaemon_died, NULL);
+                        g_debug ("Launched syndaemon");
+                }
+        } else if (syndaemon_spawned) {
+                kill (syndaemon_pid, SIGHUP);
+                g_spawn_close_pid (syndaemon_pid);
+                syndaemon_spawned = FALSE;
+                g_debug ("Killed syndaemon");
+        }
+
+        return 0;
 }
 
 static void
@@ -2456,6 +2538,8 @@ mdm_slave_greeter (void)
 			}
 		}
 
+        set_disable_w_typing (TRUE);
+
 		mdm_debug ("mdm_slave_greeter: Launching greeter '%s'", command);
 
 		exec_command (command, NULL);
@@ -3596,6 +3680,8 @@ mdm_slave_session_start (void)
 
 	mdm_debug ("mdm_slave_session_start: Attempting session for user '%s'",
 		   login_user);
+
+    set_disable_w_typing (FALSE);
 
 	pwent = getpwnam (login_user);
 
