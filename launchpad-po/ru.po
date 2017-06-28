@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-05-14 10:16+0000\n"
-"Last-Translator: Murat Balkybaev <d2vsd1@mail.ru>\n"
+"PO-Revision-Date: 2017-05-09 09:39+0000\n"
+"Last-Translator: Ilis <ilis@inbox.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-05-06 12:38+0000\n"
-"X-Generator: Launchpad (build 18366)\n"
+"X-Launchpad-Export-Date: 2017-06-28 07:49+0000\n"
+"X-Generator: Launchpad (build 18416)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -112,7 +112,7 @@ msgstr "Сеанс по умолчанию"
 
 #: gui/mdmwebkit.c:931
 msgid "Please select a user."
-msgstr "Пожалуйста, выберите пользователя."
+msgstr "Выберите пользователя."
 
 #: gui/mdmwebkit.c:932
 msgid "Press F1 to enter a username."
@@ -355,7 +355,7 @@ msgstr ""
 #: gui/mdmsetup.glade.h:14
 #, no-c-format
 msgid "%n will be replaced by hostname"
-msgstr "Поле «%n» будет заменено на имя узла"
+msgstr "Поле «%n» будет заменено на имя компьютера"
 
 #: gui/mdmsetup.glade.h:15
 msgid "_Default:"
@@ -363,7 +363,7 @@ msgstr "_По умолчанию"
 
 #: gui/mdmsetup.glade.h:16
 msgid "'Welcome'"
-msgstr "\"Добро пожаловать!\""
+msgstr "«Добро пожаловать!»"
 
 #: gui/mdmsetup.glade.h:17
 msgid "_Enable Automatic Login"

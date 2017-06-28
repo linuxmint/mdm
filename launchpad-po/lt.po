@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2017-04-11 20:43+0000\n"
+"PO-Revision-Date: 2017-06-23 21:50+0000\n"
 "Last-Translator: Moo <hazap@hotmail.com>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-05-06 12:38+0000\n"
-"X-Generator: Launchpad (build 18366)\n"
+"X-Launchpad-Export-Date: 2017-06-28 07:49+0000\n"
+"X-Generator: Launchpad (build 18416)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -60,7 +60,7 @@ msgstr "Jau prisijungęs"
 #: gui/mdmwebkit.c:890
 #, c-format
 msgid "There was an error loading the theme %s"
-msgstr "Įkeliant stilių %s įvyko klaida"
+msgstr "Įkeliant temą %s įvyko klaida"
 
 #: gui/mdmwebkit.c:918
 msgid "Login"
@@ -139,7 +139,7 @@ msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
 msgstr ""
-"Bandant susisiekti su prisijungimo ekranais įvyko klaida. Galbūt įsigalėjo "
+"Bandant susisiekti su prisijungimo ekranais įvyko klaida. Galbūt įsigaliojo "
 "ne visi atnaujinimai."
 
 #: gui/mdmsetup.c:517
@@ -161,7 +161,7 @@ msgstr "Automatinis arba uždelstas prisijungimas kaip root neleidžiamas."
 
 #: gui/mdmsetup.c:1198
 msgid "No theme, just pure GTK"
-msgstr "Nėra stiliaus, tik grynas GTK"
+msgstr "Nėra temos, tik grynas GTK"
 
 #: gui/mdmsetup.c:1583
 msgid "Archive is not of a subdirectory"
@@ -190,18 +190,17 @@ msgstr "%s"
 
 #: gui/mdmsetup.c:1754
 msgid "Not a theme archive"
-msgstr "Ne stiliaus archyvas"
+msgstr "Nėra temos archyvas"
 
 #: gui/mdmsetup.c:1776
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
-msgstr ""
-"Atrodo, kad stiliaus aplankas „%s“ jau įdiegtas. Ar  įdiegti dar kartą?"
+msgstr "Atrodo, kad temos aplankas „%s“ jau įdiegtas. Ar įdiegti dar kartą?"
 
 #: gui/mdmsetup.c:1862
 msgid "Some error occurred when installing the theme"
-msgstr "Stiliaus įdiegimo metu įvyko kažkokia klaida"
+msgstr "Temos įdiegimo metu įvyko kažkokia klaida"
 
 #: gui/mdmsetup.c:1905
 msgid "No file selected"
@@ -209,7 +208,7 @@ msgstr "Nepasirinktas joks failas"
 
 #: gui/mdmsetup.c:1927
 msgid "Select Theme Archive"
-msgstr "Pasirinkite stiliaus archyvą"
+msgstr "Pasirinkite temos archyvą"
 
 #: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
 msgid "_Install"
@@ -217,30 +216,30 @@ msgstr "Įd_iegti"
 
 #: gui/mdmsetup.c:1935
 msgid "Theme archives"
-msgstr "Stilių archyvai"
+msgstr "Temų archyvai"
 
 #: gui/mdmsetup.c:2002
 #, c-format
 msgid "Remove the \"%s\" theme?"
-msgstr "Pašalinti stilių „%s“?"
+msgstr "Pašalinti temą „%s“?"
 
 #: gui/mdmsetup.c:2009
 msgid "If you choose to remove the theme, it will be permanently lost."
-msgstr "Jeigu pasirinksite pašalinti stilių, jis bus negrįžtamai prarastas."
+msgstr "Jeigu pasirinksite pašalinti temą, ji bus negrįžtamai prarasta."
 
 #: gui/mdmsetup.c:2017
 msgid "_Remove Theme"
-msgstr "_Pašalinti stilių"
+msgstr "_Pašalinti temą"
 
 #: gui/mdmsetup.c:2135
 #, c-format
 msgid "Install the theme from '%s'?"
-msgstr "Įdiegti stilių iš „%s“?"
+msgstr "Įdiegti temą iš „%s“?"
 
 #: gui/mdmsetup.c:2136
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
-msgstr "Norėdami įdiegti stilių iš failo „%s“ spauskite „Įdiegti“."
+msgstr "Norėdami įdiegti temą iš failo „%s“, spauskite „Įdiegti“."
 
 #: gui/mdmsetup.c:2407
 msgid "Images"
@@ -256,7 +255,7 @@ msgstr "Automatiškai aptinkamas"
 
 #: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
 msgid "Theme"
-msgstr "Stilius"
+msgstr "Tema"
 
 #: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
 msgid "Auto login"
@@ -268,15 +267,15 @@ msgstr "Parametrai"
 
 #: gui/mdmsetup.c:2702
 msgid "Add a new theme"
-msgstr "Pridėti naują stilių"
+msgstr "Pridėti naują temą"
 
 #: gui/mdmsetup.c:2703
 msgid "Remove the selected theme"
-msgstr "Pašalinti pažymėtą stilių"
+msgstr "Pašalinti pažymėtą temą"
 
 #: gui/mdmsetup.c:2704
 msgid "Launch the login screen to preview the theme"
-msgstr "Paleisti prisijungimo ekraną, kad peržiūrėtumėte stilių"
+msgstr "Paleisti prisijungimo ekraną, kad peržiūrėtumėte temą"
 
 #: gui/mdmsetup.c:2722
 msgid "Please install 'numlockx' to enable this feature"
@@ -315,7 +314,7 @@ msgstr "Atva_izdas:"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
-msgstr "Rodo šį paveikslėlį kaip pasveikintuvo foną."
+msgstr "Rodo šį paveikslą kaip sveikintojo foną."
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
