@@ -1,3 +1,9 @@
+mdm (2.0.19) sylvia; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 03 Nov 2017 21:25:17 +0000
+
 mdm (2.0.18) sonya; urgency=medium
 
   [ Michael Webster ]
