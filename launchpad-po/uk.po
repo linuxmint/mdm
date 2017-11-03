@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-12-06 16:54+0000\n"
-"Last-Translator: stuartlittle <Stuartlittle1970@gmail.com>\n"
+"PO-Revision-Date: 2017-09-20 11:41+0000\n"
+"Last-Translator: sharksoft <sharksmail@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-06-28 07:49+0000\n"
-"X-Generator: Launchpad (build 18416)\n"
+"X-Launchpad-Export-Date: 2017-11-03 11:42+0000\n"
+"X-Generator: Launchpad (build 18493)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -51,7 +51,7 @@ msgstr "Ім'я користувача:"
 
 #: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
 msgid "Password:"
-msgstr "Гасло:"
+msgstr "Пароль:"
 
 #: gui/mdmwebkit.c:820
 msgid "Already logged in"
@@ -68,7 +68,7 @@ msgstr "Увійти"
 
 #: gui/mdmwebkit.c:919
 msgid "OK"
-msgstr "Гаразд"
+msgstr "OK"
 
 #: gui/mdmwebkit.c:920
 msgid "Cancel"
@@ -76,11 +76,11 @@ msgstr "Скасувати"
 
 #: gui/mdmwebkit.c:921
 msgid "Please enter your username"
-msgstr "Будь ласка, уведіть Ваше ім'я користувача"
+msgstr "Будь ласка, введіть Ваше ім'я користувача"
 
 #: gui/mdmwebkit.c:922
 msgid "Please enter your password"
-msgstr "Будь ласка, уведіть Ваше гасло"
+msgstr "Будь ласка, введіть Ваш пароль"
 
 #: gui/mdmwebkit.c:924
 msgid "Shutdown"
@@ -88,7 +88,7 @@ msgstr "Вимкнути"
 
 #: gui/mdmwebkit.c:925
 msgid "Suspend"
-msgstr "Перевести на очікування"
+msgstr "Режим очікування"
 
 #: gui/mdmwebkit.c:926
 msgid "Quit"
@@ -116,7 +116,7 @@ msgstr "Будь ласка, виберіть користувача."
 
 #: gui/mdmwebkit.c:932
 msgid "Press F1 to enter a username."
-msgstr "Натисніть клявішу F1, щоб увійти"
+msgstr "Натисніть клавішу F1, щоб увійти"
 
 #: gui/mdmwebkit.c:933
 msgid "Language"
@@ -124,7 +124,7 @@ msgstr "Мова"
 
 #: gui/mdmwebkit.c:934
 msgid "Select a language"
-msgstr "Обрати мову"
+msgstr "Вибрати мову"
 
 #: gui/mdmwebkit.c:935
 msgid "Are you sure you want to quit?"
@@ -140,13 +140,13 @@ msgid ""
 "updates may have taken effect."
 msgstr ""
 "Помилка під час встановлення зв'язку з екраном входу. Можливо було вжито не "
-"усі оновлення."
+"всі оновлення."
 
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
 msgstr ""
-"Самочинний вхід чи вхід після призупинки в обліковий запис керманича (root) "
-"не дозволяється."
+"Автоматичний вхід чи вхід після паузи в обліковий запис адміністратора "
+"(root) не дозволяється."
 
 #: gui/mdmsetup.c:519
 #, c-format
@@ -160,8 +160,8 @@ msgstr "Недозволений користувач"
 #: gui/mdmsetup.c:776
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr ""
-"Самочинний вхід чи вхід після призупинки в обліковий запис керманича (root) "
-"не дозволяється."
+"Автоматичний вхід чи вхід після паузи в обліковий запис адміністратора "
+"(root) не дозволяється."
 
 #: gui/mdmsetup.c:1198
 msgid "No theme, just pure GTK"
@@ -169,11 +169,11 @@ msgstr "Без теми, просто чистий GTK"
 
 #: gui/mdmsetup.c:1583
 msgid "Archive is not of a subdirectory"
-msgstr "Архів не з підтеки"
+msgstr "Архів складається не з каталогу"
 
 #: gui/mdmsetup.c:1590
 msgid "Archive is not of a single subdirectory"
-msgstr "Архів не з однієї підтеки"
+msgstr "Архів складається не з одного каталогу"
 
 #: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
 msgid "File not a tar.gz or tar archive"
@@ -185,7 +185,7 @@ msgstr "Архів не містить файл GdmGreeterTheme.info"
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
-msgstr "Файлу не існує"
+msgstr "Файл не існує"
 
 #: gui/mdmsetup.c:1747
 #, c-format
@@ -251,11 +251,11 @@ msgstr "Зображення"
 
 #: gui/mdmsetup.c:2412
 msgid "All Files"
-msgstr "Усі файли"
+msgstr "Всі файли"
 
 #: gui/mdmsetup.c:2547
 msgid "Automatically detected"
-msgstr "Самочинно визначено"
+msgstr "Автоматично визначено"
 
 #: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
 msgid "Theme"
@@ -263,7 +263,7 @@ msgstr "Тема"
 
 #: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
 msgid "Auto login"
-msgstr "Самочинний вхід"
+msgstr "Автоматичний вхід"
 
 #: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
 msgid "Options"
@@ -311,7 +311,7 @@ msgstr "Параметри вікна входу у систему"
 
 #: gui/mdmsetup.glade.h:3
 msgid "Background"
-msgstr "Тло"
+msgstr "Фон"
 
 #: gui/mdmsetup.glade.h:4
 msgid "_Image:"
@@ -319,15 +319,15 @@ msgstr "_Зображення:"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
-msgstr "Відображати це зображення як тло проґрами-привітання."
+msgstr "Відображати це зображення як фон програми-привітання."
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
-msgstr "Вибрати зображення тла"
+msgstr "Вибрати фонове зображення"
 
 #: gui/mdmsetup.glade.h:7
 msgid "Pick background color"
-msgstr "Вибрати колір тла"
+msgstr "Вибрати колір фону"
 
 #: gui/mdmsetup.glade.h:8
 msgid "Co_lor:"
@@ -335,7 +335,7 @@ msgstr "Ко_лір:"
 
 #: gui/mdmsetup.glade.h:9
 msgid "Background color of the greeter."
-msgstr "Колір тла вікна привітання"
+msgstr "Колір фону вікна привітання"
 
 #: gui/mdmsetup.glade.h:10
 msgid "Welcome Message"
@@ -368,14 +368,14 @@ msgstr "'Ласкаво просимо'"
 
 #: gui/mdmsetup.glade.h:17
 msgid "_Enable Automatic Login"
-msgstr "_Дозволити самочинний вхід у систему"
+msgstr "_Дозволити автоматичний вхід у систему"
 
 #: gui/mdmsetup.glade.h:18
 msgid ""
 "Given user should be logged in upon first bootup. No password will be asked."
 msgstr ""
-"Даний користувач повинен бути зареєстрований при першому завантаженні. Гасло "
-"не знадобиться."
+"Даний користувач повинен бути зареєстрований при першому завантаженні. "
+"Пароль не знадобиться."
 
 #: gui/mdmsetup.glade.h:19
 msgid "_User:"
@@ -387,7 +387,7 @@ msgstr "Порожньо"
 
 #: gui/mdmsetup.glade.h:21
 msgid "Enable _Timed Login"
-msgstr "_Увімкнути самочинний вхід після затримки"
+msgstr "_Увімкнути автоматичний вхід після паузи"
 
 #: gui/mdmsetup.glade.h:22
 msgid ""
@@ -395,7 +395,7 @@ msgid ""
 "the login screen."
 msgstr ""
 "Даний користувач повинен бути зареєстрований після декількох секунд "
-"бездіяльности на екрані входу у систему."
+"бездіяльності на екрані входу у систему."
 
 #: gui/mdmsetup.glade.h:23
 msgid "U_ser:"
@@ -408,7 +408,7 @@ msgstr "Зат_римка перед входом:"
 #: gui/mdmsetup.glade.h:25
 msgid "Delay in seconds before the timed login user will be logged in."
 msgstr ""
-"Затримка у секундах перед уведенням ім’я користувача для виконання входу у "
+"Затримка у секундах перед введенням ім’я користувача для виконання входу у "
 "систему."
 
 #: gui/mdmsetup.glade.h:26
@@ -425,15 +425,15 @@ msgstr "Дозволити вхід під root'ом"
 
 #: gui/mdmsetup.glade.h:30
 msgid "Log debug information to /var/log/syslog"
-msgstr "Журнал зневаджувальної інформації для /var/log/syslog"
+msgstr "Писати налагоджувальну інформацію в /var/log/syslog"
 
 #: gui/mdmsetup.glade.h:31
 msgid "Sends debug output to the syslog."
-msgstr "Відсилати зневаджувальні дані у системний журнал."
+msgstr "Писати налагоджувальну інформацію у системний журнал."
 
 #: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"
-msgstr "Самочинно обирати останнього зареєстрованого користувача."
+msgstr "Автоматично обирати останнього зареєстрованого користувача."
 
 #: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
@@ -441,7 +441,7 @@ msgstr "Увімкнути NumLock"
 
 #: gui/mdmsetup.glade.h:34
 msgid "Use 24 Hour Clock"
-msgstr "Використовувати 24-часовий формат часу"
+msgstr "Використовувати 24-годинний формат часу"
 
 #: gui/mdmsetup.glade.h:35
 msgid "Primary monitor:"
