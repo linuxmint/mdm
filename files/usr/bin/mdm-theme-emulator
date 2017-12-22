@@ -8,6 +8,9 @@ import json
 import time
 import datetime
 import sys
+import gettext
+
+gettext.install('mdm', '/usr/share/locale')
 
 class MenuToolButton(Gtk.ToolButton):
     def __init__(self, text):
@@ -48,8 +51,8 @@ class ThemeWebView(WebKit.WebView):
         self.set_settings(settings)
 
         #  Intercept navigation and resource requests (allow only "file:" uris)
-        self.connect("navigation-requested", self.onNavigationRequest);
-        self.connect("resource-request-starting", self.onResourceRequestStarting);
+        self.connect("navigation-requested", self.onNavigationRequest)
+        self.connect("resource-request-starting", self.onResourceRequestStarting)
 
     def onNavigationRequest(self, view, frame, networkRequest):
         uri = networkRequest.get_uri()
@@ -82,7 +85,7 @@ class ThemeToolbar(Gtk.Toolbar):
 
         # En/Disable
         self.disableButton = Gtk.ToolButton(Gtk.STOCK_YES)
-        self.disableButton.set_label("Disable")
+        self.disableButton.set_label(_("Disable"))
         self.disableButton.connect('clicked', emulator.onEnableDisableClicked)
         self.sensitiveItems.append(self.disableButton)
         self.add(self.disableButton)
@@ -132,39 +135,61 @@ class ThemeToolbar(Gtk.Toolbar):
         
     def createAddMenuButton(self, emulator):
         menu = Gtk.Menu()
-        menu.append(self.createMenuItem('Dummies', emulator.onAddDummiesClicked))
-        menu.append(self.createMenuItem('User', emulator.onAddUserClicked))
-        menu.append(self.createMenuItem('Session', emulator.onAddSessionClicked))
+        menu.append(self.createMenuItem(_('Dummies'),
+                    emulator.onAddDummiesClicked))
+        menu.append(self.createMenuItem(_('User'),
+                    emulator.onAddUserClicked))
+        menu.append(self.createMenuItem(_('Session'),
+                    emulator.onAddSessionClicked))
         menu.show_all()
 
-        button = MenuToolButton(u"Add \u25BE")
+        button = MenuToolButton(_(u"Add \u25BE"))
+          # \u25BE = BLACK DOWN-POINTING SMALL TRIANGLE 
         button.set_popup(menu)
 
         return button
 
     def createSetMenuButton(self, emulator):
         menu = Gtk.Menu()
-        menu.append(self.createMenuItem('Welcome Message', emulator.onMenuJavascriptCallPrompt, "set_welcome_message"))
-        menu.append(self.createMenuItem('Message', emulator.onMenuJavascriptCallPrompt, "mdm_msg"))
-        menu.append(self.createMenuItem('Error Message', emulator.onMenuJavascriptCallPrompt, "mdm_error"))
-        menu.append(self.createMenuItem('Timed Message', emulator.onMenuJavascriptCallPrompt, "mdm_timed"))
+        menu.append(self.createMenuItem(_('Welcome Message'),
+                    emulator.onMenuJavascriptCallPrompt,
+                    "set_welcome_message"))
+        menu.append(self.createMenuItem(_('Message'),
+                    emulator.onMenuJavascriptCallPrompt,
+                    "mdm_msg"))
+        menu.append(self.createMenuItem(_('Error Message'),
+                    emulator.onMenuJavascriptCallPrompt,
+                    "mdm_error"))
+        menu.append(self.createMenuItem(_('Timed Message'),
+                    emulator.onMenuJavascriptCallPrompt,
+                    "mdm_timed"))
         menu.show_all()
 
-        button = MenuToolButton(u"Set \u25BE")
+        button = MenuToolButton(_(u"Set \u25BE"))
         button.set_popup(menu)
 
         return button
 
     def createHideMenuButton(self, emulator):
         menu = Gtk.Menu()
-        menu.append(self.createMenuItem('Shutdown', emulator.onMenuJavascriptCall, "mdm_hide_shutdown"))
-        menu.append(self.createMenuItem('Suspend', emulator.onMenuJavascriptCall, "mdm_hide_suspend"))
-        menu.append(self.createMenuItem('Restart', emulator.onMenuJavascriptCall, "mdm_hide_restart"))
-        menu.append(self.createMenuItem('Quit', emulator.onMenuJavascriptCall, "mdm_hide_quit"))
-        menu.append(self.createMenuItem('XDMCP', emulator.onMenuJavascriptCall, "mdm_hide_xdmcp"))
+        menu.append(self.createMenuItem(_('Shutdown'),
+                    emulator.onMenuJavascriptCall,
+                    "mdm_hide_shutdown"))
+        menu.append(self.createMenuItem(_('Suspend'),
+                    emulator.onMenuJavascriptCall,
+                    "mdm_hide_suspend"))
+        menu.append(self.createMenuItem(_('Restart'),
+                    emulator.onMenuJavascriptCall,
+                    "mdm_hide_restart"))
+        menu.append(self.createMenuItem(_('Quit'),
+                    emulator.onMenuJavascriptCall,
+                    "mdm_hide_quit"))
+        menu.append(self.createMenuItem(_('XDMCP'),
+                    emulator.onMenuJavascriptCall,
+                    "mdm_hide_xdmcp"))
         menu.show_all()
 
-        button = MenuToolButton(u"Hide \u25BE")
+        button = MenuToolButton(_(u"Hide \u25BE"))
         button.set_popup(menu)
 
         return button
@@ -172,10 +197,10 @@ class ThemeToolbar(Gtk.Toolbar):
 class MultiPromptDialog(Gtk.Dialog):
     def __init__(self, parent, title, okLabel, *labels):
         Gtk.Dialog.__init__ (self, title, parent,
-                              Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT)
-                              
+                             Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT)
+
         self.add_button(okLabel, Gtk.ResponseType.OK)
-        self.add_button("Cancel", Gtk.ResponseType.CANCEL)
+        self.add_button(_("Cancel"), Gtk.ResponseType.CANCEL)
         self.set_title(title)
 
         dialogBox = self.get_content_area()
@@ -214,7 +239,7 @@ class ThemeEmulator:
     def __init__(self):
         self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
         self.window.connect("destroy", self.closeApplication)
-        self.window.set_title("MDM Theme Emulator")
+        self.window.set_title(_("MDM Theme Emulator"))
 
         self.userName = None
 
@@ -223,7 +248,8 @@ class ThemeEmulator:
             item.set_sensitive(False)
 
         self.scrolledWindow = Gtk.ScrolledWindow()
-        self.scrolledWindow.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        self.scrolledWindow.set_policy(Gtk.PolicyType.AUTOMATIC,
+                                       Gtk.PolicyType.AUTOMATIC)
 
         self.webView = ThemeWebView()
 
@@ -242,7 +268,7 @@ class ThemeEmulator:
 
         self.webView.connect("load-finished", self.onLoadFinished)
         self.webView.connect("script-alert", self.onAlert)
-        self.setStatus("Initialized")
+        self.setStatus(_("Initialized"))
 
         self.isFullscreen = False
         self.isLoaded = False
@@ -254,7 +280,8 @@ class ThemeEmulator:
         GObject.timeout_add(1000, self.onClockUpdate, None)
         if len(sys.argv) >= 2:
             self.filename = sys.argv[1]
-            self.setStatus("Loading file: " + self.filename)
+            self.setStatus(_("Loading file:  {filename}").format(
+                          filename=self.filename))
             self.webView.open(self.filename)
             
             if len(sys.argv) >= 3 and sys.argv[2] == 'fullscreen':
@@ -262,30 +289,32 @@ class ThemeEmulator:
 
     def callJavascriptMethod(self, method, *arguments):
         jsonData = json.dumps(arguments)
-        self.webView.execute_script(method + ".apply(null, " + jsonData + ");");
+        self.webView.execute_script(method + ".apply(null, " + jsonData + ");")
 
     def setResolutionFromString(self, string):
         data = string.split('x')
         if len(data) == 2:
             width, height = data
             self.setResolution(int(width), int(height))
-            self.setStatus("Resolution changed to: " + string)
+            self.setStatus(_("Resolution changed to:  {resolution}").format(
+                          resolution=string))
         else:
-            self.setStatus("Wrong resolution format: " + string)
+            self.setStatus(_("Wrong resolution format:  {resolution}").format(
+                          resolution=string))
 
     def setResolution(self, width, height):
         self.window.unmaximize()
         self.scrolledWindow.set_size_request(width, height)
-        self.window.resize(100,100) # force resize to minimum size
+        self.window.resize(100,100)  # force resize to minimum size
 
     def setEnabled(self, enable):
         if self.isEnabled != enable:
             self.isEnabled = enable
             if enable:
-                self.toolbar.disableButton.set_label("Disable")
+                self.toolbar.disableButton.set_label(_("Disable"))
                 self.callJavascriptMethod("mdm_enable")
             else:
-                self.toolbar.disableButton.set_label("Enable")
+                self.toolbar.disableButton.set_label(_("Enable"))
                 self.callJavascriptMethod("mdm_disable")
 
     def setTime(self):
@@ -318,7 +347,8 @@ class ThemeEmulator:
         return False
 
     def onWindowStateChange(self, window, event):
-        self.isFullscreen = bool(Gdk.WindowState.FULLSCREEN & event.new_window_state)
+        self.isFullscreen = bool(Gdk.WindowState.FULLSCREEN &
+                                 event.new_window_state)
         if self.isLoaded:
             self.toolbar.resolutionCombo.set_sensitive(self.isFullscreen == False)
         if self.isFullscreen:
@@ -351,7 +381,9 @@ class ThemeEmulator:
             self.window.unfullscreen()
 
     def onMenuJavascriptCallPrompt(self, widget, name):
-        text = self.multiPromptDialog("Please supply a message", "Set", "Please enter a message for %s:" % widget.get_label())
+        text = self.multiPromptDialog(_("Please supply a message"), _("Set"),
+          _("Please enter a message for {label}:").format(
+            label=widget.get_label()))
         if text:
             self.callJavascriptMethod(name, text)
 
@@ -375,53 +407,84 @@ class ThemeEmulator:
         self.setStatus("Reloading")
 
     def onAddDummiesClicked(self, widget):
-        self.callJavascriptMethod("mdm_add_user", "dummy", "John Dummy", "Already logged in")
-        self.callJavascriptMethod("mdm_add_user", "joe", "Joe User", "")
-        self.callJavascriptMethod("mdm_add_session", "Cinnamon", "cinnamon.desktop")
-        self.callJavascriptMethod("mdm_add_session", "Mate", "mate.desktop")
-        self.callJavascriptMethod("mdm_add_session", "Gnome", "gnome3.desktop")
-        self.callJavascriptMethod("mdm_add_language", "English (USA)", "en_US.UTF-8")
-        self.callJavascriptMethod("mdm_add_language", "Chinese (China)", "zh_CN.UTF-8")
-        self.callJavascriptMethod("mdm_add_language", "Spanish (Argentina)", "es_AR.UTF-8")
-        self.callJavascriptMethod("mdm_add_language", "French (France)", "fr_FR.UTF-8")
-        self.callJavascriptMethod("mdm_add_language", "Dummy (DummyLand)", "du_DU")        
-        self.setStatus("Added 2 dummy users, 5 dummy languages and 3 dummy sessions")
+        self.callJavascriptMethod("mdm_add_user",
+                                  _("dummy"),
+                                  _("John Dummy"),
+                                  _("Already logged in"))
+        self.callJavascriptMethod("mdm_add_user",
+                                  _("joe"),
+                                  _("Joe User"),
+                                  "")
+        self.callJavascriptMethod("mdm_add_session",
+                                  _("Cinnamon"),
+                                  "cinnamon.desktop")
+        self.callJavascriptMethod("mdm_add_session",
+                                  _("Mate"),
+                                  "mate.desktop")
+        self.callJavascriptMethod("mdm_add_session",
+                                  _("Gnome"),
+                                  "gnome3.desktop")
+        self.callJavascriptMethod("mdm_add_language",
+                                  _("English (USA)"),
+                                  "en_US.UTF-8")
+        self.callJavascriptMethod("mdm_add_language",
+                                  _("Chinese (China)"),
+                                  "zh_CN.UTF-8")
+        self.callJavascriptMethod("mdm_add_language",
+                                  _("Spanish (Argentina)"),
+                                  "es_AR.UTF-8")
+        self.callJavascriptMethod("mdm_add_language",
+                                  _("French (France)"),
+                                  "fr_FR.UTF-8")
+        self.callJavascriptMethod("mdm_add_language",
+                                  _("Dummy (DummyLand)"),
+                                  "du_DU")
+        self.setStatus(
+          _("Added 2 dummy users, 5 dummy languages and 3 dummy sessions"))
 
     def onAddSessionClicked(self, widget):
-        data = self.multiPromptDialog("Add a new Session", "Add", "Please enter a session name:", "Please enter a desktop filename:")
+        data = self.multiPromptDialog(_("Add a new Session"), _("Add"),
+          _("Please enter a session name:"), 
+          _("Please enter a .desktop filename:"))
         if data:
             name, filename = data
             if name != "" and filename != "":
                 self.callJavascriptMethod("mdm_add_session", name, filename)
-                self.setStatus("Added session: %s / %s" % (name, filename))
+                self.setStatus(_("Added session:  {session_name} / {dot_desktop_filename}").format(
+                  session_name=name, dot_desktop_filename=filename))
             else:
-                self.setStatus("Add session failed due to empty field")
+                self.setStatus(_("Adding a session failed due to empty field"))
 
     def onAddUserClicked(self, widget):
-        data = self.multiPromptDialog("Add a new User", "Add", "Please enter a user name:", "Please enter gecos:")
+        data = self.multiPromptDialog(_("Add a new User"), _("Add"),
+          _("Please enter a user name:"), _("Please enter gecos:"))
         if data:
             name, gecos = data
             if name != "" and gecos != "":
                 self.callJavascriptMethod("mdm_add_user", name, gecos, "true")
-                self.setStatus("Added user: %s / %s" % (name, gecos))
+                self.setStatus(
+                  _("Added user:  {session_username} / {user_GECOS}").format(
+                    session_username=name, user_GECOS=gecos))
             else:
-                self.setStatus("Add user failed due to empty field")
+                self.setStatus(_("Adding a user failed due to empty field"))
 
     def onOpenClicked(self, widget):
-        dialog = Gtk.FileChooserDialog("Please select an mdm theme", self.window,
+        dialog = Gtk.FileChooserDialog(_("Please select an MDM theme"), 
+            self.window,
             Gtk.FileChooserAction.OPEN,
             (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
              Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
 
         filter_text = Gtk.FileFilter()
-        filter_text.set_name("HTML files")
+        filter_text.set_name(_("HTML files"))
         filter_text.add_mime_type("text/html")
         dialog.add_filter(filter_text)
 
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
             self.filename = dialog.get_filename()
-            self.setStatus("Loading file: " + self.filename)
+            self.setStatus(_("Loading file:  {theme_filename}").format(
+                          theme_filename=self.filename))
             self.webView.open(self.filename)
 
         dialog.destroy()
@@ -435,13 +498,16 @@ class ThemeEmulator:
                 item.set_sensitive(True)
             self.toolbar.sensitiveItems = None
 
-        self.callJavascriptMethod("set_welcome_message", "Welcome to the MDM Theme Emulator")
-        self.callJavascriptMethod("mdm_msg", "Please enter your username")
-        self.callJavascriptMethod("mdm_set_current_language", "English (USA)", "en_US.UTF-8")
-        self.callJavascriptMethod("mdm_prompt", "Username: ")
+        self.callJavascriptMethod("set_welcome_message",
+                                  _("Welcome to the MDM Theme Emulator"))
+        self.callJavascriptMethod("mdm_msg", _("Please enter your username"))
+        self.callJavascriptMethod("mdm_set_current_language",
+                                  _("English (USA)"), "en_US.UTF-8")
+        self.callJavascriptMethod("mdm_prompt", _("Username: "))
         self.setTime()
 
-        self.setStatus("Load finished: " + self.filename)
+        self.setStatus(_("Load finished:  {theme_filename}").format(
+                      theme_filename=self.filename)
         
     def onAlert(self, view, frame, message):
         data = message.split('###', 1)
@@ -449,34 +515,39 @@ class ThemeEmulator:
             action, param = data
             if action == "USER":
                 self.userName = param
-                self.callJavascriptMethod("mdm_noecho", 'Password:')
-                self.setStatus("Selected user: " + param)
+                self.callJavascriptMethod("mdm_noecho", _('Password:'))
+                self.setStatus(_("Selected user:  {username}").format(
+                              username=param))
             elif action == "LOGIN":
                 if self.userName:
-                    self.setStatus("Logged in as %s, with password %s" % (self.userName, param))
+                    self.setStatus(_("Logged in as {username}, with password {password}").format(
+                      username=self.userName, password=param))
                     self.userName = None
-                    self.callJavascriptMethod("mdm_error", "Can't log in in emulator")
-                    self.callJavascriptMethod("mdm_prompt", 'Username:')
+                    self.callJavascriptMethod("mdm_error",
+                                              _("Can't log-in in emulator"))
+                    self.callJavascriptMethod("mdm_prompt", _('Username:'))
                 else:
                     self.userName = param
-                    self.setStatus("Entered user: " + param)
-                    self.callJavascriptMethod("mdm_noecho", 'Password:')
+                    self.setStatus(_("Entered user:  {username}").format(
+                                  username=param))
+                    self.callJavascriptMethod("mdm_noecho", _('Password:'))
             elif action == "SESSION":
-                self.setStatus("Session: " + param)
+                self.setStatus(_("Session:  {session}").format(session=param))
             elif action == "LANGUAGE":
-                self.setStatus("Language: " + param)
+                self.setStatus(_("Language:  {lang}").format(lang=param))
             elif action == "SHUTDOWN":
-                self.setStatus("Shutdown")
+                self.setStatus(_("Shutdown"))
             elif action == "SUSPEND":
-                self.setStatus("Suspend")
+                self.setStatus(_("Suspend"))
             elif action == "RESTART":
-                self.setStatus("Restart")
+                self.setStatus(_("Restart"))
             elif action == "QUIT":
-                self.setStatus("Quit")
+                self.setStatus(_("Quit"))
             elif action == "XDMCP":
-                self.setStatus("Xdmcp")
+                self.setStatus(_("XDMCP"))
             else:
-                self.setStatus('Unrecognized action: ' + action)
+                self.setStatus(_('Unrecognized action:  {text}').format(
+                              text=action))
             return 1
         
 def main():
