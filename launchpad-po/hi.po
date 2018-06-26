@@ -8,26 +8,26 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2016-03-23 04:59+0000\n"
-"Last-Translator: Anand Mohan Tiwari <digitaljedi@live.in>\n"
+"PO-Revision-Date: 2018-06-17 15:46+0000\n"
+"Last-Translator: Panwar <Unknown>\n"
 "Language-Team: Hindi <hi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-11-03 11:42+0000\n"
-"X-Generator: Launchpad (build 18493)\n"
+"X-Launchpad-Export-Date: 2018-06-26 10:12+0000\n"
+"X-Generator: Launchpad (build 18688)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
-msgstr "क्या आप निश्चित तौर पर कंप्यूटर को बंद करना चाहते हैं ?"
+msgstr "क्या आप कंप्यूटर बंद करना चाहते हैं?"
 
 #: gui/mdmwebkit.c:191
 msgid "Shut _Down"
-msgstr "बन्द करें (_D)"
+msgstr "बंद करें (_D)"
 
 #: gui/mdmwebkit.c:196
 msgid "Are you sure you want to suspend the computer?"
-msgstr "क्या आप सुनिश्चित हैं कि आप कंप्यूटर स्थगित करना चाहते हैं?"
+msgstr "क्या आप कंप्यूटर स्थगित करना चाहते हैं?"
 
 #: gui/mdmwebkit.c:196
 msgid "_Suspend"
@@ -35,19 +35,19 @@ msgstr "स्थगित करें (_S)"
 
 #: gui/mdmwebkit.c:202
 msgid "Are you sure you want to restart the computer?"
-msgstr "क्या आप सुनिश्चित हैं कि आप कंप्यूटर पुन:आरंभ करना चाहते हैं?"
+msgstr "क्या आप कंप्यूटर पुन:आरंभ करना चाहते हैं?"
 
 #: gui/mdmwebkit.c:202
 msgid "_Restart"
-msgstr "पुन:आरंभ करें (_R)"
+msgstr "पुन: आरंभ करें (_R)"
 
 #: gui/mdmwebkit.c:330
 msgid "User %u will login in %t"
-msgstr "उपयोक्ता %u %t सेकण्ड में लॉग इन होगा"
+msgstr "प्रयोक्ता %u %t सेकंड में लॉगिन होगा"
 
 #: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
 msgid "Username:"
-msgstr "उपयोगकर्ता नाम :"
+msgstr "उपयोक्ता का नाम :"
 
 #: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
 msgid "Password:"
@@ -55,16 +55,16 @@ msgstr "कूटशब्द :"
 
 #: gui/mdmwebkit.c:820
 msgid "Already logged in"
-msgstr "पहले से लॉग इन है"
+msgstr "पहले से लॉगिन है"
 
 #: gui/mdmwebkit.c:890
 #, c-format
 msgid "There was an error loading the theme %s"
-msgstr ""
+msgstr "थीम लोड करने में त्रुटि रही %s"
 
 #: gui/mdmwebkit.c:918
 msgid "Login"
-msgstr "लागिन"
+msgstr "लॉगिन"
 
 #: gui/mdmwebkit.c:919
 msgid "OK"
@@ -76,11 +76,11 @@ msgstr "रद्द करें"
 
 #: gui/mdmwebkit.c:921
 msgid "Please enter your username"
-msgstr "कृपया अपना उपयोक्ता नाम भरें"
+msgstr "कृपया अपना उपयोक्ता नाम दर्ज करें"
 
 #: gui/mdmwebkit.c:922
 msgid "Please enter your password"
-msgstr "कृपया अपना कूटशब्द भरें"
+msgstr "कृपया अपना कूटशब्द दर्ज करें"
 
 #: gui/mdmwebkit.c:924
 msgid "Shutdown"
@@ -92,7 +92,7 @@ msgstr "स्थगित करें"
 
 #: gui/mdmwebkit.c:926
 msgid "Quit"
-msgstr "बंद करें"
+msgstr "छोड़ें"
 
 #: gui/mdmwebkit.c:927
 msgid "Restart"
@@ -104,7 +104,7 @@ msgstr "सत्र"
 
 #: gui/mdmwebkit.c:929
 msgid "Select a session"
-msgstr "कोई एक सत्र चुने"
+msgstr "सत्र चुनें"
 
 #: gui/mdmwebkit.c:930
 msgid "Default session"
@@ -112,11 +112,11 @@ msgstr "डिफ़ॉल्ट सत्र"
 
 #: gui/mdmwebkit.c:931
 msgid "Please select a user."
-msgstr ""
+msgstr "उपयोक्ता चुनें।"
 
 #: gui/mdmwebkit.c:932
 msgid "Press F1 to enter a username."
-msgstr ""
+msgstr "उपयोक्ता नाम दर्ज करने के लिए F1 दबाएँ।"
 
 #: gui/mdmwebkit.c:933
 msgid "Language"
@@ -124,11 +124,11 @@ msgstr "भाषा"
 
 #: gui/mdmwebkit.c:934
 msgid "Select a language"
-msgstr "कोई एक भाषा चुने"
+msgstr "भाषा चुनें"
 
 #: gui/mdmwebkit.c:935
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "क्या आप छोड़ना चाहते हैं?"
 
 #: gui/mdmwebkit.c:936
 msgid "Close"
@@ -139,321 +139,336 @@ msgid ""
 "An error occurred while trying to contact the login screens.  Not all "
 "updates may have taken effect."
 msgstr ""
+"लॉगिन स्क्रीन से संपर्क करते समय एक त्रुटि हुई। शायद, सभी अपडेट लागू न हुई "
+"हो।"
 
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
-msgstr ""
+msgstr "रूट अकाउंट हेतु स्वतः या समयबद्ध लॉगिन वर्जित है।"
 
 #: gui/mdmsetup.c:519
 #, c-format
 msgid "The %s user UID is lower than 'MinimalUID'."
-msgstr ""
+msgstr "%s प्रयोक्ता UID 'MinimalUID' से निम्न है।"
 
 #: gui/mdmsetup.c:526
 msgid "User not allowed"
-msgstr ""
+msgstr "उपयोक्ता स्वीकार्य नहीं है"
 
 #: gui/mdmsetup.c:776
 msgid "Autologin or timed login to the root account is not allowed."
-msgstr ""
+msgstr "रूट अकाउंट हेतु स्वतः या समयबद्ध लॉगिन स्वीकार्य नहीं है"
 
 #: gui/mdmsetup.c:1198
 msgid "No theme, just pure GTK"
-msgstr ""
+msgstr "कोई थीम नहीं, सिर्फ शुद्ध GTK"
 
 #: gui/mdmsetup.c:1583
 msgid "Archive is not of a subdirectory"
-msgstr ""
+msgstr "संग्रह सब-फ़ोल्डर नहीं है"
 
 #: gui/mdmsetup.c:1590
 msgid "Archive is not of a single subdirectory"
-msgstr ""
+msgstr "संग्रह एकल सब-फ़ोल्डर नहीं है"
 
 #: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
 msgid "File not a tar.gz or tar archive"
-msgstr ""
+msgstr "फ़ाइल tar.gz या tar संग्रह नहीं है"
 
 #: gui/mdmsetup.c:1630
 msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr ""
+msgstr "संग्रह में GdmGreeterTheme.info फ़ाइल नहीं है"
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
-msgstr ""
+msgstr "फ़ाइल मौजूद नहीं है"
 
 #: gui/mdmsetup.c:1747
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: gui/mdmsetup.c:1754
 msgid "Not a theme archive"
-msgstr ""
+msgstr "यह थीम संग्रह नहीं है"
 
 #: gui/mdmsetup.c:1776
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
 msgstr ""
+"थीम फ़ोल्डर '%s' पहले से ही इंस्टॉल प्रतीत होती है। फिर भी दोबारा इंस्टॉल "
+"करें?"
 
 #: gui/mdmsetup.c:1862
 msgid "Some error occurred when installing the theme"
-msgstr ""
+msgstr "थीम इंस्टॉल करते समय त्रुटि हुई"
 
 #: gui/mdmsetup.c:1905
 msgid "No file selected"
-msgstr ""
+msgstr "कोई फ़ाइल नहीं चुनी गई"
 
 #: gui/mdmsetup.c:1927
 msgid "Select Theme Archive"
-msgstr ""
+msgstr "थीम संग्रह चुनें"
 
 #: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
 msgid "_Install"
-msgstr ""
+msgstr "इंस्टॉल करें (_I)"
 
 #: gui/mdmsetup.c:1935
 msgid "Theme archives"
-msgstr ""
+msgstr "थीम संग्रह"
 
 #: gui/mdmsetup.c:2002
 #, c-format
 msgid "Remove the \"%s\" theme?"
-msgstr ""
+msgstr "\"%s\" थीम हटाएँ?"
 
 #: gui/mdmsetup.c:2009
 msgid "If you choose to remove the theme, it will be permanently lost."
-msgstr ""
+msgstr "यदि आप थीम हटाते हैं, तो वह हमेशा के लिए खो जाएँगी।"
 
 #: gui/mdmsetup.c:2017
 msgid "_Remove Theme"
-msgstr ""
+msgstr "थीम हटाएँ (_R)"
 
 #: gui/mdmsetup.c:2135
 #, c-format
 msgid "Install the theme from '%s'?"
-msgstr ""
+msgstr "'%s' से थीम इंस्टॉल करें?"
 
 #: gui/mdmsetup.c:2136
 #, c-format
 msgid "Select install to add the theme from the file '%s'."
-msgstr ""
+msgstr "फ़ाइल '%s' से थीम जोड़ने के लिए इंस्टॉल चुनें।"
 
 #: gui/mdmsetup.c:2407
 msgid "Images"
-msgstr ""
+msgstr "चित्र"
 
 #: gui/mdmsetup.c:2412
 msgid "All Files"
-msgstr ""
+msgstr "सभी फ़ाइलें"
 
 #: gui/mdmsetup.c:2547
 msgid "Automatically detected"
-msgstr ""
+msgstr "स्वतः ही पता लगाएँ"
 
 #: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
 msgid "Theme"
-msgstr ""
+msgstr "थीम"
 
 #: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
 msgid "Auto login"
-msgstr ""
+msgstr "स्वतः लॉगिन"
 
 #: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
 msgid "Options"
-msgstr ""
+msgstr "विकल्प"
 
 #: gui/mdmsetup.c:2702
 msgid "Add a new theme"
-msgstr ""
+msgstr "नई थीम जोड़ें"
 
 #: gui/mdmsetup.c:2703
 msgid "Remove the selected theme"
-msgstr ""
+msgstr "चुनी गई थीम हटाएँ"
 
 #: gui/mdmsetup.c:2704
 msgid "Launch the login screen to preview the theme"
-msgstr ""
+msgstr "थीम का पूर्वावलोकन करने के लिए लॉगिन स्क्रीन लॉन्च करें"
 
 #: gui/mdmsetup.c:2722
 msgid "Please install 'numlockx' to enable this feature"
-msgstr ""
+msgstr "इस सुविधा को चालू करने के लिए 'numlockx' इंस्टॉल करें"
 
 #: gui/mdmsetup.c:2919
 msgid "Could not access configuration file (defaults.conf)"
-msgstr ""
+msgstr "विन्यास फाइल (defaults.conf) तक नहीं पहुंचा जा सका"
 
 #: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
 msgid ""
 "Make sure that the file exists before launching login manager config utility."
 msgstr ""
+"कृपया लॉगिन विन्यास प्रबंधक चलाने से पहले सुनिश्चित कर लें कि फ़ाइल मौजूद है।"
 
 #: gui/mdmsetup.c:2936
 msgid "Could not access configuration file"
-msgstr ""
+msgstr "विन्यास फाइल तक नहीं पहुंचा जा सका"
 
 #: gui/mdmsetup.c:2984
 msgid "You must be root to configure MDM."
-msgstr ""
+msgstr "आप रुट के तौर पर ही MDM विन्यस्त कर सकते हैं"
 
 #: gui/mdmsetup.glade.h:1
 msgid "Login Window Preferences"
-msgstr ""
+msgstr "लॉगिन विंडो प्राथमिकताएँ"
 
 #: gui/mdmsetup.glade.h:3
 msgid "Background"
-msgstr ""
+msgstr "बैकग्राउंड"
 
 #: gui/mdmsetup.glade.h:4
 msgid "_Image:"
-msgstr ""
+msgstr "चित्र (_I)"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
-msgstr ""
+msgstr "अभिवादक में बैकग्राउंड के रूप में इस चित्र को प्रदर्शित करता है।"
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
-msgstr ""
+msgstr "बैकग्राउंड चित्र चुनें"
 
 #: gui/mdmsetup.glade.h:7
 msgid "Pick background color"
-msgstr ""
+msgstr "बैकग्राउंड का रंग चुनें"
 
 #: gui/mdmsetup.glade.h:8
 msgid "Co_lor:"
-msgstr ""
+msgstr "रंग (_l):"
 
 #: gui/mdmsetup.glade.h:9
 msgid "Background color of the greeter."
-msgstr ""
+msgstr "अभिवादक का बैकग्राउंड रंग"
 
 #: gui/mdmsetup.glade.h:10
 msgid "Welcome Message"
-msgstr ""
+msgstr "स्वागत संदेश"
 
 #: gui/mdmsetup.glade.h:11
 msgid "C_ustom:"
-msgstr ""
+msgstr "अनुकूलित (_u)"
 
 #: gui/mdmsetup.glade.h:12
 msgid ""
 "Controls which text to display next to the logo image in the standard "
 "greeter."
 msgstr ""
+"सामान्य अभिवादक में लोगो-चित्र के बगल में प्रदर्शित होने वाले शब्दों को "
+"नियंत्रित करता है।"
 
 #: gui/mdmsetup.glade.h:14
 #, no-c-format
 msgid "%n will be replaced by hostname"
-msgstr ""
+msgstr "%n होस्ट नाम से बदल दिया जाएगा"
 
 #: gui/mdmsetup.glade.h:15
 msgid "_Default:"
-msgstr ""
+msgstr "डिफ़ॉल्ट (_D):"
 
 #: gui/mdmsetup.glade.h:16
 msgid "'Welcome'"
-msgstr ""
+msgstr "'अभिनंदन'"
 
 #: gui/mdmsetup.glade.h:17
 msgid "_Enable Automatic Login"
-msgstr ""
+msgstr "स्वतः लॉगिन सक्रिय करें (_E)"
 
 #: gui/mdmsetup.glade.h:18
 msgid ""
 "Given user should be logged in upon first bootup. No password will be asked."
 msgstr ""
+"यह उपयोक्ता पहले सिस्टम स्टार्टअप पर लॉगिन होना चाहिए। कोई पासवर्ड अनुरोध "
+"नहीं किया जाएगा।"
 
 #: gui/mdmsetup.glade.h:19
 msgid "_User:"
-msgstr ""
+msgstr "उपयोक्ता (_U):"
 
 #: gui/mdmsetup.glade.h:20
 msgid "Dummy"
-msgstr ""
+msgstr "डमी"
 
 #: gui/mdmsetup.glade.h:21
 msgid "Enable _Timed Login"
-msgstr ""
+msgstr "समयबद्ध लॉगिन सक्रिय करें (_T)"
 
 #: gui/mdmsetup.glade.h:22
 msgid ""
 "Given user should be logged in after a number of seconds of inactivity on "
 "the login screen."
 msgstr ""
+"यह प्रयोक्ता लॉगिन स्क्रीन पर एक समय अवधि की निष्क्रियता के बाद लॉगिन हो "
+"जाना चाहिए।"
 
 #: gui/mdmsetup.glade.h:23
 msgid "U_ser:"
-msgstr ""
+msgstr "उपयोक्ता (_s):"
 
 #: gui/mdmsetup.glade.h:24
 msgid "_Pause before login:"
-msgstr ""
+msgstr "लॉगिन से पहले ठहराव (_P)"
 
 #: gui/mdmsetup.glade.h:25
 msgid "Delay in seconds before the timed login user will be logged in."
-msgstr ""
+msgstr "समय अवधि सेकंड में जिसके बाद उपयोक्ता लॉगिन हो जाएगा।"
 
 #: gui/mdmsetup.glade.h:26
 msgid "seconds"
-msgstr ""
+msgstr "सेकंड"
 
 #: gui/mdmsetup.glade.h:27
 msgid "dummy"
-msgstr ""
+msgstr "डमी"
 
 #: gui/mdmsetup.glade.h:29
 msgid "Allow root login"
-msgstr ""
+msgstr "रुट के रूप में लॉगिन की अनुमति दें"
 
 #: gui/mdmsetup.glade.h:30
 msgid "Log debug information to /var/log/syslog"
-msgstr ""
+msgstr "दोषमार्जन संबंधी जानकारी /var/log/syslog में रखें"
 
 #: gui/mdmsetup.glade.h:31
 msgid "Sends debug output to the syslog."
-msgstr ""
+msgstr "दोषमार्जन का आउटपुट syslog में भेजें।"
 
 #: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"
-msgstr ""
+msgstr "अंतिम लॉगिन करने वाले उपयोक्ता को स्वतः ही चुनें"
 
 #: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
-msgstr ""
+msgstr "NumLock सक्रिय करें"
 
 #: gui/mdmsetup.glade.h:34
 msgid "Use 24 Hour Clock"
-msgstr ""
+msgstr "24 घंटे की घड़ी उपयोग करें"
 
 #: gui/mdmsetup.glade.h:35
 msgid "Primary monitor:"
-msgstr ""
+msgstr "प्राथमिक मॉनीटर:"
 
 #: gui/mdmsetup.glade.h:36
 msgid " "
-msgstr ""
+msgstr " "
 
 #: gui/mdmsetup.glade.h:37
 msgid "Limit the session output"
-msgstr ""
+msgstr "सत्र के आउटपुट को सीमित करें"
 
 #: gui/mdmsetup.glade.h:38
 msgid ""
 "This prevents .xsession-errors from getting too big (200KB, a few thousand "
 "lines)."
 msgstr ""
+"यह .xsession-errors को ज़्यादा बड़ा होने से रोकता है (200KB, कुछ हजार "
+"पंक्तियाँ)।"
 
 #: gui/mdmsetup.glade.h:39
 msgid "Filter the session output"
-msgstr ""
+msgstr "सत्र के आउटपुट को निस्पंदित(filter) करें"
 
 #: gui/mdmsetup.glade.h:40
 msgid ""
 "This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
 "Glade...etc) from getting in .xsession-errors."
 msgstr ""
+"यह आम libraries व toolkits (Gtk, Glib, Gio, Glade...आदि) की चेतावनियों को "
+".xsession-errors में जाने से रोकता है।"
 
 #: gui/mdmsetup.glade.h:41
 msgid "Default session:"
-msgstr ""
+msgstr "डिफ़ॉल्ट सत्र :"
