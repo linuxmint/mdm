@@ -1,0 +1,469 @@
+# Urdu translation for linuxmint
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2016-12-11 11:03+0000\n"
+"Last-Translator: Waqar Ahmed <waqar.17a@gmail.com>\n"
+"Language-Team: Urdu <ur@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2018-11-27 17:48+0000\n"
+"X-Generator: Launchpad (build 18826)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "کیا آپ واقعی کمپیوٹر کو بند کرنا چاہتے ہیں؟"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "کمپیوٹر بند _کریں"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "کیا آپ واقعی کمپیوٹر کو معطل کرنا چاہتے ہیں؟"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_معطل"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "کیا آپ واقعی کمپیوٹر کو ری سٹارٹ شروع کرنا چاہتے ہیں؟"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_ری سٹارٹ"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "صارف %u کو %t سیکنڈ میں لاگ ان کر دیا جائے گا"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "صارف کا نام:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "پاس ورڈ"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "پہلے ہی سے لاگ ان"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "تھیم %s کو لوڈ کرنے میں مسئلہ درپیش ہوا"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "لاگ ان"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "ٹھیک هے"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "منسوخ کریں"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "اپنا صارف کا نام درج کریں"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "براہِ کرم اپنا پاس ورڈ ڈالیے"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "کمپیوٹر بند کریں"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "معطل"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "بند کریں"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "دوبارہ شروع کریں"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "دورانیہ"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "دورانیہ منتخب کریں"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "طے شُدہ دورانیہ"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr "برائے مہربانی کوئی صارف منتخب کریں۔"
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr "اسم صارف داخل کرنے کے لیے F1 دبائیں۔"
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "زبان"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "زبان کا انتخاب کریں"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "کيا آپ واقعي چھوڑ نا چا ہتے ہيں؟"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "بند کریں"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr "بہی ہا نہیں کہاں بہت ہے نے"
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr "روٹ کھاتے تک 'خود کار لاگ ان' اور 'ٹائمڈ لاگ ان' منع ہے۔"
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "‏%s صارف کا ‏UID، ‏ 'MinimalUID' سے کم ہے۔"
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "صارف کو اجازت نہیں ہے"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr "روٹ کھاتے تک 'خود کار لاگ ان' اور 'ٹائمڈ لاگ ان' کی اجازت نہیں۔"
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "کوئی تھیم نہیں، صرف خالص GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "آرکائیو سب-ڈآریکٹری کا نہیں ہوتا"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "آرکائیو صرف ایک سب-ڈآریکٹری کا نہیں ہوتا"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "فائل نہ تو tar.gz ہے نہ ہی کوئی  tar آرکائیو"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "آرکائیوْ میں GdmGreeterTheme.info کی فائل موجود نہیں"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "فائل  موجود نہیں"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "‏%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "یہ تھیم آرکائیو نہیں ہے"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr ""
+"تھیم ڈائرکٹری '%s' پہلے سے انسٹال شدہ ہے۔ پھر بھی دوبارہ انسٹال کردیں؟"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "تھیم انسٹال کرتے ہوئے کوئی مسئلہ درپیش"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "کوئی فائل منتخب کردہ نہیں"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "تھیم آرکائیو منتخب کریں"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_انسٹال کریں"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "تھیم کے آرکائیوْز"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "تھیم %s ہٹائیں؟"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "اگر آپ تھیم ہٹائیں گے تو یہ ہمیشہ کے لیے حذف کر دیا جائے گا۔"
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "تھیم _ہٹا دیں"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "‏'%s' سے نیا تھیم انسٹال کریں؟"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "فائل '%s' سے تھیم شامل کرنے کے لیے 'انسٹال' منتخب کریں۔"
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "تصاویر"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "تمام فائلیں"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "خودکار دریافت کردہ"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "تھیم"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "نیٹ ورک لاگ اِن"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "اختیارات"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "نیا تھیم شامل کریں..."
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "منتخب کردہ تھیم ہٹا دیں"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "اس تھیم کا پیش منظر دیکھنے کے لیے لاگ ان سکرین چلائیں"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "براہ مہربانی اس فیچر کو فعال کرنے کے لیے 'numlockx' کو انسٹال کریں"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "تشکیل فائل(defaults.conf) تک رسائی ناکام"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"لاگ ان منتظم کی تشکیل یوٹیلیٹی چلانے سے پہلے یقینی بنالیں کے فائل موجود ہے۔"
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "تشکیل فائل تک رسائی ناکام ہوئی"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "‏MDM کی تشکیل کے لیے آپ کا روٹ ہونا ضروری ہے۔"
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "لاگ ان ونڈو کی ترجیحات"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "پس منظر"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "تص_ویر:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "یہ تصویر گریٹر میں بطور پس منظر دکھائیں۔"
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "پس منظر تصویر منتخب کریں"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "پس منظر کا رنگ چنیں"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "رن_گ:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "گریٹر کے پس منظر کا رنگ"
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "خوش آمدید پیغام"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "تخ_صیصی(Custom):"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"کنٹرول کرتا ہے کہ معیاری گریٹر پر لوگو تصویر کے سامنے کونسا متن دکھایا جائے۔"
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "‏%n کو ہوسٹ کے نام سے بدل دیا جائے گا"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_طے شدہ:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'خوش آمدید'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "خودکار لاگ ان _فعال کریں"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"دیے گئے صارف کو پہلی دفعہ کمپیوٹر شروع ہونے پر خود ہی لاگ ان کردیں۔ پاسورڈ "
+"نہیں پوچھا جائے گا۔"
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_صارف"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "ڈمی"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "ٹائمڈ(_Timed) لاگ ان فعال کریں"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"دیے گئے صارف کو کچھ سیکنڈ بعد لاگ ان کر دیا جائے گا اگر وہ سکرین پر کوئی عمل "
+"نہیں کرتا۔"
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "صا_رف:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "لاگ ان سے پہلے وقفہ:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr "ٹائمڈ صارف کے لاگ-ان ہونے سے قبل تاخیر(سیکنڈ میں)۔"
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "سیکنڈ"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "ڈمی"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "روٹ لاگ ان کی اجازت دیں"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "ڈی-بگ معلومات کو /var/log/syslog میں ڈالیں"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "ڈی-بگ ماخذ کو syslog کی طرف بھیجتا ہے۔"
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "آخر لاگ ان کردہ صارف کو خود کار منتخب کرلیں"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "نم لاک فعال کریں"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "24 گھنٹے والی گھڑی استعمال کریں"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "مرکزی مانیٹر"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "دورانیے کا ماخذ محدود کریں"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"یہ .xsession-errors کوزیادہ بڑا(200KB، چند ہزار لائنیں) ہونے سے روکتا ہے۔"
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "دورانیے کا ماخذ فلٹر کریں"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"یہ کامن لائبریریوں اور ٹول-کٹ سے انتباہات کو .xsession-errors میں گھسنے سے "
+"روکتا ہے۔"
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "طے شُدہ دورانیہ:"

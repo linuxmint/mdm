@@ -1,0 +1,473 @@
+# Papiamento translation for linuxmint
+# Copyright (c) 2016 Rosetta Contributors and Canonical Ltd 2016
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-05-11 16:40+0100\n"
+"PO-Revision-Date: 2016-07-17 13:55+0000\n"
+"Last-Translator: Frank <f.boye@hotmail.nl>\n"
+"Language-Team: Papiamento <pap@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2018-11-27 17:48+0000\n"
+"X-Generator: Launchpad (build 18826)\n"
+
+#: gui/mdmwebkit.c:191
+msgid "Are you sure you want to shut down the computer?"
+msgstr "Bo tin sigur ku bo ke paga e kòmpiuter?"
+
+#: gui/mdmwebkit.c:191
+msgid "Shut _Down"
+msgstr "Paga"
+
+#: gui/mdmwebkit.c:196
+msgid "Are you sure you want to suspend the computer?"
+msgstr "Bo tin sigur ku bo ke suspende e kòmpiuter?"
+
+#: gui/mdmwebkit.c:196
+msgid "_Suspend"
+msgstr "_Suspende"
+
+#: gui/mdmwebkit.c:202
+msgid "Are you sure you want to restart the computer?"
+msgstr "Bo tin sigur ko bo ke"
+
+#: gui/mdmwebkit.c:202
+msgid "_Restart"
+msgstr "_Rekomienso"
+
+#: gui/mdmwebkit.c:330
+msgid "User %u will login in %t"
+msgstr "Usado %u lo login na %t"
+
+#: gui/mdmwebkit.c:520 gui/mdmwebkit.c:522
+msgid "Username:"
+msgstr "Usuario:"
+
+#: gui/mdmwebkit.c:539 gui/mdmwebkit.c:540
+msgid "Password:"
+msgstr "Kontraseña:"
+
+#: gui/mdmwebkit.c:820
+msgid "Already logged in"
+msgstr "Di login kaba"
+
+#: gui/mdmwebkit.c:890
+#, c-format
+msgid "There was an error loading the theme %s"
+msgstr "Un eror a sugeri durante kargamentu di e tema %s"
+
+#: gui/mdmwebkit.c:918
+msgid "Login"
+msgstr "Login"
+
+#: gui/mdmwebkit.c:919
+msgid "OK"
+msgstr "OK"
+
+#: gui/mdmwebkit.c:920
+msgid "Cancel"
+msgstr "Kanselá"
+
+#: gui/mdmwebkit.c:921
+msgid "Please enter your username"
+msgstr "Por fabor yena e usuario"
+
+#: gui/mdmwebkit.c:922
+msgid "Please enter your password"
+msgstr "Por fabor yena bo kontraseña"
+
+#: gui/mdmwebkit.c:924
+msgid "Shutdown"
+msgstr "Paga"
+
+#: gui/mdmwebkit.c:925
+msgid "Suspend"
+msgstr "Suspende"
+
+#: gui/mdmwebkit.c:926
+msgid "Quit"
+msgstr "Sali"
+
+#: gui/mdmwebkit.c:927
+msgid "Restart"
+msgstr "Rekuminsa"
+
+#: gui/mdmwebkit.c:928
+msgid "Session"
+msgstr "Seshon"
+
+#: gui/mdmwebkit.c:929
+msgid "Select a session"
+msgstr "Selekta e seshon"
+
+#: gui/mdmwebkit.c:930
+msgid "Default session"
+msgstr "Seshon standard"
+
+#: gui/mdmwebkit.c:931
+msgid "Please select a user."
+msgstr "Por fabor selekta e usuario."
+
+#: gui/mdmwebkit.c:932
+msgid "Press F1 to enter a username."
+msgstr "Primi F1 pa yena e usuario."
+
+#: gui/mdmwebkit.c:933
+msgid "Language"
+msgstr "Idioma"
+
+#: gui/mdmwebkit.c:934
+msgid "Select a language"
+msgstr "Selektá un idioma"
+
+#: gui/mdmwebkit.c:935
+msgid "Are you sure you want to quit?"
+msgstr "Bo tin sigur ku bo ke sali?"
+
+#: gui/mdmwebkit.c:936
+msgid "Close"
+msgstr "Sera"
+
+#: gui/mdmsetup.c:264
+msgid ""
+"An error occurred while trying to contact the login screens.  Not all "
+"updates may have taken effect."
+msgstr ""
+"Un eror a sugeri turesten tabata purba kontakta e pantaya pa login. No tur "
+"update lo a hasi efekto."
+
+#: gui/mdmsetup.c:517
+msgid "Autologin or timed login to the root account is forbidden."
+msgstr "Login automatiko of login di time  na e akòunt root ta prohibi."
+
+#: gui/mdmsetup.c:519
+#, c-format
+msgid "The %s user UID is lower than 'MinimalUID'."
+msgstr "E usuario %s su UID ta menos ku e 'MinimalUID'."
+
+#: gui/mdmsetup.c:526
+msgid "User not allowed"
+msgstr "Usuario no tin pèrmit"
+
+#: gui/mdmsetup.c:776
+msgid "Autologin or timed login to the root account is not allowed."
+msgstr "Login automatiko of login di time  na e akòunt root no tin mag."
+
+#: gui/mdmsetup.c:1198
+msgid "No theme, just pure GTK"
+msgstr "Sin tema, solamente puru GTK"
+
+#: gui/mdmsetup.c:1583
+msgid "Archive is not of a subdirectory"
+msgstr "Argif  no ta di un submap(map den un map)"
+
+#: gui/mdmsetup.c:1590
+msgid "Archive is not of a single subdirectory"
+msgstr "Argif  no ta di solamente un submap(map den un map)"
+
+#: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
+msgid "File not a tar.gz or tar archive"
+msgstr "Dokumento no ta tar.gz of tar argif"
+
+#: gui/mdmsetup.c:1630
+msgid "Archive does not include a GdmGreeterTheme.info file"
+msgstr "Argif no ta inklui  un dokumento GdmGreeterTheme.Info"
+
+#: gui/mdmsetup.c:1652
+msgid "File does not exist"
+msgstr "Dokumento no ta eksisti"
+
+#: gui/mdmsetup.c:1747
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: gui/mdmsetup.c:1754
+msgid "Not a theme archive"
+msgstr "No ta un argif di tema"
+
+#: gui/mdmsetup.c:1776
+#, c-format
+msgid ""
+"Theme directory '%s' seems to be already installed. Install again anyway?"
+msgstr "Map di tema '%s' ta parse di ta instala kaba. Instala atrobe?"
+
+#: gui/mdmsetup.c:1862
+msgid "Some error occurred when installing the theme"
+msgstr "Algun eror a okuri durante instalashon di e tema"
+
+#: gui/mdmsetup.c:1905
+msgid "No file selected"
+msgstr "Niun dokumento selekta"
+
+#: gui/mdmsetup.c:1927
+msgid "Select Theme Archive"
+msgstr "Selekta e Tema Argif"
+
+#: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
+msgid "_Install"
+msgstr "_Install"
+
+#: gui/mdmsetup.c:1935
+msgid "Theme archives"
+msgstr "Thema argifnan"
+
+#: gui/mdmsetup.c:2002
+#, c-format
+msgid "Remove the \"%s\" theme?"
+msgstr "Kita e \"%s\" tema?"
+
+#: gui/mdmsetup.c:2009
+msgid "If you choose to remove the theme, it will be permanently lost."
+msgstr "Si bo skohe pa kita e tema e lo ta permanentemente pèrdi."
+
+#: gui/mdmsetup.c:2017
+msgid "_Remove Theme"
+msgstr "_Kita Tema"
+
+#: gui/mdmsetup.c:2135
+#, c-format
+msgid "Install the theme from '%s'?"
+msgstr "Instala e tema for di '%s'?"
+
+#: gui/mdmsetup.c:2136
+#, c-format
+msgid "Select install to add the theme from the file '%s'."
+msgstr "Selekta instala pa añadi e tema for di file '%s'."
+
+#: gui/mdmsetup.c:2407
+msgid "Images"
+msgstr "Imagennan"
+
+#: gui/mdmsetup.c:2412
+msgid "All Files"
+msgstr "Tur Dokumentonan"
+
+#: gui/mdmsetup.c:2547
+msgid "Automatically detected"
+msgstr "Detekta automatikamente"
+
+#: gui/mdmsetup.c:2665 gui/mdmsetup.glade.h:2
+msgid "Theme"
+msgstr "Tema"
+
+#: gui/mdmsetup.c:2672 gui/mdmsetup.glade.h:28
+msgid "Auto login"
+msgstr "Login automatiko"
+
+#: gui/mdmsetup.c:2679 gui/mdmsetup.glade.h:42
+msgid "Options"
+msgstr "Opshonnan"
+
+#: gui/mdmsetup.c:2702
+msgid "Add a new theme"
+msgstr "Añadi un tema nobo"
+
+#: gui/mdmsetup.c:2703
+msgid "Remove the selected theme"
+msgstr "Kita e tema selekta"
+
+#: gui/mdmsetup.c:2704
+msgid "Launch the login screen to preview the theme"
+msgstr "Lansa e pantaya di login pa premira e tema"
+
+#: gui/mdmsetup.c:2722
+msgid "Please install 'numlockx' to enable this feature"
+msgstr "Por fabor instala 'numlockx' pa aktiva e feature aki"
+
+#: gui/mdmsetup.c:2919
+msgid "Could not access configuration file (defaults.conf)"
+msgstr "No por a aksesa e dokumento di konfigurashon (defaults.conf)"
+
+#: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
+msgid ""
+"Make sure that the file exists before launching login manager config utility."
+msgstr ""
+"Sigura bo mes ku e dokumento ta eksisti prome ku bo lansa e login manager "
+"config utility."
+
+#: gui/mdmsetup.c:2936
+msgid "Could not access configuration file"
+msgstr "No por aksesa e dokumento di konfigurashon"
+
+#: gui/mdmsetup.c:2984
+msgid "You must be root to configure MDM."
+msgstr "Bo mester ta root pa por konfigura MDM."
+
+#: gui/mdmsetup.glade.h:1
+msgid "Login Window Preferences"
+msgstr "Login Window Preferences"
+
+#: gui/mdmsetup.glade.h:3
+msgid "Background"
+msgstr "Fondo"
+
+#: gui/mdmsetup.glade.h:4
+msgid "_Image:"
+msgstr "_imagennan:"
+
+#: gui/mdmsetup.glade.h:5
+msgid "Displays this image as the background in the greeter."
+msgstr "Ta mustra e imagen aki komo fondo di e kumindado."
+
+#: gui/mdmsetup.glade.h:6
+msgid "Select background image"
+msgstr "Selekta e imagen di fondo"
+
+#: gui/mdmsetup.glade.h:7
+msgid "Pick background color"
+msgstr "Skohe kolo di fondo"
+
+#: gui/mdmsetup.glade.h:8
+msgid "Co_lor:"
+msgstr "Co_lor:"
+
+#: gui/mdmsetup.glade.h:9
+msgid "Background color of the greeter."
+msgstr "Kolo di fondo pa e kumindado."
+
+#: gui/mdmsetup.glade.h:10
+msgid "Welcome Message"
+msgstr "Mensahe di Bon Bini"
+
+#: gui/mdmsetup.glade.h:11
+msgid "C_ustom:"
+msgstr "C_ustom:"
+
+#: gui/mdmsetup.glade.h:12
+msgid ""
+"Controls which text to display next to the logo image in the standard "
+"greeter."
+msgstr ""
+"Kontrola kua teksto ta aparese banda di e imagen logo den e kumindado "
+"standard."
+
+#: gui/mdmsetup.glade.h:14
+#, no-c-format
+msgid "%n will be replaced by hostname"
+msgstr "%n lo wòrdu remplasa dor di e hostname"
+
+#: gui/mdmsetup.glade.h:15
+msgid "_Default:"
+msgstr "_Default:"
+
+#: gui/mdmsetup.glade.h:16
+msgid "'Welcome'"
+msgstr "'Bon bini'"
+
+#: gui/mdmsetup.glade.h:17
+msgid "_Enable Automatic Login"
+msgstr "_Aktiva Login Automatiko"
+
+#: gui/mdmsetup.glade.h:18
+msgid ""
+"Given user should be logged in upon first bootup. No password will be asked."
+msgstr ""
+"E usuario mester ta di login durante e prome bootup. Niun kontraseña lo "
+"wòrdu pidi."
+
+#: gui/mdmsetup.glade.h:19
+msgid "_User:"
+msgstr "_Usuario:"
+
+#: gui/mdmsetup.glade.h:20
+msgid "Dummy"
+msgstr "Dummy"
+
+#: gui/mdmsetup.glade.h:21
+msgid "Enable _Timed Login"
+msgstr "Aktiva _Timed Login"
+
+#: gui/mdmsetup.glade.h:22
+msgid ""
+"Given user should be logged in after a number of seconds of inactivity on "
+"the login screen."
+msgstr ""
+"E usuario mester ta di login despues di par di sekòndenan di inaktividat na "
+"e pantaya di login."
+
+#: gui/mdmsetup.glade.h:23
+msgid "U_ser:"
+msgstr "U_ser:"
+
+#: gui/mdmsetup.glade.h:24
+msgid "_Pause before login:"
+msgstr "_Pause prome ku e login:"
+
+#: gui/mdmsetup.glade.h:25
+msgid "Delay in seconds before the timed login user will be logged in."
+msgstr "Retraso den sekònde prome e timed login usuario lo wòrdu di login."
+
+#: gui/mdmsetup.glade.h:26
+msgid "seconds"
+msgstr "sekòndenan"
+
+#: gui/mdmsetup.glade.h:27
+msgid "dummy"
+msgstr "dummy"
+
+#: gui/mdmsetup.glade.h:29
+msgid "Allow root login"
+msgstr "Permiti login root"
+
+#: gui/mdmsetup.glade.h:30
+msgid "Log debug information to /var/log/syslog"
+msgstr "Warda e informashon debug na  /var/log/syslog"
+
+#: gui/mdmsetup.glade.h:31
+msgid "Sends debug output to the syslog."
+msgstr "Ta manda e debug output na e syslog."
+
+#: gui/mdmsetup.glade.h:32
+msgid "Automatically select the last logged in user"
+msgstr "Selekta e usuario ku a login lastu automatikamente"
+
+#: gui/mdmsetup.glade.h:33
+msgid "Enable NumLock"
+msgstr "Aktiva Numlock"
+
+#: gui/mdmsetup.glade.h:34
+msgid "Use 24 Hour Clock"
+msgstr "Usa Oloshi di 24 ora"
+
+#: gui/mdmsetup.glade.h:35
+msgid "Primary monitor:"
+msgstr "Pantaya prinsipal:"
+
+#: gui/mdmsetup.glade.h:36
+msgid " "
+msgstr " "
+
+#: gui/mdmsetup.glade.h:37
+msgid "Limit the session output"
+msgstr "Limita e output di e seshon"
+
+#: gui/mdmsetup.glade.h:38
+msgid ""
+"This prevents .xsession-errors from getting too big (200KB, a few thousand "
+"lines)."
+msgstr ""
+"Esaki ta preveni .xsession-errors di bira muchu grandi (200KB, un par di mil "
+"liñanan)."
+
+#: gui/mdmsetup.glade.h:39
+msgid "Filter the session output"
+msgstr "Filtra e output di e seshon"
+
+#: gui/mdmsetup.glade.h:40
+msgid ""
+"This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
+"Glade...etc) from getting in .xsession-errors."
+msgstr ""
+"Esaki ta preveni atvertenshanan di e bibliotekanan i kahanan di hèrmènt "
+"komun (Gtk, Glib, Gio, Glade...etc) di drenta .xsession-errors."
+
+#: gui/mdmsetup.glade.h:41
+msgid "Default session:"
+msgstr "Seshon default:"
