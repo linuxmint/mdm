@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2017-09-20 11:41+0000\n"
-"Last-Translator: Oliver Star <ewqstar@gmail.com>\n"
+"PO-Revision-Date: 2018-07-09 18:58+0000\n"
+"Last-Translator: stuartlittle <Stuartlittle1970@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2018-06-26 10:12+0000\n"
-"X-Generator: Launchpad (build 18688)\n"
+"X-Launchpad-Export-Date: 2018-12-11 11:56+0000\n"
+"X-Generator: Launchpad (build 18837)\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -68,7 +68,7 @@ msgstr "Увійти"
 
 #: gui/mdmwebkit.c:919
 msgid "OK"
-msgstr "OK"
+msgstr "Так"
 
 #: gui/mdmwebkit.c:920
 msgid "Cancel"
@@ -145,7 +145,7 @@ msgstr ""
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
 msgstr ""
-"Автоматичний вхід чи вхід після паузи в обліковий запис адміністратора "
+"Автоматичний вхід чи вхід після призупинки  в обліковий запис адміністратора "
 "(root) не дозволяється."
 
 #: gui/mdmsetup.c:519
@@ -160,7 +160,7 @@ msgstr "Недозволений користувач"
 #: gui/mdmsetup.c:776
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr ""
-"Автоматичний вхід чи вхід після паузи в обліковий запис адміністратора "
+"Автоматичний вхід чи вхід після призупинки в обліковий запис адміністратора "
 "(root) не дозволяється."
 
 #: gui/mdmsetup.c:1198
@@ -185,7 +185,7 @@ msgstr "Архів не містить файл GdmGreeterTheme.info"
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
-msgstr "Файл не існує"
+msgstr "Файлу не існує"
 
 #: gui/mdmsetup.c:1747
 #, c-format
@@ -311,7 +311,7 @@ msgstr "Параметри вікна входу у систему"
 
 #: gui/mdmsetup.glade.h:3
 msgid "Background"
-msgstr "Фон"
+msgstr "Тло"
 
 #: gui/mdmsetup.glade.h:4
 msgid "_Image:"
@@ -319,15 +319,15 @@ msgstr "_Зображення:"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
-msgstr "Відображати це зображення як фон програми-привітання."
+msgstr "Відображати це зображення як тло програми-привітання."
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
-msgstr "Вибрати фонове зображення"
+msgstr "Вибрати тлове зображення"
 
 #: gui/mdmsetup.glade.h:7
 msgid "Pick background color"
-msgstr "Вибрати колір фону"
+msgstr "Вибрати колір тла"
 
 #: gui/mdmsetup.glade.h:8
 msgid "Co_lor:"
@@ -335,7 +335,7 @@ msgstr "Ко_лір:"
 
 #: gui/mdmsetup.glade.h:9
 msgid "Background color of the greeter."
-msgstr "Колір фону вікна привітання"
+msgstr "Колір тла вікна привітання"
 
 #: gui/mdmsetup.glade.h:10
 msgid "Welcome Message"
@@ -387,7 +387,7 @@ msgstr "Порожньо"
 
 #: gui/mdmsetup.glade.h:21
 msgid "Enable _Timed Login"
-msgstr "_Увімкнути автоматичний вхід після паузи"
+msgstr "_Увімкнути автоматичний вхід після призупинки"
 
 #: gui/mdmsetup.glade.h:22
 msgid ""
@@ -425,11 +425,11 @@ msgstr "Дозволити вхід під root'ом"
 
 #: gui/mdmsetup.glade.h:30
 msgid "Log debug information to /var/log/syslog"
-msgstr "Писати налагоджувальну інформацію в /var/log/syslog"
+msgstr "Писати зневаджувальну інформацію в /var/log/syslog"
 
 #: gui/mdmsetup.glade.h:31
 msgid "Sends debug output to the syslog."
-msgstr "Писати налагоджувальну інформацію у системний журнал."
+msgstr "Писати зневаджувальну інформацію у системний журнал."
 
 #: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"

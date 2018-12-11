@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-11 16:40+0100\n"
-"PO-Revision-Date: 2017-04-30 19:43+0000\n"
-"Last-Translator: Belkacem Mohammed <belkacem77@gmail.com>\n"
+"PO-Revision-Date: 2018-10-27 21:39+0000\n"
+"Last-Translator: Yacine Bouklif <yacine_tizi2003@yahoo.fr>\n"
 "Language-Team: Kabyle <kab@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2018-06-26 10:12+0000\n"
-"X-Generator: Launchpad (build 18688)\n"
+"X-Launchpad-Export-Date: 2018-12-11 11:56+0000\n"
+"X-Generator: Launchpad (build 18837)\n"
+"Language: kab\n"
 
 #: gui/mdmwebkit.c:191
 msgid "Are you sure you want to shut down the computer?"
@@ -145,39 +146,41 @@ msgstr ""
 #: gui/mdmsetup.c:517
 msgid "Autologin or timed login to the root account is forbidden."
 msgstr ""
+"Tuqqna tawurmant neɣ tuqqna s usmezger ɣer umiḍan n unedbal ur turig ara."
 
 #: gui/mdmsetup.c:519
 #, c-format
 msgid "The %s user UID is lower than 'MinimalUID'."
-msgstr ""
+msgstr "UID n useqdac %s temẓi ɣef 'MinimalUID'."
 
 #: gui/mdmsetup.c:526
 msgid "User not allowed"
-msgstr ""
+msgstr "Aseqdac ur yurig ara"
 
 #: gui/mdmsetup.c:776
 msgid "Autologin or timed login to the root account is not allowed."
 msgstr ""
+"Tuqqna tawurmant neɣ tuqqna s usmezger ɣer umiḍan n unedbal ur turig ara."
 
 #: gui/mdmsetup.c:1198
 msgid "No theme, just pure GTK"
-msgstr ""
+msgstr "Ulac asentel, anagar GTK aḥerfi"
 
 #: gui/mdmsetup.c:1583
 msgid "Archive is not of a subdirectory"
-msgstr ""
+msgstr "Aɣbar mačči d akaram anaddaw"
 
 #: gui/mdmsetup.c:1590
 msgid "Archive is not of a single subdirectory"
-msgstr ""
+msgstr "Aɣbar mačči d akaram anaddaw asuf"
 
 #: gui/mdmsetup.c:1626 gui/mdmsetup.c:1703
 msgid "File not a tar.gz or tar archive"
-msgstr ""
+msgstr "Afaylu mačči d aɣbar tar.gz neɣ tar"
 
 #: gui/mdmsetup.c:1630
 msgid "Archive does not include a GdmGreeterTheme.info file"
-msgstr ""
+msgstr "Aɣbar ur yesɛi ara afaylu GdmGreeterTheme.info"
 
 #: gui/mdmsetup.c:1652
 msgid "File does not exist"
@@ -190,25 +193,26 @@ msgstr "%s"
 
 #: gui/mdmsetup.c:1754
 msgid "Not a theme archive"
-msgstr ""
+msgstr "Ulac aɣbar n usentel"
 
 #: gui/mdmsetup.c:1776
 #, c-format
 msgid ""
 "Theme directory '%s' seems to be already installed. Install again anyway?"
 msgstr ""
+"Akaram n usentel '%s' yettbin-d am wakken yettwasbedd yakan. Ad t-tesbedeḍ ?"
 
 #: gui/mdmsetup.c:1862
 msgid "Some error occurred when installing the theme"
-msgstr ""
+msgstr "Ḍrant-d kra n tuccḍiwin deg usbeddi n ukaram"
 
 #: gui/mdmsetup.c:1905
 msgid "No file selected"
-msgstr ""
+msgstr "Ulac afaylu yettwafernen"
 
 #: gui/mdmsetup.c:1927
 msgid "Select Theme Archive"
-msgstr ""
+msgstr "Fren aɣbar n usentel"
 
 #: gui/mdmsetup.c:1931 gui/mdmsetup.c:2146
 msgid "_Install"
@@ -216,7 +220,7 @@ msgstr "_Sebded"
 
 #: gui/mdmsetup.c:1935
 msgid "Theme archives"
-msgstr ""
+msgstr "Iɣbaren n usentel"
 
 #: gui/mdmsetup.c:2002
 #, c-format
@@ -225,7 +229,7 @@ msgstr "Kkes asentel \"%s\"?"
 
 #: gui/mdmsetup.c:2009
 msgid "If you choose to remove the theme, it will be permanently lost."
-msgstr ""
+msgstr "Ma tferneḍ ad tekkseḍ asentel, ad iṛuḥ dayen."
 
 #: gui/mdmsetup.c:2017
 msgid "_Remove Theme"
@@ -271,36 +275,38 @@ msgstr "Rnu asentel amaynut"
 
 #: gui/mdmsetup.c:2703
 msgid "Remove the selected theme"
-msgstr ""
+msgstr "Kkes asentel yettwafernen"
 
 #: gui/mdmsetup.c:2704
 msgid "Launch the login screen to preview the theme"
-msgstr ""
+msgstr "Sekker agdil n tuqqna iwakken ad twaliḍ asentel"
 
 #: gui/mdmsetup.c:2722
 msgid "Please install 'numlockx' to enable this feature"
-msgstr ""
+msgstr "Ttxil-k sbedd 'numlockx' iwakken ad tesremdeḍ tawuri-agi"
 
 #: gui/mdmsetup.c:2919
 msgid "Could not access configuration file (defaults.conf)"
-msgstr ""
+msgstr "D awezɣi adduf ɣer ufaylu n twila (defaults.conf)"
 
 #: gui/mdmsetup.c:2920 gui/mdmsetup.c:2937
 msgid ""
 "Make sure that the file exists before launching login manager config utility."
 msgstr ""
+"Senqed belli yella ufaylu send ad tsekkereḍ allal n uswel n umsefrak n "
+"tuqqna."
 
 #: gui/mdmsetup.c:2936
 msgid "Could not access configuration file"
-msgstr ""
+msgstr "D awezɣi adduf ɣer ufaylu n twila"
 
 #: gui/mdmsetup.c:2984
 msgid "You must be root to configure MDM."
-msgstr ""
+msgstr "Isefk ad tiliḍ d root iwakken ad tsewleḍ MDM."
 
 #: gui/mdmsetup.glade.h:1
 msgid "Login Window Preferences"
-msgstr ""
+msgstr "Qqen ɣer ismenyifen n usfaylu"
 
 #: gui/mdmsetup.glade.h:3
 msgid "Background"
@@ -312,42 +318,44 @@ msgstr "_Tugna:"
 
 #: gui/mdmsetup.glade.h:5
 msgid "Displays this image as the background in the greeter."
-msgstr ""
+msgstr "Beqqeḍ tugna-agi deg ugilal n tuta."
 
 #: gui/mdmsetup.glade.h:6
 msgid "Select background image"
-msgstr ""
+msgstr "Fren tugna n ugilal"
 
 #: gui/mdmsetup.glade.h:7
 msgid "Pick background color"
-msgstr ""
+msgstr "Fren ini n ugilal"
 
 #: gui/mdmsetup.glade.h:8
 msgid "Co_lor:"
-msgstr ""
+msgstr "I_ni:"
 
 #: gui/mdmsetup.glade.h:9
 msgid "Background color of the greeter."
-msgstr ""
+msgstr "Ini n ugilal n tuta n usnubeg.."
 
 #: gui/mdmsetup.glade.h:10
 msgid "Welcome Message"
-msgstr ""
+msgstr "Izen n usnubeg"
 
 #: gui/mdmsetup.glade.h:11
 msgid "C_ustom:"
-msgstr ""
+msgstr "Yu_gen:"
 
 #: gui/mdmsetup.glade.h:12
 msgid ""
 "Controls which text to display next to the logo image in the standard "
 "greeter."
 msgstr ""
+"Ad yesenqed acu n uḍris ara yettubeqḍen ɣer tama n tugna n ulugut di tuta "
+"taslugant."
 
 #: gui/mdmsetup.glade.h:14
 #, no-c-format
 msgid "%n will be replaced by hostname"
-msgstr ""
+msgstr "%n ad ittusemselsi s yisem n usneftaɣ"
 
 #: gui/mdmsetup.glade.h:15
 msgid "_Default:"
@@ -359,12 +367,13 @@ msgstr "'Anṣuf'"
 
 #: gui/mdmsetup.glade.h:17
 msgid "_Enable Automatic Login"
-msgstr ""
+msgstr "_Sermed tuqqna tawurmant"
 
 #: gui/mdmsetup.glade.h:18
 msgid ""
 "Given user should be logged in upon first bootup. No password will be asked."
 msgstr ""
+"Aseqdac ad yeqqen s wudem awurman. Ur d-yettili ara usuter n wawal n uɛeddi."
 
 #: gui/mdmsetup.glade.h:19
 msgid "_User:"
@@ -372,17 +381,18 @@ msgstr "A_seqdac:"
 
 #: gui/mdmsetup.glade.h:20
 msgid "Dummy"
-msgstr ""
+msgstr "Asugnan"
 
 #: gui/mdmsetup.glade.h:21
 msgid "Enable _Timed Login"
-msgstr ""
+msgstr "Sermed tuqqna s usmezger"
 
 #: gui/mdmsetup.glade.h:22
 msgid ""
 "Given user should be logged in after a number of seconds of inactivity on "
 "the login screen."
 msgstr ""
+"Aseqdac ad yeqqen mbaɛd kra n tasinin n war armud deg ugdil n tuqqna."
 
 #: gui/mdmsetup.glade.h:23
 msgid "U_ser:"
@@ -390,72 +400,76 @@ msgstr "Ase_qdac:"
 
 #: gui/mdmsetup.glade.h:24
 msgid "_Pause before login:"
-msgstr ""
+msgstr "_Asgunfu send tuqqna:"
 
 #: gui/mdmsetup.glade.h:25
 msgid "Delay in seconds before the timed login user will be logged in."
-msgstr ""
+msgstr "Amenḍar s tasinin send tuqqna s usmezger n useqdac ."
 
 #: gui/mdmsetup.glade.h:26
 msgid "seconds"
-msgstr ""
+msgstr "tasinin"
 
 #: gui/mdmsetup.glade.h:27
 msgid "dummy"
-msgstr ""
+msgstr "asugnan"
 
 #: gui/mdmsetup.glade.h:29
 msgid "Allow root login"
-msgstr ""
+msgstr "Sermed tuqqna n root"
 
 #: gui/mdmsetup.glade.h:30
 msgid "Log debug information to /var/log/syslog"
-msgstr ""
+msgstr "Sekles isallan n useɣti di /var/log/syslog"
 
 #: gui/mdmsetup.glade.h:31
 msgid "Sends debug output to the syslog."
-msgstr ""
+msgstr "Ad yazen isallan n useɣti ɣer syslog."
 
 #: gui/mdmsetup.glade.h:32
 msgid "Automatically select the last logged in user"
-msgstr ""
+msgstr "Fren s wudem awurman aseqdac angaru yeqqnen"
 
 #: gui/mdmsetup.glade.h:33
 msgid "Enable NumLock"
-msgstr ""
+msgstr "Sermed NumLock"
 
 #: gui/mdmsetup.glade.h:34
 msgid "Use 24 Hour Clock"
-msgstr ""
+msgstr "Seqdec tamrilt n 24 n isragen"
 
 #: gui/mdmsetup.glade.h:35
 msgid "Primary monitor:"
-msgstr ""
+msgstr "Agdil amezwaru"
 
 #: gui/mdmsetup.glade.h:36
 msgid " "
-msgstr ""
+msgstr " "
 
 #: gui/mdmsetup.glade.h:37
 msgid "Limit the session output"
-msgstr ""
+msgstr "Eg tilist i tuffɣa n tɣimit"
 
 #: gui/mdmsetup.glade.h:38
 msgid ""
 "This prevents .xsession-errors from getting too big (200KB, a few thousand "
 "lines)."
 msgstr ""
+"Ayagi ad iqerreɛ .xsession-errors iwakken ur yettuɣal ara d ameqran (200Ko, "
+"kra n igima n izirigen)."
 
 #: gui/mdmsetup.glade.h:39
 msgid "Filter the session output"
-msgstr ""
+msgstr "Sti tuffɣa n tɣimit"
 
 #: gui/mdmsetup.glade.h:40
 msgid ""
 "This prevents warnings from common libraries and toolkits (Gtk, Glib, Gio, "
 "Glade...etc) from getting in .xsession-errors."
 msgstr ""
+"Ayagi ad iqerreɛ ismigal n temkarḍiwin timugna akked ifecka (Gtk, Glib, Gio, "
+"Glade..tgr) iwakken ur ttilin ara di.xsession-errors."
 
 #: gui/mdmsetup.glade.h:41
 msgid "Default session:"
-msgstr ""
+msgstr "Tiɣimit n lexṣas:"
